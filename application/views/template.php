@@ -611,10 +611,10 @@
                                             <i class="fas fa-circle fa-xs mr-1"></i> SPP <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
-                                            <a href="<?= base_url('spp/sppBaru') ?>" class="dropdown-item">SPP Baru</a>
-                                            <a href="<?= base_url('spp/sppApproval') ?>" class="dropdown-item">SPP
+                                            <a href="<?= base_url('Spp/sppBaru') ?>" class="dropdown-item">SPP Baru</a>
+                                            <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">SPP
                                                 Approval</a>
-                                            <a href="<?= base_url('spp/sppBaru'); ?>" class="dropdown-item">Semua Data
+                                            <a href="<?= base_url('Spp'); ?>" class="dropdown-item">Semua Data
                                                 SPP</a>
 
                                         </div>
