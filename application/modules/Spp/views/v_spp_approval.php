@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title">Data SPP</h4>
+                        <h4 class="header-title">Approval SPP</h4>
                         <div class="form-group">
                             <select class="form-control" id="filter" name="filter">
                                 <option value="">Semua</option>
