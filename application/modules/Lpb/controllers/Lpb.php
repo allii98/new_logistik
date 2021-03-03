@@ -11,11 +11,13 @@ class Lpb extends CI_Controller
 
     public function index()
     {
+        $data['title'] = 'Laporan Penerimaan Barang';
+        $this->template->load('template', 'v_lpbIndex', $data);
     }
 
     public function input()
     {
-        $data['title'] = 'LPB';
+        $data['title'] = 'Laporan Penerimaan Barang';
 
         $this->template->load('template', 'v_lpbInput', $data);
     }
