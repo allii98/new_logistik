@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="page-title-box">
 
-                <h4 class="page-title"><?= $tittle; ?></h4>
+                <h4 class="page-title"><?= $title; ?></h4>
             </div>
         </div>
     </div>
@@ -121,7 +121,9 @@
                         <div class="col-lg-2"></div>
                     </div>
                     <!-- end row-->
-                    <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... <br /> No. Ref SPP : ...</label>
+
+                    <hr>
+                    <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... No. Ref SPP : ...</label>
                     <h4 id="h4_no_po" name="h4_no_po"></h4>
                     <h4 id="h4_no_ref_po" name="h4_no_ref_po"></h4>
                     <input type="hidden" id="hidden_no_po" name="hidden_no_po">

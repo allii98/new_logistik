@@ -1,14 +1,16 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Po extends CI_Controller {
+class Po extends CI_Controller
+{
 
-    
+    var $title = 'Permohonan Order';
+
     public function index()
     {
         $data = [
-            'tittle'=> "Permohonan Order"
+            'title' => $this->title,
         ];
         $this->template->load('template', 'v_dataPo', $data);
     }
@@ -16,11 +18,10 @@ class Po extends CI_Controller {
     public function input()
     {
         $data = [
-            'tittle'=> "Permohonan Order"
+            'title' => $this->title,
         ];
-        $this->template->load('template', 'v_inputPo',$data);
+        $this->template->load('template', 'v_inputPo', $data);
     }
-
 }
 
 /* End of file Po.php */
