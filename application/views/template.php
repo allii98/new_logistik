@@ -12,34 +12,25 @@
     <link rel="shortcut icon" href="<?php echo base_url() ?>assets/images/favicon.ico">
 
     <!-- third party css -->
-    <link href="<?php echo base_url() ?>assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css"
-        rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url() ?>assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css"
-        rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url() ?>assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css"
-        rel="stylesheet" type="text/css" />
-    <link href="<?php echo base_url() ?>assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css"
-        rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url() ?>assets/libs/datatables.net-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url() ?>assets/libs/datatables.net-responsive-bs4/css/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url() ?>assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url() ?>assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- third party css end -->
 
     <!-- App css -->
-    <link href="<?php echo base_url() ?>assets/css/bootstrap-creative.min.css" rel="stylesheet" type="text/css"
-        id="bs-default-stylesheet" />
-    <link href="<?php echo base_url() ?>assets/css/app-creative.min.css" rel="stylesheet" type="text/css"
-        id="app-default-stylesheet" />
+    <link href="<?php echo base_url() ?>assets/css/bootstrap-creative.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
+    <link href="<?php echo base_url() ?>assets/css/app-creative.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
 
-    <link href="<?php echo base_url() ?>assets/css/bootstrap-creative-dark.min.css" rel="stylesheet" type="text/css"
-        id="bs-dark-stylesheet" />
-    <link href="<?php echo base_url() ?>assets/css/app-creative-dark.min.css" rel="stylesheet" type="text/css"
-        id="app-dark-stylesheet" />
+    <link href="<?php echo base_url() ?>assets/css/bootstrap-creative-dark.min.css" rel="stylesheet" type="text/css" id="bs-dark-stylesheet" />
+    <link href="<?php echo base_url() ?>assets/css/app-creative-dark.min.css" rel="stylesheet" type="text/css" id="app-dark-stylesheet" />
 
     <!-- icons -->
     <link href="<?php echo base_url() ?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
 
 </head>
 
-<body class="loading" data-layout-mode="horizontal"
-    data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
+<body class="loading" data-layout-mode="horizontal" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
 
     <!-- Begin page -->
     <div id="wrapper">
@@ -93,9 +84,7 @@
                                         <!-- item-->
                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="media">
-                                                <img class="d-flex mr-2 rounded-circle"
-                                                    src="<?php echo base_url() ?>assets/images/users/user-2.jpg"
-                                                    alt="Generic placeholder image" height="32">
+                                                <img class="d-flex mr-2 rounded-circle" src="<?php echo base_url() ?>assets/images/users/user-2.jpg" alt="Generic placeholder image" height="32">
                                                 <div class="media-body">
                                                     <h5 class="m-0 font-14">Erwin E. Brown</h5>
                                                     <span class="font-12 mb-0">UI Designer</span>
@@ -106,9 +95,7 @@
                                         <!-- item-->
                                         <a href="javascript:void(0);" class="dropdown-item notify-item">
                                             <div class="media">
-                                                <img class="d-flex mr-2 rounded-circle"
-                                                    src="<?php echo base_url() ?>assets/images/users/user-5.jpg"
-                                                    alt="Generic placeholder image" height="32">
+                                                <img class="d-flex mr-2 rounded-circle" src="<?php echo base_url() ?>assets/images/users/user-5.jpg" alt="Generic placeholder image" height="32">
                                                 <div class="media-body">
                                                     <h5 class="m-0 font-14">Jacob Deo</h5>
                                                     <span class="font-12 mb-0">Developer</span>
@@ -123,28 +110,24 @@
                     </li>
 
                     <li class="dropdown d-inline-block d-lg-none">
-                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown"
-                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="fe-search noti-icon"></i>
                         </a>
                         <div class="dropdown-menu dropdown-lg dropdown-menu-right p-0">
                             <form class="p-3">
-                                <input type="text" class="form-control" placeholder="Search ..."
-                                    aria-label="Recipient's username">
+                                <input type="text" class="form-control" placeholder="Search ..." aria-label="Recipient's username">
                             </form>
                         </div>
                     </li>
 
                     <li class="dropdown d-none d-lg-inline-block">
-                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen"
-                            href="#">
+                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="fullscreen" href="#">
                             <i class="fe-maximize noti-icon"></i>
                         </a>
                     </li>
 
                     <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown"
-                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="fe-grid noti-icon"></i>
                         </a>
                         <div class="dropdown-menu dropdown-lg dropdown-menu-right">
@@ -153,22 +136,19 @@
                                 <div class="row no-gutters">
                                     <div class="col">
                                         <a class="dropdown-icon-item" href="#">
-                                            <img src="<?php echo base_url() ?>assets/images/brands/slack.png"
-                                                alt="slack">
+                                            <img src="<?php echo base_url() ?>assets/images/brands/slack.png" alt="slack">
                                             <span>Slack</span>
                                         </a>
                                     </div>
                                     <div class="col">
                                         <a class="dropdown-icon-item" href="#">
-                                            <img src="<?php echo base_url() ?>assets/images/brands/github.png"
-                                                alt="Github">
+                                            <img src="<?php echo base_url() ?>assets/images/brands/github.png" alt="Github">
                                             <span>GitHub</span>
                                         </a>
                                     </div>
                                     <div class="col">
                                         <a class="dropdown-icon-item" href="#">
-                                            <img src="<?php echo base_url() ?>assets/images/brands/dribbble.png"
-                                                alt="dribbble">
+                                            <img src="<?php echo base_url() ?>assets/images/brands/dribbble.png" alt="dribbble">
                                             <span>Dribbble</span>
                                         </a>
                                     </div>
@@ -177,22 +157,19 @@
                                 <div class="row no-gutters">
                                     <div class="col">
                                         <a class="dropdown-icon-item" href="#">
-                                            <img src="<?php echo base_url() ?>assets/images/brands/bitbucket.png"
-                                                alt="bitbucket">
+                                            <img src="<?php echo base_url() ?>assets/images/brands/bitbucket.png" alt="bitbucket">
                                             <span>Bitbucket</span>
                                         </a>
                                     </div>
                                     <div class="col">
                                         <a class="dropdown-icon-item" href="#">
-                                            <img src="<?php echo base_url() ?>assets/images/brands/dropbox.png"
-                                                alt="dropbox">
+                                            <img src="<?php echo base_url() ?>assets/images/brands/dropbox.png" alt="dropbox">
                                             <span>Dropbox</span>
                                         </a>
                                     </div>
                                     <div class="col">
                                         <a class="dropdown-icon-item" href="#">
-                                            <img src="<?php echo base_url() ?>assets/images/brands/g-suite.png"
-                                                alt="G Suite">
+                                            <img src="<?php echo base_url() ?>assets/images/brands/g-suite.png" alt="G Suite">
                                             <span>G Suite</span>
                                         </a>
                                     </div>
@@ -204,42 +181,36 @@
                     </li>
 
                     <li class="dropdown d-none d-lg-inline-block topbar-dropdown">
-                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown"
-                            href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle arrow-none waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <img src="<?php echo base_url() ?>assets/images/flags/us.jpg" alt="user-image" height="16">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="<?php echo base_url() ?>assets/images/flags/germany.jpg" alt="user-image"
-                                    class="mr-1" height="12"> <span class="align-middle">German</span>
+                                <img src="<?php echo base_url() ?>assets/images/flags/germany.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">German</span>
                             </a>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="<?php echo base_url() ?>assets/images/flags/italy.jpg" alt="user-image"
-                                    class="mr-1" height="12"> <span class="align-middle">Italian</span>
+                                <img src="<?php echo base_url() ?>assets/images/flags/italy.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Italian</span>
                             </a>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="<?php echo base_url() ?>assets/images/flags/spain.jpg" alt="user-image"
-                                    class="mr-1" height="12"> <span class="align-middle">Spanish</span>
+                                <img src="<?php echo base_url() ?>assets/images/flags/spain.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Spanish</span>
                             </a>
 
                             <!-- item-->
                             <a href="javascript:void(0);" class="dropdown-item">
-                                <img src="<?php echo base_url() ?>assets/images/flags/russia.jpg" alt="user-image"
-                                    class="mr-1" height="12"> <span class="align-middle">Russian</span>
+                                <img src="<?php echo base_url() ?>assets/images/flags/russia.jpg" alt="user-image" class="mr-1" height="12"> <span class="align-middle">Russian</span>
                             </a>
 
                         </div>
                     </li>
 
                     <li class="dropdown notification-list topbar-dropdown">
-                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
-                            role="button" aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             <i class="fe-bell noti-icon"></i>
                             <span class="badge badge-danger rounded-circle noti-icon-badge">9</span>
                         </a>
@@ -261,8 +232,7 @@
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item active">
                                     <div class="notify-icon">
-                                        <img src="<?php echo base_url() ?>assets/images/users/user-1.jpg"
-                                            class="img-fluid rounded-circle" alt="" />
+                                        <img src="<?php echo base_url() ?>assets/images/users/user-1.jpg" class="img-fluid rounded-circle" alt="" />
                                     </div>
                                     <p class="notify-details">Cristina Pride</p>
                                     <p class="text-muted mb-0 user-msg">
@@ -283,8 +253,7 @@
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <div class="notify-icon">
-                                        <img src="<?php echo base_url() ?>assets/images/users/user-4.jpg"
-                                            class="img-fluid rounded-circle" alt="" />
+                                        <img src="<?php echo base_url() ?>assets/images/users/user-4.jpg" class="img-fluid rounded-circle" alt="" />
                                     </div>
                                     <p class="notify-details">Karen Robinson</p>
                                     <p class="text-muted mb-0 user-msg">
@@ -325,8 +294,7 @@
                             </div>
 
                             <!-- All-->
-                            <a href="javascript:void(0);"
-                                class="dropdown-item text-center text-primary notify-item notify-all">
+                            <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
                                 View all
                                 <i class="fe-arrow-right"></i>
                             </a>
@@ -335,10 +303,8 @@
                     </li>
 
                     <li class="dropdown notification-list topbar-dropdown">
-                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light"
-                            data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                            <img src="<?php echo base_url() ?>assets/images/users/user-1.jpg" alt="user-image"
-                                class="rounded-circle">
+                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img src="<?php echo base_url() ?>assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
                             <span class="pro-user-name ml-1">
                                 Geneva <i class="mdi mdi-chevron-down"></i>
                             </span>
@@ -429,8 +395,7 @@
                     </li>
 
                     <li class="dropdown d-none d-xl-block">
-                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
-                            role="button" aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             Create New
                             <i class="mdi mdi-chevron-down"></i>
                         </a>
@@ -471,8 +436,7 @@
                     </li>
 
                     <li class="dropdown dropdown-mega d-none d-xl-block">
-                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"
-                            role="button" aria-haspopup="false" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
                             Mega Menu
                             <i class="mdi mdi-chevron-down"></i>
                         </a>
@@ -587,17 +551,14 @@
                     <div class="collapse navbar-collapse" id="topnav-menu-content">
                         <ul class="navbar-nav">
                             <li class="nav-item ">
-                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>"
-                                    id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
+                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>" id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fe-airplay mr-1"></i> Dashboards
                                 </a>
 
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fe-grid mr-1"></i> Menu Transaksi <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-apps">
@@ -605,161 +566,121 @@
                                     <!-- <a href="apps-calendar.html" class="dropdown-item"><i class="fe-calendar mr-1"></i> Calendar</a>
                                         <a href="apps-chat.html" class="dropdown-item"><i class="fe-message-square mr-1"></i> Chat</a> -->
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                            id="topnav-ecommerce" role="button" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <i class="fe-shopping-cart mr-1"></i> SPP <div class="arrow-down"></div>
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-ecommerce" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-circle fa-xs mr-1"></i> SPP <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
-                                            <a href="ecommerce-dashboard.html" class="dropdown-item">SPP Baru</a>
-                                            <a href="ecommerce-products.html" class="dropdown-item">SPP Approval</a>
-                                            <a href="ecommerce-product-detail.html" class="dropdown-item">Semua Data
+                                            <a href="<?= base_url('spp/sppbaru') ?>" class="dropdown-item">SPP Baru</a>
+                                            <a href="<?= base_url('spp') ?>" class="dropdown-item">SPP Approval</a>
+                                            <a href="<?= base_url('spp/approval'); ?>" class="dropdown-item">Semua Data
                                                 SPP</a>
 
                                         </div>
                                     </div>
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-mail mr-1"></i> Email <div class="arrow-down"></div>
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-circle fa-xs mr-1"></i> PO <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                            <a href="email-inbox.html" class="dropdown-item">Inbox</a>
-                                            <a href="email-read.html" class="dropdown-item">Read Email</a>
-                                            <a href="email-compose.html" class="dropdown-item">Compose Email</a>
-                                            <a href="email-templates.html" class="dropdown-item">Email Templates</a>
+                                            <a href="<?= base_url('po/input') ?>" class="dropdown-item">Input PO</a>
+                                            <a href="<?= base_url('po') ?>" class="dropdown-item">Data PO</a>
                                         </div>
                                     </div>
 
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-users mr-1"></i> CRM <div class="arrow-down"></div>
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-circle fa-xs mr-1"></i> LPB <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="crm-dashboard.html" class="dropdown-item">Dashboard</a>
-                                            <a href="crm-contacts.html" class="dropdown-item">Contacts</a>
-                                            <a href="crm-opportunities.html" class="dropdown-item">Opportunities</a>
-                                            <a href="crm-leads.html" class="dropdown-item">Leads</a>
-                                            <a href="crm-customers.html" class="dropdown-item">Customers</a>
+                                            <a href="<?= base_url('lpb/input'); ?>" class="dropdown-item">Input LPB</a>
+                                            <a href="<?= base_url('lpb'); ?>" class="dropdown-item">Data LPB</a>
                                         </div>
                                     </div>
 
-                                    <a href="apps-social-feed.html" class="dropdown-item"><i class="fe-rss mr-1"></i>
-                                        Social Feed</a>
-                                    <a href="apps-companies.html" class="dropdown-item"><i class="fe-activity mr-1"></i>
-                                        Companies</a>
+                                    <div class="dropdown">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-circle fa-xs mr-1"></i> BPB <div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                            <a href="<?= base_url('bpb/input'); ?>" class="dropdown-item">Input BPB</a>
+                                            <a href="<?= base_url('bpb'); ?>" class="dropdown-item">Data BPB</a>
+                                        </div>
+                                    </div>
 
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-project"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-briefcase mr-1"></i> Projects <div class="arrow-down"></div>
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-circle fa-xs mr-1"></i> BKB <div class="arrow-down"></div>
                                         </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-project">
-                                            <a href="project-list.html" class="dropdown-item">List</a>
-                                            <a href="project-detail.html" class="dropdown-item">Detail</a>
-                                            <a href="project-create.html" class="dropdown-item">Create Project</a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                            <a href="<?= base_url('bkb/input'); ?>" class="dropdown-item">Input BKB</a>
+                                            <a href="<?= base_url('bkb'); ?>" class="dropdown-item">Data BKB</a>
+                                            <a href="<?= base_url('bkb/menunggu_approval'); ?>" class="dropdown-item">Approval Rev Qty</a>
                                         </div>
                                     </div>
+
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-task"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-clipboard mr-1"></i> Tasks <div class="arrow-down"></div>
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-circle fa-xs mr-1"></i> PP <div class="arrow-down"></div>
                                         </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-task">
-                                            <a href="task-list.html" class="dropdown-item">List</a>
-                                            <a href="task-details.html" class="dropdown-item">Details</a>
-                                            <a href="task-kanban-board.html" class="dropdown-item">Kanban Board</a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                            <a href="<?= base_url('pp/input'); ?>" class="dropdown-item">Input PP</a>
+                                            <a href="<?= base_url('pp'); ?>" class="dropdown-item">Data PP</a>
                                         </div>
                                     </div>
+
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-contact"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-book mr-1"></i> Contacts <div class="arrow-down"></div>
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-circle fa-xs mr-1"></i> Retur <div class="arrow-down"></div>
                                         </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-contact">
-                                            <a href="contacts-list.html" class="dropdown-item">Members List</a>
-                                            <a href="contacts-profile.html" class="dropdown-item">Profile</a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                            <a href="#" class="dropdown-item">Retur BKB</a>
                                         </div>
                                     </div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-tickets"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-aperture mr-1"></i> Tickets <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-tickets">
-                                            <a href="tickets-list.html" class="dropdown-item">List</a>
-                                            <a href="tickets-detail.html" class="dropdown-item">Detail</a>
-                                        </div>
-                                    </div>
-                                    <a href="apps-file-manager.html" class="dropdown-item"><i
-                                            class="fe-folder-plus mr-1"></i> File Manager</a>
+
                                 </div>
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-ui" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-briefcase mr-1"></i> UI Elements <div class="arrow-down"></div>
+                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fe-layers mr-1"></i> Laporan <div class="arrow-down"></div>
                                 </a>
-
-                                <div class="dropdown-menu mega-dropdown-menu dropdown-mega-menu-xl"
-                                    aria-labelledby="topnav-ui">
-                                    <div class="row">
-                                        <div class="col-lg-4">
-                                            <div>
-                                                <a href="ui-buttons.html" class="dropdown-item">Buttons</a>
-                                                <a href="ui-cards.html" class="dropdown-item">Cards</a>
-                                                <a href="ui-avatars.html" class="dropdown-item">Avatars</a>
-                                                <a href="ui-portlets.html" class="dropdown-item">Portlets</a>
-                                                <a href="ui-tabs-accordions.html" class="dropdown-item">Tabs &
-                                                    Accordions</a>
-                                                <a href="ui-modals.html" class="dropdown-item">Modals</a>
-                                                <a href="ui-progress.html" class="dropdown-item">Progress</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div>
-                                                <a href="ui-notifications.html" class="dropdown-item">Notifications</a>
-                                                <a href="ui-spinners.html" class="dropdown-item">Spinners</a>
-                                                <a href="ui-images.html" class="dropdown-item">Images</a>
-                                                <a href="ui-carousel.html" class="dropdown-item">Carousel</a>
-                                                <a href="ui-list-group.html" class="dropdown-item">List Group</a>
-                                                <a href="ui-video.html" class="dropdown-item">Embed Video</a>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-4">
-                                            <div>
-                                                <a href="ui-dropdowns.html" class="dropdown-item">Dropdowns</a>
-                                                <a href="ui-ribbons.html" class="dropdown-item">Ribbons</a>
-                                                <a href="ui-tooltips-popovers.html" class="dropdown-item">Tooltips &
-                                                    Popovers</a>
-                                                <a href="ui-general.html" class="dropdown-item">General UI</a>
-                                                <a href="ui-typography.html" class="dropdown-item">Typography</a>
-                                                <a href="ui-grid.html" class="dropdown-item">Grid</a>
-                                            </div>
+                                <div class="dropdown-menu" aria-labelledby="topnav-components">
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Laporan Barang</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Surat Permintaan Pembelian (SPP)</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Purchase Order (PO)</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Permohonan Pembayaran (PP)</a>
+                                    <div class="dropdown">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fe-bookmark mr-1"></i> Analisa <div class="arrow-down"></div>
+                                        </a>
+                                        <div class="dropdown-menu" aria-labelledby="topnav-form">
+                                            <a href="forms-elements.html" class="dropdown-item">SPP vs PO</a>
+                                            <a href="forms-advanced.html" class="dropdown-item">LPB vs PO</a>
+                                            <a href="forms-validation.html" class="dropdown-item">Durasi Transaksi</a>
                                         </div>
                                     </div>
-
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Laporan Penerimaan Barang (LPB)</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Bukti Keluar Barang (BKB)</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Laporan Register Stok Harian</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Laporan Rincian Stok</a>
                                 </div>
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-layers mr-1"></i> Components <div class="arrow-down"></div>
+                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fe-layers mr-1"></i> Posting <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                            id="topnav-extendedui" role="button" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-extendedui" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fe-pocket mr-1"></i> Extended UI <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-extendedui">
@@ -777,9 +698,7 @@
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
                                         Widgets</a>
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fe-bookmark mr-1"></i> Forms <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-form">
@@ -797,9 +716,7 @@
                                         </div>
                                     </div>
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-charts"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-charts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fe-bar-chart-2 mr-1"></i> Charts <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-charts">
@@ -815,9 +732,7 @@
                                         </div>
                                     </div>
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-table"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-table" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fe-grid mr-1"></i> Tables <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-table">
@@ -832,9 +747,7 @@
                                         </div>
                                     </div>
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-icons"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-icons" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fe-cpu mr-1"></i> Icons <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-icons">
@@ -849,9 +762,7 @@
                                         </div>
                                     </div>
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-map"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-map" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="fe-map mr-1"></i> Maps <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-map">
@@ -864,15 +775,12 @@
                             </li>
 
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-package mr-1"></i> Pages <div class="arrow-down"></div>
+                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fe-package mr-1"></i> Master <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Auth Style 1 <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-auth">
@@ -887,9 +795,7 @@
                                     </div>
 
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth2"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Auth Style 2 <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-auth2">
@@ -905,9 +811,7 @@
                                     </div>
 
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-error"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-error" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Errors <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-error">
@@ -920,9 +824,7 @@
                                     </div>
 
                                     <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-utility"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
+                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-utility" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Utility <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-utility">
@@ -938,19 +840,6 @@
                                             <a href="pages-gallery.html" class="dropdown-item">Gallery</a>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-layout" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-sidebar mr-1"></i> Layouts <div class="arrow-down"></div>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="topnav-layout">
-                                    <a href="layouts-vertical.html" class="dropdown-item">Vertical</a>
-                                    <a href="layouts-detached.html" class="dropdown-item">Detached</a>
-                                    <a href="layouts-two-column.html" class="dropdown-item">Two Column Menu</a>
-                                    <a href="layouts-two-tone-icons.html" class="dropdown-item">Two Tones Icons</a>
-                                    <a href="layouts-preloader.html" class="dropdown-item">Preloader</a>
                                 </div>
                             </li>
                         </ul> <!-- end navbar-->
@@ -984,7 +873,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             2015 - <script>
-                            document.write(new Date().getFullYear())
+                                document.write(new Date().getFullYear())
                             </script> &copy; UBold theme by <a href="">Coderthemes</a>
                         </div>
                         <div class="col-md-6">
@@ -1067,15 +956,13 @@
                         </a>
                     </div>
 
-                    <h6 class="font-weight-medium px-3 mt-3 text-uppercase">Favourites <a href="javascript: void(0);"
-                            class="font-18 text-danger"><i class="float-right mdi mdi-plus-circle"></i></a></h6>
+                    <h6 class="font-weight-medium px-3 mt-3 text-uppercase">Favourites <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-right mdi mdi-plus-circle"></i></a></h6>
 
                     <div class="p-2">
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-10.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-10.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status online"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1090,8 +977,7 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-1.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-1.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status away"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1107,8 +993,7 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-9.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-9.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status busy"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1121,15 +1006,13 @@
                         </a>
                     </div>
 
-                    <h6 class="font-weight-medium px-3 mt-3 text-uppercase">Other Chats <a href="javascript: void(0);"
-                            class="font-18 text-danger"><i class="float-right mdi mdi-plus-circle"></i></a></h6>
+                    <h6 class="font-weight-medium px-3 mt-3 text-uppercase">Other Chats <a href="javascript: void(0);" class="font-18 text-danger"><i class="float-right mdi mdi-plus-circle"></i></a></h6>
 
                     <div class="p-2 pb-4">
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-2.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-2.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status online"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1144,8 +1027,7 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-4.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-4.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status away"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1160,8 +1042,7 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-5.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-5.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status online"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1177,8 +1058,7 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-6.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-6.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status online"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1193,8 +1073,7 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-7.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-7.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status busy"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1209,8 +1088,7 @@
                         <a href="javascript: void(0);" class="text-reset notification-item">
                             <div class="media">
                                 <div class="position-relative mr-2">
-                                    <img src="<?php echo base_url() ?>assets/images/users/user-8.jpg"
-                                        class="rounded-circle avatar-sm" alt="user-pic">
+                                    <img src="<?php echo base_url() ?>assets/images/users/user-8.jpg" class="rounded-circle avatar-sm" alt="user-pic">
                                     <i class="mdi mdi-circle user-status away"></i>
                                 </div>
                                 <div class="media-body overflow-hidden">
@@ -1238,24 +1116,21 @@
                         <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
                             <p class="text-muted mb-0">App Development<span class="float-right">75%</span></p>
                             <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%"
-                                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </a>
 
                         <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
                             <p class="text-muted mb-0">Database Repair<span class="float-right">37%</span></p>
                             <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-info" role="progressbar" style="width: 37%"
-                                    aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-info" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </a>
 
                         <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
                             <p class="text-muted mb-0">Backup Create<span class="float-right">52%</span></p>
                             <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-warning" role="progressbar" style="width: 52%"
-                                    aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-warning" role="progressbar" style="width: 52%" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </a>
                     </div>
@@ -1266,24 +1141,21 @@
                         <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
                             <p class="text-muted mb-0">Sales Reporting<span class="float-right">12%</span></p>
                             <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-danger" role="progressbar" style="width: 12%"
-                                    aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-danger" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </a>
 
                         <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
                             <p class="text-muted mb-0">Redesign Website<span class="float-right">67%</span></p>
                             <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-primary" role="progressbar" style="width: 67%"
-                                    aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-primary" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </a>
 
                         <a href="javascript: void(0);" class="text-reset item-hovered d-block p-2">
                             <p class="text-muted mb-0">New Admin Design<span class="float-right">84%</span></p>
                             <div class="progress mt-2" style="height: 4px;">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 84%"
-                                    aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress-bar bg-success" role="progressbar" style="width: 84%" aria-valuenow="84" aria-valuemin="0" aria-valuemax="100"></div>
                             </div>
                         </a>
                     </div>
@@ -1306,27 +1178,23 @@
 
                         <h6 class="font-weight-medium font-14 mt-4 mb-2 pb-1">Color Scheme</h6>
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="color-scheme-mode" value="light"
-                                id="light-mode-check" checked />
+                            <input type="radio" class="custom-control-input" name="color-scheme-mode" value="light" id="light-mode-check" checked />
                             <label class="custom-control-label" for="light-mode-check">Light Mode</label>
                         </div>
 
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="color-scheme-mode" value="dark"
-                                id="dark-mode-check" />
+                            <input type="radio" class="custom-control-input" name="color-scheme-mode" value="dark" id="dark-mode-check" />
                             <label class="custom-control-label" for="dark-mode-check">Dark Mode</label>
                         </div>
 
                         <!-- Width -->
                         <h6 class="font-weight-medium font-14 mt-4 mb-2 pb-1">Width</h6>
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="width" value="fluid" id="fluid-check"
-                                checked />
+                            <input type="radio" class="custom-control-input" name="width" value="fluid" id="fluid-check" checked />
                             <label class="custom-control-label" for="fluid-check">Fluid</label>
                         </div>
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="width" value="boxed"
-                                id="boxed-check" />
+                            <input type="radio" class="custom-control-input" name="width" value="boxed" id="boxed-check" />
                             <label class="custom-control-label" for="boxed-check">Boxed</label>
                         </div>
 
@@ -1334,14 +1202,12 @@
                         <h6 class="font-weight-medium font-14 mt-4 mb-2 pb-1">Layout Positon</h6>
 
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="menus-position" value="fixed"
-                                id="fixed-check" checked />
+                            <input type="radio" class="custom-control-input" name="menus-position" value="fixed" id="fixed-check" checked />
                             <label class="custom-control-label" for="fixed-check">Fixed</label>
                         </div>
 
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="menus-position" value="scrollable"
-                                id="scrollable-check" />
+                            <input type="radio" class="custom-control-input" name="menus-position" value="scrollable" id="scrollable-check" />
                             <label class="custom-control-label" for="scrollable-check">Scrollable</label>
                         </div>
 
@@ -1349,22 +1215,19 @@
                         <h6 class="font-weight-medium font-14 mt-4 mb-2 pb-1">Topbar</h6>
 
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="topbar-color" value="dark"
-                                id="darktopbar-check" checked />
+                            <input type="radio" class="custom-control-input" name="topbar-color" value="dark" id="darktopbar-check" checked />
                             <label class="custom-control-label" for="darktopbar-check">Dark</label>
                         </div>
 
                         <div class="custom-control custom-switch mb-1">
-                            <input type="radio" class="custom-control-input" name="topbar-color" value="light"
-                                id="lighttopbar-check" />
+                            <input type="radio" class="custom-control-input" name="topbar-color" value="light" id="lighttopbar-check" />
                             <label class="custom-control-label" for="lighttopbar-check">Light</label>
                         </div>
 
 
                         <button class="btn btn-primary btn-block mt-4" id="resetBtn">Reset to Default</button>
 
-                        <a href="https://1.envato.market/uboldadmin" class="btn btn-danger btn-block mt-3"
-                            target="_blank"><i class="mdi mdi-basket mr-1"></i> Purchase Now</a>
+                        <a href="https://1.envato.market/uboldadmin" class="btn btn-danger btn-block mt-3" target="_blank"><i class="mdi mdi-basket mr-1"></i> Purchase Now</a>
 
                     </div>
 
