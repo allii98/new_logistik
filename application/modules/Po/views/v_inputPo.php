@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="page-title-box">
 
-                <h4 class="page-title"><?= $tittle; ?></h4>
+                <h4 class="page-title"><?= $title; ?></h4>
             </div>
         </div>
     </div>
@@ -121,7 +121,9 @@
                         <div class="col-lg-2"></div>
                     </div>
                     <!-- end row-->
-                    <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... <br /> No. Ref SPP : ...</label>
+
+                    <hr>
+                    <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... No. Ref SPP : ...</label>
                     <h4 id="h4_no_po" name="h4_no_po"></h4>
                     <h4 id="h4_no_ref_po" name="h4_no_ref_po"></h4>
                     <input type="hidden" id="hidden_no_po" name="hidden_no_po">
@@ -157,7 +159,7 @@
                                         <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row" name="btn_hapus_row" onclick="hapus_row('1')"></button>
                                     </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                        <td width="7%">
+                                        <td width="14%">
                                             <input type="text" class="form-control" id="txt_no_spp_1" name="txt_no_spp_1" placeholder="Cari SPP" onfocus="pilihModalDataSPP('1')" readonly required=""><br />
                                             <input type="hidden" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_1">
                                             <input type="hidden" id="hidden_tgl_ref_1" name="hidden_tgl_ref_1">
@@ -205,7 +207,7 @@
                                         <td width="10%">
                                             <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" size="15" value="0" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" required /><br />
                                         </td>
-                                        <td width="15%">
+                                        <td width="10%">
                                             <select class="form-control" id="cmb_kurs_1" name="cmb_kurs_1" required="">
                                                 <option value="Rp">Rp IDR</option>
                                                 <option value="USD">&dollar; USD</option>
@@ -216,17 +218,17 @@
                                                 <option value="MYR">RM MYR</option>
                                             </select><br />
                                         </td>
-                                        <td width="12%">
+                                        <td width="10%">
                                             <input type="text" class="form-control" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
                                         </td>
-                                        <td width="8%">
+                                        <td width="10%">
                                             <input type="text" class="form-control" id="txt_biaya_lain_1" name="txt_biaya_lain_1" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" size="15" required /><br />
                                         </td>
-                                        <td width="10%">
+                                        <td width="12%">
                                             <textarea class="resizable_textarea form-control" size="10" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_1" placeholder="Keterangan Biaya"></textarea>
                                         </td>
 
-                                        <td>
+                                        <td width="12%">
                                             <textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,1)"></textarea><br />
                                             <label id="lbl_status_simpan_1"></label>
                                             <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
@@ -234,7 +236,7 @@
                                         <td>
                                             <input type="text" class="form-control" id="txt_jumlah_1" name="txt_jumlah_1" size="15" placeholder="Jumlah" readonly required />
                                         </td>
-                                        <td width="5%">
+                                        <td width="3%">
                                             <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
                                             <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
                                             <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
