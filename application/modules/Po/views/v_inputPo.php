@@ -272,9 +272,76 @@
     </div>
 
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="modal fade show" id="modal-supllier" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="scrollableModalTitle">Pilih Supplier</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table id="supllier" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Kode</th>
+                                            <th style="text-align: center;">Nama Supplier</th>
+                                            <th>Jenis Usaha</th>
+                                            <th style="text-align: center;">#</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+</div>
 <script>
-    $('#tes').change(function() {
-        var id = this.value;
-        console.log(id);
+    $('#kd_supplier').click(function() {
+        $("#modal-supllier").modal();
+
+    });
+
+    $(document).ready(function() {
+        $('#supllier').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "<?php echo site_url('Po/get_ajax') ?>",
+                "type": "POST"
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+        });
+
+        $(document).on('click', '#pilih', function() {
+            var id = $(this).data('id');
+            // console.log(id);
+            var merk = $(this).data('merk');
+            $('#id_aset').val(id);
+            $('#isi_aset').val(merk);
+            $("#modal-aset").modal('hide');
+        });
     })
 </script>
