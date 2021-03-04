@@ -18,29 +18,29 @@
                         <div class="col-lg-4">
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Jenis PO *</label>
-                                <div class="col-8">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="Jenis PO" autocomplite="off" required>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="jns_po" name="jns_po" placeholder="Jenis PO" autocomplite="off" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Tgl. PO *</label>
-                                <div class="col-8">
-                                    <input type="date" class="form-control bg-light" id="inputEmail3" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
+                                <div class="col-7">
+                                    <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Supplier *</label>
                                 <div class="col-3">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="Kode Supplier" autocomplite="off" required>
+                                    <input type="text" class="form-control" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" required>
                                 </div>
-                                <div class="col-5">
-                                    <input type="text" class="form-control bg-light" id="inputEmail3" placeholder="Supplier" autocomplite="off" readonly>
+                                <div class="col-4">
+                                    <input type="text" class="form-control bg-light" id="supplier" name="supplier" placeholder="Supplier" autocomplite="off" readonly>
                                 </div>
                             </div>
                             <div class="form-group row mb-2">
                                 <label class="col-4 col-form-label">Status Bayar*</label>
                                 <div class="col-3">
-                                    <select class="form-control" id="example-select">
+                                    <select class="form-control" id="stts_bayar" name="stts_bayar">
                                         <option value="1">Cash</option>
                                         <option value="2">Kredit</option>
                                     </select>
@@ -49,25 +49,25 @@
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Tempo Pembayaran*</label>
                                 <div class="col-2">
-                                    <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
+                                    <input type="text" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
                                 </div>
-                                <label class="col-4 col-form-label">Tempo Pengiriman *</label>
+                                <label class="col-3 col-form-label">Tempo Pengiriman*</label>
                                 <div class="col-2">
-                                    <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
+                                    <input type="text" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
                             <div class="form-group row mb-1">
-                                <label class="col-5 col-form-label">Lokasi Pengiriman *</label>
+                                <label class="col-5 col-form-label">Lokasi Pengiriman*</label>
                                 <div class="col-7">
-                                    <input class="form-control" type="text" id="inputEmail3" placeholder="Lokasi Pengiriman" autocomplite="off" required>
+                                    <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" autocomplite="off" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">Lokasi Pembelian *</label>
                                 <div class="col-4">
-                                    <select class="form-control" id="example-select" required>
+                                    <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
                                         <option value="1">-- Pilih --</option>
                                         <option value="2">RO</option>
                                         <option value="3">SITE</option>
@@ -77,33 +77,36 @@
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">No. Penawaran *</label>
                                 <div class="col-7">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="No Penawaran" autocomplite="off" required>
+                                    <input type="text" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">Pemesan *</label>
                                 <div class="col-7">
-                                    <input type="text" class="form-control bg-light" id="inputEmail3" value="USER SITE" autocomplite="off" readonly required>
+                                    <input type="text" class="form-control bg-light" id="pemesan" name="pemesan" value="USER SITE" autocomplite="off" readonly required>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">Keterangan Pengiriman</label>
                                 <div class="col-7">
-                                    <textarea class="form-control" id="inputEmail3" placeholder="Keterangan Pengiriman" autocomplite="off"></textarea>
+                                    <textarea class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off"></textarea>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-4">
                             <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">PPH *</label>
+                                <div class="col-1"></div>
+                                <label class="col-3 col-form-label mx-0">PPH *</label>
                                 <div class="col-6">
-                                    <input type="text" class="form-control" id="inputEmail3" placeholder="PPH" autocomplite="off" value="0" required>
+                                    <input type="text" class="form-control" id="pph" name="pph" placeholder="PPH" autocomplite="off" value="0" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label" required>PPN *</label>
+                                <div class="col-1"></div>
+                                <label class="col-3 col-form-label" required>PPN *</label>
                                 <div class="col-3">
-                                    <select class="form-control" id="tes" required>
+                                    <select class="form-control" id="ppn" name="ppn" required>
                                         <option value="1">N</option>
                                         <option value="2">Y</option>
                                         <option value="3">X</option>
@@ -111,24 +114,27 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">Keterangan</label>
-                                <div class="col-8">
-                                    <textarea class="form-control" id="inputEmail3" placeholder="Keterangan" autocomplite="off"></textarea>
+                                <div class="col-1"></div>
+                                <label class="col-3 col-form-label">Keterangan</label>
+                                <div class="col-7">
+                                    <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">Dikirim ke Kebun*</label>
+                                <div class="col-1"></div>
+                                <label class="col-3 col-form-label">Dikirim ke Kebun*</label>
                                 <div class="col-3">
-                                    <select class="form-control" id="tes" required>
+                                    <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
                                         <option value="1">N</option>
                                         <option value="2">Y</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">Total Pembayaran</label>
-                                <div class="col-8">
-                                    <input type="text" class="form-control bg-light" id="inputEmail3" placeholder="Total Pembayaran" autocomplite="off" readonly required>
+                                <div class="col-1"></div>
+                                <label class="col-3 col-form-label">Total Pembayaran</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" autocomplite="off" readonly required>
                                 </div>
                             </div>
                         </div>
@@ -202,7 +208,7 @@
                                                 <option value="TBM">TBM</option>
                                             </select>
                                         </td>
-                                        <td width="13%">
+                                        <td width="18%">
                                             <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required>
                                             <label id="lbl_kode_brg_1">Kode : ... </label><br />
                                             <label id="lbl_nama_brg_1">Nama Barang : ...</label><br />
@@ -212,7 +218,6 @@
                                         </td>
                                         <td width="7%">
                                             <input type="text" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="8" onkeyup="jumlah('1')" required /><br />
-                                            <label id="lbl_satuan_brg_1">Satuan : ...</label><br />
 
                                             <!-- <input type="text" id="hidden_stok_1" name="hidden_stok_1"> -->
                                             <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
@@ -231,7 +236,7 @@
                                                 <option value="MYR">RM MYR</option>
                                             </select><br />
                                         </td>
-                                        <td width="10%">
+                                        <td width="8%">
                                             <input type="text" class="form-control" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
                                         </td>
                                         <td width="10%">
