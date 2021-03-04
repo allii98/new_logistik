@@ -28,7 +28,7 @@ class Po extends CI_Controller
             $row[] = $d->supplier;
             $row[] = $d->usaha;
             // $row[] = '<img src=" ' . site_url('assets/uploads/tiket/' . $d->foto) . '" width="60px">';
-            $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="${data[i].id}" data-kode="${data[i].kode}" data-supplier="${data[i].supplier}" > Pilih</button>';
+            $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->kode . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
 
 
 

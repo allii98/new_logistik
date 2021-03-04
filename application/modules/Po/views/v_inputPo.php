@@ -31,6 +31,7 @@
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Supplier *</label>
                                 <div class="col-3">
+                                    <input type="hidden" name="id_supplier" id="id-supplier">
                                     <input type="text" class="form-control" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" required>
                                 </div>
                                 <div class="col-4">
@@ -179,7 +180,7 @@
                                     </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                         <td width="14%">
-                                            <input type="text" class="form-control" id="txt_no_spp_1" name="txt_no_spp_1" placeholder="Cari SPP" onfocus="pilihModalDataSPP('1')" readonly required=""><br />
+                                            <input type="text" class="form-control" id="pilihSpp" name="txt_no_spp_1" placeholder="Cari SPP" readonly required=""><br />
                                             <input type="hidden" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_1">
                                             <input type="hidden" id="hidden_tgl_ref_1" name="hidden_tgl_ref_1">
                                             <input type="hidden" id="hidden_kd_departemen_1" name="hidden_kd_departemen_1">
@@ -298,6 +299,91 @@
                                             <th style="text-align: center;">#</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+
+            <div class="modal fade show" id="modal-spp" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-scrollable modal-full-width" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="scrollableModalTitle">Pilih SPP</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-3 col-xs-12">Alokasi
+                                </label>
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
+                                        <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+                                        <?php
+                                        switch ($this->session->userdata('status_lokasi')) {
+                                            case 'PKS':
+                                            case 'SITE':
+                                        ?>
+                                                <option value="PKS">PKS</option>
+                                                <option value="SITE">SITE</option>
+                                            <?php
+                                                break;
+                                            case 'RO':
+                                            ?>
+                                                <option value="PKS">PKS</option>
+                                                <option value="SITE">SITE</option>
+                                                <option value="RO">RO</option>
+                                            <?php
+                                                break;
+                                            case 'HO':
+                                            ?>
+                                                <option value="PKS">PKS</option>
+                                                <option value="SITE">SITE</option>
+                                                <option value="RO">RO</option>
+                                                <option value="HO">HO</option>
+                                        <?php
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="spp" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>No. SPP</th>
+                                            <th>Tgl. SPP</th>
+                                            <th>Ref. SPP</th>
+                                            <th>Departemen</th>
+                                            <th>Kode Barang</th>
+                                            <th>Item Barang</th>
+                                            <th>Ket</th>
+                                            <th>Lokasi</th>
+                                            <th>Status</th>
+                                            <th>PO</th>
+                                        </tr>
+                                    </thead>
 
                                     <tbody>
 
@@ -317,7 +403,9 @@
 <script>
     $('#kd_supplier').click(function() {
         $("#modal-supllier").modal();
-
+    });
+    $('#pilihSpp').click(function() {
+        $("#modal-spp").modal();
     });
 
     $(document).ready(function() {
@@ -338,10 +426,12 @@
         $(document).on('click', '#pilih', function() {
             var id = $(this).data('id');
             // console.log(id);
-            var merk = $(this).data('merk');
-            $('#id_aset').val(id);
-            $('#isi_aset').val(merk);
-            $("#modal-aset").modal('hide');
+            var kode = $(this).data('kode');
+            var supplier = $(this).data('supplier');
+            $('#id-supplier').val(id);
+            $('#kd_supplier').val(kode);
+            $('#supplier').val(supplier);
+            $("#modal-supllier").modal('hide');
         });
     })
 </script>

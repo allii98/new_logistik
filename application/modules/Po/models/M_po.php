@@ -1,11 +1,12 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_po extends CI_Model {
+class M_po extends CI_Model
+{
 
     var $table = 'supplier'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kode', 'supplier', 'usaha'); //field yang ada di table user
+    var $column_order = array(null, 'id', 'kode', 'supplier', 'usaha'); //field yang ada di table supplier  
     var $column_search = array('kode', 'supplier',  'usaha'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
@@ -18,11 +19,10 @@ class M_po extends CI_Model {
     private function _get_datatables_query()
     {
         // $Value = ;
-        $this->db_logistik_pt->select('kode, supplier, usaha');
+        $this->db_logistik_pt->select('id, kode, supplier, usaha');
         $this->db_logistik_pt->from('supplier');
         $this->db_logistik_pt->order_by('id', 'desc');
-        
-        
+
 
         $i = 0;
 
@@ -76,11 +76,10 @@ class M_po extends CI_Model {
 
     public function get_supplier()
     {
-        $supplier = "SELECT kode, supplier, usaha FROM supplier ORDER BY  id DESC";
+        $supplier = "SELECT kode, supplier, usaha FROM supplier ORDER BY id DESC";
         $query = $this->db_logistik_pt_logistik_pt->query($supplier)->result_array();
         return $query;
     }
-
 }
 
 /* End of file M_po.php */

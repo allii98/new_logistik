@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="emailaddress">Periode</label>
-                                        <input class="form-control" type="date"  id="periode" name="periode" required="" placeholder="Enter your Periode">
+                                        <input class="form-control" type="date" value="<?= date('Y-m-d') ?>"  id="periode" name="periode" required="" placeholder="Enter your Periode">
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="emailaddress">PT</label>
