@@ -120,3 +120,30 @@ $db['db_logistik_msal'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+$db['db_logistik'] = array(
+	'dsn'	=> '',
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => '',
+	// 'hostname' => '192.168.1.231',
+	'hostname' => '192.168.1.237',
+	'username' => 'mis',
+	'password' => 'msaljkt@88',
+	// 'database' => 'msalgrou_logistikmsal',
+	'database' => 'msalgrou_logistik',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
