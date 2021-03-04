@@ -15,69 +15,79 @@
             <h4 class="header-title mb-3">Input LPB</h4>
             <div class="row">
 
-                <div class="form-group col-md-3">
-                    <label class="control-label">Tgl Terima <span class="required">*</span>
-                    </label>
-                    <div class="col-md">
-                        <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control bg-light" required="required" type="date" value="<?= date('Y-m-d') ?>" readonly>
+                <div class="col-md-3">
+                    <div class="form-group row mb-1">
+                        <label class="col-4 col-form-label">Tgl Terima <span class="required">*</span>
+                        </label>
+                        <div class="col-md">
+                            <input id="tgl_terima" name="tgl_terima" class="form-control bg-light" required="required" type="date" value="<?= date('Y-m-d') ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Tgl Input <span class="required">*</span>
+                        </label>
+                        <div class="col-md">
+                            <input id="tgl_input" name="tgl_input" class="form-control bg-light" value="<?= date('Y-m-d'); ?>" required="required" type="date">
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group col-md-3">
-                    <label class="control-label">No. Pengantar <span class="required">*</span>
-                    </label>
-                    <div class="col-md col-sm col-xs-12">
-                        <input id="txt_no_pengantar" name="txt_no_pengantar" class="form-control" required="required" type="text" placeholder="No. Pengantar">
+                <div class="col-md-3">
+                    <div class="form-group row mb-1">
+                        <label class="col-5 col-form-label">No. Pengantar<span class="required">*</span>
+                        </label>
+                        <div class="col-md">
+                            <input id="no_pengantar" name="no_pengantar" class="form-control" required="required" type="text" placeholder="No. Pengantar" autocomplite="off">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-5 col-form-label">Lokasi Gudang <span class="required">*</span>
+                        </label>
+                        <div class="col-md col-sm col-xs-12">
+                            <input id="lokasi_gudang" name="lokasi_gudang" class="form-control" required="required" type="text" placeholder="Lokasi Gudang" autocomplite="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group row mb-1">
+                        <label class="col-3 col-form-label">No. PO <span class="required">*</span>
+                        </label>
+                        <div class="col-md row ml-0">
+                            <input id="no_po" name="no_po" class="form-control col-md-3" required="required" type="text" onfocus="pilihModalDataPO()" placeholder="No. PO" autocomplite="off">
+                            <input id="txt_ref_po" name="txt_ref_po" class="form-control col-md-8 ml-1" type="text" placeholder="Ref. PO" readonly>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-3 col-form-label">Tgl. PO<span class="required">*</span>
+                        </label>
+                        <div class="col-md col-sm col-xs-12">
+                            <input id="tgl_po" name="tgl_po" class="form-control" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="form-group row mb-1">
+                        <label class="col-4 col-form-label">Supplier <span class="required">*</span>
+                        </label>
+                        <div class="col-md row ml-0">
+                            <input id="kd_supplier" name="kd_supplier" class="form-control col-md-3" required="required" type="text" placeholder="Kode Supplier" readonly>
+                            <input id="txt_supplier" name="txt_supplier" class="form-control col-md-8 ml-1" required="required" type="text" placeholder="Supplier" readonly>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label">Keterangan <span class="required">*</span>
+                        </label>
+                        <div class="col-md col-sm col-xs-12">
+                            <textarea class="resizable_textarea form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan" readonly="" rows="1" autocomplite="off">-</textarea>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group col-md-3">
-                    <label class="control-label">No. PO <span class="required">*</span>
-                    </label>
-                    <div class="col-md row ml-0">
-                        <input id="txt_no_po" name="txt_no_po" class="form-control col-md-3" required="required" type="text" onfocus="pilihModalDataPO()" placeholder="No. PO">
-                        <input id="txt_ref_po" name="txt_ref_po" class="form-control col-md-8 ml-1" type="text" placeholder="Ref. PO" readonly>
-                    </div>
-                </div>
-
-                <div class="form-group col-md-3">
-                    <label class="control-label">Supplier <span class="required">*</span>
-                    </label>
-                    <div class="col-md row ml-0">
-                        <input id="txt_kd_supplier" name="txt_kd_supplier" class="form-control col-md-3" required="required" type="text" placeholder="Kode Supplier" readonly>
-                        <input id="txt_supplier" name="txt_supplier" class="form-control col-md-8 ml-1" required="required" type="text" placeholder="Supplier" readonly>
-                    </div>
-                </div>
 
 
-                <div class="form-group col-md-3">
-                    <label class="control-label">Tgl Input <span class="required">*</span>
-                    </label>
-                    <div class="col-md">
-                        <input id="txt_tgl_input" name="txt_tgl_input" class="form-control" required="required" type="date">
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <label class="control-label">Lokasi Gudang <span class="required">*</span>
-                    </label>
-                    <div class="col-md col-sm col-xs-12">
-                        <input id="txt_lokasi_gudang" name="txt_lokasi_gudang" class="form-control" required="required" type="text" placeholder="Lokasi Gudang">
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <label class="control-label">Tgl. PO <span class="required">*</span>
-                    </label>
-                    <div class="col-md col-sm col-xs-12">
-                        <input id="txt_tgl_po" name="txt_tgl_po" class="form-control" required="required" type="text" placeholder="Tgl. PO" readonly>
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <label class="control-label">Ket <span class="required">*</span>
-                    </label>
-                    <div class="col-md col-sm col-xs-12">
-                        <textarea class="resizable_textarea form-control" id="txt_ket_pengiriman" name="txt_ket_pengiriman" placeholder="Keterangan" readonly="">-</textarea>
-                    </div>
-                </div>
+
 
 
             </div>
@@ -114,10 +124,10 @@
                                         </label>
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="txt_nama_brg_1" name="txt_nama_brg_1" placeholder="Nama Barang" readonly>
+                                        <input type="text" class="form-control" id="txt_nama_brg_1" name="txt_nama_brg_1" placeholder="Nama Barang" readonly autocomplite="off">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty">
+                                        <input type="text" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" autocomplite="off">
                                         <label id="lbl_qty_po_1">Qty PO : </label>
                                         <label id="lbl_sisa_qty_1">Sisa Qty : </label>
 
@@ -125,7 +135,7 @@
                                         <input type="hidden" id="hidden_sisa_qty_1" name="hidden_sisa_qty_1">
                                     </td>
                                     <td>
-                                        <input type="text" class="form-control" id="txt_satuan_1" name="txt_satuan_1" placeholder="Satuan" readonly>
+                                        <input type="text" class="form-control" id="txt_satuan_1" name="txt_satuan_1" placeholder="Satuan" readonly autocomplite="off">
                                         <label id="lbl_grup_1" name="lbl_grup_1">Grup : -</label>
 
                                         <input type="hidden" id="hidden_grup_1" name="hidden_grup_1">
