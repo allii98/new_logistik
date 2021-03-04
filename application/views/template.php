@@ -86,7 +86,8 @@
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#"
                                             id="topnav-ecommerce" role="button" data-toggle="dropdown"
                                             aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-circle fa-xs mr-1"></i> SPP <div class="arrow-down"></div>
+                                            <i class="mdi mdi-clipboard-multiple-outline mr-1"></i> SPP <div
+                                                class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
                                             <a href="<?= base_url('Spp/sppBaru') ?>" class="dropdown-item">SPP Baru</a>
@@ -101,7 +102,8 @@
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email"
                                             role="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <i class="fas fa-circle fa-xs mr-1"></i> PO <div class="arrow-down"></div>
+                                            <i class="mdi mdi-clipboard-arrow-up-outline mr-1"></i> PO <div
+                                                class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-email">
                                             <a href="<?= base_url('po/input') ?>" class="dropdown-item">Input PO</a>
@@ -113,7 +115,8 @@
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm"
                                             role="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <i class="fas fa-circle fa-xs mr-1"></i> LPB <div class="arrow-down"></div>
+                                            <i class="mdi mdi-clipboard-arrow-down-outline mr-1"></i> LPB <div
+                                                class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
                                             <a href="<?= base_url('lpb/input'); ?>" class="dropdown-item">Input LPB</a>
@@ -125,7 +128,7 @@
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm"
                                             role="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <i class="fas fa-circle fa-xs mr-1"></i> BPB <div class="arrow-down"></div>
+                                            <i class="mdi mdi-vote-outline mr-1"></i> BPB <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
                                             <a href="<?= base_url('bpb/input'); ?>" class="dropdown-item">Input BPB</a>
@@ -137,7 +140,9 @@
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm"
                                             role="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <i class="fas fa-circle fa-xs mr-1"></i> BKB <div class="arrow-down"></div>
+                                            <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i> BKB <div
+                                                class="arrow-down">
+                                            </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
                                             <a href="<?= base_url('bkb/input'); ?>" class="dropdown-item">Input BKB</a>
@@ -151,7 +156,7 @@
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm"
                                             role="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <i class="fas fa-circle fa-xs mr-1"></i> PP <div class="arrow-down"></div>
+                                            <i class="mdi mdi-cash-multiple mr-1"></i> PP <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
                                             <a href="<?= base_url('pp/input'); ?>" class="dropdown-item">Input PP</a>
@@ -163,7 +168,7 @@
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm"
                                             role="button" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                            <i class="fas fa-circle fa-xs mr-1"></i> Retur <div class="arrow-down">
+                                            <i class="mdi mdi-backburger mr-1"></i> Retur <div class="arrow-down">
                                             </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
@@ -177,16 +182,21 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components"
                                     role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-layers mr-1"></i> Laporan <div class="arrow-down"></div>
+                                    <i class="mdi mdi-file-multiple-outline mr-1"></i> Laporan <div class="arrow-down">
+                                    </div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i
+                                            class="mdi mdi-file-table-outline mr-1"></i>
                                         Laporan Barang</a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i
+                                            class="mdi mdi-file-outline mr-1"></i>
                                         Surat Permintaan Pembelian (SPP)</a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i
+                                            class="mdi mdi-file-upload-outline mr-1"></i>
                                         Purchase Order (PO)</a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i
+                                            class="mdi mdi-file-download-outline mr-1"></i>
                                         Permohonan Pembayaran (PP)</a>
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form"
@@ -217,110 +227,12 @@
                                     <i class="fe-layers mr-1"></i> Posting <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#"
-                                            id="topnav-extendedui" role="button" data-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <i class="fe-pocket mr-1"></i> Extended UI <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-extendedui">
-                                            <a href="extended-nestable.html" class="dropdown-item">Nestable List</a>
-                                            <a href="extended-range-slider.html" class="dropdown-item">Range Slider</a>
-                                            <a href="extended-dragula.html" class="dropdown-item">Dragula</a>
-                                            <a href="extended-animation.html" class="dropdown-item">Animation</a>
-                                            <a href="extended-sweet-alert.html" class="dropdown-item">Sweet Alert</a>
-                                            <a href="extended-tour.html" class="dropdown-item">Tour Page</a>
-                                            <a href="extended-scrollspy.html" class="dropdown-item">Scrollspy</a>
-                                            <a href="extended-loading-buttons.html" class="dropdown-item">Loading
-                                                Buttons</a>
-                                        </div>
-                                    </div>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Widgets</a>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-bookmark mr-1"></i> Forms <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-form">
-                                            <a href="forms-elements.html" class="dropdown-item">General Elements</a>
-                                            <a href="forms-advanced.html" class="dropdown-item">Advanced</a>
-                                            <a href="forms-validation.html" class="dropdown-item">Validation</a>
-                                            <a href="forms-pickers.html" class="dropdown-item">Pickers</a>
-                                            <a href="forms-wizard.html" class="dropdown-item">Wizard</a>
-                                            <a href="forms-masks.html" class="dropdown-item">Masks</a>
-                                            <a href="forms-summernote.html" class="dropdown-item">Summernote</a>
-                                            <a href="forms-quilljs.html" class="dropdown-item">Quilljs Editor</a>
-                                            <a href="forms-file-uploads.html" class="dropdown-item">File Uploads</a>
-                                            <a href="forms-x-editable.html" class="dropdown-item">X Editable</a>
-                                            <a href="forms-image-crop.html" class="dropdown-item">Image Crop</a>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-charts"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-bar-chart-2 mr-1"></i> Charts <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-charts">
-                                            <a href="charts-apex.html" class="dropdown-item">Apex Charts</a>
-                                            <a href="charts-flot.html" class="dropdown-item">Flot Charts</a>
-                                            <a href="charts-morris.html" class="dropdown-item">Morris Charts</a>
-                                            <a href="charts-chartjs.html" class="dropdown-item">Chartjs Charts</a>
-                                            <a href="charts-peity.html" class="dropdown-item">Peity Charts</a>
-                                            <a href="charts-chartist.html" class="dropdown-item">Chartist Charts</a>
-                                            <a href="charts-c3.html" class="dropdown-item">C3 Charts</a>
-                                            <a href="charts-sparklines.html" class="dropdown-item">Sparklines Charts</a>
-                                            <a href="charts-knob.html" class="dropdown-item">Jquery Knob Charts</a>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-table"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-grid mr-1"></i> Tables <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-table">
-                                            <a href="tables-basic.html" class="dropdown-item">Basic Tables</a>
-                                            <a href="tables-datatables.html" class="dropdown-item">Data Tables</a>
-                                            <a href="tables-editable.html" class="dropdown-item">Editable Tables</a>
-                                            <a href="tables-responsive.html" class="dropdown-item">Responsive Tables</a>
-                                            <a href="tables-footables.html" class="dropdown-item">FooTable</a>
-                                            <a href="tables-bootstrap.html" class="dropdown-item">Bootstrap Tables</a>
-                                            <a href="tables-tablesaw.html" class="dropdown-item">Tablesaw Tables</a>
-                                            <a href="tables-jsgrid.html" class="dropdown-item">JsGrid Tables</a>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-icons"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-cpu mr-1"></i> Icons <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-icons">
-                                            <a href="icons-two-tone.html" class="dropdown-item">Two Tone Icons</a>
-                                            <a href="icons-feather.html" class="dropdown-item">Feather Icons</a>
-                                            <a href="icons-mdi.html" class="dropdown-item">Material Design Icons</a>
-                                            <a href="icons-dripicons.html" class="dropdown-item">Dripicons</a>
-                                            <a href="icons-font-awesome.html" class="dropdown-item">Font Awesome 5</a>
-                                            <a href="icons-themify.html" class="dropdown-item">Themify</a>
-                                            <a href="icons-simple-line.html" class="dropdown-item">Simple Line</a>
-                                            <a href="icons-weather.html" class="dropdown-item">Weather</a>
-                                        </div>
-                                    </div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-map"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            <i class="fe-map mr-1"></i> Maps <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-map">
-                                            <a href="maps-google.html" class="dropdown-item">Google Maps</a>
-                                            <a href="maps-vector.html" class="dropdown-item">Vector Maps</a>
-                                            <a href="maps-mapael.html" class="dropdown-item">Mapael Maps</a>
-                                        </div>
-                                    </div>
+                                        Hitung Ulang Stok</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Transfer Transaksi ke GL</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Tutup Buku</a>
                                 </div>
                             </li>
 
@@ -330,75 +242,12 @@
                                     <i class="fe-package mr-1"></i> Master <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Auth Style 1 <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-auth">
-                                            <a href="auth-login.html" class="dropdown-item">Log In</a>
-                                            <a href="auth-register.html" class="dropdown-item">Register</a>
-                                            <a href="auth-signin-signup.html" class="dropdown-item">Signin - Signup</a>
-                                            <a href="auth-recoverpw.html" class="dropdown-item">Recover Password</a>
-                                            <a href="auth-lock-screen.html" class="dropdown-item">Lock Screen</a>
-                                            <a href="auth-logout.html" class="dropdown-item">Logout</a>
-                                            <a href="auth-confirm-mail.html" class="dropdown-item">Confirm Mail</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-auth2"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Auth Style 2 <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-auth2">
-                                            <a href="auth-login-2.html" class="dropdown-item">Log In 2</a>
-                                            <a href="auth-register-2.html" class="dropdown-item">Register 2</a>
-                                            <a href="auth-signin-signup-2.html" class="dropdown-item">Signin - Signup
-                                                2</a>
-                                            <a href="auth-recoverpw-2.html" class="dropdown-item">Recover Password 2</a>
-                                            <a href="auth-lock-screen-2.html" class="dropdown-item">Lock Screen 2</a>
-                                            <a href="auth-logout-2.html" class="dropdown-item">Logout 2</a>
-                                            <a href="auth-confirm-mail-2.html" class="dropdown-item">Confirm Mail 2</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-error"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Errors <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-error">
-                                            <a href="pages-404.html" class="dropdown-item">Error 404</a>
-                                            <a href="pages-404-two.html" class="dropdown-item">Error 404 Two</a>
-                                            <a href="pages-404-alt.html" class="dropdown-item">Error 404-alt</a>
-                                            <a href="pages-500.html" class="dropdown-item">Error 500</a>
-                                            <a href="pages-500-two.html" class="dropdown-item">Error 500 Two</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-utility"
-                                            role="button" data-toggle="dropdown" aria-haspopup="true"
-                                            aria-expanded="false">
-                                            Utility <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-utility">
-                                            <a href="pages-starter.html" class="dropdown-item">Starter</a>
-                                            <a href="pages-timeline.html" class="dropdown-item">Timeline</a>
-                                            <a href="pages-sitemap.html" class="dropdown-item">Sitemap</a>
-                                            <a href="pages-invoice.html" class="dropdown-item">Invoice</a>
-                                            <a href="pages-faqs.html" class="dropdown-item">FAQs</a>
-                                            <a href="pages-search-results.html" class="dropdown-item">Search Results</a>
-                                            <a href="pages-pricing.html" class="dropdown-item">Pricing</a>
-                                            <a href="pages-maintenance.html" class="dropdown-item">Maintenance</a>
-                                            <a href="pages-coming-soon.html" class="dropdown-item">Coming Soon</a>
-                                            <a href="pages-gallery.html" class="dropdown-item">Gallery</a>
-                                        </div>
-                                    </div>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Kode Barang</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Input Stok Awal</a>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                        Laporan Rinci Stok</a>
                                 </div>
                             </li>
                         </ul> <!-- end navbar-->
