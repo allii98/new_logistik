@@ -15,110 +15,123 @@
                 <div class="card-body">
 
                     <div class="row">
-                        <div class="col-lg-2"></div>
                         <div class="col-lg-4">
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Jenis PO *</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder="" autocomplite="off">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Tgl. PO *</label>
-                                <input type="date" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
-                            </div>
-                            <label for="example-input-small">Supplier *</label>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="form-group">
-                                        <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
-                                    </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">Jenis PO *</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control" id="inputEmail3" placeholder="Jenis PO" autocomplite="off" required>
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Status Bayar *</label>
-                                <select class="form-control" id="example-select">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
-                            </div>
-                            <div class="row">
-                                <div class="col-lg-6">
-                                    <label for="example-input-small">Tempo Pembayaran *</label>
-                                    <div class="form-group">
-                                        <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off"><span>Hari</span>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <label for="example-input-small">Tempo Pengiriman *</label>
-                                    <div class="form-group">
-                                        <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off"><span>Hari</span>
-                                    </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">Tgl. PO *</label>
+                                <div class="col-8">
+                                    <input type="date" class="form-control bg-light" id="inputEmail3" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
                                 </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Keterangan Pengiriman </label>
-                                <textarea class="form-control" id="example-textarea" rows="3"></textarea>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">Supplier *</label>
+                                <div class="col-3">
+                                    <input type="text" class="form-control" id="inputEmail3" placeholder="Kode Supplier" autocomplite="off" required>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" class="form-control bg-light" id="inputEmail3" placeholder="Supplier" autocomplite="off" readonly>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Lokasi Pengiriman*</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
+                            <div class="form-group row mb-2">
+                                <label class="col-4 col-form-label">Status Bayar*</label>
+                                <div class="col-3">
+                                    <select class="form-control" id="example-select">
+                                        <option value="1">Cash</option>
+                                        <option value="2">Kredit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">Tempo Pembayaran*</label>
+                                <div class="col-2">
+                                    <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
+                                </div>
+                                <label class="col-4 col-form-label">Tempo Pengiriman *</label>
+                                <div class="col-2">
+                                    <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4">
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Status Bayar *</label>
-                                <select class="form-control" id="example-select">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                    <option>5</option>
-                                </select>
+                            <div class="form-group row mb-1">
+                                <label class="col-5 col-form-label">Lokasi Pengiriman *</label>
+                                <div class="col-7">
+                                    <input class="form-control" type="text" id="inputEmail3" placeholder="Lokasi Pengiriman" autocomplite="off" required>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">No. Penawaran</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
+                            <div class="form-group row mb-1">
+                                <label class="col-5 col-form-label">Lokasi Pembelian *</label>
+                                <div class="col-4">
+                                    <select class="form-control" id="example-select" required>
+                                        <option value="1">-- Pilih --</option>
+                                        <option value="2">RO</option>
+                                        <option value="3">SITE</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Pemesan *</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
+                            <div class="form-group row mb-1">
+                                <label class="col-5 col-form-label">No. Penawaran *</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control" id="inputEmail3" placeholder="No Penawaran" autocomplite="off" required>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">PPH *</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
+                            <div class="form-group row mb-1">
+                                <label class="col-5 col-form-label">Pemesan *</label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control bg-light" id="inputEmail3" value="USER SITE" autocomplite="off" readonly required>
+                                </div>
                             </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">PPN *</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Keterangan</label>
-                                <textarea class="form-control" id="example-textarea" rows="3"></textarea>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Dikirim ke Kebun *</label>
-                                <select class="form-control" id="tes">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-input-small">Total Pembayaran *</label>
-                                <input type="text" id="example-input-small" name="example-input-small" class="form-control" placeholder=".input-sm" autocomplite="off">
+                            <div class="form-group row mb-1">
+                                <label class="col-5 col-form-label">Keterangan Pengiriman</label>
+                                <div class="col-7">
+                                    <textarea class="form-control" id="inputEmail3" placeholder="Keterangan Pengiriman" autocomplite="off"></textarea>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="col-lg-2"></div>
+                        <div class="col-lg-4">
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">PPH *</label>
+                                <div class="col-6">
+                                    <input type="text" class="form-control" id="inputEmail3" placeholder="PPH" autocomplite="off" value="0" required>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label" required>PPN *</label>
+                                <div class="col-3">
+                                    <select class="form-control" id="tes" required>
+                                        <option value="1">N</option>
+                                        <option value="2">Y</option>
+                                        <option value="3">X</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">Keterangan</label>
+                                <div class="col-8">
+                                    <textarea class="form-control" id="inputEmail3" placeholder="Keterangan" autocomplite="off"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">Dikirim ke Kebun*</label>
+                                <div class="col-3">
+                                    <select class="form-control" id="tes" required>
+                                        <option value="1">N</option>
+                                        <option value="2">Y</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">Total Pembayaran</label>
+                                <div class="col-8">
+                                    <input type="text" class="form-control bg-light" id="inputEmail3" placeholder="Total Pembayaran" autocomplite="off" readonly required>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- end row-->
 
