@@ -8,6 +8,8 @@ class Spp extends CI_Controller
     {
         parent::__construct();
         if (!$this->session->userdata('id_user')) {
+            $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
+            $this->session->set_flashdata('pesan', $pemberitahuan);
             redirect('Login');
         }
     }

@@ -47,7 +47,7 @@
                                             </span>
                                         </a>
                                     </div>
-                                    <br>
+                                    <p><?php echo $this->session->flashdata('pesan'); ?></p>
                                 </div>
 
                                 <form action="<?=base_url('Login/proses')?>" method="POST">
