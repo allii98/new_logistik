@@ -68,6 +68,18 @@ class Po extends CI_Controller
         $data = $this->M_po->get_supplier();
         echo json_encode($data);
     }
+
+    public function getSpp()
+    {
+        $data = $this->M_po->get_spp();
+        echo json_encode($data);
+    }
+
+    public function getPoo()
+    {
+        $data = $this->M_po->get_sup();
+        echo json_encode($data);
+    }
 }
 
 /* End of file Po.php */

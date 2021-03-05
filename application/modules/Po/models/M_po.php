@@ -5,6 +5,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_po extends CI_Model
 {
 
+
+
     var $table = 'supplier'; //nama tabel dari database
     var $column_order = array(null, 'id', 'kode', 'supplier', 'usaha'); //field yang ada di table supplier  
     var $column_search = array('kode', 'supplier',  'usaha'); //field yang diizin untuk pencarian 
@@ -77,8 +79,26 @@ class M_po extends CI_Model
     public function get_supplier()
     {
         $supplier = "SELECT kode, supplier, usaha FROM supplier ORDER BY id DESC";
-        $query = $this->db_logistik_pt_logistik_pt->query($supplier)->result_array();
+        $query = $this->db_logistik_pt->query($supplier)->result_array();
         return $query;
+    }
+
+    public function get_sup()
+    {
+        // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
+        $toko = $this->input->get('toko');
+        $query = "SELECT id, kode, supplier, usaha  FROM `supplier` WHERE `supplier` LIKE '%$toko%' LIMIT 5";
+        $t = $this->db_logistik_pt->query($query)->result_array();
+        return $t;
+    }
+
+    public function get_spp()
+    {
+        // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
+        $noref = $this->input->get('noref');
+        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, kodebartxt, nabar, tglppo, namadept, ket, kodedept, namadept, lokasi, status, status2, po, qty, kodept  FROM `item_ppo` WHERE `noreftxt` LIKE '%$noref%' ORDER BY id DESC LIMIT 10";
+        $d = $this->db_logistik_pt->query($query)->result_array();
+        return $d;
     }
 }
 

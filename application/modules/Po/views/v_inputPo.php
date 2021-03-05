@@ -30,13 +30,17 @@
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Supplier *</label>
-                                <div class="col-3">
-                                    <input type="hidden" name="id_supplier" id="id-supplier">
-                                    <input type="text" class="form-control" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" required>
+                                <div class="col-7">
+                                    <input type="hidden" name="kd_supplier" id="kd_supplier">
+                                    <!-- <input type="text" class="form-control" id="kd_supp" name="kd_supplier" placeholder="Nama Supplier" autocomplite="off" required> -->
+                                    <!-- <select class="js-data-example-ajax"></select> -->
+                                    <select class="js-data-example-ajax form-control select2" id="select2">
+                                        <option selected="selected">Nama Supplier</option>
+                                    </select>
                                 </div>
-                                <div class="col-4">
+                                <!-- <div class="col-4">
                                     <input type="text" class="form-control bg-light" id="supplier" name="supplier" placeholder="Supplier" autocomplite="off" readonly>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="form-group row mb-2">
                                 <label class="col-4 col-form-label">Status Bayar*</label>
@@ -180,7 +184,11 @@
                                     </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                         <td width="14%">
-                                            <input type="text" class="form-control" id="pilihSpp" name="txt_no_spp_1" placeholder="Cari SPP" readonly required=""><br />
+                                            <!-- <input type="text" class="form-control" id="pilihSpp" name="txt_no_spp_1" placeholder="Cari SPP" readonly required=""> -->
+                                            <select class="js-data-example-ajax form-control select3" id="pilihSpp">
+                                                <option selected="selected">Nama Supplier</option>
+                                            </select>
+                                            <h6 style="margin-top: 0px;" id="lbl_nama_brg_1">Nama Barang : ...</h6><br />
                                             <input type="hidden" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_1">
                                             <input type="hidden" id="hidden_tgl_ref_1" name="hidden_tgl_ref_1">
                                             <input type="hidden" id="hidden_kd_departemen_1" name="hidden_kd_departemen_1">
@@ -295,7 +303,7 @@
                                             <th style="text-align: center;">No</th>
                                             <th style="text-align: center;">Kode</th>
                                             <th style="text-align: center;">Nama Supplier</th>
-                                            <th>Jenis Usaha</th>
+                                            <th style="text-align: center;">Jenis Usaha</th>
                                             <th style="text-align: center;">#</th>
                                         </tr>
                                     </thead>
@@ -401,12 +409,100 @@
     </div>
 </div>
 <script>
-    $('#kd_supplier').click(function() {
-        $("#modal-supllier").modal();
-    });
+    // $('#kd_supplier').click(function() {
+    //     $("#modal-supllier").modal();
+    // });
     $('#pilihSpp').click(function() {
         $("#modal-spp").modal();
     });
+
+    $(".js-data-example-ajax").select2({
+        ajax: {
+            url: "<?php echo site_url('Po/getPoo') ?>",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    toko: params.term, // search term
+                };
+            },
+            processResults: function(data) {
+                var results = [];
+                $.each(data, function(index, item) {
+                    results.push({
+                        id: item.kode,
+                        text: item.supplier
+                    });
+                });
+                return {
+                    results: results
+                };
+            }
+        }
+
+    }).on('select2:select', function(evt) {
+        var data = $(".select2 option:selected").text();
+        $('#kd_supplier').val(data);
+
+    });
+
+    $("#pilihSpp").select2({
+        ajax: {
+            url: "<?php echo site_url('Po/getSpp') ?>",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    noref: params.term, // search term
+                };
+            },
+            processResults: function(data) {
+                var results = [];
+                $.each(data, function(index, item) {
+                    results.push({
+                        id: item.id,
+                        text: item.noreftxt
+                    });
+                });
+                return {
+                    results: results
+                };
+            }
+        }
+
+    }).on('select3:select', function(evt) {
+        var data = $(".select3 option:selected").text();
+        $('#lbl_nama_brg_1').val(data);
+
+    });
+
+
+    //     $(function(){
+    //        $('.js-data-example-ajax').select2({
+    //            minimumInputLength: 3,
+    //            allowClear: true,
+    //            placeholder: 'masukkan nama propinsi',
+    //            ajax: {
+    //               dataType: 'json',
+    //               url: '<?php echo site_url('Po/getPoo') ?>',
+    //               delay: 800,
+    //               data: function(params) {
+    //                 return {
+    //                   search: params.term
+    //                 }
+    //               },
+    //               processResults: function (data, page) {
+    //               return {
+    //                 results: data
+    //               };
+    //             },
+    //           }
+    //       }).on('select2:select', function (evt) {
+    //          var data = $(".select2 option:selected").text();
+    //          alert("Data yang dipilih adalah "+data);
+    //       });
+    //  });
+
 
     $(document).ready(function() {
         $('#supllier').DataTable({
