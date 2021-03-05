@@ -3,8 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Retur extends CI_Controller
 {
-    public function index()
+    public function input()
     {
-        echo "Retur";
+        $data = [
+            'title' => 'Retur BKB',
+        ];
+        $this->template->load('template', 'v_inputretur', $data);
     }
 }

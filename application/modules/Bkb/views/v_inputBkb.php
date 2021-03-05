@@ -1,19 +1,11 @@
 <div class="container-fluid">
-
-    <!-- PAGE TITLE -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-                <h2 class="page-title"><?= $title ?></h2>
-            </div>
-        </div>
-    </div>
-    <!-- end page title -->
-
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-2">
         <div class="col-md col-xl-3">
             <div class="widget-rounded-circle card-box">
-                <h4 class="header-title mb-3">Input BKB</h4>
+                <h4 class="header-title">BKB</h4>
+                <p class="sub-header">
+                    Input Bukti Keluar Barang
+                </p>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group row mb-1">
