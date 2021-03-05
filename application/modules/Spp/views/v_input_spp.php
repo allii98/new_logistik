@@ -11,40 +11,23 @@
 
                     <div class="row">
                         <div class="col-lg-1 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Devisi*</label>
-                                <select class="form-control" id="example-select">
+                                <select class="form-control" id="devisi">
                                     <option selected disabled>Pilih</option>
                                     <?php
-                                    switch ($sesi_sl) {
-                                        case 'HO':
-                                    ?>
-                                            <option value="ho_msal_ho">PT. MULIA SAWIT AGRO LESTARI (HO)</option>
-                                            <option value="ho_msal_ro">PT. MULIA SAWIT AGRO LESTARI (RO)</option>
-                                            <option value="ho_msal_pks">PT. MULIA SAWIT AGRO LESTARI (PKS)</option>
-                                            <option value="ho_msal_estate1">PT. MULIA SAWIT AGRO LESTARI (ESTATE 1)</option>
-                                            <option value="ho_msal_estate2">PT. MULIA SAWIT AGRO LESTARI (ESTATE 2)</option>
-                                        <?php
-                                            break;
-                                        case 'RO':
-                                        case 'SITE':
-                                        case 'PKS':
-                                        ?>
-                                            <option value="pks_msal_estate1">PT. MULIA SAWIT AGRO LESTARI (ESTATE 1)</option>
-                                            <option value="pks_msal_estate2">PT. MULIA SAWIT AGRO LESTARI (ESTATE 2)</option>
-                                    <?php
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                                    foreach ($devisi as $d) : { ?>
+                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
+                                    <?php }
+                                    endforeach;
                                     ?>
                                 </select>
                             </div>
                         </div>
                         <div class="col-lg-1 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Jenis SPP*</label>
-                                <select class="form-control" id="example-select">
+                                <select class="form-control" id="jenis_spp">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     switch ($sesi_sl) {
@@ -73,25 +56,25 @@
                             </div>
                         </div> <!-- end col -->
                         <div class="col-lg-1 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Alokasi*</label>
-                                <select class="form-control" id="example-select">
+                                <select class="form-control" id="alokasi">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     switch ($sesi_sl) {
                                         case 'HO':
                                     ?>
-                                            <option value="lok_ho">HO</option>
-                                            <option value="lok_ro">RO</option>
-                                            <option value="lok_site">SITE</option>
-                                            <option value="lok_pks">PKS</option>
+                                            <option value="HO">HO</option>
+                                            <option value="RO">RO</option>
+                                            <option value="SITE">SITE</option>
+                                            <option value="SITE">PKS</option>
                                         <?php
                                             break;
                                         case 'RO':
                                         case 'SITE':
                                         case 'PKS':
                                         ?>
-                                            <option value="lok_site">SITE</option>
+                                            <option value="SITE">SITE</option>
                                     <?php
                                             break;
                                         default:
@@ -102,19 +85,19 @@
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Tgl Referensi*</label>
                                 <input type="text" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Tgl terima*</label>
-                                <input type="date" class="form-control">
+                                <input type="date" class="form-control" id="tgl_terima">
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Department*</label>
                                 <select class="form-control" id="dept">
                                     <option value="" selected disabled>Pilih</option>
@@ -130,22 +113,22 @@
                             </div>
                         </div>
                         <div class="col-lg-1 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Kode</label>
                                 <input type="text" id="kd_dept" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
-                            <div class="form-group mb-3">
+                            <div class="form-group">
                                 <label for="example-select">Keterangan</label>
-                                <textarea class="form-control" rows="2"></textarea>
+                                <textarea class="form-control" rows="2" id="ket"></textarea>
                             </div>
                         </div>
                     </div>
                     <!-- end row-->
                     <div class="row">
                         <div class="col-sm-12">
-                            <p class="sub-header">
+                            <p class="sub-header mb-0 mt-0">
                                 <label for="">No. SPP : ... &nbsp; No. Ref SPP : ...</label>
                             </p>
 
@@ -153,7 +136,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Kode Barang</th>
+                                        <th>Nama & Kode Barang</th>
                                         <th>Qty</th>
                                         <th>Stok/Satuan</th>
                                         <th>Merk/Type/Jenis</th>
@@ -169,9 +152,17 @@
                                         </td>
                                         <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                             <td width="30%">
-                                                <input type="text" class="form-control" id="txt_cari_kode_brg_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
+                                                <input type="text" class="form-control" id="nakobar" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
                                                 <!-- <label id="lbl_kode_brg_1">Kode : ... </label><br />
                                                 <label id="lbl_nama_brg_1">Nama Barang : ...</label><br /> -->
+
+                                                <input type="text" id="dev">
+                                                <input type="text" id="jp">
+                                                <input type="text" id="alok">
+                                                <input type="text" id="tgl_ref" value="<?= date('d/m/Y'); ?>">
+                                                <input type="text" id="tgl_trm">
+                                                <input type="text" id="depart">
+                                                <input type="text" id="keterangan">
 
                                                 <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
                                                 <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
@@ -184,7 +175,11 @@
                                                 <input type="hidden" id="hidden_stok_1" name="hidden_stok_1">
                                                 <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
                                             </td>
-                                            <td width="10%"></td>
+                                            <td width="10%">
+                                                <span id="stok"></span>
+                                                <span> | </span>
+                                                <span id="satuan"></span>
+                                            </td>
                                             <td>
                                                 <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="resizable_textarea form-control" size="26" placeholder="Merk/Type/Jenis, jika ada" onkeypress="saveRinciEnter(event,'1')"></textarea>
                                                 <label id="lbl_status_simpan_1"></label>
@@ -265,6 +260,7 @@
         // listBarang(no_row);
     }
 
+    // Start Data Table Server Side
     var table;
     $(document).ready(function() {
 
@@ -287,5 +283,73 @@
 
         });
 
+    });
+    // End Data Table Server Side
+
+    $(document).ready(function() {
+        $(document).on('click', '#data_barang', function() {
+
+            var nakobar = $(this).data('nabar') + " - " + $(this).data('kodebar');
+            var satuan = $(this).data('satuan');
+            // console.log(nabar);
+
+            // Set data to Form Edit
+            $('#nakobar').val(nakobar);
+            $('#satuan').text(satuan);
+            $("#modalListBarang").modal('hide');
+        });
+    });
+
+    //inputan save
+    $(document).ready(function() {
+        $('#devisi').on('change', function() {
+            var data = this.value;
+            $('#dev').val(data);
+        });
+
+        $('#jenis_spp').on('change', function() {
+            var data = this.value;
+            $('#jp').val(data);
+        });
+
+        $('#alokasi').on('change', function() {
+            var data = this.value;
+            $('#alok').val(data);
+        });
+
+        $('#tgl_terima').on('change', function() {
+            var data = this.value;
+            $('#tgl_trm').val(data);
+        });
+
+        $('#dept').on('change', function() {
+            var data = this.value;
+            $('#depart').val(data);
+        });
+
+        $("#ket").keyup(function() {
+            var data = $("#ket").val();
+            $('#keterangan').val(data);
+        });
+    });
+
+    $(document).ready(function() {
+        $(document).on('click', '#data_barang', function() {
+            var kd_bar = $(this).data('kodebar');
+            // console.log(kd_bar);
+            // var id = $(this).attr('data');
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('Spp/getStok') ?>",
+                dataType: "JSON",
+                data: {
+                    kd_bar: kd_bar
+                },
+                success: function(data) {
+                    $('#stok').text(data);
+                }
+            });
+            return false;
+        });
     });
 </script>

@@ -22,6 +22,7 @@ class Spp extends CI_Controller
         }
     }
 
+    //Start Data Table Server Side
     function get_data_barang()
     {
         $list = $this->M_spp->get_datatables();
@@ -30,11 +31,11 @@ class Spp extends CI_Controller
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = '<a href="javascript:;" id="btn_data_barang">
-                    <button class="btn btn-success btn-xs" id="data_barang" name="data_barang" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
+            $row[] = '<button class="btn btn-success btn-xs" id="data_barang" name="data_barang"
+                    data-nabar="' . $field->nabar . '" data-kodebar="' . $field->kodebar . '" data-satuan="' . $field->satuan . '"
+                    data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
                         Pilih
                     </button>
-                </a>
                 ';
             $row[] = $no;
             $row[] = $field->kodebar;
@@ -53,6 +54,7 @@ class Spp extends CI_Controller
         //output dalam format JSON
         echo json_encode($output);
     }
+    //End Start Data Table Server Side
 
     public function index()
     {
@@ -63,13 +65,42 @@ class Spp extends CI_Controller
     {
         $data['sesi_sl'] = $this->session->userdata('status_lokasi');
 
+        $data['devisi'] = $this->M_spp->cariDevisi();
+
         $data['dept'] = $this->M_spp->dept();
 
-        // $kobar = $this->db_logistik->get('kodebar')->result_array();
-        // var_dump($kobar);
-        // die;
-
         $this->template->load('template', 'v_input_spp', $data);
+    }
+
+    public function getStok()
+    {
+        $kd_bar = $this->input->get('kd_bar');
+        // $data = $this->M_spp->getStok($kd_bar);
+        // echo json_encode($data);
+
+        // $id = $this->input->post('kodbar');
+
+        // $ym_periode  = $this->session->userdata('ym_periode');
+        $query_stockawal = "SELECT saldoawal_qty FROM stockawal WHERE kodebartxt = '$kd_bar'";
+        // $query_stockawal = "SELECT saldoawal_qty FROM stockawal WHERE kodebartxt = '$kd_bar' AND tglinput = (SELECT MIN(tglinput) FROM stockawal WHERE kodebartxt = '$kd_bar')";
+
+        $stockawal = $this->db_logistik_pt->query($query_stockawal)->row();
+
+        if (empty($stockawal)) {
+            $get_stockawal = "0";
+        } else {
+            $get_stockawal = $stockawal->saldoawal_qty;
+        }
+
+        $query_masuk = "SELECT SUM(qty) as stokmasuk FROM masukitem WHERE kodebartxt = '$kd_bar'";
+        $summasuk = $this->db_logistik_pt->query($query_masuk)->row();
+
+        $query_keluar = "SELECT SUM(qty2) as stokkeluar FROM keluarbrgitem WHERE kodebartxt = '$kd_bar'";
+        $sumkeluar = $this->db_logistik_pt->query($query_keluar)->row();
+
+        $data = ($get_stockawal + $summasuk->stokmasuk) - $sumkeluar->stokkeluar;
+        // $data = $summasuk->stokmasuk - $sumkeluar->stokkeluar;
+        echo json_encode($data);
     }
 
     public function sppApproval()
