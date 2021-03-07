@@ -87,7 +87,7 @@ class M_po extends CI_Model
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $toko = $this->input->get('toko');
-        $query = "SELECT id, kode, supplier, usaha  FROM `supplier` WHERE `supplier` LIKE '%$toko%' LIMIT 5";
+        $query = "SELECT id, kode, supplier, usaha  FROM `supplier` WHERE `supplier` LIKE '%$toko%'";
         $t = $this->db_logistik_pt->query($query)->result_array();
         return $t;
     }
