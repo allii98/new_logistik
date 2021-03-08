@@ -212,12 +212,12 @@
                                         Laporan Rinci Stok</a>
                                 </div>
                             </li>
-                            <li class="nav-item ">
+                            <li class="nav-item">
                                 <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Login/logout') ?>">
                                     <i class="mdi mdi-logout mr-1"></i> Logout
                                 </a>
-
                             </li>
+
                         </ul> <!-- end navbar-->
                     </div> <!-- end .collapsed-->
                 </nav>
@@ -249,17 +249,11 @@
             <footer class="footer">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-6">
-                            2015 - <script>
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3">
+                            <script>
                                 document.write(new Date().getFullYear())
-                            </script> &copy; UBold theme by <a href="">Coderthemes</a>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="text-md-right footer-links d-none d-sm-block">
-                                <a href="javascript:void(0);">About Us</a>
-                                <a href="javascript:void(0);">Help</a>
-                                <a href="javascript:void(0);">Contact Us</a>
-                            </div>
+                            </script> &copy; Copyright <a href="http://msalgroup.com">PT Mulia Sawit Agro Lestari</a>
                         </div>
                     </div>
                 </div>
