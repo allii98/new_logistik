@@ -27,7 +27,7 @@
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">Jenis SPP*</label>
-                                <select class="form-control" id="jenis_spp">
+                                <select class="form-control" id="cmb_jenis_permohonan">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     switch ($sesi_sl) {
@@ -58,7 +58,7 @@
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">Alokasi*</label>
-                                <select class="form-control" id="alokasi">
+                                <select class="form-control" id="cmb_alokasi">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     switch ($sesi_sl) {
@@ -87,19 +87,20 @@
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">Tgl Referensi*</label>
-                                <input type="text" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
+                                <input type="text" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">Tgl terima*</label>
-                                <input type="date" class="form-control" id="tgl_terima">
+                                <input type="date" class="form-control" id="txt_tgl_terima">
                             </div>
                         </div>
+                        <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" data-date-format="yyyy-mm-dd" placeholder="Tanggal" readonly>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">Department*</label>
-                                <select class="form-control" id="dept">
+                                <select class="form-control" id="cmb_departemen">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     foreach ($dept as $d) : {
@@ -115,7 +116,7 @@
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">Kode</label>
-                                <input type="text" id="kd_dept" class="form-control">
+                                <input type="text" id="txt_kode_departemen" class="form-control">
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
@@ -129,8 +130,9 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <p class="sub-header mb-0 mt-0">
-                                <label for="">No. SPP : ... &nbsp; No. Ref SPP : ...</label>
+                                <label id="lbl_spp_status" name="lbl_spp_status">No. SPP : ... &nbsp; No. Ref SPP : ...</label>
                             </p>
+                            <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
 
                             <table id="tableRinciBarang" class="table table-striped table-bordered table-in">
                                 <thead>
@@ -164,24 +166,26 @@
                                                 <input type="text" id="depart">
                                                 <input type="text" id="keterangan">
 
-                                                <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
-                                                <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
+                                                <input type="hidden" id="hidden_kode_brg" name="hidden_kode_brg">
+                                                <input type="hidden" id="hidden_nama_brg" name="hidden_nama_brg">
                                             </td>
                                             <td width="15%">
-                                                <input type="number" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
+                                                <input type="number" class="form-control currencyduadigit" id="txt_qty" name="txt_qty" placeholder="Qty" size="26" required /><br />
                                                 <!-- <label id="lbl_stok_1">Stok : ...</label><br />
                                                 <label id="lbl_satuan_brg_1">Satuan : ...</label><br /> -->
 
-                                                <input type="hidden" id="hidden_stok_1" name="hidden_stok_1">
-                                                <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
+                                                <input type="hidden" id="hidden_stok" name="hidden_stok">
+                                                <input type="hidden" id="hidden_satuan_brg" name="hidden_satuan_brg">
                                             </td>
                                             <td width="10%">
                                                 <span id="stok"></span>
                                                 <span> | </span>
                                                 <span id="satuan"></span>
+                                                <input type="hidden" id="stok">
+                                                <input type="hidden" id="satuan">
                                             </td>
                                             <td>
-                                                <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="resizable_textarea form-control" size="26" placeholder="Merk/Type/Jenis, jika ada" onkeypress="saveRinciEnter(event,'1')"></textarea>
+                                                <textarea id="txt_keterangan_rinci" name="txt_keterangan_rinci" class="resizable_textarea form-control" size="26" placeholder="Merk/Type/Jenis, jika ada"></textarea>
                                                 <label id="lbl_status_simpan_1"></label>
 
                                                 <input type="hidden" id="hidden_id_ppo_item_1" name="hidden_id_ppo_item_1">
@@ -265,11 +269,11 @@
 
 <script>
     $(document).ready(function() {
-        $('#dept').on('change', function() {
+        $('#cmb_departemen').on('change', function() {
             var data = this.value;
             // alert(this.value);
             // console.log(data);
-            $('#kd_dept').val(data);
+            $('#txt_kode_departemen').val(data);
         });
     });
 
@@ -317,6 +321,7 @@
             // Set data to Form Edit
             $('#nakobar').val(nakobar);
             $('#satuan').text(satuan);
+            $('#hidden_satuan_brg').val(satuan);
             $("#modalListBarang").modal('hide');
         });
     });
@@ -368,6 +373,7 @@
                 },
                 success: function(data) {
                     $('#stok').text(data);
+                    $('#hidden_stok').val(data);
                 }
             });
             return false;
@@ -376,6 +382,26 @@
 
     //Simpan Data
     $('#btn_simpan_1').on('click', function() {
+
+        // data = [
+        //     // devisi = $('#devisi').val(),
+        //     // jenis_spp = $('#cmb_jenis_permohonan').val(),
+        //     cmb_alokasi = $('#cmb_alokasi').val(),
+        //     hidden_no_spp = $('#hidden_no_spp').val(),
+        //     txt_tanggal = $('#txt_tanggal').val(),
+        //     txt_tgl_terima = $('#txt_tgl_terima').val(),
+        //     txt_tgl_ref = $('#txt_tgl_ref').val(),
+        //     cmb_jenis_permohonan = $('#cmb_jenis_permohonan').val(),
+        //     txt_kode_departemen = $('#txt_kode_departemen').val(),
+        //     cmb_departemen = $('#cmb_departemen').val(),
+        //     hidden_kode_brg = $('#hidden_kode_brg').val(),
+        //     hidden_nama_brg = $('#hidden_nama_brg').val(),
+        //     hidden_satuan_brg = $('#hidden_satuan_brg').val(),
+        //     txt_qty = $('#txt_qty').val(),
+        //     hidden_stok = $('#hidden_stok').val(),
+        //     txt_keterangan_rinci = $('#txt_keterangan_rinci').val()
+        // ];
+        // console.log(data);
 
         $.ajax({
             type: "POST",
@@ -392,9 +418,24 @@
             },
 
             data: {
-                devisi: $('#devisi').val(),
-                jenis_spp: $('#jenis_spp').val()
+                // devisi: $('#devisi').val(),
+                // jenis_spp: $('#cmb_jenis_permohonan').val(),
+                cmb_alokasi: $('#cmb_alokasi').val(),
+                hidden_no_spp: $('#hidden_no_spp').val(),
+                txt_tanggal: $('#txt_tanggal').val(),
+                txt_tgl_terima: $('#txt_tgl_terima').val(),
+                txt_tgl_ref: $('#txt_tgl_ref').val(),
+                cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
+                txt_kode_departemen: $('#txt_kode_departemen').val(),
+                cmb_departemen: $('#cmb_departemen').val(),
+                hidden_kode_brg: $('#hidden_kode_brg').val(),
+                hidden_nama_brg: $('#hidden_nama_brg').val(),
+                hidden_satuan_brg: $('#hidden_satuan_brg').val(),
+                txt_qty: $('#txt_qty').val(),
+                hidden_stok: $('#hidden_stok').val(),
+                txt_keterangan_rinci: $('#txt_keterangan_rinci').val()
             },
+
             success: function(data) {
                 $('#devisi').val("");
                 $('#jenis_spp').val("");

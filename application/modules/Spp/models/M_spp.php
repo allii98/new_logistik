@@ -126,7 +126,7 @@ class M_spp extends CI_Model
     public function saveSpp($data)
     {
 
-        return $this->db_logistik_pt->insert('testsave', $data);
+        return $this->db_logistik_pt->insert('ppo', $data);
     }
 }
 

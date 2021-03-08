@@ -97,24 +97,92 @@ class Spp extends CI_Controller
 
     public function saveSpp()
     {
+        $cmb_alokasi = $this->input->post("cmb_alokasi");
+        // $cmb_estate = $this->input->post("cmb_estate");
+        // $cmb_alokasi = $this->session->userdata('status_lokasi');
+
+        if ($cmb_alokasi == "HO") {
+            $text1 = "PST";
+            $text2 = "BWJ";
+            $dig_1 = "1";
+        } else if ($cmb_alokasi == "SITE") {
+            // $text1 = $cmb_estate;
+            $text1 = "EST";
+            $text2 = "SWJ";
+            $dig_1 = "6";
+        } else if ($cmb_alokasi == "RO") {
+            $text1 = "ROM";
+            $text2 = "PKY";
+            $dig_1 = "2";
+        } else if ($cmb_alokasi == "PKS") {
+            $text1 = "FAC";
+            $text2 = "SWJ";
+            $dig_1 = "3";
+        }
+
+        if ($this->session->userdata('status_lokasi') == "HO") {
+            $dig_2 = "1";
+        } else if ($this->session->userdata('status_lokasi') == "RO") {
+            $dig_2 = "2";
+        } else if ($this->session->userdata('status_lokasi') == "PKS") {
+            $dig_2 = "3";
+        } else if ($this->session->userdata('status_lokasi') == "SITE") {
+            $dig_2 = "6";
+        }
+
+        $key = $dig_1 . $dig_2;
+
+        $query_ppo = "SELECT MAX(SUBSTRING(noppotxt, 3)) as maxspp from ppo WHERE noppotxt LIKE '$key%'";
+        $generate_ppo = $this->db_logistik_pt->query($query_ppo)->row();
+        $noUrut = (int)($generate_ppo->maxspp);
+        $noUrut++;
+        $print = sprintf("%05s", $noUrut);
+
+        if (empty($this->input->post('hidden_no_spp'))) {
+            // $nospp = $generate_ppo->nospp;
+            $nospp = $dig_1 . $dig_2 . $print;
+        } else {
+            // $nospp = $this->input->post('hidden_no_spp');
+            $nospp = $this->input->post('hidden_no_spp');
+        }
+
+        $tgl_ppo = date("Y-m-d", strtotime($this->input->post('txt_tanggal')));
+        $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('txt_tanggal')));
+        $tgl_trm = date("Y-m-d", strtotime($this->input->post('txt_tgl_terima')));
+        $tgl_ref = date("Y-m-d", strtotime($this->input->post('txt_tgl_ref')));
+
+        $getmonth = date("m", strtotime($this->input->post('txt_tgl_ref')));
+        $getyear = date("y", strtotime($this->input->post('txt_tgl_ref')));
+
+        $noref = $text1 . "-" . $_POST['cmb_jenis_permohonan'] . "/" . $text2 . "/" . $getmonth . "/" . $getyear . "/" . $nospp;
+
+        $periode = date("Y-m-d", strtotime($this->input->post('txt_tgl_ref')));
+        $d_periode =  date("j", strtotime($periode));
+        if ($d_periode >= 26) {
+            $periodetxt = date("Ym", strtotime($this->input->post('txt_tgl_ref') . " +1 month"));
+        } else {
+            $periodetxt = date("Ym", strtotime($this->input->post('txt_tgl_ref')));
+        }
+        $thn = date("Y", strtotime($this->input->post('txt_tgl_ref')));
+
         $data_ppo = [
             'kpd' => 'Bagian Purchasing',
-            'noppo' => $no_spp,
-            'noppotxt' => $no_spp,
-            'jenis' => $this->input->post('jenis_spp'),
+            'noppo' => $nospp,
+            'noppotxt' => $nospp,
+            'jenis' => $this->input->post('cmb_jenis_permohonan'),
             'tglppo' => $tgl_ppo . date("H:i:s"),
             'tglppotxt' => $tgl_ppo_txt,
             'tgltrm' => $tgl_trm . date(" H:i:s"),
-            'kode_dept' => $this->input->post('txt_kode_departemen'),
-            'nama_dept' => $this->input->post('cmb_departemen'),
+            'kodedept' => $this->input->post('txt_kode_departemen'),
+            'namadept' => $this->input->post('cmb_departemen'),
             'noref' => $nospp,
             'noreftxt' => $noref,
             'tglref' => $tgl_ref . date("H:i:s"),
             'ket' => $tgl_ref . date("txt_keterangan"),
             'no_acc' => 0,
             'ket_acc' => "",
-            'kode_pt' => $this->session->userdata('kode_pt'),
-            'kode_pt' => $this->session->userdata('pt'),
+            'pt' => $this->session->userdata('pt'),
+            'kodept' => $this->session->userdata('kode_pt'),
             'periode' => $periode . date(" H:i:s"),
             'periodetxt' => $periodetxt,
             'thn' => $thn,
@@ -130,40 +198,51 @@ class Spp extends CI_Controller
             'nama_main' => 0,
         ];
 
-        $data_item_ppo = [
-            'noppo' => $no_spp,
-            'noppotxt' => $no_spp,
-            'tglppo' => $tgl_ppo . date(" H:i:s"),
-            'tglppotxt' => $tgl_ppo_txt,
-            'kodedept' => $this->input->post('txt_kode_departemen'),
-            'namadept' => $this->input->post('cmb_departemen'),
-            'noref' => $nospp,
-            'noreftxt' => $noref,
-            'kodebar' => $this->input->post('hidden_kode_brg'),
-            'kodebartxt' => $this->input->post('hidden_kode_brg'),
-            'nabar' => $this->input->post('hidden_nama_brg'),
-            'sat' => $this->input->post('hidden_satuan_brg'),
-            'qty' => $this->input->post('txt_qty'),
-            'qty2' => NULL,
-            'stok' => $this->input->post('hidden_stok'),
-            'harga' => "0",
-            'jumharga' => "0",
-            'kodept' => $this->session->userdata('kode_pt'),
-            'namapt' => $this->session->userdata('pt'),
-            'periode' => $periode . date(" H:i:s"),
-            'periodetxt' => $periode . date(" H:i:s"),
-        ];
+        // $data_item_ppo = [
+        //     'noppo' => $nospp,
+        //     'noppotxt' => $nospp,
+        //     'tglppo' => $tgl_ppo . date(" H:i:s"),
+        //     'tglppotxt' => $tgl_ppo_txt,
+        //     'kodedept' => $this->input->post('txt_kode_departemen'),
+        //     'namadept' => $this->input->post('cmb_departemen'),
+        //     'noref' => $nospp,
+        //     'noreftxt' => $noref,
+        //     'kodebar' => $this->input->post('hidden_kode_brg'),
+        //     'kodebartxt' => $this->input->post('hidden_kode_brg'),
+        //     'nabar' => $this->input->post('hidden_nama_brg'),
+        //     'sat' => $this->input->post('hidden_satuan_brg'),
+        //     'qty' => $this->input->post('txt_qty'),
+        //     'qty2' => NULL,
+        //     'stok' => $this->input->post('hidden_stok'),
+        //     'harga' => "0",
+        //     'jumharga' => "0",
+        //     'kodept' => $this->session->userdata('kode_pt'),
+        //     'namapt' => $this->session->userdata('pt'),
+        //     'periode' => $periode . date(" H:i:s"),
+        //     'periodetxt' => $periode . date(" H:i:s"),
+        //     'thn' => $thn,
+        //     'ket' => $this->input->post('txt_keterangan_rinci'),
+        //     'tglisi' => $tgl_ref . " " . date("H:i:s"),
+        //     'user' => $this->session->userdata('user'),
+        //     'status' => 'DALAM PROSES',
+        //     'status2' => '0',
+        //     'ada_penawar' => '',
+        //     'lokasi' => $this->session->userdata('status_lokasi'),
+        //     'po' => "0",
+        //     'saldo_po' => "0",
+        //     'kode_budget' => "0",
+        //     'grup' => "0",
+        //     'main_acct' => "0",
+        //     'nama_main' => "",
+        // ];
 
+        // $data = [
+        //     'devisi' => $this->input->post('devisi'),
+        //     'jenis_spp' => $this->input->post('jenis_spp')
 
+        // ];
 
-
-        $data = [
-            'devisi' => $this->input->post('devisi'),
-            'jenis_spp' => $this->input->post('jenis_spp')
-
-        ];
-
-        $data = $this->M_spp->saveSpp($data);
+        $data = $this->M_spp->saveSpp($data_ppo);
         echo json_encode($data);
     }
 
