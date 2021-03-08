@@ -3,48 +3,53 @@
     <div class="row justify-content-center">
         <div class="col-md">
             <div class="widget-rounded-circle card-box mt-2">
-                <h4 class="header-title">LPB</h4>
-                <p class="sub-header">
+                <h4 class="header-title">
+                    <font face="Verdana"> LPB </font>
+                </h4>
+                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                     Input Laporan Penerimaan Barang
                 </p>
                 <div class="row">
 
-                    <div class="col-md-3">
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label">Tgl Terima <span class="required">*</span>
-                            </label>
-                            <div class="col-8">
-                                <input id="tgl_terima" name="tgl_terima" class="form-control bg-light" required="required" type="date" value="<?= date('Y-m-d') ?>" readonly>
+                    <table>
+                        <div class="col-md-3">
+                            <div class="form-group row mb-1">
+                                <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
+                                </label>
+                                <div class="col-6">
+                                    <input id="tgl_terima" name="tgl_terima" class="form-control bg-light" required="required" type="date" value="<?= date('Y-m-d') ?>" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Input&nbsp;<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6">
+                                    <input id="tgl_input" name="tgl_input" class="form-control bg-light" value="<?= date('Y-m-d'); ?>" required="required" type="date">
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-4 col-form-label">Tgl Input <span class="required">*</span>
-                            </label>
-                            <div class="col-md">
-                                <input id="tgl_input" name="tgl_input" class="form-control bg-light" value="<?= date('Y-m-d'); ?>" required="required" type="date">
-                            </div>
-                        </div>
-                    </div>
+                    </table>
 
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label">No. Pengantar<span class="required">*</span>
+                            <label class="col-6 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;Pengantar<span class="required">*</span>
                             </label>
-                            <div class="col-md">
+                            <div class="col-md-6">
                                 <input id="no_pengantar" name="no_pengantar" class="form-control" required="required" type="text" placeholder="No. Pengantar" autocomplite="off">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-5 col-form-label">Lokasi Gudang <span class="required">*</span>
+                            <label class="col-6 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
                             </label>
-                            <div class="col-md col-sm col-xs-12">
+                            <div class="col-md-6 col-sm col-xs-12">
                                 <input id="lokasi_gudang" name="lokasi_gudang" class="form-control" required="required" type="text" placeholder="Lokasi Gudang" autocomplite="off">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-3 col-form-label">No. PO <span class="required">*</span>
+                            <div class="col-md-1"></div>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
                             <div class="col-md row ml-0">
                                 <input id="no_po" name="no_po" class="form-control col-md-3" required="required" type="text" onfocus="pilihModalDataPO()" placeholder="No. PO" autocomplite="off">
@@ -52,16 +57,17 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">Tgl. PO<span class="required">*</span>
+                            <div class="col-md-1"></div>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-md col-sm col-xs-12">
+                            <div class="col-md-6">
                                 <input id="tgl_po" name="tgl_po" class="form-control" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label">Supplier <span class="required">*</span>
+                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier&nbsp;<span class="required">*</span>
                             </label>
                             <div class="col-md row ml-0">
                                 <input id="kd_supplier" name="kd_supplier" class="form-control col-md-3" required="required" type="text" placeholder="Kode Supplier" readonly>
@@ -71,7 +77,7 @@
 
 
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Keterangan <span class="required">*</span>
+                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket<span class="required">*</span>
                             </label>
                             <div class="col-md col-sm col-xs-12">
                                 <textarea class="resizable_textarea form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan" readonly="" rows="1" autocomplite="off">-</textarea>
@@ -83,17 +89,17 @@
                 <hr class="mt-0 mb-2">
 
                 <div class="row mx-0">
-                    <label id="lbl_lpb_status" name="lbl_lpb_status">No. LPB : ... &nbsp; No. Ref. LPB : ...</label>
+                    <label id="lbl_lpb_status" name="lbl_lpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. LPB : ... &nbsp; No. Ref. LPB : ...</label>
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
                             <thead>
                                 <tr>
                                     <th></th>
-                                    <th width="20%">Kd. Barang</th>
-                                    <th>Nama Barang</th>
-                                    <th width="10%">Qty</th>
-                                    <th width="10%">Satuan</th>
-                                    <th width="30%">Ket</th>
+                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kd. Barang</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang</th>
+                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
+                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan</th>
+                                    <th width="30%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -108,7 +114,8 @@
                                         <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_kode_barang_1" name="txt_kode_barang_1" placeholder="Kode Barang" onfocus="pilihModalBarang('1')" readonly>
                                             <label>
-                                                <input type="checkbox" id="chk_asset_1" name="chk_asset_1" value=""> Asset ?
+                                                <input type="checkbox" id="chk_asset_1" name="chk_asset_1" value="">
+                                                <font face="Verdana" size="1.5"> Asset ?</font>
                                             </label>
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
@@ -158,7 +165,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Pilih PO</h4>
+                <h4 class="modal-title" id="myModalLabel" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih PO</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -205,22 +212,22 @@
                         <table id="tableDetailPO" class="table table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>Tgl</th>
-                                    <th>Ref. PO</th>
-                                    <th>No. PO</th>
-                                    <th>Supplier</th>
-                                    <th>Lokasi Beli</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref. PO</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. PO</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi Beli</th>
                                 </tr>
                             </thead>
                             <tbody id="tbodyDetailSPP">
                                 <tr>
-                                    <td>x</td>
-                                    <td>x</td>
-                                    <td>x</td>
-                                    <td>x</td>
-                                    <td>x</td>
-                                    <td>x</td>
+                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
+                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
+                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
+                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
+                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
+                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
                                 </tr>
                             </tbody>
                         </table>
