@@ -200,7 +200,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <th>Kurs</th>
                                     <th>Disc <span>%</span></th>
                                     <th>Biaya Lainnya</th>
-                                    <th>Ket. Biaya</th>
+                                    <th>Ket.&nbsp;Biaya</th>
 
                                     <th>Keterangan</th>
                                     <th>Jumlah Rp</th>
@@ -216,7 +216,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row" name="btn_hapus_row" onclick="hapus_row('1')"></button>
                                     </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                        <td width="30%">
+                                        <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <!-- <input type="text" class="form-control" id="pilihSpp" name="txt_no_spp_1" placeholder="Cari SPP" readonly required=""> -->
                                             <select class="js-data-example-ajax form-control select3" id="pilihSpp">
                                                 <option selected="selected">Cari SPP</option>
@@ -238,7 +238,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             <!-- <label class="control-label" id="lbl_jenis_budget_1">Jenis Budget : </label> -->
 
                                         </td>
-                                        <td width="10%">
+                                        <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <select class="form-control" id="cmb_jenis_budget_1" name="cmb_jenis_budget_1" required>
                                                 <option value="">-- Pilih --</option>
                                                 <option value="TEKNIK">TEKNIK</option>
@@ -253,7 +253,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <option value="TBM">TBM</option>
                                             </select>
                                         </td>
-                                        <td width="18%">
+                                        <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required>
                                             <!-- <label id="lbl_kode_brg_1">Kode : ... </label><br />
                                             <label id="lbl_nama_brg_1">Nama Barang : ...</label><br /> -->
@@ -262,16 +262,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
                                             <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
                                         </td>
-                                        <td width="7%">
+                                        <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="8" onkeyup="jumlah('1')" required /><br />
 
                                             <!-- <input type="text" id="hidden_stok_1" name="hidden_stok_1"> -->
                                             <!-- <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1"> -->
                                         </td>
-                                        <td width="10%">
+                                        <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" size="15" value="0" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" required /><br />
                                         </td>
-                                        <td width="10%">
+                                        <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <select class="form-control" id="cmb_kurs_1" name="cmb_kurs_1" required="">
                                                 <option value="Rp">Rp IDR</option>
                                                 <option value="USD">&dollar; USD</option>
@@ -282,25 +282,24 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <option value="MYR">RM MYR</option>
                                             </select><br />
                                         </td>
-                                        <td width="8%">
+                                        <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
                                         </td>
-                                        <td width="10%">
+                                        <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_biaya_lain_1" name="txt_biaya_lain_1" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" size="15" required /><br />
                                         </td>
-                                        <td width="12%">
+                                        <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <textarea class="resizable_textarea form-control" size="10" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_1" placeholder="Keterangan Biaya"></textarea>
                                         </td>
-
-                                        <td width="12%">
+                                        <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,1)"></textarea><br />
                                             <label id="lbl_status_simpan_1"></label>
                                             <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
                                         </td>
-                                        <td>
+                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_jumlah_1" name="txt_jumlah_1" size="15" placeholder="Jumlah" readonly required />
                                         </td>
-                                        <td width="3%">
+                                        <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
                                             <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
                                             <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
