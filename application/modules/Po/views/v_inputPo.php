@@ -1,18 +1,14 @@
 <div class="container-fluid">
     <!-- start page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-
-                <h4 class="page-title"><?= $title; ?></h4>
-            </div>
-        </div>
-    </div>
     <!-- end page title -->
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
+                    <h4 class="header-title">PO</h4>
+                    <p class="sub-header">
+                        Purchase Order
+                    </p>
 
                     <div class="row">
                         <div class="col-lg-4">

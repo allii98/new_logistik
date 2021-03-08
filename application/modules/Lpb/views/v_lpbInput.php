@@ -78,15 +78,9 @@
                             </div>
                         </div>
                     </div>
-
-
-
-
-
-
                 </div>
 
-                <hr>
+                <hr class="mt-0 mb-2">
 
                 <div class="row mx-0">
                     <label id="lbl_lpb_status" name="lbl_lpb_status">No. LPB : ... &nbsp; No. Ref. LPB : ...</label>

@@ -57,7 +57,7 @@
 										</div> -->
 
                 </div>
-                <hr>
+                <hr class="mt-0 mb-2">
                 <div class="">
                     <label id="lbl_bpb_status" name="lbl_bpb_status">No. BPB : ... &nbsp; No. Ref. BPB : ...</label>
                     <h4 id="h4_no_bpb" name="h4_no_bpb"></h4>
