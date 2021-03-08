@@ -20,7 +20,7 @@
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Tgl. PO *</label>
-                                <div class="col-7">
+                                <div class="col-5">
                                     <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
                                 </div>
                             </div>
@@ -38,7 +38,7 @@
                                     <input type="text" class="form-control bg-light" id="supplier" name="supplier" placeholder="Supplier" autocomplite="off" readonly>
                                 </div> -->
                             </div>
-                            <div class="form-group row mb-2">
+                            <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Status Bayar*</label>
                                 <div class="col-3">
                                     <select class="form-control" id="stts_bayar" name="stts_bayar">
@@ -61,13 +61,13 @@
                         <div class="col-lg-4">
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">Lokasi Pengiriman*</label>
-                                <div class="col-7">
+                                <div class="col-5">
                                     <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" autocomplite="off" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">Lokasi Pembelian *</label>
-                                <div class="col-4">
+                                <div class="col-3">
                                     <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
                                         <option value="1">-- Pilih --</option>
                                         <option value="2">RO</option>
