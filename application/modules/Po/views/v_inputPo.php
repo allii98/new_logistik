@@ -1,3 +1,6 @@
+<?php
+$lokasi_sesi = $this->session->userdata('status_lokasi');
+?>
 <div class="container-fluid">
     <!-- start page title -->
     <!-- end page title -->
@@ -15,7 +18,38 @@
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Jenis PO *</label>
                                 <div class="col-7">
-                                    <input type="text" class="form-control" id="jns_po" name="jns_po" placeholder="Jenis PO" autocomplite="off" required>
+                                    <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
+                                    <select class="form-control" id="cmb_pilih_jenis_po">
+                                        <option selected="selected">-Pilih-</option>
+                                        <?php
+                                        switch ($lokasi_sesi) {
+                                            case 'PKS':
+                                        ?>
+                                                <option value="PO-Lokal">PO-Lokal</option>
+                                            <?php
+                                                break;
+                                            case 'SITE':
+                                            ?>
+                                                <option value="PO-Lokal">PO-Lokal</option>
+                                            <?php
+                                                break;
+                                            case 'RO':
+                                            ?>
+                                                <option value="PO-Lokal">PO-Lokal</option>
+                                            <?php
+                                                break;
+                                            case 'HO':
+                                            ?>
+                                                <option value="PO">PO</option>
+                                                <option value="POA">POA - PO Asset</option>
+                                                <option value="PO-Khusus">POK - PO Khusus</option>
+                                        <?php
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
@@ -27,12 +61,13 @@
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Supplier *</label>
                                 <div class="col-7">
-                                    <input type="hidden" name="kd_supplier" id="kd_supplier">
                                     <!-- <input type="text" class="form-control" id="kd_supp" name="kd_supplier" placeholder="Nama Supplier" autocomplite="off" required> -->
                                     <!-- <select class="js-data-example-ajax"></select> -->
                                     <select class="js-data-example-ajax form-control select2" id="select2">
                                         <option selected="selected">Nama Supplier</option>
                                     </select>
+                                    <input type="hidden" name="kd_supplier" id="kd_supplier">
+                                    <input type="hidden" name="txtsupplier" id="txtsupplier">
                                 </div>
                                 <!-- <div class="col-4">
                                     <input type="text" class="form-control bg-light" id="supplier" name="supplier" placeholder="Supplier" autocomplite="off" readonly>
@@ -84,13 +119,15 @@
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">Pemesan *</label>
                                 <div class="col-7">
-                                    <input type="text" class="form-control bg-light" id="pemesan" name="pemesan" value="USER SITE" autocomplite="off" readonly required>
+                                    <input type="text" class="form-control bg-light" id="pemesan" name="pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
+                                    <input type="hidden" name="txt_kode_pemesan" id="txt_kode_pemesan" value="<?php echo $this->session->userdata('id_user'); ?>">
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-5 col-form-label">Keterangan Pengiriman</label>
                                 <div class="col-7">
                                     <textarea class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off"></textarea>
+                                    <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
                                 </div>
                             </div>
                         </div>
@@ -126,8 +163,8 @@
                                 <label class="col-3 col-form-label">Dikirim ke Kebun*</label>
                                 <div class="col-3">
                                     <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
-                                        <option value="1">N</option>
-                                        <option value="2">Y</option>
+                                        <option value="Y" selected="">Y</option>
+                                        <option value="N">N</option>
                                     </select>
                                 </div>
                             </div>
@@ -146,9 +183,9 @@
                     <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... No. Ref SPP : ...</label>
                     <h4 id="h4_no_po" name="h4_no_po"></h4>
                     <h4 id="h4_no_ref_po" name="h4_no_ref_po"></h4>
-                    <input type="hidden" id="hidden_no_po" name="hidden_no_po">
-                    <input type="hidden" id="hidden_id_po" name="hidden_id_po">
-                    <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                    <input type="text" id="hidden_no_po" name="hidden_no_po">
+                    <input type="text" id="hidden_id_po" name="hidden_id_po">
+                    <input type="text" id="hidden_no_ref_po" name="hidden_no_ref_po">
                     <div class="table-responsive">
                         <table id="tableRinciPO" class="table table-striped table-bordered" width="150%">
                             <thead>
@@ -179,17 +216,20 @@
                                         <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row" name="btn_hapus_row" onclick="hapus_row('1')"></button>
                                     </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                        <td width="14%">
+                                        <td width="30%">
                                             <!-- <input type="text" class="form-control" id="pilihSpp" name="txt_no_spp_1" placeholder="Cari SPP" readonly required=""> -->
                                             <select class="js-data-example-ajax form-control select3" id="pilihSpp">
-                                                <option selected="selected">Nama Supplier</option>
+                                                <option selected="selected">Cari SPP</option>
                                             </select>
-                                            <h6 style="margin-top: 0px;" id="lbl_nama_brg_1">Nama Barang : ...</h6><br />
+                                            <!-- <h6 style="margin-top: 0px;" id="lbl_nama_brg_1">Nama Barang : ...</h6><br /> -->
                                             <input type="hidden" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_1">
                                             <input type="hidden" id="hidden_tgl_ref_1" name="hidden_tgl_ref_1">
                                             <input type="hidden" id="hidden_kd_departemen_1" name="hidden_kd_departemen_1">
                                             <input type="hidden" id="hidden_departemen_1" name="hidden_departemen_1">
                                             <input type="hidden" id="hidden_tgl_spp_1" name="hidden_tgl_spp_1">
+                                            <input type="hidden" id="hidden_kd_pt_1" name="hidden_kd_pt_1">
+                                            <input type="hidden" id="hidden_nama_pt_1" name="hidden_nama_pt_1">
+                                            <input type="hidden" id="noppo" name="noppo">
 
                                             <!-- <label id="lbl_no_ref_spp_1">Ref SPP : ...</label><br />
 											<label id="lbl_tgl_ref_1">Tgl. Ref : ...</label><br />
@@ -215,17 +255,18 @@
                                         </td>
                                         <td width="18%">
                                             <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required>
-                                            <label id="lbl_kode_brg_1">Kode : ... </label><br />
-                                            <label id="lbl_nama_brg_1">Nama Barang : ...</label><br />
+                                            <!-- <label id="lbl_kode_brg_1">Kode : ... </label><br />
+                                            <label id="lbl_nama_brg_1">Nama Barang : ...</label><br /> -->
 
                                             <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
                                             <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
+                                            <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
                                         </td>
                                         <td width="7%">
                                             <input type="text" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="8" onkeyup="jumlah('1')" required /><br />
 
                                             <!-- <input type="text" id="hidden_stok_1" name="hidden_stok_1"> -->
-                                            <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
+                                            <!-- <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1"> -->
                                         </td>
                                         <td width="10%">
                                             <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" size="15" value="0" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" required /><br />
@@ -408,9 +449,23 @@
     // $('#kd_supplier').click(function() {
     //     $("#modal-supllier").modal();
     // });
-    $('#pilihSpp').click(function() {
-        $("#modal-spp").modal();
+    $('#cmb_pilih_jenis_po').change(function() {
+        var jenis_po = $('#cmb_pilih_jenis_po').val();
+
+        if (jenis_po == "PO") {
+            $('#hidden_jenis_spp').val('SPP');
+        } else if (jenis_po == "POA") {
+            $('#hidden_jenis_spp').val('SPPA');
+        } else if (jenis_po == "PO-Lokal") {
+            $('#hidden_jenis_spp').val('SPPI');
+        } else if (jenis_po == "PO-Khusus") {
+            $('#hidden_jenis_spp').val('SPPK');
+        }
     });
+
+    // $('#pilihSpp').click(function() {
+    //     $("#modal-spp").modal();
+    // });
 
     $(".js-data-example-ajax").select2({
         ajax: {
@@ -437,8 +492,10 @@
         }
 
     }).on('select2:select', function(evt) {
-        var data = $(".select2 option:selected").text();
-        $('#kd_supplier').val(data);
+        var kode = $(".select2 option:selected").text();
+        var data = $(".select2 option:selected").val();
+        $('#kd_supplier').val(kode);
+        $('#txtsupplier').val(data);
 
     });
 
@@ -454,6 +511,7 @@
             },
             processResults: function(data) {
                 var results = [];
+
                 $.each(data, function(index, item) {
                     results.push({
                         id: item.id,
@@ -467,10 +525,64 @@
         }
 
     }).on('select3:select', function(evt) {
+        // console.log(evt)
+        // data = JSON.parse(evt);
+        // $.each(data, function(index, value) {
+        //     var opodsi = value.nama_petugas;
+        //     $('#petugas').val(opsi);
+        // });
         var data = $(".select3 option:selected").text();
-        $('#lbl_nama_brg_1').val(data);
+        $('#hidden_no_ref_spp_1').val(data);
 
     });
+
+    $('.select3').change(function() {
+        // var dd = this.value;
+        // console.log(dd);
+
+        $.ajax({
+            type: 'post',
+            url: '<?= site_url('Po/getid'); ?>',
+            data: {
+                id: this.value
+            },
+            success: function(response) {
+
+                data = JSON.parse(response);
+                // console.log(data);
+                $.each(data, function(index, value) {
+                    var opsi = value.noreftxt;
+                    var tglref = value.tglref;
+                    var kodedept = value.kodedept;
+                    var namadept = value.namadept;
+                    var tglppo = value.tglppo;
+                    var kodept = value.kodept;
+                    var pt = value.pt;
+                    var noppo = value.noppo;
+                    var kodebar = value.kodebar;
+                    var nabar = value.nabar;
+                    var sat = value.sat;
+                    $('#hidden_no_ref_spp_1').val(opsi);
+                    $('#hidden_tgl_ref_1').val(tglref);
+                    $('#hidden_kd_departemen_1').val(kodedept);
+                    $('#hidden_departemen_1').val(namadept);
+                    $('#hidden_tgl_spp_1').val(tglppo);
+                    $('#hidden_kd_pt_1').val(kodept);
+                    $('#hidden_nama_pt_1').val(pt);
+                    $('#noppo').val(noppo);
+                    $('#hidden_kode_brg_1').val(kodebar);
+                    $('#hidden_nama_brg_1').val(nabar);
+                    $('#hidden_satuan_brg_1').val(sat);
+                });
+
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    });
+
+
 
 
     //     $(function(){

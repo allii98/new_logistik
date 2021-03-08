@@ -96,9 +96,23 @@ class M_po extends CI_Model
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $noref = $this->input->get('noref');
-        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, kodebartxt, nabar, tglppo, namadept, ket, kodedept, namadept, lokasi, status, status2, po, qty, kodept  FROM `item_ppo` WHERE `noreftxt` LIKE '%$noref%' ORDER BY id DESC LIMIT 10";
+        $query = "SELECT id, noppo, noreftxt FROM ppo WHERE noreftxt LIKE '%$noref%' ORDER BY id DESC";
         $d = $this->db_logistik_pt->query($query)->result_array();
         return $d;
+    }
+
+    public function get_id()
+    {
+        $query = "SELECT * FROM ppo p LEFT JOIN item_ppo i ON p.noppo = i.noppo WHERE p.id = '" . $this->input->post('id') . "'";
+        $data = $this->db->query($query)->result_array();
+        return $data;
+    }
+
+    public function get_itemppo()
+    {
+        $query = "SELECT * FROM item_ppo WHERE id = '" . $this->input->post('id') . "'";
+        $data = $this->db->query($query)->result_array();
+        return $data;
     }
 }
 
