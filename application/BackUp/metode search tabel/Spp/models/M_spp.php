@@ -6,7 +6,7 @@ class M_spp extends CI_Model
 {
     // Start Data Table Server Side
     var $table = 'kodebar'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan'); //field yang ada di table user
+    var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp'); //field yang ada di table user
     var $column_search = array('id', 'kodebar', 'nabar', 'grp'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'asc'); // default order 
 
@@ -73,60 +73,11 @@ class M_spp extends CI_Model
     }
     //End Data Table Server Side
 
-    public function cariDevisi()
-    {
-        $lokasi = $this->session->userdata('status_lokasi');
-
-        if ($lokasi == 'SITE') {
-            $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->where('kodetxt', '06');
-            $this->db_logistik_pt->or_where('kodetxt', '07');
-            $this->db_logistik_pt->from('pt_copy');
-            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
-            return $this->db_logistik_pt->get()->result_array();
-        } else {
-            $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->from('pt_copy');
-            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
-            return $this->db_logistik_pt->get()->result_array();
-        }
-    }
-
     public function dept()
     {
         $this->db_logistik_pt->select('kode, nama');
         $this->db_logistik_pt->from('dept');
         return $this->db_logistik_pt->get()->result_array();
-    }
-
-    public function stokAwal($kd_bar)
-    {
-        $this->db_logistik_pt->select('saldoawal_qty');
-        $this->db_logistik_pt->where('kodebartxt', $kd_bar);
-        $this->db_logistik_pt->from('stockawal');
-        return $this->db_logistik_pt->get()->row();
-    }
-
-    public function sumMasuk($kd_bar)
-    {
-        $this->db_logistik_pt->select_sum('qty', 'stokmasuk');
-        $this->db_logistik_pt->where('kodebartxt', $kd_bar);
-        $this->db_logistik_pt->from('masukitem');
-        return $this->db_logistik_pt->get()->row();
-    }
-
-    public function sumKeluar($kd_bar)
-    {
-        $this->db_logistik_pt->select_sum('qty2', 'stokkeluar');
-        $this->db_logistik_pt->where('kodebartxt', $kd_bar);
-        $this->db_logistik_pt->from('keluarbrgitem');
-        return $this->db_logistik_pt->get()->row();
-    }
-
-    public function saveSpp($data)
-    {
-
-        return $this->db_logistik_pt->insert('testsave', $data);
     }
 }
 

@@ -75,16 +75,10 @@ class Spp extends CI_Controller
     public function getStok()
     {
         $kd_bar = $this->input->get('kd_bar');
-        // $data = $this->M_spp->getStok($kd_bar);
-        // echo json_encode($data);
-
-        // $id = $this->input->post('kodbar');
 
         // $ym_periode  = $this->session->userdata('ym_periode');
-        $query_stockawal = "SELECT saldoawal_qty FROM stockawal WHERE kodebartxt = '$kd_bar'";
-        // $query_stockawal = "SELECT saldoawal_qty FROM stockawal WHERE kodebartxt = '$kd_bar' AND tglinput = (SELECT MIN(tglinput) FROM stockawal WHERE kodebartxt = '$kd_bar')";
 
-        $stockawal = $this->db_logistik_pt->query($query_stockawal)->row();
+        $stockawal = $this->M_spp->stokAwal($kd_bar);
 
         if (empty($stockawal)) {
             $get_stockawal = "0";
@@ -92,14 +86,84 @@ class Spp extends CI_Controller
             $get_stockawal = $stockawal->saldoawal_qty;
         }
 
-        $query_masuk = "SELECT SUM(qty) as stokmasuk FROM masukitem WHERE kodebartxt = '$kd_bar'";
-        $summasuk = $this->db_logistik_pt->query($query_masuk)->row();
+        $summasuk = $this->M_spp->sumMasuk($kd_bar);
 
-        $query_keluar = "SELECT SUM(qty2) as stokkeluar FROM keluarbrgitem WHERE kodebartxt = '$kd_bar'";
-        $sumkeluar = $this->db_logistik_pt->query($query_keluar)->row();
+        $sumkeluar = $this->M_spp->sumKeluar($kd_bar);
 
         $data = ($get_stockawal + $summasuk->stokmasuk) - $sumkeluar->stokkeluar;
-        // $data = $summasuk->stokmasuk - $sumkeluar->stokkeluar;
+
+        echo json_encode($data);
+    }
+
+    public function saveSpp()
+    {
+        $data_ppo = [
+            'kpd' => 'Bagian Purchasing',
+            'noppo' => $no_spp,
+            'noppotxt' => $no_spp,
+            'jenis' => $this->input->post('jenis_spp'),
+            'tglppo' => $tgl_ppo . date("H:i:s"),
+            'tglppotxt' => $tgl_ppo_txt,
+            'tgltrm' => $tgl_trm . date(" H:i:s"),
+            'kode_dept' => $this->input->post('txt_kode_departemen'),
+            'nama_dept' => $this->input->post('cmb_departemen'),
+            'noref' => $nospp,
+            'noreftxt' => $noref,
+            'tglref' => $tgl_ref . date("H:i:s"),
+            'ket' => $tgl_ref . date("txt_keterangan"),
+            'no_acc' => 0,
+            'ket_acc' => "",
+            'kode_pt' => $this->session->userdata('kode_pt'),
+            'kode_pt' => $this->session->userdata('pt'),
+            'periode' => $periode . date(" H:i:s"),
+            'periodetxt' => $periodetxt,
+            'thn' => $thn,
+            'tglisi' => $tgl_ref . " " . date("H:i:s"),
+            'user' => $this->session->userdata('user'),
+            'status' => 'DALAM PROSES',
+            'status2' => '0',
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => 0,
+            'kode_budget' => 0,
+            'grup' => 0,
+            'main_acct' => 0,
+            'nama_main' => 0,
+        ];
+
+        $data_item_ppo = [
+            'noppo' => $no_spp,
+            'noppotxt' => $no_spp,
+            'tglppo' => $tgl_ppo . date(" H:i:s"),
+            'tglppotxt' => $tgl_ppo_txt,
+            'kodedept' => $this->input->post('txt_kode_departemen'),
+            'namadept' => $this->input->post('cmb_departemen'),
+            'noref' => $nospp,
+            'noreftxt' => $noref,
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'qty2' => NULL,
+            'stok' => $this->input->post('hidden_stok'),
+            'harga' => "0",
+            'jumharga' => "0",
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'periode' => $periode . date(" H:i:s"),
+            'periodetxt' => $periode . date(" H:i:s"),
+        ];
+
+
+
+
+        $data = [
+            'devisi' => $this->input->post('devisi'),
+            'jenis_spp' => $this->input->post('jenis_spp')
+
+        ];
+
+        $data = $this->M_spp->saveSpp($data);
         echo json_encode($data);
     }
 
