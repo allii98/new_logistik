@@ -2,41 +2,46 @@
     <div class="row justify-content-center mt-2">
         <div class="col-md col-xl-3">
             <div class="widget-rounded-circle card-box">
-                <h4 class="header-title">BPB</h4>
-                <p class="sub-header">
+                <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BPB</h4>
+                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
                     Input Bon Permintaan Barang
                 </p>
                 <div class="row">
                     <div class="form-group row col-md-3">
-                        <label class="control-label col-md col-sm-3 col-xs-12">Untuk keperluan <span class="required">*</span>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Untuk keperluan <span class="required">*</span>
                         </label>
-                        <div class="col-md-9">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
                             <textarea class="resizable_textarea form-control" rows="1" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
                         </div>
                     </div>
-                    <div class="form-group row col-md-3 ml-1">
-                        <label class="control-label col-md col-sm-3 col-xs-12">Bagian<span class="required">*</span>
+                    <div class="form-group row col-md-3">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian<span class="required">*</span>
                         </label>
-                        <div class="col-md-9">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
                             <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
-                                <option value="" selected>-- Pilih --</option>
+                                <option value="" selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group row col-md-3 ml-4">
-                        <label class="control-label col-md-2 col-sm-3 col-xs-12">Tgl BPB<span class="required">*</span>
+                    <div class="form-group row col-md-3">
+                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB <span class="required">*</span>
                         </label>
-                        <div class="col-md-9">
-                            <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control bg-light" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off" readonly>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-7">
+                            <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off" readonly>
                         </div>
                     </div>
 
-                    <div class="form-group row col-md-3 ml-1">
-                        <label class="control-label col-md col-sm-3 col-xs-12">Alokasi Estate <span class="required">*</span>
+                    <div class="form-group row col-md-3">
+                        <div class="col-md-1"></div>
+                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate<span class="required">*</span>
                         </label>
-                        <div class="col-md-9">
+                        <div class="col-md-1"></div>
+                        <div class="col-md-6">
                             <select class="form-control" id="cmb_alokasi_est" name="cmb_alokasi_est" required="">
-                                <option value="" selected>-- Pilih --</option>
+                                <option value="" selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
                                 <option value="03">03</option>
                                 <option value="06">06</option>
                                 <option value="07">07</option>
@@ -59,7 +64,7 @@
                 </div>
                 <hr class="mt-0 mb-2">
                 <div class="">
-                    <label id="lbl_bpb_status" name="lbl_bpb_status">No. BPB : ... &nbsp; No. Ref. BPB : ...</label>
+                    <label id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp; No. Ref. BPB : ...</label>
                     <h4 id="h4_no_bpb" name="h4_no_bpb"></h4>
                     <h4 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h4>
                     <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
@@ -70,16 +75,16 @@
                             <thead>
                                 <tr>
                                     <th width="3%"></th>
-                                    <th width="10%">TM/TBM</th>
-                                    <th width="10%">Afd/Unit</th>
-                                    <th width="8%">Blok/Sub</th>
-                                    <th width="10%">Thn Tanam</th>
-                                    <th width="20%">Bahan</th>
-                                    <th width="25%">Account Beban</th>
-                                    <th width="25%">Barang</th>
-                                    <th width="8%">Qty Diminta</th>
+                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM/TBM</th>
+                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Afd/Unit</th>
+                                    <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Blok/Sub</th>
+                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Thn Tanam</th>
+                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
+                                    <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
+                                    <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang</th>
+                                    <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty Diminta</th>
                                     <!-- <th width="8%">Qty Disetujui</th> -->
-                                    <th width="25%">Keterangan</th>
+                                    <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
                                     <th width="3%"></th>
                                 </tr>
                             </thead>
@@ -96,10 +101,10 @@
                                             <select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
                                                 <option value="-">-</option>
                                                 <!-- <option value=""></option> -->
-                                                <option value="TM">TM</option>
-                                                <option value="TBM">TBM</option>
-                                                <option value="LANDCLEARING">LANDCLEARING</option>
-                                                <option value="PEMBIBITAN">PEMBIBITAN</option> ->
+                                                <option value="TM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM</option>
+                                                <option value="TBM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TBM</option>
+                                                <option value="LANDCLEARING" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">LANDCLEARING</option>
+                                                <option value="PEMBIBITAN" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PEMBIBITAN</option> ->
                                             </select>
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
