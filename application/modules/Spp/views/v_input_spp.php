@@ -96,7 +96,7 @@
                                 <input type="date" class="form-control" id="txt_tgl_terima">
                             </div>
                         </div>
-                        <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" data-date-format="yyyy-mm-dd" placeholder="Tanggal" readonly>
+                        <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" placeholder="Tanggal" readonly>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">Department*</label>
@@ -122,7 +122,7 @@
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">Keterangan</label>
-                                <textarea class="form-control" rows="2" id="ket"></textarea>
+                                <textarea class="form-control" rows="2" id="txt_keterangan"></textarea>
                             </div>
                         </div>
                     </div>
@@ -133,6 +133,8 @@
                                 <label id="lbl_spp_status" name="lbl_spp_status">No. SPP : ... &nbsp; No. Ref SPP : ...</label>
                             </p>
                             <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
+                            <h6 id="h4_no_spp" name="h4_no_spp"></h6>
+                            <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
 
                             <table id="tableRinciBarang" class="table table-striped table-bordered table-in">
                                 <thead>
@@ -157,14 +159,6 @@
                                                 <input type="text" class="form-control" id="nakobar" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
                                                 <!-- <label id="lbl_kode_brg_1">Kode : ... </label><br />
                                                 <label id="lbl_nama_brg_1">Nama Barang : ...</label><br /> -->
-
-                                                <input type="text" id="dev">
-                                                <input type="text" id="jp">
-                                                <input type="text" id="alok">
-                                                <input type="text" id="tgl_ref" value="<?= date('d/m/Y'); ?>">
-                                                <input type="text" id="tgl_trm">
-                                                <input type="text" id="depart">
-                                                <input type="text" id="keterangan">
 
                                                 <input type="hidden" id="hidden_kode_brg" name="hidden_kode_brg">
                                                 <input type="hidden" id="hidden_nama_brg" name="hidden_nama_brg">
@@ -314,48 +308,19 @@
     $(document).ready(function() {
         $(document).on('click', '#data_barang', function() {
 
+            var nabar_hide = $(this).data('nabar');
+            var kodebar_hide = $(this).data('kodebar');
             var nakobar = $(this).data('nabar') + " - " + $(this).data('kodebar');
             var satuan = $(this).data('satuan');
             // console.log(nabar);
 
             // Set data to Form Edit
+            $('#hidden_nama_brg').val(nabar_hide);
+            $('#hidden_kode_brg').val(kodebar_hide);
             $('#nakobar').val(nakobar);
             $('#satuan').text(satuan);
             $('#hidden_satuan_brg').val(satuan);
             $("#modalListBarang").modal('hide');
-        });
-    });
-
-    //inputan save
-    $(document).ready(function() {
-        $('#devisi').on('change', function() {
-            var data = this.value;
-            $('#dev').val(data);
-        });
-
-        $('#jenis_spp').on('change', function() {
-            var data = this.value;
-            $('#jp').val(data);
-        });
-
-        $('#alokasi').on('change', function() {
-            var data = this.value;
-            $('#alok').val(data);
-        });
-
-        $('#tgl_terima').on('change', function() {
-            var data = this.value;
-            $('#tgl_trm').val(data);
-        });
-
-        $('#dept').on('change', function() {
-            var data = this.value;
-            $('#depart').val(data);
-        });
-
-        $("#ket").keyup(function() {
-            var data = $("#ket").val();
-            $('#keterangan').val(data);
         });
     });
 
@@ -425,6 +390,7 @@
                 txt_tanggal: $('#txt_tanggal').val(),
                 txt_tgl_terima: $('#txt_tgl_terima').val(),
                 txt_tgl_ref: $('#txt_tgl_ref').val(),
+                txt_keterangan: $('#txt_keterangan').val(),
                 cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
                 txt_kode_departemen: $('#txt_kode_departemen').val(),
                 cmb_departemen: $('#cmb_departemen').val(),
@@ -437,12 +403,21 @@
             },
 
             success: function(data) {
+                console.log(data);
+                // console.log(nospp);
+                // console.log(noref);
                 $('#devisi').val("");
                 $('#jenis_spp').val("");
 
                 $('#lbl_status_simpan_1').empty();
                 $('#lbl_status_simpan_1').append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
 
+                $('#lbl_spp_status').empty();
+                $('#h4_no_spp').html('No. SPP : ' + data.nospp);
+                $('#hidden_no_spp').val(data.no_spp);
+
+                $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
+                $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
                 // $('[name="harga"]').val("");
                 // $('#ModalaAdd').modal('hide');
                 // tampil_data_barang();
