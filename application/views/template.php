@@ -20,6 +20,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="<?php echo base_url() ?>assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
+    <link href="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+
+
     <!-- App css -->
     <link href="<?php echo base_url() ?>assets/css/bootstrap-creative.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
     <link href="<?php echo base_url() ?>assets/css/app-creative.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
@@ -56,6 +59,7 @@
                     <div class="collapse navbar-collapse" id="topnav-menu-content">
 
                         <ul class="navbar-nav">
+
 
                             <li class="nav-item ">
                                 <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>" id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -291,12 +295,53 @@
                                     <font face="Verdana" size="2.5">Logout</font>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled">
 
-                            <li class="nav-item ml-4">
-                                <a style="color:dodgerblue" class="nav-link dropdown-toggle arrow-none" id="topnav-dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled">
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled">
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled">
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled">
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled">
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link disabled">
+
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Login/logout') ?>">
+
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <div style="color:dodgerblue" class="nav-link disabled" id="topnav-dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fe-user info mr-1"></i>
                                     <font face="Verdana" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font>
-                                </a>
+
+                                </div>
                             </li>
 
                         </ul> <!-- end navbar-->
@@ -312,6 +357,7 @@
         <!-- JQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
+        <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/libs/select2/js/select2.min.js"></script>
 

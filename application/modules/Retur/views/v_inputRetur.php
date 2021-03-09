@@ -4,20 +4,20 @@
         <div class="col-md">
             <div class="widget-rounded-circle card-box mt-2">
                 <h4 class="header-title"><?= $title ?></h4>
-                <p class="sub-header">
+                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                     Retur Bukti Keluar Barang
                 </p>
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-3 col-form-label">No Retur <span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No&nbsp;Retur&nbsp;<span class="required">*</span>
                             </label>
                             <label class="col-md-4 col-sm-6 col-xs-12" id="lbl_no_ret">-</label>
                         </div>
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">Tgl Retur <span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Retur<span class="required">*</span>
                             </label>
-                            <div class="col-6">
+                            <div class="col-md-7">
                                 <input id="txt_tgl_retur" name="txt_tgl_retur" class="form-control bg-light" value="<?= date('Y-m-d'); ?>" required="required" type="date">
                             </div>
                         </div>
@@ -25,14 +25,14 @@
 
                     <div class="col-md-4">
                         <div class="form-group row mb-1">
-                            <label class="col-3 col-form-label">No BKB <span class="required">*</span>
+                            <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No&nbsp;BKB&nbsp;<span class="required">*</span>
                             </label>
                             <div class="col-md-6">
                                 <input id="txt_no_bkb" name="txt_no_bkb" class="form-control" required="required" type="text" onfocus="getListBKB()" onkeypress="getEventBKB(event,this.value)" placeholder="No BKB">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-3 col-form-label">No BA <span class="required">*</span>
+                            <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No&nbsp;BA<span class="required">*</span>
                             </label>
                             <div class="col-md-8">
                                 <input id="txt_no_ba" name="txt_no_ba" class="form-control" required="required" type="text" placeholder="No BA">
@@ -42,14 +42,14 @@
 
                     <div class="col-md-4">
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label">No Ref BKB <span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No&nbsp;Ref&nbsp;BKB&nbsp;<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
                                 <input id="txt_no_ref_bkb" name="txt_no_ref_bkb" class="form-control" required="required" type="text" readonly="" placeholder="No Ref BKB">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-4 col-form-label">Keterangan <span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan&nbsp;<span class="required">*</span>
                             </label>
                             <div class="col-md col-sm col-xs-12">
                                 <textarea class="resizable_textarea form-control" id="txt_keterangan" rows="1" name="txt_keterangan" placeholder="Keterangan"></textarea>
@@ -64,14 +64,14 @@
                         <thead>
                             <tr>
                                 <th width="3%"></th>
-                                <th width="25%">Barang</th>
-                                <th width="10%">Afd/Unit</th>
-                                <th width="8%">Blok/Sub</th>
-                                <th width="20%">Kode Beban</th>
-                                <th width="25%">Sub Beban</th>
-                                <th width="8%">Qty Retur</th>
+                                <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang</th>
+                                <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Afd/Unit</th>
+                                <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"> Blok/Sub</th>
+                                <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Beban</th>
+                                <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Sub Beban</th>
+                                <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty Retur</th>
                                 <!-- <th width="8%">Qty Dikeluarkan</th> -->
-                                <th width="25%">Keterangan</th>
+                                <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
                                 <th></th>
                             </tr>
                         </thead>
