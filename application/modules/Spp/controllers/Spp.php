@@ -235,40 +235,75 @@ class Spp extends CI_Controller
             'nama_main' => "",
         ];
 
-        // $data = [
-        //     'devisi' => $this->input->post('devisi'),
-        //     'jenis_spp' => $this->input->post('jenis_spp')
-
-        // ];
-
         $data = $this->M_spp->saveSpp($data_ppo);
         $data2 = $this->M_spp->saveSpp2($data_item_ppo);
 
-        // if ($data) {
-        //     $bool_ppo = TRUE;
-        // } else {
-        //     $bool_ppo = FALSE;
-        // }
+        // cari id terakhir
+        $user = $this->session->userdata('user');
+        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE user = '$user'";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_ppo = $generate_id->id_ppo;
 
-        // if ($data2) {
-        //     $bool_itemppo = TRUE;
-        // } else {
-        //     $bool_itemppo = FALSE;
-        // }
-
-        // if ($bool_ppo == TRUE and $bool_itemppo == TRUE) {
-        //     $data3 =  array('status' => TRUE, 'no_spp' => $nospp, 'no_ref_ppo' => $noref);
-        // } else {
-        //     return FALSE;
-        // }
+        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE user = '$user'";
+        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
+        $id_item_ppo = $generate_id_item->id_item_ppo;
 
         $data_return = [
             'data' => $data,
             'data2' => $data2,
             'nospp' => $nospp,
             'noref' => $noref,
+            'id_ppo' => $id_ppo,
+            'id_item_ppo' => $id_item_ppo,
         ];
         echo json_encode($data_return);
+    }
+
+    public function updateSpp()
+    {
+        $data['nama_dept'] = $this->M_spp->namaDept($this->input->post("cmb_departemen"));
+
+        $tgl_trm = date("Y-m-d", strtotime($this->input->post('txt_tgl_terima')));
+
+        // cari id terakhir
+        $user = $this->session->userdata('user');
+        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE user = '$user'";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_ppo = $generate_id->id_ppo;
+
+        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE user = '$user'";
+        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
+        $id_item_ppo = $generate_id_item->id_item_ppo;
+
+        // var_dump($id_ppo);
+        // var_dump($id_item_ppo);
+        // // var_dump($user);
+        // die;
+
+        $data_ppo = [
+            'jenis' => $this->input->post('cmb_jenis_permohonan'),
+            'tgltrm' => $tgl_trm . date(" H:i:s"),
+            'kodedept' => $this->input->post('txt_kode_departemen'),
+            'namadept' => $data['nama_dept']['nama'],
+            'ket' => $this->input->post('txt_keterangan'),
+        ];
+
+        $data_item_ppo = [
+            'kodedept' => $this->input->post('txt_kode_departemen'),
+            'namadept' => $data['nama_dept']['nama'],
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'stok' => $this->input->post('hidden_stok'),
+            'ket' => $this->input->post('txt_keterangan_rinci'),
+        ];
+
+        $data = $this->M_spp->updateSpp($id_ppo, $data_ppo);
+        $data2 = $this->M_spp->updateSpp2($id_item_ppo, $data_item_ppo);
+
+        echo json_encode($data, $data2);
     }
 
     public function sppApproval()
