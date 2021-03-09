@@ -114,6 +114,11 @@ class M_po extends CI_Model
         $data = $this->db->query($query)->result_array();
         return $data;
     }
+
+    public function saveSpp($datainsert, $datainsertitem)
+    {
+        # code...
+    }
 }
 
 /* End of file M_po.php */

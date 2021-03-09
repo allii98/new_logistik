@@ -8,11 +8,17 @@ class Po extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+
         $this->load->model('M_po');
         $db_pt = check_db_pt();
-
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
+        if (!$this->session->userdata('id_user')) {
+            $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
+            $this->session->set_flashdata('pesan', $pemberitahuan);
+            redirect('Login');
+        }
+        date_default_timezone_set('Asia/Jakarta');
     }
 
     function get_ajax()
@@ -305,6 +311,246 @@ class Po extends CI_Controller
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
             'konversi' => "0"
         ];
+
+        $data1 = $this->db->insert('po', $datainsert);
+        $data2 = $this->db->insert('item_po', $datainsertitem);
+
+        $data_return = [
+            'data' => $data1,
+            'data2' => $data2,
+            'nopo' => $no_po,
+            'noref' => $norefpo,
+            'id_po' => $no_id,
+            'id_item' => $no_id_item,
+        ];
+
+
+        // $data = $this->M_po->savePO($datainsert, $datainsertitem);
+        echo json_encode($data_return);
+    }
+
+
+    public function update()
+    {
+        $lokasibuatspp = substr($this->input->post('hidden_no_ref'), 0, 3);
+        switch ($lokasibuatspp) {
+            case 'PST': // HO
+                $lokasispp = 1;
+                break;
+            case 'ROM': // RO
+                $lokasispp = 2;
+                break;
+            case 'EST': // SITE
+                $lokasispp = 3;
+                break;
+            case 'FAC': // PKS
+                $lokasispp = 6;
+                break;
+            default:
+                break;
+        }
+
+        $lokasibuatpo = $this->session->userdata('status_lokasi');
+        switch ($lokasibuatpo) {
+            case 'HO':
+                $lokasipo = 1;
+                $kodepo = "BWJ";
+                break;
+            case 'RO':
+                $lokasipo = 2;
+                $kodepo = "PKY";
+                break;
+            case 'SITE':
+                $lokasipo = 3;
+                $kodepo = "SWJ";
+                break;
+            case 'PKS':
+                $lokasipo = 6;
+                $kodepo = "SWJ";
+                break;
+            default:
+                break;
+        }
+
+        $key = $lokasispp . $lokasipo;
+
+        $query_po = "SELECT MAX(SUBSTRING(nopotxt, 3)) as maxpo from po WHERE nopotxt LIKE '$key%'";
+        $generate_po = $this->db_logistik_pt->query($query_po)->row();
+        $noUrut = (int)($generate_po->maxpo);
+        $noUrut++;
+        $print = sprintf("%05s", $noUrut);
+
+        // Est/swj/PO-Lokal/11/18/00034 atau Fac/swj/jkt/12/18/6100005 atau Est-POA/swj/jkt/12/18/6100004
+        // $no_po = $lokasispp.$lokasipo.$print;
+
+        $no_id = $this->input->post('hidden_id_po');
+        $no_id_item = $this->input->post('hidden_id_po_item');
+        $norefpo = $this->input->post('hidden_no_ref_po');
+        $no_po = $this->input->post('hidden_no_po');
+
+        $tgl_po = date("Y-m-d", strtotime($this->input->post('txt_tgl_po')));
+        $tgl_po_txt = date("Ymd", strtotime($this->input->post('txt_tgl_po')));
+
+        $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
+        $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
+
+        $tgl_ref = date("Y-m-d", strtotime($this->input->post('hidden_tgl_ref')));
+        $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
+
+        if ($this->input->post('cmb_dikirim_ke_kebun') == 'Y') {
+            $dikirim_ke_kebun = 1;
+        } else {
+            $dikirim_ke_kebun = 0;
+        }
+
+        // $user = $this->session->userdata('user');
+        // $ip = $this->input->ip_address();
+        // $platform = $this->platform->agent();
+
+        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00") {
+            $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+            $disc = $this->input->post('txt_disc') / 100;
+            $jumharga = $qty_harga - ($qty_harga * $disc);
+        } else {
+            $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+        }
+
+        // $hidden_jenis_spp = $this->input->post('hidden_jenis_spp');
+        // $kodebar = $this->input->post('hidden_kode_brg');
+        // $nabar = $this->input->post('hidden_nama_brg');
+
+        $dataupdate = [
+            'kd_dept' => $this->input->post('hidden_kode_departemen'),
+            'ket_dept' => $this->input->post('hidden_departemen'),
+            'grup' => $this->input->post('cmb_jenis_budget'),
+            'kode_budet' => "0",
+            'kd_subbudget' => "0",
+            'ket_subbudget' => NULL,
+            'kode_supply' => $this->input->post('txt_kode_supplier'),
+            'nama_supply' => $this->input->post('txt_supplier'),
+            'kode_pemesan' => $this->input->post('txt_kode_pemesan'),
+            'pemesan' => $this->input->post('txt_pemesan'),
+            'nopo' => $no_po,
+            'nopotxt' =>  $no_po,
+            'noppo' => "0",
+            'noppotxt' => "0",
+            'noppotxt' => $this->input->post('hidden_no_ref'),
+            'no_refppo' => $this->input->post('hidden_no_ref'),
+            'tgl_refppo' => $tgl_ref,
+            'tgl_reftxt' => $tgl_ref_txt,
+            'tglpo' => $tgl_po,
+            'tglpotxt' => $tgl_po_txt,
+            'tglppo' => $tgl_ppo,
+            'tglppotxt' =>  $tgl_ppo_txt,
+            'bayar' => $this->input->post('cmb_status_bayar'),
+            'tempo_bayar' => $this->input->post('txt_tempo_pembayaran'),
+            'lokasikirim' => $this->input->post('txt_lokasi_pengiriman'),
+            'tempo_kirim' => $this->input->post('txt_tempo_pengiriman'),
+            'lokasi_beli' => $this->input->post('cmb_lokasi_pembelian'),
+            'ket' => $this->input->post('txt_keterangan'),
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+
+
+            'ket_acc' => $this->input->post('txt_no_penawaran'),
+            'periode' => date('Y-m-d H:i:s'),
+            'periodetxt' => date('Ym'),
+            'thn' => date('Y'),
+            'tglisi' => date('Y-m-d H:i:s'),
+            'user' => $this->session->userdata('user'),
+            'ppn' =>  $this->input->post('cmb_ppn'),
+            'totalbayar' =>  $this->input->post('txt_total_pembayaran'),
+            'ket_kirim' => $this->input->post('txt_ket_pengiriman'),
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'noreftxt' => $norefpo,
+            'uangmuka' => $this->input->post('txt_uang_muka'),
+            'voucher' => $this->input->post('txt_no_voucher'),
+            'terbayar' => "0",
+            'nopp' => NULL,
+            'batal' => "0",
+            'kirim' => $dikirim_ke_kebun
+        ];
+
+
+
+        $dataupdateitem = [
+            'nopo' => $no_po,
+            'nopotxt' => $no_po,
+            'noppo' => $this->input->post('txt_no_spp'),
+            'noppotxt' => $this->input->post('txt_no_spp'),
+            'refppo' => $this->input->post('hidden_no_ref'),
+            'tglppo' => $tgl_ppo,
+            'tglppotxt' => $tgl_ppo_txt,
+            'tglpo' => $tgl_po,
+            'tglpotxt' => $tgl_po_txt,
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'harga' => $this->input->post('txt_harga'),
+            'jumharga' => $jumharga,
+            'kodept' => $this->input->post('hidden_kodept'),
+            'namapt' => $this->input->post('hidden_namapt'),
+            'periode' => date('Y-m-d H:i:s'),
+            'periodetxt' => date('Ym'),
+            'thn' => date('Y'),
+            'merek' => $this->input->post('txt_merk'),
+            'tglisi' => date('Y-m-d H:i:s'),
+            'user' => $this->session->userdata('user'),
+            'ket' => $this->input->post('txt_keterangan_rinci'),
+            'noref' => $norefpo,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'hargasblm' => $this->input->post('txt_harga'),
+            'disc' => $this->input->post('txt_disc'),
+            'kurs' => $this->input->post('cmb_kurs'),
+            'kode_budget' => "0",
+            'grup' => $this->input->post('cmb_jenis_budget'),
+            'main_acct' => "0",
+            'nama_main' => NULL,
+            'batal' => "0",
+            'cek_pp' => "0",
+            'KODE_BPO' => "0",
+            'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
+            'kode_bebanbpo' => Null,
+            'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
+            'konversi' => "0"
+        ];
+
+        // update po
+        $this->db->where('id', $no_id);
+        $updatepo = $this->update('po', $dataupdate);
+        // update item
+        $this->db->where('id', $no_id);
+        $updateitem = $this->update('item_po', $dataupdateitem);
+
+        $data_return = [
+            'data' => $updatepo,
+            'data2' => $updateitem,
+            'nopo' => $no_po,
+            'noref' => $norefpo,
+            'id_po' => $no_id,
+            'id_item' => $no_id_item,
+        ];
+
+
+        // $data = $this->M_po->savePO($datainsert, $datainsertitem);
+        echo json_encode($data_return);
+    }
+
+    function cancel_ubah_rinci()
+    {
+        $id_po         = $this->input->post('hidden_id_po');
+        $id_po_item = $this->input->post('hidden_id_po_item');
+        $no_ref_po  = $this->input->post('hidden_no_ref_po');
+
+        $query = "SELECT id, nopotxt, noppotxt, refppo, kodebartxt, nabar, sat, qty, harga, jumharga, ket, noref, hargasblm, disc, kurs, grup, jumlahbpo, nama_bebanbpo, merek FROM item_po WHERE id = '$id_po_item' AND noref = '$no_ref_po'";
+
+        $data = $this->db_logistik_pt->query($query)->result();
+        /*var_dump($id_po);
+		var_dump($id_po_item);
+		var_dump($no_ref_po);*/
+        echo json_encode($data);
     }
 }
 
