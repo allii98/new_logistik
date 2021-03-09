@@ -295,54 +295,14 @@
                                     <font face="Verdana" size="2.5">Logout</font>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
 
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Login/logout') ?>">
-
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
+                            <!-- <li class="nav-item">
                                 <div style="color:dodgerblue" class="nav-link disabled" id="topnav-dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fe-user info mr-1"></i>
                                     <font face="Verdana" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font>
 
                                 </div>
-                            </li>
+                            </li> -->
 
                         </ul> <!-- end navbar-->
                     </div> <!-- end .collapsed-->
