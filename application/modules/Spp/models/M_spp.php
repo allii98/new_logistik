@@ -99,6 +99,14 @@ class M_spp extends CI_Model
         return $this->db_logistik_pt->get()->result_array();
     }
 
+    public function namaDept($kd_dept)
+    {
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->where('kode', $kd_dept);
+        $this->db_logistik_pt->from('dept');
+        return $this->db_logistik_pt->get()->row_array();
+    }
+
     public function stokAwal($kd_bar)
     {
         $this->db_logistik_pt->select('saldoawal_qty');
@@ -123,10 +131,14 @@ class M_spp extends CI_Model
         return $this->db_logistik_pt->get()->row();
     }
 
-    public function saveSpp($data)
+    public function saveSpp($data_ppo)
     {
+        return $this->db_logistik_pt->insert('ppo', $data_ppo);
+    }
 
-        return $this->db_logistik_pt->insert('ppo', $data);
+    public function saveSpp2($data_item_ppo)
+    {
+        return $this->db_logistik_pt->insert('item_ppo', $data_item_ppo);
     }
 }
 
