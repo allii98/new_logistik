@@ -59,14 +59,17 @@
 
                             <li class="nav-item ">
                                 <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>" id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-airplay mr-1"></i> Dashboards
+                                    <i class="fe-airplay mr-1"></i>
+                                    <font face="Verdana" size="2.5">Dashboards</font>
                                 </a>
 
                             </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-apps" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-grid mr-1"></i> Menu Transaksi <div class="arrow-down"></div>
+                                    <i class="fe-grid mr-1"></i>
+                                    <font face="Verdana" size="2.5">Menu Transaksi</font>
+                                    <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-apps">
 
@@ -74,76 +77,118 @@
                                         <a href="apps-chat.html" class="dropdown-item"><i class="fe-message-square mr-1"></i> Chat</a> -->
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-ecommerce" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-clipboard-multiple-outline mr-1"></i> SPP <div class="arrow-down"></div>
+                                            <i class="mdi mdi-clipboard-multiple-outline mr-1"></i>
+                                            <font face="Verdana" size="2.5">SPP</font>
+                                            <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
-                                            <a href="<?= base_url('Spp/sppBaru') ?>" class="dropdown-item">SPP Baru</a>
-                                            <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">SPP
-                                                Approval</a>
-                                            <a href="<?= base_url('Spp'); ?>" class="dropdown-item">Semua Data
-                                                SPP</a>
+                                            <a href="<?= base_url('Spp/sppBaru') ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">SPP Baru</font>
+                                            </a>
+                                            <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">SPP
+                                                    Approval</font>
+                                            </a>
+                                            <a href="<?= base_url('Spp'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Semua Data
+                                                    SPP</font>
+                                            </a>
 
                                         </div>
                                     </div>
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-clipboard-arrow-up-outline mr-1"></i> PO <div class="arrow-down"></div>
+                                            <i class="mdi mdi-clipboard-arrow-up-outline mr-1"></i>
+                                            <font face="Verdana" size="2.5">PO</font>
+                                            <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                            <a href="<?= base_url('po/input') ?>" class="dropdown-item">Input PO</a>
-                                            <a href="<?= base_url('po') ?>" class="dropdown-item">Data PO</a>
+                                            <a href="<?= base_url('po/input') ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input PO</font>
+                                            </a>
+                                            <a href="<?= base_url('po') ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Data PO</font>
+                                            </a>
                                         </div>
                                     </div>
 
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-clipboard-arrow-down-outline mr-1"></i> LPB <div class="arrow-down"></div>
+                                            <i class="mdi mdi-clipboard-arrow-down-outline mr-1"></i>
+                                            <font face="Verdana" size="2.5">LPB</font>
+                                            <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('lpb/input'); ?>" class="dropdown-item">Input LPB</a>
-                                            <a href="<?= base_url('lpb'); ?>" class="dropdown-item">Data LPB</a>
+                                            <a href="<?= base_url('lpb/input'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input LPB</font>
+                                            </a>
+                                            <a href="<?= base_url('lpb'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Data LPB</font>
+                                            </a>
                                         </div>
                                     </div>
 
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-vote-outline mr-1"></i> BPB <div class="arrow-down"></div>
+                                            <i class="mdi mdi-vote-outline mr-1"></i>
+                                            <font face="Verdana" size="2.5"> BPB</font>
+                                            <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('bpb/input'); ?>" class="dropdown-item">Input BPB</a>
-                                            <a href="<?= base_url('bpb'); ?>" class="dropdown-item">Data BPB</a>
+                                            <a href="<?= base_url('bpb/input'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input BPB</font>
+                                            </a>
+                                            <a href="<?= base_url('bpb'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Data BPB</font>
+                                            </a>
                                         </div>
                                     </div>
 
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i> BKB <div class="arrow-down">
+                                            <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i>
+                                            <font face="Verdana" size="2.5"> BKB</font>
+                                            <div class="arrow-down">
                                             </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('bkb/input'); ?>" class="dropdown-item">Input BKB</a>
-                                            <a href="<?= base_url('bkb'); ?>" class="dropdown-item">Data BKB</a>
-                                            <a href="<?= base_url('bkb/menunggu_approval'); ?>" class="dropdown-item">Approval Rev Qty</a>
+                                            <a href="<?= base_url('bkb/input'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input BKB</font>
+                                            </a>
+                                            <a href="<?= base_url('bkb'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Data BKB</font>
+                                            </a>
+                                            <a href="<?= base_url('bkb/menunggu_approval'); ?>" class="dropdown-item">Approval Rev Qty</font></a>
                                         </div>
                                     </div>
 
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-cash-multiple mr-1"></i> PP <div class="arrow-down"></div>
+                                            <i class="mdi mdi-cash-multiple mr-1"></i>
+                                            <font face="Verdana" size="2.5"> PP</font>
+                                            <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('pp/input'); ?>" class="dropdown-item">Input PP</a>
-                                            <a href="<?= base_url('pp'); ?>" class="dropdown-item">Data PP</a>
+                                            <a href="<?= base_url('pp/input'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input PP</font>
+                                            </a>
+                                            <a href="<?= base_url('pp'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Data PP</font>
+                                            </a>
                                         </div>
                                     </div>
 
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-backburger mr-1"></i> Retur <div class="arrow-down">
+                                            <i class="mdi mdi-backburger mr-1"></i>
+                                            <font face="Verdana" size="2.5">SRetur</font>
+                                            <div class="arrow-down">
                                             </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="#" class="dropdown-item">Retur BKB</a>
+                                            <a href="#" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Retur BKB</font>
+                                            </a>
                                         </div>
                                     </div>
 
@@ -152,69 +197,105 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="mdi mdi-file-multiple-outline mr-1"></i> Laporan <div class="arrow-down">
+                                    <i class="mdi mdi-file-multiple-outline mr-1"></i>
+                                    <font face="Verdana" size="2.5">Laporan </font>
+                                    <div class="arrow-down">
                                     </div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
                                     <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-table-outline mr-1"></i>
-                                        Laporan Barang</a>
+                                        <font face="Verdana" size="2.5">Laporan Barang</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-outline mr-1"></i>
-                                        Surat Permintaan Pembelian (SPP)</a>
+                                        <font face="Verdana" size="2.5">Surat Permintaan Pembelian (SPP)</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-upload-outline mr-1"></i>
-                                        Purchase Order (PO)</a>
+                                        <font face="Verdana" size="2.5">Purchase Order (PO)</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-download-outline mr-1"></i>
-                                        Permohonan Pembayaran (PP)</a>
+                                        <font face="Verdana" size="2.5">Permohonan Pembayaran (PP)</font>
+                                    </a>
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fe-bookmark mr-1"></i> Analisa <div class="arrow-down"></div>
+                                            <i class="fe-bookmark mr-1"></i>
+                                            <font face="Verdana" size="2.5">Analisa</font>
+                                            <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-form">
-                                            <a href="forms-elements.html" class="dropdown-item">SPP vs PO</a>
-                                            <a href="forms-advanced.html" class="dropdown-item">LPB vs PO</a>
-                                            <a href="forms-validation.html" class="dropdown-item">Durasi Transaksi</a>
+                                            <a href="forms-elements.html" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">SPP vs PO</font>
+                                            </a>
+                                            <a href="forms-advanced.html" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">LPB vs PO</font>
+                                            </a>
+                                            <a href="forms-validation.html" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Durasi Transaksi</font>
+                                            </a>
                                         </div>
                                     </div>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Laporan Penerimaan Barang (LPB)</a>
+                                        <font face="Verdana" size="2.5">Laporan Penerimaan Barang (LPB)</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Bukti Keluar Barang (BKB)</a>
+                                        <font face="Verdana" size="2.5">Bukti Keluar Barang (BKB)</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Laporan Register Stok Harian</a>
+                                        <font face="Verdana" size="2.5">Laporan Register Stok Harian</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Laporan Rincian Stok</a>
+                                        <font face="Verdana" size="2.5">Laporan Rincian Stok</font>
+                                    </a>
                                 </div>
                             </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-components" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-layers mr-1"></i> Posting <div class="arrow-down"></div>
+                                    <i class="fe-layers mr-1"></i>
+                                    <font face="Verdana" size="2.5">Posting</font>
+                                    <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Hitung Ulang Stok</a>
+                                        <font face="Verdana" size="2.5">Hitung Ulang Stok</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Transfer Transaksi ke GL</a>
+                                        <font face="Verdana" size="2.5">Transfer Transaksi ke GL</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Tutup Buku</a>
+                                        <font face="Verdana" size="2.5">Tutup Buku</font>
+                                    </a>
                                 </div>
                             </li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-package mr-1"></i> Master <div class="arrow-down"></div>
+                                    <i class="fe-package mr-1"></i>
+                                    <font face="Verdana" size="2.5">Master</font>
+                                    <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Kode Barang</a>
+                                        <font face="Verdana" size="2.5">Kode Barang</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Input Stok Awal</a>
+                                        <font face="Verdana" size="2.5">Input Stok Awal</font>
+                                    </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
-                                        Laporan Rinci Stok</a>
+                                        <font face="Verdana" size="2.5">Laporan Rinci Stok</font>
+                                    </a>
                                 </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Login/logout') ?>">
-                                    <i class="mdi mdi-logout mr-1"></i> Logout
+                                    <i class="mdi mdi-logout mr-1"></i>
+                                    <font face="Verdana" size="2.5">Logout</font>
+                                </a>
+                            </li>
+
+                            <li class="nav-item ml-4">
+                                <a style="color:dodgerblue" class="nav-link dropdown-toggle arrow-none" id="topnav-dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fe-user info mr-1"></i>
+                                    <font face="Verdana" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font>
                                 </a>
                             </li>
 
@@ -252,9 +333,14 @@
                     <div class="row">
                         <div class="col-md-9"></div>
                         <div class="col-md-3">
+                            <font face="Verdana" size="2.5">MIS</font>
+                            @
                             <script>
                                 document.write(new Date().getFullYear())
-                            </script> &copy; Copyright <a href="http://msalgroup.com">PT Mulia Sawit Agro Lestari</a>
+                            </script>
+                            <a href="http://msalgroup.com">
+                                <font face="Verdana" size="2.5">MSAL GROUP</font>
+                            </a>
                         </div>
                     </div>
                 </div>
