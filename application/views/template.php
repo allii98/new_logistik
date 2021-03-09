@@ -61,12 +61,11 @@
                         <ul class="navbar-nav">
 
 
-                            <li class="nav-item ">
-                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>" id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <li class="nav-item">
+                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>">
                                     <i class="fe-airplay mr-1"></i>
                                     <font face="Verdana" size="2.5">Dashboards</font>
                                 </a>
-
                             </li>
 
                             <li class="nav-item dropdown">
@@ -185,12 +184,12 @@
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="mdi mdi-backburger mr-1"></i>
-                                            <font face="Verdana" size="2.5">SRetur</font>
+                                            <font face="Verdana" size="2.5">Retur</font>
                                             <div class="arrow-down">
                                             </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="#" class="dropdown-item">
+                                            <a href="<?= base_url('retur/input'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Retur BKB</font>
                                             </a>
                                         </div>
@@ -295,57 +294,12 @@
                                     <font face="Verdana" size="2.5">Logout</font>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link disabled">
-
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Login/logout') ?>">
-
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <div style="color:dodgerblue" class="nav-link disabled" id="topnav-dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-user info mr-1"></i>
-                                    <font face="Verdana" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font>
-
-                                </div>
-                            </li>
-
                         </ul> <!-- end navbar-->
                     </div> <!-- end .collapsed-->
+                    <div style="color:dodgerblue;" class="collapse navbar-collapse">
+                        <i class="fas fa-user-circle mr-2"></i>
+                        <font face="Verdana" size="2.5" class="text-left">Hai, <?= $this->session->userdata('user'); ?></font>
+                    </div>
                 </nav>
             </div> <!-- end container-fluid -->
         </div> <!-- end topnav-->
