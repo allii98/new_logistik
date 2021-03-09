@@ -265,20 +265,8 @@ class Spp extends CI_Controller
 
         $tgl_trm = date("Y-m-d", strtotime($this->input->post('txt_tgl_terima')));
 
-        // cari id terakhir
-        $user = $this->session->userdata('user');
-        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE user = '$user'";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_ppo = $generate_id->id_ppo;
-
-        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE user = '$user'";
-        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
-        $id_item_ppo = $generate_id_item->id_item_ppo;
-
-        // var_dump($id_ppo);
-        // var_dump($id_item_ppo);
-        // // var_dump($user);
-        // die;
+        $id_ppo = $this->input->post('hidden_id_ppo');
+        $id_item_ppo = $this->input->post('hidden_id_item_ppo');
 
         $data_ppo = [
             'jenis' => $this->input->post('cmb_jenis_permohonan'),

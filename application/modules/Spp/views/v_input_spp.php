@@ -474,7 +474,9 @@
                 hidden_satuan_brg: $('#hidden_satuan_brg').val(),
                 txt_qty: $('#txt_qty').val(),
                 hidden_stok: $('#hidden_stok').val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci').val()
+                txt_keterangan_rinci: $('#txt_keterangan_rinci').val(),
+                hidden_id_ppo: $('#hidden_id_ppo').val(),
+                hidden_id_item_ppo: $('#hidden_id_item_ppo').val()
             },
 
             success: function(data) {
