@@ -115,9 +115,27 @@ class M_po extends CI_Model
         return $data;
     }
 
-    public function saveSpp($datainsert, $datainsertitem)
+    public function namaDept($kd_dept)
     {
-        # code...
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->where('kode', $kd_dept);
+        $this->db_logistik_pt->from('dept');
+        return $this->db_logistik_pt->get()->row_array();
+    }
+
+    public function updatePO($no_id, $dataupdate)
+    {
+        $this->db_logistik_pt->where('id', $no_id);
+        $this->db_logistik_pt->update('po', $dataupdate);
+
+        return TRUE;
+    }
+    public function updateItem($no_id_item, $dataupdateitem)
+    {
+        $this->db_logistik_pt->where('id', $no_id_item);
+        $this->db_logistik_pt->update('item_po',  $dataupdateitem);
+
+        return TRUE;
     }
 }
 

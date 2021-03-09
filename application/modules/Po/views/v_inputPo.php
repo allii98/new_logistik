@@ -185,7 +185,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     <div class="x_content div_form_2">
 
 
-                        <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... <br /> No. Ref SPP : ...</label>
+                        <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... <br /> No. Ref PO : ...</label>
                         <h6 id="h4_no_po" name="h4_no_po"></h6>
                         <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                         <input type="hidden" id="hidden_no_po" name="hidden_no_po">
@@ -307,9 +307,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                 <!-- <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan"></button> -->
                                                 <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
+                                                <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
                                                 <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"></button>
+                                                <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"></button>
                                                 <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
                                             </td>
                                         </form>
@@ -500,14 +500,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
 
             data: {
-                hidden_kode_departemen: $('#hidden_kd_departemen_').val(),
+                hidden_kode_departemen: $('#hidden_kd_departemen_1').val(),
                 hidden_departemen: $('#hidden_departemen_1').val(),
                 cmb_jenis_budget: $('#cmb_jenis_budget_1').val(),
                 txt_kode_supplier: $('#kd_supplier').val(),
                 txt_supplier: $('#txtsupplier').val(),
                 txt_kode_pemesan: $('#txt_kode_pemesan').val(),
                 txt_pemesan: $('#txt_pemesan').val(),
-                hidden_no_ref: $('#hidden_no_ref_po').val(),
+                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
                 cmb_status_bayar: $('#cmb_status_bayar').val(),
                 txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
                 txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
@@ -545,10 +545,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#lbl_status_simpan_1').append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
 
                     $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                    $('.div_form_1').find('input,textarea,select').attr('class', 'form-control bg-light');
+                    $('.div_form_1').find('input,textarea,select').addClass('class', 'form-control bg-light');
 
                     $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-                    $('#tableRinciPO').find('input,textarea,select').attr('class', 'form-control bg-light');
+                    $('#tableRinciPO').find('input,textarea,select').addClass('class', 'form-control bg-light');
 
                     // $('#tableRinciPO tbody #tr_' + ' td').find('#btn_simpan_' + ',#txt_no_spp_').attr('disabled', '');
                     $('#btn_simpan_1').hide();
@@ -563,6 +563,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#h4_no_ref_po').html('No. Ref PO : ' + data.noref);
                     $('#hidden_no_ref_po').val(data.noref);
                     $('#hidden_id_po').val(data.id_po);
+                    $('#hidden_id_po_item_1').val(data.id_item);
 
 
 
@@ -583,8 +584,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     //GET UPDATE
     $('#btn_ubah_1').on('click', function() {
 
-        $('.div_form_1').find('input,textarea').removeAttr('readonly');
-        $('.div_form_1').find('select').removeAttr('disabled');
+        $('.div_form_1').find('input,textarea,select').removeAttr('disabled');
         $('.div_form_1').find('input,textarea,select').removeClass('bg-light');
 
         $('#tableRinciPO').find('input,textarea').removeAttr('disabled');
@@ -616,14 +616,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             data: {
                 hidden_id_po: $('#hidden_id_po').val(),
-                hidden_kode_departemen: $('#hidden_kd_departemen_').val(),
+                hidden_no_po: $('#hidden_no_po').val(),
+                hidden_id_po_item: $('#hidden_id_po_item_1').val(),
+                hidden_kode_departemen: $('#hidden_kd_departemen_1').val(),
                 hidden_departemen: $('#hidden_departemen_1').val(),
                 cmb_jenis_budget: $('#cmb_jenis_budget_1').val(),
                 txt_kode_supplier: $('#kd_supplier').val(),
                 txt_supplier: $('#txtsupplier').val(),
                 txt_kode_pemesan: $('#txt_kode_pemesan').val(),
                 txt_pemesan: $('#txt_pemesan').val(),
-                hidden_no_ref: $('#hidden_no_ref_po').val(),
+                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
                 cmb_status_bayar: $('#cmb_status_bayar').val(),
                 txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
                 txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
@@ -661,29 +663,18 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#lbl_status_simpan_1').append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
 
                     $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                    $('.div_form_1').find('input,textarea,select').attr('class', 'form-control bg-light');
+                    $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
                     $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-                    $('#tableRinciPO').find('input,textarea,select').attr('class', 'form-control bg-light');
+                    $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
 
                     // $('#tableRinciPO tbody #tr_' + ' td').find('#btn_simpan_' + ',#txt_no_spp_').attr('disabled', '');
                     $('#btn_simpan_1').hide();
                     $('#btn_hapus_row').hide();
+                    $('#btn_update_1').hide();
+                    $('#btn_cancel_update_1').hide();
                     $('#btn_ubah_1').show();
                     $('#btn_hapus_1').show();
-                    // console.log(response);
-
-                    $('#h4_no_po').html('No. PO : ' + data.nopo);
-                    $('#hidden_no_po').val(data.nopo);
-                    $('#lbl_spp_status').empty();
-                    $('#h4_no_ref_po').html('No. Ref PO : ' + data.noref);
-                    $('#hidden_no_ref_po').val(data.noref);
-                    $('#hidden_id_po').val(data.id_po);
-
-
-
-
-
 
                 } else {
                     $('#lbl_status_simpan_').empty();
