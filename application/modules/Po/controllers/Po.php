@@ -327,6 +327,7 @@ class Po extends CI_Controller
     }
 
 
+
     public function update()
     {
 
@@ -464,18 +465,13 @@ class Po extends CI_Controller
         echo json_encode($updatepo, $updateitem);
     }
 
-    function cancel_ubah_rinci()
+    public function cancel_ubah_rinci()
     {
-        $id_po         = $this->input->post('hidden_id_po');
-        $id_po_item = $this->input->post('hidden_id_po_item');
-        $no_ref_po  = $this->input->post('hidden_no_ref_po');
+        $id_po_item = $this->input->post('id_po_item');
+        $id_po         = $this->input->post('id_po');
 
-        $query = "SELECT id, nopotxt, noppotxt, refppo, kodebartxt, nabar, sat, qty, harga, jumharga, ket, noref, hargasblm, disc, kurs, grup, jumlahbpo, nama_bebanbpo, merek FROM item_po WHERE id = '$id_po_item' AND noref = '$no_ref_po'";
+        $data = $this->M_po->cancelUpdateItemPO($id_po_item, $id_po);
 
-        $data = $this->db_logistik_pt->query($query)->result();
-        /*var_dump($id_po);
-		var_dump($id_po_item);
-		var_dump($no_ref_po);*/
         echo json_encode($data);
     }
 }

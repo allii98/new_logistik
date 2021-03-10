@@ -705,7 +705,7 @@
 
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>
-    <script src="<?php echo base_url(); ?>assets/jquerynumber/jquery.number.js"></script>
+
     <!-- Vendor js -->
     <script src="<?php echo base_url() ?>assets/js/vendor.min.js"></script>
     <!-- third party js -->
@@ -725,7 +725,7 @@
     <script src="<?php echo base_url() ?>assets/libs/pdfmake/build/pdfmake.min.js"></script>
     <script src="<?php echo base_url() ?>assets/libs/pdfmake/build/vfs_fonts.js"></script>
     <!-- third party js ends -->
-
+    <script src="<?php echo base_url(); ?>assets/jquerynumber/jquery.number.js"></script>
     <!-- Datatables init -->
     <script src="<?php echo base_url() ?>assets/js/pages/datatables.init.js"></script>
 

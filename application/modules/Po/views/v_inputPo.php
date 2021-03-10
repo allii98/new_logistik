@@ -62,17 +62,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Supplier *</label>
                                 <div class="col-7">
-                                    <!-- <input type="text" class="form-control" id="kd_supp" name="kd_supplier" placeholder="Nama Supplier" autocomplite="off" required> -->
-                                    <!-- <select class="js-data-example-ajax"></select> -->
                                     <select class="js-data-example-ajax form-control select2" id="select2">
                                         <option selected="selected">Nama Supplier</option>
                                     </select>
                                     <input type="hidden" name="kd_supplier" id="kd_supplier">
                                     <input type="hidden" name="txtsupplier" id="txtsupplier">
                                 </div>
-                                <!-- <div class="col-4">
-                                    <input type="text" class="form-control bg-light" id="supplier" name="supplier" placeholder="Supplier" autocomplite="off" readonly>
-                                </div> -->
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Status Bayar*</label>
@@ -86,7 +81,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="form-group row mb-1">
                                 <label class="col-4 col-form-label">Tempo Pembayaran*</label>
                                 <div class="col-2">
-                                    <input type="text" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
+                                    <input type="text" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" autocomplite="off"><span>Hari</span>
                                 </div>
                                 <label class="col-3 col-form-label">Tempo Pengiriman*</label>
                                 <div class="col-2">
@@ -441,6 +436,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 <script>
     function tambah_row(row) {
+        // row++;
         console.log(row);
         var tr_buka = '<tr id="tr_' + row + '">';
         var td_col_1 = '<td width="3%">' +
@@ -538,8 +534,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-        number(row);
-        return true;
+        $('#txt_qty_1' + row).number(true, 2);
     }
 
 
@@ -556,6 +551,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function number(row) {
         $('#txt_qty_1' + row).number(true, 2);
         $('#txt_harga_1' + row + ',#txt_disc_1' + row + ',#txt_biaya_lain_1' + row + ',#txt_jumlah_1' + row).number(true, 2);
+        row++;
     }
 
     function saveRinciEnter(e, no) {
@@ -671,15 +667,48 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#hidden_id_po').val(data.id_po);
                     $('#hidden_id_po_item_1').val(data.id_item);
 
-
-
-
-
-
                 } else {
                     $('#lbl_status_simpan_').empty();
                     $('#lbl_status_simpan_').append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
                 }
+
+
+            }
+        });
+        return false;
+    });
+    //cancle Data
+    $('#btn_cancel_update_1').on('click', function() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Po/cancel_ubah_rinci') ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#lbl_status_simpan_1').empty();
+                $('#lbl_status_simpan_1').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
+            },
+            data: {
+                id_po: $('#hidden_id_po').val(),
+                id_po_item: $('#hidden_id_po_item_1').val(),
+            },
+            success: function(data) {
+                console.log(data);
+                var po = data.data_po;
+                var item = data.data_item_po;
+                $('#tgl_po').append(po.tglpo);
+                $("#cmb_status_bayar").change(function() {
+                    $(this).children("option:selected").val(po.bayar);
+                });
+                $('#tmpo_pembayaran').val(po.tempo_bayar);
+                $('#tmpo_pengiriman').val(po.tempo_kirim);
+                $('#lks_pengiriman').val(po.lokasikirim);
+                $("#lks_pembelian").change(function() {
+                    $(this).children("option:selected").val(po.lokasi_beli);
+                });
+
+
+                $('#lbl_status_simpan_1').empty();
+                $('#lbl_status_simpan_1').append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
 
 
             }
@@ -794,33 +823,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     });
 
 
-    //CANCLE
-    $('#btn_cancel_update_1').on('click', function() {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Po/cancel_ubah_rinci') ?>",
-            dataType: "JSON",
-            beforeSend: function() {
-                $('#lbl_status_simpan_' + no).empty();
-                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
-            },
-
-            data: {
-                hidden_id_po: $('#hidden_id_po').val(),
-                hidden_id_po_item: $('#hidden_id_po_item_').val(),
-                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
-            },
-
-            success: function(data) {
-                $('#lbl_status_simpan_1').empty();
-                $('#lbl_status_simpan_1').append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
-
-            }
-        });
-        return false;
-
-
-    });
 
     // $('#kd_supplier').click(function() {
     //     $("#modal-supllier").modal();
@@ -893,6 +895,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         id: item.id,
                         text: item.noreftxt
                     });
+
                 });
                 return {
                     results: results
