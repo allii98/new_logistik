@@ -259,6 +259,15 @@ class Spp extends CI_Controller
         echo json_encode($data_return);
     }
 
+    public function cancelUpdateItemSpp()
+    {
+        $id_item_ppo = $this->input->post('hidden_id_item_ppo');
+
+        $data = $this->M_spp->cancelUpdateItemSpp($id_item_ppo);
+
+        echo json_encode($data);
+    }
+
     public function updateSpp()
     {
         $data['nama_dept'] = $this->M_spp->namaDept($this->input->post("cmb_departemen"));

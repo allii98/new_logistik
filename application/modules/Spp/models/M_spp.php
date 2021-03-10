@@ -141,6 +141,14 @@ class M_spp extends CI_Model
         return $this->db_logistik_pt->insert('item_ppo', $data_item_ppo);
     }
 
+    public function cancelUpdateItemSpp($id_item_ppo)
+    {
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where('id', $id_item_ppo);
+        return $this->db_logistik_pt->get()->result_array();
+    }
+
     public function updateSpp($id_ppo, $data_ppo)
     {
         $this->db_logistik_pt->where('id', $id_ppo);
