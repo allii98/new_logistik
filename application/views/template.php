@@ -318,6 +318,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
+        <script src="<?php echo base_url(); ?>assets/jquerynumber/jquery.number.js"></script>
 
         <script src="<?php echo base_url() ?>assets/libs/select2/js/select2.min.js"></script>
 
