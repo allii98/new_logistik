@@ -216,7 +216,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <tr id="tr_1">
                                         <td width="3%">
                                             <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                            <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row"></button>
+                                            <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button>
                                             <button style="display:none;" class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row" name="btn_hapus_row" onclick="hapus_row('1')"></button>
                                         </td>
                                         <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
@@ -440,120 +440,108 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     </div>
 </div>
 <script>
-    $(document).ready(function() {
-
-        $('#btn_tambah_row').click(function(row) {
-            console.log(row);
-            var tr_buka = '<tr id="tr_' + row + '">';
-            var td_col_1 = '<td width="3%">' +
-                '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
-                '<button class="btn btn-xs btn-info fa fa-plus"  data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row' + row + '" name="btn_tambah_row"></button>' +
-                '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
-                '</td>';
-            var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
-            var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
-                '<option selected="selected">Cari SPP</option>' +
-
-                '</select>' +
-                '<input type="hidden" id="hidden_no_ref_spp_1' + row + '" name="hidden_no_ref_spp_1' + row + '">' +
-                '<input type="hidden" id="hidden_tgl_ref_1' + row + '" name="hidden_tgl_ref_1' + row + '">' +
-                '<input type="hidden" id="hidden_kd_departemen_1' + row + '" name="hidden_kd_departemen_1' + row + '">' +
-                '<input type="hidden" id="hidden_departemen_1' + row + '" name="hidden_departemen_1' + row + '">' +
-                '<input type="hidden" id="hidden_tgl_spp_1' + row + '" name="hidden_tgl_spp_1' + row + '">' +
-                '<input type="hidden" id="hidden_kd_pt_1' + row + '" name="hidden_kd_pt_1' + row + '">' +
-                '<input type="hidden" id="hidden_nama_pt_1' + row + '" name="hidden_nama_pt_1' + row + '">' +
-                '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
-
-                '</td>';
-            var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<select class="form-control" id="cmb_jenis_budget_1' + row + '" name="cmb_jenis_budget_1' + row + '" required>' +
-                '<option value="">-- Pilih --</option>' +
-                '<option value="TEKNIK">TEKNIK</option>' +
-                '<option value="BIBITAN">BIBITAN</option>' +
-                '<option value="LC & TANAM">LC & TANAM</option>' +
-                '<option value="RAWAT">RAWAT</option>' +
-                '<option value="PANEN">PANEN</option>' +
-                '<option value="TEKNIK">TEKNIK</option>' +
-                '<option value="PABRIK">PABRIK</option>' +
-                '<option value="KANTOR">KANTOR</option>' +
-                '<option value="Kendaraan">Kendaraan</option>' +
-                '<option value="TBM">TBM</option>' +
-                '</select>'; +
+    function tambah_row(row) {
+        console.log(row);
+        var tr_buka = '<tr id="tr_' + row + '">';
+        var td_col_1 = '<td width="3%">' +
+            '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
+            '<button class="btn btn-xs btn-info fa fa-plus"  data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row' + row + '" name="btn_tambah_row"></button>' +
+            '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
             '</td>';
-            var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="text" class="form-control" id="txt_merk_1' + row + '" name="txt_merk_1' + row + '" placeholder="Merk"  required />' +
-                '<input type="hidden" class="form-control" id="hidden_kode_brg_1' + row + '" name="hidden_kode_brg_1' + row + '"   />' +
-                '<input type="hidden" class="form-control" id="hidden_nama_brg_1' + row + '" name="hidden_nama_brg_1' + row + '"   />' +
-                '<input type="hidden" class="form-control" id="hidden_satuan_brg_1' + row + '" name="hidden_satuan_brg_1' + row + '"   />' +
+        var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
+        var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="js-data-example-ajax form-control select3" id="pilihSpp" name="pilihSpp' + row + '" required>' +
+            '<option selected="selected">Cari SPP</option>' +
 
-                '</td>';
-            var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="text" class="form-control" id="txt_qty_1' + row + '" name="txt_qty_1' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
+            '</select>' +
+            '<input type="hidden" id="hidden_no_ref_spp_1' + row + '" name="hidden_no_ref_spp_1' + row + '">' +
+            '<input type="hidden" id="hidden_tgl_ref_1' + row + '" name="hidden_tgl_ref_1' + row + '">' +
+            '<input type="hidden" id="hidden_kd_departemen_1' + row + '" name="hidden_kd_departemen_1' + row + '">' +
+            '<input type="hidden" id="hidden_departemen_1' + row + '" name="hidden_departemen_1' + row + '">' +
+            '<input type="hidden" id="hidden_tgl_spp_1' + row + '" name="hidden_tgl_spp_1' + row + '">' +
+            '<input type="hidden" id="hidden_kd_pt_1' + row + '" name="hidden_kd_pt_1' + row + '">' +
+            '<input type="hidden" id="hidden_nama_pt_1' + row + '" name="hidden_nama_pt_1' + row + '">' +
+            '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
 
-                '</td>';
-            var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="text" class="form-control" id="txt_harga_1' + row + '" name="txt_harga_1' + row + '" value="0" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
+            '</td>';
+        var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control" id="cmb_jenis_budget_1' + row + '" name="cmb_jenis_budget_1' + row + '" required>' +
+            '<option value="">-- Pilih --</option>' +
+            '<option value="TEKNIK">TEKNIK</option>' +
+            '<option value="BIBITAN">BIBITAN</option>' +
+            '<option value="LC & TANAM">LC & TANAM</option>' +
+            '<option value="RAWAT">RAWAT</option>' +
+            '<option value="PANEN">PANEN</option>' +
+            '<option value="TEKNIK">TEKNIK</option>' +
+            '<option value="PABRIK">PABRIK</option>' +
+            '<option value="KANTOR">KANTOR</option>' +
+            '<option value="Kendaraan">Kendaraan</option>' +
+            '<option value="TBM">TBM</option>' +
+            '</select>'; +
+        '</td>';
+        var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_merk_1' + row + '" name="txt_merk_1' + row + '" placeholder="Merk"  required />' +
+            '<input type="hidden" class="form-control" id="hidden_kode_brg_1' + row + '" name="hidden_kode_brg_1' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="hidden_nama_brg_1' + row + '" name="hidden_nama_brg_1' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="hidden_satuan_brg_1' + row + '" name="hidden_satuan_brg_1' + row + '"   />' +
 
-                '</td>';
-            var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<select class="form-control" id="cmb_kurs_1' + row + '" name="cmb_kurs_1' + row + '" required="">' +
-                '<option value="Rp">Rp IDR</option>' +
-                '<option value="USD">&dollar; USD</option>' +
-                '<option value="SGD">S&dollar; SGD</option>' +
-                '<option value="Euro">&euro; Euro</option>' +
-                '<option value="GBP">&pound; GBP</option>' +
-                '<option value="Yen">&yen; Yen</option>' +
-                '<option value="MYR">RM MYR</option>' +
-                '</select><br />' +
-                '</td>';
-            var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="text" class="form-control" id="txt_disc_1' + row + '" name="txt_disc_1' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+            '</td>';
+        var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_qty_1' + row + '" name="txt_qty_1' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
 
-                '</td>';
-            var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="text" class="form-control" id="txt_biaya_lain_1' + row + '" name="txt_biaya_lain_1' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+            '</td>';
+        var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_harga_1' + row + '" name="txt_harga_1' + row + '" value="0" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
-                '</td>';
-            var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_1' + row + '" name="txt_keterangan_biaya_lain_1' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '</td>';
+        var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control" id="cmb_kurs_1' + row + '" name="cmb_kurs_1' + row + '" required="">' +
+            '<option value="Rp">Rp IDR</option>' +
+            '<option value="USD">&dollar; USD</option>' +
+            '<option value="SGD">S&dollar; SGD</option>' +
+            '<option value="Euro">&euro; Euro</option>' +
+            '<option value="GBP">&pound; GBP</option>' +
+            '<option value="Yen">&yen; Yen</option>' +
+            '<option value="MYR">RM MYR</option>' +
+            '</select><br />' +
+            '</td>';
+        var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_disc_1' + row + '" name="txt_disc_1' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+
+            '</td>';
+        var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_biaya_lain_1' + row + '" name="txt_biaya_lain_1' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+
+            '</td>';
+        var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_1' + row + '" name="txt_keterangan_biaya_lain_1' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
 
 
-                '</td>';
-            var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_1' + row + '" name="txt_keterangan_rinci_1' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '</td>';
+        var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_1' + row + '" name="txt_keterangan_rinci_1' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
 
-                '</td>';
-            var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="text" class="form-control" id="txt_jumlah_1 ' + row + '" name="txt_jumlah_1" size="15" placeholder="Jumlah" readonly required />' +
-                '<label id="lbl_status_simpan_1"></label>' +
-                '<input type="hidden" id="hidden_id_po_item_1 ' + row + '" name="hidden_id_po_item_1">' +
-                '</td>';
-            var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" ></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" ></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" ></button>' +
+            '</td>';
+        var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_jumlah_1 ' + row + '" name="txt_jumlah_1" size="15" placeholder="Jumlah" readonly required />' +
+            '<label id="lbl_status_simpan_1"></label>' +
+            '<input type="hidden" id="hidden_id_po_item_1 ' + row + '" name="hidden_id_po_item_1">' +
+            '</td>';
+        var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" ></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" ></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" ></button>' +
 
-                '</td>';
-            var form_tutup = '</form>';
-            var tr_tutup = '</tr>';
-            $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-            number(row);
-            return true;
-        });
-    });
+            '</td>';
+        var form_tutup = '</form>';
+        var tr_tutup = '</tr>';
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        number(row);
+        return true;
+    }
 
-    // $('#btn_hapus_row_').click(function() {
-    //     var rowCount = $("#tableRinciPO td").closest("tr").length;
-    //     if (rowCount != 1) {
-    //         $('#tr_' + id).remove();
-    //         totalBayar();
-    //     } else {
-    //         swal('Tidak Bisa dihapus, item PO tinggal 1');
-    //     }
-    // })
 
     function hapus_row(id) {
         var rowCount = $("#tableRinciPO td").closest("tr").length;
