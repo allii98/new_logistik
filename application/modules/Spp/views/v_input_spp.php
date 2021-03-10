@@ -309,6 +309,7 @@
     });
     // End Data Table Server Side
 
+    // pilih item dari data table server side
     $(document).ready(function() {
         $(document).on('click', '#data_barang', function() {
 
@@ -328,6 +329,7 @@
         });
     });
 
+    // pilih item dari data table server side
     $(document).ready(function() {
         $(document).on('click', '#data_barang', function() {
             var kd_bar = $(this).data('kodebar');
@@ -456,11 +458,43 @@
             },
 
             data: {
-                hidden_id_item_ppo: $('#hidden_id_item_ppo').val()
+                hidden_id_item_ppo: $('#hidden_id_item_ppo').val(),
+                hidden_id_ppo: $('#hidden_id_ppo').val()
             },
 
             success: function(data) {
                 console.log(data);
+
+                var ppo = data.data_ppo;
+                var item_ppo = data.data_item_ppo;
+                // console.log(ppo);
+
+                $('#txt_keterangan').val(ppo.ket);
+
+                $('#cmb_jenis_permohonan').val(item_ppo.jenis);
+                $('#cmb_alokasi').val(item_ppo.lokasi);
+                $('#txt_tgl_terima').val(item_ppo.tgltrm);
+                $('#cmb_departemen').val(item_ppo.namadept);
+                $('#txt_kode_departemen').val(item_ppo.kodedept);
+                $('#txt_keterangan_rinci').val(item_ppo.ket);
+
+                $('#lbl_status_simpan_1').empty();
+                $('#lbl_status_simpan_1').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Edit Dibatalkan</label>');
+
+                $('#lbl_status_simpan_1').empty();
+                $('#lbl_status_simpan_1').append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
+
+                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
+                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
+
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').addClass('bg-light');
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').attr('disabled', '');
+
+                $('#btn_update').css('display', 'none');
+                $('#btn_cancel_update').css('display', 'none');
+                $('#btn_ubah').css('display', 'block');
+                $('#btn_hapus').css('display', 'block');
+
                 // console.log(nospp);
                 // console.log(noref);
                 // $('#devisi').val("");

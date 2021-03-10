@@ -262,8 +262,9 @@ class Spp extends CI_Controller
     public function cancelUpdateItemSpp()
     {
         $id_item_ppo = $this->input->post('hidden_id_item_ppo');
+        $id_ppo = $this->input->post('hidden_id_ppo');
 
-        $data = $this->M_spp->cancelUpdateItemSpp($id_item_ppo);
+        $data = $this->M_spp->cancelUpdateItemSpp($id_item_ppo, $id_ppo);
 
         echo json_encode($data);
     }
