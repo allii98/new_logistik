@@ -250,6 +250,26 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapus">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Konfirmasi Hapus</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="hidden_no_delete" name="hidden_no_delete">
+                <p>Apakah Anda yakin ingin menghapus data ini ???</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="btn_delete" onclick="deleteData()">Hapus</button>
+                <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- referensi add drop table -->
 <!-- <script>
     $(document).ready(function() {
@@ -469,13 +489,19 @@
                 var item_ppo = data.data_item_ppo;
                 // console.log(ppo);
 
+                $('#cmb_jenis_permohonan').append(ppo.jenis);
+                $('#cmb_alokasi').append(ppo.lokasi);
+                $('#txt_tgl_terima').append(ppo.tgltrm);
+                $('#cmb_departemen').append(ppo.namadept);
+                $('#txt_kode_departemen').val(ppo.kodedept);
                 $('#txt_keterangan').val(ppo.ket);
 
-                $('#cmb_jenis_permohonan').val(item_ppo.jenis);
-                $('#cmb_alokasi').val(item_ppo.lokasi);
-                $('#txt_tgl_terima').val(item_ppo.tgltrm);
-                $('#cmb_departemen').val(item_ppo.namadept);
-                $('#txt_kode_departemen').val(item_ppo.kodedept);
+                var nakobar = item_ppo.nabar + " - " + item_ppo.kodebar;
+
+                $('#nakobar').val(nakobar);
+                $('#txt_qty').val(item_ppo.qty);
+                $('#stok').text(item_ppo.STOK);
+                $('#satuan').text(item_ppo.sat);
                 $('#txt_keterangan_rinci').val(item_ppo.ket);
 
                 $('#lbl_status_simpan_1').empty();
@@ -603,6 +629,13 @@
 
 
 
+    function hapusRinci(no) {
+        $('#modalKonfirmasiHapus').modal('show');
+    }
+
+
+
+
     function tambah_row(id) {
         var n = $('#hidden_no_table').val();
 
@@ -616,21 +649,17 @@
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%">' +
             '<input type="text" class="form-control" id="txt_cari_kode_brg_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
-            '<label id="lbl_kode_brg_' + n + '">Kode : ... </label><br />' +
-            '<label id="lbl_nama_brg_' + n + '">Nama Barang : ...</label><br />' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="15%">' +
             '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
-            '<label id="lbl_stok_' + n + '">Stok : ...</label><br />' +
-            '<label id="lbl_satuan_brg_' + n + '">Satuan : ...</label><br />' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
-        // var td_col_4 = '<td>'
-        // +'<input type="text" id="txt_merk_type_jenis_'+n+'" name="txt_merk_type_jenis_'+n+'" size="26" placeholder="Merk/Type/Jenis">'
-        // +'</td>';
+        var td_col_4 = '<td>' +
+            '<span id="stok"></span><span> | </span><span id="satuan"></span>' +
+            '</td>';
         var td_col_5 = '<td>' +
             '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" size="26" placeholder="Merk/Type/Jenis, jika ada" onkeypress="saveRinciEnter(event,' + n + ')"></textarea>' +
             '<label id="lbl_status_simpan_' + n + '"></label>'
@@ -648,7 +677,7 @@
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_5 + td_col_6 + form_tutup + tr_tutup);
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + form_tutup + tr_tutup);
         $('#txt_qty_' + n).number(true, 2);
         /*$('html, body').animate({
             scrollTop: $("#tr_" + n).offset().top
