@@ -62,7 +62,7 @@
 
 
                             <li class="nav-item ">
-                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>" id="topnav-dashboard" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Home') ?>">
                                     <i class="fe-airplay mr-1"></i>
                                     <font face="Verdana" size="2.5">Dashboards</font>
                                 </a>
@@ -185,7 +185,7 @@
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <i class="mdi mdi-backburger mr-1"></i>
-                                            <font face="Verdana" size="2.5">SRetur</font>
+                                            <font face="Verdana" size="2.5">Retur</font>
                                             <div class="arrow-down">
                                             </div>
                                         </a>
@@ -221,7 +221,7 @@
                                     </a>
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-form" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fe-bookmark mr-1"></i>
+                                            <i class="fe-bar-chart-2 mr-1"></i>
                                             <font face="Verdana" size="2.5">Analisa</font>
                                             <div class="arrow-down"></div>
                                         </a>
@@ -237,16 +237,16 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-file-plus  mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Penerimaan Barang (LPB)</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-file-minus mr-1"></i>
                                         <font face="Verdana" size="2.5">Bukti Keluar Barang (BKB)</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-clipboard mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Register Stok Harian</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-check-square mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Rincian Stok</font>
                                     </a>
                                 </div>
@@ -259,13 +259,13 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-repeat mr-1"></i>
                                         <font face="Verdana" size="2.5">Hitung Ulang Stok</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-send mr-1"></i>
                                         <font face="Verdana" size="2.5">Transfer Transaksi ke GL</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-book mr-1"></i>
                                         <font face="Verdana" size="2.5">Tutup Buku</font>
                                     </a>
                                 </div>
@@ -273,18 +273,18 @@
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle arrow-none" href="#" id="topnav-pages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-package mr-1"></i>
+                                    <i class="fe-settings mr-1"></i>
                                     <font face="Verdana" size="2.5">Master</font>
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-codepen mr-1"></i>
                                         <font face="Verdana" size="2.5">Kode Barang</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-edit mr-1"></i>
                                         <font face="Verdana" size="2.5">Input Stok Awal</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-gift mr-1"></i>
+                                    <a href="widgets.html" class="dropdown-item"><i class="fe-check-square mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Rinci Stok</font>
                                     </a>
                                 </div>
@@ -296,16 +296,15 @@
                                 </a>
                             </li>
 
-                            <!-- <li class="nav-item">
-                                <div style="color:dodgerblue" class="nav-link disabled" id="topnav-dashboard" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fe-user info mr-1"></i>
-                                    <font face="Verdana" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font>
-
-                                </div>
-                            </li> -->
 
                         </ul> <!-- end navbar-->
                     </div> <!-- end .collapsed-->
+                    <li class="navbar-nav">
+                        <a style="color:dodgerblue" class="collapse navbar-collapse nav-link dropdown-toggle arrow-none">
+                            <i class="fas fa-user-circle info mr-2"></i>
+                            <font face="Verdana" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font>
+                        </a>
+                    </li>
                 </nav>
             </div> <!-- end container-fluid -->
         </div> <!-- end topnav-->
