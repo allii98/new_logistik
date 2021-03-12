@@ -152,7 +152,7 @@
                                     <tbody id="tbody_rincian" name="tbody_rincian">
                                         <tr id="tr_1">
                                             <td width="3%">
-                                                <input type="text" id="hidden_no_table_1" name="hidden_no_table_1">
+                                                <input type="hidden" id="hidden_no_table_1" name="hidden_no_table_1">
                                                 <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
                                                 <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row_1" name="btn_tambah_row" onclick="tambah_row()"></button>
                                                 <button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row" onclick="hapus_row('1')"></button>
@@ -190,9 +190,9 @@
                                                 </td>
                                                 <td width="5%">
                                                     <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
-                                                    <button style=" display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" value="1"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
                                                 </td>
                                             </form>
@@ -271,6 +271,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- referensi add drop table -->
 <!-- <script>
@@ -432,10 +433,10 @@
 
                 $('#lbl_spp_status').empty();
                 $('#h4_no_spp').html('No. SPP : ' + data.nospp);
-                $('#hidden_no_spp').val(data.no_spp);
+                $('#hidden_no_spp').val(data.nospp);
 
                 $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
-                $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
+                // $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
 
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
@@ -460,28 +461,28 @@
         return false;
     };
 
-    // var n = $('#hidden_no_row').val();
-    $('#btn_ubah_' + n).on('click', function() {
 
-        var n = $('#hidden_no_row').val();
+    function ubahRinci(n) {
+
+        // var n = $('#hidden_no_row').val();
 
         $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
         $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
 
-        $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').removeClass('bg-light');
-        $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').removeAttr('disabled');
+        $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeClass('bg-light');
+        $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeAttr('disabled');
 
         $('#btn_simpan_' + n).css('display', 'none');
-        $('#btn_hapus').css('display', 'none');
+        $('#btn_hapus_' + n).css('display', 'none');
         $('#btn_ubah_' + n).css('display', 'none');
         $('#btn_update_' + n).css('display', 'block');
         $('#btn_cancel_update_' + n).css('display', 'block');
 
         $("#status_sukses").remove();
-    });
+    };
 
-    // var n = $('#hidden_no_row').val();
-    $('#btn_cancel_update_' + n).on('click', function() {
+    // cancel update
+    function cancelUpdate(n) {
         // var data = this.value;
         // console.log(data);
 
@@ -491,12 +492,12 @@
             dataType: "JSON",
 
             beforeSend: function() {
-                $('#lbl_status_simpan_1').empty();
-                $('#lbl_status_simpan_1').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Cancel Update</label>');
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Cancel Update</label>');
             },
 
             data: {
-                hidden_id_item_ppo: $('#hidden_id_item_ppo_1').val(),
+                hidden_id_item_ppo: $('#hidden_id_item_ppo_' + n).val(),
                 hidden_id_ppo: $('#hidden_id_ppo').val()
             },
 
@@ -514,30 +515,30 @@
                 $('#txt_kode_departemen').val(ppo.kodedept);
                 $('#txt_keterangan').val(ppo.ket);
 
-                var nakobar_1 = item_ppo.nabar + " - " + item_ppo.kodebar;
+                var nakobar = item_ppo.nabar + " - " + item_ppo.kodebar;
 
-                $('#nakobar_1').val(nakobar_1);
-                $('#txt_qty_1').val(item_ppo.qty);
-                $('#stok_1').text(item_ppo.STOK);
-                $('#satuan_1').text(item_ppo.sat);
-                $('#txt_keterangan_rinci_1').val(item_ppo.ket);
+                $('#nakobar_' + n).val(nakobar);
+                $('#txt_qty_' + n).val(item_ppo.qty);
+                $('#stok_' + n).text(item_ppo.STOK);
+                $('#satuan_' + n).text(item_ppo.sat);
+                $('#txt_keterangan_rinci_' + n).val(item_ppo.ket);
 
-                $('#lbl_status_simpan_1').empty();
-                $('#lbl_status_simpan_1').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Edit Dibatalkan</label>');
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Edit Dibatalkan</label>');
 
-                $('#lbl_status_simpan_1').empty();
-                $('#lbl_status_simpan_1').append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
 
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').addClass('bg-light');
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').attr('disabled', '');
+                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
+                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
 
-                $('#btn_update_1').css('display', 'none');
-                $('#btn_cancel_update_1').css('display', 'none');
-                $('#btn_ubah_1').css('display', 'block');
-                $('#btn_hapus').css('display', 'block');
+                $('#btn_update_' + n).css('display', 'none');
+                $('#btn_cancel_update_' + n).css('display', 'none');
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
 
                 // console.log(nospp);
                 // console.log(noref);
@@ -572,11 +573,10 @@
                 // tampil_data_barang();
             }
         });
-    });
+    };
 
-    var n = $('#hidden_no_row').val();
     //Update Data
-    $('#btn_update_' + n).on('click', function() {
+    function updateRinci(n) {
 
         $.ajax({
             type: "POST",
@@ -584,8 +584,8 @@
             dataType: "JSON",
 
             beforeSend: function() {
-                $('#lbl_status_simpan_1').empty();
-                $('#lbl_status_simpan_1').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
             },
 
             data: {
@@ -598,14 +598,14 @@
                 cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
                 txt_kode_departemen: $('#txt_kode_departemen').val(),
                 cmb_departemen: $('#cmb_departemen').val(),
-                hidden_kode_brg: $('#hidden_kode_brg_1').val(),
-                hidden_nama_brg: $('#hidden_nama_brg_1').val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_1').val(),
-                txt_qty: $('#txt_qty_1').val(),
-                hidden_stok: $('#hidden_stok_1').val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_1').val(),
+                hidden_kode_brg: $('#hidden_kode_brg_' + n).val(),
+                hidden_nama_brg: $('#hidden_nama_brg_' + n).val(),
+                hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                txt_qty: $('#txt_qty_' + n).val(),
+                hidden_stok: $('#hidden_stok_' + n).val(),
+                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + n).val(),
                 hidden_id_ppo: $('#hidden_id_ppo').val(),
-                hidden_id_item_ppo: $('#hidden_id_item_ppo_1').val()
+                hidden_id_item_ppo: $('#hidden_id_item_ppo_' + n).val()
             },
 
             success: function(data) {
@@ -615,8 +615,8 @@
                 // $('#devisi').val("");
                 // $('#jenis_spp').val("");
 
-                $('#lbl_status_simpan_1').empty();
-                $('#lbl_status_simpan_1').append('<label id="status_sukses" style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil Diupdate</label>');
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<label id="status_sukses" style="color:#6fca+nd;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil Diupdate</label>');
 
                 // $('#lbl_spp_status').empty();
                 // $('#h4_no_spp').html('No. SPP : ' + data.nospp);
@@ -628,15 +628,15 @@
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').addClass('bg-light');
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').attr('disabled', '');
+                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').addClass('bg-light');
+                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').attr('disabled', '');
 
                 // $('#btn_hapus_row').css('display', 'none');
                 // $('#btn_simpan_1').css('display', 'none');
-                $('#btn_ubah_1').css('display', 'block');
-                $('#btn_hapus').css('display', 'block');
-                $('#btn_update_1').css('display', 'none');
-                $('#btn_cancel_update_1').css('display', 'none');
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
+                $('#btn_update_' + n).css('display', 'none');
+                $('#btn_cancel_update_' + n).css('display', 'none');
 
                 // $('[name="harga"]').val("");
                 // $('#ModalaAdd').modal('hide');
@@ -644,11 +644,81 @@
             }
         });
         return false;
-    });
+    };
 
-    function hapusRinci(no) {
+    function hapusRinci(n) {
+        $('#hidden_no_delete').val(n);
         $('#modalKonfirmasiHapus').modal('show');
     }
+
+
+    function deleteData() {
+        // var data = this.value;
+        // console.log(data);
+        var n = $('#hidden_no_delete').val();
+        var id_item = $('#hidden_id_item_ppo_' + n).val();
+        var id_ppo = $('#hidden_id_ppo').val();
+
+        console.log(id_item);
+        console.log(id_ppo);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Spp/deleteItemSpp') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+            },
+
+            data: {
+                hidden_id_item_ppo: $('#hidden_id_item_ppo_' + n).val(),
+                hidden_id_ppo: $('#hidden_id_ppo').val()
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                // var ppo = data.data_ppo;
+                // var item_ppo = data.data_item_ppo;
+                // // console.log(ppo);
+
+                // $('#cmb_jenis_permohonan').append(ppo.jenis);
+                // $('#cmb_alokasi').append(ppo.lokasi);
+                // $('#txt_tgl_terima').append(ppo.tgltrm);
+                // $('#cmb_departemen').append(ppo.namadept);
+                // $('#txt_kode_departemen').val(ppo.kodedept);
+                // $('#txt_keterangan').val(ppo.ket);
+
+                // var nakobar = item_ppo.nabar + " - " + item_ppo.kodebar;
+
+                // $('#nakobar_' + n).val(nakobar);
+                // $('#txt_qty_' + n).val(item_ppo.qty);
+                // $('#stok_' + n).text(item_ppo.STOK);
+                // $('#satuan_' + n).text(item_ppo.sat);
+                // $('#txt_keterangan_rinci_' + n).val(item_ppo.ket);
+
+                // $('#lbl_status_simpan_' + n).empty();
+                // $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Edit Dibatalkan</label>');
+
+                // $('#lbl_status_simpan_' + n).empty();
+                // $('#lbl_status_simpan_' + n).append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
+
+                // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
+                // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
+
+                // $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
+                // $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+
+                // $('#btn_update_' + n).css('display', 'none');
+                // $('#btn_cancel_update_' + n).css('display', 'none');
+                // $('#btn_ubah_' + n).css('display', 'block');
+                // $('#btn_hapus_' + n).css('display', 'block');
+
+            }
+        });
+    };
 
 
     var n = 2;
@@ -659,7 +729,7 @@
         var tr_buka = '<tr id="tr_' + n + '">';
         // var  hidden_proses = '<input type="hidden" id="hidden_proses_status_'+n+'" name="hidden_proses_status_'+n+'" value="insert">';
         var td_col_1 = '<td width="3%">' +
-            '<input type="text" id="hidden_no_table_' + n + '" name="hidden_no_table_' + n + '">' +
+            '<input type="hidden" id="hidden_no_table_' + n + '" name="hidden_no_table_' + n + '">' +
             '<input type="hidden" id="hidden_proses_status_' + n + '" name="hidden_proses_status_' + n + '" value="insert">' +
             '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row()"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row_' + n + '" onclick="hapus_row(' + n + ')"></button>' +
@@ -685,13 +755,13 @@
             '<label id="lbl_status_simpan_' + n + '"></label>'
             // +'<input type="hidden" id="hidden_id_ppo_'+n+'" name="hidden_id_ppo_'+n+'">'
             +
-            '<input type="hidden" id="hidden_id_ppo_item_' + n + '" name="hidden_id_ppo_item_' + n + '">' +
+            '<input type="hidden" id="hidden_id_item_ppo_' + n + '" name="hidden_id_item_ppo_' + n + '">' +
             '</td>';
         var td_col_6 = '<td width="5%">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update""></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
             '</td>';
         var form_tutup = '</form>';
