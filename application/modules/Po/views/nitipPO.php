@@ -434,6 +434,135 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         </div>
     </div>
 </div>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="modal fade show" id="modal-supllier" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-scrollable" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="scrollableModalTitle">Pilih Supplier</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="table-responsive">
+                                <table id="supllier" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th style="text-align: center;">No</th>
+                                            <th style="text-align: center;">Kode</th>
+                                            <th style="text-align: center;">Nama Supplier</th>
+                                            <th style="text-align: center;">Jenis Usaha</th>
+                                            <th style="text-align: center;">#</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-12">
+
+            <div class="modal fade show" id="modal-spp" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
+                <div class="modal-dialog modal-dialog-scrollable modal-full-width" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="scrollableModalTitle">Pilih SPP</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label class="control-label col-md-5 col-sm-3 col-xs-12">Alokasi
+                                </label>
+                                <div class="col-md-3 col-sm-6 col-xs-12">
+                                    <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
+                                        <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+                                        <?php
+                                        switch ($this->session->userdata('status_lokasi')) {
+                                            case 'PKS':
+                                            case 'SITE':
+                                        ?>
+                                                <option value="PKS">PKS</option>
+                                                <option value="SITE">SITE</option>
+                                            <?php
+                                                break;
+                                            case 'RO':
+                                            ?>
+                                                <option value="PKS">PKS</option>
+                                                <option value="SITE">SITE</option>
+                                                <option value="RO">RO</option>
+                                            <?php
+                                                break;
+                                            case 'HO':
+                                            ?>
+                                                <option value="PKS">PKS</option>
+                                                <option value="SITE">SITE</option>
+                                                <option value="RO">RO</option>
+                                                <option value="HO">HO</option>
+                                        <?php
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="spp" class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th>No.</th>
+                                            <th>No. SPP</th>
+                                            <th>Tgl. SPP</th>
+                                            <th>Ref. SPP</th>
+                                            <th>Departemen</th>
+                                            <th>Kode Barang</th>
+                                            <th>Item Barang</th>
+                                            <th>Ket</th>
+                                            <th>Lokasi</th>
+                                            <th>Status</th>
+                                            <th>PO</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+
+                                    </tbody>
+
+                                </table>
+
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal-dialog -->
+            </div>
+        </div>
+    </div>
+</div>
 <script>
     function tambah_row(row) {
         // row++;

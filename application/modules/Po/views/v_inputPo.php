@@ -212,7 +212,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th colspan="10"><button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" onclick="tambah_row()"></button></th>
+                                        <th colspan="13"><button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" onclick="tambah_row()"></button></th>
                                     </tr>
                                 </tfoot>
                             </table>
@@ -225,134 +225,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 </div>
 
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-12">
-
-            <div class="modal fade show" id="modal-supllier" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-scrollable" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="scrollableModalTitle">Pilih Supplier</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="table-responsive">
-                                <table id="supllier" class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th style="text-align: center;">No</th>
-                                            <th style="text-align: center;">Kode</th>
-                                            <th style="text-align: center;">Nama Supplier</th>
-                                            <th style="text-align: center;">Jenis Usaha</th>
-                                            <th style="text-align: center;">#</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div>
-        </div>
-    </div>
-
-
-    <div class="row">
-        <div class="col-12">
-
-            <div class="modal fade show" id="modal-spp" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-scrollable modal-full-width" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="scrollableModalTitle">Pilih SPP</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <label class="control-label col-md-5 col-sm-3 col-xs-12">Alokasi
-                                </label>
-                                <div class="col-md-3 col-sm-6 col-xs-12">
-                                    <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
-                                        <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
-                                        <?php
-                                        switch ($this->session->userdata('status_lokasi')) {
-                                            case 'PKS':
-                                            case 'SITE':
-                                        ?>
-                                                <option value="PKS">PKS</option>
-                                                <option value="SITE">SITE</option>
-                                            <?php
-                                                break;
-                                            case 'RO':
-                                            ?>
-                                                <option value="PKS">PKS</option>
-                                                <option value="SITE">SITE</option>
-                                                <option value="RO">RO</option>
-                                            <?php
-                                                break;
-                                            case 'HO':
-                                            ?>
-                                                <option value="PKS">PKS</option>
-                                                <option value="SITE">SITE</option>
-                                                <option value="RO">RO</option>
-                                                <option value="HO">HO</option>
-                                        <?php
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="table-responsive">
-                                <table id="spp" class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>No. SPP</th>
-                                            <th>Tgl. SPP</th>
-                                            <th>Ref. SPP</th>
-                                            <th>Departemen</th>
-                                            <th>Kode Barang</th>
-                                            <th>Item Barang</th>
-                                            <th>Ket</th>
-                                            <th>Lokasi</th>
-                                            <th>Status</th>
-                                            <th>PO</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                        </div>
-                    </div><!-- /.modal-content -->
-                </div><!-- /.modal-dialog -->
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     var row = 0;
     var simpanBaru = true;
@@ -363,10 +235,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function tambah_row() {
         row++;
         console.log("bariske", row);
+        // $('#btn_hapus_row_1').hide();
+        // if (row == 1) {
+        //     $('#btn_hapus_row_1').hide();
+        // } else {
+        //     console.log('mantap');
+        // }
         var tr_buka = '<tr id="tr_' + row + '">';
         var td_col_1 = '<td width="3%">' +
             '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
             '' +
+
             '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
@@ -460,7 +339,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var tr_tutup = '</tr>';
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_1' + row).number(true, 2);
-        initPilihSpp(row)
+        if (row == 1) {
+            $('#btn_hapus_row_1').hide();
+        }
+        initPilihSpp(row);
+        jumlah(row);
     }
 
 
@@ -472,6 +355,33 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         } else {
             swal('Tidak Bisa dihapus, item PO tinggal 1');
         }
+    }
+
+    function totalBayar() {
+        var no_po = $('#hidden_no_po').val();
+        var no_ref_po = $('#hidden_no_ref_po').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/total_bayar'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'no_po': no_po,
+                'no_ref_po': no_ref_po
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#ttl_pembayaran').val(data.totalbayar);
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
     }
 
     function number(row) {
@@ -498,18 +408,112 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     }
 
+    function initPilihSpp(id) {
+
+        $(`#pilihSpp${id}`).select2({
+            ajax: {
+                url: "<?php echo site_url('Po/getSpp') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        noref: params.term, // search term
+                    };
+                },
+                processResults: function(data) {
+                    var results = [];
+
+                    $.each(data, function(index, item) {
+                        results.push({
+                            id: item.id,
+                            text: item.noreftxt
+                        });
+
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+
+        }).on('select3:select', function(evt) {
+            // console.log(evt)
+            // data = JSON.parse(evt);
+            // $.each(data, function(index, value) {
+            //     var opodsi = value.nama_petugas;
+            //     $('#petugas').val(opsi);
+            // });
+            var data = $(".select3 option:selected").text();
+            $('#hidden_no_ref_spp_1').val(data);
+
+        });
+
+        $(`#pilihSpp${id}`).change(function() {
+            // var dd = this.value;
+
+
+            $.ajax({
+                type: 'post',
+                url: '<?= site_url('Po/getid'); ?>',
+                data: {
+                    id: this.value
+                },
+                success: function(response) {
+
+                    data = JSON.parse(response);
+                    console.table(data);
+                    $.each(data, function(index, value) {
+                        var opsi = value.noreftxt;
+                        var tglref = value.tglref;
+                        var kodedept = value.kodedept;
+                        var namadept = value.namadept;
+                        var tglppo = value.tglppo;
+                        var kodept = value.kodept;
+                        var pt = value.pt;
+                        var noppo = value.noppo;
+                        var kodebar = value.kodebar;
+                        var nabar = value.nabar;
+                        var sat = value.sat;
+                        var qty = value.qty;
+                        $(`#hidden_tgl_ref_1${id}`).val(tglref);
+                        $(`#hidden_no_ref_spp_1${id}`).val(opsi);
+                        $(`#hidden_kd_departemen_1${id}`).val(kodedept);
+                        $(`#hidden_departemen_1${id}`).val(namadept);
+                        $(`#hidden_tgl_spp_1${id}`).val(tglppo);
+                        $(`#hidden_kd_pt_1${id}`).val(kodept);
+                        $(`#hidden_nama_pt_1${id}`).val(pt);
+                        $(`#noppo${id}`).val(noppo);
+                        $(`#hidden_kode_brg_1${id}`).val(kodebar);
+                        $(`#hidden_nama_brg_1${id}`).val(nabar);
+                        $(`#hidden_satuan_brg_1${id}`).val(sat);
+                        $(`#txt_qty_1${id}`).val(qty);
+                    });
+
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        });
+
+    }
+
     function jumlah(no_row) {
-        var qty = $('#txt_qty_' + no_row).val();
-        var harga = $('#txt_harga_' + no_row).val();
-        var disc = $('#txt_disc_' + no_row).val();
-        var biaya_lain = $('#txt_biaya_lain_' + no_row).val();
+        console.log('jumlahke', no_row)
+        var qty = $(`#txt_qty_1${no_row}`).val();
+        var harga = $(`#txt_harga_1${no_row}`).val();
+        var disc = $(`#txt_disc_1${no_row}`).val();
+        var biaya_lain = $(`#txt_biaya_lain_1${no_row}`).val();
 
         var hargaDisc = (parseInt(harga) * parseInt(disc)) / 100;
         var hargaSetelahDisc = parseInt(harga) - parseInt(hargaDisc);
 
         var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
 
-        $('#txt_jumlah_1' + no_row).val(nilai);
+        console.log(nilai);
+        // document.getElementById("txt_jumlah_1" + no_row).value = "Johnny Bravo";
+        alert(nilai)
+        // $(`#txt_jumlah_1${no_row}`).val(nilai);
     }
     //Simpan Data
     function simpan(id) {
@@ -604,6 +608,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_biaya_lain: $('#txt_biaya_lain_1' + id).val(),
                     txt_keterangan_biaya_lain: $('#txt_biaya_lain_1' + id).val(),
                     hidden_tanggal: $('#hidden_tgl_spp_1' + id).val(),
+
                 },
 
                 success: function(data) {
@@ -632,6 +637,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#hidden_no_ref_po').val(data.noref);
                         $('#hidden_id_po').val(data.id_po);
                         $('#hidden_id_po_item_1').val(data.id_item);
+
                         simpanBaru = false;
                     } else {
                         $('#lbl_status_simpan_').empty();
@@ -944,95 +950,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     });
 
 
-    function initPilihSpp(id) {
 
-        $(`#pilihSpp${id}`).select2({
-            ajax: {
-                url: "<?php echo site_url('Po/getSpp') ?>",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        noref: params.term, // search term
-                    };
-                },
-                processResults: function(data) {
-                    var results = [];
-
-                    $.each(data, function(index, item) {
-                        results.push({
-                            id: item.id,
-                            text: item.noreftxt
-                        });
-
-                    });
-                    return {
-                        results: results
-                    };
-                }
-            }
-
-        }).on('select3:select', function(evt) {
-            // console.log(evt)
-            // data = JSON.parse(evt);
-            // $.each(data, function(index, value) {
-            //     var opodsi = value.nama_petugas;
-            //     $('#petugas').val(opsi);
-            // });
-            var data = $(".select3 option:selected").text();
-            $('#hidden_no_ref_spp_1').val(data);
-
-        });
-
-        $(`#pilihSpp${id}`).change(function() {
-            // var dd = this.value;
-
-
-            $.ajax({
-                type: 'post',
-                url: '<?= site_url('Po/getid'); ?>',
-                data: {
-                    id: this.value
-                },
-                success: function(response) {
-
-                    data = JSON.parse(response);
-                    console.table(data);
-                    $.each(data, function(index, value) {
-                        var opsi = value.noreftxt;
-                        var tglref = value.tglref;
-                        var kodedept = value.kodedept;
-                        var namadept = value.namadept;
-                        var tglppo = value.tglppo;
-                        var kodept = value.kodept;
-                        var pt = value.pt;
-                        var noppo = value.noppo;
-                        var kodebar = value.kodebar;
-                        var nabar = value.nabar;
-                        var sat = value.sat;
-                        var qty = value.qty;
-                        $(`#hidden_tgl_ref_1${id}`).val(tglref);
-                        $(`#hidden_no_ref_spp_1${id}`).val(opsi);
-                        $(`#hidden_kd_departemen_1${id}`).val(kodedept);
-                        $(`#hidden_departemen_1${id}`).val(namadept);
-                        $(`#hidden_tgl_spp_1${id}`).val(tglppo);
-                        $(`#hidden_kd_pt_1${id}`).val(kodept);
-                        $(`#hidden_nama_pt_1${id}`).val(pt);
-                        $(`#nopp1${id}`).val(noppo);
-                        $(`#hidden_kode_brg_1${id}`).val(kodebar);
-                        $(`#hidden_nama_brg_1${id}`).val(nabar);
-                        $(`#hidden_satuan_brg_1${id}`).val(sat);
-                        $(`#txt_qty_1${id}`).val(qty);
-                    });
-
-                },
-                error: function(request) {
-                    console.log(request.responseText);
-                }
-            });
-        });
-
-    }
 
 
 

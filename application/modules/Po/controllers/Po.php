@@ -98,6 +98,29 @@ class Po extends CI_Controller
         echo json_encode($data);
     }
 
+    function total_bayar()
+    {
+        $no_po = $this->input->post('no_po');
+        $no_ref_po = $this->input->post('no_ref_po');
+
+        $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
+        $data = $this->db_logistik_pt->query($query)->row();
+
+        $dataedit['totalbayar'] = $data->totalbayar;
+        $this->db_logistik_pt->set($dataedit);
+        $this->db_logistik_pt->where('nopotxt', $no_po);
+        $this->db_logistik_pt->where('noreftxt', $no_ref_po);
+        $this->db_logistik_pt->update('po');
+        if ($this->db_logistik_pt->affected_rows() > 0) {
+            $bool_update_po = TRUE;
+        } else {
+            $bool_update_po = FALSE;
+        }
+
+        echo json_encode($data);
+    }
+
+
     public function save()
     {
         $data['nama_dept'] = $this->M_po->namaDept($this->input->post("hidden_kode_departemen"));
