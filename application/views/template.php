@@ -193,7 +193,7 @@
                                             </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="#" class="dropdown-item">
+                                            <a href="<?= base_url('retur/input') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Retur BKB</font>
                                             </a>
                                         </div>
@@ -299,16 +299,31 @@
                                 </a>
                             </li>
 
-
                         </ul> <!-- end navbar-->
                     </div> <!-- end .collapsed-->
-                    <li class="navbar-nav">
-                        <a style="color:dodgerblue" class="collapse navbar-collapse nav-link dropdown-toggle arrow-none">
-                            <i class="fas fa-user-circle info mr-2"></i>
-                            <font face="Verdana" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font>
-                        </a>
-                    </li>
+                    <ul class="navbar-nav">
+                        <li class="dropdown notification-list topbar-dropdown arrow-none">
+                            <a class="collapse navbar-collapse nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" style="color: dodgerblue;" aria-haspopup="false" aria-expanded="false">
+                                <img src="http://ubold-laravel.coderthemes.com/assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle mr-2">
+                                <font face="Verdana" color="" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font><i class="ml-1 mdi mdi-chevron-down"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                                <!-- item-->
+                                <div class="dropdown-header noti-title">
+                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                </div>
+
+                                <!-- item-->
+                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                    <i class="fe-calendar"></i>
+                                    <span>Periode : 202103</span>
+                                </a>
+                            </div>
+                        </li>
+                    </ul>
+
                 </nav>
+
             </div> <!-- end container-fluid -->
         </div> <!-- end topnav-->
 
