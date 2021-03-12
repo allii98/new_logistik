@@ -32,6 +32,8 @@
 
     <!-- icons -->
     <link href="<?php echo base_url() ?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <script src="<?php echo base_url() ?>assets/js/vendor.min.js"></script>
+
 
 </head>
 
@@ -318,8 +320,11 @@
 
         <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
+        <script src="<?php echo base_url() ?>assets/js/app.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/libs/select2/js/select2.min.js"></script>
+
+
 
         <div class="content-page mt-1">
             <div class="content">
@@ -707,7 +712,6 @@
     <div class="rightbar-overlay"></div>
 
     <!-- Vendor js -->
-    <script src="<?php echo base_url() ?>assets/js/vendor.min.js"></script>
     <!-- third party js -->
     <script src="<?php echo base_url() ?>assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url() ?>assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -730,7 +734,7 @@
     <script src="<?php echo base_url() ?>assets/js/pages/datatables.init.js"></script>
 
     <!-- App js -->
-    <script src="<?php echo base_url() ?>assets/js/app.min.js"></script>
+
 
 </body>
 
