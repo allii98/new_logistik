@@ -349,13 +349,183 @@ class Po extends CI_Controller
         echo json_encode($data_return);
     }
 
+    public function saveItem()
+    {
+        $data['nama_dept'] = $this->M_po->namaDept($this->input->post("hidden_kode_departemen"));
+        $lokasibuatspp = substr($this->input->post('hidden_no_ref'), 0, 3);
+        switch ($lokasibuatspp) {
+            case 'PST': // HO
+                $lokasispp = 1;
+                break;
+            case 'ROM': // RO
+                $lokasispp = 2;
+                break;
+            case 'EST': // SITE
+                $lokasispp = 3;
+                break;
+            case 'FAC': // PKS
+                $lokasispp = 6;
+                break;
+            default:
+                break;
+        }
+
+        $lokasibuatpo = $this->session->userdata('status_lokasi');
+        switch ($lokasibuatpo) {
+            case 'HO':
+                $lokasipo = 1;
+                $kodepo = "BWJ";
+                break;
+            case 'RO':
+                $lokasipo = 2;
+                $kodepo = "PKY";
+                break;
+            case 'SITE':
+                $lokasipo = 3;
+                $kodepo = "SWJ";
+                break;
+            case 'PKS':
+                $lokasipo = 6;
+                $kodepo = "SWJ";
+                break;
+            default:
+                break;
+        }
+
+        $key = $lokasispp . $lokasipo;
+
+        $query_po = "SELECT MAX(SUBSTRING(nopotxt, 3)) as maxpo from po WHERE nopotxt LIKE '$key%'";
+        $generate_po = $this->db_logistik_pt->query($query_po)->row();
+        $noUrut = (int)($generate_po->maxpo);
+        $noUrut++;
+        $print = sprintf("%05s", $noUrut);
+
+        if (empty($this->input->post('hidden_no_po'))) {
+            $no_po = $lokasispp . $lokasipo . $print;
+        } else {
+            $no_po = $this->input->post('hidden_no_po');
+        }
+
+
+
+        $query_id_item = "SELECT MAX(id)+1 as no_id_item FROM item_po";
+        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
+        $no_id_item = $generate_id_item->no_id_item;
+        if (empty($no_id_item)) {
+            $no_id_item = 1;
+        }
+
+        $hidden_jenis_spp = $this->input->post('hidden_jenis_spp');
+
+        if (!empty($this->input->post('hidden_no_ref_po'))) {
+            $norefpo = $this->input->post('hidden_no_ref_po');
+        } else {
+            // Est/swj/PO-Lokal/11/18/00034 atau Fac/swj/jkt/12/18/6100005 atau Est-POA/swj/jkt/12/18/6100004 atau Est2/swj/jkt/01/16/7100029
+            if ($hidden_jenis_spp == "SPPA") {
+                $norefpo = $lokasibuatspp . "/" . $kodepo . "/POA/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+            } else if ($hidden_jenis_spp == "SPPI") {
+                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-Lokal/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+            } else if ($hidden_jenis_spp == "SPPK") {
+                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-Khusus/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+            } else {
+                $norefpo = $lokasibuatspp . "/" . $kodepo . "/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+            }
+        }
+
+        $tgl_po = date("Y-m-d", strtotime($this->input->post('txt_tgl_po')));
+        $tgl_po_txt = date("Ymd", strtotime($this->input->post('txt_tgl_po')));
+
+        $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
+        $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
+
+        $tgl_ref = date("Y-m-d", strtotime($this->input->post('hidden_tgl_ref')));
+        $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
+
+        if ($this->input->post('cmb_dikirim_ke_kebun') == 'Y') {
+            $dikirim_ke_kebun = 1;
+        } else {
+            $dikirim_ke_kebun = 0;
+        }
+
+        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00") {
+            $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+            $disc = $this->input->post('txt_disc') / 100;
+            $jumharga = $qty_harga - ($qty_harga * $disc);
+        } else {
+            $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+        }
+
+        $pph = $this->input->post('txt_pph');
+        if (empty($pph)) {
+            $pph = "0";
+        }
+
+
+
+        $datainsertitem = [
+            'id' => $no_id_item,
+            'nopo' => $no_po,
+            'nopotxt' => $no_po,
+            'noppo' => $this->input->post('txt_no_spp'),
+            'noppotxt' => $this->input->post('txt_no_spp'),
+            'refppo' => $this->input->post('hidden_no_ref'),
+            'tglppo' =>  date("Y-m-d"),
+            'tglppotxt' =>  date("Ymd"),
+            'tglpo' =>  date("Y-m-d"),
+            'tglpotxt' => date("Ymd"),
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'harga' => $this->input->post('txt_harga'),
+            'jumharga' => $jumharga,
+            'kodept' => $this->input->post('hidden_kodept'),
+            'namapt' => $this->input->post('hidden_namapt'),
+            'periode' => date('Y-m-d H:i:s'),
+            'periodetxt' => date('Ym'),
+            'thn' => date('Y'),
+            'merek' => $this->input->post('txt_merk'),
+            'tglisi' => date('Y-m-d H:i:s'),
+            'user' => $this->session->userdata('user'),
+            'ket' => $this->input->post('txt_keterangan_rinci'),
+            'noref' => $norefpo,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'hargasblm' => $this->input->post('txt_harga'),
+            'disc' => $this->input->post('txt_disc'),
+            'kurs' => $this->input->post('cmb_kurs'),
+            'kode_budget' => "0",
+            'grup' => $this->input->post('cmb_jenis_budget'),
+            'main_acct' => "0",
+            'nama_main' => NULL,
+            'batal' => "0",
+            'cek_pp' => "0",
+            'KODE_BPO' => "0",
+            'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
+            'kode_bebanbpo' => Null,
+            'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
+            'konversi' => "0"
+        ];
+
+
+        $data = $this->db->insert('item_po', $datainsertitem);
+
+        $data_return = [
+            'data' => $data,
+            'nopo' => $no_po,
+            'noref' => $norefpo,
+            'id_item' => $no_id_item,
+        ];
+
+
+        // $data = $this->M_po->savePO($datainsert, $datainsertitem);
+        echo json_encode($data_return);
+    }
+
 
 
     public function update()
     {
-
-        // $norefpo = $this->input->post('hidden_no_ref_po');
-
 
         $no_id = $this->input->post('hidden_id_po');
         $no_id_item = $this->input->post('hidden_id_po_item');
@@ -491,7 +661,7 @@ class Po extends CI_Controller
     public function cancel_ubah_rinci()
     {
         $id_po_item = $this->input->post('id_po_item');
-        $id_po         = $this->input->post('id_po');
+        $id_po  = $this->input->post('id_po');
 
         $data = $this->M_po->cancelUpdateItemPO($id_po_item, $id_po);
 
