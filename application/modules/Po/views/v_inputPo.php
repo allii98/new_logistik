@@ -507,12 +507,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // console.log(nilai);
         // document.getElementById("txt_jumlah_1" + no_row).value = "Johnny Bravo";
         // alert(nilai)
-        if (nilai = null) {
-            $(`#txt_jumlah_1${no_row}`).val("Jumlah");
-        } else {
+        $(`#txt_jumlah_1${no_row}`).val(nilai);
+        // if (nilai = null) {
+        //     $(`#txt_jumlah_1${no_row}`).val("Jumlah");
+        // } else {
 
-            $(`#txt_jumlah_1${no_row}`).val(nilai);
-        }
+        // }
     }
 
     //Simpan Data
