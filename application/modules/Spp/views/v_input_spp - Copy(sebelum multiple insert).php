@@ -152,48 +152,47 @@
                                     <tbody id="tbody_rincian" name="tbody_rincian">
                                         <tr id="tr_1">
                                             <td width="3%">
-                                                <input type="text" id="hidden_no_table_1" name="hidden_no_table_1">
                                                 <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                                <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row_1" name="btn_tambah_row" onclick="tambah_row()"></button>
-                                                <button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row" onclick="hapus_row('1')"></button>
+                                                <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button>
+                                                <button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row" name="btn_hapus_row" onclick="hapus_row('1')"></button>
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td width="30%">
-                                                    <input type="text" class="form-control" id="nakobar_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
+                                                    <input type="text" class="form-control" id="nakobar" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
                                                     <!-- <label id="lbl_kode_brg_1">Kode : ... </label><br />
                                                 <label id="lbl_nama_brg_1">Nama Barang : ...</label><br /> -->
 
-                                                    <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
-                                                    <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
+                                                    <input type="hidden" id="hidden_kode_brg" name="hidden_kode_brg">
+                                                    <input type="hidden" id="hidden_nama_brg" name="hidden_nama_brg">
                                                 </td>
                                                 <td width="15%">
-                                                    <input type="number" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
+                                                    <input type="number" class="form-control" id="txt_qty" name="txt_qty" placeholder="Qty" size="26" required /><br />
                                                     <!-- <label id="lbl_stok_1">Stok : ...</label><br />
                                                 <label id="lbl_satuan_brg_1">Satuan : ...</label><br /> -->
 
-                                                    <input type="hidden" id="hidden_stok_1" name="hidden_stok_1">
-                                                    <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
+                                                    <input type="hidden" id="hidden_stok" name="hidden_stok">
+                                                    <input type="hidden" id="hidden_satuan_brg" name="hidden_satuan_brg">
                                                 </td>
                                                 <td width="10%">
-                                                    <span id="stok_1"></span>
+                                                    <span id="stok"></span>
                                                     <span> | </span>
-                                                    <span id="satuan_1"></span>
-                                                    <input type="hidden" id="stok_1">
-                                                    <input type="hidden" id="satuan_1">
+                                                    <span id="satuan"></span>
+                                                    <input type="hidden" id="stok">
+                                                    <input type="hidden" id="satuan">
                                                 </td>
                                                 <td>
-                                                    <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="form-control" size="26" placeholder="Merk/Type/Jenis, jika ada"></textarea>
+                                                    <textarea id="txt_keterangan_rinci" name="txt_keterangan_rinci" class="form-control" size="26" placeholder="Merk/Type/Jenis, jika ada"></textarea>
                                                     <label id="lbl_status_simpan_1"></label>
 
-                                                    <input type="hidden" id="hidden_id_item_ppo_1">
+                                                    <input type="hidden" id="hidden_id_item_ppo">
 
                                                 </td>
                                                 <td width="5%">
-                                                    <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
-                                                    <button style=" display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" value="1"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                    <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan" name="btn_simpan" type="button" data-toggle="tooltip" data-placement="right" title="Simpan"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" id="btn_ubah" name="btn_ubah" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update" name="btn_update" type="button" data-toggle="tooltip" data-placement="right" title="Update"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update" name="btn_cancel_update" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" value="1"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus" name="btn_hapus" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
                                                 </td>
                                             </form>
                                         </tr>
@@ -229,7 +228,6 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                     <table id="dabar" class="table table-bordered" style="width: 100%;">
                         <thead>
                             <tr>
@@ -299,7 +297,7 @@
 
     function cari_barang(no_row) {
         // $('#hidden_no_row').empty();
-        $('#hidden_no_row').val(no_row);
+        // $('#hidden_no_row').val(no_row);
         $('#modalListBarang').modal('show');
         // $('#tableListBarang').DataTable().destroy();
         // listBarang(no_row);
@@ -332,11 +330,8 @@
     // End Data Table Server Side
 
     // pilih item dari data table server side
-
     $(document).ready(function() {
         $(document).on('click', '#data_barang', function() {
-
-            var n = $('#hidden_no_row').val();
 
             var nabar_hide = $(this).data('nabar');
             var kodebar_hide = $(this).data('kodebar');
@@ -344,23 +339,19 @@
             var satuan = $(this).data('satuan');
             // console.log(nabar);
 
-            // Set data
-            $('#hidden_nama_brg_' + n).val(nabar_hide);
-            $('#hidden_kode_brg_' + n).val(kodebar_hide);
-            $('#nakobar_' + n).val(nakobar);
-            $('#satuan_' + n).text(satuan);
-            $('#hidden_satuan_brg_' + n).val(satuan);
+            // Set data to Form Edit
+            $('#hidden_nama_brg').val(nabar_hide);
+            $('#hidden_kode_brg').val(kodebar_hide);
+            $('#nakobar').val(nakobar);
+            $('#satuan').text(satuan);
+            $('#hidden_satuan_brg').val(satuan);
             $("#modalListBarang").modal('hide');
-
         });
     });
 
     // pilih item dari data table server side
     $(document).ready(function() {
         $(document).on('click', '#data_barang', function() {
-
-            var n = $('#hidden_no_row').val();
-
             var kd_bar = $(this).data('kodebar');
             // console.log(kd_bar);
             // var id = $(this).attr('data');
@@ -372,8 +363,8 @@
                     kd_bar: kd_bar
                 },
                 success: function(data) {
-                    $('#stok_' + n).text(data);
-                    $('#hidden_stok_' + n).val(data);
+                    $('#stok').text(data);
+                    $('#hidden_stok').val(data);
                 }
             });
             return false;
@@ -381,12 +372,7 @@
     });
 
     //Simpan Data
-    // var n = $('#hidden_no_row').val();
-    //var n = 2;
-
-    function saveRinciClick(n) {
-
-        console.log(n);
+    $('#btn_simpan').on('click', function() {
 
         $.ajax({
             type: "POST",
@@ -394,8 +380,8 @@
             dataType: "JSON",
 
             beforeSend: function() {
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
+                $('#lbl_status_simpan_1').empty();
+                $('#lbl_status_simpan_1').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
                 if ($.trim($('#hidden_no_spp').val()) == '') {
                     $('#lbl_spp_status').empty();
                     $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
@@ -412,12 +398,12 @@
                 cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
                 txt_kode_departemen: $('#txt_kode_departemen').val(),
                 cmb_departemen: $('#cmb_departemen').val(),
-                hidden_kode_brg: $('#hidden_kode_brg_' + n).val(),
-                hidden_nama_brg: $('#hidden_nama_brg_' + n).val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
-                txt_qty: $('#txt_qty_' + n).val(),
-                hidden_stok: $('#hidden_stok_' + n).val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + n).val()
+                hidden_kode_brg: $('#hidden_kode_brg').val(),
+                hidden_nama_brg: $('#hidden_nama_brg').val(),
+                hidden_satuan_brg: $('#hidden_satuan_brg').val(),
+                txt_qty: $('#txt_qty').val(),
+                hidden_stok: $('#hidden_stok').val(),
+                txt_keterangan_rinci: $('#txt_keterangan_rinci').val()
             },
 
             success: function(data) {
@@ -427,8 +413,8 @@
                 $('#devisi').val("");
                 $('#jenis_spp').val("");
 
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<label id="status_sukses" style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
+                $('#lbl_status_simpan_1').empty();
+                $('#lbl_status_simpan_1').append('<label id="status_sukses" style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
 
                 $('#lbl_spp_status').empty();
                 $('#h4_no_spp').html('No. SPP : ' + data.nospp);
@@ -440,16 +426,16 @@
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').addClass('bg-light');
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').attr('disabled', '');
 
-                $('#btn_hapus_row_' + n).css('display', 'none');
-                $('#btn_simpan_' + n).css('display', 'none');
-                $('#btn_ubah_' + n).css('display', 'block');
-                $('#btn_hapus_' + n).css('display', 'block');
+                $('#btn_hapus_row').css('display', 'none');
+                $('#btn_simpan').css('display', 'none');
+                $('#btn_ubah').css('display', 'block');
+                $('#btn_hapus').css('display', 'block');
 
                 $('#hidden_id_ppo').val(data.id_ppo);
-                $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+                $('#hidden_id_item_ppo').val(data.id_item_ppo);
 
 
                 // $('[name="harga"]').val("");
@@ -458,30 +444,26 @@
             }
         });
         return false;
-    };
+    });
 
-    // var n = $('#hidden_no_row').val();
-    $('#btn_ubah_' + n).on('click', function() {
-
-        var n = $('#hidden_no_row').val();
+    $('#btn_ubah').on('click', function() {
 
         $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
         $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
 
-        $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').removeClass('bg-light');
-        $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').removeAttr('disabled');
+        $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').removeClass('bg-light');
+        $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').removeAttr('disabled');
 
-        $('#btn_simpan_' + n).css('display', 'none');
+        $('#btn_simpan').css('display', 'none');
         $('#btn_hapus').css('display', 'none');
-        $('#btn_ubah_' + n).css('display', 'none');
-        $('#btn_update_' + n).css('display', 'block');
-        $('#btn_cancel_update_' + n).css('display', 'block');
+        $('#btn_ubah').css('display', 'none');
+        $('#btn_update').css('display', 'block');
+        $('#btn_cancel_update').css('display', 'block');
 
         $("#status_sukses").remove();
     });
 
-    // var n = $('#hidden_no_row').val();
-    $('#btn_cancel_update_' + n).on('click', function() {
+    $('#btn_cancel_update').on('click', function() {
         // var data = this.value;
         // console.log(data);
 
@@ -496,7 +478,7 @@
             },
 
             data: {
-                hidden_id_item_ppo: $('#hidden_id_item_ppo_1').val(),
+                hidden_id_item_ppo: $('#hidden_id_item_ppo').val(),
                 hidden_id_ppo: $('#hidden_id_ppo').val()
             },
 
@@ -514,13 +496,13 @@
                 $('#txt_kode_departemen').val(ppo.kodedept);
                 $('#txt_keterangan').val(ppo.ket);
 
-                var nakobar_1 = item_ppo.nabar + " - " + item_ppo.kodebar;
+                var nakobar = item_ppo.nabar + " - " + item_ppo.kodebar;
 
-                $('#nakobar_1').val(nakobar_1);
-                $('#txt_qty_1').val(item_ppo.qty);
-                $('#stok_1').text(item_ppo.STOK);
-                $('#satuan_1').text(item_ppo.sat);
-                $('#txt_keterangan_rinci_1').val(item_ppo.ket);
+                $('#nakobar').val(nakobar);
+                $('#txt_qty').val(item_ppo.qty);
+                $('#stok').text(item_ppo.STOK);
+                $('#satuan').text(item_ppo.sat);
+                $('#txt_keterangan_rinci').val(item_ppo.ket);
 
                 $('#lbl_status_simpan_1').empty();
                 $('#lbl_status_simpan_1').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Edit Dibatalkan</label>');
@@ -531,12 +513,12 @@
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').addClass('bg-light');
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').attr('disabled', '');
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').addClass('bg-light');
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').attr('disabled', '');
 
-                $('#btn_update_1').css('display', 'none');
-                $('#btn_cancel_update_1').css('display', 'none');
-                $('#btn_ubah_1').css('display', 'block');
+                $('#btn_update').css('display', 'none');
+                $('#btn_cancel_update').css('display', 'none');
+                $('#btn_ubah').css('display', 'block');
                 $('#btn_hapus').css('display', 'block');
 
                 // console.log(nospp);
@@ -557,15 +539,15 @@
                 // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                 // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                // $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').addClass('bg-light');
-                // $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').attr('disabled', '');
+                // $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').addClass('bg-light');
+                // $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').attr('disabled', '');
 
                 // // $('#btn_hapus_row').css('display', 'none');
-                // // $('#btn_simpan_1').css('display', 'none');
-                // $('#btn_ubah_1').css('display', 'block');
+                // // $('#btn_simpan').css('display', 'none');
+                // $('#btn_ubah').css('display', 'block');
                 // $('#btn_hapus').css('display', 'block');
-                // $('#btn_update_1').css('display', 'none');
-                // $('#btn_cancel_update_1').css('display', 'none');
+                // $('#btn_update').css('display', 'none');
+                // $('#btn_cancel_update').css('display', 'none');
 
                 // $('[name="harga"]').val("");
                 // $('#ModalaAdd').modal('hide');
@@ -574,9 +556,8 @@
         });
     });
 
-    var n = $('#hidden_no_row').val();
     //Update Data
-    $('#btn_update_' + n).on('click', function() {
+    $('#btn_update').on('click', function() {
 
         $.ajax({
             type: "POST",
@@ -598,14 +579,14 @@
                 cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
                 txt_kode_departemen: $('#txt_kode_departemen').val(),
                 cmb_departemen: $('#cmb_departemen').val(),
-                hidden_kode_brg: $('#hidden_kode_brg_1').val(),
-                hidden_nama_brg: $('#hidden_nama_brg_1').val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_1').val(),
-                txt_qty: $('#txt_qty_1').val(),
-                hidden_stok: $('#hidden_stok_1').val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_1').val(),
+                hidden_kode_brg: $('#hidden_kode_brg').val(),
+                hidden_nama_brg: $('#hidden_nama_brg').val(),
+                hidden_satuan_brg: $('#hidden_satuan_brg').val(),
+                txt_qty: $('#txt_qty').val(),
+                hidden_stok: $('#hidden_stok').val(),
+                txt_keterangan_rinci: $('#txt_keterangan_rinci').val(),
                 hidden_id_ppo: $('#hidden_id_ppo').val(),
-                hidden_id_item_ppo: $('#hidden_id_item_ppo_1').val()
+                hidden_id_item_ppo: $('#hidden_id_item_ppo').val()
             },
 
             success: function(data) {
@@ -628,15 +609,15 @@
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                 $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').addClass('bg-light');
-                $('.div_form_2').find('#nakobar_1, #txt_qty_1, #txt_keterangan_rinci_1').attr('disabled', '');
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').addClass('bg-light');
+                $('.div_form_2').find('#nakobar, #txt_qty, #txt_keterangan_rinci').attr('disabled', '');
 
                 // $('#btn_hapus_row').css('display', 'none');
-                // $('#btn_simpan_1').css('display', 'none');
-                $('#btn_ubah_1').css('display', 'block');
+                // $('#btn_simpan').css('display', 'none');
+                $('#btn_ubah').css('display', 'block');
                 $('#btn_hapus').css('display', 'block');
-                $('#btn_update_1').css('display', 'none');
-                $('#btn_cancel_update_1').css('display', 'none');
+                $('#btn_update').css('display', 'none');
+                $('#btn_cancel_update').css('display', 'none');
 
                 // $('[name="harga"]').val("");
                 // $('#ModalaAdd').modal('hide');
@@ -646,42 +627,41 @@
         return false;
     });
 
+
+
     function hapusRinci(no) {
         $('#modalKonfirmasiHapus').modal('show');
     }
 
 
-    var n = 2;
 
-    function tambah_row() {
-        // var n = ;
+
+    function tambah_row(id) {
+        var n = $('#hidden_no_table').val();
 
         var tr_buka = '<tr id="tr_' + n + '">';
         // var  hidden_proses = '<input type="hidden" id="hidden_proses_status_'+n+'" name="hidden_proses_status_'+n+'" value="insert">';
         var td_col_1 = '<td width="3%">' +
-            '<input type="text" id="hidden_no_table_' + n + '" name="hidden_no_table_' + n + '">' +
             '<input type="hidden" id="hidden_proses_status_' + n + '" name="hidden_proses_status_' + n + '" value="insert">' +
             '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row()"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row_' + n + '" onclick="hapus_row(' + n + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%">' +
-            '<input type="text" class="form-control" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
+            '<input type="text" class="form-control" id="txt_cari_kode_brg_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="15%">' +
-            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
         var td_col_4 = '<td>' +
-            '<span id="stok_' + n + '"></span><span> | </span><span id="satuan_' + n + '"></span>' +
-            '<input type="hidden" id="stok_' + n + '">' +
-            '<input type="hidden" id="satuan_' + n + '">' +
+            '<span id="stok"></span><span> | </span><span id="satuan"></span>' +
             '</td>';
         var td_col_5 = '<td>' +
-            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" size="26" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
+            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" size="26" placeholder="Merk/Type/Jenis, jika ada" onkeypress="saveRinciEnter(event,' + n + ')"></textarea>' +
             '<label id="lbl_status_simpan_' + n + '"></label>'
             // +'<input type="hidden" id="hidden_id_ppo_'+n+'" name="hidden_id_ppo_'+n+'">'
             +
@@ -689,23 +669,22 @@
             '</td>';
         var td_col_6 = '<td width="5%">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update""></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + form_tutup + tr_tutup);
-        // $('#txt_qty_' + n).number(true, 2);
+        $('#txt_qty_' + n).number(true, 2);
         /*$('html, body').animate({
             scrollTop: $("#tr_" + n).offset().top
         }, 2000);*/
-        // n = parseInt(n) + parseInt(1);
-        $('#hidden_no_table_' + n).val(n);
-        console.log(n)
+        // n = parseInt(n)+ parseInt(1);
         n++;
+        $('#hidden_no_table').val(n);
     }
 
     function hapus_row(id) {
