@@ -210,11 +210,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <tbody id="tbody_rincian" name="tbody_rincian">
 
                                 </tbody>
-                                <tfoot>
+                                <!-- <tfoot>
                                     <tr>
                                         <th colspan="13"><button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" onclick="tambah_row()"></button></th>
                                     </tr>
-                                </tfoot>
+                                </tfoot> -->
                             </table>
                         </div>
                     </div>
@@ -248,6 +248,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
             '' +
 
+            '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" id="tambah_row' + row + '" name="btn_hapus_row" onclick="tambah_row(' + row + ')"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
