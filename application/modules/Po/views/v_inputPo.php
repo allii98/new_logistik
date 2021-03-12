@@ -512,8 +512,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         console.log(nilai);
         // document.getElementById("txt_jumlah_1" + no_row).value = "Johnny Bravo";
-        alert(nilai)
-        // $(`#txt_jumlah_1${no_row}`).val(nilai);
+        // alert(nilai)
+        $(`#txt_jumlah_1${no_row}`).val(nilai);
     }
     //Simpan Data
     function simpan(id) {

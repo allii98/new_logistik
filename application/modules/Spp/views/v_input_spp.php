@@ -218,8 +218,8 @@
 
 </div> <!-- container -->
 
-<div class="modal fade show" id="modalListBarang" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListBarang">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">List Barang</h4>
