@@ -337,8 +337,8 @@
         <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/libs/select2/js/select2.min.js"></script>
-        <!-- 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script> -->
+
+        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
 
         <div class="content-page mt-1">

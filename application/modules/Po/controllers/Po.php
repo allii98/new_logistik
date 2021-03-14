@@ -19,6 +19,7 @@ class Po extends CI_Controller
             redirect('Login');
         }
         date_default_timezone_set('Asia/Jakarta');
+        $this->load->library('form_validation');
     }
 
     function get_ajax()
@@ -522,7 +523,67 @@ class Po extends CI_Controller
         echo json_encode($data_return);
     }
 
+    public function updateItem()
+    {
+        $no_id_item = $this->input->post('hidden_id_po_item');
+        $norefpo = $this->input->post('hidden_no_ref_po');
+        $no_po = $this->input->post('hidden_no_po');
 
+        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00") {
+            $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+            $disc = $this->input->post('txt_disc') / 100;
+            $jumharga = $qty_harga - ($qty_harga * $disc);
+        } else {
+            $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+        }
+
+        $dataupdateitem = [
+            'nopo' => $no_po,
+            'nopotxt' => $no_po,
+            'noppo' => $this->input->post('txt_no_spp'),
+            'noppotxt' => $this->input->post('txt_no_spp'),
+            'refppo' => $this->input->post('hidden_no_ref'),
+            'tglppo' =>  date("Y-m-d"),
+            'tglppotxt' =>  date("Ymd"),
+            'tglpo' =>  date("Y-m-d"),
+            'tglpotxt' => date("Ymd"),
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'harga' => $this->input->post('txt_harga'),
+            'jumharga' => $jumharga,
+            'kodept' => $this->input->post('hidden_kodept'),
+            'namapt' => $this->input->post('hidden_namapt'),
+            'periode' => date('Y-m-d H:i:s'),
+            'periodetxt' => date('Ym'),
+            'thn' => date('Y'),
+            'merek' => $this->input->post('txt_merk'),
+            'tglisi' => date('Y-m-d H:i:s'),
+            'user' => $this->session->userdata('user'),
+            'ket' => $this->input->post('txt_keterangan_rinci'),
+            'noref' => $norefpo,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'hargasblm' => $this->input->post('txt_harga'),
+            'disc' => $this->input->post('txt_disc'),
+            'kurs' => $this->input->post('cmb_kurs'),
+            'kode_budget' => "0",
+            'grup' => $this->input->post('cmb_jenis_budget'),
+            'main_acct' => "0",
+            'nama_main' => NULL,
+            'batal' => "0",
+            'cek_pp' => "0",
+            'KODE_BPO' => "0",
+            'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
+            'kode_bebanbpo' => Null,
+            'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
+            'konversi' => "0"
+        ];
+
+        $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
+        echo json_encode($updateitem);
+    }
 
     public function update()
     {
@@ -664,6 +725,15 @@ class Po extends CI_Controller
         $id_po  = $this->input->post('id_po');
 
         $data = $this->M_po->cancelUpdateItemPO($id_po_item, $id_po);
+
+        echo json_encode($data);
+    }
+    public function cancel_item()
+    {
+        $id_po_item = $this->input->post('id_po_item');
+        // $id_po  = $this->input->post('id_po');
+
+        $data = $this->M_po->cancelItemPO($id_po_item);
 
         echo json_encode($data);
     }

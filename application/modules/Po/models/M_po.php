@@ -157,6 +157,15 @@ class M_po extends CI_Model
 
         return $data_return;
     }
+
+    public function cancelItemPO($id_po_item)
+    {
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->from('item_po');
+        $this->db_logistik_pt->where('id', $id_po_item);
+        $data_item_po =  $this->db_logistik_pt->get()->row_array();
+        return $data_item_po;
+    }
 }
 
 /* End of file M_po.php */
