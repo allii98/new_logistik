@@ -333,8 +333,10 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
+
         $data1 = $this->db->insert('po', $datainsert);
         $data2 = $this->db->insert('item_po', $datainsertitem);
+        $this->_cek_flag_po($no_po);
 
         $data_return = [
             'data' => $data1,
@@ -348,6 +350,50 @@ class Po extends CI_Controller
 
         // $data = $this->M_po->savePO($datainsert, $datainsertitem);
         echo json_encode($data_return);
+    }
+
+    private function _cek_flag_po($no_po)
+    {
+        $no_spp = $this->input->post('txt_no_spp');
+        $no_ref_spp = $this->input->post('hidden_no_ref');
+        $kodebar = $this->input->post('hidden_kode_brg');
+
+        $cek_spp = "SELECT * FROM item_ppo WHERE noppotxt = '$no_spp' AND noreftxt = '$no_ref_spp'";
+        $num_row_spp = $this->db_logistik_pt->query($cek_spp)->num_rows();
+
+        $cek_po = "SELECT * FROM item_po WHERE noppotxt = '$no_spp' AND refppo = '$no_ref_spp' AND nopotxt = '$no_po'";
+        $num_row_po = $this->db_logistik_pt->query($cek_po)->num_rows();
+
+        $dataedititempo['po'] = '1';
+        $this->db_logistik_pt->set($dataedititempo);
+        $this->db_logistik_pt->where('noreftxt', $no_ref_spp);
+        $this->db_logistik_pt->where('noppotxt', $no_spp);
+        $this->db_logistik_pt->where('kodebartxt', $kodebar);
+        $this->db_logistik_pt->update('item_ppo');
+
+        if ($num_row_spp == $num_row_po) {
+            $dataeditpo['po'] = '1';
+            $this->db_logistik_pt->set($dataeditpo);
+            $this->db_logistik_pt->where('noreftxt', $no_ref_spp);
+            $this->db_logistik_pt->where('noppotxt', $no_spp);
+            $this->db_logistik_pt->update('ppo');
+        }
+    }
+
+    public function deletePO()
+    {
+        $no_po = $this->input->post('nopo');
+
+        $data = $this->M_po->deletePO($no_po);
+
+        echo json_encode($data);
+    }
+
+    public function hapus_rinci()
+    {
+        $id_po_item = $this->input->post('hidden_id_po_item');
+        $data = $this->db_logistik_pt->delete('item_po', array('id' => $id_po_item));
+        echo json_encode($data);
     }
 
     public function saveItem()
