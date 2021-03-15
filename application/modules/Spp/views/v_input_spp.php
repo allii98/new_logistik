@@ -22,6 +22,8 @@
                                     endforeach;
                                     ?>
                                 </select>
+                                <label id="dev_req"></label>
+
                             </div>
                         </div>
                         <div class="col-lg-1 col-12">
@@ -53,6 +55,7 @@
                                     }
                                     ?>
                                 </select>
+                                <label id="jp_req"></label>
                             </div>
                         </div> <!-- end col -->
                         <div class="col-lg-1 col-12">
@@ -82,6 +85,7 @@
                                     }
                                     ?>
                                 </select>
+                                <label id="alok_req"></label>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
@@ -95,6 +99,7 @@
                                 <label for="example-select">Tgl terima*</label>
                                 <input type="date" class="form-control" id="txt_tgl_terima">
                             </div>
+                            <label id="tgl_trm_req" class="mt-0"></label>
                         </div>
                         <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" placeholder="Tanggal" readonly>
                         <div class="col-lg-2 col-12">
@@ -111,6 +116,7 @@
                                     endforeach;
                                     ?>
                                 </select>
+                                <label id="dept_req"></label>
                             </div>
                         </div>
                         <div class="col-lg-1 col-12">
@@ -123,6 +129,7 @@
                             <div class="form-group">
                                 <label for="example-select">Keterangan</label>
                                 <textarea class="form-control" rows="2" id="txt_keterangan"></textarea>
+                                <label id="ket_req"></label>
                             </div>
                         </div>
                         <input type="hidden" id="hidden_id_ppo">
@@ -357,76 +364,110 @@
     function saveRinciClick(n) {
 
         console.log(n);
+        var dev = $('#devisi').val();
+        var jp = $('#cmb_jenis_permohonan').val();
+        var alok = $('#cmb_alokasi').val();
+        var tgl_trm = $('#txt_tgl_terima').val();
+        var dept = $('#cmb_departemen').val();
 
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Spp/saveSpp') ?>",
-            dataType: "JSON",
+        if (dev) {
+            $('#dev_req').empty();
+        }
+        if (jp) {
+            $('#jp_req').empty();
+        }
+        if (alok) {
+            $('#alok_req').empty();
+        }
+        if (tgl_trm) {
+            $('#tgl_trm_req').empty();
+        }
+        if (dept) {
+            $('#dept_req').empty();
+        }
 
-            beforeSend: function() {
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
-                if ($.trim($('#hidden_no_spp').val()) == '') {
+        if (!dev) {
+            $('#dev_req').append('<h6 style="color:red;">This field is required!</h6>');
+        } else if (!jp) {
+            $('#jp_req').append('<h6 style="color:red;">This field is required!</h6>');
+        } else if (!alok) {
+            $('#alok_req').append('<h6 style="color:red;">This field is required!</h6>');
+        } else if (!tgl_trm) {
+            $('#tgl_trm_req').append('<h6 style="color:red;">This field is required!</h6>');
+        } else if (!dept) {
+            $('#dept_req').append('<h6 style="color:red;">This field is required!</h6>');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Spp/saveSpp') ?>",
+                dataType: "JSON",
+
+                beforeSend: function() {
+                    $('#lbl_status_simpan_' + n).empty();
+                    $('#lbl_status_simpan_' + n).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
+                    if ($.trim($('#hidden_no_spp').val()) == '') {
+                        $('#lbl_spp_status').empty();
+                        $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                    }
+                },
+
+                data: {
+                    cmb_alokasi: $('#cmb_alokasi').val(),
+                    hidden_no_spp: $('#hidden_no_spp').val(),
+                    txt_tanggal: $('#txt_tanggal').val(),
+                    txt_tgl_terima: $('#txt_tgl_terima').val(),
+                    txt_tgl_ref: $('#txt_tgl_ref').val(),
+                    txt_keterangan: $('#txt_keterangan').val(),
+                    cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
+                    txt_kode_departemen: $('#txt_kode_departemen').val(),
+                    cmb_departemen: $('#cmb_departemen').val(),
+                    hidden_kode_brg: $('#hidden_kode_brg_' + n).val(),
+                    hidden_nama_brg: $('#hidden_nama_brg_' + n).val(),
+                    hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                    txt_qty: $('#txt_qty_' + n).val(),
+                    hidden_stok: $('#hidden_stok_' + n).val(),
+                    txt_keterangan_rinci: $('#txt_keterangan_rinci_' + n).val()
+                },
+
+                success: function(data) {
+                    console.log(data);
+                    // console.log(nospp);
+                    // console.log(noref);
+                    // $('#devisi').val("");
+                    // $('#jenis_spp').val("");
+
+                    $('#lbl_status_simpan_' + n).empty();
+                    $('#lbl_status_simpan_' + n).append('<label id="status_sukses" style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
+
                     $('#lbl_spp_status').empty();
-                    $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                    $('#h4_no_spp').html('No. SPP : ' + data.nospp);
+                    $('#hidden_no_spp').val(data.nospp);
+
+                    $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
+                    // $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
+
+                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
+                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
+
+                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
+                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+
+                    $('#btn_hapus_row_' + n).css('display', 'none');
+                    $('#btn_simpan_' + n).css('display', 'none');
+                    $('#btn_ubah_' + n).css('display', 'block');
+                    $('#btn_hapus_' + n).css('display', 'block');
+
+                    $('#hidden_id_ppo').val(data.id_ppo);
+                    $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+
+
+                    // $('[name="harga"]').val("");
+                    // $('#ModalaAdd').modal('hide');
+                    // tampil_data_barang();
                 }
-            },
+            });
+        }
 
-            data: {
-                cmb_alokasi: $('#cmb_alokasi').val(),
-                hidden_no_spp: $('#hidden_no_spp').val(),
-                txt_tanggal: $('#txt_tanggal').val(),
-                txt_tgl_terima: $('#txt_tgl_terima').val(),
-                txt_tgl_ref: $('#txt_tgl_ref').val(),
-                txt_keterangan: $('#txt_keterangan').val(),
-                cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
-                txt_kode_departemen: $('#txt_kode_departemen').val(),
-                cmb_departemen: $('#cmb_departemen').val(),
-                hidden_kode_brg: $('#hidden_kode_brg_' + n).val(),
-                hidden_nama_brg: $('#hidden_nama_brg_' + n).val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
-                txt_qty: $('#txt_qty_' + n).val(),
-                hidden_stok: $('#hidden_stok_' + n).val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + n).val()
-            },
-
-            success: function(data) {
-                console.log(data);
-                // console.log(nospp);
-                // console.log(noref);
-                $('#devisi').val("");
-                $('#jenis_spp').val("");
-
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<label id="status_sukses" style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
-
-                $('#lbl_spp_status').empty();
-                $('#h4_no_spp').html('No. SPP : ' + data.nospp);
-                $('#hidden_no_spp').val(data.nospp);
-
-                $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
-                // $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
-
-                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
-                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
-
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
-
-                $('#btn_hapus_row_' + n).css('display', 'none');
-                $('#btn_simpan_' + n).css('display', 'none');
-                $('#btn_ubah_' + n).css('display', 'block');
-                $('#btn_hapus_' + n).css('display', 'block');
-
-                $('#hidden_id_ppo').val(data.id_ppo);
-                $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
-
-
-                // $('[name="harga"]').val("");
-                // $('#ModalaAdd').modal('hide');
-                // tampil_data_barang();
-            }
-        });
         return false;
     };
 
