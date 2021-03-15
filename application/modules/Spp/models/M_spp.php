@@ -174,6 +174,13 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->update('item_ppo', $data_item_ppo);
         return TRUE;
     }
+
+    public function deleteSpp($no_spp)
+    {
+        $this->db_logistik_pt->delete('ppo', array('noppo' => $no_spp));
+        $this->db_logistik_pt->delete('item_ppo', array('noppo' => $no_spp));
+        return TRUE;
+    }
 }
 
 /* End of file M_spp.php */

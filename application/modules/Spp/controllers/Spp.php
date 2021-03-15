@@ -99,6 +99,7 @@ class Spp extends CI_Controller
 
     public function saveSpp()
     {
+        $id_user = $this->session->userdata('id_user');
         $cmb_alokasi = $this->input->post("cmb_alokasi");
 
         $data['nama_dept'] = $this->M_spp->namaDept($this->input->post("cmb_departemen"));
@@ -186,6 +187,7 @@ class Spp extends CI_Controller
             'periodetxt' => $periodetxt,
             'thn' => $thn,
             'tglisi' => date("Y-m-d H:i:s"),
+            'id_user' => $id_user,
             'user' => $this->session->userdata('user'),
             'status' => 'DALAM PROSES',
             'status2' => '0',
@@ -222,6 +224,7 @@ class Spp extends CI_Controller
             'thn' => $thn,
             'ket' => $this->input->post('txt_keterangan_rinci'),
             'tglisi' => date("Y-m-d H:i:s"),
+            'id_user' => $id_user,
             'user' => $this->session->userdata('user'),
             'status' => 'DALAM PROSES',
             'status2' => '0',
@@ -244,12 +247,12 @@ class Spp extends CI_Controller
         }
 
         // cari id terakhir
-        $user = $this->session->userdata('user');
-        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE user = '$user'";
+
+        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE id_user = '$id_user'";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_ppo = $generate_id->id_ppo;
 
-        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE user = '$user'";
+        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE id_user = '$id_user'";
         $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
         $id_item_ppo = $generate_id_item->id_item_ppo;
 
@@ -342,6 +345,15 @@ class Spp extends CI_Controller
         // } else {
         //     $data = FALSE;
         // }
+        echo json_encode($data);
+    }
+
+    public function deleteSpp()
+    {
+        $no_spp = $this->input->post('no_spp');
+
+        $data = $this->M_spp->deleteSpp($no_spp);
+
         echo json_encode($data);
     }
 
