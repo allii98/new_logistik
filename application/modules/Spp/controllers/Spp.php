@@ -8,6 +8,7 @@ class Spp extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_spp');
+        $this->load->model('M_data_spp');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -360,6 +361,41 @@ class Spp extends CI_Controller
     public function sppApproval()
     {
         $this->template->load('template', 'v_spp_approval');
+    }
+
+    public function get_data_spp()
+    {
+        $list = $this->M_data_spp->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = '';
+            $row[] = '';
+            $row[] = $no . ".";
+            $row[] = $field->noppotxt;
+            $row[] = $field->noreftxt;
+            $row[] = $field->tglref;
+            $row[] = $field->tglppo;
+            $row[] = $field->tgltrm;
+            $row[] = $field->namadept;
+            $row[] = $field->lokasi;
+            $row[] = $field->ket;
+            $row[] = 'DALAM PROSES';
+            $row[] = $field->user;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_data_spp->count_all(),
+            "recordsFiltered" => $this->M_data_spp->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
 }
 
