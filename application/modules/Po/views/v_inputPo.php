@@ -187,6 +187,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                         <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                         <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                        <input type="text" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                         <div class="table-responsive">
                             <table id="tableRinciPO" class="table table-striped table-bordered" width="150%">
                                 <thead>
@@ -249,6 +250,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         setInterval(function() {
             check_form_2();
         }, 1000);
+
     });
     var row = 0;
     var simpanBaru = true;
@@ -264,19 +266,21 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function tambah_row() {
         row++;
         // console.log("bariske", row);
+
         var tr_buka = '<tr id="tr_' + row + '">';
         var td_col_1 = '<td width="3%">' +
             '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
             '' +
-
             '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" name="btn_tambah_row" id="tambah_row' + row + '" onclick="tambah_row(' + row + ')"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
+        var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" id="noppo' + row + '" name="noppo' + row + '">' +
+            '</td>';
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
             '<option selected="selected">Cari SPP</option>' +
-
             '</select>' +
             '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
@@ -361,6 +365,37 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
+        var lokasi = $('#lokasi').val();
+        switch (lokasi) {
+            case 'HO':
+                var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                    '<input type="text" id="noppo' + row + '" name="noppo' + row + '">' +
+
+                    '</td>';
+                break;
+            case 'RO':
+            case 'SITE':
+            case 'PKS':
+                var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                    '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
+                    '<option selected="selected">Cari SPP</option>' +
+                    '</select>' +
+                    '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
+                    '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
+                    '<input type="hidden" id="hidden_kd_departemen_1' + row + '" name="hidden_kd_departemen_1' + row + '">' +
+                    '<input type="hidden" id="hidden_departemen_1' + row + '" name="hidden_departemen_1' + row + '">' +
+                    '<input type="hidden" id="hidden_tgl_spp_1' + row + '" name="hidden_tgl_spp_1' + row + '">' +
+                    '<input type="hidden" id="hidden_kd_pt_1' + row + '" name="hidden_kd_pt_1' + row + '">' +
+                    '<input type="hidden" id="hidden_nama_pt_1' + row + '" name="hidden_nama_pt_1' + row + '">' +
+                    '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
+
+                    '</td>';
+                break;
+            default:
+                break;
+        }
+
+
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_1' + row).number(true, 2);
         if (row == 1) {
@@ -424,6 +459,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function check_form_2() {
+        // var data = sessionStorage.setItem('status_lokasi', 'loggedIn');
+        // console.log(data);
         if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#dikirim_kebun').val()) != '') {
             $('#btn_simpan_1').removeAttr('disabled', '');
             $('#tambah_row1').removeAttr('disabled', '');
@@ -458,7 +495,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $.each(data, function(index, item) {
                         results.push({
                             id: item.id,
-                            text: item.noreftxt
+                            text: item.noreftxt + ' - ' + item.tglppotxt + ' - ' + item.namadept
                         });
 
                     });
@@ -1159,7 +1196,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var id_po = $('#hidden_id_po').val();
         // var no_po = $('#hidden_no_po').val();
 
-        console.log(id_item);
+        // console.log(id_item);
         // console.log(id_po);
         $('#modalKonfirmasiHapus').modal('hide');
 

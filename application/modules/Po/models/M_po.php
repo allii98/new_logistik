@@ -96,7 +96,7 @@ class M_po extends CI_Model
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $noref = $this->input->get('noref');
-        $query = "SELECT id, noppo, noreftxt FROM ppo WHERE noreftxt LIKE '%$noref%' ORDER BY id DESC";
+        $query = "SELECT id, noppo, noreftxt, tglppotxt, namadept FROM ppo WHERE noreftxt LIKE '%$noref%' ORDER BY id DESC";
         $d = $this->db_logistik_pt->query($query)->result_array();
         return $d;
     }

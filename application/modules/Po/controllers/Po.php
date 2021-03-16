@@ -58,6 +58,7 @@ class Po extends CI_Controller
     {
         $data = [
             'title' => "Permohonan Order",
+
         ];
         $this->template->load('template', 'v_dataPo', $data);
     }
@@ -66,6 +67,7 @@ class Po extends CI_Controller
     {
         $data = [
             'title' => "Permohonan Order",
+            'sesi_sl' => $this->session->userdata('status_lokasi')
         ];
         $this->template->load('template', 'v_inputPo', $data);
     }

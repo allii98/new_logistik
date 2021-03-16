@@ -32,6 +32,7 @@
     <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" /> -->
     <!-- icons -->
     <link href="<?php echo base_url() ?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" type="text/css" />
 
 
 
@@ -335,6 +336,12 @@
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <script src="<?php echo base_url() ?>assets/js/vendor.min.js"></script>
         <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
+
+        <!-- Tost-->
+        <script src="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.js"></script>
+
+        <!-- toastr init js-->
+        <script src="<?php echo base_url() ?>assets/js/pages/toastr.init.js"></script>
 
         <script src="<?php echo base_url() ?>assets/libs/select2/js/select2.min.js"></script>
 
