@@ -31,11 +31,14 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no . ".";
-            $row[] = $d->kode;
-            $row[] = $d->supplier;
-            $row[] = $d->usaha;
+            $row[] = $d->tglppo;
+            $row[] = $d->noreftxt;
+            $row[] = $d->namadept;
+            $row[] = $d->kodebar;
+            $row[] = $d->nabar;
+            $row[] = $d->ket;
             // $row[] = '<img src=" ' . site_url('assets/uploads/tiket/' . $d->foto) . '" width="60px">';
-            $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->kode . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
+            // $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->noreftxt . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
 
 
 

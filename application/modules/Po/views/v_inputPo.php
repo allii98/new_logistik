@@ -187,15 +187,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                         <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                         <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
-                        <input type="text" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
+                        <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                         <div class="table-responsive">
-                            <table id="tableRinciPO" class="table table-striped table-bordered" width="150%">
+                            <table id="tableRinciPO" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>SPP</th>
+                                        <th width="250px">SPP</th>
                                         <th>Jenis Budget</th>
-                                        <th>Item Barang</th>
+                                        <th width="500px">Nama & Kode Barang</th>
+                                        <th>Merk</th>
                                         <th>Qty</th>
 
                                         <th>Harga</th>
@@ -242,16 +243,99 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="col-4 float-right">
+                            <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
+                                <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+                                <?php
+                                switch ($this->session->userdata('status_lokasi')) {
+                                    case 'PKS':
+                                    case 'SITE':
+                                ?>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                    <?php
+                                        break;
+                                    case 'RO':
+                                    ?>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                        <option value="RO">RO</option>
+                                    <?php
+                                        break;
+                                    case 'HO':
+                                    ?>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                        <option value="RO">RO</option>
+                                        <option value="HO">HO</option>
+                                <?php
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                            <table id="spp" class="table table-bordered" width="60px">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Tgl. SPP</th>
+                                        <th>Ref. SPP</th>
+                                        <th>Departemen</th>
+                                        <th>Kode Barang</th>
+                                        <th>Item Barang</th>
+                                        <th>Ket</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <th style="text-align: center;" colspan="7"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
 
 </div>
 
 <script>
-    $(document).ready(function() {
-        setInterval(function() {
-            check_form_2();
-        }, 1000);
+    // $(document).ready(function() {
+    //     setInterval(function() {
+    //         check_form_2();
+    //     }, 1000);
 
-    });
+    // });
+
+
     var row = 0;
     var simpanBaru = true;
     var updateBaru = true;
@@ -262,6 +346,99 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     $(function() {
         tambah_row();
     })
+
+    function pilihItem() {
+        var rowcollection = $('#spp').DataTable().rows({
+            selected: true
+        }).data().toArray();
+        // console.log(rowcollection);
+        $.each(rowcollection, function(index, elem) {
+            // var no_spp = rowcollection[index][3];
+            var no_ref_spp = rowcollection[index][2];
+            var departemen = rowcollection[index][3];
+            var kodebar = rowcollection[index][4];
+            console.log(no_ref_spp, departemen, kodebar);
+            // data_spp_dipilih(no_spp, no_ref_spp, kodebar);
+        })
+    }
+
+    function data_spp_dipilih(no_ref_spp, departemen, kodebar) {
+        var dataClick = $('#spp').DataTable().row(this).data();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/get_detail_spp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                'no_spp': no_spp,
+                'no_ref_spp': no_ref_spp,
+                'kodebar': kodebar
+            },
+            success: function(data) {
+                console.log(data);
+                var tglref = new Date(data[0].tglref);
+                var tglppo = new Date(data[0].tglppo);
+
+                $.each(data[1], function(index) {
+                    // if(index != 0){
+                    if (n != 1) {
+                        tambah_row(n);
+                    }
+
+                    $('#lbl_no_ref_spp_' + n).empty();
+                    $('#lbl_tgl_ref_' + n).empty();
+                    $('#lbl_departemen_' + n).empty();
+                    $('#lbl_tgl_spp_' + n).empty();
+
+                    $('#lbl_no_ref_spp_' + n).append('Ref SPP : ' + data[0].noreftxt);
+                    $('#lbl_tgl_ref_' + n).append('Tgl. Ref : ' + dateToMDY(tglref));
+                    $('#lbl_departemen_' + n).append('Departemen : ' + data[0].kodedept + ' | ' + data[0].namadept);
+                    $('#lbl_tgl_spp_' + n).append('Tgl SPP : ' + dateToMDY(tglppo));
+
+                    $('#hidden_no_ref_spp_' + n).val(data[0].noreftxt);
+                    $('#hidden_tgl_ref_' + n).val(dateToMDY(tglref));
+                    $('#hidden_kd_departemen_' + n).val(data[0].kodedept);
+                    $('#hidden_departemen_' + n).val(data[0].namadept);
+                    $('#hidden_tgl_spp_' + n).val(dateToMDY(tglppo));
+                    $('#hidden_kd_pt_' + n).val(data[0].kodept);
+                    $('#hidden_nama_pt_' + n).val(data[0].pt);
+
+                    $('#txt_no_spp_' + n).val(data[0].noppotxt);
+
+                    $('#lbl_kode_brg_' + n).empty();
+                    $('#lbl_nama_brg_' + n).empty()
+                    $('#lbl_satuan_brg_' + n).empty();
+
+                    $('#hidden_kode_brg_' + n).empty();
+                    $('#hidden_nama_brg_' + n).empty();
+                    $('#hidden_satuan_brg_' + n).empty();
+
+                    $('#lbl_kode_brg_' + n).append('Kode : ' + data[1][index].kodebartxt);
+                    $('#lbl_nama_brg_' + n).append('Nama Barang : ' + data[1][index].nabar);
+                    $('#lbl_satuan_brg_' + n).append('Satuan : ' + data[1][index].sat);
+
+                    $('#hidden_kode_brg_' + n).val(data[1][index].kodebartxt);
+                    $('#hidden_nama_brg_' + n).val(data[1][index].nabar);
+                    $('#hidden_satuan_brg_' + n).val(data[1][index].sat);
+                    $('html, body').animate({
+                        scrollTop: $("#tr_" + n).offset().top
+                    }, 2000);
+
+                    $('#txt_qty_' + n).val(data[1][index].qty);
+                    n++;
+                    $('#hidden_no_table').val(n);
+                })
+                $('#modalDataSPP').modal('hide');
+                $('#txt_qty_' + n).focus();
+
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
 
     function tambah_row() {
         row++;
@@ -275,9 +452,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
-        var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" id="noppo' + row + '" name="noppo' + row + '">' +
-            '</td>';
+
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
             '<option selected="selected">Cari SPP</option>' +
@@ -307,11 +482,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<option value="TBM">TBM</option>' +
             '</select>'; +
         '</td>';
+        var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
+            '<span id="nama_brg_' + row + '"></span><span> | </span><span id="kode_brg_' + row + '" ></span>' +
+
+            // '<input type="text" class="form-control" id="hidden_kode_brg_1' + row + '" name="hidden_kode_brg_1' + row + '"   />' +
+            // '<input type="text" class="form-control" id="hidden_nama_brg_1' + row + '" name="hidden_nama_brg_1' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="hidden_satuan_brg_1' + row + '" name="hidden_satuan_brg_1' + row + '"   />' +
+
+            '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control" id="txt_merk_1' + row + '" name="txt_merk_1' + row + '" placeholder="Merk"  required />' +
-            '<input type="hidden" class="form-control" id="hidden_kode_brg_1' + row + '" name="hidden_kode_brg_1' + row + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_nama_brg_1' + row + '" name="hidden_nama_brg_1' + row + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_satuan_brg_1' + row + '" name="hidden_satuan_brg_1' + row + '"   />' +
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -369,7 +550,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         switch (lokasi) {
             case 'HO':
                 var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                    '<input type="text" id="noppo' + row + '" name="noppo' + row + '">' +
+                    '<input type="text" class="form-control"  id="spp' + row + '" name="spp' + row + '">' +
 
                     '</td>';
                 break;
@@ -396,7 +577,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
 
 
-        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_1' + row).number(true, 2);
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
@@ -458,6 +639,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     }
 
+
     function check_form_2() {
         // var data = sessionStorage.setItem('status_lokasi', 'loggedIn');
         // console.log(data);
@@ -496,6 +678,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         results.push({
                             id: item.id,
                             text: item.noreftxt + ' - ' + item.tglppotxt + ' - ' + item.namadept
+                            // text: item.noreftxt
                         });
 
                     });
@@ -547,9 +730,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $(`#hidden_nama_pt_1${id}`).val(pt);
                         $(`#noppo${id}`).val(noppo);
                         $(`#hidden_kode_brg_1${id}`).val(kodebar);
+                        $(`#kode_brg_${id}`).text(kodebar);
                         $(`#hidden_nama_brg_1${id}`).val(nabar);
+                        $(`#nama_brg_${id}`).text(nabar);
                         $(`#hidden_satuan_brg_1${id}`).val(sat);
                         $(`#txt_qty_1${id}`).val(qty);
+                        console.log(kodebar);
+                        console.log(nabar);
                     });
 
                 },
@@ -557,6 +744,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     console.log(request.responseText);
                 }
             });
+        });
+
+        $(`#spp${id}`).click(function() {
+            $("#modal-spp").modal();
         });
 
     }
@@ -624,8 +815,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 url: "<?php echo base_url('Po/save') ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-                    $('#lbl_status_simpan_1' + id).empty();
-                    $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
+                    // $('#lbl_status_simpan_1' + id).empty();
+                    // $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
                     if ($.trim($('#hidden_no_po').val()) == '') {
                         $('#lbl_spp_status').empty();
                         $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
@@ -673,10 +864,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 success: function(data) {
                     if (true) {
                         console.table(data);
-                        $('#lbl_status_simpan_1' + id).empty();
-                        $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
+                        // $('#lbl_status_simpan_1' + id).empty();
+                        // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Berhasil disimpan',
+                            position: 'top-right',
+                            icon: 'success',
+                            showHideTransition: 'plain'
+                            // reload: false
+                        });
+
+
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                        $('.div_form_1').find('input,textarea,select').addClass('class', 'bg-light');
+                        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).attr('disabled', '');
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).addClass('class', 'bg-light');
@@ -684,8 +885,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
-                        $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-                        $('#tableRinciPO').find('input,textarea,select').addClass('class', 'bg-light');
+                        // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
+                        // $('#tableRinciPO').find('input,textarea,select').addClass('class', 'bg-light');
                         $('#btn_simpan_' + id).hide();
                         $('#btn_hapus_row_' + id).hide();
                         $('#btn_ubah_' + id).show();
@@ -697,8 +898,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#hidden_no_ref_po').val(data.noref);
                         $('#hidden_id_po').val(data.id_po);
                         var idItem = data.id_item;
-                        console.log(idItem);
-                        console.log(id);
+                        // console.log(idItem);
+                        // console.log(id);
                         $('#hidden_id_po_item_' + id).val(idItem);
 
                         simpanBaru = false;
@@ -757,8 +958,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 url: "<?php echo base_url('Po/saveItem') ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-                    $('#lbl_status_simpan_1' + id).empty();
-                    $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
+                    // $('#lbl_status_simpan_1' + id).empty();
+                    // $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
                     if ($.trim($('#hidden_no_po').val()) == '') {
                         $('#lbl_spp_status').empty();
                         $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
@@ -808,20 +1009,29 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 success: function(data) {
                     if (true) {
 
-                        $('#lbl_status_simpan_1' + id).empty();
-                        $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
+                        // $('#lbl_status_simpan_1' + id).empty();
+                        // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
+
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Berhasil disimpan',
+                            position: 'top-right',
+                            icon: 'success',
+                            showHideTransition: 'plain'
+                            // reload: false
+                        });
+
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                        $('.div_form_1').find('input,textarea,select').addClass('class', 'bg-light');
-
-                        $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
-                        $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
+                        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).attr('disabled', '');
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).addClass('class', 'bg-light');
 
                         // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                         // $('#tableRinciPO').find('input,textarea,select').addClass('class', 'bg-light');
+                        $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
+                        $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
                         $('#btn_simpan_' + id).hide();
                         $('#btn_hapus_row_' + id).show();
@@ -859,8 +1069,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 url: "<?php echo base_url('Po/update') ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-                    $('#lbl_status_simpan_1' + id).empty();
-                    $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
+                    // $('#lbl_status_simpan_1' + id).empty();
+                    // $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
                 },
 
                 data: {
@@ -909,8 +1119,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 success: function(data) {
                     if (true) {
 
-                        $('#lbl_status_simpan_1' + id).empty();
-                        $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil diupdate</label>');
+                        // $('#lbl_status_simpan_1' + id).empty();
+                        // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil diupdate</label>');
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Berhasil diupdate',
+                            position: 'top-right',
+                            stack: true,
+                            icon: 'success'
+                        });
+
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
@@ -942,8 +1160,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 url: "<?php echo base_url('Po/updateItem') ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-                    $('#lbl_status_simpan_1' + id).empty();
-                    $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
+                    // $('#lbl_status_simpan_1' + id).empty();
+                    // $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
                 },
 
                 data: {
@@ -990,11 +1208,18 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 success: function(data) {
                     if (true) {
 
-                        $('#lbl_status_simpan_1' + id).empty();
-                        $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil diupdate</label>');
+                        // $('#lbl_status_simpan_1' + id).empty();
+                        // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil diupdate</label>');
 
-                        // $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                        // $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+                        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $.toast({
+                            heading: 'Success',
+                            text: 'Berhasil diupdate',
+                            position: 'top-right',
+                            stack: true,
+                            icon: 'success'
+                        });
 
                         // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                         // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
@@ -1081,10 +1306,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                     $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
-                    $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-                    $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
-                    // $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
-                    // $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
+                    // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
+                    // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
+                    $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
+                    $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
                     $('#lbl_status_simpan_1' + id).empty();
                     $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
@@ -1137,11 +1362,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                     $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                     $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
-                    $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-                    $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
+                    // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
+                    // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
 
-                    // $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
-                    // $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
+                    $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
+                    $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
                     $('#lbl_status_simpan_1' + id).empty();
                     $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
@@ -1318,10 +1543,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     });
 
-    // $('#pilihSpp').click(function() {
-    //     $("#modal-spp").modal();
-    // });
-
 
 
 
@@ -1359,17 +1580,26 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-
-
-
-
-
-
     $(document).ready(function() {
-        $('#supllier').DataTable({
+        // $('#supllier').DataTable({
+        //     "processing": true,
+        //     "serverSide": true,
+        //     "order": [],
+        //     "ajax": {
+        //         "url": "<?php echo site_url('Po/get_ajax') ?>",
+        //         "type": "POST"
+        //     },
+        //     "columnDefs ": [{
+        //         "targets": [0],
+        //         "orderable": false,
+        //     }, ],
+        // });
+
+        $('#spp').DataTable({
             "processing": true,
             "serverSide": true,
             "order": [],
+            "select": true,
             "ajax": {
                 "url": "<?php echo site_url('Po/get_ajax') ?>",
                 "type": "POST"
@@ -1378,6 +1608,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "targets": [0],
                 "orderable": false,
             }, ],
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().deselect();
+                    }
+                }
+            ],
         });
 
         $(document).on('click', '#pilih', function() {

@@ -353,7 +353,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         <div class="col-12">
 
             <div class="modal fade show" id="modal-spp" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog modal-dialog-scrollable modal-full-width" role="document">
+                <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="scrollableModalTitle">Pilih SPP</h5>
@@ -970,9 +970,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     });
 
-    // $('#pilihSpp').click(function() {
-    //     $("#modal-spp").modal();
-    // });
+    $('#pilihSpp').click(function() {
+        $("#modal-spp").modal();
+    });
 
     $(".js-data-example-ajax").select2({
         ajax: {

@@ -5,11 +5,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_po extends CI_Model
 {
 
-
-
-    var $table = 'supplier'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kode', 'supplier', 'usaha'); //field yang ada di table supplier  
-    var $column_search = array('kode', 'supplier',  'usaha'); //field yang diizin untuk pencarian 
+    var $table = 'item_ppo'; //nama tabel dari database
+    var $column_order = array(null, 'id', 'tglppo', 'noreftxt', 'namadept', 'kodebar', 'nabar', 'ket'); //field yang ada di table supplier  
+    var $column_search = array('tglppo', 'noreftxt',  'namadept', 'kodebar', 'nabar'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -21,8 +19,8 @@ class M_po extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $this->db_logistik_pt->select('id, kode, supplier, usaha');
-        $this->db_logistik_pt->from('supplier');
+        $this->db_logistik_pt->select('id, tglppo, noreftxt, namadept,kodebar,nabar, ket');
+        $this->db_logistik_pt->from('item_ppo');
         $this->db_logistik_pt->order_by('id', 'desc');
 
 
@@ -94,7 +92,6 @@ class M_po extends CI_Model
 
     public function get_spp()
     {
-        // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $noref = $this->input->get('noref');
         $query = "SELECT id, noppo, noreftxt, tglppotxt, namadept FROM ppo WHERE noreftxt LIKE '%$noref%' ORDER BY id DESC";
         $d = $this->db_logistik_pt->query($query)->result_array();
