@@ -4,322 +4,533 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 <div class="container-fluid">
     <!-- start page title -->
     <!-- end page title -->
-    <div class="row">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h4 class="header-title">PO</h4>
-                    <p class="sub-header">
-                        Purchase Order
-                    </p>
+    <div class="row justify-content-center mt-1">
+        <div class="col-md">
+            <div class="widget-rounded-circle card-box">
+                <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
+                <p class="sub-header my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                    Input Purchase Order
+                </p>
 
-                    <div class="row div_form_1">
-                        <div class="col-lg-4">
-                            <div class="form-group row mb-1">
-                                <!-- <a href="<?php echo site_url('po/input'); ?>" class="btn btn-sm btn-info" id="a_po_baru"><span class="fa fa-plus"></span> PO Baru</a> -->
-                                <label class="col-4 col-form-label">Jenis PO *</label>
-                                <div class="col-7">
-                                    <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
-                                    <select class="form-control" id="cmb_pilih_jenis_po">
-                                        <option selected="selected">-Pilih-</option>
+                <div class="row mt-0 div_form_1">
+                    <div class="col-md-4">
+                        <div class="form-group row mb-1">
+                            <!-- <a href="<?php echo site_url('po/input'); ?>" class="btn btn-sm btn-info" id="a_po_baru"><span class="fa fa-plus"></span> PO Baru</a> -->
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;PO&nbsp;*</label>
+                            <div class="col-4">
+                                <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
+                                <select class="form-control" id="cmb_pilih_jenis_po">
+                                    <option selected="selected">
+                                        <font face="Verdana" size="2.5">-Pilih-</font>
+                                    </option>
+                                    <?php
+                                    switch ($lokasi_sesi) {
+                                        case 'PKS':
+                                    ?>
+                                            <option value="PO-Lokal">PO-Lokal</option>
                                         <?php
-                                        switch ($lokasi_sesi) {
-                                            case 'PKS':
+                                            break;
+                                        case 'SITE':
                                         ?>
-                                                <option value="PO-Lokal">PO-Lokal</option>
-                                            <?php
-                                                break;
-                                            case 'SITE':
-                                            ?>
-                                                <option value="PO-Lokal">PO-Lokal</option>
-                                            <?php
-                                                break;
-                                            case 'RO':
-                                            ?>
-                                                <option value="PO-Lokal">PO-Lokal</option>
-                                            <?php
-                                                break;
-                                            case 'HO':
-                                            ?>
-                                                <option value="PO">PO</option>
-                                                <option value="POA">POA - PO Asset</option>
-                                                <option value="PO-Khusus">POK - PO Khusus</option>
+                                            <option value="PO-Lokal">PO-Lokal</option>
                                         <?php
-                                                break;
-                                            default:
-                                                break;
-                                        }
+                                            break;
+                                        case 'RO':
                                         ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">Tgl. PO *</label>
-                                <div class="col-5">
-                                    <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">Supplier *</label>
-                                <div class="col-7">
-                                    <select class="js-data-example-ajax form-control select2" id="select2">
-                                        <option selected="selected">Nama Supplier</option>
-                                    </select>
-                                    <input type="hidden" name="kd_supplier" id="kd_supplier">
-                                    <input type="hidden" name="txtsupplier" id="txtsupplier">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">Status Bayar*</label>
-                                <div class="col-3">
-                                    <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
-                                        <option value="1">Cash</option>
-                                        <option value="2">Kredit</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">Tempo Pembayaran*</label>
-                                <div class="col-2">
-                                    <input type="text" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" autocomplite="off"><span>Hari</span>
-                                </div>
-                                <label class="col-3 col-form-label">Tempo Pengiriman*</label>
-                                <div class="col-2">
-                                    <input type="text" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
-                                </div>
+                                            <option value="PO-Lokal">PO-Lokal</option>
+                                        <?php
+                                            break;
+                                        case 'HO':
+                                        ?>
+                                            <option value="PO">PO</option>
+                                            <option value="POA">POA - PO Asset</option>
+                                            <option value="PO-Khusus">POK - PO Khusus</option>
+                                    <?php
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-lg-4">
-                            <div class="form-group row mb-1">
-                                <label class="col-5 col-form-label">Lokasi Pengiriman*</label>
-                                <div class="col-5">
-                                    <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" autocomplite="off" required>
-                                    <!-- <span class="pesan pesan-nama" style="color: red;">Harus di isi !</span><br /> -->
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-5 col-form-label">Lokasi Pembelian *</label>
-                                <div class="col-3">
-                                    <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
-                                        <option value="1">-- Pilih --</option>
-                                        <option value="2">RO</option>
-                                        <option value="3">SITE</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-5 col-form-label">No. Penawaran *</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-5 col-form-label">Pemesan *</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control bg-light" id="txt_pemesan" name="txt_pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
-                                    <input type="hidden" name="txt_kode_pemesan" id="txt_kode_pemesan" value="<?php echo $this->session->userdata('id_user'); ?>">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-5 col-form-label">Keterangan Pengiriman</label>
-                                <div class="col-7">
-                                    <textarea class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off"></textarea>
-                                    <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
-                                    <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
-                                </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2.5">Tgl.&nbsp;PO&nbsp;*</font>
+                            </label>
+                            <div class="col-5">
+                                <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
                             </div>
                         </div>
-
-                        <div class="col-lg-4">
-                            <div class="form-group row mb-1">
-                                <div class="col-1"></div>
-                                <label class="col-3 col-form-label mx-0">PPH *</label>
-                                <div class="col-6">
-                                    <input type="text" class="form-control" id="pph" name="pph" placeholder="PPH" autocomplite="off" value="0" required>
-                                </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2.5">Supplier&nbsp;*</font>
+                            </label>
+                            <div class="col-6">
+                                <select class="js-data-example-ajax form-control select2" id="select2">
+                                    <option selected="selected">Nama Supplier</option>
+                                </select>
+                                <input type="hidden" name="kd_supplier" id="kd_supplier">
+                                <input type="hidden" name="txtsupplier" id="txtsupplier">
                             </div>
-                            <div class="form-group row mb-1">
-                                <div class="col-1"></div>
-                                <label class="col-3 col-form-label" required>PPN *</label>
-                                <div class="col-3">
-                                    <select class="form-control" id="ppn" name="ppn" required>
-                                        <option value="1">N</option>
-                                        <option value="2">Y</option>
-                                        <option value="3">X</option>
-                                    </select>
-                                </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2.5">Status&nbsp;Bayar*</font>
+                            </label>
+                            <div class="col-3">
+                                <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
+                                    <option value="1">
+                                        <font face="Verdana" size="2.5">Cash</font>
+                                    </option>
+                                    <option value="2">Kredit</option>
+                                </select>
                             </div>
-                            <div class="form-group row mb-1">
-                                <div class="col-1"></div>
-                                <label class="col-3 col-form-label">Keterangan</label>
-                                <div class="col-7">
-                                    <textarea class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
-                                </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2.5">Tempo Pembayaran*</font>
+                            </label>
+                            <div class="col-2">
+                                <input type="text" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" autocomplite="off"><span>
+                                    <font face="Verdana" size="2.5">Hari</font>
+                                </span>
                             </div>
-                            <div class="form-group row mb-1">
-                                <div class="col-1"></div>
-                                <label class="col-3 col-form-label">Dikirim ke Kebun*</label>
-                                <div class="col-3">
-                                    <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
-                                        <option value="Y" selected="">Y</option>
-                                        <option value="N">N</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <div class="col-1"></div>
-                                <label class="col-3 col-form-label">Total Pembayaran</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" autocomplite="off" readonly required>
-                                </div>
+                            <label class="col-3 col-form-label mr-2">
+                                <font face="Verdana" size="2">Tempo Pengiriman*</font>
+                            </label>
+                            <div class="col-2">
+                                <input type="text" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
                             </div>
                         </div>
                     </div>
-                    <!-- end row-->
-
-                    <hr>
-                    <div class="x_content div_form_2">
-
-
-                        <label id="lbl_spp_status" name="lbl_spp_status">No. PO : ... <br /> No. Ref PO : ...</label>
-                        <h6 id="h4_no_po" name="h4_no_po"></h6>
-                        <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                        <input type="hidden" id="hidden_no_po" name="hidden_no_po">
-                        <input type="hidden" id="hidden_id_po" name="hidden_id_po">
-                        <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
-                        <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
-                        <div class="table-responsive">
-                            <table id="tableRinciPO" class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th width="250px">SPP</th>
-                                        <th>Jenis Budget</th>
-                                        <th width="500px">Nama & Kode Barang</th>
-                                        <th>Merk</th>
-                                        <th>Qty</th>
-
-                                        <th>Harga</th>
-                                        <th>Kurs</th>
-                                        <th>Disc <span>%</span></th>
-                                        <th>Biaya Lainnya</th>
-                                        <th>Ket.&nbsp;Biaya</th>
-
-                                        <th>Keterangan</th>
-                                        <th>Jumlah Rp</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody_rincian" name="tbody_rincian">
-
-                                </tbody>
-                                <!-- <tfoot>
-                                    <tr>
-                                        <th colspan="13"><button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" onclick="tambah_row()"></button></th>
-                                    </tr>
-                                </tfoot> -->
-                            </table>
+                    <div class="col-md-4">
+                        <div class="form-group row mb-1">
+                            <label class="col-4 mr-1 col-form-label">
+                                <font face="Verdana" size="2">Lokasi&nbsp;Pengiriman*</font>
+                            </label>
+                            <div class="col-5">
+                                <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" autocomplite="off" required>
+                                <!-- <span class="pesan pesan-nama" style="color: red;">Harus di isi !</span><br /> -->
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label  mr-1">
+                                <font face="Verdana" size="2">Lokasi&nbsp;Pembelian*</font>
+                            </label>
+                            <div class="col-3">
+                                <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
+                                    <option value="1">-- Pilih --</option>
+                                    <option value="2">RO</option>
+                                    <option value="3">SITE</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label mr-1">
+                                <font face="Verdana" size="2">No.&nbsp;Penawaran*</font>
+                            </label>
+                            <div class="col-7">
+                                <input type="text" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" required>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label mr-1">
+                                <font face="Verdana" size="2">Pemesan *</font>
+                            </label>
+                            <div class="col-5">
+                                <input type="text" class="form-control bg-light" id="txt_pemesan" name="txt_pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
+                                <input type="hidden" name="txt_kode_pemesan" id="txt_kode_pemesan" value="<?php echo $this->session->userdata('id_user'); ?>">
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label mr-1">
+                                <font face="Verdana" size="2">Ket. Pengiriman</font>
+                            </label>
+                            <div class="col-7">
+                                <textarea class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off"></textarea>
+                                <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
+                                <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
+                            </div>
                         </div>
                     </div>
-                </div> <!-- end card-body -->
-            </div> <!-- end card -->
-        </div><!-- end col -->
-    </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapus">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body p-4">
-                    <div class="text-center">
-                        <i class="dripicons-warning h1 text-warning"></i>
-                        <h4 class="mt-2">Konfirmasi Hapus</h4>
-                        <input type="hidden" id="hidden_no_delete" name="hidden_no_delete">
-                        <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
-                        <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteData()">Hapus</button>
-                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                    <div class="col-md-4">
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label mx-0">
+                                <font face="Verdana" size="2">PPH *</font>
+                            </label>
+                            <div class="col-4">
+                                <input type="text" class="form-control" id="pph" name="pph" placeholder="PPH" autocomplite="off" value="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label" required>
+                                <font face="Verdana" size="2">PPN *</font>
+                            </label>
+                            <div class="col-3">
+                                <select class="form-control" id="ppn" name="ppn" required>
+                                    <option value="1">N</option>
+                                    <option value="2">Y</option>
+                                    <option value="3">X</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2">Ket</font>
+                            </label>
+                            <div class="col-7">
+                                <textarea class="form-control" id="keterangan" name="keterangan" rows="1" placeholder="Keterangan" autocomplite="off"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1 my-0">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2">Dikirim&nbsp;ke&nbsp;Kebun*</font>
+                            </label>
+                            <div class="col-3 py-0">
+                                <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
+                                    <option value="Y" selected="">Y</option>
+                                    <option value="N">N</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2">Total&nbsp;Pembayaran</font>
+                            </label>
+                            <div class="col-7">
+                                <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" autocomplite="off" readonly required>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
+                            <?php
+                            switch ($sesi_sl) {
+                                case 'HO':
+                            ?>
+
+                                <?php
+                                    break;
+                                case 'RO':
+                                case 'SITE':
+                                case 'PKS':
+                                ?>
+                                    <label class="col-4 col-form-label">
+                                        <font face="Verdana" size="2.5">SPP *</font>
+                                    </label>
+                                    <div class="col-7">
+                                        <select class="js-data-example-ajax form-control select4" id="sppSITE">
+                                            <option selected="selected">
+                                                <font face="Verdana" size="2.5">Cari SPP</font>
+                                            </option>
+                                        </select>
+
+                                    </div>
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+
+                        </div>
                     </div>
+                </div>
+                <!-- end row-->
+
+                <hr class="mt-0 mb-2">
+
+                <?php
+                switch ($sesi_sl) {
+                    case 'HO':
+                ?>
+                        <div class="x_content mb-0 div_form_2">
+
+
+                            <label id="lbl_spp_status" name="lbl_spp_status">
+                                <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
+                            </label>
+                            <h6 id="h4_no_po" name="h4_no_po"></h6>
+                            <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                            <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                            <input type="hidden" id="hidden_id_po" name="hidden_id_po">
+                            <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                            <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
+                            <div class="table-responsive mt-0">
+                                <table id="tableRinciPO" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <?php
+                                            switch ($sesi_sl) {
+                                                case 'HO':
+                                            ?>
+                                                    <th>#</th>
+                                                    <th width="250px">
+                                                        <font face="Verdana" size="2.5">SPP</font>
+                                                    </th>
+                                                <?php
+                                                    break;
+                                                case 'RO':
+                                                case 'SITE':
+                                                case 'PKS':
+                                                ?>
+                                            <?php
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            ?>
+
+                                            <th>
+                                                <font face="Verdana" size="2.5">Jenis Budget</font>
+                                            </th>
+                                            <th width="500px">
+                                                <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Merk</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Qty</font>
+                                            </th>
+
+                                            <th>
+                                                <font face="Verdana" size="2.5">Harga</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Kurs</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Disc <span>%</span></font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Biaya Lainnya</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
+                                            </th>
+
+                                            <th>
+                                                <font face="Verdana" size="2.5">Keterangan</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Jumlah Rp</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Aksi</font>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_rincian" name="tbody_rincian">
+
+                                    </tbody>
+                                    <!-- <tfoot>
+                <tr>
+                    <th colspan="13"><button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" onclick="tambah_row()"></button></th>
+                </tr>
+            </tfoot> -->
+                                </table>
+                            </div>
+                        </div>
+                    <?php
+                        break;
+                    case 'RO':
+                    case 'SITE':
+                    case 'PKS':
+                    ?>
+                        <div class="x_content mb-0 div_form_3">
+
+
+                            <label id="lbl_spp_status" name="lbl_spp_status">
+                                <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
+                            </label>
+                            <h6 id="h4_no_po" name="h4_no_po"></h6>
+                            <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                            <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                            <input type="hidden" id="hidden_id_po" name="hidden_id_po">
+                            <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                            <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
+                            <div class="table-responsive mt-0">
+                                <table id="tableItemPO" class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <?php
+                                            switch ($sesi_sl) {
+                                                case 'HO':
+                                            ?>
+                                                    <th>#</th>
+                                                    <th width="250px">
+                                                        <font face="Verdana" size="2.5">SPP</font>
+                                                    </th>
+                                                <?php
+                                                    break;
+                                                case 'RO':
+                                                case 'SITE':
+                                                case 'PKS':
+                                                ?>
+                                            <?php
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            ?>
+
+                                            <th>
+                                                <font face="Verdana" size="2.5">Jenis Budget</font>
+                                            </th>
+                                            <th width="500px">
+                                                <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Merk</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Qty</font>
+                                            </th>
+
+                                            <th>
+                                                <font face="Verdana" size="2.5">Harga</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Kurs</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Disc <span>%</span></font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Biaya Lainnya</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
+                                            </th>
+
+                                            <th>
+                                                <font face="Verdana" size="2.5">Keterangan</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Jumlah Rp</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Aksi</font>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_item" name="tbody_item">
+                                        <!-- <tbody id="tbody_item" name="tbody_item"> -->
+
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                <?php
+                        break;
+                    default:
+                        break;
+                }
+                ?>
+
+
+
+            </div> <!-- end card-body -->
+        </div> <!-- end card -->
+    </div><!-- end col -->
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapus">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <input type="hidden" id="hidden_no_delete" name="hidden_no_delete">
+                    <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteData()">Hapus</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
-        <div class="modal-dialog modal-lg modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <div class="col-4 float-right">
-                            <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
-                                <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="col-4 float-right">
+                        <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
+                            <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+                            <?php
+                            switch ($this->session->userdata('status_lokasi')) {
+                                case 'PKS':
+                                case 'SITE':
+                            ?>
+                                    <option value="PKS">PKS</option>
+                                    <option value="SITE">SITE</option>
                                 <?php
-                                switch ($this->session->userdata('status_lokasi')) {
-                                    case 'PKS':
-                                    case 'SITE':
+                                    break;
+                                case 'RO':
                                 ?>
-                                        <option value="PKS">PKS</option>
-                                        <option value="SITE">SITE</option>
-                                    <?php
-                                        break;
-                                    case 'RO':
-                                    ?>
-                                        <option value="PKS">PKS</option>
-                                        <option value="SITE">SITE</option>
-                                        <option value="RO">RO</option>
-                                    <?php
-                                        break;
-                                    case 'HO':
-                                    ?>
-                                        <option value="PKS">PKS</option>
-                                        <option value="SITE">SITE</option>
-                                        <option value="RO">RO</option>
-                                        <option value="HO">HO</option>
+                                    <option value="PKS">PKS</option>
+                                    <option value="SITE">SITE</option>
+                                    <option value="RO">RO</option>
                                 <?php
-                                        break;
-                                    default:
-                                        break;
-                                }
+                                    break;
+                                case 'HO':
                                 ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-12">
-                        <div class="table-responsive">
-                            <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                            <table id="spp" class="table table-bordered" width="60px">
-                                <thead>
-                                    <tr>
-                                        <th>No.</th>
-                                        <th>Tgl. SPP</th>
-                                        <th>Ref. SPP</th>
-                                        <th>Departemen</th>
-                                        <th>Kode Barang</th>
-                                        <th>Item Barang</th>
-                                        <th>Ket</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th style="text-align: center;" colspan="7"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                                    <option value="PKS">PKS</option>
+                                    <option value="SITE">SITE</option>
+                                    <option value="RO">RO</option>
+                                    <option value="HO">HO</option>
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+                        </select>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                        <table id="spp" class="table table-bordered" width="60px">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Tgl. SPP</th>
+                                    <th>Ref. SPP</th>
+                                    <th>Departemen</th>
+                                    <th>Kode Barang</th>
+                                    <th>Item Barang</th>
+                                    <th>Ket</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th style="text-align: center;" colspan="7"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
+</div>
 
 
 
@@ -328,12 +539,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 <script>
-    // $(document).ready(function() {
-    //     setInterval(function() {
-    //         check_form_2();
-    //     }, 1000);
-
-    // });
+    $(document).ready(function() {
+        // setInterval(function() {
+        //     check_form_2();
+        // }, 1000);
+        $('.div_form_3').hide();
+    });
 
 
     var row = 0;
@@ -344,119 +555,135 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     var hapus = true;
 
     $(function() {
+        // tambah_item();
         tambah_row();
-    })
+    });
 
-    function pilihItem() {
-        var rowcollection = $('#spp').DataTable().rows({
-            selected: true
-        }).data().toArray();
-        // console.log(rowcollection);
-        $.each(rowcollection, function(index, elem) {
-            // var no_spp = rowcollection[index][3];
-            var no_ref_spp = rowcollection[index][2];
-            var departemen = rowcollection[index][3];
-            var kodebar = rowcollection[index][4];
-            console.log(no_ref_spp, departemen, kodebar);
-            // data_spp_dipilih(no_spp, no_ref_spp, kodebar);
-        })
-    }
+    $("#sppSITE").select2({
+        ajax: {
+            url: "<?php echo site_url('Po/getSpp') ?>",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                // console.log(params);
+                return {
+                    noref: params.term, // search term
+                    tgl: params.term // search term
+                };
+            },
+            processResults: function(data) {
+                var results = [];
 
-    function data_spp_dipilih(no_ref_spp, departemen, kodebar) {
-        var dataClick = $('#spp').DataTable().row(this).data();
+                $.each(data, function(index, item) {
+                    var tglppo = item.tglppo;
+                    var tgl = tglppo.substr(0, 10);
+                    // var tgl2 = date()
+                    results.push({
+                        id: item.id,
+                        text: item.noreftxt + ' - ' + tgl + ' - ' + item.namadept
+                    });
+
+                });
+                return {
+                    results: results
+                };
+            }
+        }
+
+    }).on('select4:select', function(evt) {
+        var data = $(".select4 option:selected").text();
+        $('#hidden_no_ref_spp_1').val(data);
+
+    });
+
+    $('#sppSITE').change(function() {
+        // var dd = this.value;
+        // console.log(dd);
 
         $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Po/get_detail_spp'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-            cache: false,
+            type: 'post',
+            url: '<?= site_url('Po/getid'); ?>',
             data: {
-                'no_spp': no_spp,
-                'no_ref_spp': no_ref_spp,
-                'kodebar': kodebar
+                id: this.value
             },
-            success: function(data) {
+            success: function(response) {
+                $('.div_form_3').show();
+
+                data = JSON.parse(response);
+
+                var n = 2;
                 console.log(data);
-                var tglref = new Date(data[0].tglref);
-                var tglppo = new Date(data[0].tglppo);
+                $.each(data, function(index, value) {
 
-                $.each(data[1], function(index) {
-                    // if(index != 0){
-                    if (n != 1) {
-                        tambah_row(n);
-                    }
+                    tambah_item();
+                    // console.log(value);
 
-                    $('#lbl_no_ref_spp_' + n).empty();
-                    $('#lbl_tgl_ref_' + n).empty();
-                    $('#lbl_departemen_' + n).empty();
-                    $('#lbl_tgl_spp_' + n).empty();
-
-                    $('#lbl_no_ref_spp_' + n).append('Ref SPP : ' + data[0].noreftxt);
-                    $('#lbl_tgl_ref_' + n).append('Tgl. Ref : ' + dateToMDY(tglref));
-                    $('#lbl_departemen_' + n).append('Departemen : ' + data[0].kodedept + ' | ' + data[0].namadept);
-                    $('#lbl_tgl_spp_' + n).append('Tgl SPP : ' + dateToMDY(tglppo));
-
-                    $('#hidden_no_ref_spp_' + n).val(data[0].noreftxt);
-                    $('#hidden_tgl_ref_' + n).val(dateToMDY(tglref));
-                    $('#hidden_kd_departemen_' + n).val(data[0].kodedept);
-                    $('#hidden_departemen_' + n).val(data[0].namadept);
-                    $('#hidden_tgl_spp_' + n).val(dateToMDY(tglppo));
-                    $('#hidden_kd_pt_' + n).val(data[0].kodept);
-                    $('#hidden_nama_pt_' + n).val(data[0].pt);
-
-                    $('#txt_no_spp_' + n).val(data[0].noppotxt);
-
-                    $('#lbl_kode_brg_' + n).empty();
-                    $('#lbl_nama_brg_' + n).empty()
-                    $('#lbl_satuan_brg_' + n).empty();
-
-                    $('#hidden_kode_brg_' + n).empty();
-                    $('#hidden_nama_brg_' + n).empty();
-                    $('#hidden_satuan_brg_' + n).empty();
-
-                    $('#lbl_kode_brg_' + n).append('Kode : ' + data[1][index].kodebartxt);
-                    $('#lbl_nama_brg_' + n).append('Nama Barang : ' + data[1][index].nabar);
-                    $('#lbl_satuan_brg_' + n).append('Satuan : ' + data[1][index].sat);
-
-                    $('#hidden_kode_brg_' + n).val(data[1][index].kodebartxt);
-                    $('#hidden_nama_brg_' + n).val(data[1][index].nabar);
-                    $('#hidden_satuan_brg_' + n).val(data[1][index].sat);
-                    $('html, body').animate({
-                        scrollTop: $("#tr_" + n).offset().top
-                    }, 2000);
-
-                    $('#txt_qty_' + n).val(data[1][index].qty);
+                    var opsi = value.noreftxt;
+                    var tglref = value.tglref;
+                    var kodedept = value.kodedept;
+                    var namadept = value.namadept;
+                    var tglppo = value.tglppo;
+                    var kodept = value.kodept;
+                    var pt = value.pt;
+                    var noppo = value.noppo;
+                    var kodebar = value.kodebar;
+                    var nabar = value.nabar;
+                    var sat = value.sat;
+                    var qty = value.qty;
+                    $('#hidden_no_ref_spp_' + n).val(opsi);
+                    $('#hidden_tgl_hidden' + n).val(tglref);
+                    $('#hidden_kd_departemen_1' + n).val(kodedept);
+                    $('#hidden_departemen_1' + n).val(namadept);
+                    $('#hidden_tgl_spp_1' + n).val(tglppo);
+                    $('#hidden_kd_pt_1' + n).val(kodept);
+                    $('#hidden_nama_pt_1' + n).val(pt);
+                    $('#noppo' + n).val(noppo);
+                    $('#hidden_kode_brg_1' + n).val(kodebar);
+                    $('#kode_brg_' + n).text(kodebar);
+                    $('#hidden_nama_brg_1' + n).val(nabar);
+                    $('#nama_brg_' + n).text(nabar);
+                    $('#hidden_satuan_brg_1' + n).val(sat);
+                    $('#txt_qty_1' + n).val(qty);
                     n++;
-                    $('#hidden_no_table').val(n);
-                })
-                $('#modalDataSPP').modal('hide');
-                $('#txt_qty_' + n).focus();
+                });
 
             },
             error: function(request) {
-                alert(request.responseText);
+                console.log(request.responseText);
             }
         });
-    }
+    });
 
-    function tambah_row() {
+
+    function tambah_item() {
+
         row++;
-        // console.log("bariske", row);
+        console.log("bariske", row);
 
         var tr_buka = '<tr id="tr_' + row + '">';
-        var td_col_1 = '<td width="3%">' +
-            '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
-            '' +
-            '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" name="btn_tambah_row" id="tambah_row' + row + '" onclick="tambah_row(' + row + ')"></button>' +
-            '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
-            '</td>';
+
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
 
-        var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
-            '<option selected="selected">Cari SPP</option>' +
-            '</select>' +
+
+        var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control" id="cmb_jenis_budget_1' + row + '" name="cmb_jenis_budget_1' + row + '" required>' +
+            '<option value="">-- Pilih --</option>' +
+            '<option value="TEKNIK">TEKNIK</option>' +
+            '<option value="BIBITAN">BIBITAN</option>' +
+            '<option value="LC & TANAM">LC & TANAM</option>' +
+            '<option value="RAWAT">RAWAT</option>' +
+            '<option value="PANEN">PANEN</option>' +
+            '<option value="TEKNIK">TEKNIK</option>' +
+            '<option value="PABRIK">PABRIK</option>' +
+            '<option value="KANTOR">KANTOR</option>' +
+            '<option value="Kendaraan">Kendaraan</option>' +
+            '<option value="TBM">TBM</option>' +
+            '</select>'; +
+
+        '</td>';
+        var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
+            '<span id="nama_brg_' + row + '"></span><span> | </span><span id="kode_brg_' + row + '" ></span>' +
             '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
             '<input type="hidden" id="hidden_kd_departemen_1' + row + '" name="hidden_kd_departemen_1' + row + '">' +
@@ -465,8 +692,128 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="hidden" id="hidden_kd_pt_1' + row + '" name="hidden_kd_pt_1' + row + '">' +
             '<input type="hidden" id="hidden_nama_pt_1' + row + '" name="hidden_nama_pt_1' + row + '">' +
             '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
+            '<input type="hidden" class="form-control" id="hidden_kode_brg_1' + row + '" name="hidden_kode_brg_1' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="hidden_nama_brg_1' + row + '" name="hidden_nama_brg_1' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="hidden_satuan_brg_1' + row + '" name="hidden_satuan_brg_1' + row + '"   />' +
 
             '</td>';
+        var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_merk_1' + row + '" name="txt_merk_1' + row + '" placeholder="Merk"  required />' +
+
+            '</td>';
+        var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_qty_1' + row + '" name="txt_qty_1' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
+
+            '</td>';
+        var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_harga_1' + row + '" name="txt_harga_1' + row + '" value="0" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
+
+            '</td>';
+        var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control" id="cmb_kurs_1' + row + '" name="cmb_kurs_1' + row + '" required="">' +
+            '<option value="Rp">Rp IDR</option>' +
+            '<option value="USD">&dollar; USD</option>' +
+            '<option value="SGD">S&dollar; SGD</option>' +
+            '<option value="Euro">&euro; Euro</option>' +
+            '<option value="GBP">&pound; GBP</option>' +
+            '<option value="Yen">&yen; Yen</option>' +
+            '<option value="MYR">RM MYR</option>' +
+            '</select><br />' +
+            '</td>';
+        var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_disc_1' + row + '" name="txt_disc_1' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+
+            '</td>';
+        var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_biaya_lain_1' + row + '" name="txt_biaya_lain_1' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+
+            '</td>';
+        var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_1' + row + '" name="txt_keterangan_biaya_lain_1' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+
+
+            '</td>'
+        var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_1' + row + '" name="txt_keterangan_rinci_1' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+
+            '</td>';
+        var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_jumlah_1' + row + '" name="txt_jumlah_1" size="15" placeholder="Jumlah"  readonly />' +
+            '<label id="lbl_status_simpan_1' + row + '"></label>' +
+            '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
+            '</td>';
+        var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+
+            '</td>';
+        var form_tutup = '</form>';
+        var tr_tutup = '</tr>';
+        var lokasi = $('#lokasi').val();
+        switch (lokasi) {
+            case 'HO':
+                var td_col_1 = '<td width="3%">' +
+                    '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
+                    '' +
+                    '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" name="btn_tambah_row" id="tambah_row' + row + '" onclick="tambah_row(' + row + ')"></button>' +
+                    '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
+                    '</td>';
+                var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                    '<input type="text" class="form-control"  id="spp' + row + '" name="spp' + row + '">' +
+
+                    '</td>';
+                break;
+            case 'RO':
+            case 'SITE':
+            case 'PKS':
+                break;
+            default:
+                break;
+        }
+
+
+
+        $('#tbody_item').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        $('#txt_qty_1' + row).number(true, 2);
+        if (row == 1) {
+            $('#btn_hapus_row_1').hide();
+        } else {
+            $('#btn_hapus_row_1' + row).show();
+        }
+        initPilihSpp(row);
+        jumlah(row);
+    }
+
+    function tambah_row() {
+        row++;
+        // console.log("bariske", row);
+
+        var tr_buka = '<tr id="tr_' + row + '">';
+        // var td_col_1 = '<td width="3%">' +
+        //     '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
+        //     '' +
+        //     '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" name="btn_tambah_row" id="tambah_row' + row + '" onclick="tambah_row(' + row + ')"></button>' +
+        //     '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
+        //     '</td>';
+        var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
+
+        // var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        //     '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
+        //     '<option selected="selected">Cari SPP</option>' +
+        //     '</select>' +
+        //     '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
+        //     '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
+        //     '<input type="hidden" id="hidden_kd_departemen_1' + row + '" name="hidden_kd_departemen_1' + row + '">' +
+        //     '<input type="hidden" id="hidden_departemen_1' + row + '" name="hidden_departemen_1' + row + '">' +
+        //     '<input type="hidden" id="hidden_tgl_spp_1' + row + '" name="hidden_tgl_spp_1' + row + '">' +
+        //     '<input type="hidden" id="hidden_kd_pt_1' + row + '" name="hidden_kd_pt_1' + row + '">' +
+        //     '<input type="hidden" id="hidden_nama_pt_1' + row + '" name="hidden_nama_pt_1' + row + '">' +
+        //     '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
+
+        //     '</td>';
         var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<select class="form-control" id="cmb_jenis_budget_1' + row + '" name="cmb_jenis_budget_1' + row + '" required>' +
             '<option value="">-- Pilih --</option>' +
@@ -549,6 +896,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var lokasi = $('#lokasi').val();
         switch (lokasi) {
             case 'HO':
+                var td_col_1 = '<td width="3%">' +
+                    '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
+                    '' +
+                    '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" name="btn_tambah_row" id="tambah_row' + row + '" onclick="tambah_row(' + row + ')"></button>' +
+                    '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + row + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
+                    '</td>';
                 var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                     '<input type="text" class="form-control"  id="spp' + row + '" name="spp' + row + '">' +
 
@@ -557,24 +910,25 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             case 'RO':
             case 'SITE':
             case 'PKS':
-                var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                    '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
-                    '<option selected="selected">Cari SPP</option>' +
-                    '</select>' +
-                    '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
-                    '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
-                    '<input type="hidden" id="hidden_kd_departemen_1' + row + '" name="hidden_kd_departemen_1' + row + '">' +
-                    '<input type="hidden" id="hidden_departemen_1' + row + '" name="hidden_departemen_1' + row + '">' +
-                    '<input type="hidden" id="hidden_tgl_spp_1' + row + '" name="hidden_tgl_spp_1' + row + '">' +
-                    '<input type="hidden" id="hidden_kd_pt_1' + row + '" name="hidden_kd_pt_1' + row + '">' +
-                    '<input type="hidden" id="hidden_nama_pt_1' + row + '" name="hidden_nama_pt_1' + row + '">' +
-                    '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
+                // var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                //     '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
+                //     '<option selected="selected">Cari SPP</option>' +
+                //     '</select>' +
+                //     '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
+                //     '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
+                //     '<input type="hidden" id="hidden_kd_departemen_1' + row + '" name="hidden_kd_departemen_1' + row + '">' +
+                //     '<input type="hidden" id="hidden_departemen_1' + row + '" name="hidden_departemen_1' + row + '">' +
+                //     '<input type="hidden" id="hidden_tgl_spp_1' + row + '" name="hidden_tgl_spp_1' + row + '">' +
+                //     '<input type="hidden" id="hidden_kd_pt_1' + row + '" name="hidden_kd_pt_1' + row + '">' +
+                //     '<input type="hidden" id="hidden_nama_pt_1' + row + '" name="hidden_nama_pt_1' + row + '">' +
+                //     '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
 
-                    '</td>';
+                //     '</td>';
                 break;
             default:
                 break;
         }
+
 
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
@@ -771,7 +1125,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function simpan(id) {
         if (simpanBaru) {
 
-            // console.log('simpan', id);
+            console.log('simpan', id);
             console.table({
                 hidden_kode_departemen: $('#hidden_kd_departemen_1' + id).val(),
                 hidden_departemen: $('#hidden_departemen_1' + id).val(),
@@ -878,6 +1232,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $('.div_form_2').find('input,textarea,select').attr('disabled', '');
+                        $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
 
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).attr('disabled', '');
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).addClass('class', 'bg-light');
@@ -1024,6 +1380,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $('.div_form_2').find('input,textarea,select').attr('disabled', '');
+                        $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
 
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).attr('disabled', '');
                         // $('.div_form_2').find('#pilihSpp' + id + ',#cmb_jenis_budget_1' + id + ',#txt_merk_1' + id + ',#txt_qty_1' + id + ',#txt_harga_1' + id + ',#cmb_kurs_1' + id + ',#txt_disc_1' + id + ',#txt_biaya_lain_1' + id + ',#txt_keterangan_biaya_lain_1' + id + ',#txt_keterangan_rinci_1' + id).addClass('class', 'bg-light');
@@ -1245,12 +1603,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function ubah(id) {
-        $('.div_form_1').find('input,textarea,select').removeAttr('disabled');
-        $('.div_form_1').find('input,textarea,select').removeClass('bg-light');
-        $('#tableRinciPO').find('input,textarea').removeAttr('disabled');
-        $('#tableRinciPO').find('input,textarea').removeClass('bg-light');
-        $('#tableRinciPO').find('select').removeAttr('disabled');
-        $('#tableRinciPO').find('select').removeClass('bg-light');
+        // $('.div_form_1').find('input,textarea,select').removeAttr('disabled');
+        // $('.div_form_1').find('input,textarea,select').removeClass('bg-light');
+        // $('.div_form_2').find('input,textarea,select').removeAttr('disabled');
+        // $('.div_form_2').find('input,textarea,select').removeClass('bg-light');
+        // $('#tableRinciPO').find('input,textarea').removeAttr('disabled');
+        // $('#tableRinciPO').find('input,textarea').removeClass('bg-light');
+        // $('#tableItemPO').find('input,textarea').removeAttr('disabled');
+        // $('#tableItemPO').find('input,textarea').removeClass('bg-light');
+        // $('#tableItemPO').find('select').removeAttr('disabled');
+        // $('#tableItemPO').find('select').removeClass('bg-light');
+        // $('#tableRinciPO').find('select').removeAttr('disabled');
+        // $('#tableRinciPO').find('select').removeClass('bg-light');
+        $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
+        $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
         $('#btn_ubah_' + id).hide();
         $('#btn_hapus_' + id).hide();
         $('#btn_update_' + id).show();
@@ -1305,6 +1671,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#btn_cancel_update_' + id).hide();
                     $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                     $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                    $('.div_form_2').find('input,textarea,select').attr('disabled', '');
+                    $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
 
                     // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                     // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
@@ -1362,6 +1730,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                     $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                     $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+
+                    $('.div_form_2').find('input,textarea,select').attr('disabled', '');
+                    $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
                     // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                     // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
 
@@ -1546,7 +1917,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-    $(".js-data-example-ajax").select2({
+    $("#select2").select2({
         ajax: {
             url: "<?php echo site_url('Po/getPoo') ?>",
             dataType: 'json',

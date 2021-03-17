@@ -93,7 +93,8 @@ class M_po extends CI_Model
     public function get_spp()
     {
         $noref = $this->input->get('noref');
-        $query = "SELECT id, noppo, noreftxt, tglppotxt, namadept FROM ppo WHERE noreftxt LIKE '%$noref%' ORDER BY id DESC";
+        $tgl = $this->input->get('tgl');
+        $query = "SELECT id, noppo, noreftxt, tglppo, tglppotxt, namadept FROM ppo WHERE noreftxt LIKE '%$noref%' OR tglppo LIKE '%$tgl%' ORDER BY id DESC";
         $d = $this->db_logistik_pt->query($query)->result_array();
         return $d;
     }

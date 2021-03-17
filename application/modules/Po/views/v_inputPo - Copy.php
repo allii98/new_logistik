@@ -102,8 +102,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     case 'PKS':
                                     ?>
                                         <label class="col-4 col-form-label">Spp *</label>
-                                        <div class="col-8">
-                                            <!-- <select class="js-data-example-ajax form-control select4" id="sppSITE"> -->
+                                        <div class="col-7">
                                             <select class="js-data-example-ajax form-control select4" id="sppSITE">
                                                 <option selected="selected">Cari Spp</option>
                                             </select>
@@ -382,6 +381,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     // });
 
 
+
+
     var row = 0;
     var simpanBaru = true;
     var updateBaru = true;
@@ -444,12 +445,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             success: function(response) {
 
                 data = JSON.parse(response);
-                console.log(data);
+                // console.log(data);
                 $.each(data, function(index, value) {
-                    // if (n != 1) {
-                    // 	tambah_row(n);
-                    // }
-
                     var opsi = value.noreftxt;
                     var tglref = value.tglref;
                     var kodedept = value.kodedept;
@@ -576,7 +573,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
     }
 
-    function tambah_row(row) {
+    function tambah_row() {
         row++;
         // console.log("bariske", row);
 
@@ -805,7 +802,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 delay: 250,
                 data: function(params) {
                     return {
-                        tgl: params.term, // search term
+                        noref: params.term, // search term
                     };
                 },
                 processResults: function(data) {
