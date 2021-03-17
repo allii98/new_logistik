@@ -75,6 +75,15 @@ class Po extends CI_Controller
         $this->template->load('template', 'v_inputPo', $data);
     }
 
+    public function inputv1()
+    {
+        $data = [
+            'title' => "Permohonan Order",
+            'sesi_sl' => $this->session->userdata('status_lokasi')
+        ];
+        $this->template->load('template', 'v_inputPoIdris', $data);
+    }
+
     public function getPo()
     {
         $data = $this->M_po->get_supplier();
