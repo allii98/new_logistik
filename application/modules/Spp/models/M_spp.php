@@ -181,6 +181,14 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->delete('item_ppo', array('noppo' => $no_spp));
         return TRUE;
     }
+
+    public function cari_item_spp($kodebar, $qty, $ket)
+    {
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'qty' => $qty, 'ket' => $ket]);
+        return $this->db_logistik_pt->get()->num_rows();
+    }
 }
 
 /* End of file M_spp.php */

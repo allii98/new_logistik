@@ -75,10 +75,11 @@ class M_data_spp extends CI_Model
         return $this->db_logistik_pt->count_all_results();
     }
 
-    public function getdata()
+    public function getDetailSpp($noppo)
     {
-        $query = "SELECT * FROM item_ppo ";
-        $data = $this->db->query($query)->result_array();
-        return $data;
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where('noppotxt', $noppo);
+        return $this->db_logistik_pt->get()->result_array();
     }
 }

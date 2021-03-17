@@ -1,18 +1,23 @@
 <div class="container-fluid">
 
-    <div class="row mt-2">
+    <div class="row mt-0">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title">SPP</h4>
-                    <p class="sub-header">
-                        Surat Permintaan Pembelian
-                    </p>
+                    <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
+                    <div class="row justify-content-between headspp">
+                        <p class="sub-header ml-2">
+                            <font face="Verdana" size="2.5">Surat Permintaan Pembelian</font>
+                        </p>
+                        <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelSpp" onclick="hapusSpp()" disabled>Batalkan SPP</button>
+                    </div>
 
                     <div class="row div_form_1">
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
-                                <label for="example-select">Devisi*</label>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Devisi*</font>
+                                </label>
                                 <select class="form-control" id="devisi">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
@@ -26,7 +31,9 @@
                         </div>
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
-                                <label for="example-select">Jenis SPP*</label>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Jenis&nbsp;SPP*</font>
+                                </label>
                                 <select class="form-control" id="cmb_jenis_permohonan">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
@@ -57,7 +64,9 @@
                         </div> <!-- end col -->
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
-                                <label for="example-select">Alokasi*</label>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Alokasi*</font>
+                                </label>
                                 <select class="form-control" id="cmb_alokasi">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
@@ -86,20 +95,26 @@
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
-                                <label for="example-select">Tgl Referensi*</label>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Tgl Referensi*</font>
+                                </label>
                                 <input type="text" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
-                                <label for="example-select">Tgl terima*</label>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Tgl terima*</font>
+                                </label>
                                 <input type="date" class="form-control" id="txt_tgl_terima">
                             </div>
                         </div>
                         <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" placeholder="Tanggal" readonly>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
-                                <label for="example-select">Department*</label>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Department*</font>
+                                </label>
                                 <select class="form-control" id="cmb_departemen">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
@@ -115,14 +130,18 @@
                         </div>
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
-                                <label for="example-select">Kode</label>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Kode</font>
+                                </label>
                                 <input type="text" id="txt_kode_departemen" class="form-control bg-light" readonly>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
-                                <label for="example-select">Keterangan</label>
-                                <textarea class="form-control" rows="2" id="txt_keterangan"></textarea>
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Keterangan</font>
+                                </label>
+                                <textarea class="form-control" rows="1" id="txt_keterangan"></textarea>
                             </div>
                         </div>
                         <input type="hidden" id="hidden_id_ppo">
@@ -131,10 +150,12 @@
                     <div class="row div_form_2">
                         <div class="col-sm-12">
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                                <h6 id="lbl_spp_status" name="lbl_spp_status">No. SPP : ... &nbsp; No. Ref SPP : ...</h6>
+                                <h6 id="lbl_spp_status" name="lbl_spp_status">
+                                    <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
+                                </h6>
                             </div>
                             <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
-                            <div class="row" style="margin-top: -15px; margin-left:4px;">
+                            <div class="row" style="margin-left:4px;">
                                 <h6 id="h4_no_spp" name="h4_no_spp"></h6>&emsp;&emsp;
                                 <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
                             </div>
@@ -143,12 +164,24 @@
                                 <table id="tableRinciBarang" class="table table-striped table-bordered table-in">
                                     <thead>
                                         <tr>
-                                            <th>#</th>
-                                            <th>Nama & Kode Barang</th>
-                                            <th>Qty</th>
-                                            <th>Stok/Sat</th>
-                                            <th>Merk/Type/Jenis</th>
-                                            <th>Aksi</th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">#</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Qty</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Stok/Sat</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Merk/Type/Jenis</font>
+                                            </th>
+                                            <th>
+                                                <font face="Verdana" size="2.5">Aksi</font>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_rincian" name="tbody_rincian">
@@ -156,7 +189,7 @@
                                             <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                 <input type="hidden" id="hidden_no_table_1" name="hidden_no_table_1">
                                                 <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row_1" name="btn_tambah_row" onclick="tambah_row()"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row" onclick="hapus_row('1')"></button>
+                                                <!-- <button style="display:none;" class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row" onclick="hapus_row('1')"></button> -->
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
@@ -178,13 +211,13 @@
                                                     <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="form-control" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>
                                                     <input type="hidden" id="hidden_id_item_ppo_1">
                                                 </td>
-                                                <td width="8%" style="padding-top: 2px;">
+                                                <td width="7%" style="padding-top: 2px;">
                                                     <div class="row">
-                                                        <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
+                                                        <button class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
-                                                        <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
-                                                        <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                        <!-- <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button> -->
                                                         <label id="lbl_status_simpan_1"></label>
                                                     </div>
                                                 </td>
@@ -238,21 +271,18 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapus">
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusSpp">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Konfirmasi Hapus</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <input type="hidden" id="hidden_no_delete" name="hidden_no_delete">
-                <p>Apakah Anda yakin ingin menghapus data ini ???</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="btn_delete" onclick="deleteData()">Hapus</button>
-                <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                    <p class="mt-3">Apakah Anda yakin ingin menghapus SPP ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteSpp()">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
             </div>
         </div>
     </div>
@@ -402,6 +432,9 @@
             beforeSend: function() {
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+
+                $('#btn_simpan_' + n).css('display', 'none');
+
                 if ($.trim($('#hidden_no_spp').val()) == '') {
                     $('#lbl_spp_status').empty();
                     $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
@@ -428,45 +461,43 @@
 
             success: function(data) {
                 console.log(data);
-                // console.log(nospp);
-                // console.log(noref);
-                // $('#devisi').val("");
-                // $('#jenis_spp').val("");
 
-                $('#lbl_status_simpan_' + n).empty();
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil Disimpan!',
-                    icon: 'success',
-                    loader: false
-                });
+                if (data.item_exist == "1") {
+                    swal('Sudah ada Item, Qty dan Ket yang sama !');
+                    $('#lbl_status_simpan_' + n).empty();
+                    $('#lbl_spp_status').empty();
+                    $('#btn_simpan_' + n).css('display', 'block');
+                } else {
+                    $('#lbl_status_simpan_' + n).empty();
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Disimpan!',
+                        icon: 'success',
+                        loader: false
+                    });
 
-                $('#lbl_spp_status').empty();
-                $('#h4_no_spp').html('No. SPP : ' + data.nospp);
-                $('#hidden_no_spp').val(data.nospp);
+                    $('#lbl_spp_status').empty();
+                    $('#h4_no_spp').html('No. SPP : ' + data.nospp);
+                    $('#hidden_no_spp').val(data.nospp);
 
-                $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
-                // $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
+                    $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
+                    // $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
 
-                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
-                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
+                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
+                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
+                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+                    $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
-                $('#btn_hapus_row_' + n).css('display', 'none');
-                $('#btn_simpan_' + n).css('display', 'none');
-                $('#btn_ubah_' + n).css('display', 'block');
-                $('#btn_hapus_' + n).css('display', 'block');
+                    $('#btn_hapus_row_' + n).css('display', 'none');
+                    $('#btn_ubah_' + n).css('display', 'block');
+                    $('#btn_hapus_' + n).css('display', 'block');
 
-                $('#hidden_id_ppo').val(data.id_ppo);
-                $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
-
-
-                // $('[name="harga"]').val("");
-                // $('#ModalaAdd').modal('hide');
-                // tampil_data_barang();
+                    $('#hidden_id_ppo').val(data.id_ppo);
+                    $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+                }
             }
         });
     }
@@ -476,8 +507,8 @@
 
         // var n = $('#hidden_no_row').val();
 
-        $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
-        $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
+        // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
+        // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
 
         $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeClass('bg-light');
         $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeAttr('disabled');
@@ -502,6 +533,9 @@
             dataType: "JSON",
 
             beforeSend: function() {
+
+                $('#btn_cancel_update_' + n).css('display', 'none');
+
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
             },
@@ -548,7 +582,6 @@
                 $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
 
                 $('#btn_update_' + n).css('display', 'none');
-                $('#btn_cancel_update_' + n).css('display', 'none');
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
@@ -565,6 +598,9 @@
             dataType: "JSON",
 
             beforeSend: function() {
+
+                $('#btn_update_' + n).css('display', 'none');
+
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
             },
@@ -609,7 +645,6 @@
 
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
-                $('#btn_update_' + n).css('display', 'none');
                 $('#btn_cancel_update_' + n).css('display', 'none');
             }
         });
@@ -618,27 +653,23 @@
 
     function hapusRinci(n) {
         $('#hidden_no_delete').val(n);
-        if (n == 1) {
-            Swal.fire({
-                title: 'Item SPP Tinggal 1',
-                text: "Yakin akan menghapus SPP ini?",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya Hapus!'
-            }).then((result) => {
-                if (result.value) {
-                    deleteSpp(n);
-                }
-            })
-        } else {
-            $('#modalKonfirmasiHapus').modal('show');
-        }
+        Swal.fire({
+            text: "Yakin akan menghapus Data ini?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya Hapus!'
+        }).then((result) => {
+            if (result.value) {
+                deleteData(n);
+            }
+        })
     }
 
-    function deleteSpp(n) {
+    function deleteSpp() {
         console.log(n);
 
+        var n = $('#hidden_no_delete').val();
         var no_spp = $('#hidden_no_spp').val();
 
         $.ajax({
@@ -663,14 +694,7 @@
         });
     }
 
-    function deleteData() {
-
-        var n = $('#hidden_no_delete').val();
-        var id_item = $('#hidden_id_item_ppo_' + n).val();
-        var id_ppo = $('#hidden_id_ppo').val();
-
-        console.log(id_item);
-        console.log(id_ppo);
+    function deleteData(n) {
 
         $.ajax({
             type: "POST",
@@ -728,7 +752,7 @@
         var tr_buka = '<tr id="tr_' + n + '">';
         var td_col_1 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="hidden" id="hidden_no_table_' + n + '" name="hidden_no_table_' + n + '">' +
-            '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row()"></button>' +
+            '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row_' + n + '" name="btn_tambah_row_' + n + '" onclick="tambah_row()"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row_' + n + '" onclick="hapus_row(' + n + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
@@ -749,11 +773,11 @@
             '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
             '<input type="hidden" id="hidden_id_item_ppo_' + n + '" name="hidden_id_item_ppo_' + n + '">' +
             '</td>';
-        var td_col_6 = '<td width="8%" style="padding-top: 2px;">' +
+        var td_col_6 = '<td width="7%" style="padding-top: 2px;">' +
             '<div class="row">' +
-            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
+            '<button class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
             '<label id="lbl_status_simpan_' + n + '"></label>' +
@@ -769,6 +793,8 @@
         }, 2000);*/
         // n = parseInt(n) + parseInt(1);
         $('#hidden_no_table_' + n).val(n);
+        // var u = n - 1;
+        // $('.div_form_2').find('#btn_tambah_row_' + u).attr('disabled', '');
         console.log(n)
         n++;
     }
@@ -786,5 +812,10 @@
         // n = parseInt(n)- parseInt(1);
         // $('#tr_'+n).remove();
         // }
+    }
+
+    function hapusSpp(n) {
+
+        $('#modalKonfirmasiHapusSpp').modal('show');
     }
 </script>

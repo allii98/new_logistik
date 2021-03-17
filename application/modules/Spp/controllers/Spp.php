@@ -239,12 +239,19 @@ class Spp extends CI_Controller
             'nama_main' => "",
         ];
 
+        $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $data_item_ppo['qty'], $data_item_ppo['ket']);
 
-        if (empty($this->input->post('hidden_no_spp'))) {
-            $data = $this->M_spp->saveSpp($data_ppo);
-            $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+        if ($cek_isi_item >= 1) {
+            $item_exist = 1;
+            $data2 = NULL;
         } else {
-            $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+            $item_exist = 0;
+            if (empty($this->input->post('hidden_no_spp'))) {
+                $data = $this->M_spp->saveSpp($data_ppo);
+                $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+            } else {
+                $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+            }
         }
 
         // cari id terakhir
@@ -264,6 +271,7 @@ class Spp extends CI_Controller
             'noref' => $noref,
             'id_ppo' => $id_ppo,
             'id_item_ppo' => $id_item_ppo,
+            'item_exist' => $item_exist
         ];
         echo json_encode($data_return);
     }
@@ -371,9 +379,11 @@ class Spp extends CI_Controller
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = '';
-            $row[] = '';
-            $row[] = $no . ".";
+            $row[] = $no;
+            $row[] = '<button class="btn btn-info btn-xs" id="detail_spp" name="detail_spp"
+                        data-noppotxt="' . $field->noppotxt . '"
+                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Detail
+                        </button>';
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
             $row[] = $field->tglref;
@@ -396,6 +406,14 @@ class Spp extends CI_Controller
         );
         //output dalam format JSON
         echo json_encode($output);
+    }
+
+    public function getDetailSpp()
+    {
+        $noppo = $this->input->post('hidden_noppotxt');
+        $result = $this->M_data_spp->getDetailSpp($noppo);
+
+        echo json_encode($result);
     }
 }
 
