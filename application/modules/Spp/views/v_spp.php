@@ -1,6 +1,6 @@
 <div class="container-fluid">
 
-    <div class="row mt-2">
+    <div class="row mt-0">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -14,13 +14,11 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="dataspp" class="table table-striped table-bordered">
+                        <table id="dataspp" class="table w-100 dataTable no-footer table-striped">
                             <thead>
                                 <tr>
-                                    <!-- <th></th> -->
-                                    <th style="padding: 0.4em;">#</th>
+                                    <th style="padding: 0.4em;">No</th>
                                     <th style="padding: 0.4em;">Approval</th>
-                                    <th style="padding: 0.4em;">No.</th>
                                     <th style="padding: 0.4em;">No. SPP</th>
                                     <th style="padding: 0.4em;">No. Ref</th>
                                     <th style="padding: 0.4em;">Tgl. Ref</th>
@@ -49,12 +47,52 @@
 
 </div> <!-- container -->
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalDetailSpp">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Detail SPP</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table id="dabar" class="table w-100 dataTable no-footer table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>No SPP</th>
+                                <th>No Ref SPP</th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Sat</th>
+                                <th>Qty</th>
+                                <th>Stok</th>
+                                <th>Ket</th>
+                                <th>Status PO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="data_detail_spp">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var table;
     $(document).ready(function() {
 
         //datatables
         table = $('#dataspp').DataTable({
+
+            "scrollY": 400,
+            "scrollX": true,
 
             "processing": true,
             "serverSide": true,
@@ -72,5 +110,50 @@
 
         });
 
+    });
+
+    $(document).ready(function() {
+        $(document).on('click', '#detail_spp', function() {
+
+            var noppotxt = $(this).data('noppotxt');
+            // console.log(noppotxt);
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Spp/getDetailSpp') ?>",
+                dataType: "JSON",
+
+                data: {
+                    hidden_noppotxt: noppotxt
+                },
+
+                success: function(data) {
+
+                    console.log(data);
+                    var html = '';
+                    var i;
+                    for (i = 0; i < data.length; i++) {
+                        var no = i + 1;
+                        html += '<tr>' +
+                            '<td>' + no + '</td>' +
+                            '<td>' + data[i].noppotxt + '</td>' +
+                            '<td>' + data[i].noreftxt + '</td>' +
+                            '<td>' + data[i].kodebar + '</td>' +
+                            '<td>' + data[i].nabar + '</td>' +
+                            '<td>' + data[i].sat + '</td>' +
+                            '<td>' + data[i].qty + '</td>' +
+                            '<td>' + data[i].STOK + '</td>' +
+                            '<td>' + data[i].ket + '</td>' +
+                            '<td>' + '' + '</td>' +
+                            '</tr>';
+                    }
+                    $('#data_detail_spp').html(html);
+
+                }
+            });
+
+            $("#modalDetailSpp").modal('show');
+
+        });
     });
 </script>
