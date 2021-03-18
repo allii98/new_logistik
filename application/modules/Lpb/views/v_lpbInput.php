@@ -11,82 +11,89 @@
                 </p>
                 <div class="row">
 
-                    <table>
-                        <div class="col-md-3">
-                            <div class="form-group row mb-1">
-                                <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
-                                </label>
-                                <div class="col-6">
-                                    <input id="tgl_terima" name="tgl_terima" class="form-control bg-light" required="required" type="date" value="<?= date('Y-m-d') ?>" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Input&nbsp;<span class="required">*</span>
-                                </label>
-                                <div class="col-md-6">
-                                    <input id="tgl_input" name="tgl_input" class="form-control bg-light" value="<?= date('Y-m-d'); ?>" required="required" type="date">
-                                </div>
+                    <div class="col-md-3">
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi<span class="required">*</span>
+                            </label>
+                            <div class="col-md-8">
+                                <select class="form-control" id="devisi">
+                                    <option value="" selected disabled>Pilih</option>
+                                    <?php
+                                    foreach ($devisi as $d) : { ?>
+                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
+                                    <?php }
+                                    endforeach;
+                                    ?>
+                                </select>
                             </div>
                         </div>
-                    </table>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
+                            </label>
+                            <div class="col-md-8">
+                                <input id="tgl_terima" name="tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Input&nbsp;<span class="required">*</span>
+                            </label>
+                            <div class="col-md-8">
+                                <input id="tgl_input" name="tgl_input" class="form-control bg-light" readonly value="<?= date('Y-m-d'); ?>" type="date">
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-6 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;Pengantar<span class="required">*</span>
+                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;Pengantar<span class="required">*</span>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <input id="no_pengantar" name="no_pengantar" class="form-control" required="required" type="text" placeholder="No. Pengantar" autocomplite="off">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-6 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
+                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
                             </label>
-                            <div class="col-md-6 col-sm col-xs-12">
+                            <div class="col-md-7">
                                 <input id="lokasi_gudang" name="lokasi_gudang" class="form-control" required="required" type="text" placeholder="Lokasi Gudang" autocomplite="off">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <div class="col-md-1"></div>
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
+                            <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-md row ml-0">
-                                <input id="no_po" name="no_po" class="form-control col-md-3" required="required" type="text" onfocus="pilihModalDataPO()" placeholder="No. PO" autocomplite="off">
-                                <input id="txt_ref_po" name="txt_ref_po" class="form-control col-md-8 ml-1" type="text" placeholder="Ref. PO" readonly>
+                            <div class="col-md-9 row">
+                                <input id="txt_no_po" name="txt_no_po" class="form-control col-md-3" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off">
+                                <input id="txt_ref_po" name="txt_ref_po" class="form-control bg-light col-md-8 ml-2" type="text" placeholder="Ref. PO" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-1"></div>
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO<span class="required">*</span>
+                            <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-md-6">
-                                <input id="tgl_po" name="tgl_po" class="form-control" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
+                            <div class="col-md-9 row">
+                                <input id="txt_tgl_po" name="txt_tgl_po" class="form-control bg-light" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier&nbsp;<span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier&nbsp;<span class="required">*</span>
                             </label>
-                            <div class="col-md row ml-0">
-                                <input id="kd_supplier" name="kd_supplier" class="form-control col-md-3" required="required" type="text" placeholder="Kode Supplier" readonly>
-                                <input id="txt_supplier" name="txt_supplier" class="form-control col-md-8 ml-1" required="required" type="text" placeholder="Supplier" readonly>
+                            <div class="col-md-8 row">
+                                <input id="txt_kd_supplier" name="txt_kd_supplier" class="form-control bg-light col-md-3" required="required" type="text" placeholder="Kode Supplier" readonly>
+                                <input id="txt_supplier" name="txt_supplier" class="form-control bg-light col-md-8 ml-2" required="required" type="text" placeholder="Supplier" readonly>
                             </div>
                         </div>
-
-
                         <div class="form-group row">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket<span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket<span class="required">*</span>
                             </label>
-                            <div class="col-md col-sm col-xs-12">
-                                <textarea class="resizable_textarea form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan" readonly="" rows="1" autocomplite="off">-</textarea>
+                            <div class="col-md-8 row">
+                                <textarea class="resizable_textarea form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan" rows="1" autocomplite="off"></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
-
-                <hr class="mt-0 mb-2">
 
                 <div class="row mx-0">
                     <label id="lbl_lpb_status" name="lbl_lpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. LPB : ... &nbsp; No. Ref. LPB : ...</label>
@@ -154,209 +161,95 @@
             </div>
         </div>
     </div>
-</div>
-<!-- end row-->
-
 
 </div> <!-- container -->
 
-<!-- Pilih PO -->
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalDataPO">
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListPo">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih PO</h4>
+                <h4 class="modal-title" id="myModalLabel">List PO</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-horizontal">
-                    <!-- <div class="form-group">
-							<label class="control-label col-md-5 col-sm-3 col-xs-12">Alokasi 
-							</label>
-							<div class="col-md-3 col-sm-6 col-xs-12">
-								<select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
-									<option value="SEMUA" selected>TAMPILKAN SEMUA</option>
-									<?php
-                                    switch ($this->session->userdata('status_lokasi')) {
-                                        case 'PKS':
-                                        case 'SITE':
-                                    ?>
-										<option value="PKS">PKS</option>
-										<option value="SITE">SITE</option>
-									<?php
-                                            break;
-                                        case 'RO':
-                                    ?>
-										<option value="PKS">PKS</option>
-										<option value="SITE">SITE</option>
-										<option value="RO">RO</option>
-									<?php
-                                            break;
-                                        case 'HO':
-                                    ?>
-										<option value="PKS">PKS</option>
-										<option value="SITE">SITE</option>
-										<option value="RO">RO</option>
-										<option value="HO">HO</option>
-									<?php
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ?>
-								</select>
-							</div>
-						</div> -->
                     <div class="table-responsive">
-                        <table id="tableDetailPO" class="table table-bordered" width="100%">
+                        <table id="tableDetailPo" class="table table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref. PO</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. PO</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi Beli</th>
+                                    <th>#</th>
+                                    <th>No.</th>
+                                    <th>Tgl</th>
+                                    <th>No.PO</th>
+                                    <th>Ref.PO</th>
+                                    <th>Supplier</th>
+                                    <th>Lokasi&nbsp;Beli</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyDetailSPP">
-                                <tr>
-                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                </tr>
+                            <tbody>
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
 </div>
-<!-- END Pilih PO -->
-
-<!-- LIST BARANG -->
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalBarang">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">List Barang</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <div class="table-responsive">
-                            <input type="hidden" id="hidden_no_row_barang" name="hidden_no_row_barang">
-                            <table id="tableBarang" class="table table-bordered" style="width: 100%;">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Qty PO</th>
-                                        <th>Qty LPB</th>
-                                        <th>Sisa Blm Terima</th>
-                                        <th>Sat</th>
-                                        <th>Keterangan</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody_listbarang">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--  END LIST BARANG -->
 
 <script>
-    function pilihModalDataPO() {
-        $('#modalDataPO').modal('show');
-        tableDataPO();
+    function cariPo() {
+
+        $('#modalListPo').modal('show');
     }
 
-    function tableDataPO() {
-        $('#tableDetailPO').DataTable().destroy();
-        $('#tableDetailPO').DataTable({
-            "paging": true,
-            "scrollY": false,
-            "scrollX": true,
-            "searching": true,
-            "select": true,
-            "bLengthChange": true,
-            "scrollCollapse": true,
-            "bPaginate": true,
-            "bInfo": true,
-            "bSort": false,
+    // Start Data Table Server Side
+    var table;
+    $(document).ready(function() {
+
+        //datatables
+        table = $('#tableDetailPo').DataTable({
+
             "processing": true,
             "serverSide": true,
             "order": [],
-            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
-            "columns": [{
-                    "width": "5%"
-                },
-                {
-                    "width": "20%"
-                },
-                {
-                    "width": "30%"
-                },
-                {
-                    "width": "10%"
-                },
-                {
-                    "width": "20%"
-                },
-                {
-                    "width": null
-                },
-            ],
+
+            "ajax": {
+                "url": "<?php echo site_url('Lpb/get_data_po') ?>",
+                "type": "POST"
+            },
+
             "columnDefs": [{
-                "targets": [],
+                "targets": [0],
                 "orderable": false,
             }, ],
-            "drawCallback": function(settings) {
-                $('#tableDetailPO tr').each(function() {
-                    var Cell = $(this).find('td');
 
-                    Cell.parent().on('mouseover', Cell, function() {
-                        Cell.parent().css('background-color', '#26b99a');
-                        Cell.parent().css('color', '#ffffff');
-
-                        Cell.parent().bind("mouseout", function() {
-                            Cell.parent().css('background-color', '');
-                            Cell.parent().css('color', '#73879c');
-                        });
-                    });
-                });
-            },
         });
-        var rel = setInterval(function() {
-            $('#tableDetailPO').DataTable().ajax.reload();
-            clearInterval(rel);
-        }, 100);
-    }
 
+    });
+    // End Data Table Server Side
 
+    $(document).ready(function() {
+        $(document).on('click', '#pilih_po', function() {
 
-    function pilihModalBarang(row) {
-        $('#modalBarang').modal('show');
-        tableBarang();
-        $('#hidden_no_row_barang').val(row);
-    }
+            var nopotxt = $(this).data('nopotxt');
+            var noreftxt = $(this).data('noreftxt');
+            var tglpo = $(this).data('tglpo');
+            var kode_supply = $(this).data('kode_supply');
+            var nama_supply = $(this).data('nama_supply');
+            // console.log(nabar);
+
+            // Set data
+            $('#txt_no_po').val(nopotxt);
+            $('#txt_ref_po').val(noreftxt);
+            $('#txt_tgl_po').val(tglpo);
+            $('#txt_kd_supplier').text(kode_supply);
+            $('#txt_supplier').val(nama_supply);
+            $("#modalListPo").modal('hide');
+
+        });
+    });
 </script>

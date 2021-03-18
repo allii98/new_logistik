@@ -2,12 +2,12 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_data_spp extends CI_Model
+class M_lpb extends CI_Model
 {
-
-    var $table = 'ppo'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
-    var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
+    // start server side table
+    var $table = 'po'; //nama tabel dari database
+    var $column_order = array(null, 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli'); //field yang ada di table user
+    var $column_search = array('tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'desc'); // default order 
 
     public function __construct()
@@ -20,8 +20,8 @@ class M_data_spp extends CI_Model
     {
 
         $this->db_logistik_pt->from($this->table);
-        // $this->db_logistik_pt->select('id, noppotxt, noreftxt, tglref,tglppo,tgltrm,namadept,lokasi,ket,user');
-        // $this->db_logistik_pt->from('ppo');
+        // $this->db_logistik_pt->select('id', 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli');
+        // $this->db_logistik_pt->from('po');
         // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
@@ -74,12 +74,26 @@ class M_data_spp extends CI_Model
         $this->db_logistik_pt->from($this->table);
         return $this->db_logistik_pt->count_all_results();
     }
+    // end server side table
 
-    public function getDetailSpp($noppo)
+    public function cariDevisi()
     {
-        $this->db_logistik_pt->select('*');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('noppotxt', $noppo);
-        return $this->db_logistik_pt->get()->result_array();
+        $lokasi = $this->session->userdata('status_lokasi');
+
+        if ($lokasi == 'SITE') {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->where('kodetxt', '06');
+            $this->db_logistik_pt->or_where('kodetxt', '07');
+            $this->db_logistik_pt->from('pt_copy');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        } else {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->from('pt_copy');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        }
     }
 }
+
+/* End of file ModelName.php */
