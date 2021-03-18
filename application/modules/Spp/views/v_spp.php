@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title">Data SPP</h4>
+                        <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data SPP</h4>
                         <div class="form-group">
                             <select class="form-control" id="filter" name="filter">
                                 <option value="">Semua</option>
@@ -14,21 +14,45 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="dataspp" class="table w-100 dataTable no-footer table-striped">
+                        <table id="dataspp" class="table w-100 dataTable no-footer table-sm table-striped">
                             <thead>
                                 <tr>
-                                    <th style="padding: 0.4em;">No</th>
-                                    <th style="padding: 0.4em;">Approval</th>
-                                    <th style="padding: 0.4em;">No. SPP</th>
-                                    <th style="padding: 0.4em;">No. Ref</th>
-                                    <th style="padding: 0.4em;">Tgl. Ref</th>
-                                    <th style="padding: 0.4em;">Tanggal</th>
-                                    <th style="padding: 0.4em;">Tgl. Terima</th>
-                                    <th style="padding: 0.4em;">Departemen</th>
-                                    <th style="padding: 0.4em;">Lokasi</th>
-                                    <th style="padding: 0.4em;">Keterangan</th>
-                                    <th style="padding: 0.4em;">Status</th>
-                                    <th style="padding: 0.4em;">Input Oleh</th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">No</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Approval</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">No. SPP</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">No. Ref</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Tgl. Ref</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Tanggal</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Tgl. Terima</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Departemen</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Lokasi</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Keterangan</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Status</font>
+                                    </th>
+                                    <th style="padding: 0.4em;">
+                                        <font face="Verdana" size="2.5">Input Oleh</font>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -57,19 +81,39 @@
             </div>
             <div class="modal-body">
                 <div class="table-responsive">
-                    <table id="dabar" class="table w-100 dataTable no-footer table-striped">
+                    <table id="dabar" class="table-sm table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>No</th>
-                                <th>No SPP</th>
-                                <th>No Ref SPP</th>
-                                <th>Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Sat</th>
-                                <th>Qty</th>
-                                <th>Stok</th>
-                                <th>Ket</th>
-                                <th>Status PO</th>
+                                <th style="margin-top: 10px;">
+                                    <font face="Verdana" size="2.5">No</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">No SPP</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">No Ref SPP</font>
+                                </th>
+                                <th style="padding-left: 0.4em;">
+                                    <font face="Verdana" size="2.5">Kode Barang</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">Nama Barang</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">Sat</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">Qty</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">Stok</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">Ket</font>
+                                </th>
+                                <th style="padding: 0.4em;">
+                                    <font face="Verdana" size="2.5">Status&nbsp;PO</font>
+                                </th>
                             </tr>
                         </thead>
                         <tbody id="data_detail_spp">
@@ -136,14 +180,14 @@
                         var no = i + 1;
                         html += '<tr>' +
                             '<td>' + no + '</td>' +
-                            '<td>' + data[i].noppotxt + '</td>' +
-                            '<td>' + data[i].noreftxt + '</td>' +
-                            '<td>' + data[i].kodebar + '</td>' +
-                            '<td>' + data[i].nabar + '</td>' +
-                            '<td>' + data[i].sat + '</td>' +
-                            '<td>' + data[i].qty + '</td>' +
-                            '<td>' + data[i].STOK + '</td>' +
-                            '<td>' + data[i].ket + '</td>' +
+                            '<td> <font face="Verdana" size="2"> ' + data[i].noppotxt + '</font></td>' +
+                            '<td> <font face="Verdana" size="2">' + data[i].noreftxt + '</font></td>' +
+                            '<td> <font face="Verdana" size="2">' + data[i].kodebar + '</font></td>' +
+                            '<td> <font face="Verdana" size="2">' + data[i].nabar + '</font></td>' +
+                            '<td> <font face="Verdana" size="2">' + data[i].sat + '</font></td>' +
+                            '<td> <font face="Verdana" size="2">' + data[i].qty + '</font></td>' +
+                            '<td> <font face="Verdana" size="2">' + data[i].STOK + '</font></td>' +
+                            '<td> <font face="Verdana" size="2">' + data[i].ket + '</font></td>' +
                             '<td>' + '' + '</td>' +
                             '</tr>';
                     }
