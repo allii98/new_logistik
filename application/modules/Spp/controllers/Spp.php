@@ -326,34 +326,8 @@ class Spp extends CI_Controller
         $id_ppo = $this->input->post('hidden_id_ppo');
         $id_ppo_item = $this->input->post('hidden_id_item_ppo');
 
-        // $get_ppo = $this->db_logistik_pt->get_where('ppo', array('id' => $id_ppo))->row();
-        // $get_item_ppo = $this->db_logistik_pt->get_where('item_ppo', array('id' => $id_ppo_item))->row();
-
-        // $no_ppo = $get_ppo->noppotxt;
-        // $no_ref_ppo = $get_ppo->noreftxt;
-        // $item_ppo_kodebar = $get_item_ppo->kodebartxt;
-        // $item_ppo_nabar = $get_item_ppo->nabar;
-
-        // $user = $this->session->userdata('user');
-        // $ip = $this->input->ip_address();
-        // $platform = $this->platform->agent();
-
-        //$query = "INSERT INTO item_ppo_history SELECT null, a.*,'DATA SEBELUM DIHAPUS', '$user menghapus barang $item_ppo_kodebar|$item_ppo_nabar pada SPP $no_ref_ppo', NOW(), '$user', '$ip', '$platform' FROM item_ppo a WHERE a.id = $id_ppo_item";
-
-        // $this->db_logistik_pt->query($query);
-        // if ($this->db_logistik_pt->affected_rows() > 0) {
-        //     $bool_itemppohistory = TRUE;
-        // } else {
-        //     $bool_itemppohistory = FALSE;
-        // }
-
         $data = $this->db_logistik_pt->delete('item_ppo', array('id' => $id_ppo_item));
 
-        // if ($bool_itemppohistory === TRUE && $data_delete === TRUE) {
-        //     $data = TRUE;
-        // } else {
-        //     $data = FALSE;
-        // }
         echo json_encode($data);
     }
 
@@ -382,7 +356,7 @@ class Spp extends CI_Controller
             $row[] = $no;
             $row[] = '<button class="btn btn-info btn-xs" id="detail_spp" name="detail_spp"
                         data-noppotxt="' . $field->noppotxt . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Detail
+                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Approve
                         </button>';
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
