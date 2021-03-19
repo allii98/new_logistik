@@ -6,7 +6,7 @@ class M_po extends CI_Model
 {
 
     var $table = 'item_ppo'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'tglppo', 'noreftxt', 'namadept', 'kodebar', 'nabar', 'ket'); //field yang ada di table supplier  
+    var $column_order = array(null, 'id', '	noppo', 'tglppo', 'noreftxt', 'qty', 'namadept', 'kodebar', 'nabar', 'ket'); //field yang ada di table supplier  
     var $column_search = array('tglppo', 'noreftxt',  'namadept', 'kodebar', 'nabar'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
@@ -19,7 +19,7 @@ class M_po extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $this->db_logistik_pt->select('id, tglppo, noreftxt, namadept,kodebar,nabar, ket');
+        $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
         $this->db_logistik_pt->from('item_ppo');
         $this->db_logistik_pt->order_by('id', 'desc');
 
@@ -74,6 +74,20 @@ class M_po extends CI_Model
         return $this->db_logistik_pt->count_all_results();
     }
 
+    public function get_detail_ppo($no_spp, $no_ref_spp)
+    {
+        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, tglref, tglppo, tgltrm, kodedept, namadept, ket, pt, kodept, lokasi, status, status2, po, jenis FROM ppo WHERE  noppo = '$no_spp' AND noreftxt = '$no_ref_spp' ORDER BY id DESC";
+        $data = $this->db_logistik_pt->query($query);
+        return $data;
+    }
+
+    public function get_detail_item_ppo($no_spp, $no_ref_spp, $kodebar)
+    {
+        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, kodebartxt, nabar, tglppo, qty, kodedept, namadept, ket, kodept, namapt, lokasi, status, status2, po, sat FROM item_ppo WHERE noppotxt = '$no_spp' AND noreftxt = '$no_ref_spp' AND kodebartxt = '$kodebar' ORDER BY id DESC";
+        $data = $this->db_logistik_pt->query($query);
+        return $data;
+    }
+
     public function get_supplier()
     {
         $supplier = "SELECT kode, supplier, usaha FROM supplier ORDER BY id DESC";
@@ -94,7 +108,7 @@ class M_po extends CI_Model
     {
         $noref = $this->input->get('noref');
         $tgl = $this->input->get('tgl');
-        $query = "SELECT id, noppo, noreftxt, tglppo, tglppotxt, namadept FROM ppo WHERE noreftxt LIKE '%$noref%' OR tglppo LIKE '%$tgl%' ORDER BY id DESC";
+        $query = "SELECT id, noppo,jenis, noreftxt, tglppo, tglppotxt, namadept FROM ppo WHERE jenis = 'SPPI' AND (noreftxt LIKE '%$noref%' OR tglppo LIKE '%$tgl%') ORDER BY id DESC";
         $d = $this->db_logistik_pt->query($query)->result_array();
         return $d;
     }
@@ -132,6 +146,13 @@ class M_po extends CI_Model
     {
         $this->db_logistik_pt->where('id', $no_id_item);
         $this->db_logistik_pt->update('item_po',  $dataupdateitem);
+
+        return TRUE;
+    }
+    public function updatePPO($id_ppo, $ppo)
+    {
+        $this->db_logistik_pt->where('id', $id_ppo);
+        $this->db_logistik_pt->update('item_ppo',  $ppo);
 
         return TRUE;
     }

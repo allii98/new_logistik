@@ -23,6 +23,9 @@
     <link href="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
 
 
+    <!-- Tour css -->
+    <link href="<?php echo base_url() ?>assets/libs/hopscotch/css/hopscotch.min.css" rel="stylesheet" type="text/css" />
+
     <!-- App css -->
     <link href="<?php echo base_url() ?>assets/css/bootstrap-creative.min.css" rel="stylesheet" type="text/css" id="bs-default-stylesheet" />
     <link href="<?php echo base_url() ?>assets/css/app-creative.min.css" rel="stylesheet" type="text/css" id="app-default-stylesheet" />
@@ -337,6 +340,10 @@
         <script src="<?php echo base_url() ?>assets/js/vendor.min.js"></script>
         <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
 
+
+        <!-- Sweet alert init js-->
+        <script src="<?php echo base_url() ?>assets/js/pages/sweet-alerts.init.js"></script>
+
         <!-- Tost-->
         <script src="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.js"></script>
 
@@ -344,6 +351,9 @@
         <script src="<?php echo base_url() ?>assets/js/pages/toastr.init.js"></script>
 
         <script src="<?php echo base_url() ?>assets/libs/select2/js/select2.min.js"></script>
+
+        <!-- Tour page js -->
+        <script src="<?php echo base_url() ?>assets/libs/hopscotch/js/hopscotch.min.js"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 

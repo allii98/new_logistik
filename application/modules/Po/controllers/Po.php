@@ -31,11 +31,13 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no . ".";
+            $row[] = $d->noppo;
             $row[] = $d->tglppo;
             $row[] = $d->noreftxt;
             $row[] = $d->namadept;
             $row[] = $d->kodebar;
             $row[] = $d->nabar;
+            // $row[] = $d->qty;
             $row[] = $d->ket;
             // $row[] = '<img src=" ' . site_url('assets/uploads/tiket/' . $d->foto) . '" width="60px">';
             // $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->noreftxt . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
@@ -133,6 +135,18 @@ class Po extends CI_Controller
         }
 
         echo json_encode($data);
+    }
+
+    public function get_detail_spp()
+    {
+        $no_spp = $this->input->post('no_spp');
+        $no_ref_spp = $this->input->post('no_ref_spp');
+        $kodebar = $this->input->post('kodebar');
+
+        $ppo = $this->M_po->get_detail_ppo($no_spp, $no_ref_spp)->row();
+        $item_ppo = $this->M_po->get_detail_item_ppo($no_spp, $no_ref_spp, $kodebar)->result();
+
+        echo json_encode(array($ppo, $item_ppo));
     }
 
 
@@ -347,9 +361,26 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
+        //update(dengan cara qty2+qty inputan) where id_ppo = id_ppo yang di dapat
+        $query =  "SELECT QTY2 FROM item_ppo WHERE id = '" . $this->input->post('id_ppo') . "' ";
+        $d = $this->db->query($query)->row_array();
+
+
+        $tmbhQTY = $d->QTY2 + $this->input->post('txt_qty');
+        $id_ppo = $this->input->post('id_ppo');
+        $data_ppo =  array(
+            'QTY2' => $tmbhQTY
+        );
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+        //select item_ppo where id_ppo = id_ppo yang di dapat
+
+        //cek isi qty dan qty2, jika qty == qty2, maka update po = 1 
 
         $data1 = $this->db->insert('po', $datainsert);
         $data2 = $this->db->insert('item_po', $datainsertitem);
+
+
         $this->_cek_flag_po($no_po);
 
         $data_return = [
@@ -364,50 +395,6 @@ class Po extends CI_Controller
 
         // $data = $this->M_po->savePO($datainsert, $datainsertitem);
         echo json_encode($data_return);
-    }
-
-    private function _cek_flag_po($no_po)
-    {
-        $no_spp = $this->input->post('txt_no_spp');
-        $no_ref_spp = $this->input->post('hidden_no_ref');
-        $kodebar = $this->input->post('hidden_kode_brg');
-
-        $cek_spp = "SELECT * FROM item_ppo WHERE noppotxt = '$no_spp' AND noreftxt = '$no_ref_spp'";
-        $num_row_spp = $this->db_logistik_pt->query($cek_spp)->num_rows();
-
-        $cek_po = "SELECT * FROM item_po WHERE noppotxt = '$no_spp' AND refppo = '$no_ref_spp' AND nopotxt = '$no_po'";
-        $num_row_po = $this->db_logistik_pt->query($cek_po)->num_rows();
-
-        $dataedititempo['po'] = '1';
-        $this->db_logistik_pt->set($dataedititempo);
-        $this->db_logistik_pt->where('noreftxt', $no_ref_spp);
-        $this->db_logistik_pt->where('noppotxt', $no_spp);
-        $this->db_logistik_pt->where('kodebartxt', $kodebar);
-        $this->db_logistik_pt->update('item_ppo');
-
-        if ($num_row_spp == $num_row_po) {
-            $dataeditpo['po'] = '1';
-            $this->db_logistik_pt->set($dataeditpo);
-            $this->db_logistik_pt->where('noreftxt', $no_ref_spp);
-            $this->db_logistik_pt->where('noppotxt', $no_spp);
-            $this->db_logistik_pt->update('ppo');
-        }
-    }
-
-    public function deletePO()
-    {
-        $no_po = $this->input->post('nopo');
-
-        $data = $this->M_po->deletePO($no_po);
-
-        echo json_encode($data);
-    }
-
-    public function hapus_rinci()
-    {
-        $id_po_item = $this->input->post('hidden_id_po_item');
-        $data = $this->db_logistik_pt->delete('item_po', array('id' => $id_po_item));
-        echo json_encode($data);
     }
 
     public function saveItem()
@@ -570,6 +557,11 @@ class Po extends CI_Controller
 
 
         $data = $this->db->insert('item_po', $datainsertitem);
+        $no_ppo = $this->input->post('id_ppo');
+        $data_ppo =  array(
+            'QTY2' => $this->input->post('txt_qty')
+        );
+        $this->M_po->updatePPO($no_ppo, $data_ppo);
 
         $data_return = [
             'data' => $data,
@@ -582,6 +574,52 @@ class Po extends CI_Controller
         // $data = $this->M_po->savePO($datainsert, $datainsertitem);
         echo json_encode($data_return);
     }
+
+    private function _cek_flag_po($no_po)
+    {
+        $no_spp = $this->input->post('txt_no_spp');
+        $no_ref_spp = $this->input->post('hidden_no_ref');
+        $kodebar = $this->input->post('hidden_kode_brg');
+
+        $cek_spp = "SELECT * FROM item_ppo WHERE noppotxt = '$no_spp' AND noreftxt = '$no_ref_spp'";
+        $num_row_spp = $this->db_logistik_pt->query($cek_spp)->num_rows();
+
+        $cek_po = "SELECT * FROM item_po WHERE noppotxt = '$no_spp' AND refppo = '$no_ref_spp' AND nopotxt = '$no_po'";
+        $num_row_po = $this->db_logistik_pt->query($cek_po)->num_rows();
+
+        $dataedititempo['po'] = '1';
+        $this->db_logistik_pt->set($dataedititempo);
+        $this->db_logistik_pt->where('noreftxt', $no_ref_spp);
+        $this->db_logistik_pt->where('noppotxt', $no_spp);
+        $this->db_logistik_pt->where('kodebartxt', $kodebar);
+        $this->db_logistik_pt->update('item_ppo');
+
+        if ($num_row_spp == $num_row_po) {
+            $dataeditpo['po'] = '1';
+            $this->db_logistik_pt->set($dataeditpo);
+            $this->db_logistik_pt->where('noreftxt', $no_ref_spp);
+            $this->db_logistik_pt->where('noppotxt', $no_spp);
+            $this->db_logistik_pt->update('ppo');
+        }
+    }
+
+    public function deletePO()
+    {
+        $no_po = $this->input->post('nopo');
+
+        $data = $this->M_po->deletePO($no_po);
+
+        echo json_encode($data);
+    }
+
+    public function hapus_rinci()
+    {
+        $id_po_item = $this->input->post('hidden_id_po_item');
+        $data = $this->db_logistik_pt->delete('item_po', array('id' => $id_po_item));
+        echo json_encode($data);
+    }
+
+
 
     public function updateItem()
     {
