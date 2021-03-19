@@ -9,6 +9,7 @@ class Lpb extends CI_Controller
         parent::__construct();
 
         $this->load->model('M_lpb');
+        $this->load->model('M_item_lpb');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -68,6 +69,44 @@ class Lpb extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->M_lpb->count_all(),
             "recordsFiltered" => $this->M_lpb->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    public function get_data_item_po()
+    {
+        $nopo = $this->input->post('nopo');
+        $this->M_item_lpb->where_datatables($nopo);
+        $list = $this->M_item_lpb->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = '<button class="btn btn-success btn-xs" id="pilih_item_po" name="pilih_item_po"
+                        data-kodebar="' . $field->kodebar . '" data-nabar="' . $field->nabar . '"
+                        data-qty="' . $field->qty . '" data-sat="' . $field->sat . '"
+                        data-ket="' . $field->ket . '"
+                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih
+                        </button>';
+            $row[] = $no;
+            $row[] = $field->kodebar;
+            $row[] = $field->nabar;
+            $row[] = $field->qty;
+            $row[] = $field->ket;
+            $row[] = $field->ket;
+            $row[] = $field->sat;
+            $row[] = $field->ket;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_item_lpb->count_all(),
+            "recordsFiltered" => $this->M_item_lpb->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON

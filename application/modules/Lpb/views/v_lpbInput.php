@@ -101,12 +101,13 @@
                         <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kd. Barang</th>
+                                    <th width="3%">#</th>
+                                    <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang</th>
-                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
-                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan</th>
-                                    <th width="30%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
+                                    <th width="5%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
+                                    <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
+                                    <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan</th>
+                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -118,22 +119,27 @@
                                         <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button>
                                     </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                            <input type="text" class="form-control" id="txt_kode_barang_1" name="txt_kode_barang_1" placeholder="Kode Barang" onfocus="pilihModalBarang('1')" readonly>
-                                            <label>
-                                                <input type="checkbox" id="chk_asset_1" name="chk_asset_1" value="">
-                                                <font face="Verdana" size="1.5"> Asset ?</font>
-                                            </label>
+                                        <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                            <div class="row">
+                                                <input type="text" class="form-control col-8" id="txt_kode_barang_1" name="txt_kode_barang_1" placeholder="Kode Barang" onfocus="cari_barang('1')" readonly>
+                                                <label class="ml-1 mt-1">
+                                                    <input type="checkbox" id="chk_asset_1" name="chk_asset_1" value="">
+                                                    <span face="Verdana" size="1.8"> Asset ?</span>
+                                                </label>
+                                            </div>
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_nama_brg_1" name="txt_nama_brg_1" placeholder="Nama Barang" readonly autocomplite="off">
                                         </td>
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                        <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" autocomplite="off">
-
 
                                             <input type="hidden" id="hidden_qty_po_1" name="hidden_qty_po_1">
                                             <input type="hidden" id="hidden_sisa_qty_1" name="hidden_sisa_qty_1">
+                                        </td>
+                                        <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty po :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">245</span>
+                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa qty :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">334</span>
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control" id="txt_satuan_1" name="txt_satuan_1" placeholder="Satuan" readonly autocomplite="off">
@@ -141,7 +147,7 @@
                                             <input type="hidden" id="hidden_grup_1" name="hidden_grup_1">
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                            <textarea class="resizable_textarea form-control" id="txt_ket_rinci_1" name="txt_ket_rinci_1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,1)"></textarea>
+                                            <textarea class="resizable_textarea form-control" id="txt_ket_rinci_1" name="txt_ket_rinci_1" placeholder="Keterangan" rows="1" onkeypress="saveRinciEnter(event,1)"></textarea>
                                             <label id="lbl_status_simpan_1"></label>
                                             <input type="hidden" id="hidden_id_masuk_item_1" name="hidden_id_masuk_item_1">
                                         </td>
@@ -200,6 +206,47 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListItemPo">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">List Barang</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="table-responsive">
+                            <input type="" id="hidden_no_row" name="hidden_no_row">
+                            <table id="tableDetailItemPo" class="table table-bordered" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>No</th>
+                                        <th>Kode Barang</th>
+                                        <th>Nama Barang</th>
+                                        <th>Qty PO</th>
+                                        <th>Qty LPB</th>
+                                        <th>Sisa Blm Terima</th>
+                                        <th>Sat</th>
+                                        <th>Keterangan</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_listbarang">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function cariPo() {
 
@@ -249,7 +296,136 @@
             $('#txt_kd_supplier').text(kode_supply);
             $('#txt_supplier').val(nama_supply);
             $("#modalListPo").modal('hide');
+            nopo(nopotxt);
 
         });
     });
+
+    $(document).ready(function() {
+        $(document).on('click', '#pilih_item_po', function() {
+
+            var n = $('#hidden_no_row').val();
+
+            var kodebar = $(this).data('kodebar');
+            var nabar = $(this).data('nabar');
+            var qty = $(this).data('qty');
+            var sat = $(this).data('sat');
+            var ket = $(this).data('ket');
+            // console.log(nabar);
+
+            // Set data
+            $('#txt_kode_barang_' + n).val(kodebar);
+            $('#txt_nama_brg_' + n).val(nabar);
+            $('#txt_qty_' + n).val(qty);
+            $('#txt_satuan_' + n).val(sat);
+            $('#txt_ket_rinci_' + n).text(ket);
+            $("#modalListItemPo").modal('hide');
+
+        });
+    });
+
+    function cari_barang(no_row) {
+        // $('#hidden_no_row').empty();
+        console.log(no_row);
+        $('#hidden_no_row').val(no_row);
+        $('#modalListItemPo').modal('show');
+        // $('#tableListBarang').DataTable().destroy();
+        // listBarang(no_row);
+    }
+
+    function tambah_row(num_last) {
+        var row = ++num_last;
+        console.log(' baris ke ' + row);
+        // var row = $('#hidden_no_table').val();
+        var tr_buka = '<tr id="tr_' + row + '">';
+        var td_col_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">'
+            // +'<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalBarang('+row+')"></button><br />'
+            +
+            '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row(' + row + ')"></button><br />' +
+            '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row_' + row + '" onclick="hapus_row(' + row + ')"></button>' +
+            '</td>';
+        var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
+        var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" onfocus="cari_barang(' + row + ')" readonly>' +
+            '<label>' +
+            '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value=""> <font face="Verdana" size="1.5"> Asset ?</font>' +
+            '</label>' +
+            '</td>';
+        var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_nama_brg_' + row + '" name="txt_nama_brg_' + row + '" placeholder="Nama Barang" readonly>' +
+            '</td>';
+        var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty">' +
+            // '<label id="lbl_qty_po_' + row + '">Qty PO : </label>' +
+            // '<label id="lbl_sisa_qty_' + row + '">Sisa Qty : </label>'+
+            '<input type="hidden" id="hidden_qty_po_' + row + '" name="hidden_qty_po_' + row + '">' +
+            '<input type="hidden" id="hidden_sisa_qty_' + row + '" name="hidden_sisa_qty_' + row + '">' +
+            '</td>';
+        var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_satuan_' + row + '" name="txt_satuan_' + row + '" placeholder="Satuan" readonly>' +
+            // '<label id="lbl_grup_' + row + '" name="lbl_grup_' + row + '">Grup : -</label>' +
+            '<input type="hidden" id="hidden_grup_' + row + '" name="hidden_grup_' + row + '">' +
+            '</td>';
+        var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1" onkeypress="saveRinciEnter(event,' + row + ')"></textarea>' +
+            '<label id="lbl_status_simpan_' + row + '"></label>' +
+            '<input type="hidden" id="hidden_id_masuk_item_' + row + '" name="hidden_id_masuk_item_' + row + '">' +
+            '</td>';
+        var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            '</td>';
+        var form_tutup = '</form>';
+        var tr_tutup = '</tr>';
+
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
+
+        $('#txt_qty_' + row).number(true, 2);
+
+        // $('html, body').animate({
+        //     scrollTop: $("#tr_" + row).offset().top
+        // }, 2000);
+
+        // row++;
+        $('#hidden_no_table').val(row);
+    }
+
+    // Start Data Table Server Side
+    var table;
+
+    function nopo(nopotxt) {
+        $(document).ready(function() {
+
+            //datatables
+            var nopo = nopotxt;
+            console.log(nopo);
+            table = $('#tableDetailItemPo').DataTable({
+                destroy: true,
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+
+                "ajax": {
+                    "url": "<?php echo site_url('Lpb/get_data_item_po') ?>",
+                    "type": "POST",
+                    "data": {
+                        nopo: nopo
+                    }
+
+                },
+
+                "columnDefs": [{
+                    "targets": [0],
+                    "orderable": false,
+                }, ],
+
+            });
+
+        });
+    }
+    // End Data Table Server Side
 </script>
