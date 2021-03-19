@@ -338,44 +338,87 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_1" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button>
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                                <td width="30%">
+                                                <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="text" class="form-control" id="spp" name="spp">
+                                                    <input type="hidden" id="hidden_no_ref_spp_" name="hidden_no_ref_spp_">
+                                                    <input type="hidden" id="hidden_tgl_ref_" name="hidden_tgl_ref_">
+                                                    <input type="hidden" id="hidden_kd_departemen_" name="hidden_kd_departemen_">
+                                                    <input type="hidden" id="hidden_departemen_" name="hidden_departemen_">
+                                                    <input type="hidden" id="hidden_tgl_spp_1" name="hidden_tgl_spp_1">
+                                                    <input type="hidden" id="hidden_kd_pt_1" name="hidden_kd_pt_1">
+                                                    <input type="hidden" id="hidden_nama_pt_1" name="hidden_nama_pt_1">
+                                                    <input type="hidden" id="noppo" name="noppo">
+                                                </td>
+                                                <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <select class="form-control" id="cmb_jenis_budget_1" name="cmb_jenis_budget_1" required>
+                                                        <option value="">-- Pilih --</option>
+                                                        <option value="TEKNIK">TEKNIK</option>
+                                                        <option value="BIBITAN">BIBITAN</option>
+                                                        <option value="LC & TANAM">LC & TANAM</option>
+                                                        <option value="RAWAT">RAWAT</option>
+                                                        <option value="PANEN">PANEN</option>
+                                                        <option value="TEKNIK">TEKNIK</option>
+                                                        <option value="PABRIK">PABRIK</option>
+                                                        <option value="KANTOR">KANTOR</option>
+                                                        <option value="Kendaraan">Kendaraan</option>
+                                                        <option value="TBM">TBM</option>
+                                                    </select>
+                                                </td>
+                                                <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <span id="nama_brg_"></span><span>|</span><span id="kode_brg_"></span>
+                                                    <input type="hidden" class="form-control" id="hidden_kode_brg_1" name="hidden_kode_brg_1" />
+                                                    <input type="hidden" class="form-control" id="hidden_nama_brg_1" name="hidden_nama_brg_1" />
+                                                    <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
 
                                                 </td>
-                                                <td width="20%">
+                                                <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required />
+                                                </td>
+                                                <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="text" class="form-control" id="txt_qty" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah()" />
+                                                </td>
+                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" value="0" onkeyup="jumlah()" placeholder="Harga dalam Rupiah" size="15" required /><br />
+                                                </td>
+                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <select class="form-control" id="cmb_kurs_1" name="cmb_kurs_1" required="">
+                                                        <option value="Rp">Rp IDR</option>
+                                                        <option value="USD">&dollar; USD</option>
+                                                        <option value="SGD">S&dollar; SGD</option>
+                                                        <option value="Euro">&euro; Euro</option>
+                                                        <option value="GBP">&pound; GBP</option>
+                                                        <option value="Yen">&yen; Yen</option>
+                                                        <option value="MYR">RM MYR</option>
+                                                    </select><br />
+                                                </td>
+                                                <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="text" class="form-control" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah()" placeholder="Disc" />
 
                                                 </td>
-                                                <td width="20%">
+                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="text" class="form-control" id="txt_biaya_lain_1" name="txt_biaya_lain_1" size="15" value="0" onkeyup="jumlah()" placeholder="Biaya Lain" />
 
                                                 </td>
-                                                <td width="20%">
+                                                <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event)"></textarea><br />
 
                                                 </td>
-                                                <td width="20%">
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event)"></textarea><br />
 
                                                 </td>
-                                                <td width="20%">
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="text" class="form-control" id="txt_jumlah_1" name="txt_jumlah_1" size="15" placeholder="Jumlah" readonly />
+                                                    <label id="lbl_status_simpan_1"></label>
+                                                    <input type="hidden" id="hidden_id_po_item_" name="hidden_id_po_item_">
 
                                                 </td>
-                                                <td width="20%">
-
-                                                </td>
-                                                <td width="20%">
-
-                                                </td>
-                                                <td width="20%">
-
-                                                </td>
-                                                <td width="20%">
-
-                                                </td>
-                                                <td width="20%">
-
-                                                </td>
-                                                <td width="20%">
-
-                                                </td>
-                                                <td width="20%">
-
+                                                <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_" name="btn_simpan_" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi()"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah()" id="btn_ubah_" name="btn_ubah_" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_" name="btn_update_" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update()"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_" name="btn_cancel_update_" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancleUpdate()"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci()"></button>
                                                 </td>
 
                                             </form>
@@ -880,7 +923,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
-        var td_col_2 = '<td width="30%" style="padding-rignht: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control"  id="spp' + n + '" name="spp' + n + '">' +
             '<input type="hidden" id="hidden_no_ref_spp_' + n + '" name="hidden_no_ref_spp_' + n + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + n + '" name="hidden_tgl_ref_' + n + '">' +
