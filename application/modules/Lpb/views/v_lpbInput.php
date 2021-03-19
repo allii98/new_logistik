@@ -135,8 +135,8 @@
                                             </div>
                                         </td>
                                         <td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">
-                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty po :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">245</span>
-                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa qty :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">334</span>
+                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty&nbsp;po&emsp;:&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">22</span>
+                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">3</span>
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" autocomplite="off">
