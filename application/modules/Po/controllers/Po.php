@@ -10,6 +10,7 @@ class Po extends CI_Controller
         parent::__construct();
 
         $this->load->model('M_po');
+        $this->load->model('M_data');
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
@@ -39,6 +40,42 @@ class Po extends CI_Controller
             $row[] = $d->nabar;
             // $row[] = $d->qty;
             $row[] = $d->ket;
+            // $row[] = '<img src=" ' . site_url('assets/uploads/tiket/' . $d->foto) . '" width="60px">';
+            // $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->noreftxt . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
+
+
+
+
+            // add html for action
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_po->count_all(),
+            "recordsFiltered" => $this->M_po->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
+
+    public function dataPO()
+    {
+        $list = $this->M_data->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            $no++;
+            $row = array();
+            $row[] = '<a href="#" class="btn btn-warning btn-xs">No Option</a>';
+            $row[] = $no . ".";
+            $row[] = $d->no_refppo;
+            $row[] = $d->nopo;
+            $row[] = $d->tglpo;
+            $row[] = $d->nama_supply;
+            $row[] = $d->ket;
+            $row[] = $d->terbayar;
             // $row[] = '<img src=" ' . site_url('assets/uploads/tiket/' . $d->foto) . '" width="60px">';
             // $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->noreftxt . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
 
@@ -274,8 +311,8 @@ class Po extends CI_Controller
             'kode_budet' => "0",
             'kd_subbudget' => "0",
             'ket_subbudget' => NULL,
-            'kode_supply' => $this->input->post('txt_kode_supplier'),
-            'nama_supply' => $this->input->post('txt_supplier'),
+            'nama_supply' => $this->input->post('txt_kode_supplier'),
+            'kode_supply' => $this->input->post('txt_supplier'),
             'kode_pemesan' => $this->input->post('txt_kode_pemesan'),
             'pemesan' => $this->input->post('txt_pemesan'),
             'nopo' => $no_po,
@@ -362,16 +399,16 @@ class Po extends CI_Controller
         ];
 
         //update(dengan cara qty2+qty inputan) where id_ppo = id_ppo yang di dapat
-        $query =  "SELECT QTY2 FROM item_ppo WHERE id = '" . $this->input->post('id_ppo') . "' ";
-        $d = $this->db->query($query)->row_array();
+        // $query =  "SELECT QTY2 FROM item_ppo WHERE id = '" . $this->input->post('id_ppo') . "' ";
+        // $d = $this->db->query($query)->row_array();
 
 
-        $tmbhQTY = $d->QTY2 + $this->input->post('txt_qty');
-        $id_ppo = $this->input->post('id_ppo');
-        $data_ppo =  array(
-            'QTY2' => $tmbhQTY
-        );
-        $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // $tmbhQTY = $d->QTY2 + $this->input->post('txt_qty');
+        // $id_ppo = $this->input->post('id_ppo');
+        // $data_ppo =  array(
+        //     'QTY2' => $tmbhQTY
+        // );
+        // $this->M_po->updatePPO($id_ppo, $data_ppo);
 
         //select item_ppo where id_ppo = id_ppo yang di dapat
 
@@ -557,11 +594,11 @@ class Po extends CI_Controller
 
 
         $data = $this->db->insert('item_po', $datainsertitem);
-        $no_ppo = $this->input->post('id_ppo');
-        $data_ppo =  array(
-            'QTY2' => $this->input->post('txt_qty')
-        );
-        $this->M_po->updatePPO($no_ppo, $data_ppo);
+        // $no_ppo = $this->input->post('id_ppo');
+        // $data_ppo =  array(
+        //     'QTY2' => $this->input->post('txt_qty')
+        // );
+        // $this->M_po->updatePPO($no_ppo, $data_ppo);
 
         $data_return = [
             'data' => $data,

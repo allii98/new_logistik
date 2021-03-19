@@ -333,13 +333,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <tr id="tr_1">
                                             <td width="3%">
                                                 <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                                <!-- <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row()"></button> -->
-                                                <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalDataSPP('1')"></button>
-                                                <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_1" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button>
+                                                <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onfocus="modalSPP('1')"></button>
+                                                <!-- <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalD('1')"></button> -->
+                                                <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_1" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="spp" name="spp">
+                                                    <input type="text" class="form-control" id="getspp" onfocus="modalSPP('1')" name="spp">
                                                     <input type="hidden" id="hidden_no_ref_spp_" name="hidden_no_ref_spp_">
                                                     <input type="hidden" id="hidden_tgl_ref_" name="hidden_tgl_ref_">
                                                     <input type="hidden" id="hidden_kd_departemen_" name="hidden_kd_departemen_">
@@ -611,9 +611,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <th>Ref. SPP</th>
                                     <th>Departemen</th>
                                     <th>Kode Barang</th>
-                                    <th data-priority="1">Item Barang</th>
+                                    <th>Item Barang</th>
                                     <!-- <th>Qty</th> -->
-                                    <th data-priority="2">Ket</th>
+                                    <th>Ket</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -652,7 +652,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
     var row = 0;
-    var n = 0;
     var simpanBaru = true;
     var updateBaru = true;
     var cancleUpdatePO = true;
@@ -804,7 +803,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
             '<span id="nama_brg_' + row + '"></span><span> | </span><span id="kode_brg_' + row + '" ></span>' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
-            '<input type="text" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
+            '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
             '<input type="hidden" id="hidden_kd_departemen_' + row + '" name="hidden_kd_departemen_' + row + '">' +
             '<input type="hidden" id="hidden_departemen_' + row + '" name="hidden_departemen_' + row + '">' +
@@ -823,8 +822,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control" id="txt_qty' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" />' +
-            '<input type="text" class="form-control" id="qty' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
-            '<input type="text" class="form-control" id="tes' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
+            '<input type="hidden" class="form-control" id="qty' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
+            '<input type="hidden" class="form-control" id="tes' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -906,13 +905,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             $('#btn_hapus_row_1' + row).show();
         }
         initPilihSpp(row);
-        hitungqty(row);
+        // hitungqty(row);
         jumlah(row);
     }
 
     // var n = 2;
-    function tambah_row() {
-        n++;
+    function tambah_row(n) {
+        // n++;
         console.log("bariske", n);
 
         var tr_buka = '<tr id="tr_' + n + '">';
@@ -936,13 +935,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
 
-        // var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-        //     '<select class="js-data-example-ajax form-control select3" id="pilihSpp' + row + '" name="pilihSpp' + row + '" required>' +
-        //     '<option selected="selected">Cari SPP</option>' +
-        //     '</select>' +
 
-
-        //     '</td>';
         var td_col_3 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<select class="form-control" id="cmb_jenis_budget_1' + n + '" name="cmb_jenis_budget_1' + n + '" required>' +
             '<option value="">-- Pilih --</option>' +
@@ -1027,15 +1020,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-        $('#txt_qty' + n).number(true, 2);
-        if (n == 1) {
-            $('#btn_hapus_row_1').hide();
-        } else {
-            $('#btn_hapus_row_1' + n).show();
-        }
-        modalSPP(n);
-        jumlah(n);
-        // return true; 
+        // $('#txt_qty' + n).number(true, 2);
+        // if (n == 1) {
+        //     $('#btn_hapus_row_1').hide();
+        // } else {
+        //     $('#btn_hapus_row_1' + n).show();
+        // }
+        // modalSPP(n);
+        // jumlah(n);
+        return true;
     }
 
     function pilihItem() {
@@ -1214,9 +1207,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function modalSPP(id) {
-        $(`#spp${id}`).click(function() {
-            $("#modal-spp").modal();
-        });
+        // $('#getspp').click(function() {
+        $("#modal-spp").modal();
+        // });
 
     }
 

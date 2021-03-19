@@ -4,7 +4,6 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_po extends CI_Model
 {
-
     var $table = 'item_ppo'; //nama tabel dari database
     var $column_order = array(null, 'id', '	noppo', 'tglppo', 'noreftxt', 'qty', 'namadept', 'kodebar', 'nabar', 'ket'); //field yang ada di table supplier  
     var $column_search = array('tglppo', 'noreftxt',  'namadept', 'kodebar', 'nabar'); //field yang diizin untuk pencarian 
