@@ -103,12 +103,11 @@
                                 <tr>
                                     <th width="3%">#</th>
                                     <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang</th>
-                                    <th width="5%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
-                                    <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
-                                    <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan</th>
+                                    <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
+                                    <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
                                     <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
-                                    <th></th>
+                                    <th width="6%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
@@ -128,23 +127,22 @@
                                                 </label>
                                             </div>
                                         </td>
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                            <input type="text" class="form-control" id="txt_nama_brg_1" name="txt_nama_brg_1" placeholder="Nama Barang" readonly autocomplite="off">
+                                        <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                            <div class="row">
+                                                <span face="Verdana" class="ml-2" id="txt_nama_brg_1" size="1.8">Nama Barang</span>
+                                                &emsp;/
+                                                <span face="Verdana" class="ml-2" id="txt_satuan_1" size="1.8">Satuan</span>
+                                            </div>
+                                        </td>
+                                        <td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">
+                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty po :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">245</span>
+                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa qty :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">334</span>
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                             <input type="text" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" autocomplite="off">
 
                                             <input type="hidden" id="hidden_qty_po_1" name="hidden_qty_po_1">
                                             <input type="hidden" id="hidden_sisa_qty_1" name="hidden_sisa_qty_1">
-                                        </td>
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty po :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">245</span>
-                                            <span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa qty :&nbsp;</span><span class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">334</span>
-                                        </td>
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                            <input type="text" class="form-control" id="txt_satuan_1" name="txt_satuan_1" placeholder="Satuan" readonly autocomplite="off">
-
-                                            <input type="hidden" id="hidden_grup_1" name="hidden_grup_1">
                                         </td>
                                         <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                             <textarea class="resizable_textarea form-control" id="txt_ket_rinci_1" name="txt_ket_rinci_1" placeholder="Keterangan" rows="1" onkeypress="saveRinciEnter(event,1)"></textarea>
@@ -315,9 +313,9 @@
 
             // Set data
             $('#txt_kode_barang_' + n).val(kodebar);
-            $('#txt_nama_brg_' + n).val(nabar);
+            $('#txt_nama_brg_' + n).text(nabar);
             $('#txt_qty_' + n).val(qty);
-            $('#txt_satuan_' + n).val(sat);
+            $('#txt_satuan_' + n).text(sat);
             $('#txt_ket_rinci_' + n).text(ket);
             $("#modalListItemPo").modal('hide');
 
