@@ -32,6 +32,7 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no . ".";
+            $row[] = $d->id;
             $row[] = $d->noppo;
             $row[] = $d->tglppo;
             $row[] = $d->noreftxt;
@@ -176,12 +177,13 @@ class Po extends CI_Controller
 
     public function get_detail_spp()
     {
+        $id = $this->input->post('id');
         $no_spp = $this->input->post('no_spp');
         $no_ref_spp = $this->input->post('no_ref_spp');
         $kodebar = $this->input->post('kodebar');
 
         $ppo = $this->M_po->get_detail_ppo($no_spp, $no_ref_spp)->row();
-        $item_ppo = $this->M_po->get_detail_item_ppo($no_spp, $no_ref_spp, $kodebar)->result();
+        $item_ppo = $this->M_po->get_detail_item_ppo($id, $no_ref_spp, $kodebar)->result();
 
         echo json_encode(array($ppo, $item_ppo));
     }
@@ -320,12 +322,12 @@ class Po extends CI_Controller
             'noppo' => "0",
             'noppotxt' => "0",
             'no_refppo' => $this->input->post('hidden_no_ref'),
-            'tgl_refppo' =>  date("Y-m-d  H:i:s"),
+            'tgl_refppo' =>  $this->input->post('hidden_tglref'),
             'tgl_reftxt' =>  date("Ymd"),
             'tglpo' =>  date("Y-m-d  H:i:s"),
             'tglpotxt' =>  date("Ymd"),
-            'tglppo' =>  date("Y-m-d"),
-            'tglppotxt' =>   date("Ymd"),
+            'tglppo' =>  $tgl_ppo,
+            'tglppotxt' =>   $tgl_ppo_txt,
             'bayar' => $this->input->post('cmb_status_bayar'),
             'tempo_bayar' => $this->input->post('txt_tempo_pembayaran'),
             'lokasikirim' => $this->input->post('txt_lokasi_pengiriman'),
@@ -360,8 +362,8 @@ class Po extends CI_Controller
             'noppo' => $this->input->post('txt_no_spp'),
             'noppotxt' => $this->input->post('txt_no_spp'),
             'refppo' => $this->input->post('hidden_no_ref'),
-            'tglppo' =>  date("Y-m-d"),
-            'tglppotxt' =>  date("Ymd"),
+            'tglppo' =>  $tgl_ppo,
+            'tglppotxt' => $tgl_ppo_txt,
             'tglpo' =>  date("Y-m-d"),
             'tglpotxt' => date("Ymd"),
             'kodebar' => $this->input->post('hidden_kode_brg'),
@@ -554,8 +556,8 @@ class Po extends CI_Controller
             'noppo' => $this->input->post('txt_no_spp'),
             'noppotxt' => $this->input->post('txt_no_spp'),
             'refppo' => $this->input->post('hidden_no_ref'),
-            'tglppo' =>  date("Y-m-d"),
-            'tglppotxt' =>  date("Ymd"),
+            'tglppo' =>  $tgl_ppo,
+            'tglppotxt' =>  $tgl_ppo_txt,
             'tglpo' =>  date("Y-m-d"),
             'tglpotxt' => date("Ymd"),
             'kodebar' => $this->input->post('hidden_kode_brg'),
@@ -672,14 +674,22 @@ class Po extends CI_Controller
             $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
         }
 
+
+
+        $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
+        $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
+
+        $tgl_ref = date("Y-m-d", strtotime($this->input->post('hidden_tgl_ref')));
+        $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
+
         $dataupdateitem = [
             'nopo' => $no_po,
             'nopotxt' => $no_po,
             'noppo' => $this->input->post('txt_no_spp'),
             'noppotxt' => $this->input->post('txt_no_spp'),
             'refppo' => $this->input->post('hidden_no_ref'),
-            'tglppo' =>  date("Y-m-d"),
-            'tglppotxt' =>  date("Ymd"),
+            'tglppo' =>  $tgl_ppo,
+            'tglppotxt' =>  $tgl_ppo_txt,
             'tglpo' =>  date("Y-m-d"),
             'tglpotxt' => date("Ymd"),
             'kodebar' => $this->input->post('hidden_kode_brg'),
@@ -761,7 +771,7 @@ class Po extends CI_Controller
             'noppo' => $no_po,
             'noppotxt' => $no_po,
             'no_refppo' => $this->input->post('hidden_no_ref'),
-            'tgl_refppo' =>  date("Y-m-d  H:i:s"),
+            'tgl_refppo' =>  $this->input->post('hidden_tglref'),
             'tgl_reftxt' =>  date("Ymd"),
             'tglpo' =>  date("Y-m-d  H:i:s"),
             'tglpotxt' =>  date("Ymd"),

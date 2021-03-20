@@ -80,9 +80,9 @@ class M_po extends CI_Model
         return $data;
     }
 
-    public function get_detail_item_ppo($no_spp, $no_ref_spp, $kodebar)
+    public function get_detail_item_ppo($id, $no_ref_spp, $kodebar)
     {
-        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, kodebartxt, nabar, tglppo, qty, kodedept, namadept, ket, kodept, namapt, lokasi, status, status2, po, sat FROM item_ppo WHERE noppotxt = '$no_spp' AND noreftxt = '$no_ref_spp' AND kodebartxt = '$kodebar' ORDER BY id DESC";
+        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, kodebartxt, nabar, tglppo, qty, kodedept, namadept, ket, kodept, namapt, lokasi, status, status2, po, sat FROM item_ppo WHERE id = '$id' AND noreftxt = '$no_ref_spp' AND kodebartxt = '$kodebar' ORDER BY id DESC";
         $data = $this->db_logistik_pt->query($query);
         return $data;
     }
@@ -107,7 +107,7 @@ class M_po extends CI_Model
     {
         $noref = $this->input->get('noref');
         $tgl = $this->input->get('tgl');
-        $query = "SELECT id, noppo,jenis, noreftxt, tglppo, tglppotxt, namadept FROM ppo WHERE jenis = 'SPPI' AND (noreftxt LIKE '%$noref%' OR tglppo LIKE '%$tgl%') ORDER BY id DESC";
+        $query = "SELECT id, noppo, jenis, noreftxt, tglppo, tglref, tglppotxt, namadept FROM ppo WHERE jenis = 'SPPI' AND (noreftxt LIKE '%$noref%' OR tglppo LIKE '%$tgl%') ORDER BY id DESC";
         $d = $this->db_logistik_pt->query($query)->result_array();
         return $d;
     }
