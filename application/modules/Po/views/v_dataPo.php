@@ -124,7 +124,6 @@
 			"processing": true,
 			"serverSide": true,
 			"order": [],
-			"select": true,
 			"ajax": {
 				"url": "<?php echo site_url('Po/dataPO') ?>",
 				"type": "POST"
@@ -132,9 +131,7 @@
 			"columnDefs ": [{
 				"targets": [0],
 				"orderable": false,
-
 			}, ],
-
 		});
 	});
 </script>
