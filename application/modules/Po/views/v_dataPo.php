@@ -1,20 +1,10 @@
-<!-- PAGE TITLE -->
-<div class="row">
-	<div class="col-12">
-		<div class="page-title-box">
-			<h2 class="page-title"><?= $title ?></h2>
-		</div>
-	</div>
-</div>
-<!-- end page title -->
-
 <!-- start row-->
 <div class="row justify-content-center">
 	<div class="col-md">
 		<div class="widget-rounded-circle card-box">
-			<h4 class="header-title mb-3">Data PO</h4>
+			<h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data PO</h4>
 			<hr>
-			<div class="row">
+			<div class=" row">
 
 				<div class="col-md-12 col-sm-12 col-xs-12">
 					<div class="x_panel">
@@ -81,15 +71,31 @@
 							<table id="tableListPO" class="table table-striped table-bordered" width="100%">
 								<thead>
 									<tr>
-										<th>#</th>
-										<th>No.</th>
-										<th>No. Ref</th>
-										<th>No. PO</th>
-										<th>Tgl. PO</th>
-										<th>Supplier</th>
+										<th>
+											<font face="Verdana" size="2.5">#</font>
+										</th>
+										<th>
+											<font face="Verdana" size="2.5">No.</font>
+										</th>
+										<th>
+											<font face="Verdana" size="2.5">No. Ref</font>
+										</th>
+										<th>
+											<font face="Verdana" size="2.5">No. PO</font>
+										</th>
+										<th>
+											<font face="Verdana" size="2.5">Tgl. PO</font>
+										</th>
+										<th>
+											<font face="Verdana" size="2.5">Supplier</font>
+										</th>
 										<!-- <th>Item Barang</th> -->
-										<th>Ket</th>
-										<th>Terbayar</th>
+										<th>
+											<font face="Verdana" size="2.5">Ket</font>
+										</th>
+										<th>
+											<font face="Verdana" size="2.5">Terbayar</font>
+										</th>
 									</tr>
 								</thead>
 
