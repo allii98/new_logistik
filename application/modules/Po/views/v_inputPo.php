@@ -605,26 +605,43 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 <div class="col-12">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                        <table id="spp" class="table w-100 dataTable no-footer" width="60px">
+                        <table id="spp" class="table table-striped table-bordered table-in" width="60px">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>ID</th>
-                                    <th>No. SPP</th>
-                                    <th>Tgl. SPP</th>
-                                    <th>Ref. SPP</th>
-                                    <th>Departemen</th>
-                                    <th>Kode Barang</th>
-                                    <th>Item Barang</th>
-                                    <!-- <th>Qty</th> -->
-                                    <th>Ket</th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">No.</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">ID</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">No. SPP</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Tgl. SPP</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Ref. SPP</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Departemen</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Kode Barang</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Item Barang</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Ket</font>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th style="text-align: center;" colspan="7"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
+                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -1130,9 +1147,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                     $('#noppo' + n).val(data[1][0].noppotxt);
 
-                    $('html, body').animate({
-                        scrollTop: $("#tr_" + n).offset()
-                    }, 2000);
+                    // $('html, body').animate({
+                    //     scrollTop: $("#tr_" + n).offset()
+                    // }, 2000);
 
                     $('#txt_qty_' + n).val(data[1][0].qty);
                     n++;
