@@ -1,10 +1,11 @@
 <?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+class Home extends CI_Controller
+{
 
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -14,23 +15,23 @@ class Home extends CI_Controller {
             redirect('Login');
         }
     }
-    
+
 
     public function index()
     {
         $data = [
-            'tittle'=> "Dashboard"
+            'tittle' => "Dashboard"
         ];
-        $this->template->load('template', 'dashboard',$data);
+        $data['jumlahpo'] = $this->db->query("SELECT * FROM po")->num_rows();
+        $this->template->load('template', 'dashboard', $data);
     }
     public function tes()
     {
         $data = [
-            'tittle'=> "Dashboard"
+            'tittle' => "Dashboard"
         ];
-        $this->template->load('template', 'v_contohTabel',$data);
+        $this->template->load('template', 'v_contohTabel', $data);
     }
-
 }
 
 /* End of file Home.php */
