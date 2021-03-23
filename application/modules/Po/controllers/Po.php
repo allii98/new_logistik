@@ -401,12 +401,13 @@ class Po extends CI_Controller
         ];
 
         //update(dengan cara qty2+qty inputan) where id_ppo = id_ppo yang di dapat
-        $query =  "SELECT qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_ppo') . "' ";
+        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
         $d = $this->db->query($query)->row();
+        $qtyy = $d->qty;
         $qty2 = $d->qty2;
         if ($qty2 == null) {
             $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $tmbhQTY
             );
@@ -414,13 +415,31 @@ class Po extends CI_Controller
         } else {
             $a = $this->input->post('txt_qty');
             $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $qty,
+
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+        }
+
+
+        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        $ambil = $this->db->query($chek)->row();
+        $qtyy = $ambil->qty;
+        $qtyy2 = $ambil->qty2;
+
+        if ($qtyy == $qtyy2) {
+
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
                 'po' => 1
             );
             $this->M_po->updatePPO($id_ppo, $data_ppo);
         }
+
+
+
 
 
         //select item_ppo where id_ppo = id_ppo yang di dapat
@@ -431,7 +450,7 @@ class Po extends CI_Controller
         $data2 = $this->db->insert('item_po', $datainsertitem);
 
 
-        $this->_cek_flag_po($no_po);
+        // $this->_cek_flag_po($no_po);
 
         $data_return = [
             'data' => $data1,
@@ -605,12 +624,13 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
-        $query =  "SELECT qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_ppo') . "' ";
+        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
         $d = $this->db->query($query)->row();
+        $qtyy = $d->qty;
         $qty2 = $d->qty2;
         if ($qty2 == null) {
             $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $tmbhQTY
             );
@@ -618,9 +638,24 @@ class Po extends CI_Controller
         } else {
             $a = $this->input->post('txt_qty');
             $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $qty,
+
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+        }
+
+
+        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        $ambil = $this->db->query($chek)->row();
+        $qtyy = $ambil->qty;
+        $qtyy2 = $ambil->qty2;
+
+        if ($qtyy == $qtyy2) {
+
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
                 'po' => 1
             );
             $this->M_po->updatePPO($id_ppo, $data_ppo);
@@ -758,12 +793,13 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
-        $query =  "SELECT qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_ppo') . "' ";
+        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
         $d = $this->db->query($query)->row();
+        $qtyy = $d->qty;
         $qty2 = $d->qty2;
         if ($qty2 == null) {
             $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $tmbhQTY
             );
@@ -771,9 +807,24 @@ class Po extends CI_Controller
         } else {
             $a = $this->input->post('txt_qty');
             $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $qty,
+
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+        }
+
+
+        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        $ambil = $this->db->query($chek)->row();
+        $qtyy = $ambil->qty;
+        $qtyy2 = $ambil->qty2;
+
+        if ($qtyy == $qtyy2) {
+
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
                 'po' => 1
             );
             $this->M_po->updatePPO($id_ppo, $data_ppo);
@@ -904,12 +955,13 @@ class Po extends CI_Controller
         ];
 
 
-        $query =  "SELECT qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_ppo') . "' ";
+        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
         $d = $this->db->query($query)->row();
+        $qtyy = $d->qty;
         $qty2 = $d->qty2;
         if ($qty2 == null) {
             $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $tmbhQTY
             );
@@ -917,9 +969,24 @@ class Po extends CI_Controller
         } else {
             $a = $this->input->post('txt_qty');
             $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_ppo');
+            $id_ppo = $this->input->post('id_item');
             $data_ppo =  array(
                 'qty2' => $qty,
+
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+        }
+
+
+        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        $ambil = $this->db->query($chek)->row();
+        $qtyy = $ambil->qty;
+        $qtyy2 = $ambil->qty2;
+
+        if ($qtyy == $qtyy2) {
+
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
                 'po' => 1
             );
             $this->M_po->updatePPO($id_ppo, $data_ppo);

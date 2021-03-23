@@ -340,6 +340,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <input type="text" class="form-control" id="getspp1" onfocus="modalSPP('1')" name="spp">
+                                                    <input type="hidden" class="form-control" id="id_item_1" name="id">
                                                     <input type="hidden" class="form-control" id="id_ppo1" name="id_ppo1">
                                                     <input type="hidden" class="form-control" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_">
                                                     <input type="hidden" class="form-control" id="hidden_tgl_ref_1" name="hidden_tgl_ref_">
@@ -954,6 +955,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')">' +
+            '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
+            '<input type="hidden" id="id_ppo' + n + '" name="id_ppo' + n + '">' +
             '<input type="hidden" id="hidden_no_ref_spp_' + n + '" name="hidden_no_ref_spp_' + n + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + n + '" name="hidden_tgl_ref_' + n + '">' +
             '<input type="hidden" id="hidden_kd_departemen_' + n + '" name="hidden_kd_departemen_' + n + '">' +
@@ -1115,6 +1118,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
                     $('#id_ppo' + n).val(data[0].id);
+                    $('#id_item_' + n).val(data[1][0].id);
                     $('#getspp' + n).val(data[1][0].noreftxt);
                     $('#hidden_kode_brg_' + n).val(data[1][0].kodebartxt);
                     $('#kode_brg_' + n).text(data[1][0].kodebartxt);
@@ -1387,7 +1391,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function simpan(id) {
         if (simpanBaru) {
 
-            // console.log('simpan', id);
+            console.log('simpan', id);
             console.table({
                 id_ppo: $('#id_ppo' + id).val(),
                 hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
@@ -1480,6 +1484,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+                    id_item: $('#id_item_' + id).val(),
                 },
                 success: function(data) {
                     if (true) {
@@ -1520,15 +1525,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         simpanBaru = false;
                     } else {
-                        $('#lbl_status_simpan_' + id).empty();
-                        $('#lbl_status_simpan_' + id).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
+                        $('#lbl_status_simpan_1' + id).empty();
+                        $('#lbl_status_simpan_1' + id).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
                     }
                 }
             });
         }
         // simpan keduakalinya
         else {
-            // console.log('simpan setelah dengan keadaan po dibuat')
+            console.log('simpan setelah dengan keadaan po dibuat')
 
             console.table({
                 id_ppo: $('#id_ppo' + id).val(),
@@ -1557,7 +1562,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
                 hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
                 hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
-                txt_qty: $('#txt_qty' + id).val(),
+                txt_qty: $('#txt_qty_' + id).val(),
                 txt_harga: $('#txt_harga_' + id).val(),
                 hidden_kodept: $('#hidden_kd_pt_' + id).val(),
                 hidden_namapt: $('#hidden_nama_pt_' + id).val(),
@@ -1569,6 +1574,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                 hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                 hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+                id_item: $('#id_item_' + id).val(),
             })
 
             $.ajax({
@@ -1623,6 +1629,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+                    id_item: $('#id_item_' + id).val(),
 
                 },
 
@@ -1667,8 +1674,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         // simpanBaru = false;
                     } else {
-                        $('#lbl_status_simpan_').empty();
-                        $('#lbl_status_simpan_').append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
+                        $('#lbl_status_simpan_1' + id).empty();
+                        $('#lbl_status_simpan_1' + id).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
                     }
 
 
@@ -1732,6 +1739,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+                    id_item: $('#id_item_' + id).val(),
 
                 },
 
@@ -1824,6 +1832,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+                    id_item: $('#id_item_' + id).val(),
 
                 },
 
