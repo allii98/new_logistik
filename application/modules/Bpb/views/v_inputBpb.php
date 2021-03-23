@@ -25,7 +25,7 @@
                             <div class="col-md-1"></div>
                             <div class="col-md-7">
                                 <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
-                                    <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
+                                    <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
                                 </select>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                                         <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                             <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                                 <!-- TM/TBM -->
-                                                <select class="form-control" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit('1')">
+                                                <select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
                                                     <option value="-">-</option>
                                                     <!-- <option value=""></option> -->
                                                     <option value="TM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM</option>
@@ -110,7 +110,7 @@
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                                 <!-- AFD/UNIT -->
-                                                <select class="form-control set_strip_cmb" id="cmb_afd_unit_1" name="cmb_afd_unit_1" onchange="cmb_blok_sub('1')">
+                                                <select class="form-control set_strip_cmb" id="cmb_afd_unit_1" name="cmb_afd_unit_1" onchange="cmb_blok_sub(1)">
                                                     <option value="-">-</option>
                                                 </select>
                                             </td>
@@ -134,7 +134,7 @@
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- Account Beban -->
-                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
+                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban(1)" autocomplite="off">
                                                 <label class="control-label" id="lbl_no_acc_1"></label>
                                                 <label class="control-label" id="lbl_nama_acc_1"></label>
                                                 <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1">
@@ -250,34 +250,7 @@
 
     });
 
-    function cek_tm_tbm(row) {
-        if ($('#cmb_bagian :selected').text() != "TANAMAN") {
-            var strip_cmb = '<option value="-">-</option>';
-            // $('.set_strip_cmb').empty();
-            // $('.set_strip_cmb').append(strip_cmb);
-            $('.set_strip_cmb').html(strip_cmb);
-            // $('#cmb_tm_tbm_'+row).html(strip_cmb);
-        } else {
-            var cmb_tm_tbm = '<option value=""></option>';
-            cmb_tm_tbm += '<option value="TM">TM</option>';
-            cmb_tm_tbm += '<option value="TBM">TBM</option>';
-            cmb_tm_tbm += '<option value="LANDCLEARING">LANDCLEARING</option>';
-            cmb_tm_tbm += '<option value="PEMBIBITAN">PEMBIBITAN</option>';
 
-            var strip_cmb = '<option value="-">-</option>';
-            // $('.set_strip_cmb').empty();
-            // $('.set_strip_cmb').append(strip_cmb);
-            $('.set_strip_cmb').html(strip_cmb);
-            // $('#cmb_tm_tbm_'+row).html(strip_cmb);
-
-            // $('.cmb_tm_tbm').empty();
-            // $('.cmb_tm_tbm').append(cmb_tm_tbm);			
-            $('.cmb_tm_tbm').html(cmb_tm_tbm);
-            // $('#cmb_tm_tbm_'+row).html(cmb_tm_tbm);
-
-            // $('#txt_account_beban_'+row).attr('disabled','');
-        }
-    }
 
     function check_form_2() {
         if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
@@ -423,8 +396,7 @@
         $('#hidden_no_table').val(row);
     }
 
-    function cek_bagian(row) {
-        // console.log($('#cmb_bagian :selected').text());
+    function cek_tm_tbm(row) {
         if ($('#cmb_bagian :selected').text() != "TANAMAN") {
             var strip_cmb = '<option value="-">-</option>';
             // $('.set_strip_cmb').empty();
@@ -441,13 +413,15 @@
             var strip_cmb = '<option value="-">-</option>';
             // $('.set_strip_cmb').empty();
             // $('.set_strip_cmb').append(strip_cmb);
-            // $('.set_strip_cmb').html(strip_cmb);
-            $('#cmb_tm_tbm_' + row).html(strip_cmb);
+            $('.set_strip_cmb').html(strip_cmb);
+            // $('#cmb_tm_tbm_'+row).html(strip_cmb);
 
             // $('.cmb_tm_tbm').empty();
             // $('.cmb_tm_tbm').append(cmb_tm_tbm);			
-            // $('.cmb_tm_tbm').html(cmb_tm_tbm);
-            $('#cmb_tm_tbm_' + row).html(cmb_tm_tbm);
+            $('.cmb_tm_tbm').html(cmb_tm_tbm);
+            // $('#cmb_tm_tbm_'+row).html(cmb_tm_tbm);
+
+            // $('#txt_account_beban_'+row).attr('disabled','');
         }
     }
 
@@ -484,6 +458,111 @@
                     $('#cmb_afd_unit_' + row).append(opsi_afd_unit);
                 });
                 // cmb_tahun_tanam(row);
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function cmb_blok_sub(row) {
+        var tm_tbm = $('#cmb_tm_tbm_' + row).val();
+        var afd_unit = $('#cmb_afd_unit_' + row).val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/pilih_blok_sub'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'tm_tbm': tm_tbm,
+                'afd_unit': afd_unit
+            },
+            success: function(data) {
+                $('#cmb_blok_sub_' + row).empty();
+                var opsi_pilih_master_blok = '<option value=""></option>';
+                $('#cmb_blok_sub_' + row).append(opsi_pilih_master_blok);
+
+                $.each(data, function(index) {
+                    var opsi_master_blok = '<option value="' + data[index].blok + '">' + data[index].blok + '</option>';
+                    $('#cmb_blok_sub_' + row).append(opsi_master_blok);
+                });
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function cmb_tahun_tanam(row) {
+        var tm_tbm = $('#cmb_tm_tbm_' + row).val();
+        var afd_unit = $('#cmb_afd_unit_' + row).val();
+        var blok_sub = $('#cmb_blok_sub_' + row).val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/pilih_tahun_tanam'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'tm_tbm': tm_tbm,
+                'afd_unit': afd_unit,
+                'blok_sub': blok_sub
+            },
+            success: function(data) {
+                $('#cmb_tahun_tanam_' + row).empty();
+                var opsi_pilih_tahun_tanam = '<option value=""></option>';
+                $('#cmb_tahun_tanam_' + row).append(opsi_pilih_tahun_tanam);
+
+                $.each(data, function(index) {
+                    var opsi_tahun_tanam = '<option value="' + data[index].tahuntanam + '">' + data[index].tahuntanam + '</option>';
+                    $('#cmb_tahun_tanam_' + row).append(opsi_tahun_tanam);
+                });
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+
+    function cmb_bahan(row) {
+        var tm_tbm = $('#cmb_tm_tbm_' + row).val();
+        var afd_unit = $('#cmb_afd_unit_' + row).val();
+        var blok_sub = $('#cmb_blok_sub_' + row).val();
+        var thn_tanam = $('#cmb_tahun_tanam_' + row).val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/pilih_bahan'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'tm_tbm': tm_tbm,
+                'afd_unit': afd_unit,
+                'blok_sub': blok_sub,
+                'thn_tanam': thn_tanam
+            },
+            success: function(data) {
+                $('#cmb_bahan_' + row).empty();
+
+                var opsi_pilih = '<option value=""></option>';
+                $('#cmb_bahan_' + row).append(opsi_pilih);
+
+                $.each(data, function(index) {
+                    // var opsi_cmb_bahan = '<option value="'+data[index].coa_material+'">'+data[index].coa_material+'-'+data[index].ket+'</option>';
+                    var opsi_cmb_bahan = '<option value="' + data[index][0] + '">' + data[index][0] + '-' + data[index][1] + '</option>';
+                    $('#cmb_bahan_' + row).append(opsi_cmb_bahan);
+                });
             },
             error: function(request) {
                 alert(request.responseText);
