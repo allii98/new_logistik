@@ -88,6 +88,23 @@ class M_item_lpb extends CI_Model
     }
     // end server side table
 
+    public function sumqty($kodebar, $nopo)
+    {
+        $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
+        $this->db_logistik_pt->where(['batal !=' => 1, 'kodebar' => $kodebar, 'nopo' => $nopo]);
+        $this->db_logistik_pt->from('masukitem');
+        return $this->db_logistik_pt->get()->row();
+    }
+
+    public function saveLpb($data_stokmasuk)
+    {
+        return $this->db_logistik_pt->insert('stokmasuk', $data_stokmasuk);
+    }
+
+    public function saveLpb2($data_masukitem)
+    {
+        return $this->db_logistik_pt->insert('masukitem', $data_masukitem);
+    }
 }
 
 /* End of file M_item_lpb.php */
