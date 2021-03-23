@@ -1219,23 +1219,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
     function check_form_2() {
-        // var data = sessionStorage.setItem('status_lokasi', 'loggedIn');
-        // console.log(data);
         if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#dikirim_kebun').val()) != '') {
-            // $('#btn_simpan_1').removeAttr('disabled', '');
-            // $('#tambah_row1').removeAttr('disabled', '');
-            // $('#tableRinciPO').find('input,textarea,select').removeAttr('disabled');
-            // // $('#tableRinciPO').find('input,textarea,select').removeClass('bg-light');
+
             $('.div_form_2').show();
         } else {
             $('.div_form_2').hide();
-            // $('#btn_simpan_1').attr('disabled', '');
-            // $('#tambah_row1').attr('disabled', '');
-            // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-            // // $('#tableRinciPO').find('input,textarea,select').addClass('class', 'bg-light');
-            // // $("#tableRinciPO").click(function() {
-            // //     Swal("Anda Harus mingisi data diatas!");
-            // // });
+
         }
     }
 

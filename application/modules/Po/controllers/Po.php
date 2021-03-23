@@ -70,7 +70,7 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<a href="#" class="btn btn-warning btn-xs">No Option</a>';
-            $row[] = '<font face="Verdana" size="2.5">' + $no . "." + '</font>';
+            $row[] =  $no . ".";
             $row[] = $d->no_refppo;
             $row[] = $d->nopo;
             $row[] = $d->tglpo;
