@@ -791,6 +791,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
                     $('#id_ppo' + n).val(idppo);
+                    $('#id_item_' + n).val(idppo);
                     $('#hidden_no_ref_spp_' + n).val(opsi);
                     // $('#hidden_tgl_hidden' + n).val(tglref);
                     $('#hidden_kd_departemen_' + n).val(kodedept);
@@ -854,6 +855,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
             '<span id="nama_brg_' + row + '"></span><span> | </span><span id="kode_brg_' + row + '" ></span>' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
+            '<input type="hidden" id="id_item_' + row + '" name="id_item_' + row + '">' +
             '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
             '<input type="hidden" id="hidden_kd_departemen_' + row + '" name="hidden_kd_departemen_' + row + '">' +
@@ -873,8 +875,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" />' +
-            '<input type="text" class="form-control" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
-            '<input type="text" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
+            '<input type="hidden" class="form-control" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
+            '<input type="hidden" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1155,7 +1157,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     //     scrollTop: $("#tr_" + n).offset()
                     // }, 2000);
 
-                    $('#txt_qty_' + n).val(data[1][0].qty);
+                    // $('#txt_qty_' + n).val(data[1][0].qty);
                     n++;
                     // $('#hidden_no_table').val(n);
                 });
