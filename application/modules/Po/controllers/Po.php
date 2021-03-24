@@ -523,15 +523,6 @@ class Po extends CI_Controller
             $no_po = $this->input->post('hidden_no_po');
         }
 
-
-
-        $query_id_item = "SELECT MAX(id)+1 as no_id_item FROM item_po";
-        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
-        $no_id_item = $generate_id_item->no_id_item;
-        if (empty($no_id_item)) {
-            $no_id_item = 1;
-        }
-
         $hidden_jenis_spp = $this->input->post('hidden_jenis_spp');
 
         if (!empty($this->input->post('hidden_no_ref_po'))) {
@@ -548,6 +539,15 @@ class Po extends CI_Controller
                 $norefpo = $lokasibuatspp . "/" . $kodepo . "/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
             }
         }
+
+
+        $query_id_item = "SELECT MAX(id)+1 as no_id_item FROM item_po";
+        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
+        $no_id_item = $generate_id_item->no_id_item;
+        if (empty($no_id_item)) {
+            $no_id_item = 1;
+        }
+
 
         $tgl_po = date("Y-m-d", strtotime($this->input->post('txt_tgl_po')));
         $tgl_po_txt = date("Ymd", strtotime($this->input->post('txt_tgl_po')));
@@ -576,6 +576,8 @@ class Po extends CI_Controller
         if (empty($pph)) {
             $pph = "0";
         }
+
+
 
 
 
@@ -671,8 +673,8 @@ class Po extends CI_Controller
 
         $data_return = [
             'data' => $data,
-            // 'nopo' => $no_po,
-            // 'noref' => $norefpo,
+            'nopo' => $no_po,
+            'noref' => $norefpo,
             'id_item' => $no_id_item,
         ];
 

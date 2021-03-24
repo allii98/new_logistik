@@ -1435,7 +1435,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                 hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                 hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
-            })
+            });
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('Po/save') ?>",
@@ -1489,6 +1489,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                     id_item: $('#id_item_' + id).val(),
+                    hidden_no_po: $('#hidden_no_po').val(),
+
                 },
                 success: function(data) {
                     if (true) {
@@ -1588,10 +1590,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 beforeSend: function() {
                     $('#lbl_status_simpan_1' + id).empty();
                     $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
-                    if ($.trim($('#hidden_no_po').val()) == '') {
-                        $('#lbl_spp_status').empty();
-                        $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
-                    }
+
                 },
 
                 data: {
@@ -1634,6 +1633,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                     id_item: $('#id_item_' + id).val(),
+                    hidden_no_po: $('#hidden_no_po').val(),
 
                 },
 
