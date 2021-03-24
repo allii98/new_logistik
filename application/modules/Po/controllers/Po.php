@@ -671,8 +671,8 @@ class Po extends CI_Controller
 
         $data_return = [
             'data' => $data,
-            'nopo' => $no_po,
-            'noref' => $norefpo,
+            // 'nopo' => $no_po,
+            // 'noref' => $norefpo,
             'id_item' => $no_id_item,
         ];
 

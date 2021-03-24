@@ -763,7 +763,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             success: function(response) {
                 $('.div_form_3').show();
-
+                $('.div_form_1').find('#sppSITE').attr('disabled', '');
                 // console.log(response);
                 data = JSON.parse(response);
 
@@ -807,7 +807,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#hidden_satuan_brg_' + n).val(sat);
                     // $('#txt_qty_' + n).val(qty);
                     if (qty2 != null) {
-                        $('#txt_qty_' + n).val(qty2);
+                        var hasil = qty - qty2;
+                        $('#txt_qty_' + n).val(hasil);
                     } else {
                         $('#txt_qty_' + n).val(qty);
                     }
@@ -1134,7 +1135,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
                     if (qty2 != null) {
-                        $('#txt_qty_' + n).val(qty2);
+                        var hasil = qty - qty2;
+                        $('#txt_qty_' + n).val(hasil);
                     } else {
                         $('#txt_qty_' + n).val(qty);
                     }
