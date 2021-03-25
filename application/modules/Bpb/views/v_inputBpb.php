@@ -4,7 +4,7 @@
         <div class="col-md col-xl-3">
             <div class="card-body">
 
-                <div class="widget-rounded-circle card-box">
+                <div class="card-box">
                     <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BPB</h4>
                     <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
                         Input Bon Permintaan Barang
@@ -134,7 +134,7 @@
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- Account Beban -->
-                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban(1)" autocomplite="off">
+                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
                                                 <label class="control-label" id="lbl_no_acc_1"></label>
                                                 <label class="control-label" id="lbl_nama_acc_1"></label>
                                                 <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1">
@@ -195,6 +195,101 @@
             </div>
         </div>
     </div> <!-- end row-->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalAccBeban">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Account Beban</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <div class="table-responsive">
+                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                        <table id="tableAccBeban" class="table table-striped table-bordered table-in" width="100px">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        <font face="Verdana" size="2.5">No.</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">No. COA</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Nama Account</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Type</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Grup</font>
+                                    </th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th style="text-align: center;" colspan="5"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListBarang">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h4 class="modal-title" id="myModalLabel">List Barang</h4>
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-horizontal">
+						<div class="form-group">
+							<div class="table-responsive">
+								<input type="hidden" id="hidden_no_row_barang" name="hidden_no_row_barang">
+								<table id="tableListBarang" class="table table-bordered" width="100%">
+									<thead>
+										<tr>
+											<th></th>
+											<th>No</th>
+											<th>Kode Barang</th>
+											<th>Nama Barang</th>
+											<th>Grup</th>
+											<th>Satuan</th>
+										</tr>
+									</thead>
+									<tbody id="tbody_listbarang">
+									</tbody>
+								</table>
+							</div>
+						</div>
+						<!-- <div class="form-group">
+							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
+								<button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Setujui Semua" id="btn_setuju_all" name="btn_setuju_all" onclick="pilihItem()">Pilih Item</button>
+							</div>
+						</div> -->
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 
 </div>
@@ -553,6 +648,8 @@
                 'thn_tanam': thn_tanam
             },
             success: function(data) {
+
+                    console.log(data);
                 $('#cmb_bahan_' + row).empty();
 
                 var opsi_pilih = '<option value=""></option>';
@@ -569,4 +666,74 @@
             }
         });
     }
+
+    function pilihModalAccBeban(row) {
+		$('#modalAccBeban').modal('show');
+		$('#hidden_no_row').val(row);
+		tableAccBeban(row);
+	}
+
+	 // Start Data Table Server Side
+     var table;
+
+function tableAccBeban(row) {
+    $(document).ready(function() {
+        var cmb_bahan = $('#cmb_bahan_' + row).val();
+        //datatables
+        // var nopo = nopotxt;
+        console.log(cmb_bahan);
+        table = $('#tableAccBeban').DataTable({
+            "destroy": true,
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "select": true,
+            "ajax": {
+                "url": "<?php echo site_url('Bpb/list_acc_beban') ?>",
+                "type": "POST",
+                "data": {
+                    cmb_no_ac : cmb_bahan
+                }
+            },
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#tableAccBeban').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#tableAccBeban').DataTable().rows().deselect();
+                    }
+                }
+            ],
+
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+
+        });
+
+    });
+}
+// End Data Table Server Side
+
+    function cari_barang(no_row) {
+		$('#hidden_no_row_barang').val(no_row);
+		$('#modalListBarang').modal('show');
+		// $('#tableListBarang').DataTable().destroy();
+		// listBarang(no_row);
+	}
+
+    function simpan() {
+
+      }
 </script>

@@ -9,16 +9,9 @@ class Bpb extends CI_Controller
         parent::__construct();
         $this->load->model('M_bpb');
         $db_pt = check_db_pt();
-        $this->db_logistik = $this->load->database('db_logistik', TRUE);
+        $this->db_logistik = $this->load->database('db_logistik' ,TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
-
-        $this->db_logistik_msal = $this->load->database('db_logistik_msal', TRUE);
-        $this->db_logistik_mapa = $this->load->database('db_logistik_mapa', TRUE);
-        $this->db_logistik_psam = $this->load->database('db_logistik_psam', TRUE);
-        $this->db_logistik_peak = $this->load->database('db_logistik_peak', TRUE);
-
         $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
-        $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
             $this->session->set_flashdata('pesan', $pemberitahuan);
@@ -139,5 +132,37 @@ class Bpb extends CI_Controller
             array_push($data, $data_coa);
         }
         echo json_encode($data);
+    }
+
+    public function list_acc_beban()
+    {
+        $cmb_no_ac = $this->input->post('cmb_no_ac');
+        $this->M_bpb->where_datatables($cmb_no_ac);
+        $list = $this->M_bpb->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $field->noac;
+            $row[] = $field->nama;
+            $row[] = $field->type;
+            $row[] = $field->group;
+            
+
+            $data[] = $row;
+        }
+
+            $output = array(
+                "draw" => $_POST['draw'],
+                "recordsTotal" => $this->M_bpb->count_all(),
+                "recordsFiltered" => $this->M_bpb->count_filtered(),
+                "data" => $data,
+            );
+            //output dalam format JSON
+            echo json_encode($output);
+        
     }
 }

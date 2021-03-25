@@ -21,6 +21,7 @@ class M_po extends CI_Model
         $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
         $this->db_logistik_pt->from('item_ppo');
         $this->db_logistik_pt->where('po', 0);
+        $this->db_logistik_pt->where('status2', 1);
         $this->db_logistik_pt->order_by('id', 'desc');
 
 
