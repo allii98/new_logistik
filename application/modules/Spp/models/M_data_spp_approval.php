@@ -20,8 +20,8 @@ class M_data_spp_approval extends CI_Model
     {
 
         $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_pt->where('status2', 0);
         // $this->db_logistik_pt->select('id, noppotxt, noreftxt, tglref,tglppo,tgltrm,namadept,lokasi,ket,user');
-        // $this->db_logistik_pt->from('ppo');
         // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
@@ -116,6 +116,27 @@ class M_data_spp_approval extends CI_Model
 
         $this->db_logistik_pt->where('id', $id);
         $this->db_logistik_pt->update('item_ppo', $data_update_item_ppo);
+
+        $this->db_logistik_pt->select_sum('status2', 'sum_status2');
+        $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
+        $this->db_logistik_pt->from('item_ppo');
+        $return_sum = $this->db_logistik_pt->get()->row();
+
+        $this->db_logistik_pt->select('status2');
+        $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
+        $this->db_logistik_pt->from('item_ppo');
+        $return_count = $this->db_logistik_pt->count_all_results();
+
+        if ($return_sum->sum_status2 == $return_count) {
+            $data_sum_count = [
+                'status' => 'DISETUJUI',
+                'status2' => '1',
+                'TGL_APPROVE' => date("Y-m-d H:i:s")
+            ];
+
+            $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
+            $this->db_logistik_pt->update('ppo', $data_sum_count);
+        }
 
         return $this->db_logistik_pt->insert('approval_spp', $data_insert);
     }
