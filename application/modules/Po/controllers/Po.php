@@ -11,6 +11,7 @@ class Po extends CI_Controller
 
         $this->load->model('M_po');
         $this->load->model('M_data');
+        $this->load->model('M_cariSPP');
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
@@ -39,15 +40,7 @@ class Po extends CI_Controller
             $row[] = $d->namadept;
             $row[] = $d->kodebar;
             $row[] = $d->nabar;
-            // $row[] = $d->qty;
             $row[] = $d->ket;
-            // $row[] = '<img src=" ' . site_url('assets/uploads/tiket/' . $d->foto) . '" width="60px">';
-            // $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->noreftxt . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
-
-
-
-
-            // add html for action
 
             $data[] = $row;
         }
@@ -77,13 +70,6 @@ class Po extends CI_Controller
             $row[] = $d->nama_supply;
             $row[] = $d->ket;
             $row[] = $d->terbayar;
-            // $row[] = '<img src=" ' . site_url('assets/uploads/tiket/' . $d->foto) . '" width="60px">';
-            // $row[] = '<button type="button" class="btn btn-success" style="margin:2px;" title="Pilih" id="pilih" data-id="' . $d->id . '" data-kode="' . $d->noreftxt . '" data-supplier="' . $d->supplier . '" > Pilih</button>';
-
-
-
-
-            // add html for action
 
             $data[] = $row;
         }
@@ -91,6 +77,33 @@ class Po extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->M_po->count_all(),
             "recordsFiltered" => $this->M_po->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
+
+
+    public function get_carispp()
+    {
+        $list = $this->M_cariSPP->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            $no++;
+            $row = array();
+            $row[] = '<button class="btn btn-success btn-xs" id="data_spp" name="data_spp"
+                    data-id="' . $d->id . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button>';
+            $row[] = $d->tglppo;
+            $row[] = $d->noreftxt;
+            $row[] = $d->namadept;
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_cariSPP->count_all(),
+            "recordsFiltered" => $this->M_cariSPP->count_filtered(),
             "data" => $data,
         );
         // output to json format

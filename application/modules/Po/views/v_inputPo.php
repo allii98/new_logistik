@@ -657,6 +657,59 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalcarispp">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                
+
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                        <table id="dataspp" class="table table-striped table-bordered table-in" width="100%">
+                            <thead>
+                                <tr>
+                               
+                                    <th>
+                                        <font face="Verdana" size="2.5">#</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Tanggal</font>
+                                    </th>
+                                   
+                                    <th>
+                                        <font face="Verdana" size="2.5">Ref. SPP</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Departemen</font>
+                                    </th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <!-- <tfoot>
+                                <tr>
+                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
+                                </tr>
+                            </tfoot> -->
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
 
 
@@ -697,6 +750,103 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
 
 
+        $(document).on('click', '#data_spp', function() {
+            var id = $(this).data('id');
+            console.log(id);
+            $.ajax({
+            type: 'post',
+            url: '<?= site_url('Po/getid'); ?>',
+            data: {
+                id: id 
+            },
+            success: function(response) {
+                $('.div_form_3').show();
+                $('.div_form_1').find('#sppSITE').attr('disabled', '');
+                // console.log(response);
+                data = JSON.parse(response);
+                // console.log(data);
+
+                var n = 1;
+                $.each(data, function(index, value) {
+
+                    tambah_item();
+                    // console.log(value);
+
+                    var idppo = value.id;
+                    var opsi = value.noreftxt;
+                    var tglref = value.tglref;
+                    var kodedept = value.kodedept;
+                    var namadept = value.namadept;
+                    var tglppo = value.tglppo;
+                    var kodept = value.kodept;
+                    var pt = value.pt;
+                    var noppo = value.noppo;
+                    var kodebar = value.kodebar;
+                    var nabar = value.nabar;
+                    var sat = value.sat;
+                    // var tglref = value.tglref;
+                    var qty = value.qty;
+                    var qty2 = value.qty2;
+
+
+                    $('#id_ppo' + n).val(idppo);
+                    $('#id_item_' + n).val(idppo);
+                    $('#hidden_no_ref_spp_' + n).val(opsi);
+                    // $('#hidden_tgl_hidden' + n).val(tglref);
+                    $('#hidden_kd_departemen_' + n).val(kodedept);
+                    $('#hidden_departemen_' + n).val(namadept);
+                    $('#hidden_tgl_spp_' + n).val(tglppo);
+                    $('#hidden_kd_pt_' + n).val(kodept);
+                    $('#hidden_nama_pt_' + n).val(pt);
+                    $('#noppo' + n).val(noppo);
+                    $('#hidden_kode_brg_' + n).val(kodebar);
+                    $('#kode_brg_' + n).text(kodebar);
+                    $('#hidden_nama_brg_' + n).val(nabar);
+                    $('#nama_brg_' + n).text(nabar);
+                    $('#hidden_satuan_brg_' + n).val(sat);
+                    // $('#txt_qty_' + n).val(qty);
+                    if (qty2 != null) {
+                        var hasil = qty - qty2;
+                        $('#txt_qty_' + n).val(hasil);
+                    } else {
+                        $('#txt_qty_' + n).val(qty);
+                    }
+                    $('#qty_' + n).val(qty);
+                    $('#qty2_' + n).val(qty2);
+                    $('#hidden_tgl_ref_' + n).val(tglref);
+                    n++;
+                });
+                $('#modalcarispp').modal('hide');
+
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+        });
+
+        cariSPP();
+    });
+
+    function cariSPP() {
+		$('#modalcarispp').modal('show');
+	}
+
+    var table;
+    $(document).ready(function() {
+       table = $('#dataspp').DataTable({
+			"processing": true,
+			"serverSide": true,
+			"order": [],
+			"ajax": {
+				"url": "<?php echo site_url('Po/get_carispp') ?>",
+				"type": "POST"
+			},
+			"columnDefs ": [{
+				"targets": [0],
+				"orderable": false,
+			}, ],
+		});
     });
 
 
@@ -2419,5 +2569,5 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             $('#supplier').val(supplier);
             $("#modal-supllier").modal('hide');
         });
-    })
+    });
 </script>
