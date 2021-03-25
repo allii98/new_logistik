@@ -9,6 +9,7 @@ class Spp extends CI_Controller
         parent::__construct();
         $this->load->model('M_spp');
         $this->load->model('M_data_spp');
+        $this->load->model('M_data_spp_approval');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -354,9 +355,9 @@ class Spp extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = '<button class="btn btn-info btn-xs" id="detail_spp" name="detail_spp"
+            $row[] = '<button class="btn btn-primary btn-xs fa fa-print" id="print_spp" name="print_spp"
                         data-noppotxt="' . $field->noppotxt . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Approve
+                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
                         </button>';
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
@@ -366,7 +367,7 @@ class Spp extends CI_Controller
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
-            $row[] = 'DALAM PROSES';
+            $row[] = '<h5><span class="badge badge-success">Approved</span></h5>';
             $row[] = $field->user;
 
             $data[] = $row;
@@ -386,6 +387,59 @@ class Spp extends CI_Controller
     {
         $noppo = $this->input->post('hidden_noppotxt');
         $result = $this->M_data_spp->getDetailSpp($noppo);
+
+        echo json_encode($result);
+    }
+
+    public function get_data_spp_approval()
+    {
+        $list = $this->M_data_spp_approval->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = '<button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval"
+                        data-noppotxt="' . $field->noppotxt . '"
+                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Approve
+                        </button>';
+            $row[] = $field->noppotxt;
+            $row[] = $field->noreftxt;
+            $row[] = $field->tglref;
+            $row[] = $field->tglppo;
+            $row[] = $field->tgltrm;
+            $row[] = $field->namadept;
+            $row[] = $field->lokasi;
+            $row[] = $field->ket;
+            $row[] = '<h5><span class="badge badge-success">DALAM<br>PROSES</span></h5>';
+            $row[] = $field->user;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_data_spp_approval->count_all(),
+            "recordsFiltered" => $this->M_data_spp_approval->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    public function getDetailSppApproval()
+    {
+        $noppo = $this->input->post('hidden_noppotxt');
+        $result = $this->M_data_spp_approval->getDetailSppApproval($noppo);
+
+        echo json_encode($result);
+    }
+
+    public function approval_spp1()
+    {
+        $id_item_spp = $this->input->post('id_item_spp');
+        $result = $this->M_data_spp_approval->approval_spp1($id_item_spp);
 
         echo json_encode($result);
     }
