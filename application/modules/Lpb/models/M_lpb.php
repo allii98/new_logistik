@@ -94,6 +94,36 @@ class M_lpb extends CI_Model
             return $this->db_logistik_pt->get()->result_array();
         }
     }
+
+    public function get_data_po_qr($nopotxt)
+    {
+        $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli');
+        $this->db_logistik_pt->where('nopotxt', $nopotxt);
+        $this->db_logistik_pt->from('po');
+        $data_po = $this->db_logistik_pt->get()->row_array();
+
+        $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket');
+        $this->db_logistik_pt->where('nopotxt', $nopotxt);
+        $this->db_logistik_pt->from('item_po');
+        $data_item_po = $this->db_logistik_pt->get()->result_array();
+
+        $d_return = [
+            'data_po' => $data_po,
+            'data_item_po' => $data_item_po
+        ];
+        return $d_return;
+    }
+
+    public function sumqty($kodebar, $nopo, $qty)
+    {
+        $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'nopo' => $nopo]);
+        $this->db_logistik_pt->from('masukitem');
+        $sumqty_lpb = $this->db_logistik_pt->get()->row();
+
+        $result = $qty - $sumqty_lpb->qty_lpb;
+        return $result;
+    }
 }
 
 /* End of file ModelName.php */

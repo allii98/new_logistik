@@ -9,42 +9,10 @@
                 <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                     Input Laporan Penerimaan Barang
                 </p>
-
                 <div class="row div_form_1">
+
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
-                            </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
-                            </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_ref_po" name="txt_ref_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO<span class="required">*</span>
-                            </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_tgl_po" name="txt_tgl_po" class="form-control bg-light" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier<span class="required">*</span>
-                            </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <!-- <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi<span class="required">*</span>
                             </label>
                             <div class="col-md-8">
@@ -58,19 +26,12 @@
                                     ?>
                                 </select>
                             </div>
-                        </div> -->
-                        <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
-                            </label>
-                            <div class="col-md-7">
-                                <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
-                            </div>
                         </div>
-                        <div class="form-group row">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
                             </label>
-                            <div class="col-md-7">
-                                <input id="txt_lokasi_gudang" name="txt_lokasi_gudang" class="form-control" required="required" type="text" placeholder="Lokasi Gudang" autocomplite="off">
+                            <div class="col-md-8">
+                                <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
                             </div>
                         </div>
                     </div>
@@ -83,9 +44,44 @@
                                 <input id="txt_no_pengantar" name="txt_no_pengantar" class="form-control" required="required" type="text" placeholder="No. Pengantar" autocomplite="off">
                             </div>
                         </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</label>
+                        <div class="form-group row">
+                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
+                            </label>
                             <div class="col-md-7">
+                                <input id="txt_lokasi_gudang" name="txt_lokasi_gudang" class="form-control" required="required" type="text" placeholder="Lokasi Gudang" autocomplite="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row mb-1">
+                            <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 row">
+                                <input id="txt_no_po" name="txt_no_po" class="form-control col-md-3" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off">
+                                <input id="txt_ref_po" name="txt_ref_po" class="form-control bg-light col-md-8 ml-2" type="text" placeholder="Ref. PO" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO<span class="required">*</span>
+                            </label>
+                            <div class="col-md-9 row">
+                                <input id="txt_tgl_po" name="txt_tgl_po" class="form-control bg-light" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group row mb-1">
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier&nbsp;<span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 row">
+                                <input id="txt_kd_supplier" name="txt_kd_supplier" class="form-control bg-light col-md-3" required="required" type="text" placeholder="Kode Supplier" readonly>
+                                <input id="txt_supplier" name="txt_supplier" class="form-control bg-light col-md-8 ml-2" required="required" type="text" placeholder="Supplier" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket<span class="required">*</span>
+                            </label>
+                            <div class="col-md-8 row">
                                 <textarea class="resizable_textarea form-control" id="txt_ket_pengiriman" name="txt_ket_pengiriman" placeholder="Keterangan" rows="1" autocomplite="off"></textarea>
                             </div>
                         </div>
@@ -107,7 +103,7 @@
                         <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
                             <thead>
                                 <tr>
-                                    <!-- <th width="3%">#</th> -->
+                                    <th width="3%">#</th>
                                     <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan / Grup</th>
                                     <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
@@ -117,12 +113,12 @@
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
-                                <!-- <tr id="tr_1">
+                                <tr id="tr_1">
                                     <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                         <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                        <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br /> -->
-                                <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
-                                <!-- </td>
+                                        <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br />
+                                        <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
+                                    </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                         <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                             <div class="row">
@@ -161,7 +157,7 @@
                                             <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
                                         </td>
                                     </form>
-                                </tr> -->
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -177,14 +173,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">List PO</h4>
+                <input id="multiple" type="text" size="50" onkeypress="nopos()">
+                <button class="qrcode-reader" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-line-color="#00FF00" data-qrr-target="#multiple">Scane QRCode</button>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row mb-2 mt-0">
-                    <button class="qrcode-reader mr-2 ml-2 mdi mdi-camera btn btn-xs btn-primary" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"> QRCode</button>
-                    <input id="multiple" type="text" class="col-4" onkeypress="cariPoqr()">
-                </div>
                 <div class="form-horizontal">
                     <div class="table-responsive">
                         <table id="tableDetailPo" class="table table-bordered" width="100%">
@@ -254,6 +248,11 @@
 </div>
 
 <script>
+    function nopos() {
+        nopo('3100001');
+        // swal(e);
+    }
+
     $(document).ready(function() {
         cariPo()
     });
@@ -300,14 +299,14 @@
             var noreftxt = $(this).data('noreftxt');
             var tglpo = $(this).data('tglpo');
             var kode_supply = $(this).data('kode_supply');
-            var nama_supply = $(this).data('kode_supply');
+            var nama_supply = $(this).data('nama_supply');
             // console.log(nabar);
 
             // Set data
             $('#txt_no_po').val(nopotxt);
             $('#txt_ref_po').val(noreftxt);
             $('#txt_tgl_po').val(tglpo);
-            $('#txt_kd_name_supplier').val(nama_supply);
+            $('#txt_kd_supplier').val(kode_supply);
             $('#txt_supplier').val(nama_supply);
             $("#modalListPo").modal('hide');
             nopo(nopotxt);
@@ -386,7 +385,7 @@
     function getGrupBarang(kodebar, n) {
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Lpb/get_grup_barang'); ?>",
+            url: "<?php echo site_url('lpb/get_grup_barang'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
 
@@ -399,36 +398,17 @@
         });
     }
 
-    function sumqty(kodebar, nopotxt, qty, i) {
-        var nopo = nopotxt;
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Lpb/sum_qty'); ?>",
-            dataType: "JSON",
-
-            data: {
-                'kodebar': kodebar,
-                'nopo': nopo,
-                'qty': qty
-            },
-            success: function(data) {
-                console.log(data + 'sum');
-                $('#sisa_qty_' + i).text(data);
-            }
-        });
-    }
-
-    function tambah_row(row) {
-        // var row = ++num_last;
+    function tambah_row(num_last) {
+        var row = ++num_last;
         console.log(row);
         // var row = $('#hidden_no_table').val();
         var tr_buka = '<tr id="tr_' + row + '">';
-        // var td_col_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-        //     '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
-        //     // +'<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalBarang('+row+')"></button><br />'+
-        //     '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row(' + row + ')"></button><br />' +
-        //     '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row_' + row + '" onclick="hapus_row(' + row + ')"></button>' +
-        //     '</td>';
+        var td_col_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
+            // +'<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalBarang('+row+')"></button><br />'+
+            '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row(' + row + ')"></button><br />' +
+            '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row_' + row + '" onclick="hapus_row(' + row + ')"></button>' +
+            '</td>';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
         var td_col_2 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
@@ -468,7 +448,7 @@
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
 
         // $('#txt_qty_' + row).number(true, 2);
 
@@ -578,7 +558,7 @@
         console.log('sisa no' + n);
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Lpb/sum_sisa_qty_po'); ?>",
+            url: "<?php echo site_url('lpb/sum_sisa_qty_po'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
 
@@ -629,57 +609,7 @@
                 $.qrCodeReader.instance.open.call(this);
             }
         });
+
+
     });
-
-    function cariPoqr() {
-
-        var n = $('#multiple').val();
-        console.log(n);
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-
-            data: {
-                'nopotxt': n
-            },
-            success: function(data) {
-
-                var data_po = data.data_po;
-                var data_item_po = data.data_item_po;
-
-                $('#txt_no_po').val(data_po.nopotxt);
-                $('#txt_ref_po').val(data_po.noreftxt);
-                $('#txt_tgl_po').val(data_po.tglpo);
-                $('#txt_kd_supplier').val(data_po.kode_supply);
-                $('#txt_supplier').val(data_po.nama_supply);
-                $("#modalListPo").modal('hide');
-
-                for (i = 0; i < data_item_po.length; i++) {
-                    // var no = i + 1;
-
-                    tambah_row(i);
-                    sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
-
-                    var kodebar = data_item_po[i].kodebar;
-                    var nabar = data_item_po[i].nabar;
-                    var qty = data_item_po[i].qty;
-                    var sat = data_item_po[i].sat;
-                    var ket = data_item_po[i].ket;
-                    // var sumsisa = $(this).data('sumsisa');
-
-                    // Set data
-                    $('#txt_kode_barang_' + i).val(kodebar);
-                    $('#txt_nama_brg_' + i).text(nabar);
-                    $('#txt_satuan_' + i).text(sat);
-                    $('#txt_ket_rinci_' + i).text(ket);
-                    $('#qty_po_' + i).text(qty);
-                    // $('#sisa_qty_' + no).text(sumsisa);
-                    getGrupBarang(kodebar, i);
-                }
-            }
-        });
-    }
 </script>

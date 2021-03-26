@@ -407,4 +407,20 @@ class Lpb extends CI_Controller
         $sisa_qty_po  =  number_format($data_qty_po->qty - $data_sisa_qty_lpb->qty_lpb, 0);
         echo json_encode($sisa_qty_po);
     }
+
+    public function get_data_po_qr()
+    {
+        $nopotxt = $this->input->post('nopotxt');
+        $result = $this->M_lpb->get_data_po_qr($nopotxt);
+        echo json_encode($result);
+    }
+
+    public function sum_qty()
+    {
+        $kodebar = $this->input->post('kodebar');
+        $nopo = $this->input->post('nopo');
+        $qty = $this->input->post('qty');
+        $result = $this->M_lpb->sumqty($kodebar, $nopo, $qty);
+        echo json_encode($result);
+    }
 }
