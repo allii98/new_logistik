@@ -95,7 +95,7 @@
                 <div class="row mx-0 div_form_2">
                     <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
                         <h6 id="lbl_lpb_status" name="lbl_lpb_status">
-                            <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
+                            <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
                         </h6>
                     </div>
                     <div class="row" style="margin-left:4px;">
@@ -300,14 +300,14 @@
             var noreftxt = $(this).data('noreftxt');
             var tglpo = $(this).data('tglpo');
             var kode_supply = $(this).data('kode_supply');
-            var nama_supply = $(this).data('kode_supply');
+            var nama_supply = $(this).data('nama_supply');
             // console.log(nabar);
 
             // Set data
             $('#txt_no_po').val(nopotxt);
             $('#txt_ref_po').val(noreftxt);
             $('#txt_tgl_po').val(tglpo);
-            $('#txt_kd_name_supplier').val(nama_supply);
+            $('#txt_kd_supplier').val(kode_supply);
             $('#txt_supplier').val(nama_supply);
             $("#modalListPo").modal('hide');
             nopo(nopotxt);
@@ -653,8 +653,9 @@
                 $('#txt_no_po').val(data_po.nopotxt);
                 $('#txt_ref_po').val(data_po.noreftxt);
                 $('#txt_tgl_po').val(data_po.tglpo);
-                $('#txt_kd_supplier').val(data_po.kode_supply);
-                $('#txt_supplier').val(data_po.nama_supply);
+                var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
+                $('#txt_kd_name_supplier').val(namesup);
+
                 $("#modalListPo").modal('hide');
 
                 for (i = 0; i < data_item_po.length; i++) {
