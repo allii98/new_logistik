@@ -37,7 +37,7 @@
     <link href="<?php echo base_url() ?>assets/css/icons.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" type="text/css" />
 
-
+    <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/qrcode-reader.css">
 
 
 </head>
@@ -356,6 +356,8 @@
         <script src="<?php echo base_url() ?>assets/libs/hopscotch/js/hopscotch.min.js"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+
+        <script src="<?php echo base_url() ?>assets/dist/js/qrcode-reader.min.js?v=20190604"></script>
 
 
         <div class="content-page mt-1">
