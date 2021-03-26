@@ -20,24 +20,24 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="col-4">
                                 <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
                                 <select class="form-control" id="cmb_pilih_jenis_po">
-                                    <option selected="selected" disabled>
+                                    <option disabled>
                                         <font face="Verdana" size="2.5">-Pilih-</font>
                                     </option>
                                     <?php
                                     switch ($lokasi_sesi) {
                                         case 'PKS':
                                     ?>
-                                            <option value="PO-Lokal">PO-Lokal</option>
+                                            <option selected="selected" value="PO-Lokal">PO-Lokal</option>
                                         <?php
                                             break;
                                         case 'SITE':
                                         ?>
-                                            <option value="PO-Lokal">PO-Lokal</option>
+                                            <option selected="selected" value="PO-Lokal">PO-Lokal</option>
                                         <?php
                                             break;
                                         case 'RO':
                                         ?>
-                                            <option value="PO-Lokal">PO-Lokal</option>
+                                            <option selected="selected" value="PO-Lokal">PO-Lokal</option>
                                         <?php
                                             break;
                                         case 'HO':
@@ -68,10 +68,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </label>
                             <div class="col-6">
                                 <select class="js-data-example-ajax form-control select2" id="select2">
-                                    <option selected="selected" disabled>Nama Supplier</option>
+                                    <option disabled>Nama Supplier</option>
                                 </select>
-                                <input type="hidden" name="kd_supplier" id="kd_supplier">
-                                <input type="hidden" name="txtsupplier" id="txtsupplier">
+                                <input type="text" name="kd_supplier" id="kd_supplier">
+                                <input type="text" name="txtsupplier" id="txtsupplier">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -211,37 +211,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
                             </div>
                         </div>
-                        <div class="form-group row mb-1">
-                            <?php
-                            switch ($sesi_sl) {
-                                case 'HO':
-                            ?>
 
-                                <?php
-                                    break;
-                                case 'RO':
-                                case 'SITE':
-                                case 'PKS':
-                                ?>
-                                    <label class="col-4 col-form-label">
-                                        <font face="Verdana" size="2.5">SPP *</font>
-                                    </label>
-                                    <div class="col-7">
-                                        <select class="js-data-example-ajax form-control select4" id="sppSITE">
-                                            <option selected="selected">
-                                                <font face="Verdana" size="2.5">Cari SPP</font>
-                                            </option>
-                                        </select>
-
-                                    </div>
-                            <?php
-                                    break;
-                                default:
-                                    break;
-                            }
-                            ?>
-
-                        </div>
                     </div>
                 </div>
                 <!-- end row-->
@@ -666,7 +636,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 </button>
             </div>
             <div class="modal-body">
-                
+
 
                 <div class="col-12">
                     <div class="table-responsive">
@@ -674,21 +644,21 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <table id="dataspp" class="table table-striped table-bordered table-in" width="100%">
                             <thead>
                                 <tr>
-                               
+
                                     <th>
                                         <font face="Verdana" size="2.5">#</font>
                                     </th>
                                     <th>
                                         <font face="Verdana" size="2.5">Tanggal</font>
                                     </th>
-                                   
+
                                     <th>
                                         <font face="Verdana" size="2.5">Ref. SPP</font>
                                     </th>
                                     <th>
                                         <font face="Verdana" size="2.5">Departemen</font>
                                     </th>
-                                    
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -724,6 +694,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         }, 1000);
 
+
+
         $('#txt_qty_1').keyup(function() {
             var a = $('#txt_qty_1').val();
             var b = $('#qty_1').val();
@@ -748,105 +720,119 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             }
 
         });
+        var lokasi = $('#lokasi').val();
+
+        switch (lokasi) {
+            case 'HO':
+
+                break;
+            case 'RO':
+            case 'SITE':
+            case 'PKS':
+
+                $(document).on('click', '#data_spp', function() {
+                    var id = $(this).data('id');
+                    console.log(id);
+                    $.ajax({
+                        type: 'post',
+                        url: '<?= site_url('Po/getid'); ?>',
+                        data: {
+                            id: id
+                        },
+                        success: function(response) {
+                            $('.div_form_3').show();
+                            $('.div_form_1').find('#sppSITE').attr('disabled', '');
+                            // console.log(response);
+                            data = JSON.parse(response);
+                            // console.log(data);
+
+                            var n = 1;
+                            $.each(data, function(index, value) {
+
+                                tambah_item();
+                                // console.log(value);
+
+                                var idppo = value.id;
+                                var opsi = value.noreftxt;
+                                var tglref = value.tglref;
+                                var kodedept = value.kodedept;
+                                var namadept = value.namadept;
+                                var tglppo = value.tglppo;
+                                var kodept = value.kodept;
+                                var pt = value.pt;
+                                var noppo = value.noppo;
+                                var kodebar = value.kodebar;
+                                var nabar = value.nabar;
+                                var sat = value.sat;
+                                // var tglref = value.tglref;
+                                var qty = value.qty;
+                                var qty2 = value.qty2;
 
 
-        $(document).on('click', '#data_spp', function() {
-            var id = $(this).data('id');
-            console.log(id);
-            $.ajax({
-            type: 'post',
-            url: '<?= site_url('Po/getid'); ?>',
-            data: {
-                id: id 
-            },
-            success: function(response) {
-                $('.div_form_3').show();
-                $('.div_form_1').find('#sppSITE').attr('disabled', '');
-                // console.log(response);
-                data = JSON.parse(response);
-                // console.log(data);
+                                $('#id_ppo' + n).val(idppo);
+                                $('#id_item_' + n).val(idppo);
+                                $('#hidden_no_ref_spp_' + n).val(opsi);
+                                // $('#hidden_tgl_hidden' + n).val(tglref);
+                                $('#hidden_kd_departemen_' + n).val(kodedept);
+                                $('#hidden_departemen_' + n).val(namadept);
+                                $('#hidden_tgl_spp_' + n).val(tglppo);
+                                $('#hidden_kd_pt_' + n).val(kodept);
+                                $('#hidden_nama_pt_' + n).val(pt);
+                                $('#noppo' + n).val(noppo);
+                                $('#hidden_kode_brg_' + n).val(kodebar);
+                                $('#kode_brg_' + n).text(kodebar);
+                                $('#hidden_nama_brg_' + n).val(nabar);
+                                $('#nama_brg_' + n).text(nabar);
+                                $('#hidden_satuan_brg_' + n).val(sat);
+                                // $('#txt_qty_' + n).val(qty);
+                                if (qty2 != null) {
+                                    var hasil = qty - qty2;
+                                    $('#txt_qty_' + n).val(hasil);
+                                } else {
+                                    $('#txt_qty_' + n).val(qty);
+                                }
+                                $('#qty_' + n).val(qty);
+                                $('#qty2_' + n).val(qty2);
+                                $('#hidden_tgl_ref_' + n).val(tglref);
+                                n++;
+                            });
+                            $('#modalcarispp').modal('hide');
 
-                var n = 1;
-                $.each(data, function(index, value) {
-
-                    tambah_item();
-                    // console.log(value);
-
-                    var idppo = value.id;
-                    var opsi = value.noreftxt;
-                    var tglref = value.tglref;
-                    var kodedept = value.kodedept;
-                    var namadept = value.namadept;
-                    var tglppo = value.tglppo;
-                    var kodept = value.kodept;
-                    var pt = value.pt;
-                    var noppo = value.noppo;
-                    var kodebar = value.kodebar;
-                    var nabar = value.nabar;
-                    var sat = value.sat;
-                    // var tglref = value.tglref;
-                    var qty = value.qty;
-                    var qty2 = value.qty2;
-
-
-                    $('#id_ppo' + n).val(idppo);
-                    $('#id_item_' + n).val(idppo);
-                    $('#hidden_no_ref_spp_' + n).val(opsi);
-                    // $('#hidden_tgl_hidden' + n).val(tglref);
-                    $('#hidden_kd_departemen_' + n).val(kodedept);
-                    $('#hidden_departemen_' + n).val(namadept);
-                    $('#hidden_tgl_spp_' + n).val(tglppo);
-                    $('#hidden_kd_pt_' + n).val(kodept);
-                    $('#hidden_nama_pt_' + n).val(pt);
-                    $('#noppo' + n).val(noppo);
-                    $('#hidden_kode_brg_' + n).val(kodebar);
-                    $('#kode_brg_' + n).text(kodebar);
-                    $('#hidden_nama_brg_' + n).val(nabar);
-                    $('#nama_brg_' + n).text(nabar);
-                    $('#hidden_satuan_brg_' + n).val(sat);
-                    // $('#txt_qty_' + n).val(qty);
-                    if (qty2 != null) {
-                        var hasil = qty - qty2;
-                        $('#txt_qty_' + n).val(hasil);
-                    } else {
-                        $('#txt_qty_' + n).val(qty);
-                    }
-                    $('#qty_' + n).val(qty);
-                    $('#qty2_' + n).val(qty2);
-                    $('#hidden_tgl_ref_' + n).val(tglref);
-                    n++;
+                        },
+                        error: function(request) {
+                            console.log(request.responseText);
+                        }
+                    });
                 });
-                $('#modalcarispp').modal('hide');
+                break;
+            default:
+                break;
+        }
 
-            },
-            error: function(request) {
-                console.log(request.responseText);
-            }
-        });
-        });
+
 
         cariSPP();
     });
 
     function cariSPP() {
-		$('#modalcarispp').modal('show');
-	}
+        $('#modalcarispp').modal('show');
+    }
 
     var table;
     $(document).ready(function() {
-       table = $('#dataspp').DataTable({
-			"processing": true,
-			"serverSide": true,
-			"order": [],
-			"ajax": {
-				"url": "<?php echo site_url('Po/get_carispp') ?>",
-				"type": "POST"
-			},
-			"columnDefs ": [{
-				"targets": [0],
-				"orderable": false,
-			}, ],
-		});
+        table = $('#dataspp').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "ajax": {
+                "url": "<?php echo site_url('Po/get_carispp') ?>",
+                "type": "POST"
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+        });
     });
 
 
@@ -859,10 +845,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     var qty = true;
 
-    // $(function() {
-    //     // tambah_item();
-    //     tambah_row();
-    // });
 
     $("#sppSITE").select2({
         ajax: {
@@ -2491,8 +2473,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
 
     }).on('select2:select', function(evt) {
-        var kode = $(".select2 option:selected").text();
-        var data = $(".select2 option:selected").val();
+        // var selected = evt.params.data;
+        var a = "0475";
+        var b = "TOKO ( KAS )";
+        var kode = $(".select2 option:selected").text(a);
+        var data = $(".select2 option:selected").val(b);
         $('#kd_supplier').val(kode);
         $('#txtsupplier').val(data);
 
