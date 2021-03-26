@@ -217,23 +217,8 @@
                     var td_10 = (data[i].status2 == "1") ? '<td><span style="color: green"><b>DISETUJUI<br>' + data[i].TGL_APPROVE + '</b></span></td>' : '<td><button class="btn btn-success btn-xs fa fa-check" type="button" onclick="approve_barang(' + data[i].id + ',' + data[i].noppotxt + ')"></button><button class="btn btn-danger ml-1 btn-xs fa fa-times" type="button"></button></td>';
                     var tr_tutup = '</tr>';
                     $('#data_detail_spp').append(tr_buka + td_1 + td_2 + td_3 + td_4 + td_5 + td_6 + td_7 + td_8 + td_9 + td_10 + tr_tutup);
-                    // html += '<tr>' +
-                    //     '<td>' + no + '</td>' +
-                    //     '<td> <font face="Verdana" size="2">' + data[i].kodebar + '</font></td>' +
-                    //     '<td> <font face="Verdana" size="2">' + data[i].nabar + '</font></td>' +
-                    //     '<td> <font face="Verdana" size="2">' + data[i].sat + '</font></td>' +
-                    //     '<td> <font face="Verdana" size="2">' + data[i].qty + '</font></td>' +
-                    //     '<td> <font face="Verdana" size="2">' + data[i].STOK + '</font></td>' +
-                    //     '<td> <font face="Verdana" size="2">' + data[i].ket + '</font></td>' +
-                    //     '<td> <font face="Verdana" size="2">' + 'DALAM PROSES' + '</font></td>' +
-                    //     '<td><button class="btn btn-xs btn-primary" type="button" disabled>Qty</button></td>' +
-                    //     '<td>' +
-                    //     '<button class="btn btn-success btn-xs fa fa-check" type="button" onclick="approve_barang(' + data[i].id + ')"></button>' +
-                    //     '<button class="btn btn-danger ml-1 btn-xs fa fa-times" type="button"></button>' +
-                    //     '</td>' +
-                    //     '</tr>';
+ 
                 }
-                // $('#data_detail_spp').html(html);
 
             }
         });
@@ -250,11 +235,7 @@
         }).then((result) => {
             if (result.value) {
                 setujui_barang(n);
-                $('#data_detail_spp').empty();
                 data_spp_approval(noppotxt);
-                // setTimeout(function() {
-                //     $("#data_detail_spp").load("<?php base_url('Spp/sppApproval') ?> #data_detail_spp");
-                // }, 2000); //refresh every 2 seconds
             }
         })
     }
@@ -271,6 +252,7 @@
             },
 
             success: function(data) {
+                $('#data_detail_spp').empty();
                 console.log(data);
             }
         });

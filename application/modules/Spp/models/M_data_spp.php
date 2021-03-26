@@ -20,8 +20,8 @@ class M_data_spp extends CI_Model
     {
 
         $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_pt->where('status2 !=', 0);
         // $this->db_logistik_pt->select('id, noppotxt, noreftxt, tglref,tglppo,tgltrm,namadept,lokasi,ket,user');
-        // $this->db_logistik_pt->from('ppo');
         // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
