@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_po extends CI_Model
 {
     var $table = 'item_ppo'; //nama tabel dari database
-    var $column_order = array(null, 'id', '	noppo', 'tglppo', 'noreftxt', 'qty', 'namadept', 'kodebar', 'nabar', 'ket'); //field yang ada di table supplier  
+    var $column_order = array(null, 'id', 'noppo', 'tglppo', 'noreftxt', 'qty', 'namadept', 'kodebar', 'nabar', 'ket'); //field yang ada di table supplier  
     var $column_search = array('tglppo', 'noreftxt',  'namadept', 'kodebar', 'nabar'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
@@ -20,7 +20,7 @@ class M_po extends CI_Model
         // $Value = ;
         $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
         $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('po', 0);
+        // $this->db_logistik_pt->where('po', 0);
         $this->db_logistik_pt->where('status2', 1);
         $this->db_logistik_pt->order_by('id', 'desc');
 
@@ -154,6 +154,13 @@ class M_po extends CI_Model
     {
         $this->db_logistik_pt->where('id', $id_ppo);
         $this->db_logistik_pt->update('item_ppo',  $ppo);
+
+        return TRUE;
+    }
+    public function editPPO($no_id, $ppo)
+    {
+        $this->db_logistik_pt->where('id', $no_id);
+        $this->db_logistik_pt->update('ppo',  $ppo);
 
         return TRUE;
     }

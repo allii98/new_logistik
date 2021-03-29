@@ -12,6 +12,7 @@ class Po extends CI_Controller
         $this->load->model('M_po');
         $this->load->model('M_data');
         $this->load->model('M_cariSPP');
+        $this->load->model('M_detail');
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
@@ -53,6 +54,37 @@ class Po extends CI_Controller
         // output to json format
         echo json_encode($output);
     }
+    function detail()
+    {
+        $id = $this->input->post('id');
+        $this->M_detail->where_datatables($id);
+        $list = $this->M_detail->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            $no++;
+            $row = array();
+            $row[] = $no . ".";
+            $row[] = $d->nopo;
+            $row[] = $d->noref;
+            $row[] = $d->grup;
+            $row[] = $d->nabar . ' | ' . $d->kodebar;
+            $row[] = $d->qty;
+            // $row[] = $d->tglpo;
+            $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
+            // $row[] = $d->ket;
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_detail->count_all(),
+            "recordsFiltered" => $this->M_detail->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
 
     public function dataPO()
     {
@@ -62,7 +94,13 @@ class Po extends CI_Controller
         foreach ($list as $d) {
             $no++;
             $row = array();
-            $row[] = '<a href="#" class="btn btn-warning btn-xs">No Option</a>';
+            $row[] = '<button type="button" id="detail" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-info waves-effect waves-light title="Detail">
+            <i class="mdi mdi-alert-circle-outline"></i></span>
+        </button>
+        <a href="'.base_url('Po/cetak/'.$d->nopotxt.'/'.$d->id).'" target="_blank" type="button" id="cetak" class="btn btn-danger waves-effect waves-light" title="Cetak">
+            <i class="mdi mdi-file-pdf-outline"></i></span>
+        </a>
+        ';
             $row[] =  $no . ".";
             $row[] = $d->no_refppo;
             $row[] = $d->nopo;
@@ -93,11 +131,11 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<button class="btn btn-success btn-xs" id="data_spp" name="data_spp"
-                    data-id="' . $d->id . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button>';
+                    data-id="' . $d->id . '"  data-noreftxt="' . $d->noreftxt . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button>';
             $row[] = $d->tglppo;
             $row[] = $d->noreftxt;
             $row[] = $d->namadept;
-
+            // $row[] = '<div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div>';
             $data[] = $row;
         }
         $output = array(
@@ -109,6 +147,79 @@ class Po extends CI_Controller
         // output to json format
         echo json_encode($output);
     }
+
+    function cetak(){
+		$nopo = $this->uri->segment('3');
+		$id = $this->uri->segment('4');
+
+		$data['pt'] = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'))->row();
+
+		$data['po'] = $this->db_logistik_pt->get_where('po', array('nopotxt' => $nopo, 'id' => $id))->row();
+
+		$kode_supplier = $data['po']->kode_supply;
+
+		// $data['supplier'] = $this->db_logistik_pt->get_where('supplier', array('kode'=>$kode_supplier))->row();
+
+		$query_supplier = "SELECT * FROM supplier WHERE kode = '$kode_supplier' AND account IS NOT NULL";
+		$data['supplier'] = $this->db_logistik_pt->query($query_supplier)->row();
+
+		$no_refpo = $data['po']->noreftxt;
+		$data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('nopotxt' => $nopo, 'noref' => $no_refpo))->result();
+
+		// $mpdf = new \Mpdf\Mpdf([
+		// 		    'mode' => 'utf-8',
+		// 		    // 'format' => [190, 236],
+		// 		    'format' => [190, 236], 
+		// 		    'setAutoTopMargin' => 'stretch',
+		// 		    'orientation' => 'P'
+		// 		]);
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			// 'format' => 'A4',
+			// 'setAutoTopMargin' => 'stretch',
+			'margin_top' => '28',
+			'orientation' => 'P'
+		]);
+
+		// $mpdf->SetWatermarkImage('././assets/img/terbayar.png');
+		// $mpdf->showWatermarkImage = true;
+
+		if ($data['po']->terbayar == "1") {
+			$mpdf->SetWatermarkText('TERBAYAR');
+			$mpdf->showWatermarkText = true;
+		}
+
+		if ($data['po']->terbayar == "2") {
+			$mpdf->SetWatermarkText('BAYAR SEBAGIAN');
+			$mpdf->showWatermarkText = true;
+		}
+
+		// $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+		$mpdf->SetHTMLHeader('
+                            <table width="100%" border="0">
+                                <tr>
+                                    <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
+                                    <td align="left" style="font-size:14px;font-weight:bold;margin-bottom:0px;">PT MULIA SAWIT AGRO LESTARI</td>
+                                    
+                                </tr>
+                                <tr>
+                                <td align="left" style="margin-top:0px;">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                </td>
+                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="' . site_url('assets/qrcode/' .$data['po']->qr_code) . '"></td>
+                                </tr>
+                               
+                            </table>
+                            <hr style="width:100%;margin:0px;">
+                            ');
+		// $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+        $html = $this->load->view('v_po_print',$data,true);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+	}
 
     public function index()
     {
@@ -204,6 +315,8 @@ class Po extends CI_Controller
 
     public function save()
     {
+
+
         $data['nama_dept'] = $this->M_po->namaDept($this->input->post("hidden_kode_departemen"));
         $lokasibuatspp = substr($this->input->post('hidden_no_ref'), 0, 3);
         switch ($lokasibuatspp) {
@@ -255,8 +368,10 @@ class Po extends CI_Controller
 
         if (empty($this->input->post('hidden_no_po'))) {
             $no_po = $lokasispp . $lokasipo . $print;
+            $nopo = $lokasispp . $lokasipo . $print;
         } else {
             $no_po = $this->input->post('hidden_no_po');
+            $nopo = $this->input->post('hidden_no_po');
         }
 
         $query_id = "SELECT MAX(id)+1 as no_id FROM po";
@@ -318,6 +433,30 @@ class Po extends CI_Controller
             $pph = "0";
         }
 
+
+        //  generate qrcode
+        $this->load->library('ciqrcode'); //pemanggilan library QR CODE
+
+        $config['cacheable']    = true; //boolean, the default is true
+        $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        $config['imagedir']     = './assets/qrcode/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = '1024'; //interger, the default is 1024
+        $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        $this->ciqrcode->initialize($config);
+
+        $image_name = $nopo . '.png'; //buat name dari qr code sesuai dengan nopo
+
+        $params['data'] = $nopo; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H=High
+        $params['size'] = 10;
+        $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/qrcode/
+        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+
+        // end generate qrcode
+
         $datainsert = [
             'id' => $no_id,
             'kd_dept' => $data['nama_dept']['kode'],
@@ -365,7 +504,8 @@ class Po extends CI_Controller
             'terbayar' => "0",
             'nopp' => NULL,
             'batal' => "0",
-            'kirim' => $dikirim_ke_kebun
+            'kirim' => $dikirim_ke_kebun,
+            'qr_code' => $image_name
         ];
 
         $datainsertitem = [
@@ -449,6 +589,7 @@ class Po extends CI_Controller
                 'po' => 1
             );
             $this->M_po->updatePPO($id_ppo, $data_ppo);
+            // $this->M_po->updatePPO($id_ppo, $data_ppo);
         }
 
 
@@ -462,6 +603,15 @@ class Po extends CI_Controller
         $data1 = $this->db->insert('po', $datainsert);
         $data2 = $this->db->insert('item_po', $datainsertitem);
 
+        if ($qtyy == $qtyy2) {
+
+
+            $data_ppo =  array(
+                'po' => 1
+            );
+            $this->M_po->editPPO($no_id, $data_ppo);
+            // $this->M_po->updatePPO($id_ppo, $data_ppo);
+        }
 
         // $this->_cek_flag_po($no_po);
 

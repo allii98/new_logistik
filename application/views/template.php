@@ -38,6 +38,7 @@
     <link href="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/qrcode-reader.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 
 </head>
@@ -220,9 +221,10 @@
                                     <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-outline mr-1"></i>
                                         <font face="Verdana" size="2.5">Surat Permintaan Pembelian (SPP)</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-upload-outline mr-1"></i>
+                                    <a href="#" onclick="lap_po();" class="dropdown-item"><i class="mdi mdi-file-upload-outline mr-1"></i>
                                         <font face="Verdana" size="2.5">Purchase Order (PO)</font>
                                     </a>
+
                                     <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-download-outline mr-1"></i>
                                         <font face="Verdana" size="2.5">Permohonan Pembayaran (PP)</font>
                                     </a>
@@ -331,6 +333,73 @@
             </div> <!-- end container-fluid -->
         </div> <!-- end topnav-->
 
+
+        <!-- modal lap PO -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapPO">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Laporan PO</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Company *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="cmb_company" name="cmb_company" required="">
+                                    <option value="" selected>-- Pilih --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Periode *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="txt_periode2" name="txt_periode2">
+                                <input type="hidden" class="form-control" id="tanggalawalPO" name="tanggalawalPO">
+                                <input type="hidden" class="form-control" id="tanggalakhirPO" name="tanggalakhirPO">
+                            </div>
+                        </div>
+
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" id="rbt_register" value="register" name="rbt_pilihan1" checked="">
+                                <label for="rbt_register">Register PO</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" id="rbt_cetakan" value="cetakan" name="rbt_pilihan1">
+                                <label for="rbt_cetakan">Cetakan</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" id="rbt_cash" value="cash" name="rbt_pilihan1">
+                                <label for="rbt_cash">PO ( Cash )</label>
+                            </div>
+                        </div>
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" id="rbt_po_lokal_r" value="po_lokal_r" name="rbt_pilihan1" checked="">
+                                <label for="rbt_po_lokal_r"> PO Lokal (Register)</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" id="rbt_po_lokal_t" value="po_lokal_t" name="rbt_pilihan1">
+                                <label for="rbt_po_lokal_t">PO Lokal (Total PO)</label>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkanpo()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal lap PO -->
+
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
@@ -358,6 +427,9 @@
         <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/dist/js/qrcode-reader.min.js?v=20190604"></script>
+
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 
 
         <div class="content-page mt-1">
@@ -770,6 +842,140 @@
 
     <!-- App js -->
     <script src="<?php echo base_url() ?>assets/js/app.min.js"></script>
+
+    <script type="text/javascript">
+        function lap_po() {
+            $('#modalLapPO').modal('show');
+            $('#cmb_company').empty();
+            pilihCompany();
+            pilihTanggal1();
+        }
+
+        function pilihCompany() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_devisi'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+                    if (stl == 'HO') {
+                        var opsi_cmb_company = '<option value="Semua">SEMUA</option>';
+                        $('#cmb_company').append(opsi_cmb_company);
+                    }
+                    $.each(data, function(index) {
+                        var opsi_cmb_company = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                        $('#cmb_company').append(opsi_cmb_company);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function pilihTanggal1() {
+            var d = new Date();
+            var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
+            var today1 = (25) + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+            $('#tanggalawalPO').val(today);
+            $('#tanggalakhirPO').val(today1);
+            $('#txt_periode2').val(today + ' - ' +
+                today1);
+
+            $('#txt_periode2').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+            }, function(start, end, label) {
+                $('#tanggalawalPO').val(start.format('DD/MM/YYYY'));
+                $('#tanggalakhirPO').val(end.format('DD/MM/YYYY'));
+
+                // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            });
+        }
+
+        function tampilkanpo() {
+            var cmb_company = $('#cmb_company').val();
+            var starDate = $('#tanggalawalPO').val();
+            var endDate = $('#tanggalakhirPO').val();
+            var rbt_pilihan1 = $("input[name='rbt_pilihan1']:checked").val();
+            console.log(cmb_company, starDate, endDate, rbt_pilihan1);
+
+            if (rbt_pilihan1 == 'register') {
+                window.open('<?= site_url("Laporan/print_lap_po_register"); ?>/' + cmb_company + '/' + starDate + '/' + endDate);
+            } else if (rbt_pilihan1 == 'po_lokal_r') {
+                window.open('<?= site_url("laporan/print_lap_po_lokal_r"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
+            } else if (rbt_pilihan1 == 'cash') {
+                window.open('<?= site_url("laporan/print_lap_po_cash"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
+            } else if (rbt_pilihan1 == 'po_lokal_t') {
+                window.open('<?= site_url("laporan/print_lap_po_lokal_t"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
+            } else if (rbt_pilihan1 == 'cetakan') {
+                $('#modalListLapPO').modal('show');
+                $('#tableListLapPOCetakan').DataTable().destroy();
+                $('#tableListLapPOCetakan').DataTable({
+                    "paging": true,
+                    "scrollY": false,
+                    "scrollX": false,
+                    "searching": true,
+                    "select": false,
+                    "bLengthChange": true,
+                    "scrollCollapse": true,
+                    "bPaginate": true,
+                    "bInfo": true,
+                    "bSort": false,
+                    "processing": true,
+                    "serverSide": true,
+                    "stateSave": true,
+                    "order": [],
+                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        console.log(aData);
+                    },
+                    "ajax": {
+                        "url": "<?php echo site_url('Laporan/listPOCetakan'); ?>",
+                        "type": "POST",
+                        "data": {
+                            "cmb_company": cmb_company,
+                            "txt_periode2": txt_periode2,
+                            "txt_periode3": txt_periode3
+                        },
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
+                    },
+                    "columns": [{
+                            "width": "5%"
+                        },
+                        {
+                            "width": "20%"
+                        },
+                        {
+                            "width": "20%"
+                        },
+                        {
+                            "width": "20%"
+                        },
+                        {
+                            "width": "25%"
+                        },
+                        {
+                            "width": "10%"
+                        },
+                    ],
+                    "columnDefs": [{
+                        "targets": [],
+                        "orderable": false,
+                    }, ],
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapPOCetakan').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+            }
+        }
+    </script>
 </body>
 
 </html>

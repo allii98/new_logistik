@@ -2,12 +2,12 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_data extends CI_Model
+class M_detail extends CI_Model
 {
 
-    var $table = 'po'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'no_refppo', 'nopo','nopotxt', 'tglpo', 'nama_supply', 'ket', 'terbayar'); //field yang ada di table supplier  
-    var $column_search = array('no_refppo', 'nopo', 'tglpo', 'nama_supply', 'kode_supply', 'ket', 'terbayar'); //field yang diizin untuk pencarian 
+    var $table = 'item_po'; //nama tabel dari database
+    var $column_order = array(null, 'id', 'noref', 'nopo', 'tglpo', 'grup', 'nabar', 'kodebar', 'qty'); //field yang ada di table supplier  
+    var $column_search = array('id', 'noref', 'nopo', 'tglpo', 'grup', 'nabar', 'kodebar'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -16,21 +16,32 @@ class M_data extends CI_Model
         $this->load->database();
     }
 
+    public function where_datatables($id)
+    {
+        // global $nopo;
+        $this->id = $id;
+        // return $nopo;
+    }
+
+
     private function _get_datatables_query()
     {
+
+        $eee = $this->id;
         // $Value = ;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
         $user = $this->session->userdata('user');
         if ($lokasi_sesi == 'HO') {
             # code...
-            $this->db_logistik_pt->select('id, no_refppo,nopotxt, nopo, tglpo, nama_supply, ket, terbayar');
-            $this->db_logistik_pt->from('po');
-            // $this->db_logistik_pt->where('po');
+            $this->db_logistik_pt->select('id, noref , nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
+            $this->db_logistik_pt->from('item_po');
+            $this->db_logistik_pt->where('nopo', $eee);
             $this->db_logistik_pt->order_by('id', 'desc');
         } else {
-            $this->db_logistik_pt->select('id, no_refppo,nopotxt, nopo, tglpo, nama_supply, ket, terbayar');
-            $this->db_logistik_pt->from('po');
+            $this->db_logistik_pt->select('id, noref , nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
+            $this->db_logistik_pt->from('item_po');
             $this->db_logistik_pt->where('user', $user);
+            $this->db_logistik_pt->where('nopo', $eee);
             $this->db_logistik_pt->order_by('id', 'desc');
             # code...
         }
@@ -90,4 +101,4 @@ class M_data extends CI_Model
     }
 }
 
-/* End of file M_data.php */
+/* End of file M_detail.php */

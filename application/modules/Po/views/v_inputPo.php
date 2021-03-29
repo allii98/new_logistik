@@ -68,10 +68,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </label>
                             <div class="col-6">
                                 <select class="js-data-example-ajax form-control select2" id="select2">
-                                    <option disabled>Nama Supplier</option>
+
+                                    <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                                        <option disabled>Nama Supplier</option>
+                                    <?php } else { ?>
+                                        <option disabled>Nama Supplier</option>
+                                        <option selected value="0475">TOKO ( KAS )</option>
+                                    <?php } ?>
                                 </select>
-                                <input type="text" name="kd_supplier" id="kd_supplier">
-                                <input type="text" name="txtsupplier" id="txtsupplier">
+                                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
+                                    <option disabled>Nama Supplier</option>
+                                    <option selected value="0475">TOKO ( KAS )</option>
+                                </select> -->
+                                <input type="hidden" name="kd_supplier" value="TOKO ( KAS )" id="kd_supplier">
+                                <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -92,7 +102,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <font face="Verdana" size="2.5">Tempo bayar*</font>
                             </label>
                             <div class="col-3">
-                                <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" autocomplite="off"><span>
+                                <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" value="0" autocomplite="off"><span>
                                     <font face="Verdana" size="2.5">Hari</font>
                                 </span>
                             </div>
@@ -100,7 +110,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <font face="Verdana" size="2">Tempo Pengirim*</font>
                             </label>
                             <div class="col-sm-3">
-                                <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" autocomplite="off" required><span>Hari</span>
+                                <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" value="0" autocomplite="off" required><span>Hari</span>
                             </div>
                         </div>
                     </div>
@@ -110,7 +120,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <font face="Verdana" size="2">Lokasi&nbsp;Pengirim*</font>
                             </label>
                             <div class="col-5">
-                                <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" autocomplite="off" required>
+                                <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
                                 <!-- <span class="pesan pesan-nama" style="color: red;">Harus di isi !</span><br /> -->
                             </div>
                         </div>
@@ -120,7 +130,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </label>
                             <div class="col-4">
                                 <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
-                                    <option selected="selected" disabled>-- Pilih --</option>
+                                    <option disabled>-- Pilih --</option>
                                     <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
 
                                         <option value="HO">HO</option>
@@ -129,7 +139,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <?php } else { ?>
 
                                         <option value="RO">RO</option>
-                                        <option value="SITE">SITE</option>
+                                        <option selected="selected" value="SITE">SITE</option>
                                     <?php } ?>
                                 </select>
                             </div>
@@ -139,7 +149,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <font face="Verdana" size="2">No.&nbsp;Penawaran*</font>
                             </label>
                             <div class="col-7">
-                                <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" required>
+                                <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -147,8 +157,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <font face="Verdana" size="2">Pemesan *</font>
                             </label>
                             <div class="col-5">
-                                <input type="text" class="form-control bg-light" id="txt_pemesan" name="txt_pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
-                                <input type="hidden" name="txt_kode_pemesan" id="txt_kode_pemesan" value="<?php echo $this->session->userdata('id_user'); ?>">
+                                <!-- <input type="text" class="form-control bg-light" id="txt_pemesan" name="txt_pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
+                                <input type="hidden" name="txt_kode_pemesan" id="txt_kode_pemesan" value="<?php echo $this->session->userdata('id_user'); ?>"> -->
+                                <select class="form-control" id="txt_pemesan" name="txt_pemesan" required>
+                                    <option disabled>-Pilih-</option>
+                                    <option selected value="GM">GM</option>
+                                    <option value="KTU">KTU</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -156,7 +171,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <font face="Verdana" size="2">Ket. Pengirim</font>
                             </label>
                             <div class="col-7">
-                                <textarea class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off"></textarea>
+                                <textarea class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
                                 <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
                                 <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
                             </div>
@@ -192,17 +207,35 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <textarea class="form-control" id="keterangan" name="keterangan" rows="1" placeholder="Keterangan" autocomplite="off"></textarea>
                             </div>
                         </div>
-                        <div class="form-group row mb-1 my-0">
-                            <label class="col-4 col-form-label">
-                                <font face="Verdana" size="2">Dikirim&nbsp;ke&nbsp;Kebun*</font>
-                            </label>
-                            <div class="col-3 py-0">
-                                <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
-                                    <option value="Y" selected="">Y</option>
-                                    <option value="N">N</option>
-                                </select>
-                            </div>
-                        </div>
+                        <?php
+                        switch ($lokasi_sesi) {
+                            case 'HO':
+                        ?>
+                                <div class="form-group row mb-1 my-0">
+                                    <label class="col-4 col-form-label">
+                                        <font face="Verdana" size="2">Dikirim&nbsp;ke&nbsp;Kebun*</font>
+                                    </label>
+                                    <div class="col-3 py-0">
+                                        <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
+                                            <option value="Y" selected="">Y</option>
+                                            <option value="N">N</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php
+                                break;
+                            case 'RO':
+                            case 'SITE':
+                            case 'PKS':
+                            ?>
+                        <?php
+                                break;
+                            default:
+                                break;
+                        }
+                        ?>
+
+
                         <div class="form-group row mb-1">
                             <label class="col-4 col-form-label">
                                 <font face="Verdana" size="2">Total&nbsp;Bayar</font>
@@ -388,6 +421,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                                                 </td>
                                                 <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <!-- <div class="ribbon ribbon-primary float-right"><i class="mdi mdi-access-point mr-1"></i> Primary</div> -->
+                                                    <span style="display:none;" id="habis_1" class="badge badge-danger">Habis</span>
                                                     <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi('1')"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah('1')" id="btn_ubah_1" name="btn_ubah_" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update('1')"></button>
@@ -490,10 +525,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_item" name="tbody_item">
-                                        <!-- <tbody id="tbody_item" name="tbody_item"> -->
-
                                     </tbody>
-
                                 </table>
                             </div>
                         </div>
@@ -691,7 +723,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         $('.div_form_3').hide();
         setInterval(function() {
             check_form_2();
-
         }, 1000);
 
 
@@ -744,7 +775,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             $('.div_form_1').find('#sppSITE').attr('disabled', '');
                             // console.log(response);
                             data = JSON.parse(response);
-                            // console.log(data);
+                            console.log(data);
 
                             var n = 1;
                             $.each(data, function(index, value) {
@@ -788,6 +819,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 if (qty2 != null) {
                                     var hasil = qty - qty2;
                                     $('#txt_qty_' + n).val(hasil);
+                                    console.log(hasil);
+                                    if (hasil == 0) {
+
+                                        $('.div_form_3').find('#cmb_jenis_budget_' + n + ',#txt_merk_' + n + ', #txt_qty_' + n + ' ,#cmb_kurs_' + n + ',#txt_disc_' + n + ', #txt_harga_' + n + ',#txt_biaya_lain_' + n + ',txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_rinci_' + n).attr('disabled', '');
+                                        $('#btn_simpan_' + n).hide();
+                                        $('#habis_' + n).show();
+                                    }
                                 } else {
                                     $('#txt_qty_' + n).val(qty);
                                 }
@@ -795,6 +833,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#qty2_' + n).val(qty2);
                                 $('#hidden_tgl_ref_' + n).val(tglref);
                                 n++;
+
+
                             });
                             $('#modalcarispp').modal('hide');
 
@@ -804,6 +844,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         }
                     });
                 });
+                cariSPP();
                 break;
             default:
                 break;
@@ -811,7 +852,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-        cariSPP();
+
     });
 
     function cariSPP() {
@@ -987,6 +1028,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
             '<span id="nama_brg_' + row + '"></span><span> | </span><span id="kode_brg_' + row + '" ></span>' +
+            '<input type="hidden" id="ppo' + row + '" name="ppo' + row + '">' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
             '<input type="hidden" id="id_item_' + row + '" name="id_item_' + row + '">' +
             '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
@@ -1050,6 +1092,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
             '</td>';
         var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<span style="display:none;" id="habis_' + row + '" class="badge badge-danger">Habis</span>' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
@@ -1091,6 +1134,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')">' +
             '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
+            '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
             '<input type="hidden" id="id_ppo' + n + '" name="id_ppo' + n + '">' +
             '<input type="hidden" id="hidden_no_ref_spp_' + n + '" name="hidden_no_ref_spp_' + n + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + n + '" name="hidden_tgl_ref_' + n + '">' +
@@ -1176,11 +1220,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="hidden" id="hidden_id_po_item_' + n + '" name="hidden_id_po_item_' + n + '">' +
             '</td>';
         var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<span style="display:none;" id="habis_' + n + '" class="badge badge-danger">Habis</span>' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + n + ')" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + n + ')" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
+
 
             '</td>';
         var form_tutup = '</form>';
@@ -1191,12 +1237,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_' + n).number(true, 2);
-        // if (n == 1) {
-        //     $('#btn_hapus_row_1').hide();
-        // } else {
-        //     $('#btn_hapus_row_1' + n).show();
-        // }
-        // modalSPP(n);
         hitungqty(n);
         jumlah(n);
         return true;
@@ -1204,7 +1244,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function pilihItem() {
         var rowcollection = $('#spp').DataTable().rows({
-            selected: true
+            selected: true,
+
         }).data().toArray();
         // console.log(rowcollection);
         $.each(rowcollection, function(index, elem) {
@@ -1216,7 +1257,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
         });
     }
-
 
     var n = 1;
     // $('#tableDetailSPP tbody').on('click', 'tr', function () {
@@ -1269,6 +1309,21 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     if (qty2 != null) {
                         var hasil = qty - qty2;
                         $('#txt_qty_' + n).val(hasil);
+                    } else {
+                        $('#txt_qty_' + n).val(qty);
+                        // $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+                    }
+
+                    if (qty2 != null) {
+                        var hasil = qty - qty2;
+                        $('#txt_qty_' + n).val(hasil);
+                        console.log(hasil);
+                        if (hasil == 0) {
+
+                            $('.div_form_2').find('#cmb_jenis_budget_' + n + ',#txt_merk_' + n + ', #txt_qty_' + n + ' ,#cmb_kurs_' + n + ',#txt_disc_' + n + ', #txt_harga_' + n + ',#txt_biaya_lain_' + n + ',txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_rinci_' + n).attr('disabled', '');
+                            $('#btn_simpan_' + n).hide();
+                            $('#habis_' + n).show();
+                        }
                     } else {
                         $('#txt_qty_' + n).val(qty);
                     }
@@ -1360,9 +1415,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function check_form_2() {
         if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#dikirim_kebun').val()) != '') {
-
             $('.div_form_2').show();
+            // $('.div_form_3').find('input,textarea,select,button').removeAttr('disabled', '');
+            // $('.div_form_3').find('input,textarea,select,button').prop('disabled', false);
         } else {
+            // $('.div_form_3').find('input,textarea,select,button').prop('disabled', true);
             $('.div_form_2').hide();
 
         }
@@ -2015,18 +2072,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function ubah(id) {
-        // $('.div_form_1').find('input,textarea,select').removeAttr('disabled');
-        // $('.div_form_1').find('input,textarea,select').removeClass('bg-light');
-        // $('.div_form_2').find('input,textarea,select').removeAttr('disabled');
-        // $('.div_form_2').find('input,textarea,select').removeClass('bg-light');
-        // $('#tableRinciPO').find('input,textarea').removeAttr('disabled');
-        // $('#tableRinciPO').find('input,textarea').removeClass('bg-light');
-        // $('#tableItemPO').find('input,textarea').removeAttr('disabled');
-        // $('#tableItemPO').find('input,textarea').removeClass('bg-light');
-        // $('#tableItemPO').find('select').removeAttr('disabled');
-        // $('#tableItemPO').find('select').removeClass('bg-light');
-        // $('#tableRinciPO').find('select').removeAttr('disabled');
-        // $('#tableRinciPO').find('select').removeClass('bg-light');
         $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
         $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
         $('#btn_ubah_' + id).hide();
@@ -2476,8 +2521,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // var selected = evt.params.data;
         var a = "0475";
         var b = "TOKO ( KAS )";
-        var kode = $(".select2 option:selected").text(a);
-        var data = $(".select2 option:selected").val(b);
+        var kode = $(".select2 option:selected").text();
+        var data = $(".select2 option:selected").val();
         $('#kd_supplier').val(kode);
         $('#txtsupplier').val(data);
 
@@ -2486,26 +2531,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
     $(document).ready(function() {
-        // $('#supllier').DataTable({
-        //     "processing": true,
-        //     "serverSide": true,
-        //     "order": [],
-        //     "ajax": {
-        //         "url": "<?php echo site_url('Po/get_ajax') ?>",
-        //         "type": "POST"
-        //     },
-        //     "columnDefs ": [{
-        //         "targets": [0],
-        //         "orderable": false,
-        //     }, ],
-        // });
-
+        $('#spp').DataTable().destroy();
         $('#spp').DataTable({
             "processing": true,
             "serverSide": true,
             "order": [],
             "select": true,
-            destroy: true,
+
             "ajax": {
                 "url": "<?php echo site_url('Po/get_ajax') ?>",
                 "type": "POST"
@@ -2538,10 +2570,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "bVisible": false,
                 "aTargets": [1]
             }, ]
-
-
-
-
         });
 
         $(document).on('click', '#pilih', function() {
