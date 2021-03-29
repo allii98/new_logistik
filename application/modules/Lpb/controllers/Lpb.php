@@ -423,4 +423,10 @@ class Lpb extends CI_Controller
         $result = $this->M_lpb->sumqty($kodebar, $nopo, $qty);
         echo json_encode($result);
     }
+
+    public function select2_get_po()
+    {
+        $data = $this->M_lpb->get_nopo();
+        echo json_encode($data);
+    }
 }

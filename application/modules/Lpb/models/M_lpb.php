@@ -124,6 +124,15 @@ class M_lpb extends CI_Model
         $result = $qty - $sumqty_lpb->qty_lpb;
         return $result;
     }
+
+    public function get_nopo()
+    {
+        // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
+        $nopo = $this->input->get('nopo');
+        $query = "SELECT nopo FROM po WHERE nopo LIKE '%$nopo%'";
+        $t = $this->db_logistik_pt->query($query)->result_array();
+        return $t;
+    }
 }
 
 /* End of file ModelName.php */

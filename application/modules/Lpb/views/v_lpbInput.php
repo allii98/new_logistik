@@ -13,11 +13,16 @@
                 <div class="row div_form_1">
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
+                            <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off">
+                            <div class="col-lg-7 col-11 row">
+                                <select class="js-data-example-ajax form-control select2" id="select2">
+                                </select>
+                                <input style="display:none;" id="multiple" class="form-control" type="text" class="col-2" onkeyup="cariPoqr()">
+                                <input type="hidden" id="txt_no_po">
+                                <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
                             </div>
+                            <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button>
                         </div>
                         <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
@@ -164,6 +169,7 @@
                                 </tr> -->
                             </tbody>
                         </table>
+                        <button class="btn btn-xs btn-success float-right" onclick="pre_save_all()"><b>SAVE ALL</b></button>
                     </div>
                 </div>
             </div>
@@ -183,7 +189,7 @@
             <div class="modal-body">
                 <div class="row mb-2 mt-0">
                     <button class="qrcode-reader mr-2 ml-2 mdi mdi-camera btn btn-xs btn-primary" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"> QRCode</button>
-                    <input id="multiple" type="text" class="col-4" onkeypress="cariPoqr()">
+                    <input id="multiple" type="text" class="col-4" onkeyup="cariPoqr()">
                 </div>
                 <div class="form-horizontal">
                     <div class="table-responsive">
@@ -254,18 +260,18 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        cariPo()
-    });
+    // $(document).ready(function() {
+    //     cariPo()
+    // });
 
-    function cariPo() {
+    // function cariPo() {
 
-        $('#modalListPo').modal({
-            backdrop: 'static',
-            keyboard: false
-        });
-        $('#modalListPo').modal('show');
-    }
+    //     $('#modalListPo').modal({
+    //         backdrop: 'static',
+    //         keyboard: false
+    //     });
+    //     $('#modalListPo').modal('show');
+    // }
 
     // Start Data Table Server Side
     var table;
@@ -296,92 +302,127 @@
     $(document).ready(function() {
         $(document).on('click', '#pilih_po', function() {
 
-            var nopotxt = $(this).data('nopotxt');
-            var noreftxt = $(this).data('noreftxt');
-            var tglpo = $(this).data('tglpo');
-            var kode_supply = $(this).data('kode_supply');
-            var nama_supply = $(this).data('nama_supply');
+            var n = $(this).data('nopotxt');
             // console.log(nabar);
 
             // Set data
-            $('#txt_no_po').val(nopotxt);
-            $('#txt_ref_po').val(noreftxt);
-            $('#txt_tgl_po').val(tglpo);
-            $('#txt_kd_supplier').val(kode_supply);
-            $('#txt_supplier').val(nama_supply);
-            $("#modalListPo").modal('hide');
-            nopo(nopotxt);
+            // $('#multiple').val(nopotxt);
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
+                dataType: "JSON",
 
-        });
-    });
-
-    function cari_barang(no_row) {
-        // $('#hidden_no_row').empty();
-        console.log(no_row);
-        $('#hidden_no_row').val(no_row);
-        $('#modalListItemPo').modal('show');
-        // $('#tableListBarang').DataTable().destroy();
-        // listBarang(no_row);
-    }
-
-    // Start Data Table Server Side
-    var table;
-
-    function nopo(nopotxt) {
-        $(document).ready(function() {
-
-            //datatables
-            var nopo = nopotxt;
-            console.log(nopo);
-            table = $('#tableDetailItemPo').DataTable({
-                "destroy": true,
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-
-                "ajax": {
-                    "url": "<?php echo site_url('Lpb/get_data_item_po') ?>",
-                    "type": "POST",
-                    "data": {
-                        nopo: nopo
-                    }
+                data: {
+                    'nopotxt': n
                 },
+                success: function(data) {
 
-                "columnDefs": [{
-                    "targets": [0],
-                    "orderable": false,
-                }, ],
+                    var data_po = data.data_po;
+                    var data_item_po = data.data_item_po;
 
+                    $('#txt_no_po').val(data_po.nopotxt);
+                    $('#txt_ref_po').val(data_po.noreftxt);
+                    $('#txt_tgl_po').val(data_po.tglpo);
+                    var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
+                    $('#txt_kd_name_supplier').val(namesup);
+
+                    $("#modalListPo").modal('hide');
+
+                    for (i = 0; i < data_item_po.length; i++) {
+                        // var no = i + 1;
+
+                        tambah_row(i);
+                        sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
+
+                        var kodebar = data_item_po[i].kodebar;
+                        var nabar = data_item_po[i].nabar;
+                        var qty = data_item_po[i].qty;
+                        var sat = data_item_po[i].sat;
+                        var ket = data_item_po[i].ket;
+                        // var sumsisa = $(this).data('sumsisa');
+
+                        // Set data
+                        $('#txt_kode_barang_' + i).val(kodebar);
+                        $('#txt_nama_brg_' + i).text(nabar);
+                        $('#txt_satuan_' + i).text(sat);
+                        $('#txt_ket_rinci_' + i).text(ket);
+                        $('#qty_po_' + i).text(qty);
+                        // $('#sisa_qty_' + no).text(sumsisa);
+                        getGrupBarang(kodebar, i);
+                    }
+                }
             });
 
         });
-    }
+    });
+
+    // function cari_barang(no_row) {
+    //     // $('#hidden_no_row').empty();
+    //     console.log(no_row);
+    //     $('#hidden_no_row').val(no_row);
+    //     $('#modalListItemPo').modal('show');
+    //     // $('#tableListBarang').DataTable().destroy();
+    //     // listBarang(no_row);
+    // }
+
+    // Start Data Table Server Side
+    // var table;
+
+    // function nopo(nopotxt) {
+    //     $(document).ready(function() {
+
+    //         //datatables
+    //         var nopo = nopotxt;
+    //         console.log(nopo);
+    //         table = $('#tableDetailItemPo').DataTable({
+    //             "destroy": true,
+    //             "processing": true,
+    //             "serverSide": true,
+    //             "order": [],
+
+    //             "ajax": {
+    //                 "url": "<?php echo site_url('Lpb/get_data_item_po') ?>",
+    //                 "type": "POST",
+    //                 "data": {
+    //                     nopo: nopo
+    //                 }
+    //             },
+
+    //             "columnDefs": [{
+    //                 "targets": [0],
+    //                 "orderable": false,
+    //             }, ],
+
+    //         });
+
+    //     });
+    // }
     // End Data Table Server Side
 
-    $(document).ready(function() {
-        $(document).on('click', '#pilih_item_po', function() {
+    // $(document).ready(function() {
+    //     $(document).on('click', '#pilih_item_po', function() {
 
-            var n = $('#hidden_no_row').val();
+    //         var n = $('#hidden_no_row').val();
 
-            var kodebar = $(this).data('kodebar');
-            var nabar = $(this).data('nabar');
-            var qty = $(this).data('qty');
-            var sat = $(this).data('sat');
-            var ket = $(this).data('ket');
-            var sumsisa = $(this).data('sumsisa');
-            // console.log(nabar);
+    //         var kodebar = $(this).data('kodebar');
+    //         var nabar = $(this).data('nabar');
+    //         var qty = $(this).data('qty');
+    //         var sat = $(this).data('sat');
+    //         var ket = $(this).data('ket');
+    //         var sumsisa = $(this).data('sumsisa');
+    //         // console.log(nabar);
 
-            // Set data
-            $('#txt_kode_barang_' + n).val(kodebar);
-            $('#txt_nama_brg_' + n).text(nabar);
-            $('#txt_satuan_' + n).text(sat);
-            $('#txt_ket_rinci_' + n).text(ket);
-            $('#qty_po_' + n).text(qty);
-            $('#sisa_qty_' + n).text(sumsisa);
-            $("#modalListItemPo").modal('hide');
-            getGrupBarang(kodebar, n);
-        });
-    });
+    //         // Set data
+    //         $('#txt_kode_barang_' + n).val(kodebar);
+    //         $('#txt_nama_brg_' + n).text(nabar);
+    //         $('#txt_satuan_' + n).text(sat);
+    //         $('#txt_ket_rinci_' + n).text(ket);
+    //         $('#qty_po_' + n).text(qty);
+    //         $('#sisa_qty_' + n).text(sumsisa);
+    //         $("#modalListItemPo").modal('hide');
+    //         getGrupBarang(kodebar, n);
+    //     });
+    // });
 
     function getGrupBarang(kodebar, n) {
         $.ajax({
@@ -631,16 +672,18 @@
         });
     });
 
-    function cariPoqr() {
+    function cariPoqr(n) {
 
         var n = $('#multiple').val();
-        console.log(n);
+        console.log(n + 'yeyelala');
 
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
             dataType: "JSON",
-            beforeSend: function() {},
+            beforeSend: function() {
+                $('#tbody_rincian').empty();
+            },
 
             data: {
                 'nopotxt': n
@@ -649,6 +692,8 @@
 
                 var data_po = data.data_po;
                 var data_item_po = data.data_item_po;
+
+                console.log(data_po);
 
                 $('#txt_no_po').val(data_po.nopotxt);
                 $('#txt_ref_po').val(data_po.noreftxt);
@@ -682,5 +727,169 @@
                 }
             }
         });
+    }
+
+    $("#select2").select2({
+        ajax: {
+            url: "<?php echo site_url('Lpb/select2_get_po') ?>",
+            dataType: 'json',
+            delay: 250,
+            data: function(params) {
+                return {
+                    nopo: params.term, // search term
+                };
+            },
+            processResults: function(data) {
+                var results = [];
+                $.each(data, function(index, item) {
+                    results.push({
+                        id: item.nopo,
+                        text: item.nopo
+                    });
+                });
+                return {
+                    results: results
+                };
+            }
+        }
+    }).on('select2:select', function(evt) {
+        // var selected = evt.params.data;
+        // var a = "0475";
+        // var b = "TOKO ( KAS )";
+        // var kode = $(".select2 option:selected").text(a);
+        // var data = $(".select2 option:selected").val(b);
+        // $('#kd_supplier').val(kode);
+        var data = $(".select2 option:selected").text();
+        $('#txt_no_po').val(data);
+        $('#multiple').val(data);
+
+        // $('#hidden_no_ref_spp_').val(data);
+        console.log(data);
+        cariPoqr(data);
+
+    });
+
+    $(document).ready(function() {
+        $(document).on('click', '#openreader-multi', function() {
+
+            $('#multiple').css('display', 'block');
+            $('#select2').next(".select2-container").hide();
+
+        });
+    });
+
+    function pre_save_all() {
+        var n = $('#multiple').val();
+        console.log(n + 'yeyelala');
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#tbody_rincian').empty();
+            },
+
+            data: {
+                'nopotxt': n
+            },
+            success: function(data) {
+
+                var data_item_po = data.data_item_po;
+                var count = data_item_po.length;
+
+                console.log(count + "kon");
+
+                save_all(count);
+            }
+        });
+
+        function save_all(count) {
+            for (n = 1; n <= count; n++) {
+                console.log(n);
+
+                var no_ref_po = $('#txt_ref_po').val();
+                var no_po = $('#txt_no_po').val();
+                var kodebar = $('#txt_kode_barang_' + n).val();
+
+                if ($('#chk_asset_' + n).is(':checked')) {
+                    var chk_asset = 'yes';
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo base_url('Lpb/saveLpb') ?>",
+                    dataType: "JSON",
+
+                    beforeSend: function() {
+                        $('#btn_simpan_' + n).css('display', 'none');
+
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+
+                        if ($.trim($('#hidden_no_spp').val()) == '') {
+                            $('#lbl_lpb_status').empty();
+                            $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                        }
+                    },
+
+                    data: {
+                        txt_no_po: $('#txt_no_po').val(),
+                        txt_ref_po: $('#txt_ref_po').val(),
+                        // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+                        txt_kode_barang: $('#txt_kode_barang_' + n).val(),
+                        txt_nama_brg: $('#txt_nama_brg_' + n).text(),
+                        txt_tgl_terima: $('#txt_tgl_terima').val(),
+                        hidden_no_lpb: $('#hidden_no_lpb').val(),
+                        chk_asset: chk_asset,
+                        txt_kd_supplier: $('#txt_kd_supplier').val(),
+                        txt_supplier: $('#txt_supplier').val(),
+                        txt_no_pengantar: $('#txt_no_pengantar').val(),
+                        txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
+                        txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
+                        txt_satuan: $('#txt_satuan_' + n).text(),
+                        hidden_grup: $('#hidden_grup_' + n).text(),
+                        txt_qty: $('#txt_qty_' + n).val(),
+                        txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
+                    },
+
+                    success: function(data) {
+                        console.log(n);
+
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_lpb_status').empty();
+
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Disimpan!',
+                            icon: 'success',
+                            loader: false
+                        });
+
+                        // hitung sisa qty po guys
+                        sisaQtyPO(no_ref_po, no_po, kodebar, n);
+
+                        $('#no_lpb').html('No. SPP : ' + data.nolpb);
+                        $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+
+                        $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                        $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+
+                        $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+                        $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+                        // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+
+                        $('#btn_hapus_row_' + n).css('display', 'none');
+                        $('#btn_ubah_' + n).css('display', 'block');
+                        $('#btn_hapus_' + n).css('display', 'block');
+
+                        // $('#hidden_id_ppo').val(data.id_ppo);
+                        // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+
+                    }
+                });
+            }
+        }
     }
 </script>
