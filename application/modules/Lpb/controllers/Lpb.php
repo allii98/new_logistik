@@ -36,85 +36,85 @@ class Lpb extends CI_Controller
     {
         $data['title'] = 'Laporan Penerimaan Barang';
 
-        $data['devisi'] = $this->M_lpb->cariDevisi();
+        // $data['devisi'] = $this->M_lpb->cariDevisi();
 
         $this->template->load('template', 'v_lpbInput', $data);
     }
 
-    public function get_data_po()
-    {
-        $list = $this->M_lpb->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $field) {
-            $no++;
-            $row = array();
-            $row[] = '<button class="btn btn-success btn-xs" id="pilih_po" name="pilih_po"
-                        data-nopotxt="' . $field->nopotxt . '" data-noreftxt="' . $field->noreftxt . '"
-                        data-tglpo="' . $field->tglpo . '" data-kode_supply="' . $field->kode_supply . '"
-                        data-nama_supply="' . $field->nama_supply . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih
-                        </button>';
-            $row[] = $no;
-            $row[] = $field->tglpo;
-            $row[] = $field->nopotxt;
-            $row[] = $field->noreftxt;
-            $row[] = $field->nama_supply;
-            $row[] = $field->lokasi_beli;
+    // public function get_data_po()
+    // {
+    //     $list = $this->M_lpb->get_datatables();
+    //     $data = array();
+    //     $no = $_POST['start'];
+    //     foreach ($list as $field) {
+    //         $no++;
+    //         $row = array();
+    //         $row[] = '<button class="btn btn-success btn-xs" id="pilih_po" name="pilih_po"
+    //                     data-nopotxt="' . $field->nopotxt . '" data-noreftxt="' . $field->noreftxt . '"
+    //                     data-tglpo="' . $field->tglpo . '" data-kode_supply="' . $field->kode_supply . '"
+    //                     data-nama_supply="' . $field->nama_supply . '"
+    //                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih
+    //                     </button>';
+    //         $row[] = $no;
+    //         $row[] = $field->tglpo;
+    //         $row[] = $field->nopotxt;
+    //         $row[] = $field->noreftxt;
+    //         $row[] = $field->nama_supply;
+    //         $row[] = $field->lokasi_beli;
 
-            $data[] = $row;
-        }
+    //         $data[] = $row;
+    //     }
 
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_lpb->count_all(),
-            "recordsFiltered" => $this->M_lpb->count_filtered(),
-            "data" => $data,
-        );
-        //output dalam format JSON
-        echo json_encode($output);
-    }
+    //     $output = array(
+    //         "draw" => $_POST['draw'],
+    //         "recordsTotal" => $this->M_lpb->count_all(),
+    //         "recordsFiltered" => $this->M_lpb->count_filtered(),
+    //         "data" => $data,
+    //     );
+    //     //output dalam format JSON
+    //     echo json_encode($output);
+    // }
 
-    public function get_data_item_po()
-    {
-        $nopo = $this->input->post('nopo');
-        $this->M_item_lpb->where_datatables($nopo);
-        $list = $this->M_item_lpb->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $field) {
+    // public function get_data_item_po()
+    // {
+    //     $nopo = $this->input->post('nopo');
+    //     $this->M_item_lpb->where_datatables($nopo);
+    //     $list = $this->M_item_lpb->get_datatables();
+    //     $data = array();
+    //     $no = $_POST['start'];
+    //     foreach ($list as $field) {
 
-            $sumqty = $this->M_item_lpb->sumqty($field->kodebar, $field->nopo);
-            $sumsisa = $field->qty - $sumqty->qty_lpb;
-            $no++;
-            $row = array();
-            $row[] = '<button class="btn btn-success btn-xs" id="pilih_item_po" name="pilih_item_po"
-                        data-kodebar="' . $field->kodebar . '" data-nabar="' . $field->nabar . '"
-                        data-qty="' . $field->qty . '" data-sat="' . $field->sat . '"
-                        data-ket="' . $field->ket . '" data-sumsisa="' . $sumsisa . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih
-                        </button>';
-            $row[] = $no;
-            $row[] = $field->kodebar;
-            $row[] = $field->nabar;
-            $row[] = $field->qty;
-            $row[] = $sumqty->qty_lpb;
-            $row[] = $sumsisa;
-            $row[] = $field->sat;
-            $row[] = $field->ket;
+    //         $sumqty = $this->M_item_lpb->sumqty($field->kodebar, $field->nopo);
+    //         $sumsisa = $field->qty - $sumqty->qty_lpb;
+    //         $no++;
+    //         $row = array();
+    //         $row[] = '<button class="btn btn-success btn-xs" id="pilih_item_po" name="pilih_item_po"
+    //                     data-kodebar="' . $field->kodebar . '" data-nabar="' . $field->nabar . '"
+    //                     data-qty="' . $field->qty . '" data-sat="' . $field->sat . '"
+    //                     data-ket="' . $field->ket . '" data-sumsisa="' . $sumsisa . '"
+    //                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih
+    //                     </button>';
+    //         $row[] = $no;
+    //         $row[] = $field->kodebar;
+    //         $row[] = $field->nabar;
+    //         $row[] = $field->qty;
+    //         $row[] = $sumqty->qty_lpb;
+    //         $row[] = $sumsisa;
+    //         $row[] = $field->sat;
+    //         $row[] = $field->ket;
 
-            $data[] = $row;
-        }
+    //         $data[] = $row;
+    //     }
 
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_item_lpb->count_all(),
-            "recordsFiltered" => $this->M_item_lpb->count_filtered(),
-            "data" => $data,
-        );
-        //output dalam format JSON
-        echo json_encode($output);
-    }
+    //     $output = array(
+    //         "draw" => $_POST['draw'],
+    //         "recordsTotal" => $this->M_item_lpb->count_all(),
+    //         "recordsFiltered" => $this->M_item_lpb->count_filtered(),
+    //         "data" => $data,
+    //     );
+    //     //output dalam format JSON
+    //     echo json_encode($output);
+    // }
 
     public function get_grup_barang()
     {
