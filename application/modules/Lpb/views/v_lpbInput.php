@@ -45,6 +45,8 @@
                             </label>
                             <div class="col-md-8 row">
                                 <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly>
+                                <input type="hidden" id="txt_kd_supplier">
+                                <input type="hidden" id="txt_supplier">
                             </div>
                         </div>
                     </div>
@@ -102,8 +104,8 @@
                         <h6 id="lbl_lpb_status" name="lbl_lpb_status">
                             <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
                         </h6>
-                        <input type="" id="hidden_no_lpb">
-                        <input type="" id="hidden_no_ref_lpb">
+                        <input type="hidden" id="hidden_no_lpb">
+                        <input type="hidden" id="hidden_no_ref_lpb">
                     </div>
                     <div class="row" style="margin-left:4px;">
                         <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
@@ -120,7 +122,6 @@
                                     <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
                                     <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
                                     <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
-                                    <th width="6%">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
@@ -262,170 +263,6 @@
 </div>
 
 <script>
-    // $(document).ready(function() {
-    //     cariPo()
-    // });
-
-    // function cariPo() {
-
-    //     $('#modalListPo').modal({
-    //         backdrop: 'static',
-    //         keyboard: false
-    //     });
-    //     $('#modalListPo').modal('show');
-    // }
-
-    // Start Data Table Server Side
-    // var table;
-    // $(document).ready(function() {
-
-    //     //datatables
-    //     table = $('#tableDetailPo').DataTable({
-
-    //         "processing": true,
-    //         "serverSide": true,
-    //         "order": [],
-
-    //         "ajax": {
-    //             "url": "<?php echo site_url('Lpb/get_data_po') ?>",
-    //             "type": "POST"
-    //         },
-
-    //         "columnDefs": [{
-    //             "targets": [0],
-    //             "orderable": false,
-    //         }, ],
-
-    //     });
-
-    // });
-    // End Data Table Server Side
-
-    // $(document).ready(function() {
-    //     $(document).on('click', '#pilih_po', function() {
-
-    //         var n = $(this).data('nopotxt');
-    //         // console.log(nabar);
-
-    //         // Set data
-    //         // $('#multiple').val(nopotxt);
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
-    //             dataType: "JSON",
-
-    //             data: {
-    //                 'nopotxt': n
-    //             },
-    //             success: function(data) {
-
-    //                 var data_po = data.data_po;
-    //                 var data_item_po = data.data_item_po;
-
-    //                 $('#txt_no_po').val(data_po.nopotxt);
-    //                 $('#txt_ref_po').val(data_po.noreftxt);
-    //                 $('#txt_tgl_po').val(data_po.tglpo);
-    //                 var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
-    //                 $('#txt_kd_name_supplier').val(namesup);
-
-    //                 $("#modalListPo").modal('hide');
-
-    //                 for (i = 0; i < data_item_po.length; i++) {
-    //                     // var no = i + 1;
-
-    //                     tambah_row(i);
-    //                     sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
-
-    //                     var kodebar = data_item_po[i].kodebar;
-    //                     var nabar = data_item_po[i].nabar;
-    //                     var qty = data_item_po[i].qty;
-    //                     var sat = data_item_po[i].sat;
-    //                     var ket = data_item_po[i].ket;
-    //                     // var sumsisa = $(this).data('sumsisa');
-
-    //                     // Set data
-    //                     $('#txt_kode_barang_' + i).val(kodebar);
-    //                     $('#txt_nama_brg_' + i).text(nabar);
-    //                     $('#txt_satuan_' + i).text(sat);
-    //                     $('#txt_ket_rinci_' + i).text(ket);
-    //                     $('#qty_po_' + i).text(qty);
-    //                     // $('#sisa_qty_' + no).text(sumsisa);
-    //                     getGrupBarang(kodebar, i);
-    //                 }
-    //             }
-    //         });
-
-    //     });
-    // });
-
-    // function cari_barang(no_row) {
-    //     // $('#hidden_no_row').empty();
-    //     console.log(no_row);
-    //     $('#hidden_no_row').val(no_row);
-    //     $('#modalListItemPo').modal('show');
-    //     // $('#tableListBarang').DataTable().destroy();
-    //     // listBarang(no_row);
-    // }
-
-    // Start Data Table Server Side
-    // var table;
-
-    // function nopo(nopotxt) {
-    //     $(document).ready(function() {
-
-    //         //datatables
-    //         var nopo = nopotxt;
-    //         console.log(nopo);
-    //         table = $('#tableDetailItemPo').DataTable({
-    //             "destroy": true,
-    //             "processing": true,
-    //             "serverSide": true,
-    //             "order": [],
-
-    //             "ajax": {
-    //                 "url": "<?php echo site_url('Lpb/get_data_item_po') ?>",
-    //                 "type": "POST",
-    //                 "data": {
-    //                     nopo: nopo
-    //                 }
-    //             },
-
-    //             "columnDefs": [{
-    //                 "targets": [0],
-    //                 "orderable": false,
-    //             }, ],
-
-    //         });
-
-    //     });
-    // }
-    // End Data Table Server Side
-
-    // $(document).ready(function() {
-    //     $(document).on('click', '#pilih_item_po', function() {
-
-    //         var n = $('#hidden_no_row').val();
-
-    //         var kodebar = $(this).data('kodebar');
-    //         var nabar = $(this).data('nabar');
-    //         var qty = $(this).data('qty');
-    //         var sat = $(this).data('sat');
-    //         var ket = $(this).data('ket');
-    //         var sumsisa = $(this).data('sumsisa');
-    //         // console.log(nabar);
-
-    //         // Set data
-    //         $('#txt_kode_barang_' + n).val(kodebar);
-    //         $('#txt_nama_brg_' + n).text(nabar);
-    //         $('#txt_satuan_' + n).text(sat);
-    //         $('#txt_ket_rinci_' + n).text(ket);
-    //         $('#qty_po_' + n).text(qty);
-    //         $('#sisa_qty_' + n).text(sumsisa);
-    //         $("#modalListItemPo").modal('hide');
-    //         getGrupBarang(kodebar, n);
-    //     });
-    // });
-
     function getGrupBarang(kodebar, n) {
         $.ajax({
             type: "POST",
@@ -501,17 +338,17 @@
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '<input type="hidden" id="hidden_id_masuk_item_' + row + '" name="hidden_id_masuk_item_' + row + '">' +
             '</td>';
-        var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
-            '</td>';
+        // var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        //     '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
+        //     '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
+        //     '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
+        //     '<button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+        //     '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+        //     '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
+        $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + form_tutup + tr_tutup);
 
         // $('#txt_qty_' + row).number(true, 2);
 
@@ -522,100 +359,6 @@
         // row++;
         $('#hidden_no_table').val(row);
     }
-
-    // function hapus_row(id) {
-    //     var rowCount = $("#tableRinciLPB td").closest("tr").length;
-    //     if (rowCount != 1) {
-    //         $('#tr_' + id).remove();
-    //     } else {
-    //         swal('Tidak Bisa dihapus, item LPB tinggal 1');
-    //     }
-    // }
-
-    // function saveRinciClick(n) {
-
-    //     var no_ref_po = $('#txt_ref_po').val();
-    //     var no_po = $('#txt_no_po').val();
-    //     var kodebar = $('#txt_kode_barang_' + n).val();
-
-    //     if ($('#chk_asset_' + n).is(':checked')) {
-    //         var chk_asset = 'yes';
-    //     }
-
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "<?php echo base_url('Lpb/saveLpb') ?>",
-    //         dataType: "JSON",
-
-    //         beforeSend: function() {
-    //             $('#btn_simpan_' + n).css('display', 'none');
-
-    //             $('#lbl_status_simpan_' + n).empty();
-    //             $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
-
-    //             if ($.trim($('#hidden_no_spp').val()) == '') {
-    //                 $('#lbl_lpb_status').empty();
-    //                 $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
-    //             }
-    //         },
-
-    //         data: {
-    //             txt_no_po: $('#txt_no_po').val(),
-    //             txt_ref_po: $('#txt_ref_po').val(),
-    //             // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
-    //             txt_kode_barang: $('#txt_kode_barang_' + n).val(),
-    //             txt_nama_brg: $('#txt_nama_brg_' + n).text(),
-    //             txt_tgl_terima: $('#txt_tgl_terima').val(),
-    //             hidden_no_lpb: $('#hidden_no_lpb').val(),
-    //             chk_asset: chk_asset,
-    //             txt_kd_supplier: $('#txt_kd_supplier').val(),
-    //             txt_supplier: $('#txt_supplier').val(),
-    //             txt_no_pengantar: $('#txt_no_pengantar').val(),
-    //             txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
-    //             txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
-    //             txt_satuan: $('#txt_satuan_' + n).text(),
-    //             hidden_grup: $('#hidden_grup_' + n).text(),
-    //             txt_qty: $('#txt_qty_' + n).val(),
-    //             txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
-    //         },
-
-    //         success: function(data) {
-    //             console.log(n);
-
-    //             $('#lbl_status_simpan_' + n).empty();
-    //             $('#lbl_lpb_status').empty();
-
-    //             $.toast({
-    //                 position: 'top-right',
-    //                 heading: 'Success',
-    //                 text: 'Berhasil Disimpan!',
-    //                 icon: 'success',
-    //                 loader: false
-    //             });
-
-    //             // hitung sisa qty po guys
-    //             sisaQtyPO(no_ref_po, no_po, kodebar, n);
-
-    //             $('#no_lpb').html('No. SPP : ' + data.nolpb);
-    //             $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
-
-    //             $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-    //             $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
-
-    //             $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-    //             $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-    //             // $('.headspp').find('#cancelSpp').removeAttr('disabled');
-
-    //             $('#btn_hapus_row_' + n).css('display', 'none');
-    //             $('#btn_ubah_' + n).css('display', 'block');
-    //             $('#btn_hapus_' + n).css('display', 'block');
-
-    //             // $('#hidden_id_ppo').val(data.id_ppo);
-    //             // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
-
-    //         }
-    //     });
-    // }
 
     function sisaQtyPO(no_ref_po, no_po, kodebar, n) {
         // console.log('sisa no' + n);
@@ -674,7 +417,7 @@
         });
     });
 
-    function cariPoqr(n) {
+    function cariPoqr() {
 
         var n = $('#multiple').val();
         // console.log(n + 'yeyelala');
@@ -702,6 +445,8 @@
                 $('#txt_tgl_po').val(data_po.tglpo);
                 var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
                 $('#txt_kd_name_supplier').val(namesup);
+                $('#txt_kd_supplier').val(data_po.kode_supply);
+                $('#txt_supplier').val(data_po.nama_supply);
 
                 $("#modalListPo").modal('hide');
 
@@ -764,10 +509,9 @@
         var data = $(".select2 option:selected").text();
         $('#txt_no_po').val(data);
         $('#multiple').val(data);
-
         // $('#hidden_no_ref_spp_').val(data);
         // console.log(data);
-        cariPoqr(data);
+        cariPoqr();
 
     });
 
@@ -800,183 +544,191 @@
                 var data_item_po = data.data_item_po;
                 var count = data_item_po.length;
 
-                // console.log(count + "kon");
+                // console.log(count);
 
+                // cariPoqr();
                 save_all(count);
             }
         });
     }
 
     function save_all(count) {
-        for (n = 0; n < count; n++) {
-            console.log(n);
+        var n = 0;
 
-            var no_ref_po = $('#txt_ref_po').val();
-            var no_po = $('#txt_no_po').val();
-            var kodebar = $('#txt_kode_barang_' + n).val();
+        var no_ref_po = $('#txt_ref_po').val();
+        var no_po = $('#txt_no_po').val();
+        var kodebar = $('#txt_kode_barang_' + n).val();
+
+        console.log(kodebar);
+
+        // if ($('#chk_asset_' + n).is(':checked')) {
+        //     var chk_asset = 'yes';
+        // }
+
+        // $.ajax({
+        //     type: "POST",
+        //     url: "<?php echo base_url('Lpb/saveLpb') ?>",
+        //     dataType: "JSON",
+
+        //     beforeSend: function() {
+        //         $('#btn_simpan_' + n).css('display', 'none');
+
+        //         $('#lbl_status_simpan_' + n).empty();
+        //         $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+
+        //         if ($.trim($('#hidden_no_spp').val()) == '') {
+        //             $('#lbl_lpb_status').empty();
+        //             $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+        //         }
+        //     },
+
+        //     data: {
+        //         txt_no_po: $('#txt_no_po').val(),
+        //         txt_ref_po: $('#txt_ref_po').val(),
+        //         // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+        //         txt_kode_barang: $('#txt_kode_barang_' + n).val(),
+        //         txt_nama_brg: $('#txt_nama_brg_' + n).text(),
+        //         txt_tgl_terima: $('#txt_tgl_terima').val(),
+        //         hidden_no_lpb: $('#hidden_no_lpb').val(),
+        //         hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+        //         chk_asset: chk_asset,
+        //         txt_kd_supplier: $('#txt_kd_supplier').val(),
+        //         txt_supplier: $('#txt_supplier').val(),
+        //         txt_no_pengantar: $('#txt_no_pengantar').val(),
+        //         txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
+        //         txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
+        //         txt_satuan: $('#txt_satuan_' + n).text(),
+        //         hidden_grup: $('#hidden_grup_' + n).text(),
+        //         txt_qty: $('#txt_qty_' + n).val(),
+        //         txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
+        //     },
+        //     success: function(data) {
+        //         // console.log(n);
+
+        //         // $('#lbl_status_simpan_' + n).empty();
+        //         $('#lbl_lpb_status').empty();
+
+        //         $.toast({
+        //             position: 'top-right',
+        //             heading: 'Success',
+        //             text: 'Berhasil Disimpan!',
+        //             icon: 'success',
+        //             loader: false
+        //         });
+
+        //         // hitung sisa qty po guys
+        //         sisaQtyPO(no_ref_po, no_po, kodebar, n);
+
+        //         $('#no_lpb').html('No. SPP : ' + data.nolpb);
+        //         $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+        //         $('#hidden_no_lpb').val(data.nolpb);
+        //         $('#hidden_no_ref_lpb').val(data.noreflpb);
+
+        //         save_dua_dst(data.nolpb, data.noreflpb, count);
+
+        //         // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+        //         // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+
+        //         // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+        //         // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+        //         // // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+
+        //         // $('#btn_hapus_row_' + n).css('display', 'none');
+        //         // $('#btn_ubah_' + n).css('display', 'block');
+        //         // $('#btn_hapus_' + n).css('display', 'block');
+
+        //         // $('#hidden_id_ppo').val(data.id_ppo);
+        //         // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+
+        //     }
+        // });
+    }
+
+    function save_dua_dst(no_lpb, noref_lpb, count) {
+        // console.log(no_lpb);
+        // console.log(noref_lpb);
+        // console.log(count);
+
+        var lup = count - 1;
+        for (n = 1; n <= lup; n++) {
+            // console.log(n);
 
             if ($('#chk_asset_' + n).is(':checked')) {
                 var chk_asset = 'yes';
             }
 
-            if (n == 0) {
-                console.log('ini simpan pertama');
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo base_url('Lpb/saveLpb') ?>",
-                    dataType: "JSON",
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Lpb/saveLpb') ?>",
+                dataType: "JSON",
 
-                    beforeSend: function() {
-                        $('#btn_simpan_' + n).css('display', 'none');
+                beforeSend: function() {
+                    // $('#btn_simpan_' + n).css('display', 'none');
 
-                        $('#lbl_status_simpan_' + n).empty();
-                        $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+                    // $('#lbl_status_simpan_' + n).empty();
+                    // $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
 
-                        if ($.trim($('#hidden_no_spp').val()) == '') {
-                            $('#lbl_lpb_status').empty();
-                            $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
-                        }
-                    },
+                    // if ($.trim($('#hidden_no_spp').val()) == '') {
+                    //     $('#lbl_lpb_status').empty();
+                    //     $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                    // }
+                },
 
-                    data: {
-                        txt_no_po: $('#txt_no_po').val(),
-                        txt_ref_po: $('#txt_ref_po').val(),
-                        // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
-                        txt_kode_barang: $('#txt_kode_barang_' + n).val(),
-                        txt_nama_brg: $('#txt_nama_brg_' + n).text(),
-                        txt_tgl_terima: $('#txt_tgl_terima').val(),
-                        hidden_no_lpb: $('#hidden_no_lpb').val(),
-                        chk_asset: chk_asset,
-                        txt_kd_supplier: $('#txt_kd_supplier').val(),
-                        txt_supplier: $('#txt_supplier').val(),
-                        txt_no_pengantar: $('#txt_no_pengantar').val(),
-                        txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
-                        txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
-                        txt_satuan: $('#txt_satuan_' + n).text(),
-                        hidden_grup: $('#hidden_grup_' + n).text(),
-                        txt_qty: $('#txt_qty_' + n).val(),
-                        txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
-                    },
-                    success: function(data) {
-                        // console.log(n);
+                data: {
+                    txt_no_po: $('#txt_no_po').val(),
+                    txt_ref_po: $('#txt_ref_po').val(),
+                    // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+                    txt_kode_barang: $('#txt_kode_barang_' + n).val(),
+                    txt_nama_brg: $('#txt_nama_brg_' + n).text(),
+                    txt_tgl_terima: $('#txt_tgl_terima').val(),
+                    hidden_no_lpb: no_lpb,
+                    hidden_no_ref_lpb: noref_lpb,
+                    chk_asset: chk_asset,
+                    txt_kd_supplier: $('#txt_kd_supplier').val(),
+                    txt_supplier: $('#txt_supplier').val(),
+                    txt_no_pengantar: $('#txt_no_pengantar').val(),
+                    txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
+                    txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
+                    txt_satuan: $('#txt_satuan_' + n).text(),
+                    hidden_grup: $('#hidden_grup_' + n).text(),
+                    txt_qty: $('#txt_qty_' + n).val(),
+                    txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
+                },
+                success: function(data) {
+                    // console.log(n);
 
-                        // $('#lbl_status_simpan_' + n).empty();
-                        $('#lbl_lpb_status').empty();
+                    // $('#lbl_status_simpan_' + n).empty();
+                    $('#lbl_lpb_status').empty();
 
-                        $.toast({
-                            position: 'top-right',
-                            heading: 'Success',
-                            text: 'Berhasil Disimpan!',
-                            icon: 'success',
-                            loader: false
-                        });
+                    // $.toast({
+                    //     position: 'top-right',
+                    //     heading: 'Success',
+                    //     text: 'Berhasil Disimpan!',
+                    //     icon: 'success',
+                    //     loader: false
+                    // });
 
-                        // hitung sisa qty po guys
-                        sisaQtyPO(no_ref_po, no_po, kodebar, n);
+                    // hitung sisa qty po guys
+                    sisaQtyPO(no_ref_po, no_po, kodebar, n);
 
-                        $('#no_lpb').html('No. SPP : ' + data.nolpb);
-                        $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
-                        $('#hidden_no_lpb').val(data.nolpb);
-                        $('#hidden_no_ref_lpb').val(data.noreflpb);
+                    // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                    // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
-                        // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                        // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+                    // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+                    // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+                    // // $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
-                        // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-                        // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                        // // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+                    // $('#btn_hapus_row_' + n).css('display', 'none');
+                    // $('#btn_ubah_' + n).css('display', 'block');
+                    // $('#btn_hapus_' + n).css('display', 'block');
 
-                        // $('#btn_hapus_row_' + n).css('display', 'none');
-                        // $('#btn_ubah_' + n).css('display', 'block');
-                        // $('#btn_hapus_' + n).css('display', 'block');
+                    // $('#hidden_id_ppo').val(data.id_ppo);
+                    // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
 
-                        // $('#hidden_id_ppo').val(data.id_ppo);
-                        // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+                }
+            });
 
-                    }
-                });
-            } else {
-                console.log('ini simpan kedua dst');
-                var hnl = $('#hidden_no_lpb').val();
-                console.log(hnl + "ini no lpb");
-                // $.ajax({
-                //     type: "POST",
-                //     url: "<?php echo base_url('Lpb/saveLpb') ?>",
-                //     dataType: "JSON",
-
-                //     beforeSend: function() {
-                //         $('#btn_simpan_' + n).css('display', 'none');
-
-                //         $('#lbl_status_simpan_' + n).empty();
-                //         $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
-
-                //         if ($.trim($('#hidden_no_spp').val()) == '') {
-                //             $('#lbl_lpb_status').empty();
-                //             $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
-                //         }
-                //     },
-
-                //     data: {
-                //         txt_no_po: $('#txt_no_po').val(),
-                //         txt_ref_po: $('#txt_ref_po').val(),
-                //         // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
-                //         txt_kode_barang: $('#txt_kode_barang_' + n).val(),
-                //         txt_nama_brg: $('#txt_nama_brg_' + n).text(),
-                //         txt_tgl_terima: $('#txt_tgl_terima').val(),
-                //         hidden_no_lpb: $('#hidden_no_lpb').val(),
-                //         chk_asset: chk_asset,
-                //         txt_kd_supplier: $('#txt_kd_supplier').val(),
-                //         txt_supplier: $('#txt_supplier').val(),
-                //         txt_no_pengantar: $('#txt_no_pengantar').val(),
-                //         txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
-                //         txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
-                //         txt_satuan: $('#txt_satuan_' + n).text(),
-                //         hidden_grup: $('#hidden_grup_' + n).text(),
-                //         txt_qty: $('#txt_qty_' + n).val(),
-                //         txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
-                //     },
-                //     success: function(data) {
-                //         // console.log(n);
-
-                //         // $('#lbl_status_simpan_' + n).empty();
-                //         $('#lbl_lpb_status').empty();
-
-                //         $.toast({
-                //             position: 'top-right',
-                //             heading: 'Success',
-                //             text: 'Berhasil Disimpan!',
-                //             icon: 'success',
-                //             loader: false
-                //         });
-
-                //         // hitung sisa qty po guys
-                //         sisaQtyPO(no_ref_po, no_po, kodebar, n);
-
-                //         // $('#no_lpb').html('No. SPP : ' + data.nolpb);
-                //         // $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
-                //         // $('#hidden_no_lpb').val(data.nolpb);
-
-                //         // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                //         // $('.div_form_1').find('#devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
-
-                //         // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-                //         // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                //         // // $('.headspp').find('#cancelSpp').removeAttr('disabled');
-
-                //         // $('#btn_hapus_row_' + n).css('display', 'none');
-                //         // $('#btn_ubah_' + n).css('display', 'block');
-                //         // $('#btn_hapus_' + n).css('display', 'block');
-
-                //         // $('#hidden_id_ppo').val(data.id_ppo);
-                //         // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
-
-                //     }
-                // });
-            }
         }
-    }
-
-    function save_duadst() {
 
     }
 </script>

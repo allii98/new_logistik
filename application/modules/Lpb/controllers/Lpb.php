@@ -273,8 +273,8 @@ class Lpb extends CI_Controller
         // $periode = date("Y-m-d", strtotime($this->input->post('txt_tgl_terima')));
         // $txtperiode = date("Ym", strtotime($this->input->post('txt_tgl_terima')));
 
-        $query_get_po = "SELECT id, nopotxt, kode_supply, nama_supply FROM po WHERE nopotxt = '$nopo' AND noreftxt = '$refpo'";
-        $get_po = $this->db_logistik_pt->query($query_get_po)->row();
+        // $query_get_po = "SELECT id, nopotxt, kode_supply, nama_supply FROM po WHERE nopotxt = '$nopo' AND noreftxt = '$refpo'";
+        // $get_po = $this->db_logistik_pt->query($query_get_po)->row();
 
         $query_get_item_po = "SELECT id, nopotxt, kurs, konversi FROM item_po WHERE nopotxt = '$nopo' AND noref = '$refpo' AND kodebartxt = '$kodebar' AND nabar = '$nabar'";
         $get_item_po = $this->db_logistik_pt->query($query_get_item_po)->row();
@@ -287,13 +287,13 @@ class Lpb extends CI_Controller
             $konversi = "0";
         }
 
-        if (!empty($get_po)) {
-            $kode_supply = $get_po->kode_supply;
-            $nama_supply = $get_po->nama_supply;
-        } else {
-            $kode_supply = $this->input->post('txt_kd_supplier');
-            $nama_supply = $this->input->post('txt_supplier');
-        }
+        // if (!empty($get_po)) {
+        //     $kode_supply = $get_po->kode_supply;
+        //     $nama_supply = $get_po->nama_supply;
+        // } else {
+        //     $kode_supply = $this->input->post('txt_kd_supplier');
+        //     $nama_supply = $this->input->post('txt_supplier');
+        // }
 
         $no_po = $this->input->post('txt_no_po');
         $no_ref_po = $this->input->post('txt_ref_po');
@@ -307,8 +307,8 @@ class Lpb extends CI_Controller
             'nopotxt' => $no_po,
             'LOKAL' => $po_lokal,
             'ASSET' => '0',
-            'kode_supply' => $kode_supply,
-            'nama_supply' => $nama_supply,
+            'kode_supply' => $this->input->post('txt_kd_supplier'),
+            'nama_supply' => $this->input->post('txt_supplier'),
             'ttg' => $no_lpb,
             'ttgtxt' => $no_lpb,
             'no_pengtr' => $this->input->post('txt_no_pengantar'),
@@ -379,7 +379,7 @@ class Lpb extends CI_Controller
             $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         } else {
-            $data2 = $this->M_item_lpb->saveLpb2($data_stokmasuk);
+            $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         }
 
         $data_return = [
