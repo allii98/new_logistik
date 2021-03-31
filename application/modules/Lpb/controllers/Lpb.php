@@ -379,6 +379,7 @@ class Lpb extends CI_Controller
             $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         } else {
+            $data = NULL;
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         }
 
@@ -428,5 +429,13 @@ class Lpb extends CI_Controller
     {
         $data = $this->M_lpb->get_nopo();
         echo json_encode($data);
+    }
+
+    public function get_data_after_save()
+    {
+        $nopotxt = $this->input->post('nopotxt');
+        $no_lpb = $this->input->post('no_lpb');
+        $result = $this->M_lpb->get_data_after_save($nopotxt, $no_lpb);
+        echo json_encode($result);
     }
 }
