@@ -711,13 +711,26 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     </div>
 </div>
 
-
-
-
-
 </div>
 
 <script>
+    function isSelected(selectedNoppo) {
+        var noppos = $('[id*=id_item_]');
+        // console.log(noppos);
+        var isSelected = false;
+        var a = noppos.each(function() {
+            var noppo = $(this).val();
+            console.log(noppo)
+            if (noppo == selectedNoppo) {
+                console.log("isSelected sama", noppo, selectedNoppo)
+                isSelected = true;
+                return false;
+            }
+        });
+        return isSelected;
+    }
+
+
     $(document).ready(function() {
         $('.div_form_2').hide();
         $('.div_form_3').hide();
@@ -1253,9 +1266,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             var no_spp = rowcollection[index][2];
             var no_ref_spp = rowcollection[index][4];
             var kodebar = rowcollection[index][6];
-            // console.log(id, no_spp, no_ref_spp, kodebar);
+            // isSelected(id);
+            if (isSelected(id)) {
+                alert('data sudah di pilih');
+                return false;
+            }
+            console.log(id, no_spp, no_ref_spp, kodebar);
             data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
         });
+
     }
 
     var n = 1;
@@ -1288,8 +1307,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         tambah_row(n);
                     }
                     console.log(data);
-
-
 
 
                     $('#id_ppo' + n).val(data[0].id);

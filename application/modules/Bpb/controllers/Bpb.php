@@ -8,8 +8,9 @@ class Bpb extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_bpb');
+        $this->load->model('M_brg');
         $db_pt = check_db_pt();
-        $this->db_logistik = $this->load->database('db_logistik' ,TRUE);
+        $this->db_logistik = $this->load->database('db_logistik', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
         if (!$this->session->userdata('id_user')) {
@@ -150,19 +151,50 @@ class Bpb extends CI_Controller
             $row[] = $field->nama;
             $row[] = $field->type;
             $row[] = $field->group;
-            
+
 
             $data[] = $row;
         }
 
-            $output = array(
-                "draw" => $_POST['draw'],
-                "recordsTotal" => $this->M_bpb->count_all(),
-                "recordsFiltered" => $this->M_bpb->count_filtered(),
-                "data" => $data,
-            );
-            //output dalam format JSON
-            echo json_encode($output);
-        
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_bpb->count_all(),
+            "recordsFiltered" => $this->M_bpb->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function list_barang()
+    {
+
+        $list = $this->M_brg->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+
+            $no++;
+            $row = array();
+            $row[] = '<a href="javascript:;" id="btn_data_barang">
+            <button class="btn btn-success btn-xs" id="data_barang" name="data_barang" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button></a>';
+            $row[] = $no;
+            $row[] = $field->kodebar;
+            $row[] = $field->nabar;
+            $row[] = $field->grp;
+            $row[] = $field->satuan;
+
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_brg->count_all(),
+            "recordsFiltered" => $this->M_brg->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
 }

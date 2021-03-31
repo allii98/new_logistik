@@ -74,7 +74,6 @@
                                     <i class="fe-airplay mr-1"></i>
                                     <font face="Verdana" size="2.5">Dashboards</font>
                                 </a>
-
                             </li>
 
                             <li class="nav-item dropdown">
@@ -287,7 +286,7 @@
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-pages">
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-codepen mr-1"></i>
+                                    <a href="<?= base_url('Barang') ?>" class="dropdown-item"><i class="fe-codepen mr-1"></i>
                                         <font face="Verdana" size="2.5">Kode Barang</font>
                                     </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-edit mr-1"></i>
