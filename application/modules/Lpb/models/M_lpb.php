@@ -155,6 +155,12 @@ class M_lpb extends CI_Model
         ];
         return $d_return;
     }
+
+    public function updateLpb($data_item_lpb, $id)
+    {
+        $this->db_logistik_pt->where('id', $id);
+        return $this->db_logistik_pt->update('masukitem', $data_item_lpb);
+    }
 }
 
 /* End of file ModelName.php */

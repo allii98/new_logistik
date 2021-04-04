@@ -125,6 +125,7 @@ class Lpb extends CI_Controller
 
     public function saveLpb()
     {
+        $id_user = $this->session->userdata('id_user');
         $lokasilpb = $this->session->userdata('status_lokasi'); //HO, RO, SITE, PKS
         $nopo = $this->input->post('txt_no_po');
         $refpo = $this->input->post('txt_ref_po');
@@ -329,6 +330,7 @@ class Lpb extends CI_Controller
             'noref' => $no_ref_lpb,
             'BATAL' => '0',
             'alasan_batal' => '0',
+            'id_user' => $id_user,
             'USER' => $this->session->userdata('user'),
             'cetak' => '0',
             'posting' => '0',
@@ -369,6 +371,7 @@ class Lpb extends CI_Controller
             'alasan_batal' => '0',
             'kurs' => $kurs,
             'konversi' => $konversi,
+            'id_user' => $id_user,
             'USER' => $this->session->userdata('user'),
             'cetak' => '0',
             'posting' => '0',
@@ -383,10 +386,15 @@ class Lpb extends CI_Controller
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         }
 
+        $query_id = "SELECT MAX(id) as id_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_item_lpb = $generate_id->id_lpb;
+
         $data_return = [
             'data' => $data,
             'data2' => $data2,
             'nolpb' => $no_lpb,
+            'id_item_lpb' => $id_item_lpb,
             'noreflpb' => $no_ref_lpb
         ];
 
@@ -437,5 +445,25 @@ class Lpb extends CI_Controller
         $no_lpb = $this->input->post('no_lpb');
         $result = $this->M_lpb->get_data_after_save($nopotxt, $no_lpb);
         echo json_encode($result);
+    }
+
+    public function updateLpb()
+    {
+        $check_asset = $this->input->post('chk_asset');
+        if ($check_asset == "yes") {
+            $asset = "1";
+        } else {
+            $asset = "0";
+        }
+
+        $data_item_lpb = [
+            'ASSET' => $asset,
+            'qty' => $this->input->post('txt_qty'),
+            'ket' => $this->input->post('txt_ket_rinci')
+        ];
+        $id = $this->input->post('hidden_id_item_lpb');
+
+        $data = $this->M_lpb->updateLpb($data_item_lpb, $id);
+        echo json_encode($data);
     }
 }
