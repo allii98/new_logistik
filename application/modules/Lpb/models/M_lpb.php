@@ -132,6 +132,35 @@ class M_lpb extends CI_Model
         $query = "SELECT nopo FROM po WHERE nopo LIKE '%$nopo%'";
         return $this->db_logistik_pt->query($query)->result_array();
     }
+
+    public function get_data_after_save($nopotxt, $no_lpb)
+    {
+
+        $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket, nopotxt');
+        $this->db_logistik_pt->where('nopotxt', $nopotxt);
+        $this->db_logistik_pt->from('item_po');
+        $this->db_logistik_pt->order_by('nopotxt', 'ASC');
+        $data_item_po = $this->db_logistik_pt->get()->result_array();
+
+        $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket');
+        $this->db_logistik_pt->where('nopotxt', $nopotxt);
+        $this->db_logistik_pt->where('ttg', $no_lpb);
+        $this->db_logistik_pt->order_by('nopotxt', 'ASC');
+        $this->db_logistik_pt->from('masukitem');
+        $data_item_lpb = $this->db_logistik_pt->get()->result_array();
+
+        $d_return = [
+            'data_item_po' => $data_item_po,
+            'data_item_lpb' => $data_item_lpb
+        ];
+        return $d_return;
+    }
+
+    public function updateLpb($data_item_lpb, $id)
+    {
+        $this->db_logistik_pt->where('id', $id);
+        return $this->db_logistik_pt->update('masukitem', $data_item_lpb);
+    }
 }
 
 /* End of file ModelName.php */
