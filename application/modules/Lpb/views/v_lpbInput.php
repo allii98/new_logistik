@@ -345,7 +345,7 @@
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary  mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            // '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
         var form_tutup = '</form>';
@@ -694,4 +694,60 @@
             }
         });
     };
+
+    function cancelUpdate(n) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Lpb/cancelUpdateItemLpb') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+
+                $('#btn_cancel_update_' + n).css('display', 'none');
+
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+            },
+
+            data: {
+                hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val()
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                // $('#chk_asset' + n).val(data.ASSET);
+                if (data.ASSET == 1) {
+                    $('#chk_asset_' + n).prop('checked', true);
+                } else {
+                    $('#chk_asset_' + n).prop('checked', false);
+                }
+
+                $('#lbl_status_simpan_' + n).empty();
+
+                $('#txt_qty_' + n).val(data.qty);
+                $('#txt_ket_rinci_' + n).val(data.ket);
+
+                $.toast({
+                    position: 'top-right',
+                    text: 'Edit Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+
+                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+                // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+
+                $('#btn_hapus_row_' + n).css('display', 'none');
+                $('#btn_update_' + n).css('display', 'none');
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
+
+            }
+        });
+    }
 </script>

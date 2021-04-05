@@ -41,39 +41,44 @@ class Lpb extends CI_Controller
         $this->template->load('template', 'v_lpbInput', $data);
     }
 
-    // public function get_data_po()
-    // {
-    //     $list = $this->M_lpb->get_datatables();
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $field) {
-    //         $no++;
-    //         $row = array();
-    //         $row[] = '<button class="btn btn-success btn-xs" id="pilih_po" name="pilih_po"
-    //                     data-nopotxt="' . $field->nopotxt . '" data-noreftxt="' . $field->noreftxt . '"
-    //                     data-tglpo="' . $field->tglpo . '" data-kode_supply="' . $field->kode_supply . '"
-    //                     data-nama_supply="' . $field->nama_supply . '"
-    //                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih
-    //                     </button>';
-    //         $row[] = $no;
-    //         $row[] = $field->tglpo;
-    //         $row[] = $field->nopotxt;
-    //         $row[] = $field->noreftxt;
-    //         $row[] = $field->nama_supply;
-    //         $row[] = $field->lokasi_beli;
+    public function get_data_lpb()
+    {
+        $list = $this->M_lpb->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
+                        data-ttg="' . $field->ttg . '"
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                        </button>
+                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
+                        data-ttg="' . $field->ttg . '" data-nopo="' . $field->nopo . '"
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                        </button>';
+            $row[] = $no;
+            $row[] = $field->ttg;
+            $row[] = $field->noref;
+            $row[] = $field->nopo;
+            $row[] = $field->refpo;
+            $row[] = $field->nama_supply;
+            $row[] = $field->ket;
+            $row[] = $field->tglinput;
+            $row[] = $field->USER;
 
-    //         $data[] = $row;
-    //     }
+            $data[] = $row;
+        }
 
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "recordsTotal" => $this->M_lpb->count_all(),
-    //         "recordsFiltered" => $this->M_lpb->count_filtered(),
-    //         "data" => $data,
-    //     );
-    //     //output dalam format JSON
-    //     echo json_encode($output);
-    // }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_lpb->count_all(),
+            "recordsFiltered" => $this->M_lpb->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
 
     // public function get_data_item_po()
     // {
@@ -465,5 +470,59 @@ class Lpb extends CI_Controller
 
         $data = $this->M_lpb->updateLpb($data_item_lpb, $id);
         echo json_encode($data);
+    }
+
+    public function cancelUpdateItemLpb()
+    {
+        $id_item_lpb = $this->input->post('hidden_id_item_lpb');
+
+        $data = $this->M_lpb->cancelUpdateItemLpb($id_item_lpb);
+
+        echo json_encode($data);
+    }
+
+    public function get_detail_item_lpb()
+    {
+        $no_lpb = $this->input->post('no_lpb');
+
+        $data = $this->M_lpb->get_detail_item_lpb($no_lpb);
+
+        echo json_encode($data);
+    }
+
+    public function edit_lpb($no_lpb, $nopo)
+    {
+        $data['no_lpb'] = $no_lpb;
+        $data['nopo'] = $nopo;
+
+        $this->template->load('template', 'v_lpbEdit', $data);
+    }
+
+    public function cari_lpb_edit()
+    {
+        $no_lpb = $this->input->post('no_lpb');
+        $nopo = $this->input->post('nopo');
+
+        $data = $this->M_lpb->cari_lpb_edit($no_lpb, $nopo);
+
+        echo json_encode($data);
+    }
+
+    public function cariQtyPo()
+    {
+        $nopo = $this->input->post('nopo');
+        $kodebar = $this->input->post('kodebar');
+
+        $data = $this->M_lpb->cariQtyPo($nopo, $kodebar);
+
+        echo json_encode($data);
+    }
+
+    public function sum_qty_edit()
+    {
+        $kodebar = $this->input->post('kodebar');
+        $nopo = $this->input->post('nopo');
+        $result = $this->M_lpb->sumqty_edit($kodebar, $nopo);
+        echo json_encode($result);
     }
 }
