@@ -74,6 +74,55 @@ class M_barang extends CI_Model
         $this->db_logistik->from($this->table);
         return $this->db_logistik->count_all_results();
     }
+
+    function simpan_master_barang()
+    {
+        $query_id = "SELECT MAX(id)+1 as no_id FROM kodebar";
+        $generate_id = $this->db_logistik->query($query_id)->row();
+        $no_id = $generate_id->no_id;
+        if (empty($no_id)) {
+            $no_id = 1;
+        }
+
+        $data_master_barang["kodebar"]    = $this->input->post('txt_kd_barang');
+        $data_master_barang["kodebartxt"] = $this->input->post('txt_kd_barang');
+        $data_master_barang["nabar"]      = $this->input->post('txt_nm_barang');
+        $data_master_barang["grp"]        = $this->input->post('cmb_grup_barang');
+        $data_master_barang["satuan"]     = $this->input->post('cmb_satuan');
+        $data_master_barang["spek"]       = $this->input->post('txt_spesifikasi');
+        $data_master_barang["nopart"]     = $this->input->post('txt_nmr_part');
+        $data_master_barang["ket"]        = $this->input->post('txt_keterangan');
+        $data_master_barang["inputtgl"]   = date("Y-m-d H:i:s");
+        $data_master_barang["pt"]         = $this->session->userdata('pt');
+        $data_master_barang["kode"]       = $this->session->userdata('kode_pt');
+
+        if (empty($this->input->post('hidden_id'))) {
+            $data_master_barang["id"]         = $no_id;
+
+            $this->db_logistik->insert('kodebar', $data_master_barang);
+            if ($this->db_logistik->affected_rows() > 0) {
+                // $bool_master_barang = TRUE;
+                return TRUE;
+            } else {
+                // $bool_master_barang = FALSE;
+                return FALSE;
+            }
+        } else {
+            $id = $this->input->post('hidden_id');
+
+            $data_master_barang["id"]   = $id;
+
+            $this->db_logistik->set($data_master_barang);
+            $this->db_logistik->where('id', $id);
+            $this->db_logistik->update('kodebar');
+            // var_dump($this->db_logistik->last_query());exit();
+            if ($this->db_logistik->affected_rows() > 0) {
+                return TRUE;
+            } else {
+                return FALSE;
+            }
+        }
+    }
 }
 
 /* End of file M_barang.php */

@@ -289,7 +289,7 @@
                                     <a href="<?= base_url('Barang') ?>" class="dropdown-item"><i class="fe-codepen mr-1"></i>
                                         <font face="Verdana" size="2.5">Kode Barang</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-edit mr-1"></i>
+                                    <a href="<?= base_url('Stok') ?>" class="dropdown-item"><i class="fe-edit mr-1"></i>
                                         <font face="Verdana" size="2.5">Input Stok Awal</font>
                                     </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-check-square mr-1"></i>

@@ -44,7 +44,7 @@
     </div>
 
     <!-- modalsimpan -->
-    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalInputBarang">
+    <!-- <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalInputBarang">
         <div class="modal-dialog modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -103,16 +103,85 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <div class="col-md-12">
-                            <button class="btn btn-sm btn-success col-md-2 col-md-offset-5" data-toggle="tooltip" data-placement="top" title="" id="btn_simpan" name="btn_simpan" data-original-title="Simpan">Simpan</button>
-                            <button class="btn btn-sm btn-warning col-md-2 col-md-offset-5" data-toggle="tooltip" data-placement="top" title="" id="btn_ubah" name="btn_ubah" data-original-title="Ubah">Ubah</button>
-                        </div>
+
+                        <button class="btn btn-sm btn-success col-md-2 col-md-offset-5" data-toggle="tooltip" data-placement="top" title="" id="btn_simpan" name="btn_simpan" data-original-title="Simpan">Simpan</button>
+                        <button class="btn btn-sm btn-warning col-md-2 col-md-offset-5" data-toggle="tooltip" data-placement="top" title="" id="btn_ubah" name="btn_ubah" data-original-title="Ubah">Ubah</button>
+
                     </div>
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
     <!-- endmodalsimpan -->
+
+
+    <div class="modal fade" id="inputBarang" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-modal="true">
+        <div class="modal-dialog modal-dialog-scrollable" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scrollableModalTitle">Detail Barang</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <form action="javascript:;" class="form-horizontal" id="form_input_master_barang" name="form_input_master_barang" method="POST">
+                    <div class="modal-body">
+                        <input type="hidden" id="hidden_id" name="hidden_id">
+                        <div class="form-group row">
+                            <label for="txt_nmr_part" class="col-3 col-form-label">Nomor Part</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="txt_nmr_part" placeholder="Nomor Part" required="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="txt_kd_barang" class="col-3 col-form-label">Kode Barang</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="txt_kd_barang" placeholder="Kode Barang" onfocus="modalListCOA()" required="" autocomplete="off">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="txt_nm_barang" name="txt_nm_barang" placeholder="Nama Barang" required="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="cmb_grup_barang" class="col-3 col-form-label">Group Barang</label>
+                            <div class="col-9">
+                                <select class="form-control" id="cmb_grup_barang" name="cmb_grup_barang" required="">
+                                    <option value="">Pilih</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="cmb_satuan" class="col-3 col-form-label">Satuan</label>
+                            <div class="col-9">
+                                <select class="form-control" id="cmb_satuan" name="cmb_satuan" required="">
+                                    <option value="">Pilih</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="txt_spesifikasi" class="col-3 col-form-label">Spesifikasi</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="txt_spesifikasi" placeholder="Spesifikasi" autocomplete="off" value="-" required="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="txt_keterangan" class="col-3 col-form-label">Keterangan</label>
+                            <div class="col-9">
+                                <textarea class="form-control" id="txt_keterangan" name="txt_keterangan" placeholder="Keterangan">-</textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-warning" id="btn_ubah">Ubah</button>
+                        <button class="btn btn-primary" id="btn_simpan">Simpan</button>
+                    </div>
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListCOA">
         <div class="modal-dialog modal-lg">
@@ -162,54 +231,95 @@
     });
 
     function simpan_barang() {
-        console.log("Hello WORLD!");
-        // var form_data = new FormData();
+        // console.log("Hello WORLD!");
 
-        // form_data.append('hidden_id', $('#hidden_id').val());
-        // form_data.append('txt_nmr_part', $('#txt_nmr_part').val());
-        // form_data.append('txt_kd_barang', $('#txt_kd_barang').val());
-        // form_data.append('txt_nm_barang', $('#txt_nm_barang').val());
-        // form_data.append('cmb_grup_barang', $('#cmb_grup_barang').val());
-        // form_data.append('cmb_satuan', $('#cmb_satuan').val());
-        // form_data.append('txt_spesifikasi', $('#txt_spesifikasi').val());
-        // form_data.append('txt_keterangan', $('#txt_keterangan').val());
+        var form_data = new FormData();
 
-        // $.ajax({
-        //     type: "POST",
-        //     url: "<?php echo site_url('master_barang/simpan_barang'); ?>",
-        //     dataType: "JSON",
-        //     beforeSend: function() {},
-        //     cache: false,
-        //     contentType: false,
-        //     processData: false,
+        form_data.append('hidden_id', $('#hidden_id').val());
+        form_data.append('txt_nmr_part', $('#txt_nmr_part').val());
+        form_data.append('txt_kd_barang', $('#txt_kd_barang').val());
+        form_data.append('txt_nm_barang', $('#txt_nm_barang').val());
+        form_data.append('cmb_grup_barang', $('#cmb_grup_barang').val());
+        form_data.append('cmb_satuan', $('#cmb_satuan').val());
+        form_data.append('txt_spesifikasi', $('#txt_spesifikasi').val());
+        form_data.append('txt_keterangan', $('#txt_keterangan').val());
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Barang/simpan_barang'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            contentType: false,
+            processData: false,
 
-        //     data: form_data,
-        //     success: function(data) {
-        //         $('#modalInputBarang').modal('hide');
-        //         listBarang();
-        //         new PNotify({
-        //             title: 'Sukses',
-        //             text: 'Data Berhasil Disimpan',
-        //             type: 'success',
-        //             // hide: false,
-        //             styling: 'bootstrap3'
-        //         });
-        //     },
-        //     error: function(request) {
-        //         alert(request.responseText);
-        //         new PNotify({
-        //             title: 'Gagal',
-        //             text: 'Data Gagal Tersimpan',
-        //             type: 'error',
-        //             // hide: false,
-        //             styling: 'bootstrap3'
-        //         });
-        //     }
-        // });
+            data: form_data,
+            success: function(data) {
+                $('#inputBarang').modal('hide');
+                listBarang();
+                $.toast({
+                    heading: 'Success',
+                    text: 'Data Berhasil Disimpan',
+                    position: 'top-right',
+                    stack: true,
+                    icon: 'success'
+                });
+            },
+            error: function(request) {
+                alert(request.responseText);
+
+            }
+        });
+    }
+
+    function detail_barang(kodebar, id) {
+        $('#inputBarang').modal('show');
+        $('#btn_simpan').hide();
+        $('#btn_ubah').show();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Barang/detail_barang'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            // cache   : false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'id': id,
+                'kodebar': kodebar
+            },
+            success: function(data) {
+                group_barang(data.kodebartxt);
+
+                $('#cmb_grup_barang').attr('disabled', '');
+                $('#txt_nmr_part').attr('disabled', '');
+                $('#txt_kd_barang').attr('disabled', '');
+                $('#txt_nm_barang').attr('disabled', '');
+
+                $('#hidden_id').val(data.id);
+                $('#txt_nmr_part').val(data.nopart);
+                $('#txt_kd_barang').val(data.kodebartxt);
+                $('#txt_nm_barang').val(data.nabar);
+                $('#cmb_satuan').val(data.satuan);
+                $('#txt_spesifikasi').val(data.spek);
+                $('#txt_keterangan').val(data.ket);
+            },
+            error: function(request) {
+                alert(request.responseText);
+                new PNotify({
+                    title: 'Error',
+                    text: 'Gagal mengambil data barang',
+                    type: 'error',
+                    // hide: false,
+                    styling: 'bootstrap3'
+                });
+            }
+        });
     }
 
     function modalInputBarang() {
-        $('#modalInputBarang').modal('show');
+        $('#inputBarang').modal('show');
         $('#form_input_master_barang')[0].reset();
         $('#btn_simpan').show();
         $('#btn_ubah').hide();
@@ -288,10 +398,6 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [10, 15, 20, 25]
-            ],
         });
     }
 
@@ -305,11 +411,7 @@
 
             var no_coa = dataClick[1].trim();
             var nama_account = dataClick[2].trim();
-            // var grup = dataClick[2];
             var row = $('#hidden_no_row').val();
-
-            // $('#lbl_no_acc_'+row).html(no_coa);
-            // $('#lbl_nama_acc_'+row).html(nama_account);
             $('#txt_kd_barang').val(no_coa);
             $('#txt_nm_barang').val(nama_account);
 

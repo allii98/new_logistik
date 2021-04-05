@@ -97,7 +97,7 @@ class Po extends CI_Controller
             $row[] = '<button type="button" id="detail" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-info waves-effect waves-light title="Detail">
             <i class="mdi mdi-alert-circle-outline"></i></span>
         </button>
-        <a href="'.base_url('Po/cetak/'.$d->nopotxt.'/'.$d->id).'" target="_blank" type="button" id="cetak" class="btn btn-danger waves-effect waves-light" title="Cetak">
+        <a href="' . base_url('Po/cetak/' . $d->nopotxt . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-danger waves-effect waves-light" title="Cetak">
             <i class="mdi mdi-file-pdf-outline"></i></span>
         </a>
         ';
@@ -113,8 +113,8 @@ class Po extends CI_Controller
         }
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_po->count_all(),
-            "recordsFiltered" => $this->M_po->count_filtered(),
+            "recordsTotal" => $this->M_data->count_all(),
+            "recordsFiltered" => $this->M_data->count_filtered(),
             "data" => $data,
         );
         // output to json format
@@ -148,56 +148,57 @@ class Po extends CI_Controller
         echo json_encode($output);
     }
 
-    function cetak(){
-		$nopo = $this->uri->segment('3');
-		$id = $this->uri->segment('4');
+    function cetak()
+    {
+        $nopo = $this->uri->segment('3');
+        $id = $this->uri->segment('4');
 
-		$data['pt'] = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'))->row();
+        $data['pt'] = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'))->row();
 
-		$data['po'] = $this->db_logistik_pt->get_where('po', array('nopotxt' => $nopo, 'id' => $id))->row();
+        $data['po'] = $this->db_logistik_pt->get_where('po', array('nopotxt' => $nopo, 'id' => $id))->row();
 
-		$kode_supplier = $data['po']->kode_supply;
+        $kode_supplier = $data['po']->kode_supply;
 
-		// $data['supplier'] = $this->db_logistik_pt->get_where('supplier', array('kode'=>$kode_supplier))->row();
+        // $data['supplier'] = $this->db_logistik_pt->get_where('supplier', array('kode'=>$kode_supplier))->row();
 
-		$query_supplier = "SELECT * FROM supplier WHERE kode = '$kode_supplier' AND account IS NOT NULL";
-		$data['supplier'] = $this->db_logistik_pt->query($query_supplier)->row();
+        $query_supplier = "SELECT * FROM supplier WHERE kode = '$kode_supplier' AND account IS NOT NULL";
+        $data['supplier'] = $this->db_logistik_pt->query($query_supplier)->row();
 
-		$no_refpo = $data['po']->noreftxt;
-		$data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('nopotxt' => $nopo, 'noref' => $no_refpo))->result();
+        $no_refpo = $data['po']->noreftxt;
+        $data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('nopotxt' => $nopo, 'noref' => $no_refpo))->result();
 
-		// $mpdf = new \Mpdf\Mpdf([
-		// 		    'mode' => 'utf-8',
-		// 		    // 'format' => [190, 236],
-		// 		    'format' => [190, 236], 
-		// 		    'setAutoTopMargin' => 'stretch',
-		// 		    'orientation' => 'P'
-		// 		]);
+        // $mpdf = new \Mpdf\Mpdf([
+        // 		    'mode' => 'utf-8',
+        // 		    // 'format' => [190, 236],
+        // 		    'format' => [190, 236], 
+        // 		    'setAutoTopMargin' => 'stretch',
+        // 		    'orientation' => 'P'
+        // 		]);
 
-		$mpdf = new \Mpdf\Mpdf([
-			'mode' => 'utf-8',
-			'format' => [190, 236],
-			// 'format' => 'A4',
-			// 'setAutoTopMargin' => 'stretch',
-			'margin_top' => '28',
-			'orientation' => 'P'
-		]);
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => [190, 236],
+            // 'format' => 'A4',
+            // 'setAutoTopMargin' => 'stretch',
+            'margin_top' => '28',
+            'orientation' => 'P'
+        ]);
 
-		// $mpdf->SetWatermarkImage('././assets/img/terbayar.png');
-		// $mpdf->showWatermarkImage = true;
+        // $mpdf->SetWatermarkImage('././assets/img/terbayar.png');
+        // $mpdf->showWatermarkImage = true;
 
-		if ($data['po']->terbayar == "1") {
-			$mpdf->SetWatermarkText('TERBAYAR');
-			$mpdf->showWatermarkText = true;
-		}
+        if ($data['po']->terbayar == "1") {
+            $mpdf->SetWatermarkText('TERBAYAR');
+            $mpdf->showWatermarkText = true;
+        }
 
-		if ($data['po']->terbayar == "2") {
-			$mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-			$mpdf->showWatermarkText = true;
-		}
+        if ($data['po']->terbayar == "2") {
+            $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
+            $mpdf->showWatermarkText = true;
+        }
 
-		// $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
-		$mpdf->SetHTMLHeader('
+        // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+        $mpdf->SetHTMLHeader('
                             <table width="100%" border="0">
                                 <tr>
                                     <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
@@ -207,19 +208,19 @@ class Po extends CI_Controller
                                 <tr>
                                 <td align="left" style="margin-top:0px;">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
                                 </td>
-                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="' . site_url('assets/qrcode/' .$data['po']->qr_code) . '"></td>
+                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="' . site_url('assets/qrcode/' . $data['po']->qr_code) . '"></td>
                                 </tr>
                                
                             </table>
                             <hr style="width:100%;margin:0px;">
                             ');
-		// $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+        // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
-        $html = $this->load->view('v_po_print',$data,true);
+        $html = $this->load->view('v_po_print', $data, true);
 
         $mpdf->WriteHTML($html);
         $mpdf->Output();
-	}
+    }
 
     public function index()
     {
@@ -915,8 +916,8 @@ class Po extends CI_Controller
         $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
 
         $dataupdateitem = [
-            'nopo' => $no_po,
-            'nopotxt' => $no_po,
+            // 'nopo' => $no_po,
+            // 'nopotxt' => $no_po,
             'noppo' => $this->input->post('txt_no_spp'),
             'noppotxt' => $this->input->post('txt_no_spp'),
             'refppo' => $this->input->post('hidden_no_ref'),

@@ -55,8 +55,9 @@ class Barang extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $d) {
             $no++;
+            $id    = $d->id;
             $row = array();
-            $row[] = '<button type="button" id="detail"  onClick="return false" class="btn btn-info waves-effect waves-light title="Detail">
+            $row[] = '<button class="btn btn-info waves-effect waves-light title="Detail" id="btn_detail_barang" onclick="detail_barang(' . $d->kodebartxt . ',' . $id . ')">
                 <i class="mdi mdi-alert-circle-outline"></i></span>
             </button>';
             $row[] = $no . ".";
@@ -76,6 +77,15 @@ class Barang extends CI_Controller
         echo json_encode($output);
     }
 
+    function detail_barang()
+    {
+        $id = $this->input->post('id');
+        $kodebar = $this->input->post('kodebar');
+
+        $data = $this->db_logistik->get_where('kodebar', array('id' => $id, 'kodebartxt' => $kodebar))->row();
+        echo json_encode($data);
+    }
+
     public function index()
     {
         $this->template->load('template', 'v_barang');
@@ -90,6 +100,12 @@ class Barang extends CI_Controller
 
         $query = "SELECT nama FROM noac where noac = '$data_general->general'";
         $data = $this->db_logistik->query($query)->row();
+        echo json_encode($data);
+    }
+
+    function simpan_barang()
+    {
+        $data = $this->M_barang->simpan_master_barang();
         echo json_encode($data);
     }
 

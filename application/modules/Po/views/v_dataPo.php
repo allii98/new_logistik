@@ -4,53 +4,47 @@
 		<div class="widget-rounded-circle card-box">
 			<h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data PO</h4>
 			<hr>
-			<div class=" row">
+			<div class="row">
 				<!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<div class="x_panel">
-						<div class="x_content">
-							<table id="tableListPO" class="table table-striped table-bordered" width="100%">
-								<thead>
-									<tr>
-										<th>
-											<font face="Verdana" size="2.5">#</font>
-										</th>
-										<th>
-											<font face="Verdana" size="2.5">No.</font>
-										</th>
-										<th>
-											<font face="Verdana" size="2.5">No. Ref</font>
-										</th>
-										<th>
-											<font face="Verdana" size="2.5">No. PO</font>
-										</th>
-										<th>
-											<font face="Verdana" size="2.5">Tgl. PO</font>
-										</th>
-										<th>
-											<font face="Verdana" size="2.5">Supplier</font>
-										</th>
-										<!-- <th>Item Barang</th> -->
-										<th>
-											<font face="Verdana" size="2.5">Ket</font>
-										</th>
-										<th>
-											<font face="Verdana" size="2.5">Terbayar</font>
-										</th>
-										<!-- <th>
-											<font face="Verdana" size="2.5">#</font>
-										</th> -->
-									</tr>
-								</thead>
+					<table id="tableListPO" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline" width="100%">
+						<thead>
+							<tr>
+								<th>
+									<font face="Verdana" size="2.5">#</font>
+								</th>
+								<th>
+									<font face="Verdana" size="2.5">No.</font>
+								</th>
+								<th>
+									<font face="Verdana" size="2.5">No. Ref</font>
+								</th>
+								<th>
+									<font face="Verdana" size="2.5">No. PO</font>
+								</th>
+								<th>
+									<font face="Verdana" size="2.5">Tgl. PO</font>
+								</th>
+								<th>
+									<font face="Verdana" size="2.5">Supplier</font>
+								</th>
 
-								<tbody>
+								<th>
+									<font face="Verdana" size="2.5">Ket</font>
+								</th>
+								<th>
+									<font face="Verdana" size="2.5">Terbayar</font>
+								</th>
 
-								</tbody>
-							</table>
-							<br />
-							<br />
-						</div>
-					</div>
+							</tr>
+						</thead>
+
+						<tbody>
+
+						</tbody>
+					</table>
+					<br />
+					<br />
 				</div>
 			</div>
 
@@ -123,31 +117,37 @@
 	// $(document).ready(function() {
 	// 	$('#tableListPO').DataTable();
 	// });
-
+	var table;
 	$(document).ready(function() {
 
 		$(document).on('click', '#detail', function() {
 			var id = $(this).data('id');
 			detailPO(id);
+		});
 
+		//datatables
+		dataPO();
+	});
 
-			// console.log(id);
-		})
+	function dataPO() {
+		table = $('#tableListPO').DataTable({
 
-		$('#tableListPO').DataTable({
 			"processing": true,
 			"serverSide": true,
 			"order": [],
+
 			"ajax": {
 				"url": "<?php echo site_url('Po/dataPO') ?>",
 				"type": "POST"
 			},
-			"columnDefs ": [{
+
+			"columnDefs": [{
 				"targets": [0],
 				"orderable": false,
 			}, ],
+
 		});
-	});
+	}
 
 
 	function detailPO(id) {
@@ -165,8 +165,6 @@
 					id: id
 				}
 			},
-
-
 
 			"columnDefs": [{
 				"targets": [0],
