@@ -180,18 +180,19 @@ class M_lpb extends CI_Model
 
     public function cari_lpb_edit($no_lpb, $nopo)
     {
-        $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli');
-        $this->db_logistik_pt->where('nopotxt', $nopo);
+        $this->db_logistik_pt->select('stokmasuk.nopo, stokmasuk.refpo, stokmasuk.nama_supply, stokmasuk.kode_supply, stokmasuk.tgl, stokmasuk.lokasi_gudang, stokmasuk.no_pengtr, stokmasuk.noref, stokmasuk.ket, po.tglpo');
         $this->db_logistik_pt->from('po');
-        $data_po = $this->db_logistik_pt->get()->row_array();
+        $this->db_logistik_pt->join('stokmasuk', 'stokmasuk.nopo = po.nopo');
+        $this->db_logistik_pt->where('ttg', $no_lpb);
+        $data_lpb = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket');
+        $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket, id');
         $this->db_logistik_pt->where('ttg', $no_lpb);
         $this->db_logistik_pt->from('masukitem');
         $data_item_lpb = $this->db_logistik_pt->get()->result_array();
 
         $data = [
-            'data_po' => $data_po,
+            'data_lpb' => $data_lpb,
             'data_item_lpb' => $data_item_lpb
         ];
         return $data;
@@ -218,6 +219,25 @@ class M_lpb extends CI_Model
         $sumqty_lpb = $this->db_logistik_pt->get()->row();
 
         $result = $qty_po['qty'] - $sumqty_lpb->qty_lpb;
+        return $result;
+    }
+
+    public function getQtyPo($kodebar, $nopo)
+    {
+        $this->db_logistik_pt->select('qty');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'nopo' => $nopo]);
+        $this->db_logistik_pt->from('item_po');
+        return $this->db_logistik_pt->get()->row_array();
+    }
+
+    public function getSisaLpb($qty_po, $kodebar, $no_lpb)
+    {
+        $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'ttg' => $no_lpb]);
+        $this->db_logistik_pt->from('masukitem');
+        $sumqty_lpb = $this->db_logistik_pt->get()->row();
+
+        $result = $qty_po - $sumqty_lpb->qty_lpb;
         return $result;
     }
 }

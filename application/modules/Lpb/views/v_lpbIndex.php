@@ -127,11 +127,13 @@
                 'no_lpb': no_lpb
             },
             success: function(data) {
-                // $('#hidden_grup_' + n).text(data.grp);
-                console.log(data);
 
                 var i;
                 for (i = 0; i < data.length; i++) {
+
+                    var qty_po = get_qty_po(data[i].kodebar, data[i].nopo);
+
+                    var sisa_lpb = get_sisa_lpb(qty_po, data[i].kodebar, no_lpb);
 
                     var no = i + 1;
 
@@ -151,13 +153,13 @@
                         '<font face="Verdana" size="2">' + data[i].grp + '</font>' +
                         '</td>';
                     var td_6 = '<td>' +
-                        '<font face="Verdana" size="2">-</font>' +
+                        '<font face="Verdana" size="2">' + qty_po + '</font>' +
                         '</td>';
                     var td_7 = '<td>' +
                         '<font face="Verdana" size="2">' + data[i].qty + '</font>' +
                         '</td>';
                     var td_8 = '<td>' +
-                        '<font face="Verdana" size="2">-</font>' +
+                        '<font face="Verdana" size="2">' + sisa_lpb + '</font>' +
                         '</td>';
                     var td_9 = '<td>' +
                         '<font face="Verdana" size="2">' + data[i].ket + '</font>' +
@@ -182,4 +184,47 @@
             // tampil_detail_lpb(no_lpb);
         });
     });
+
+    function get_qty_po(kodebar, nopo) {
+        var succeed = false;
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "<?php echo site_url('Lpb/getQtyPo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'kodebar': kodebar,
+                'nopo': nopo
+            },
+            success: function(data) {
+                // console.log(data.qty);
+                succeed = data.qty;
+            }
+        });
+        return succeed;
+    }
+
+    function get_sisa_lpb(qty_po, kodebar, no_lpb) {
+        var succeed = false;
+        $.ajax({
+            async: false,
+            type: "POST",
+            url: "<?php echo site_url('Lpb/getSisaLpb'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'qty_po': qty_po,
+                'kodebar': kodebar,
+                'no_lpb': no_lpb
+            },
+            success: function(data) {
+                // console.log(data);
+                succeed = data;
+            }
+        });
+        return succeed;
+    }
 </script>

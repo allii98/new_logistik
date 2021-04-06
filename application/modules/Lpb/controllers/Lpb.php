@@ -525,4 +525,23 @@ class Lpb extends CI_Controller
         $result = $this->M_lpb->sumqty_edit($kodebar, $nopo);
         echo json_encode($result);
     }
+
+    public function getQtyPo()
+    {
+        $kodebar = $this->input->post('kodebar');
+        $nopo = $this->input->post('nopo');
+
+        $result = $this->M_lpb->getQtyPo($kodebar, $nopo);
+        echo json_encode($result);
+    }
+
+    public function getSisaLpb()
+    {
+        $qty_po = $this->input->post('qty_po');
+        $kodebar = $this->input->post('kodebar');
+        $no_lpb = $this->input->post('no_lpb');
+
+        $result = $this->M_lpb->getSisaLpb($qty_po, $kodebar, $no_lpb);
+        echo json_encode($result);
+    }
 }

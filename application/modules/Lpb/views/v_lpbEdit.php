@@ -15,14 +15,14 @@
                         <div class="form-group row mb-1">
                             <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-lg-7 col-11 row">
-                                <select class="js-data-example-ajax form-control select2" id="select2">
-                                </select>
-                                <input style="display:none;" id="multiple" class="form-control" type="text" class="col-2" onkeyup="cariPoqr()">
+                            <div class="col-lg-8 col-11 row">
+                                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
+                                </select> -->
+                                <input id="multiple" class="form-control bg-light" type="text" class="col-2" onkeyup="cariPoqr()" readonly>
                                 <input type="hidden" id="txt_no_po">
                                 <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
                             </div>
-                            <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button>
+                            <!-- <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button> -->
                         </div>
                         <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
@@ -101,9 +101,9 @@
 
                 <div class="row mx-0 div_form_2">
                     <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                        <h6 id="lbl_lpb_status" name="lbl_lpb_status">
+                        <!-- <h6 id="lbl_lpb_status" name="lbl_lpb_status">
                             <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
-                        </h6>
+                        </h6> -->
                         <input type="hidden" id="hidden_no_lpb">
                         <input type="hidden" id="hidden_no_ref_lpb">
                     </div>
@@ -285,18 +285,27 @@
             },
             success: function(data) {
 
-                var data_po = data.data_po;
+                var data_lpb = data.data_lpb;
                 var data_item_lpb = data.data_item_lpb;
 
-                console.log(data_item_lpb);
+                console.log(data_lpb);
 
-                $('#txt_no_po').val(data_po.nopotxt);
-                $('#txt_ref_po').val(data_po.noreftxt);
-                $('#txt_tgl_po').val(data_po.tglpo);
-                var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
+
+                $('#multiple').val(data_lpb.nopo);
+                $('#txt_no_po').val(data_lpb.nopo);
+                $('#txt_ref_po').val(data_lpb.refpo);
+                $('#txt_tgl_po').val();
+                var namesup = data_lpb.kode_supply + ' / ' + data_lpb.nama_supply;
                 $('#txt_kd_name_supplier').val(namesup);
-                $('#txt_kd_supplier').val(data_po.kode_supply);
-                $('#txt_supplier').val(data_po.nama_supply);
+                $('#txt_kd_supplier').val(data_lpb.kode_supply);
+                $('#txt_supplier').val(data_lpb.nama_supply);
+                $('#txt_lokasi_gudang').val(data_lpb.lokasi_gudang);
+                $('#txt_no_pengantar').val(data_lpb.no_pengtr);
+                $('#txt_ket_pengiriman').val(data_lpb.ket);
+                $('#txt_tgl_po').val(data_lpb.tglpo);
+                $('#no_lpb').text('No. LPB : ' + no_lpb);
+                $('#no_ref_lpb').text('No. Ref LPB : ' + data_lpb.noref);
+
 
                 // $("#modalListPo").modal('hide');
 
@@ -313,6 +322,7 @@
                     var sat = data_item_lpb[i].satuan;
                     var ket = data_item_lpb[i].ket;
                     var grp = data_item_lpb[i].grp;
+                    var id_lpb = data_item_lpb[i].id;
                     // var sumsisa = $(this).data('sumsisa');
 
                     // Set data
@@ -328,6 +338,7 @@
                     $('#txt_ket_rinci_' + i).text(ket);
                     $('#txt_qty_' + i).val(qty);
                     $('#hidden_grup_' + i).text(grp);
+                    $('#hidden_id_item_lpb_' + i).val(id_lpb);
                     // $('#sisa_qty_' + no).text(sumsisa);
                     // getGrupBarang(kodebar, i);
                 }
@@ -452,8 +463,8 @@
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
+            // '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
+            '<button class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary  mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
             // '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
@@ -493,240 +504,240 @@
         });
     }
 
-    //scan qr code
-    $(function() {
+    // //scan qr code
+    // $(function() {
 
-        // overriding path of JS script and audio 
-        $.qrCodeReader.jsQRpath = "<?php echo base_url() ?>assets/dist/js/jsQR/jsQR.min.js";
-        $.qrCodeReader.beepPath = "<?php echo base_url() ?>assets/dist/audio/beep.mp3";
+    //     // overriding path of JS script and audio 
+    //     $.qrCodeReader.jsQRpath = "<?php echo base_url() ?>assets/dist/js/jsQR/jsQR.min.js";
+    //     $.qrCodeReader.beepPath = "<?php echo base_url() ?>assets/dist/audio/beep.mp3";
 
-        // bind all elements of a given class
-        $(".qrcode-reader").qrCodeReader();
+    //     // bind all elements of a given class
+    //     $(".qrcode-reader").qrCodeReader();
 
-        // bind elements by ID with specific options
-        $("#openreader-multi2").qrCodeReader({
-            multiple: true,
-            target: "#multiple2",
-            skipDuplicates: false
-        });
-        $("#openreader-multi3").qrCodeReader({
-            multiple: true,
-            target: "#multiple3"
-        });
+    //     // bind elements by ID with specific options
+    //     $("#openreader-multi2").qrCodeReader({
+    //         multiple: true,
+    //         target: "#multiple2",
+    //         skipDuplicates: false
+    //     });
+    //     $("#openreader-multi3").qrCodeReader({
+    //         multiple: true,
+    //         target: "#multiple3"
+    //     });
 
-        // read or follow qrcode depending on the content of the target input
-        $("#openreader-single2").qrCodeReader({
-            callback: function(code) {
-                if (code) {
-                    window.location.href = code;
-                }
-            }
-        }).off("click.qrCodeReader").on("click", function() {
-            var qrcode = $("#single2").val().trim();
-            if (qrcode) {
-                window.location.href = qrcode;
-            } else {
-                $.qrCodeReader.instance.open.call(this);
-            }
-        });
-    });
+    //     // read or follow qrcode depending on the content of the target input
+    //     $("#openreader-single2").qrCodeReader({
+    //         callback: function(code) {
+    //             if (code) {
+    //                 window.location.href = code;
+    //             }
+    //         }
+    //     }).off("click.qrCodeReader").on("click", function() {
+    //         var qrcode = $("#single2").val().trim();
+    //         if (qrcode) {
+    //             window.location.href = qrcode;
+    //         } else {
+    //             $.qrCodeReader.instance.open.call(this);
+    //         }
+    //     });
+    // });
 
-    function cariPoqr() {
+    // function cariPoqr() {
 
-        var nopo = $('#multiple').val();
-        // console.log(n + 'yeyelala');
+    //     var nopo = $('#multiple').val();
+    //     // console.log(n + 'yeyelala');
 
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {
-                $('#tbody_rincian').empty();
-            },
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
+    //         dataType: "JSON",
+    //         beforeSend: function() {
+    //             $('#tbody_rincian').empty();
+    //         },
 
-            data: {
-                'nopotxt': nopo
-            },
-            success: function(data) {
+    //         data: {
+    //             'nopotxt': nopo
+    //         },
+    //         success: function(data) {
 
-                var data_po = data.data_po;
-                var data_item_po = data.data_item_po;
+    //             var data_po = data.data_po;
+    //             var data_item_po = data.data_item_po;
 
-                console.log(data_po);
+    //             console.log(data_po);
 
-                $('#txt_no_po').val(data_po.nopotxt);
-                $('#txt_ref_po').val(data_po.noreftxt);
-                $('#txt_tgl_po').val(data_po.tglpo);
-                var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
-                $('#txt_kd_name_supplier').val(namesup);
-                $('#txt_kd_supplier').val(data_po.kode_supply);
-                $('#txt_supplier').val(data_po.nama_supply);
+    //             $('#txt_no_po').val(data_po.nopotxt);
+    //             $('#txt_ref_po').val(data_po.noreftxt);
+    //             $('#txt_tgl_po').val(data_po.tglpo);
+    //             var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
+    //             $('#txt_kd_name_supplier').val(namesup);
+    //             $('#txt_kd_supplier').val(data_po.kode_supply);
+    //             $('#txt_supplier').val(data_po.nama_supply);
 
-                $("#modalListPo").modal('hide');
+    //             $("#modalListPo").modal('hide');
 
-                for (i = 0; i < data_item_po.length; i++) {
-                    // var no = i + 1;
+    //             for (i = 0; i < data_item_po.length; i++) {
+    //                 // var no = i + 1;
 
-                    tambah_row(i);
-                    sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
+    //                 tambah_row(i);
+    //                 sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
 
-                    var kodebar = data_item_po[i].kodebar;
-                    var nabar = data_item_po[i].nabar;
-                    var qty = data_item_po[i].qty;
-                    var sat = data_item_po[i].sat;
-                    var ket = data_item_po[i].ket;
-                    // var sumsisa = $(this).data('sumsisa');
+    //                 var kodebar = data_item_po[i].kodebar;
+    //                 var nabar = data_item_po[i].nabar;
+    //                 var qty = data_item_po[i].qty;
+    //                 var sat = data_item_po[i].sat;
+    //                 var ket = data_item_po[i].ket;
+    //                 // var sumsisa = $(this).data('sumsisa');
 
-                    // Set data
-                    $('#txt_kode_barang_' + i).val(kodebar);
-                    $('#txt_nama_brg_' + i).text(nabar);
-                    $('#txt_satuan_' + i).text(sat);
-                    $('#txt_ket_rinci_' + i).text(ket);
-                    $('#qty_po_' + i).text(qty);
-                    // $('#sisa_qty_' + no).text(sumsisa);
-                    getGrupBarang(kodebar, i);
-                }
-            },
-            error: function(response) {
-                console.log(response.responseText);
-            }
-        });
-    }
+    //                 // Set data
+    //                 $('#txt_kode_barang_' + i).val(kodebar);
+    //                 $('#txt_nama_brg_' + i).text(nabar);
+    //                 $('#txt_satuan_' + i).text(sat);
+    //                 $('#txt_ket_rinci_' + i).text(ket);
+    //                 $('#qty_po_' + i).text(qty);
+    //                 // $('#sisa_qty_' + no).text(sumsisa);
+    //                 getGrupBarang(kodebar, i);
+    //             }
+    //         },
+    //         error: function(response) {
+    //             console.log(response.responseText);
+    //         }
+    //     });
+    // }
 
-    $("#select2").select2({
-        ajax: {
-            url: "<?php echo site_url('Lpb/select2_get_po') ?>",
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    nopo: params.term, // search term
-                };
-            },
-            processResults: function(data) {
-                var results = [];
-                $.each(data, function(index, item) {
-                    results.push({
-                        id: item.nopo,
-                        text: item.nopo
-                    });
-                });
-                return {
-                    results: results
-                };
-            }
-        }
-    }).on('select2:select', function(evt) {
-        // var selected = evt.params.data;
-        // var a = "0475";
-        // var b = "TOKO ( KAS )";
-        // var kode = $(".select2 option:selected").text(a);
-        // var data = $(".select2 option:selected").val(b);
-        // $('#kd_supplier').val(kode);
-        var data = $(".select2 option:selected").text();
-        $('#txt_no_po').val(data);
-        $('#multiple').val(data);
-        // $('#hidden_no_ref_spp_').val(data);
-        // console.log(data);
-        cariPoqr();
+    // $("#select2").select2({
+    //     ajax: {
+    //         url: "<?php echo site_url('Lpb/select2_get_po') ?>",
+    //         dataType: 'json',
+    //         delay: 250,
+    //         data: function(params) {
+    //             return {
+    //                 nopo: params.term, // search term
+    //             };
+    //         },
+    //         processResults: function(data) {
+    //             var results = [];
+    //             $.each(data, function(index, item) {
+    //                 results.push({
+    //                     id: item.nopo,
+    //                     text: item.nopo
+    //                 });
+    //             });
+    //             return {
+    //                 results: results
+    //             };
+    //         }
+    //     }
+    // }).on('select2:select', function(evt) {
+    //     // var selected = evt.params.data;
+    //     // var a = "0475";
+    //     // var b = "TOKO ( KAS )";
+    //     // var kode = $(".select2 option:selected").text(a);
+    //     // var data = $(".select2 option:selected").val(b);
+    //     // $('#kd_supplier').val(kode);
+    //     var data = $(".select2 option:selected").text();
+    //     $('#txt_no_po').val(data);
+    //     $('#multiple').val(data);
+    //     // $('#hidden_no_ref_spp_').val(data);
+    //     // console.log(data);
+    //     cariPoqr();
 
-    });
+    // });
 
-    $(document).ready(function() {
-        $(document).on('click', '#openreader-multi', function() {
+    // $(document).ready(function() {
+    //     $(document).on('click', '#openreader-multi', function() {
 
-            $('#multiple').css('display', 'block');
-            $('#select2').next(".select2-container").hide();
+    //         $('#multiple').css('display', 'block');
+    //         $('#select2').next(".select2-container").hide();
 
-        });
-    });
+    //     });
+    // });
 
-    function saveRinciClick(n) {
+    // function saveRinciClick(n) {
 
-        var no_ref_po = $('#txt_ref_po').val();
-        var no_po = $('#txt_no_po').val();
-        var kodebar = $('#txt_kode_barang_' + n).val();
+    //     var no_ref_po = $('#txt_ref_po').val();
+    //     var no_po = $('#txt_no_po').val();
+    //     var kodebar = $('#txt_kode_barang_' + n).val();
 
-        if ($('#chk_asset_' + n).is(':checked')) {
-            var chk_asset = 'yes';
-        }
+    //     if ($('#chk_asset_' + n).is(':checked')) {
+    //         var chk_asset = 'yes';
+    //     }
 
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Lpb/saveLpb') ?>",
-            dataType: "JSON",
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo base_url('Lpb/saveLpb') ?>",
+    //         dataType: "JSON",
 
-            beforeSend: function() {
-                $('#btn_simpan_' + n).css('display', 'none');
+    //         beforeSend: function() {
+    //             $('#btn_simpan_' + n).css('display', 'none');
 
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+    //             $('#lbl_status_simpan_' + n).empty();
+    //             $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
 
-                if ($.trim($('#hidden_no_lpb').val()) == '') {
-                    $('#lbl_lpb_status').empty();
-                    $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
-                }
-            },
+    //             if ($.trim($('#hidden_no_lpb').val()) == '') {
+    //                 $('#lbl_lpb_status').empty();
+    //                 $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+    //             }
+    //         },
 
-            data: {
-                txt_no_po: $('#txt_no_po').val(),
-                txt_ref_po: $('#txt_ref_po').val(),
-                // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
-                txt_kode_barang: $('#txt_kode_barang_' + n).val(),
-                txt_nama_brg: $('#txt_nama_brg_' + n).text(),
-                txt_tgl_terima: $('#txt_tgl_terima').val(),
-                hidden_no_lpb: $('#hidden_no_lpb').val(),
-                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
-                chk_asset: chk_asset,
-                txt_kd_supplier: $('#txt_kd_supplier').val(),
-                txt_supplier: $('#txt_supplier').val(),
-                txt_no_pengantar: $('#txt_no_pengantar').val(),
-                txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
-                txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
-                txt_satuan: $('#txt_satuan_' + n).text(),
-                hidden_grup: $('#hidden_grup_' + n).text(),
-                txt_qty: $('#txt_qty_' + n).val(),
-                txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
-            },
+    //         data: {
+    //             txt_no_po: $('#txt_no_po').val(),
+    //             txt_ref_po: $('#txt_ref_po').val(),
+    //             // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+    //             txt_kode_barang: $('#txt_kode_barang_' + n).val(),
+    //             txt_nama_brg: $('#txt_nama_brg_' + n).text(),
+    //             txt_tgl_terima: $('#txt_tgl_terima').val(),
+    //             hidden_no_lpb: $('#hidden_no_lpb').val(),
+    //             hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+    //             chk_asset: chk_asset,
+    //             txt_kd_supplier: $('#txt_kd_supplier').val(),
+    //             txt_supplier: $('#txt_supplier').val(),
+    //             txt_no_pengantar: $('#txt_no_pengantar').val(),
+    //             txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
+    //             txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
+    //             txt_satuan: $('#txt_satuan_' + n).text(),
+    //             hidden_grup: $('#hidden_grup_' + n).text(),
+    //             txt_qty: $('#txt_qty_' + n).val(),
+    //             txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
+    //         },
 
-            success: function(data) {
-                console.log(n);
+    //         success: function(data) {
+    //             console.log(n);
 
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_lpb_status').empty();
+    //             $('#lbl_status_simpan_' + n).empty();
+    //             $('#lbl_lpb_status').empty();
 
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil Disimpan!',
-                    icon: 'success',
-                    loader: false
-                });
+    //             $.toast({
+    //                 position: 'top-right',
+    //                 heading: 'Success',
+    //                 text: 'Berhasil Disimpan!',
+    //                 icon: 'success',
+    //                 loader: false
+    //             });
 
-                // hitung sisa qty po guys
-                sisaQtyPO(no_ref_po, no_po, kodebar, n);
+    //             // hitung sisa qty po guys
+    //             sisaQtyPO(no_ref_po, no_po, kodebar, n);
 
-                $('#no_lpb').html('No. SPP : ' + data.nolpb);
-                $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+    //             $('#no_lpb').html('No. SPP : ' + data.nolpb);
+    //             $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
 
-                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+    //             $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+    //             $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
-                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+    //             $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+    //             $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+    //             // $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
-                $('#btn_hapus_row_' + n).css('display', 'none');
-                $('#btn_ubah_' + n).css('display', 'block');
-                $('#btn_hapus_' + n).css('display', 'block');
+    //             $('#btn_hapus_row_' + n).css('display', 'none');
+    //             $('#btn_ubah_' + n).css('display', 'block');
+    //             $('#btn_hapus_' + n).css('display', 'block');
 
-                $('#hidden_no_lpb').val(data.nolpb);
-                $('#hidden_no_ref_lpb').val(data.noreflpb);
-                $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
-                // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
-            }
-        });
-    }
+    //             $('#hidden_no_lpb').val(data.nolpb);
+    //             $('#hidden_no_ref_lpb').val(data.noreflpb);
+    //             $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
+    //             // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+    //         }
+    //     });
+    // }
 
     function ubahRinci(n) {
 
