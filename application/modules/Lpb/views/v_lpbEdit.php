@@ -98,6 +98,8 @@
                         </div>
                     </div>
                 </div> -->
+                <input type="hidden" id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off">
+                <input type="hidden" id="txt_ref_po" name="txt_ref_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
                 <hr style="margin-top: -15px;">
                 <div class="row mx-0 div_form_2" style="margin-top: -25px;">
                     <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
@@ -337,6 +339,7 @@
                     $('#txt_satuan_' + i).text(sat);
                     $('#txt_ket_rinci_' + i).text(ket);
                     $('#txt_qty_' + i).val(qty);
+                    $('#hidden_txt_qty_' + i).val(qty);
                     $('#hidden_grup_' + i).text(grp);
                     $('#hidden_id_item_lpb_' + i).val(id_lpb);
                     // $('#sisa_qty_' + no).text(sumsisa);
@@ -459,7 +462,8 @@
             '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off">' +
+            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
+            '<input type="hidden" id="hidden_txt_qty_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
@@ -761,8 +765,31 @@
         $("#status_sukses").remove();
     };
 
-    //Update Data
     function updateRinci(n) {
+
+        var qty = $('#txt_qty_' + n).val();
+
+        if (!qty) {
+            toast('Qty');
+        } else {
+            updateRinciClick(n);
+        }
+        return false;
+    };
+
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' is required!',
+            icon: 'error',
+            loader: true,
+            loaderBg: 'red'
+        });
+    }
+
+    //Update Data
+    function updateRinciClick(n) {
 
         if ($('#chk_asset_' + n).is(':checked')) {
             var chk_asset = 'yes';
@@ -771,6 +798,8 @@
         var no_ref_po = $('#txt_ref_po').val();
         var no_po = $('#txt_no_po').val();
         var kodebar = $('#txt_kode_barang_' + n).val();
+
+        console.log(no_ref_po + ' ' + no_po + '' + kodebar);
 
         $.ajax({
             type: "POST",
@@ -872,6 +901,21 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
+            }
+        });
+    }
+
+    function cek_qty(n) {
+
+        $('#txt_qty_' + n).keyup(function() {
+            var qty = $('#txt_qty_' + n).val();
+            var qty_awal = $('#hidden_txt_qty_' + n).val();
+            var hidden_qty = $('#sisa_qty_' + n).text();
+            var a = Number(qty);
+            var b = Number(hidden_qty);
+            if (a > b) {
+                swal("Qty melebihi sisa Qty LPB");
+                $('#txt_qty_' + n).val(qty_awal);
             }
         });
     }

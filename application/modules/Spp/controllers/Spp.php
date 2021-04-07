@@ -370,7 +370,7 @@ class Spp extends CI_Controller
                 data-noppo="' . $field->noppo . '"
                 data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                 </button>
-                <button class="btn btn-primary btn-xs fa fa-print" id="print_spp" name="print_spp"
+                <button class="btn btn-danger btn-xs fa fa-trash" id="print_spp" name="print_spp"
                 data-noppotxt="' . $field->noppotxt . '"
                 data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
                 </button>';

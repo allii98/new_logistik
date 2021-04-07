@@ -334,7 +334,7 @@
             '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off">' +
+            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
@@ -353,7 +353,7 @@
 
         $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
 
-        // $('#txt_qty_' + row).number(true, 2);
+        $('#txt_qty_' + row).number(true);
 
         // $('html, body').animate({
         //     scrollTop: $("#tr_" + row).offset().top
@@ -531,6 +531,35 @@
     });
 
     function saveRinciClick(n) {
+
+        var lok_gudang = $('#txt_lokasi_gudang').val();
+        var nopeng = $('#txt_no_pengantar').val();
+        var qty = $('#txt_qty_' + n).val();
+
+        if (!lok_gudang) {
+            toast('Lokasi Gudang');
+        } else if (!nopeng) {
+            toast('No. pengantar');
+        } else if (!qty) {
+            toast('Qty');
+        } else {
+            saveRinci(n);
+        }
+        return false;
+    };
+
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' is required!',
+            icon: 'error',
+            loader: true,
+            loaderBg: 'red'
+        });
+    }
+
+    function saveRinci(n) {
 
         var no_ref_po = $('#txt_ref_po').val();
         var no_po = $('#txt_no_po').val();
@@ -747,6 +776,21 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
+            }
+        });
+    }
+
+    function cek_qty(n) {
+
+
+        $('#txt_qty_' + n).keyup(function() {
+            var qty = $('#txt_qty_' + n).val();
+            var hidden_qty = $('#sisa_qty_' + n).text();
+            var a = Number(qty);
+            var b = Number(hidden_qty);
+            if (a > b) {
+                swal("Qty melebihi sisa Qty LPB");
+                $('#txt_qty_' + n).val('');
             }
         });
     }

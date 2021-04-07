@@ -655,8 +655,31 @@
         });
     };
 
-    //Update Data
     function updateRinci(n) {
+
+        var qty = $('#txt_qty_' + n).val();
+
+        if (!qty) {
+            toast('Qty');
+        } else {
+            updateRinciClick(n);
+        }
+        return false;
+    };
+
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' is required!',
+            icon: 'error',
+            loader: true,
+            loaderBg: 'red'
+        });
+    }
+
+    //Update Data
+    function updateRinciClick(n) {
 
         $.ajax({
             type: "POST",
