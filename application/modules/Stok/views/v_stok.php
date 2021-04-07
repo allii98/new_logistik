@@ -2,12 +2,13 @@
 <div class="row justify-content-center">
     <div class="col-md">
         <div class="widget-rounded-circle card-box">
-            <h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data PO</h4>
+            <h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Stock Awal</h4>
+            <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button>
             <hr>
             <div class="row">
                 <!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <table id="tableStok" class="table dt-responsive nowrap w-100 dataTable dtr-inline" width="100%">
+                    <table id="tableStockAwal" class="table dt-responsive nowrap w-100 dataTable dtr-inline" width="100%">
 
                         <thead class="thead-light">
                             <tr role="row">
@@ -52,15 +53,16 @@
                         <input type="hidden" id="hidden_id" name="hidden_id">
 
                         <div class="form-group row">
-                            <label for="txt_nmr_part" class="col-3 col-form-label">Kode Barang</label>
+                            <label for="txt_kode_barang" class="col-3 col-form-label">Kode Barang</label>
                             <div class="col-9">
                                 <input type="text" class="form-control" id="txt_kode_barang" placeholder="Nomor Part" onfocus="modalListBarang()" autocomplete="off">
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
                             <div class="col-9">
-                                <input type="text" class="form-control" id="txt_nm_barang" name="txt_nm_barang" placeholder="Nama Barang" required="" autocomplete="off">
+                                <input type="text" class="form-control" id="txt_nama_barang" name="txt_nm_barang" placeholder="Nama Barang" required="" autocomplete="off">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -93,25 +95,23 @@
                         </div>
 
                         <div class="form-group row">
-                            <div class="col-md-12">
-                                <label class="control-label col-md-3">Saldo Akhir (Qty)</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control currencyduadigit" id="txt_saldo_akhir_qty" name="txt_saldo_akhir_qty" placeholder="Saldo Akhir (Qty)" required="" value="0.00">
-                                </div>
-                                <label class="control-label col-md-2">Saldo Akhir (Nilai)</label>
-                                <div class="col-md-3">
-                                    <input type="text" class="form-control currencyduadigit" id="txt_saldo_akhir_nilai" name="txt_saldo_akhir_nilai" placeholder="Saldo Akhir (Nilai)" required="" value="0.00">
-                                </div>
+                            <label for="txt_saldo_akhir_qty" class="col-3 col-form-label">Saldo Akhir (Qty)</label>
+                            <div class="col-3">
+                                <input type="text" class="form-control currencyduadigit" id="txt_saldo_akhir_qty" name="txt_saldo_akhir_qty" placeholder="Min. Stock (Qty)" required="" value="0.00">
+                            </div>
+
+                            <label class="control-label col-md-2">Saldo Akhir (Qty)</label>
+                            <div class="col-md-3">
+                                <input type="text" class="form-control currencyduadigit" id="txt_saldo_akhir_nilai" name="txt_saldo_akhir_nilai" placeholder="Saldo Awal (Nilai)" required="" value="0.00">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-12">
-                                <label class="control-label col-md-3">Keterangan</label>
-                                <div class="col-md-8">
-                                    <input type="text" class="form-control" id="txt_keterangan_stock_awal" name="txt_keterangan_stock_awal" placeholder="Keterangan" required="">
-                                </div>
+                            <label for="txt_keterangan_stock_awal" class="col-3 col-form-label">Keterangan</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control" id="txt_keterangan_stock_awal" placeholder="Keterangan" autocomplete="off">
                             </div>
                         </div>
+
                         <div class="form-group row">
                             <div class="col-md-12">
                                 <button class="btn btn-sm btn-success col-md-2 col-md-offset-5" data-toggle="tooltip" data-placement="top" title="Simpan" id="btn_simpan" name="btn_simpan">Simpan</button>
@@ -128,16 +128,111 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListBarang">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Cari Kode Barang</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-striped table-responsive" id="tableListBarang" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="thtable">No</th>
+                                <th class="thtable">Kode Brg</th>
+                                <th class="thtable">Nama Brg</th>
+                                <th class="thtable">Group</th>
+                                <th class="thtable">Satuan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody_list_coa"></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <script>
     var table;
     $(document).ready(function() {
 
-        datastok();
+        listStockAwal();
     });
 
-    function datastok() {
-        table = $('#tableStok').DataTable({
+    $("#form_input_stock_awal").validate({
+        ignore: [],
+        submitHandler: function(form) {
+            simpan_stock_awal();
+        }
+    });
+
+    function simpan_stock_awal() {
+        var form_data = new FormData();
+
+        form_data.append('hidden_id', $('#hidden_id').val());
+        form_data.append('txt_kode_barang', $('#txt_kode_barang').val());
+        form_data.append('txt_nama_barang', $('#txt_nama_barang').val());
+        form_data.append('txt_satuan', $('#txt_satuan').val());
+        form_data.append('txt_grup', $('#txt_grup').val());
+        form_data.append('txt_min_stock_qty', $('#txt_min_stock_qty').val());
+        form_data.append('txt_saldo_awal_nilai', $('#txt_saldo_awal_nilai').val());
+        form_data.append('txt_saldo_awal_qty', $('#txt_saldo_awal_qty').val());
+        form_data.append('txt_saldo_akhir_qty', $('#txt_saldo_akhir_qty').val());
+        form_data.append('txt_saldo_akhir_nilai', $('#txt_saldo_akhir_nilai').val());
+        form_data.append('txt_keterangan_stock_awal', $('#txt_keterangan_stock_awal').val());
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Stok/simpan_stock'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            data: form_data,
+            success: function(data) {
+                if (data == 'barang_sudah_ada_di_stok_awal') {
+                    swal('Barang sudah ada di stok awal pada periode ini')
+                } else {
+                    $('#modalInputStockAwal').modal('hide');
+                    listStockAwal();
+
+                    $.toast({
+                        heading: 'Success',
+                        text: 'Berhasil disimpan',
+                        position: 'top-right',
+                        icon: 'success',
+                        showHideTransition: 'plain'
+                        // reload: false
+                    });
+                }
+            },
+            error: function(request) {
+                alert(request.responseText);
+
+            }
+        });
+    }
+
+    function modalInputStockAwal() {
+        $('#modalInputStockAwal').modal('show');
+        $('#form_input_stock_awal')[0].reset();
+        $('#btn_simpan').show();
+        $('#btn_ubah').hide();
+    }
+
+
+    function listStockAwal() {
+
+        $('#tableStockAwal').DataTable().destroy();
+        var table = $('#tableStockAwal').DataTable({
 
             "processing": true,
             "serverSide": true,
@@ -157,18 +252,20 @@
     }
 
     function detail_barang(kodebar, id) {
+        // console.table({
+        //     kodebar,
+        //     id
+        // });
         $('#modalInputStockAwal').modal('show');
         $('#btn_simpan').hide();
         $('#btn_ubah').show();
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('stock_awal/detail_stock'); ?>",
+            url: "<?php echo site_url('Stok/detail_stock'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
-            // cache   : false,
-            // contentType : false,
-            // processData : false,
+
 
             data: {
                 'id': id,
@@ -191,14 +288,96 @@
             },
             error: function(request) {
                 alert(request.responseText);
-                new PNotify({
-                    title: 'Error',
-                    text: 'Gagal mengambil data barang',
-                    type: 'error',
-                    // hide: false,
-                    styling: 'bootstrap3'
-                });
+
             }
         });
     }
+
+    function modalListBarang() {
+        $('#modalListBarang').modal('show');
+        tableListBarang();
+    }
+
+    function tableListBarang() {
+        $('#tableListBarang').DataTable().destroy();
+        $('#tableListBarang').DataTable({
+            "paging": true,
+            "scrollY": false,
+            "scrollX": false,
+            "searching": true,
+            "select": true,
+            "bLengthChange": true,
+            "scrollCollapse": true,
+            "bPaginate": true,
+            "bInfo": true,
+            "bSort": false,
+            "processing": true,
+            "serverSide": true,
+            "responsive": true,
+            "order": [],
+            "ajax": {
+                "url": "<?php echo site_url('Stok/list_barang') ?>",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+
+            "columns": [{
+                    "width": "5%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "30%"
+                },
+                {
+                    "width": "30%"
+                },
+                {
+                    "width": "5%"
+                },
+            ],
+            "columnDefs": [{
+                "targets": [],
+                "orderable": false,
+            }, ],
+            "drawCallback": function(settings) {
+                $('#tableListBarang tr').each(function() {
+                    var Cell = $(this).find('td');
+
+                    Cell.parent().on('mouseover', Cell, function() {
+                        Cell.parent().css('background-color', '#26b99a');
+                        Cell.parent().css('color', '#ffffff');
+
+                        Cell.parent().bind("mouseout", function() {
+                            Cell.parent().css('background-color', '');
+                            Cell.parent().css('color', '#73879c');
+                        });
+                    });
+                });
+            },
+
+        });
+    }
+
+    $('#tableListBarang tbody').on('click', 'tr', function() {
+        var dataClick = $('#tableListBarang').DataTable().row(this).data();
+        var kode_brg = dataClick[1].trim();
+        var nama_brg = dataClick[2].trim();
+        var satuan = dataClick[4].trim();
+        var group_brg = dataClick[3].trim();
+        var row = $('#hidden_no_row').val();
+
+        $('#txt_kode_barang').val(kode_brg);
+        $('#txt_nama_barang').val(nama_brg);
+        $('#txt_satuan').val(satuan);
+        // $('#hidden_grup').val(group_brg);
+        $('#txt_grup').val(group_brg);
+
+        $('#modalListBarang').modal('hide');
+    });
 </script>

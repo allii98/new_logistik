@@ -14,7 +14,7 @@
             <div class="card">
                 <div class="card-body">
                     <h4 class="header-title mb-3">Data BPB</h4>
-                    <a class="btn btn-round btn-info pull-right" id="btn_input" href="#">Input BPB</a>
+                    <a class="btn btn-round btn-info pull-right" id="btn_input" href="<?= base_url('Bpb/input') ?>">Input BPB</a>
                     <hr>
                     <table id="tableListBPB" class="table table-striped table-bordered" width="100%">
                         <thead>
@@ -35,17 +35,7 @@
                         </thead>
 
                         <tbody id="tbody_list_po">
-                            <tr>
-                                <td>x</td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td>x</td>
-                                <td>x</td>
 
-                                <td>x</td>
-                                <td>x</td>
-                                <td>x</td>
-                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -57,6 +47,61 @@
 
 <script>
     $(document).ready(function() {
-        $('#tableListBPB').DataTable();
+        // $('#tableListBPB').DataTable();
+        // $('#div_filter').hide();
+        var filter = "Semua";
+        listBPB(filter);
     });
+
+    function listBPB(filter) {
+        $('#tableListBPB').DataTable().destroy();
+        var dt = $('#tableListBPB').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+
+            "ajax": {
+                "url": "<?php echo site_url('Bpb/data') ?>",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [],
+                "orderable": false,
+            }, ],
+        });
+
+        var detailRows = [];
+
+        $('#tableListBPB tbody').on('click', 'tr td.details-control', function() {
+            var tr = $(this).closest('tr');
+            var row = dt.row(tr);
+            var idx = $.inArray(tr.attr('id'), detailRows);
+
+            if (row.child.isShown()) {
+                tr.removeClass('details');
+                row.child.hide();
+
+                // Remove from the 'open' array
+                detailRows.splice(idx, 1);
+            } else {
+                tr.addClass('details');
+                row.child(format(row.data()[1])).show();
+
+                // Add to the 'open' array
+                if (idx === -1) {
+                    detailRows.push(tr.attr('id'));
+                }
+            }
+        });
+
+        dt.on('draw', function() {
+            $.each(detailRows, function(i, id) {
+                $('#' + id + ' td.details-control').trigger('click');
+            });
+
+
+        });
+    }
 </script>

@@ -142,23 +142,13 @@
                         <div class="form-group row">
                             <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
                             <div class="col-9">
-                                <input type="text" class="form-control" id="txt_nm_barang" name="txt_nm_barang" placeholder="Nama Barang" required="">
+                                <input type="text" class="form-control" id="txt_nm_barang" name="txt_nm_barang" placeholder="Nama Barang" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="cmb_grup_barang" class="col-3 col-form-label">Group Barang</label>
+                            <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
                             <div class="col-9">
-                                <select class="form-control" id="cmb_grup_barang" name="cmb_grup_barang" required="">
-                                    <option value="">Pilih</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="cmb_satuan" class="col-3 col-form-label">Satuan</label>
-                            <div class="col-9">
-                                <select class="form-control" id="cmb_satuan" name="cmb_satuan" required="">
-                                    <option value="">Pilih</option>
-                                </select>
+                                <input type="text" class="form-control" id="txt_satuan" name="txt_satuan" placeholder="Satuan" readonly="" required="">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -307,13 +297,7 @@
             },
             error: function(request) {
                 alert(request.responseText);
-                new PNotify({
-                    title: 'Error',
-                    text: 'Gagal mengambil data barang',
-                    type: 'error',
-                    // hide: false,
-                    styling: 'bootstrap3'
-                });
+
             }
         });
     }
