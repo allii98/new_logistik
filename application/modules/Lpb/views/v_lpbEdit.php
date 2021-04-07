@@ -1,29 +1,29 @@
 <div class="container-fluid">
     <!-- start row-->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-0">
         <div class="col-md">
             <div class="widget-rounded-circle card-box mt-2">
                 <h4 class="header-title">
-                    <font face="Verdana"> LPB </font>
+                    <font face="Verdana"> LPB <i>(Edit)</i> </font>
                 </h4>
                 <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                     Input Laporan Penerimaan Barang
                 </p>
 
-                <div class="row div_form_1">
+                <!-- <div class="row div_form_1">
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
                             <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-lg-8 col-11 row">
-                                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
+                            <div class="col-lg-8 col-11 row"> -->
+                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
                                 </select> -->
-                                <input id="multiple" class="form-control bg-light" type="text" class="col-2" onkeyup="cariPoqr()" readonly>
-                                <input type="hidden" id="txt_no_po">
-                                <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
-                            </div>
-                            <!-- <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button> -->
-                        </div>
+                <!-- <input id="multiple" class="form-control bg-light" type="text" class="col-2" onkeyup="cariPoqr()" readonly>
+                                <input type="hidden" id="txt_no_po"> -->
+                <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
+                <!-- </div> -->
+                <!-- <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button> -->
+                <!-- </div>
                         <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
                             </label>
@@ -50,8 +50,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <!-- <div class="form-group row mb-1">
+                    <div class="col-md-3"> -->
+                <!-- <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi<span class="required">*</span>
                             </label>
                             <div class="col-md-8">
@@ -66,14 +66,14 @@
                                 </select>
                             </div>
                         </div> -->
-                        <div class="form-group row mb-1">
+                <!-- <div class="form-group row mb-1">
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
                                 <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
                             </div>
-                        </div>
-                        <div class="form-group row">
+                        </div> -->
+                <!-- <div class="form-group row">
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
@@ -97,9 +97,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row mx-0 div_form_2">
+                </div> -->
+                <hr style="margin-top: -15px;">
+                <div class="row mx-0 div_form_2" style="margin-top: -25px;">
                     <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
                         <!-- <h6 id="lbl_lpb_status" name="lbl_lpb_status">
                             <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
@@ -341,6 +341,9 @@
                     $('#hidden_id_item_lpb_' + i).val(id_lpb);
                     // $('#sisa_qty_' + no).text(sumsisa);
                     // getGrupBarang(kodebar, i);
+
+                    $('.div_form_2').find('#txt_kode_barang_' + i + ', #chk_asset_' + i + ', #txt_qty_' + i + ',#txt_ket_rinci_' + i).addClass('bg-light');
+                    $('.div_form_2').find('#txt_kode_barang_' + i + ', #chk_asset_' + i + ', #txt_qty_' + i + ',#txt_ket_rinci_' + i).attr('disabled', '');
                 }
             },
             error: function(response) {

@@ -305,8 +305,8 @@ class Spp extends CI_Controller
         ];
 
         $data_item_ppo = [
-            'kodedept' => $this->input->post('txt_kode_departemen'),
-            'namadept' => $data['nama_dept']['nama'],
+            // 'kodedept' => $this->input->post('txt_kode_departemen'),
+            // 'namadept' => $data['nama_dept']['nama'],
             'kodebar' => $this->input->post('hidden_kode_brg'),
             'kodebartxt' => $this->input->post('hidden_kode_brg'),
             'nabar' => $this->input->post('hidden_nama_brg'),
@@ -316,7 +316,7 @@ class Spp extends CI_Controller
             'ket' => $this->input->post('txt_keterangan_rinci'),
         ];
 
-        $data = $this->M_spp->updateSpp($id_ppo, $data_ppo);
+        // $data = $this->M_spp->updateSpp($id_ppo, $data_ppo);
         $data2 = $this->M_spp->updateSpp2($id_item_ppo, $data_item_ppo);
 
         echo json_encode($data, $data2);
@@ -353,12 +353,31 @@ class Spp extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $field) {
             $no++;
+
+            if ($field->status2 == 1) {
+                $stat = '<h5><span class="badge badge-success">Approved</span></h5>';
+            } else {
+                $stat = '<h5><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+            }
+
+            if ($field->status2 == 1) {
+                $aks = '<button class="btn btn-primary btn-xs fa fa-print" id="print_spp" name="print_spp"
+                data-noppotxt="' . $field->noppotxt . '"
+                data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
+                </button>';
+            } else {
+                $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
+                data-noppo="' . $field->noppo . '"
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                </button>
+                <button class="btn btn-primary btn-xs fa fa-print" id="print_spp" name="print_spp"
+                data-noppotxt="' . $field->noppotxt . '"
+                data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
+                </button>';
+            }
             $row = array();
             $row[] = $no;
-            $row[] = '<button class="btn btn-primary btn-xs fa fa-print" id="print_spp" name="print_spp"
-                        data-noppotxt="' . $field->noppotxt . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
-                        </button>';
+            $row[] = $aks;
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
             $row[] = $field->tglref;
@@ -367,7 +386,7 @@ class Spp extends CI_Controller
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
-            $row[] = '<h5><span class="badge badge-success">Approved</span></h5>';
+            $row[] = $stat;
             $row[] = $field->user;
 
             $data[] = $row;
@@ -412,7 +431,7 @@ class Spp extends CI_Controller
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
-            $row[] = '<h5><span class="badge badge-success">DALAM<br>PROSES</span></h5>';
+            $row[] = '<h5><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             $row[] = $field->user;
 
             $data[] = $row;
@@ -440,6 +459,21 @@ class Spp extends CI_Controller
     {
         $id_item_spp = $this->input->post('id_item_spp');
         $result = $this->M_data_spp_approval->approval_spp1($id_item_spp);
+
+        echo json_encode($result);
+    }
+
+    public function edit_spp($noppo)
+    {
+        $data['noppo'] = $noppo;
+
+        $this->template->load('template', 'v_spp_edit', $data);
+    }
+
+    public function cari_spp_edit()
+    {
+        $noppo = $this->input->post('noppo');
+        $result = $this->M_data_spp->cari_spp_edit($noppo);
 
         echo json_encode($result);
     }
