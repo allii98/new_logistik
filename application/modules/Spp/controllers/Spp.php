@@ -361,10 +361,7 @@ class Spp extends CI_Controller
             }
 
             if ($field->status2 == 1) {
-                $aks = '<button class="btn btn-primary btn-xs fa fa-print" id="print_spp" name="print_spp"
-                data-noppotxt="' . $field->noppotxt . '"
-                data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
-                </button>';
+                $aks = '<a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_spp"></a>';
             } else {
                 $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
                 data-noppo="' . $field->noppo . '"
@@ -476,6 +473,62 @@ class Spp extends CI_Controller
         $result = $this->M_data_spp->cari_spp_edit($noppo);
 
         echo json_encode($result);
+    }
+
+    function cetak()
+    {
+        $nospp = $this->uri->segment('3');
+        $id = $this->uri->segment('4');
+
+        $data['ppo'] = $this->db_logistik_pt->get_where('ppo', array('noppotxt' => $nospp, 'id' => $id))->row();
+
+        $noreftxt = $data['ppo']->noreftxt;
+        $data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noreftxt,  'status2' => '1'))->result();
+
+        $query_approval = "SELECT DISTINCT nama_approval_ktu, tgl_approval_ktu, nama_approval_dept_head, tgl_approval_dept_head, nama_approval_gm, tgl_approval_gm FROM item_ppo_approval WHERE noreftxt = '$noreftxt' AND status2_ktu = '4' AND status2_dept_head = '1'";
+        $data['item_ppo_approval'] = $this->db_logistik_pt->query($query_approval)->row();
+
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => [190, 236],
+            // 'format' => 'A4',
+            // 'setAutoTopMargin' => 'stretch',
+            'margin_top' => '15',
+            'orientation' => 'P'
+        ]);
+
+        // $pdf = new \Mpdf\Mpdf([
+        // 			'mode' => 'utf-8',
+        // 			'format' => 'A4'.($orientation == 'L' ? '-L' : ''),
+        // 			'orientation' => $orientation,
+        // 			'margin_left' => $margin_left,
+        // 			'margin_right' => $margin_right,
+        // 			'margin_top' => $margin_top,
+        // 			'margin_bottom' => $margin_bottom,
+        // 			'margin_header' => 0,
+        // 			'margin_footer' => 0,
+        // 		]);
+
+        $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3>');
+        // $mpdf->SetHTMLHeader('
+        //                     <table width="100%" border="0" align="center">
+        //                         <tr>
+        //                             <td rowspan="2" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
+        //                             <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
+        //                         </tr>
+        //                         <tr>
+        //                             <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+        //                             </td>
+        //                         </tr>
+        //                     </table>
+        //                     <hr style="width:100%;">
+        //                     ');
+        // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+        $html = $this->load->view('v_spp_print', $data, true);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
     }
 }
 

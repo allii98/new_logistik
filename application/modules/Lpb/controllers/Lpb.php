@@ -60,7 +60,8 @@ class Lpb extends CI_Controller
                         <button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
                         data-ttg="' . $field->ttg . '" data-nopo="' . $field->nopo . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>';
+                        </button>
+                        <a href="' . site_url('lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = $field->ttg;
             $row[] = $field->noref;
@@ -547,5 +548,122 @@ class Lpb extends CI_Controller
 
         $result = $this->M_lpb->getSisaLpb($qty_po, $kodebar, $no_lpb);
         echo json_encode($result);
+    }
+
+    function cetak()
+    {
+        $no_lpb = $this->uri->segment('3');
+        $id = $this->uri->segment('4');
+
+        $data['no_lpb'] = $no_lpb;
+        $data['id'] = $id;
+        $data['stokmasuk'] = $this->db_logistik_pt->get_where('stokmasuk', array('id' => $id, 'ttgtxt' => $no_lpb))->row();
+        $data['masukitem'] = $this->db_logistik_pt->get_where('masukitem', array('ttgtxt' => $no_lpb, 'noref' => $data['stokmasuk']->noref))->result();
+
+        $noref = $data['stokmasuk']->noref;
+        $this->qrcode($no_lpb, $id, $noref);
+        // $data['po'] = $this->db_logistik_pt->get_where('po', array('nopotxt' => $data['stokmasuk']->nopotxt, 'noreftxt' => $data['stokmasuk']->refpo ))->row();
+
+        // var_dump($data['po']);exit();
+        // $mpdf = new \Mpdf\Mpdf([
+        //                       'mode' => 'utf-8', 
+        //                       // 'format' => [190, 236],
+        //                       'format' => 'A4',
+        //                       'setAutoTopMargin' => 'stretch',
+        //                       'orientation' => 'P'
+        //                   ]);
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => [190, 236],
+            'setAutoTopMargin' => 'stretch',
+            'orientation' => 'P'
+        ]);
+
+        $lokasibuatlpb = substr($noref, 0, 3);
+        switch ($lokasibuatlpb) {
+            case 'LPB': // HO
+                $lokasilpb = "HO";
+                break;
+            case 'ROM': // RO
+                $lokasilpb = "RO";
+                break;
+            case 'FAC': // PKS
+                $lokasilpb = "PKS";
+                break;
+            case 'EST': // SITE
+                $lokasilpb = "SITE";
+                break;
+            default:
+                break;
+        }
+
+        // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+        $mpdf->SetHTMLHeader('
+                            <table width="100%" border="0" align="center">
+                                <tr>
+                                    <td rowspan="5" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
+                                    <td rowspan="5" align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $lokasilpb . ')</td>
+                                    <td>Putih</td>
+                                    <td>:</td>
+                                    <td>Finance HO</td>
+                                </tr>
+                                <!--tr>
+                                    <td align="center" rowspan="5">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                    </td>
+                                </tr-->
+                                <tr>
+                                	<td>Merah</td>
+                                	<td>:</td>
+                                	<td>Accounting HO</td>
+                                </tr>
+                                <tr>
+                                	<td>Kuning</td>
+                                	<td>:</td>
+                                	<td>Gudang Est</td>
+                                </tr>
+                                <tr>
+                                	<td>Hijau</td>
+                                	<td>:</td>
+                                	<td>Accounting Est</td>
+                                </tr>
+                                <tr>
+                                	<td>Biru</td>
+                                	<td>:</td>
+                                	<td>Purchasing HO</td>
+                                </tr>
+                            </table>
+                            <hr style="width:100%;margin:0px;">
+                            ');
+        // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+        $html = $this->load->view('v_lpbPrint', $data, true);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+
+    function qrcode($no_lpb, $id, $noref)
+    {
+        $this->load->library('Ciqrcode');
+        // header("Content-Type: image/png");
+
+        $config['cacheable']    = false; //boolean, the default is true
+        $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        $config['imagedir']     = './assets/qrcode/lpb/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = '1024'; //interger, the default is 1024
+        $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        $this->ciqrcode->initialize($config);
+
+        $image_name = $id . '_' . $no_lpb . '.png'; //buat name dari qr code
+
+        // $params['data'] = site_url('lpb/cetak/'.$no_lpb.'/'.$id); //data yang akan di jadikan QR CODE
+        $params['data'] = $noref; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H=High
+        $params['size'] = 10;
+        $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
+        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
     }
 }
