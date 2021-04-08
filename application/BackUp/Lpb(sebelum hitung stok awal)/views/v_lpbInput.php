@@ -608,50 +608,40 @@
             },
 
             success: function(data) {
+                console.log(n);
 
-                // jika barang stok awal tidak ada maka tampilkan swal
-                if (data.result_stok_awal == 'NULL') {
-                    swal('Item tidak ada! Silahkan input stok awal.');
-                    $('#lbl_status_simpan_' + n).empty();
-                    $('#lbl_lpb_status').empty();
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_lpb_status').empty();
 
-                    $('#btn_simpan_' + n).css('display', 'block');
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil Disimpan!',
+                    icon: 'success',
+                    loader: false
+                });
 
-                } else {
-                    $('#lbl_status_simpan_' + n).empty();
-                    $('#lbl_lpb_status').empty();
+                // hitung sisa qty po guys
+                sisaQtyPO(no_ref_po, no_po, kodebar, n);
 
-                    $.toast({
-                        position: 'top-right',
-                        heading: 'Success',
-                        text: 'Berhasil Disimpan!',
-                        icon: 'success',
-                        loader: false
-                    });
+                $('#no_lpb').html('No. SPP : ' + data.nolpb);
+                $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
 
-                    // hitung sisa qty po guys
-                    sisaQtyPO(no_ref_po, no_po, kodebar, n);
+                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
-                    $('#no_lpb').html('No. SPP : ' + data.nolpb);
-                    $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+                // $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
-                    $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                    $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+                $('#btn_hapus_row_' + n).css('display', 'none');
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
 
-                    $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-                    $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                    // $('.headspp').find('#cancelSpp').removeAttr('disabled');
-
-                    $('#btn_hapus_row_' + n).css('display', 'none');
-                    $('#btn_ubah_' + n).css('display', 'block');
-                    $('#btn_hapus_' + n).css('display', 'block');
-
-                    $('#hidden_no_lpb').val(data.nolpb);
-                    $('#hidden_no_ref_lpb').val(data.noreflpb);
-                    $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
-                    // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
-
-                }
+                $('#hidden_no_lpb').val(data.nolpb);
+                $('#hidden_no_ref_lpb').val(data.noreflpb);
+                $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
+                // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
             }
         });
     }

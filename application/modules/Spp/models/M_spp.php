@@ -109,7 +109,7 @@ class M_spp extends CI_Model
 
     public function stokAwal($kd_bar)
     {
-        $this->db_logistik_pt->select('saldoawal_qty');
+        $this->db_logistik_pt->select('QTY_MASUK');
         $this->db_logistik_pt->where('kodebartxt', $kd_bar);
         $this->db_logistik_pt->from('stockawal');
         return $this->db_logistik_pt->get()->row();
@@ -125,7 +125,7 @@ class M_spp extends CI_Model
 
     public function sumKeluar($kd_bar)
     {
-        $this->db_logistik_pt->select_sum('qty2', 'stokkeluar');
+        $this->db_logistik_pt->select_sum('qty', 'stokkeluar');
         $this->db_logistik_pt->where('kodebartxt', $kd_bar);
         $this->db_logistik_pt->from('keluarbrgitem');
         return $this->db_logistik_pt->get()->row();

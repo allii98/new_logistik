@@ -388,33 +388,12 @@ class Lpb extends CI_Controller
             'qtyditerima' => '0',
         ];
 
-        $sat = $this->input->post('txt_satuan');
-        $grp = $this->input->post('hidden_grup');
-        $quantiti = $this->input->post('txt_qty');
-
-        $cari_kodebar_stock_awal = $this->M_lpb->cari_kodebar($kodebar);
-
-        if ($cari_kodebar_stock_awal == 0) {
-            $result_stok_awal =  "NULL";
-            $result_insert_stok_awal_harian = FALSE;
-            $result_update_stok_awal = FALSE;
-            $data = FALSE;
-            $data2 = FALSE;
+        if (empty($this->input->post('hidden_no_lpb'))) {
+            $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
+            $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         } else {
-            //save lpb
-            if (empty($this->input->post('hidden_no_lpb'))) {
-                $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
-                $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
-            } else {
-                $data = NULL;
-                $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
-            }
-
-            $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_po, $quantiti);
-
-            $result_update_stok_awal = $this->update_stok_awal($kodebar);
-
-            $result_stok_awal =  FALSE;
+            $data = NULL;
+            $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         }
 
         $query_id = "SELECT MAX(id) as id_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
@@ -422,9 +401,6 @@ class Lpb extends CI_Controller
         $id_item_lpb = $generate_id->id_lpb;
 
         $data_return = [
-            'result_stok_awal' => $result_stok_awal,
-            'insert_stok_harian' => $result_insert_stok_awal_harian,
-            'update_stok' => $result_update_stok_awal,
             'data' => $data,
             'data2' => $data2,
             'nolpb' => $no_lpb,
@@ -434,64 +410,6 @@ class Lpb extends CI_Controller
 
         echo json_encode($data_return);
     }
-
-    function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_po, $qty)
-    {
-        $harga_item_po = $this->M_lpb->cari_harga_po($no_po, $kodebar);
-
-        $x_harga = $harga_item_po['harga'] * $qty;
-
-        $data_insert_stok_harian = [
-            'pt' => $this->session->userdata('pt'),
-            'KODE' => $this->session->userdata('kode_pt'),
-            'afd' => '-',
-            'kodebar' => $kodebar,
-            'kodebartxt' => $kodebar,
-            'nabar' => $nabar,
-            'satuan' => $sat,
-            'grp' => $grp,
-            'saldoawal_qty' => '0',
-            'saldoawal_nilai' => $x_harga,
-            'tglinput' => date("Y-m-d H:i:s"),
-            'thn' => date("Y"),
-            'saldoakhir_qty' => '0',
-            'saldoakhir_nilai' => '0',
-            'nilai_masuk' => $harga_item_po['harga'],
-            'qty_masuk_per_tgl' => '0',
-            'QTY_MASUK' => $qty,
-            'qty_keluar_per_tgl' => '0',
-            'QTY_KELUAR' => '0',
-            'QTY_ADJMASUK' => '0',
-            'QTY_ADJKELUAR' => '0',
-            'HARGAPORAT' => '0',
-            'periode' => $this->session->userdata('ymd_periode'),
-            'txtperiode' => $this->session->userdata('ym_periode'),
-            'ket' => '-',
-            'account' => '-',
-            'ket_account' => '-',
-            'minstok' => '0',
-            'tgl_transaksi' => date("Y-m-d H:i:s")
-        ];
-
-        return $this->M_lpb->saveStockAwal($data_insert_stok_harian);
-    }
-
-    function update_stok_awal($kodebar)
-    {
-        $sum_qty_kodebar = $this->M_lpb->sum_qty_kodebar_harian($kodebar);
-        $sum_harga_kodebar = $this->M_lpb->sum_harga_kodebar_harian($kodebar);
-
-        $rata2 = $sum_harga_kodebar->saldo_awal_harian / $sum_qty_kodebar->qty_harian;
-
-        $data_update = [
-            'QTY_MASUK' => $sum_qty_kodebar->qty_harian,
-            'saldoawal_nilai' => $sum_harga_kodebar->saldo_awal_harian,
-            'nilai_masuk' => $rata2
-        ];
-
-        return $this->M_lpb->updateStokAwal($data_update, $kodebar);
-    }
-
 
     function sum_sisa_qty_po()
     {
