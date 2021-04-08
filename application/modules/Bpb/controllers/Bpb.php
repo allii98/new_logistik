@@ -31,6 +31,29 @@ class Bpb extends CI_Controller
         $this->template->load('template', 'v_indexBpb', $data);
     }
 
+    function get_all_cmb()
+    {
+        $bahan = $this->input->post('bahan');
+        $query = "SELECT * FROM tahun_tanam WHERE coa_material = '$bahan' ORDER BY thn_tanam ASC";
+        $data = $this->db_logistik_pt->query($query)->row();
+        echo json_encode($data);
+    }
+
+    function get_edit_bpb()
+    {
+        $id = $this->input->post('id');
+        $no_bpb = $this->input->post('no_bpb');
+
+        $query_bpb = "SELECT * FROM bpb WHERE id = '$id' AND nobpb = '$no_bpb'";
+
+        $data_bpb = $this->db_logistik_pt->query($query_bpb)->row();
+
+        $query_bpbitem = "SELECT * FROM bpbitem WHERE nobpb = '$no_bpb'";
+        $data_bpbitem = $this->db_logistik_pt->query($query_bpbitem)->result();
+
+        echo json_encode(array('data_bpb' => $data_bpb, 'data_bpbitem' => $data_bpbitem));
+    }
+
     public function input()
     {
         $data = [
@@ -170,13 +193,13 @@ class Bpb extends CI_Controller
                         </a>';
             if (empty($hasil->approval) || $hasil->approval == "0") {
                 $print = "";
-                $ubah = '<a href="' . site_url('bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang"> Ubah';
+                $ubah = '<a href="' . site_url('bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang">';
                 $batal = '<a href="javascript:;" id="a_batal_bpb">
-                    <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_bpb" name="btn_batal_bpb" data-toggle="tooltip" data-placement="top" title="Batal bpb" onClick="konfirmasiBatalBPB(' . $id . ',' . $hasil->nobpb . ')"> Batal
+                    <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_bpb" name="btn_batal_bpb" data-toggle="tooltip" data-placement="top" title="Batal bpb" onClick="konfirmasiBatalBPB(' . $id . ',' . $hasil->nobpb . ')">
                     </button>
                 </a>';
             } else {
-                $print = '<a href="' . site_url('bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb"> Cetak
+                $print = '<a href="' . site_url('bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb">
                 </a>';
                 $ubah = "";
                 $batal = "";

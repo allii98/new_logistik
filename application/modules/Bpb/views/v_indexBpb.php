@@ -1,19 +1,19 @@
 <div class="container-fluid">
     <!-- start page title -->
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-12">
             <div class="page-title-box">
 
-                <h4 class="page-title"><?= $title; ?></h4>
+                <h4 class="page-title"></h4>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3">Data BPB</h4>
+                    <h4 class="header-title mb-3"><?= $title; ?></h4>
                     <a class="btn btn-round btn-info pull-right" id="btn_input" href="<?= base_url('Bpb/input') ?>">Input BPB</a>
                     <hr>
                     <table id="tableListBPB" class="table table-striped table-bordered" width="100%">

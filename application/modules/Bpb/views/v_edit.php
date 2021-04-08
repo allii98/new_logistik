@@ -82,7 +82,7 @@
                                         <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
                                         <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
                                         <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang</th>
-                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan /Stok/Booking</th>
+                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan & Stok</th>
                                         <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty Diminta</th>
                                         <!-- <th width="8%">Qty Disetujui</th> -->
                                         <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
@@ -90,95 +90,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_rincian" name="tbody_rincian">
-                                    <tr id="tr_1">
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                            <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                            <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br />
-                                            <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
-                                        </td>
-                                        <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- TM/TBM -->
-                                                <select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
-                                                    <option value="-">-</option>
-                                                    <!-- <option value=""></option> -->
-                                                    <option value="TM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM</option>
-                                                    <option value="TBM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TBM</option>
-                                                    <option value="LANDCLEARING" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">LANDCLEARING</option>
-                                                    <option value="PEMBIBITAN" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PEMBIBITAN</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- AFD/UNIT -->
-                                                <select class="form-control set_strip_cmb" id="cmb_afd_unit_1" name="cmb_afd_unit_1" onchange="cmb_blok_sub(1)">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- BLOK/SUB -->
-                                                <select class="form-control set_strip_cmb" id="cmb_blok_sub_1" name="cmb_blok_sub_1" onchange="cmb_tahun_tanam(1)">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- Tahun Tanam -->
-                                                <select class="form-control set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- Bahan -->
-                                                <select class="form-control set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- Account Beban -->
-                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
-                                                <label class="control-label" id="lbl_no_acc_1"></label>
-                                                <label class="control-label" id="lbl_nama_acc_1"></label>
-                                                <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1">
-                                                <input type="hidden" id="hidden_nama_acc_1" name="hidden_nama_acc_1">
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- Barang -->
-                                                <input type="text" class="form-control" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
-                                                <label id="lbl_kode_barang_1"></label>
-                                                <label id="lbl_nama_barang_1"></label>
-                                                <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1">
-                                                <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1">
-                                                <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1">
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <label>Satuan :<b id="b_satuan_1" name="b_satuan_1"></b></label>
-                                                <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
 
-                                                <label>Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b></label>
-                                                <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
-
-                                                <label>Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b></label>
-                                                <input type="hidden" id="hidden_stok_booking_1" name="hidden_stok_booking_1">
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- Qty Diminta & Stok di Tgl ini & Satuan -->
-                                                <input type="number" class="form-control currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off">
-                                            </td>
-
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- Keterangan -->
-                                                <textarea class="resizable_textarea form-control" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')" autocomplite="off"></textarea>
-                                                <label id="lbl_status_simpan_1"></label>
-                                                <input type="hidden" id="hidden_id_bpbitem_1" name="hidden_id_bpbitem_1">
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
-                                            </td>
-                                        </form>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -358,16 +270,220 @@
     }
 
     $(document).ready(function() {
-        pilihDevisi();
-        $('#hidden_no_table').val(2);
-
+        var id = <?php echo $this->uri->segment(4) ?>;
+        var no_bpb = <?php echo $this->uri->segment(3) ?>;
+        $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Bpb/cari_dept'); ?>",
+            url: "<?php echo site_url('bpb/get_edit_bpb'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
             cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'id': id,
+                'no_bpb': no_bpb
+            },
+            success: function(data) {
+                // console.log(data);
+                var tglbpb = new Date(data.data_bpb.tglinput);
+
+                // $('#txt_diberikan_kpd').val(data.data_bpb.kpd);
+                $('#txt_untuk_keperluan').val(data.data_bpb.keperluan);
+                $('#cmb_bagian :selected').text(data.data_bpb.bag);
+                $('#txt_tgl_bpb').val(tglbpb);
+                $('#txt_no_bpb').val(data.data_bpb.nobpb);
+                $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
+
+                $('#hidden_no_bpb').val(data.data_bpb.nobpb);
+                $('#hidden_id_bpb').val(data.data_bpb.id);
+                $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
+
+                $('#lbl_bpb_status').empty();
+                $('#h4_no_bpb').html('No. BPB : ' + data.data_bpb.nobpb);
+                $('#h4_no_ref_bpb').html('No. Ref BPB : ' + data.data_bpb.norefbpb);
+
+                $('#hidden_no_table').val(1);
+
+                $.each(data.data_bpbitem, function(index) {
+                    // console.log(data);
+                    // var n = 1+index;
+                    var n = $('#hidden_no_table').val();
+
+                    var tr_buka = '<tr id="tr_' + n + '">';
+                    var td_col_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
+                        '<input type="hidden" id="hidden_proses_status_' + n + '" name="hidden_proses_status_' + n + '" value="insert">' +
+                        '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row(' + n + ')"></button><br />' +
+                        '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row" onclick="hapus_row(' + n + ')"></button>' +
+                        '</td>';
+                    var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
+                    var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + n + '" name="cmb_tm_tbm_' + n + '" onchange="cmb_afd_unit(' + n + ')" disabled>' +
+                        '<option value="-">-</option>' +
+                        '<option value="TM">TM</option>' +
+                        '<option value="TBM">TBM</option>' +
+                        '<option value="LANDCLEARING">LANDCLEARING</option>' +
+                        '<option value="PEMBIBITAN">PEMBIBITAN</option>' +
+                        '</select>' +
+                        '</td>';
+                    var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<select class="form-control set_strip_cmb" id="cmb_afd_unit_' + n + '" name="cmb_afd_unit_' + n + '" onchange="cmb_blok_sub(' + n + ')" disabled>' +
+                        '<option value=""></option>' +
+                        '<option value="01">01</option>' +
+                        '<option value="02">02</option>' +
+                        '<option value="03">03</option>' +
+                        '<option value="04">04</option>' +
+                        '<option value="05">05</option>' +
+                        '<option value="06">06</option>' +
+                        '<option value="07">07</option>' +
+                        '<option value="08">08</option>' +
+                        '<option value="09">09</option>' +
+                        '<option value="10">10</option>' +
+                        '<option value="11">11</option>' +
+                        '<option value="12">12</option>' +
+                        '<option value="14">14</option>' +
+                        '<option value="15">15</option>' +
+                        '<option value="16">16</option>' +
+                        '<option value="17">17</option>' +
+                        '<option value="99">99</option>' +
+                        '</select>' +
+                        '</td>';
+                    var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<!-- BLOK/SUB -->' +
+                        '<select class="form-control set_strip_cmb" id="cmb_blok_sub_' + n + '" name="cmb_blok_sub_' + n + '" onchange="cmb_tahun_tanam(' + n + ')">' +
+                        '<option value="-">-</option>' +
+                        '</select>' +
+                        '</td>';
+                    var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<!-- Tahun Tanam -->' +
+                        '<select class="form-control set_strip_cmb" id="cmb_tahun_tanam_' + n + '" name="cmb_tahun_tanam_' + n + '" onchange="cmb_bahan(' + n + ')">' +
+                        '<option value="-">-</option>' +
+                        '</select>' +
+                        '</td>';
+                    var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<!-- Bahan -->' +
+                        '<select class="form-control set_strip_cmb" id="cmb_bahan_' + n + '" name="cmb_bahan_' + n + '">' +
+                        '<option value="-">-</option>' +
+                        '</select>' +
+                        '</td>';
+                    var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<!-- Account Beban -->' +
+                        '<input type="text" class="form-control" id="txt_account_beban_' + n + '" name="txt_account_beban_' + n + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + n + ')" >' +
+                        '<label class="control-label" id="lbl_no_acc_' + n + '"></label>' +
+                        '<label class="control-label" id="lbl_nama_acc_' + n + '"></label>' +
+                        '<input type="hidden" id="hidden_no_acc_' + n + '" name="hidden_no_acc_' + n + '">' +
+                        '<input type="hidden" id="hidden_nama_acc_' + n + '" name="hidden_nama_acc_' + n + '">' +
+                        '</td>';
+                    var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<!-- Barang -->' +
+                        '<input type="text" class="form-control" id="txt_barang_' + n + '" name="txt_barang_' + n + '" onfocus="cari_barang(' + n + ')" placeholder="Barang">' +
+                        '<label id="lbl_kode_barang_' + n + '"></label>' +
+                        '<label id="lbl_nama_barang_' + n + '"></label>' +
+                        '<input type="hidden" id="hidden_kode_barang_' + n + '" name="hidden_kode_barang_' + n + '">' +
+                        '<input type="hidden" id="hidden_nama_barang_' + n + '" name="hidden_nama_barang_' + n + '">' +
+                        '<input type="hidden" id="hidden_grup_barang_' + n + '" name="hidden_grup_barang_' + n + '">' +
+                        '</td>';
+                    var td_col_10 = '<td>' +
+                        '<label>Satuan : <b id="b_satuan_' + n + '" name="b_satuan_' + n + '"></b></label>' +
+                        '<input type="hidden" id="hidden_satuan_' + n + '" name="hidden_satuan_' + n + '">&nbsp;' +
+                        '<label>Stok di tgl ini : <b id="b_stok_tgl_ini_' + n + '" name="b_stok_tgl_ini_' + n + '"></b></label>' +
+                        '<input type="hidden" id="hidden_stok_tgl_ini_' + n + '" name="hidden_stok_tgl_ini_' + n + '">&nbsp;' +
+                        '</td>';
+                    var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
+                        '<input type="text" class="form-control" id="txt_qty_diminta_' + n + '" name="txt_qty_diminta_' + n + '" placeholder="Qty Diminta">' +
+
+                        '</td>';
+
+                    var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                        '<!-- Keterangan -->' +
+                        '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + n + '" name="txt_ket_rinci_' + n + '" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + n + ')"></textarea>' +
+                        '<label id="lbl_status_simpan_' + n + '"></label>' +
+                        '<input type="hidden" id="hidden_id_bpbitem_' + n + '" name="hidden_id_bpbitem_' + n + '">' +
+                        '</td>';
+
+                    var td_col_12 = '<td width="5%">' +
+                        '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
+                        '<button style="display:block;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
+                        '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
+                        '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
+                        '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
+                        '</td>';
+                    var form_tutup = '</form>';
+                    var tr_tutup = '</tr>';
+
+                    // $('#tbody_rincian').append(tr_buka+td_col_1+form_buka+td_col_2+td_col_3+td_col_4+td_col_5+form_tutup+tr_tutup);
+                    $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
+
+                    var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].kodebebantxt + '</option>';
+                    $('#cmb_bahan_' + n).empty();
+                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+
+                    var opsi_cmb_blok_sub = '<option value="' + data.data_bpbitem[index].blok + '">' + data.data_bpbitem[index].blok + '</option>';
+                    $('#cmb_blok_sub_' + n).empty();
+                    $('#cmb_blok_sub_' + n).append(opsi_cmb_blok_sub);
+
+                    // $('#cmb_bahan_'+n).val(data.data_bpbitem[index].kodebebantxt);
+                    $('#txt_account_beban_' + n).val(data.data_bpbitem[index].kodesubtxt);
+                    $('#txt_barang_' + n).val(data.data_bpbitem[index].nabar);
+                    $('#txt_qty_diminta_' + n).val(data.data_bpbitem[index].qty);
+                    // $('#txt_qty_disetujui_'+n).val(data.data_bpbitem[index].qty2);
+                    $('#txt_ket_rinci_' + n).val(data.data_bpbitem[index].ket);
+
+                    // $('#').val();
+
+                    $('#lbl_no_acc_' + n).html(data.data_bpbitem[index].kodesubtxt);
+                    $('#lbl_nama_acc_' + n).html(data.data_bpbitem[index].ketsub);
+                    $('#lbl_kode_barang_' + n).html(data.data_bpbitem[index].kodebar);
+                    $('#lbl_nama_barang_' + n).html(data.data_bpbitem[index].nabar);
+
+                    $('#hidden_no_acc_' + n).val(data.data_bpbitem[index].kodesubtxt);
+                    $('#hidden_nama_acc_' + n).val(data.data_bpbitem[index].ketsub);
+
+                    $('#hidden_kode_barang_' + n).val(data.data_bpbitem[index].kodebar);
+                    $('#hidden_nama_barang_' + n).val(data.data_bpbitem[index].nabar);
+                    $('#hidden_grup_barang_' + n).val(data.data_bpbitem[index].grp);
+
+                    $('#b_satuan_' + n).html(data.data_bpbitem[index].satuan);
+                    $('#hidden_satuan_' + n).val(data.data_bpbitem[index].satuan);
+
+                    $('#hidden_id_bpbitem_' + n).val(data.data_bpbitem[index].id);
+                    // $('#b_stok_tgl_ini_'+n).html(data.data_bpbitem[index].);
+                    // $('#b_satuan_'+n).html(data.data_bpbitem[index].);
+
+                    $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
+                    $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
+
+
+                    $('#txt_qty_diminta_' + n).addClass('currencyduadigit');
+                    $('.currencyduadigit').number(true, 2);
+
+                    sum_stok(data.data_bpbitem[index].kodebar, n);
+
+                    get_all_cmb(data.data_bpbitem[index].kodebebantxt, n);
+
+                    n++;
+                    $('#hidden_no_table').val(n);
+                })
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('bpb/cari_dept'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
             data: '',
             success: function(data) {
                 $.each(data, function(index) {
@@ -380,52 +496,42 @@
             }
         });
 
-        setInterval(function() {
-            check_form_2();
+    });
 
-        }, 1000);
+    function get_all_cmb(bahan, n) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('bpb/get_all_cmb'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
 
+            data: {
+                'bahan': bahan
+            },
+            success: function(data) {
+                // console.log(data);
+                $('#cmb_tm_tbm_' + n).val(data.tmtbm);
 
+                var opsi_afd_unit = '<option value="' + data.afd + '">' + data.afd + '</option>';
+                $('#cmb_afd_unit_' + n).empty();
+                $('#cmb_afd_unit_' + n).append(opsi_afd_unit);
 
+                // var opsi_blok_sub = '<option value=""></option>';
+                // $('#cmb_blok_sub_'+n).empty();
+                // $('#cmb_blok_sub_'+n).append(opsi_blok_sub);
 
-        $('#cmb_alokasi_est').change(function() {
-            // var ses_lokasi ='<?= $this->session->userdata('status_lokasi') ?>';
-            if (this.value == '06') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 1</label>');
-            } else if (this.value == '07') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 2</label>');
-            } else if (this.value == '08') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 3</label>');
-            } else if (this.value == '09') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 4</label>');
-            } else {
-                $('#_est').remove();
-                $('#txt_estate').append('');
+                var opsi_cmb_thn_tanam = '<option value="' + data.thn_tanam + '">' + data.thn_tanam + '</option>';
+                $('#cmb_tahun_tanam_' + n).empty();
+                $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
+            },
+            error: function(request) {
+                alert(request.responseText);
             }
         });
-
-        $('#tableAccBeban tbody').on('click', 'tr', function() {
-            var dataClick = $('#tableAccBeban').DataTable().row(this).data();
-            console.log(dataClick);
-            var no_coa = dataClick[1];
-            var nama_account = dataClick[2];
-            var row = $('#hidden_no_row').val();
-
-            // $('#lbl_no_acc_' + row).html(no_coa);
-            $('#lbl_nama_acc_' + row).html(nama_account);
-            $('#txt_account_beban_' + row).val(no_coa);
-
-            $('#hidden_no_acc_' + row).val(no_coa);
-            $('#hidden_nama_acc_' + row).val(nama_account);
-
-            $('#modalAccBeban').modal('hide');
-        })
-
-    });
+    }
 
 
     function check_form_2() {
@@ -446,7 +552,6 @@
         }
 
     }
-
 
     function tambah_row(id) {
         var row = $('#hidden_no_table').val();
@@ -529,11 +634,11 @@
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '<input type="hidden" id="hidden_id_bpbitem_' + row + '" name="hidden_id_bpbitem_' + row + '">' +
             '</td>';
-        var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_12 = '<td width="5%">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '</td>';
         var form_tutup = '</form>';
@@ -554,6 +659,7 @@
         row++;
         $('#hidden_no_table').val(row);
     }
+
 
     function saveRinciClick(no) {
         // saveRinci(no);
@@ -908,8 +1014,13 @@
                 $('.div_form_1').find('input,textarea').attr('readonly', '');
                 $('.div_form_1').find('select').attr('disabled', '');
 
-                $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
-                $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
+                // $('#tableRinciBPB tbody #tr_'+no+' td').find('input,textarea').not('#txt_barang_'+no).attr('readonly','');
+                // $('#tableRinciBPB tbody #tr_'+no+' td').find('select,#txt_barang_'+no).attr('disabled','');
+                // $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
+                // $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
+
+                $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
+                $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
                 $('#lbl_status_simpan_' + no).empty();
                 $('#lbl_status_simpan_' + no).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil diubah</label>');
@@ -1047,12 +1158,9 @@
     function ubahRinci(no) {
         // $('.div_form_1').find('input,textarea').not('#txt_tgl_bpb').removeAttr('readonly');
         // $('.div_form_1').find('select').removeAttr('disabled');
+        $('#tr_' + no).find('#txt_qty_diminta_' + no).removeAttr('disabled', '');
+        $('#tr_' + no).find('#txt_qty_diminta_' + no).removeClass('bg-light');
 
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).removeAttr('readonly');
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).removeAttr('disabled');
-        // $('#tableRinciBPB tbody #tr_'+no+' td').find('#btn_simpan_'+no).attr('readonly','');
-
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('#txt_qty_diminta_' + no).removeAttr('readonly');
 
         $('#lbl_status_simpan_' + no).empty();
         $('#btn_ubah_' + no).css('display', 'none');
