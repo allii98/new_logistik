@@ -1,29 +1,29 @@
 <div class="container-fluid">
     <!-- start row-->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-0">
         <div class="col-md">
             <div class="widget-rounded-circle card-box mt-2">
                 <h4 class="header-title">
-                    <font face="Verdana"> LPB </font>
+                    <font face="Verdana"> LPB <i>(Edit)</i> </font>
                 </h4>
                 <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                     Input Laporan Penerimaan Barang
                 </p>
 
-                <div class="row div_form_1">
+                <!-- <div class="row div_form_1">
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
                             <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-lg-8 col-11 row">
-                                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
+                            <div class="col-lg-8 col-11 row"> -->
+                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
                                 </select> -->
-                                <input id="multiple" class="form-control bg-light" type="text" class="col-2" onkeyup="cariPoqr()" readonly>
-                                <input type="hidden" id="txt_no_po">
-                                <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
-                            </div>
-                            <!-- <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button> -->
-                        </div>
+                <!-- <input id="multiple" class="form-control bg-light" type="text" class="col-2" onkeyup="cariPoqr()" readonly>
+                                <input type="hidden" id="txt_no_po"> -->
+                <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
+                <!-- </div> -->
+                <!-- <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button> -->
+                <!-- </div>
                         <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
                             </label>
@@ -50,8 +50,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <!-- <div class="form-group row mb-1">
+                    <div class="col-md-3"> -->
+                <!-- <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi<span class="required">*</span>
                             </label>
                             <div class="col-md-8">
@@ -66,14 +66,14 @@
                                 </select>
                             </div>
                         </div> -->
-                        <div class="form-group row mb-1">
+                <!-- <div class="form-group row mb-1">
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
                                 <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
                             </div>
-                        </div>
-                        <div class="form-group row">
+                        </div> -->
+                <!-- <div class="form-group row">
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
@@ -97,9 +97,11 @@
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="row mx-0 div_form_2">
+                </div> -->
+                <input type="hidden" id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off">
+                <input type="hidden" id="txt_ref_po" name="txt_ref_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
+                <hr style="margin-top: -15px;">
+                <div class="row mx-0 div_form_2" style="margin-top: -25px;">
                     <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
                         <!-- <h6 id="lbl_lpb_status" name="lbl_lpb_status">
                             <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
@@ -337,10 +339,14 @@
                     $('#txt_satuan_' + i).text(sat);
                     $('#txt_ket_rinci_' + i).text(ket);
                     $('#txt_qty_' + i).val(qty);
+                    $('#hidden_txt_qty_' + i).val(qty);
                     $('#hidden_grup_' + i).text(grp);
                     $('#hidden_id_item_lpb_' + i).val(id_lpb);
                     // $('#sisa_qty_' + no).text(sumsisa);
                     // getGrupBarang(kodebar, i);
+
+                    $('.div_form_2').find('#txt_kode_barang_' + i + ', #chk_asset_' + i + ', #txt_qty_' + i + ',#txt_ket_rinci_' + i).addClass('bg-light');
+                    $('.div_form_2').find('#txt_kode_barang_' + i + ', #chk_asset_' + i + ', #txt_qty_' + i + ',#txt_ket_rinci_' + i).attr('disabled', '');
                 }
             },
             error: function(response) {
@@ -456,7 +462,8 @@
             '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off">' +
+            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
+            '<input type="hidden" id="hidden_txt_qty_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
@@ -758,8 +765,31 @@
         $("#status_sukses").remove();
     };
 
-    //Update Data
     function updateRinci(n) {
+
+        var qty = $('#txt_qty_' + n).val();
+
+        if (!qty) {
+            toast('Qty');
+        } else {
+            updateRinciClick(n);
+        }
+        return false;
+    };
+
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' is required!',
+            icon: 'error',
+            loader: true,
+            loaderBg: 'red'
+        });
+    }
+
+    //Update Data
+    function updateRinciClick(n) {
 
         if ($('#chk_asset_' + n).is(':checked')) {
             var chk_asset = 'yes';
@@ -768,6 +798,8 @@
         var no_ref_po = $('#txt_ref_po').val();
         var no_po = $('#txt_no_po').val();
         var kodebar = $('#txt_kode_barang_' + n).val();
+
+        console.log(no_ref_po + ' ' + no_po + '' + kodebar);
 
         $.ajax({
             type: "POST",
@@ -869,6 +901,21 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
+            }
+        });
+    }
+
+    function cek_qty(n) {
+
+        $('#txt_qty_' + n).keyup(function() {
+            var qty = $('#txt_qty_' + n).val();
+            var qty_awal = $('#hidden_txt_qty_' + n).val();
+            var hidden_qty = $('#sisa_qty_' + n).text();
+            var a = Number(qty);
+            var b = Number(hidden_qty);
+            if (a > b) {
+                swal("Qty melebihi sisa Qty LPB");
+                $('#txt_qty_' + n).val(qty_awal);
             }
         });
     }

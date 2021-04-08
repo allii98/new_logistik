@@ -100,47 +100,60 @@
     });
 
     $(document).ready(function() {
-        $(document).on('click', '#detail_spp', function() {
+        $(document).on('click', '#edit_spp', function() {
 
-            var noppotxt = $(this).data('noppotxt');
-            // console.log(noppotxt);
+            var noppo = $(this).data('noppo');
+            // console.log(nabar);
 
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url('Spp/getDetailSpp') ?>",
-                dataType: "JSON",
+            window.location.href = "Spp/edit_spp/" + noppo;
 
-                data: {
-                    hidden_noppotxt: noppotxt
-                },
-
-                success: function(data) {
-
-                    console.log(data);
-                    var html = '';
-                    var i;
-                    for (i = 0; i < data.length; i++) {
-                        var no = i + 1;
-                        html += '<tr>' +
-                            '<td>' + no + '</td>' +
-                            '<td> <font face="Verdana" size="2"> ' + data[i].noppotxt + '</font></td>' +
-                            '<td> <font face="Verdana" size="2">' + data[i].noreftxt + '</font></td>' +
-                            '<td> <font face="Verdana" size="2">' + data[i].kodebar + '</font></td>' +
-                            '<td> <font face="Verdana" size="2">' + data[i].nabar + '</font></td>' +
-                            '<td> <font face="Verdana" size="2">' + data[i].sat + '</font></td>' +
-                            '<td> <font face="Verdana" size="2">' + data[i].qty + '</font></td>' +
-                            '<td> <font face="Verdana" size="2">' + data[i].STOK + '</font></td>' +
-                            '<td> <font face="Verdana" size="2">' + data[i].ket + '</font></td>' +
-                            '<td>' + '' + '</td>' +
-                            '</tr>';
-                    }
-                    $('#data_detail_spp').html(html);
-
-                }
-            });
-
-            $("#modalDetailSpp").modal('show');
-
+            // $("#modalListItemLpb").modal('show');
+            // tampil_detail_lpb(no_lpb);
         });
     });
+
+    // $(document).ready(function() {
+    //     $(document).on('click', '#detail_spp', function() {
+
+    //         var noppotxt = $(this).data('noppotxt');
+    //         // console.log(noppotxt);
+
+    //         $.ajax({
+    //             type: "POST",
+    //             url: "<?php echo base_url('Spp/getDetailSpp') ?>",
+    //             dataType: "JSON",
+
+    //             data: {
+    //                 hidden_noppotxt: noppotxt
+    //             },
+
+    //             success: function(data) {
+
+    //                 console.log(data);
+    //                 var html = '';
+    //                 var i;
+    //                 for (i = 0; i < data.length; i++) {
+    //                     var no = i + 1;
+    //                     html += '<tr>' +
+    //                         '<td>' + no + '</td>' +
+    //                         '<td> <font face="Verdana" size="2"> ' + data[i].noppotxt + '</font></td>' +
+    //                         '<td> <font face="Verdana" size="2">' + data[i].noreftxt + '</font></td>' +
+    //                         '<td> <font face="Verdana" size="2">' + data[i].kodebar + '</font></td>' +
+    //                         '<td> <font face="Verdana" size="2">' + data[i].nabar + '</font></td>' +
+    //                         '<td> <font face="Verdana" size="2">' + data[i].sat + '</font></td>' +
+    //                         '<td> <font face="Verdana" size="2">' + data[i].qty + '</font></td>' +
+    //                         '<td> <font face="Verdana" size="2">' + data[i].STOK + '</font></td>' +
+    //                         '<td> <font face="Verdana" size="2">' + data[i].ket + '</font></td>' +
+    //                         '<td>' + '' + '</td>' +
+    //                         '</tr>';
+    //                 }
+    //                 $('#data_detail_spp').html(html);
+
+    //             }
+    //         });
+
+    //         $("#modalDetailSpp").modal('show');
+
+    //     });
+    // });
 </script>

@@ -16,7 +16,7 @@
                 <table id="tableListLPB" class="table table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th style="width: 120px;">#</th>
                             <th>No.</th>
                             <th>No. LPB</th>
                             <th>No. Ref LPB</th>

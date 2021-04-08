@@ -53,6 +53,10 @@ class Lpb extends CI_Controller
                         data-ttg="' . $field->ttg . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
+                        <button class="btn btn-primary btn-xs fa fa-undo" id="undo_lpb" name="undo_lpb"
+                        data-ttg="' . $field->ttg . '"
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                        </button>
                         <button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
                         data-ttg="' . $field->ttg . '" data-nopo="' . $field->nopo . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
