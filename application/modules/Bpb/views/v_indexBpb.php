@@ -42,6 +42,64 @@
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListApproval">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">List Item BPB</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <input type="hidden" id="hidden_id_setuju" name="hidden_id_setuju"> -->
+                    <!-- <input type="hidden" id="hidden_noppotxt_setuju" name="hidden_noppotxt_setuju"> -->
+                    <div class="table-responsive">
+                        <table id="tableListBPBItem" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>No. BPB</th>
+                                    <th>No. REF BPB</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Qty Diminta</th>
+                                    <th>Qty Disetujui</th>
+                                    <th>Satuan</th>
+                                    <th>Asisten Afd</th>
+                                    <th>Kepala Kebun</th>
+                                    <th>Kasie Agronomi</th>
+                                    <th>KTU</th>
+                                    <!-- <th>Manager</th> -->
+                                    <th>GM</th>
+                                    <th>Kasie Gudang</th>
+                                    <th>Kasie Pembukuan</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbody_list_po">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <!-- <?php
+                            if ($status2 == "1") {
+                            ?>
+					<button type="button" class="btn btn-success" id="btn_setuju" onclick="setuju()" >Setuju</button>
+					<?php
+                            } elseif ($status2 == "4") {
+                    ?>
+					<button type="button" class="btn btn-warning" id="btn_mengetahui" onclick="setuju()" >Mengetahui</button>
+					<?php
+                            }
+                    ?> -->
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -52,6 +110,45 @@
         var filter = "Semua";
         listBPB(filter);
     });
+
+    function listBPBItem(nobpb, norefbpb) {
+        $('#tableListBPBItem').DataTable().destroy();
+        var dt = $('#tableListBPBItem').DataTable({
+            "paging": true,
+            "scrollY": true,
+            "scrollX": true,
+            "searching": true,
+            "select": false,
+            "bLengthChange": true,
+            "scrollCollapse": true,
+            "bPaginate": true,
+            "bInfo": true,
+            "bSort": false,
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
+            "ajax": {
+                "url": "<?php echo site_url('bpb/list_bpbitem'); ?>",
+                "type": "POST",
+                "data": {
+                    'nobpb': nobpb,
+                    'norefbpb': norefbpb
+                },
+                "error": function(request) {
+                    alert(request.responseText);
+                }
+            },
+            "columnDefs": [{
+                "targets": [],
+                "orderable": false,
+            }, ],
+        });
+        var rel = setInterval(function() {
+            $('#tableListBPBItem').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
+    }
 
     function listBPB(filter) {
         $('#tableListBPB').DataTable().destroy();
@@ -103,5 +200,12 @@
 
 
         });
+    }
+
+    function modalListApproval(nobpb, norefbpb) {
+        console.log(nobpb);
+        console.log(norefbpb);
+        $('#modalListApproval').modal('show');
+        // listBPBItem(nobpb, norefbpb);
     }
 </script>

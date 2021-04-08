@@ -1,12 +1,13 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_cariSPP extends CI_Model {
+class M_cariSPP extends CI_Model
+{
     // 
     var $table = 'ppo'; //nama tabel dari database
     var $column_order = array(null, 'id', '	noppo', 'jenis', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang ada di table supplier  
-    var $column_search = array('noppo', 'jenis',  'noreftxt', 'noreftxt','tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang diizin untuk pencarian 
+    var $column_search = array('noppo', 'jenis',  'noreftxt', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -22,7 +23,7 @@ class M_cariSPP extends CI_Model {
         $this->db_logistik_pt->from('ppo');
         $this->db_logistik_pt->where('jenis', 'SPPI');
         $this->db_logistik_pt->where('po', 0);
-        // $this->db_logistik_pt->where('status2', 1);
+        $this->db_logistik_pt->where('status2', 1);
         $this->db_logistik_pt->order_by('id', 'desc');
 
 
@@ -75,9 +76,6 @@ class M_cariSPP extends CI_Model {
         $this->db_logistik_pt->from($this->table);
         return $this->db_logistik_pt->count_all_results();
     }
-
 }
 
 /* End of file M_cariSPP.php */
-
-?>
