@@ -31,10 +31,10 @@ class Stok extends CI_Controller
             $row[] = $d->satuan;
             $row[] = $d->grp;
             $row[] = $d->QTY_MASUK;
-            $row[] = $d->saldoawal_nilai;
+            $row[] = number_format($d->saldoawal_nilai, 0, ',', '.');
             $row[] = $d->saldoakhir_qty;
             $row[] = $d->saldoakhir_nilai;
-            $row[] = $d->nilai_masuk;
+            $row[] = number_format(round($d->nilai_masuk), 0, ',', '.');
             $row[] = $d->ket;
             $row[] = $d->minstok;
             $data[] = $row;
