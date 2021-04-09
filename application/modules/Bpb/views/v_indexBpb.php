@@ -13,31 +13,34 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title mb-3"><?= $title; ?></h4>
-                    <a class="btn btn-round btn-info pull-right" id="btn_input" href="<?= base_url('Bpb/input') ?>">Input BPB</a>
-                    <hr>
-                    <table id="tableListBPB" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>No.</th>
-                                <th>No. BPB</th>
-                                <th>Item Barang</th>
-                                <th>Keperluan</th>
+                    <div class="row mb-2 justify-content-between">
+                        <h4 class="header-title mb-3"><?= $title; ?></h4>
+                        <a class="btn btn-info btn-rounded waves-effect waves-light mr-2" id="btn_input" href="<?= base_url('Bpb/input') ?>">Input BPB</a>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tableListBPB" class="table w-100 dataTable no-footer table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="width: 10px;">#</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. BPB</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Item Barang</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em; width: 88px;">Keperluan</th>
 
-                                <th>Tgl Input</th>
-                                <th>Diminta Oleh</th>
-                                <!-- <th>KTU</th> -->
-                                <!-- <th>Mgr</th> -->
-                                <!-- <th>GM</th> -->
-                                <th>Approval</th>
-                            </tr>
-                        </thead>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Input</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Diminta Oleh</th>
+                                    <!-- <th>KTU</th> -->
+                                    <!-- <th>Mgr</th> -->
+                                    <!-- <th>GM</th> -->
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Approval</th>
+                                </tr>
+                            </thead>
 
-                        <tbody id="tbody_list_po">
+                            <tbody id="tbody_list_po">
 
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

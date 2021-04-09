@@ -20,7 +20,7 @@
                                     <th style="padding: 0.4em;">
                                         <font face="Verdana" size="2.5">No</font>
                                     </th>
-                                    <th style="padding: 0.4em;">
+                                    <th style="padding: 0.4em; width: 88px;">
                                         <font face="Verdana" size="2.5">#</font>
                                     </th>
                                     <th style="padding: 0.4em;">
