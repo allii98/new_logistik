@@ -3,36 +3,35 @@
 	<div class="col-md">
 		<div class="widget-rounded-circle card-box">
 			<h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data PO</h4>
-			<hr>
-			<div class="row">
+			<div class="">
 				<!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<table id="tableListPO" class="table dt-responsive nowrap w-100 dataTable no-footer dtr-inline" width="100%">
+					<table id="tableListPO" class="table dt-responsive nowrap w-100 dataTable table-bordered table-striped" width="100%">
 						<thead>
 							<tr>
-								<th>
+								<th style="width: 75px;">
 									<font face="Verdana" size="2.5">#</font>
 								</th>
-								<th>
+								<th style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">No.</font>
 								</th>
-								<th>
+								<th style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">No. Ref</font>
 								</th>
-								<th>
+								<th style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">No. PO</font>
 								</th>
-								<th>
+								<th style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">Tgl. PO</font>
 								</th>
-								<th>
+								<th style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">Supplier</font>
 								</th>
 
-								<th>
+								<th style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">Ket</font>
 								</th>
-								<th>
+								<th style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">Terbayar</font>
 								</th>
 

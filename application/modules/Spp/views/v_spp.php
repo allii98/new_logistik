@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="dataspp" class="table w-100 dataTable no-footer table-sm table-striped">
+                        <table id="dataspp" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th style="padding: 0.4em;">

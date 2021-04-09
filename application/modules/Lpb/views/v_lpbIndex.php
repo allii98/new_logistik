@@ -17,15 +17,15 @@
                     <thead>
                         <tr>
                             <th style="width: 75px;">#</th>
-                            <th>No.</th>
-                            <th>No. LPB</th>
-                            <th>No. Ref LPB</th>
-                            <th>No. PO</th>
-                            <th>No. Ref PO</th>
-                            <th>Supplier</th>
-                            <th>Keterangan</th>
-                            <th>Tgl Input</th>
-                            <th>User</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.&nbsp;LPB</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref LPB</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. PO</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref PO</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Supplier</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Keterangan</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Input</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">User</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,15 +51,15 @@
                             <table id="tableDetailItemLpb" class="table table-bordered" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama Barang</th>
-                                        <th>Satuan</th>
-                                        <th>Grup</th>
-                                        <th>Qty PO</th>
-                                        <th>Qty LPB</th>
-                                        <th>Sisa LPB</th>
-                                        <th>Ket</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">No</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Kode Barang</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Nama&nbsp;Barang</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Satuan</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Grup</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Qty&nbsp;PO</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Qty&nbsp;LPB</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Sisa&nbsp;LPB</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Ket</th>
                                     </tr>
                                 </thead>
                                 <tbody id="data_detail_item_lpb">
