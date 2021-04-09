@@ -441,7 +441,7 @@ class Po extends CI_Controller
         $config['cacheable']    = true; //boolean, the default is true
         $config['cachedir']     = './assets/'; //string, the default is application/cache/
         $config['errorlog']     = './assets/'; //string, the default is application/logs/
-        $config['imagedir']     = './assets/qrcode/'; //direktori penyimpanan qr code
+        $config['imagedir']     = './assets/qrcode/po/'; //direktori penyimpanan qr code
         $config['quality']      = true; //boolean, the default is true
         $config['size']         = '1024'; //interger, the default is 1024
         $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)

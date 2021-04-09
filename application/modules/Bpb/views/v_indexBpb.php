@@ -44,7 +44,7 @@
     </div>
 
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListApproval">
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="pp" data-backdrop="static">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
@@ -56,7 +56,7 @@
                     <!-- <input type="hidden" id="hidden_id_setuju" name="hidden_id_setuju"> -->
                     <!-- <input type="hidden" id="hidden_noppotxt_setuju" name="hidden_noppotxt_setuju"> -->
                     <div class="table-responsive">
-                        <table id="tableListBPBItem" class="table table-striped table-bordered" width="100%">
+                        <table id="pp" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
                                     <th>No.</th>
@@ -100,6 +100,50 @@
             </div>
         </div>
     </div>
+
+
+    <!-- aprrove untuk sementara -->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListApproval" data-backdrop="static">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">List Item BPB</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- <input type="hidden" id="hidden_id_setuju" name="hidden_id_setuju"> -->
+                    <!-- <input type="hidden" id="hidden_noppotxt_setuju" name="hidden_noppotxt_setuju"> -->
+                    <div class="table-responsive">
+                        <table id="tableListBPBItem" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>No. BPB</th>
+                                    <th>No. REF BPB</th>
+                                    <th>Kode Barang</th>
+                                    <th>Nama Barang</th>
+                                    <th>Qty Diminta</th>
+                                    <th>Qty Disetujui</th>
+                                    <th>Satuan</th>
+                                    <th>Approval</th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody id="tbody_list_po">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -111,43 +155,36 @@
         listBPB(filter);
     });
 
-    function listBPBItem(nobpb, norefbpb) {
-        $('#tableListBPBItem').DataTable().destroy();
-        var dt = $('#tableListBPBItem').DataTable({
-            "paging": true,
-            "scrollY": true,
-            "scrollX": true,
-            "searching": true,
-            "select": false,
-            "bLengthChange": true,
-            "scrollCollapse": true,
-            "bPaginate": true,
-            "bInfo": true,
-            "bSort": false,
-            "processing": true,
-            "serverSide": true,
-            "order": [],
-            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
-            "ajax": {
-                "url": "<?php echo site_url('bpb/list_bpbitem'); ?>",
-                "type": "POST",
-                "data": {
-                    'nobpb': nobpb,
-                    'norefbpb': norefbpb
+    function konfirmasi(nobpb, norefbpb, kodebar, approval) {
+        var conf = confirm("Apakah Anda Yakin ?");
+        if (conf == true) {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Bpb/approve'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+
                 },
-                "error": function(request) {
+                cache: false,
+                // contentType : false,
+                // processData : false,
+
+                data: {
+                    'nobpb': nobpb,
+                    'norefbpb': norefbpb,
+                    'kodebar': kodebar,
+                    // 'jabatan': jabatan,
+                    'approval': approval
+                },
+                success: function(data) {
+                    listBPBItem(nobpb, norefbpb);
+                },
+                error: function(request) {
                     alert(request.responseText);
+                    // alert('error');
                 }
-            },
-            "columnDefs": [{
-                "targets": [],
-                "orderable": false,
-            }, ],
-        });
-        var rel = setInterval(function() {
-            $('#tableListBPBItem').DataTable().ajax.reload();
-            clearInterval(rel);
-        }, 100);
+            });
+        }
     }
 
     function listBPB(filter) {
@@ -206,6 +243,38 @@
         console.log(nobpb);
         console.log(norefbpb);
         $('#modalListApproval').modal('show');
-        // listBPBItem(nobpb, norefbpb);
+        listBPBItem(nobpb, norefbpb);
+    }
+
+    function listBPBItem(nobpb, norefbpb) {
+        $('#tableListBPBItem').DataTable().destroy();
+        var dt = $('#tableListBPBItem').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+
+            "ajax": {
+                "url": "<?php echo site_url('Bpb/detail_itembpb'); ?>",
+                "type": "POST",
+                "data": {
+                    'nobpb': nobpb,
+                    'norefbpb': norefbpb
+                },
+                "error": function(request) {
+                    alert(request.responseText);
+                }
+            },
+            "columnDefs": [{
+                "targets": [],
+                "orderable": false,
+            }, ],
+            "language": {
+                "infoFiltered": ""
+            }
+        });
+        var rel = setInterval(function() {
+            $('#tableListBPBItem').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
     }
 </script>

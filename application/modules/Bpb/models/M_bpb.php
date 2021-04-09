@@ -495,6 +495,25 @@ class M_bpb extends CI_Model
             return FALSE;
         }
     }
+
+    public function updateitem($nobpb, $norefbpb, $kodebar, $dataedit_approval)
+    {
+        $this->db_logistik_pt->where('no_bpb', $nobpb);
+        $this->db_logistik_pt->where('norefbpb', $norefbpb);
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->update('approval_bpb', $dataedit_approval);
+
+        return TRUE;
+    }
+    public function update_item($nobpb, $norefbpb, $kodebar, $aprrove)
+    {
+        $this->db_logistik_pt->where('no_bpb', $nobpb);
+        $this->db_logistik_pt->where('norefbpb', $norefbpb);
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->update('bpb', $aprrove);
+
+        return TRUE;
+    }
 }
 
 /* End of file M_bpb.php */

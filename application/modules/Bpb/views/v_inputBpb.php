@@ -1,7 +1,7 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-md col-xl-3">
+        <div class="col-12">
             <div class="card-body">
 
                 <div class="card-box">
@@ -1004,8 +1004,10 @@
                         // $('#tableRinciBPB tbody #tr_'+no+' td').find('input,textarea').not('#txt_barang_'+no).attr('readonly','');
                         // $('#tableRinciBPB tbody #tr_'+no+' td').find('#txt_barang_'+no).attr('disabled','');
 
-                        $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
-                        $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
+                        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
+                        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
+                        $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
+                        $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
                         $('#lbl_status_simpan_' + no).empty();
                         $('#lbl_status_simpan_' + no).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil disimpan</label>');
@@ -1051,11 +1053,11 @@
         // $('.div_form_1').find('input,textarea').not('#txt_tgl_bpb').removeAttr('readonly');
         // $('.div_form_1').find('select').removeAttr('disabled');
 
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).removeAttr('readonly');
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).removeAttr('disabled');
+        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).removeAttr('readonly');
+        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).removeAttr('disabled');
         // $('#tableRinciBPB tbody #tr_'+no+' td').find('#btn_simpan_'+no).attr('readonly','');
 
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('#txt_qty_diminta_' + no).removeAttr('readonly');
+        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('#txt_qty_diminta_' + no).removeAttr('readonly');
 
         $('#lbl_status_simpan_' + no).empty();
         $('#btn_ubah_' + no).css('display', 'none');
@@ -1561,24 +1563,37 @@
                     if (sess_user_gudang != 36 && sess_user_gudang != 18) {
                         swal('Stock Awal Belum Ada / Tidak Ada Stock di Gudang, Silahkan Hubungi Petugas Gudang');
                     } else {
-                        swal("Stock Awal belum ada, silahkan input dahulu !", {
-                                buttons: {
-                                    ya: {
-                                        text: "Ya",
-                                        value: "iya",
-                                    },
-                                    cancel: "Tutup",
-                                },
-                            })
-                            .then((value) => {
-                                switch (value) {
-                                    case "iya":
-                                        window.open('<?php echo site_url('stock_awal'); ?>', '_blank');
-                                        break;
-                                    default:
-                                        swal.close();
-                                }
-                            });
+                        // swal("Stock Awal belum ada, silahkan input dahulu !", {
+                        //         buttons: {
+                        //             ya: {
+                        //                 text: "Ya",
+                        //                 value: "iya",
+                        //             },
+                        //             cancel: "Tutup",
+                        //         },
+                        //     })
+                        //     .then((value) => {
+                        //         switch (value) {
+                        //             case "iya":
+                        //                 window.open('<?php echo site_url('stock_awal'); ?>', '_blank');
+                        //                 break;
+                        //             default:
+                        //                 swal.close();
+                        //         }
+                        //     });
+
+                        Swal.fire({
+                            title: 'Stock Awal belum ada!',
+                            text: "silahkan input dahulu",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya!'
+                        }).then(function() {
+                            // window.location = "redirectURL";
+                            window.open('<?php echo site_url('stok'); ?>', '_blank');
+                        });
                     }
                     // if(frombpb == 'frombpb'){
                     // 	$('#tr_'+row).css('background-color','#ffcece');
