@@ -94,11 +94,11 @@ class Po extends CI_Controller
         foreach ($list as $d) {
             $no++;
             $row = array();
-            $row[] = '<button type="button" id="detail" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-info waves-effect waves-light title="Detail">
-            <i class="mdi mdi-alert-circle-outline"></i></span>
+            $row[] = '<button type="button" id="detail" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-success btn-xs waves-effect waves-light title="Detail">
+            <i class="fas fa-eye"></i></span>
         </button>
-        <a href="' . base_url('Po/cetak/' . $d->nopotxt . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-danger waves-effect waves-light" title="Cetak">
-            <i class="mdi mdi-file-pdf-outline"></i></span>
+        <a href="' . base_url('Po/cetak/' . $d->nopotxt . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
+            <i class="fas fa-print"></i></span>
         </a>
         ';
             $row[] =  $no . ".";
