@@ -1563,24 +1563,6 @@
                     if (sess_user_gudang != 36 && sess_user_gudang != 18) {
                         swal('Stock Awal Belum Ada / Tidak Ada Stock di Gudang, Silahkan Hubungi Petugas Gudang');
                     } else {
-                        // swal("Stock Awal belum ada, silahkan input dahulu !", {
-                        //         buttons: {
-                        //             ya: {
-                        //                 text: "Ya",
-                        //                 value: "iya",
-                        //             },
-                        //             cancel: "Tutup",
-                        //         },
-                        //     })
-                        //     .then((value) => {
-                        //         switch (value) {
-                        //             case "iya":
-                        //                 window.open('<?php echo site_url('stock_awal'); ?>', '_blank');
-                        //                 break;
-                        //             default:
-                        //                 swal.close();
-                        //         }
-                        //     });
 
                         Swal.fire({
                             title: 'Stock Awal belum ada!',

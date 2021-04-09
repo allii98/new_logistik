@@ -79,30 +79,30 @@
                         <div class="form-group row">
                             <label for="txt_min_stock_qty" class="col-3 col-form-label">Min. Stock (Qty)</label>
                             <div class="col-3">
-                                <input type="text" class="form-control currencyduadigit" id="txt_min_stock_qty" name="txt_min_stock_qty" placeholder="Min. Stock (Qty)" required="" value="0.00">
+                                <input type="text" class="form-control bg-light" id="txt_min_stock_qty" name="txt_min_stock_qty" placeholder="Min. Stock (Qty)" readonly value="0.00">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="txt_saldo_awal_qty" class="col-3 col-form-label">Saldo Awal (Qty)</label>
                             <div class="col-3">
-                                <input type="text" class="form-control currencyduadigit" id="txt_saldo_awal_qty" name="txt_saldo_awal_qty" placeholder="Min. Stock (Qty)" required="" value="0.00">
+                                <input type="text" class="form-control bg-light" id="txt_saldo_awal_qty" name="txt_saldo_awal_qty" placeholder="Min. Stock (Qty)" readonly value="0.00">
                             </div>
 
                             <label class="control-label col-md-2">Saldo Awal (Nilai)</label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control currencyduadigit" id="txt_saldo_awal_nilai" name="txt_saldo_awal_nilai" placeholder="Saldo Awal (Nilai)" required="" value="0.00">
+                                <input type="text" class="form-control bg-light" id="txt_saldo_awal_nilai" name="txt_saldo_awal_nilai" placeholder="Saldo Awal (Nilai)" readonly value="0.00">
                             </div>
                         </div>
 
                         <div class="form-group row">
                             <label for="txt_saldo_akhir_qty" class="col-3 col-form-label">Saldo Akhir (Qty)</label>
                             <div class="col-3">
-                                <input type="text" class="form-control currencyduadigit" id="txt_saldo_akhir_qty" name="txt_saldo_akhir_qty" placeholder="Min. Stock (Qty)" required="" value="0.00">
+                                <input type="text" class="form-control bg-light" id="txt_saldo_akhir_qty" name="txt_saldo_akhir_qty" placeholder="Min. Stock (Qty)" readonly value="0.00">
                             </div>
 
                             <label class="control-label col-md-2">Saldo Akhir (Qty)</label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control currencyduadigit" id="txt_saldo_akhir_nilai" name="txt_saldo_akhir_nilai" placeholder="Saldo Awal (Nilai)" required="" value="0.00">
+                                <input type="text" class="form-control bg-light" id="txt_saldo_akhir_nilai" name="txt_saldo_akhir_nilai" placeholder="Saldo Awal (Nilai)" readonly value="0.00">
                             </div>
                         </div>
                         <div class="form-group row">
