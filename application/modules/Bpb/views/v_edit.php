@@ -536,15 +536,10 @@
 
     function check_form_2() {
         if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
-
-            // $('.div_form_2').show();
-
             $('#btn_simpan_1').removeAttr('disabled', '');
             $('#btn_tambah_row_1').removeAttr('disabled', '');
             $('#tableRinciBPB').find('input,textarea,select').removeAttr('disabled');
         } else {
-            // $('.div_form_2').hide();
-
             $('#btn_simpan_1').attr('disabled', '');
             $('#btn_tambah_row_1').attr('disabled', '');
             $('#tableRinciBPB').find('input,textarea,select').attr('disabled', '');
@@ -564,13 +559,7 @@
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- TM/TBM -->' +
-            '<select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" onchange="cmb_afd_unit(' + row + ')">'
-            // +'<option value=""></option>'
-            // +'<option value="TM">TM</option>'
-            // +'<option value="TBM">TBM</option>'
-            // +'<option value="LANDCLEARING">LANDCLEARING</option>'
-            // +'<option value="PEMBIBITAN">PEMBIBITAN</option>'
-            +
+            '<select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" onchange="cmb_afd_unit(' + row + ')">' +
             '</select>' +
             '</td>';
         var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -776,8 +765,6 @@
         $('.div_form_1').find('input,textarea').attr('readonly', '');
         $('.div_form_1').find('select').attr('disabled', '');
 
-        // $('#tableRinciBPB tbody #tr_'+no+' td').find('input,textarea').not('#txt_barang_'+no).attr('readonly','');
-        // $('#tableRinciBPB tbody #tr_'+no+' td').find('select,#txt_barang_'+no).attr('disabled','');
         $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
         $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
 
@@ -838,10 +825,6 @@
                     }
                 }
 
-                // $('#cmb_bagian').val(data.data_bpb.bag);
-                // $('#txt_tgl_bpb').val(dateToMDY(tgl_bpb));
-                // $('#txt_tgl_bpb').val(dateToMDY(tgl_bpb));
-                // $('#txt_no_bpb').val(data.data_bpb.nobpb);
                 $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
 
                 // $('#cmb_tm_tbm_'+no).val(data.data_bpbitem.); //

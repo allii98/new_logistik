@@ -145,18 +145,18 @@
                                                 <input type="text" class="form-control" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
                                                 <label id="lbl_kode_barang_1"></label>
                                                 <label id="lbl_nama_barang_1"></label>
-                                                <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1">
-                                                <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1">
-                                                <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1">
+                                                <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1" value="0">
+                                                <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1" value="0">
+                                                <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <label>Satuan :<b id="b_satuan_1" name="b_satuan_1"></b></label>
+                                                <label>Satuan :<b id="b_satuan_1" name="b_satuan_1"></b></label><br>
                                                 <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
 
-                                                <label>Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b></label>
+                                                <label>Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b></label><br>
                                                 <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
 
-                                                <label>Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b></label>
+                                                <label>Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b></label><br>
                                                 <input type="hidden" id="hidden_stok_booking_1" name="hidden_stok_booking_1">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
@@ -184,8 +184,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
             </div>
         </div>
@@ -315,7 +313,6 @@
         }
     }
 
-
     function pilihEST() {
         $('#modalPilihEstate').modal('hide');
         var est = $('#cmb_pilih_est').val();
@@ -432,14 +429,11 @@
     function check_form_2() {
         if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
 
-            // $('.div_form_2').show();
-
             $('#btn_simpan_1').removeAttr('disabled', '');
             $('#btn_tambah_row_1').removeAttr('disabled', '');
             $('#tableRinciBPB').find('input,textarea,select').removeAttr('disabled');
         } else {
             // $('.div_form_2').hide();
-
             $('#btn_simpan_1').attr('disabled', '');
             $('#btn_tambah_row_1').attr('disabled', '');
             $('#tableRinciBPB').find('input,textarea,select').attr('disabled', '');
@@ -506,9 +500,9 @@
             '<input type="text" class="form-control" id="txt_barang_' + row + '" name="txt_barang_' + row + '" onfocus="cari_barang(' + row + ')" placeholder="Barang">' +
             '<label id="lbl_kode_barang_' + row + '"></label>' +
             '<label id="lbl_nama_barang_' + row + '"></label>' +
-            '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '">' +
-            '<input type="hidden" id="hidden_nama_barang_' + row + '" name="hidden_nama_barang_' + row + '">' +
-            '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '">' +
+            '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_nama_barang_' + row + '" name="hidden_nama_barang_' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
             '</td>';
         var td_col_10 = '<td>' +
             '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
@@ -1555,7 +1549,8 @@
                 'kodbar': kodbar
             },
             success: function(data) {
-                console.log(data);
+
+                // console.log(data);
                 if (data === false) {
                     var sess_user_gudang = '<?php echo $this->session->userdata('kode_level') ?>';
                     // 36 User Gudang

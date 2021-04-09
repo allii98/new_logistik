@@ -324,7 +324,6 @@ class Bpb extends CI_Controller
             $row[] = $field->grp;
             $row[] = $field->satuan;
 
-
             $data[] = $row;
         }
 
