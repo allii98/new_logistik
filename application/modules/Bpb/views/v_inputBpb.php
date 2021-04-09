@@ -137,8 +137,8 @@
                                                 <input type="text" class="form-control" id="txt_account_beban_1" value="-" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
                                                 <label class="control-label" id="lbl_no_acc_1"></label>
                                                 <label class="control-label" id="lbl_nama_acc_1"></label>
-                                                <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1">
-                                                <input type="hidden" id="hidden_nama_acc_1" name="hidden_nama_acc_1">
+                                                <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1" value="0">
+                                                <input type="hidden" id="hidden_nama_acc_1" name="hidden_nama_acc_1" value="0">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- Barang -->
@@ -150,13 +150,17 @@
                                                 <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <label>Satuan :<b id="b_satuan_1" name="b_satuan_1"></b></label><br>
+                                                <span>
+                                                    <label>Satuan :<b id="b_satuan_1" name="b_satuan_1"></b></label><br>
+                                                </span>
                                                 <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
-
-                                                <label>Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b></label><br>
+                                                <span>
+                                                    <label>Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b></label><br>
+                                                </span>
                                                 <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
-
-                                                <label>Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b></label><br>
+                                                <span>
+                                                    <label>Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b></label><br>
+                                                </span>
                                                 <input type="hidden" id="hidden_stok_booking_1" name="hidden_stok_booking_1">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
@@ -492,8 +496,8 @@
             '<input type="text" class="form-control" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
             '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
             '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
-            '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '">' +
-            '<input type="hidden" id="hidden_nama_acc_' + row + '" name="hidden_nama_acc_' + row + '">' +
+            '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_nama_acc_' + row + '" name="hidden_nama_acc_' + row + '" value="0">' +
             '</td>';
         var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Barang -->' +
@@ -1052,6 +1056,8 @@
         // $('#tableRinciBPB tbody #tr_'+no+' td').find('#btn_simpan_'+no).attr('readonly','');
 
         // $('#tableRinciBPB tbody #tr_' + no + ' td').find('#txt_qty_diminta_' + no).removeAttr('readonly');
+        $('#tr_' + no).find('input,textarea,select').removeAttr('disabled', '');
+        $('#tr_' + no).find('input,textarea,select').removeClass('bg-light');
 
         $('#lbl_status_simpan_' + no).empty();
         $('#btn_ubah_' + no).css('display', 'none');
