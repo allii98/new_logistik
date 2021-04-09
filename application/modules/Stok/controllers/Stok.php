@@ -24,7 +24,7 @@ class Stok extends CI_Controller
             $row = array();
             $id    = $d->id;
             $no++;
-            $row[] = '<a href="javascript:;" class="btn btn-info fa fa-info btn-xs" data-toggle="tooltip" data-placement="top" title="Detail Barang" id="btn_detail_barang" onclick="detail_barang(' . $d->kodebartxt . ',' . $id . ')">Detail</a>';
+            $row[] = '<a href="javascript:;" class="btn btn-info fa fa-info btn-xs" data-toggle="tooltip" data-placement="top" title="Detail Barang" id="btn_detail_barang" onclick="detail_barang(' . $d->kodebartxt . ',' . $id . ')"></a>';
             $row[] = $no . ".";
             $row[] = $d->kodebartxt;
             $row[] = $d->nabar;
