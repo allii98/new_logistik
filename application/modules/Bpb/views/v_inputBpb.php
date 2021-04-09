@@ -569,6 +569,12 @@
         var qty_diminta = parseInt($('#txt_qty_diminta_' + no).val());
         var stok_tgl_ini = parseInt($('#hidden_stok_tgl_ini_' + no).val());
 
+        var kodebar = $('#hidden_kode_barang_' + no).val();
+        sum_stok_booking(kodebar, no);
+
+        console.log(kodebar);
+
+
         var v_qty = validasi_qty(sudah_booking, qty_diminta, stok_tgl_ini, no);
         if (v_qty === true) {
             $('#cmb_tm_tbm_' + no +
@@ -661,6 +667,7 @@
             });
             if (isValid === true) {
                 saveData(no);
+                // sum_stok_booking(kodebar, no);
             }
         }
     }
@@ -904,6 +911,8 @@
 
             data: form_data,
             success: function(data) {
+                // var kode_barang = data.kodebar;
+                // sum_stok_booking(kode_barang, no);
                 $('.div_form_1').find('input,textarea').attr('readonly', '');
                 $('.div_form_1').find('select').attr('disabled', '');
 
@@ -987,23 +996,21 @@
 
             data: form_data,
             success: function(data) {
-                console.log(data);
+
+                // console.log(data.kodebar);
                 if (data == "kodebar_exist") {
                     swal('Tidak bisa ditambahkan. Barang sudah ada pada BPB yang sama !');
                     $('#lbl_status_simpan_' + no).empty();
                     $('#lbl_status_simpan_' + no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
                 } else {
                     if (data.status == true) {
+                        var kode_barang = data.kodebar;
+                        sum_stok_booking(kode_barang, no);
                         $('#a_bpb_baru').show();
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
-                        // $('#tableRinciBPB tbody #tr_'+no+' td').find('input,textarea').not('#txt_barang_'+no).attr('readonly','');
-                        // $('#tableRinciBPB tbody #tr_'+no+' td').find('#txt_barang_'+no).attr('disabled','');
-
-                        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
-                        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
                         $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 

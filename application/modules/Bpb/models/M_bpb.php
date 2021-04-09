@@ -311,7 +311,7 @@ class M_bpb extends CI_Model
 
             if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                 // if ($bool_bpb === TRUE && $bool_bpbitem === TRUE){
-                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb);
+                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar);
             } else {
                 return FALSE;
             }
@@ -351,7 +351,7 @@ class M_bpb extends CI_Model
                 }
 
                 if ($bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
-                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb);
+                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar);
                 } else {
                     return FALSE;
                 }
@@ -490,7 +490,7 @@ class M_bpb extends CI_Model
         $this->db_logistik_pt->update('bpbitem_booking');
 
         if ($bool_bpbitem === TRUE) {
-            return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb);
+            return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar);
         } else {
             return FALSE;
         }
@@ -505,11 +505,10 @@ class M_bpb extends CI_Model
 
         return TRUE;
     }
-    public function update_item($nobpb, $norefbpb, $kodebar, $aprrove)
+    public function update_item($nobpb, $norefbpb, $aprrove)
     {
-        $this->db_logistik_pt->where('no_bpb', $nobpb);
+        $this->db_logistik_pt->where('nobpb', $nobpb);
         $this->db_logistik_pt->where('norefbpb', $norefbpb);
-        $this->db_logistik_pt->where('kodebar', $kodebar);
         $this->db_logistik_pt->update('bpb', $aprrove);
 
         return TRUE;

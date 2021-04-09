@@ -937,14 +937,14 @@ class Bpb extends CI_Controller
             $mengetahui = "3";
             $aprrove = array('approval' =>  $approval);
 
-            $this->M_bpb->update_item($nobpb, $norefbpb, $kodebar, $aprrove);
+            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove);
         } else if ($setuju == "tidaksetuju") {
             $approval = "2";
             $mengetahui = "2";
 
             $aprrove = array('approval' =>  "0");
 
-            $this->M_bpb->update_item($nobpb, $norefbpb, $kodebar, $aprrove);
+            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove);
         }
 
         $dataedit_approval = array(
