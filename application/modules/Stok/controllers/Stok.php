@@ -34,6 +34,7 @@ class Stok extends CI_Controller
             $row[] = $d->saldoawal_nilai;
             $row[] = $d->saldoakhir_qty;
             $row[] = $d->saldoakhir_nilai;
+            $row[] = $d->nilai_masuk;
             $row[] = $d->ket;
             $row[] = $d->minstok;
             $data[] = $row;

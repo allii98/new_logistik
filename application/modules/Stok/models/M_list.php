@@ -1,8 +1,9 @@
-<?php 
+<?php
 
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_list extends CI_Model {
+class M_list extends CI_Model
+{
 
     var $table = 'stockawal'; //nama tabel dari database
     var $column_order = array(null, 'id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok'); //field yang ada di table supplier  
@@ -74,7 +75,6 @@ class M_list extends CI_Model {
         $this->db_logistik_pt->from($this->table);
         return $this->db_logistik_pt->count_all_results();
     }
-
 }
 
 /* End of file M_list.php */

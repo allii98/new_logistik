@@ -2,13 +2,15 @@
 <div class="row justify-content-center">
     <div class="col-md">
         <div class="widget-rounded-circle card-box">
-            <h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Stock Awal</h4>
-            <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button>
+            <div class="row justify-content-between">
+                <h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Stock Awal</h4>
+                <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button>
+            </div>
             <hr>
             <div class="row">
                 <!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <table id="tableStockAwal" class="table dt-responsive nowrap w-100 dataTable dtr-inline" width="100%">
+                    <table id="tableStockAwal" class="table w-100 dataTable no-footer table-sm table-striped">
 
                         <thead class="thead-light">
                             <tr role="row">
@@ -18,7 +20,7 @@
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nama Barang</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Satuan</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Group</th>
-                                <th colspan="4" rowspan="1" style="text-align: center;">Saldo</th>
+                                <th colspan="5" rowspan="1" style="text-align: center;">Saldo</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Ket</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Min. Stock</th>
                             </tr>
@@ -27,6 +29,7 @@
                                 <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 152.4px;" aria-label="Salary: activate to sort column ascending">Awal (Nilai)</th>
                                 <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 177.4px;" aria-label="Office: activate to sort column ascending">Akhir (Qty)</th>
                                 <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 106.4px;" aria-label="Extn.: activate to sort column ascending">Akhir (Nilai)</th>
+                                <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 80.4px;" aria-label="Extn.: activate to sort column ascending">Rata2 (Nilai)</th>
                             </tr>
                         </thead>
 
@@ -40,7 +43,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalInputStockAwal">
+    <div class="modal fade form-modal" tabindex="-1" role="dialog" aria-hidden="true" id="modalInputStockAwal">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -62,18 +65,18 @@
                         <div class="form-group row">
                             <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
                             <div class="col-9">
-                                <input type="text" class="form-control" id="txt_nama_barang" name="txt_nm_barang" placeholder="Nama Barang" required="" autocomplete="off">
+                                <input type="text" class="form-control bg-light" id="txt_nama_barang" name="txt_nm_barang" placeholder="Nama Barang" required="" autocomplete="off" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="txt_satuan" class="col-3 col-form-label">Satuan</label>
                             <div class="col-3">
-                                <input type="text" class="form-control" id="txt_satuan" name="txt_satuan" placeholder="Satuan" readonly="" required="">
+                                <input type="text" class="form-control bg-light" id="txt_satuan" name="txt_satuan" placeholder="Satuan" readonly="" required="">
                             </div>
                             <label class="control-label col-md-2">Group</label>
                             <div class="col-md-3">
                                 <!-- <input type="text" class="form-control" id="txt_grup" name="txt_grup" placeholder="Grup" readonly="" required=""> -->
-                                <textarea class="resizable_textarea form-control" id="txt_grup" name="txt_grup" placeholder="Grup" readonly="" required=""></textarea>
+                                <textarea class="resizable_textarea form-control bg-light" id="txt_grup" name="txt_grup" placeholder="Grup" readonly="" required=""></textarea>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -226,6 +229,9 @@
         $('#form_input_stock_awal')[0].reset();
         $('#btn_simpan').show();
         $('#btn_ubah').hide();
+        $('.modal').find('#txt_kode_barang').removeAttr('disabled');
+        $('.modal').find('#txt_kode_barang').removeClass('bg-light');
+
     }
 
 
@@ -233,6 +239,9 @@
 
         $('#tableStockAwal').DataTable().destroy();
         var table = $('#tableStockAwal').DataTable({
+
+            "scrollY": 400,
+            "scrollX": true,
 
             "processing": true,
             "serverSide": true,
@@ -258,14 +267,13 @@
         // });
         $('#modalInputStockAwal').modal('show');
         $('#btn_simpan').hide();
-        $('#btn_ubah').show();
+        $('#btn_ubah').hide();
 
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Stok/detail_stock'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
-
 
             data: {
                 'id': id,
@@ -277,13 +285,16 @@
                 $('#txt_nama_barang').val(data.nabar);
                 $('#txt_satuan').val(data.satuan);
                 $('#txt_min_stock_qty').val(data.minstok);
-                $('#txt_saldo_awal_qty').val(data.saldoawal_qty);
+                $('#txt_saldo_awal_qty').val(data.QTY_MASUK);
                 $('#txt_saldo_awal_nilai').val(data.saldoawal_nilai);
                 $('#txt_saldo_akhir_qty').val(data.saldoakhir_qty);
                 $('#txt_saldo_akhir_nilai').val(data.saldoakhir_nilai);
                 $('#txt_keterangan_stock_awal').val(data.ket);
                 // $('#hidden_grup').val(data.grp);
                 $('#txt_grup').val(data.grp);
+
+                $('.form-modal').find('#txt_keterangan_stock_awal, #txt_satuan, #txt_nama_barang, #txt_kode_barang, #txt_grup').addClass('bg-light');
+                $('.form-modal').find('#txt_keterangan_stock_awal, #txt_satuan, #txt_nama_barang, #txt_kode_barang, #txt_grup').attr('disabled', '');
 
             },
             error: function(request) {
