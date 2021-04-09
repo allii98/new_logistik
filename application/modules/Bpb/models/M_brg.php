@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_brg extends CI_Model
 {
 
-    var $table = 'kodebar'; //nama tabel dari database
+    var $table = 'stockawal'; //nama tabel dari database
     var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan'); //field yang ada di table supplier  
     var $column_search = array('kodebar', 'nabar', 'grp', 'satuan'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
@@ -19,9 +19,9 @@ class M_brg extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $this->db_logistik->select('id, kodebar, nabar, grp, satuan');
-        $this->db_logistik->from('kodebar');
-        $this->db_logistik->order_by('id', 'desc');
+        $this->db_logistik_pt->select('id, kodebar, nabar, grp, satuan');
+        $this->db_logistik_pt->from('stockawal');
+        $this->db_logistik_pt->order_by('id', 'desc');
 
 
         $i = 0;
@@ -33,22 +33,22 @@ class M_brg extends CI_Model
 
                 if ($i === 0) // looping awal
                 {
-                    $this->db_logistik->group_start();
-                    $this->db_logistik->like($item, $_POST['search']['value']);
+                    $this->db_logistik_pt->group_start();
+                    $this->db_logistik_pt->like($item, $_POST['search']['value']);
                 } else {
-                    $this->db_logistik->or_like($item, $_POST['search']['value']);
+                    $this->db_logistik_pt->or_like($item, $_POST['search']['value']);
                 }
                 if (count($this->column_search) - 1 == $i)
-                    $this->db_logistik->group_end();
+                    $this->db_logistik_pt->group_end();
             }
             $i++;
         }
 
         if (isset($_POST['order'])) {
-            $this->db_logistik->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db_logistik_pt->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } else if (isset($this->order)) {
             $order = $this->order;
-            $this->db_logistik->order_by(key($order), $order[key($order)]);
+            $this->db_logistik_pt->order_by(key($order), $order[key($order)]);
         }
     }
 
@@ -56,22 +56,22 @@ class M_brg extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-            $this->db_logistik->limit($_POST['length'], $_POST['start']);
-        $query = $this->db_logistik->get();
+            $this->db_logistik_pt->limit($_POST['length'], $_POST['start']);
+        $query = $this->db_logistik_pt->get();
         return $query->result();
     }
 
     function count_filtered()
     {
         $this->_get_datatables_query();
-        $query = $this->db_logistik->get();
+        $query = $this->db_logistik_pt->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-        $this->db_logistik->from($this->table);
-        return $this->db_logistik->count_all_results();
+        $this->db_logistik_pt->from($this->table);
+        return $this->db_logistik_pt->count_all_results();
     }
 }
 

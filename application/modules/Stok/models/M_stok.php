@@ -6,8 +6,8 @@ class M_stok extends CI_Model
 {
 
     var $table = 'stockawal'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok'); //field yang ada di table supplier  
-    var $column_search = array('kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok'); //field yang ada di table supplier  
+    var $column_search = array('kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'saldoawal_nilai', 'QTY_MASUK', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -20,7 +20,7 @@ class M_stok extends CI_Model
     {
         // $Value = ;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
-        $this->db_logistik_pt->select('id, kodebartxt, nabar, satuan, grp, saldoawal_qty, saldoawal_nilai, saldoakhir_qty, saldoakhir_nilai, ket, minstok');
+        $this->db_logistik_pt->select('id, kodebartxt, nabar, satuan, grp, saldoawal_qty, saldoawal_nilai, saldoakhir_qty,QTY_MASUK, saldoakhir_nilai, ket, minstok');
         $this->db_logistik_pt->from('stockawal');
         // $this->db_logistik_pt->where('po');
         $this->db_logistik_pt->order_by('id', 'desc');
@@ -128,7 +128,7 @@ class M_stok extends CI_Model
         $data_input_stock_awal["saldoakhir_qty"] = $this->input->post('txt_saldo_akhir_qty');
         $data_input_stock_awal["saldoakhir_nilai"] = $this->input->post('txt_saldo_akhir_nilai');
         // $data_input_stock_awal["nilai_masuk"] = $this->input->post('');
-        // $data_input_stock_awal["QTY_MASUK"] = $this->input->post('');
+        $data_input_stock_awal["QTY_MASUK"] = "0";
         // $data_input_stock_awal["QTY_KELUAR"] = $this->input->post('');
         // $data_input_stock_awal["QTY_ADJMASUK"] = $this->input->post('');
         // $data_input_stock_awal["QTY_ADJKELUAR"] = $this->input->post('');

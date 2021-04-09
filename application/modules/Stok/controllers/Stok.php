@@ -30,7 +30,7 @@ class Stok extends CI_Controller
             $row[] = $d->nabar;
             $row[] = $d->satuan;
             $row[] = $d->grp;
-            $row[] = $d->saldoawal_qty;
+            $row[] = $d->QTY_MASUK;
             $row[] = $d->saldoawal_nilai;
             $row[] = $d->saldoakhir_qty;
             $row[] = $d->saldoakhir_nilai;
