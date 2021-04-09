@@ -134,7 +134,7 @@
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- Account Beban -->
-                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
+                                                <input type="text" class="form-control" id="txt_account_beban_1" value="-" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
                                                 <label class="control-label" id="lbl_no_acc_1"></label>
                                                 <label class="control-label" id="lbl_nama_acc_1"></label>
                                                 <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1">
@@ -495,7 +495,7 @@
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Account Beban -->' +
-            '<input type="text" class="form-control" id="txt_account_beban_' + row + '" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
+            '<input type="text" class="form-control" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
             '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
             '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
             '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '">' +
@@ -1563,24 +1563,6 @@
                     if (sess_user_gudang != 36 && sess_user_gudang != 18) {
                         swal('Stock Awal Belum Ada / Tidak Ada Stock di Gudang, Silahkan Hubungi Petugas Gudang');
                     } else {
-                        // swal("Stock Awal belum ada, silahkan input dahulu !", {
-                        //         buttons: {
-                        //             ya: {
-                        //                 text: "Ya",
-                        //                 value: "iya",
-                        //             },
-                        //             cancel: "Tutup",
-                        //         },
-                        //     })
-                        //     .then((value) => {
-                        //         switch (value) {
-                        //             case "iya":
-                        //                 window.open('<?php echo site_url('stock_awal'); ?>', '_blank');
-                        //                 break;
-                        //             default:
-                        //                 swal.close();
-                        //         }
-                        //     });
 
                         Swal.fire({
                             title: 'Stock Awal belum ada!',
