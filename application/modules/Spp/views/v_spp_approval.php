@@ -32,9 +32,6 @@
                                     <font face="Verdana" size="2.5">Tgl. Ref</font>
                                 </th>
                                 <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Tanggal</font>
-                                </th>
-                                <th style="padding: 0.4em;">
                                     <font face="Verdana" size="2.5">Tgl. Terima</font>
                                 </th>
                                 <th style="padding: 0.4em;">
@@ -217,7 +214,7 @@
                     var td_10 = (data[i].status2 == "1") ? '<td><span style="color: green"><b>DISETUJUI<br>' + data[i].TGL_APPROVE + '</b></span></td>' : '<td><button class="btn btn-success btn-xs fa fa-check" type="button" onclick="approve_barang(' + data[i].id + ',' + data[i].noppotxt + ')"></button><button class="btn btn-danger ml-1 btn-xs fa fa-times" type="button"></button></td>';
                     var tr_tutup = '</tr>';
                     $('#data_detail_spp').append(tr_buka + td_1 + td_2 + td_3 + td_4 + td_5 + td_6 + td_7 + td_8 + td_9 + td_10 + tr_tutup);
- 
+
                 }
 
             }

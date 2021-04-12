@@ -355,13 +355,13 @@ class Spp extends CI_Controller
             $no++;
 
             if ($field->status2 == 1) {
-                $stat = '<h5><span class="badge badge-success">Approved</span></h5>';
+                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-success">Approved</span></h5>';
             } else {
-                $stat = '<h5><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             }
 
             if ($field->status2 == 1) {
-                $aks = '<a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_spp"></a>';
+                $aks = '<a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             } else {
                 $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
                 data-noppo="' . $field->noppo . '"
@@ -370,7 +370,8 @@ class Spp extends CI_Controller
                 <button class="btn btn-danger btn-xs fa fa-trash" id="print_spp" name="print_spp"
                 data-noppotxt="' . $field->noppotxt . '"
                 data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
-                </button>';
+                </button>
+                <a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             }
             $row = array();
             $row[] = $no;
@@ -378,7 +379,6 @@ class Spp extends CI_Controller
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
             $row[] = $field->tglref;
-            $row[] = $field->tglppo;
             $row[] = $field->tgltrm;
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
@@ -423,12 +423,11 @@ class Spp extends CI_Controller
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
             $row[] = $field->tglref;
-            $row[] = $field->tglppo;
             $row[] = $field->tgltrm;
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
-            $row[] = '<h5><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+            $row[] = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             $row[] = $field->user;
 
             $data[] = $row;
@@ -483,7 +482,7 @@ class Spp extends CI_Controller
         $data['ppo'] = $this->db_logistik_pt->get_where('ppo', array('noppotxt' => $nospp, 'id' => $id))->row();
 
         $noreftxt = $data['ppo']->noreftxt;
-        $data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noreftxt,  'status2' => '1'))->result();
+        $data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noreftxt))->result();
 
         $query_approval = "SELECT DISTINCT nama_approval_ktu, tgl_approval_ktu, nama_approval_dept_head, tgl_approval_dept_head, nama_approval_gm, tgl_approval_gm FROM item_ppo_approval WHERE noreftxt = '$noreftxt' AND status2_ktu = '4' AND status2_dept_head = '1'";
         $data['item_ppo_approval'] = $this->db_logistik_pt->query($query_approval)->row();

@@ -95,9 +95,36 @@
         </tr>
         <tr>
             <td colspan="2" align="center" height="50" valign="bottom">(<?= $ppo->user ?>)</td>
-            <td colspan="1" align="center" height="50" valign="bottom"><img src="././assets/img/approved2.png" width="15%"><br><?= 'KTU'; ?><br></td>
-            <td colspan="1" align="center" height="50" valign="bottom"><img src="././assets/img/approved2.png" width="15%"><br><?= 'GM'; ?><br></td>
-            <td colspan="2" align="center" height="50" valign="bottom"><img src="././assets/img/approved2.png" width="15%"><br><?= 'Dept Head'; ?><br></td>
+            <td colspan="1" align="center" height="50" valign="bottom">
+                <?php if ($ppo->status == 'DALAM PROSES') {
+                } else {
+                ?>
+                    <img src="././assets/img/approved2.png" width="15%">
+                <?php
+                }
+                ?>
+                <br><?= 'KTU'; ?><br>
+            </td>
+            <td colspan="1" align="center" height="50" valign="bottom">
+                <?php if ($ppo->status == 'DALAM PROSES') {
+                } else {
+                ?>
+                    <img src="././assets/img/approved2.png" width="15%"><br>
+                <?php
+                }
+                ?>
+                <?= 'GM'; ?><br>
+            </td>
+            <td colspan="2" align="center" height="50" valign="bottom">
+                <?php if ($ppo->status == 'DALAM PROSES') {
+                } else {
+                ?>
+                    <img src="././assets/img/approved2.png" width="15%"><br>
+                <?php
+                }
+                ?>
+                <?= 'Dept Head'; ?><br>
+            </td>
             <td colspan="1" align="center" height="50" valign="bottom">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</td>
         </tr>
     </table>

@@ -150,9 +150,14 @@
                     <div class="row div_form_2">
                         <div class="col-sm-12">
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                                <h6 id="lbl_spp_status" name="lbl_spp_status">
-                                    <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
-                                </h6>
+                                <div class="row ml-1 mr-1 justify-content-between">
+                                    <h6 id="lbl_spp_status" name="lbl_spp_status">
+                                        <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
+                                    </h6>
+                                    <h6>
+                                        <button class="btn btn-danger btn-xs fa fa-print" id="a_print_spp" onclick="cetak_spp()"></button>
+                                    </h6>
+                                </div>
                             </div>
                             <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
                             <div class="row" style="margin-left:4px;">
@@ -290,6 +295,10 @@
 
 <script>
     $(document).ready(function() {
+
+        $('#a_print_spp').hide();
+
+
         $('#cmb_departemen').on('change', function() {
             var data = this.value;
             // alert(this.value);
@@ -497,6 +506,9 @@
 
                     $('#hidden_id_ppo').val(data.id_ppo);
                     $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+
+                    $('#a_print_spp').show();
+
                 }
             }
         });
@@ -817,5 +829,20 @@
     function hapusSpp(n) {
 
         $('#modalKonfirmasiHapusSpp').modal('show');
+    }
+
+    function cetak_spp() {
+
+        var id = $('#hidden_id_ppo').val();
+        var nopo = $('#hidden_no_spp').val();
+
+        window.open("<?= base_url('Spp/cetak/') ?>" + nopo + '/' + id, '_blank');
+
+        // // Spp/cetak/nopo/id
+        // window.open("cetak/" + nopo + "/" + id, '_blank');
+
+        $('#cancelSpp').hide();
+
+        $('.div_form_2').css('pointer-events', 'none');
     }
 </script>
