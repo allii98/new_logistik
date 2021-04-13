@@ -330,7 +330,7 @@
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
         var td_col_2 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
-            '<input type="text" class="form-control col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" onfocus="cari_barang(' + row + ')" readonly>' +
+            '<input type="text" class="form-control col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
             '<label class="ml-1 mt-1">' +
             '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
             '<span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>' +
@@ -659,49 +659,39 @@
 
             success: function(data) {
 
-                // jika barang stok awal tidak ada maka tampilkan swal
-                if (data.result_stok_awal == 'NULL') {
-                    swal('Item tidak ada! Silahkan input stok awal.');
-                    $('#lbl_status_simpan_' + n).empty();
-                    $('#lbl_lpb_status').empty();
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_lpb_status').empty();
 
-                    $('#btn_simpan_' + n).css('display', 'block');
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil Disimpan!',
+                    icon: 'success',
+                    loader: false
+                });
 
-                } else {
-                    $('#lbl_status_simpan_' + n).empty();
-                    $('#lbl_lpb_status').empty();
+                // hitung sisa qty po guys
+                sisaQtyPO(no_ref_po, no_po, kodebar, n);
 
-                    $.toast({
-                        position: 'top-right',
-                        heading: 'Success',
-                        text: 'Berhasil Disimpan!',
-                        icon: 'success',
-                        loader: false
-                    });
+                $('#no_lpb').html('No. SPP : ' + data.nolpb);
+                $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
 
-                    // hitung sisa qty po guys
-                    sisaQtyPO(no_ref_po, no_po, kodebar, n);
+                $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
-                    $('#no_lpb').html('No. SPP : ' + data.nolpb);
-                    $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+                // $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
-                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+                $('#btn_hapus_row_' + n).css('display', 'none');
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
 
-                    $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-                    $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                    // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+                $('#hidden_no_lpb').val(data.nolpb);
+                $('#hidden_no_ref_lpb').val(data.noreflpb);
+                $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
+                // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
 
-                    $('#btn_hapus_row_' + n).css('display', 'none');
-                    $('#btn_ubah_' + n).css('display', 'block');
-                    $('#btn_hapus_' + n).css('display', 'block');
-
-                    $('#hidden_no_lpb').val(data.nolpb);
-                    $('#hidden_no_ref_lpb').val(data.noreflpb);
-                    $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
-                    // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
-
-                }
             }
         });
     }

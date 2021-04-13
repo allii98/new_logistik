@@ -394,35 +394,48 @@ class Lpb extends CI_Controller
 
         $cari_kodebar_stock_awal = $this->M_lpb->cari_kodebar($kodebar);
 
-        if ($cari_kodebar_stock_awal == 0) {
-            $result_stok_awal =  "NULL";
-            $result_insert_stok_awal_harian = FALSE;
-            $result_update_stok_awal = FALSE;
-            $data = FALSE;
-            $data2 = FALSE;
-        } else {
-            //save lpb
-            if (empty($this->input->post('hidden_no_lpb'))) {
-                $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
-                $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
-            } else {
-                $data = NULL;
-                $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
+        //save lpb
+        if (empty($this->input->post('hidden_no_lpb'))) {
+
+            //insert stock awal
+            if ($cari_kodebar_stock_awal == 0) {
+                // $result_stok_awal =  "NULL";
+                // $result_insert_stok_awal_harian = FALSE;
+                // $result_update_stok_awal = FALSE;
+                // $data = FALSE;
+                // $data2 = FALSE;
+                $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp']);
             }
 
-            $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_po, $quantiti);
+            $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
+            $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
+        } else {
 
-            $result_update_stok_awal = $this->update_stok_awal($kodebar);
+            if ($cari_kodebar_stock_awal == 0) {
+                // $result_stok_awal =  "NULL";
+                // $result_insert_stok_awal_harian = FALSE;
+                // $result_update_stok_awal = FALSE;
+                // $data = FALSE;
+                // $data2 = FALSE;
+                $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp']);
+            }
 
-            $result_stok_awal =  FALSE;
+            $data = NULL;
+            $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         }
+
+        $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_po, $quantiti);
+
+        $result_update_stok_awal = $this->update_stok_awal($kodebar);
+
+        // $result_stok_awal =  FALSE;
 
         $query_id = "SELECT MAX(id) as id_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_item_lpb = $generate_id->id_lpb;
 
         $data_return = [
-            'result_stok_awal' => $result_stok_awal,
+            // 'result_stok_awal' => $result_stok_awal,
             'insert_stok_harian' => $result_insert_stok_awal_harian,
             'update_stok' => $result_update_stok_awal,
             'data' => $data,
@@ -433,6 +446,56 @@ class Lpb extends CI_Controller
         ];
 
         echo json_encode($data_return);
+    }
+
+    function insert_stokawal($kodebar, $nabar, $satuan, $grp)
+    {
+        $query_id = "SELECT MAX(id)+1 as no_id FROM stockawal";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $no_id = $generate_id->no_id;
+        if (empty($no_id)) {
+            $no_id = 1;
+        } else {
+            $no_id = $generate_id->no_id;
+        }
+
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+
+        $pt = $this->session->userdata('pt');
+        $KODE = $this->session->userdata('kode_pt');
+        $kodebar = $kodebar;
+
+        $data_input_stock_awal["id"] = $no_id;
+        $data_input_stock_awal["pt"] = $pt;
+        // $data_input_stock_awal["pt"] = $this->session->userdata('app_pt');
+        $data_input_stock_awal["KODE"] = $KODE;
+        $data_input_stock_awal["afd"] = "-";
+        $data_input_stock_awal["kodebar"] = $kodebar;
+        $data_input_stock_awal["kodebartxt"] = $kodebar;
+        $data_input_stock_awal["nabar"] = $nabar;
+        $data_input_stock_awal["satuan"] = $satuan;
+        $data_input_stock_awal["grp"] = $grp;
+        $data_input_stock_awal["saldoawal_qty"] = "0";
+        $data_input_stock_awal["saldoawal_nilai"] = "0";
+        $data_input_stock_awal["tglinput"] = date("Y-m-d H:i:s");
+        $data_input_stock_awal["thn"] = date("Y");
+        $data_input_stock_awal["saldoakhir_qty"] = "0";
+        $data_input_stock_awal["saldoakhir_nilai"] = "0";
+        // $data_input_stock_awal["nilai_masuk"] = $this->input->post('');
+        $data_input_stock_awal["QTY_MASUK"] = "0";
+        // $data_input_stock_awal["QTY_KELUAR"] = $this->input->post('');
+        // $data_input_stock_awal["QTY_ADJMASUK"] = $this->input->post('');
+        // $data_input_stock_awal["QTY_ADJKELUAR"] = $this->input->post('');
+        // $data_input_stock_awal["HARGAPORAT"] = $this->input->post('');
+        $data_input_stock_awal["periode"] = $periode . " 00:00:00";
+        $data_input_stock_awal["txtperiode"] = $txtperiode;
+        $data_input_stock_awal["ket"] = "";
+        $data_input_stock_awal["account"] = "-";
+        $data_input_stock_awal["ket_account"] = "-";
+        $data_input_stock_awal["minstok"] = "0";
+
+        $this->db_logistik_pt->insert('stockawal', $data_input_stock_awal);
     }
 
     function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_po, $qty)
