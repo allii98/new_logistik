@@ -95,15 +95,15 @@ class M_lpb extends CI_Model
     //     }
     // }
 
-    public function get_data_po_qr($nopotxt)
+    public function get_data_po_qr($noref)
     {
         $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli');
-        $this->db_logistik_pt->where('nopotxt', $nopotxt);
+        $this->db_logistik_pt->where('noreftxt', $noref);
         $this->db_logistik_pt->from('po');
         $data_po = $this->db_logistik_pt->get()->row_array();
 
         $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket');
-        $this->db_logistik_pt->where('nopotxt', $nopotxt);
+        $this->db_logistik_pt->where('noref', $noref);
         $this->db_logistik_pt->from('item_po');
         $data_item_po = $this->db_logistik_pt->get()->result_array();
 
@@ -128,8 +128,8 @@ class M_lpb extends CI_Model
     public function get_nopo()
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
-        $nopo = $this->input->get('nopo');
-        $query = "SELECT nopo FROM po WHERE nopo LIKE '%$nopo%'";
+        $noref = $this->input->get('noref');
+        $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%'";
         return $this->db_logistik_pt->query($query)->result_array();
     }
 

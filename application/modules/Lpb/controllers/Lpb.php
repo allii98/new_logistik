@@ -511,8 +511,8 @@ class Lpb extends CI_Controller
 
     public function get_data_po_qr()
     {
-        $nopotxt = $this->input->post('nopotxt');
-        $result = $this->M_lpb->get_data_po_qr($nopotxt);
+        $noref = $this->input->post('noref');
+        $result = $this->M_lpb->get_data_po_qr($noref);
         echo json_encode($result);
     }
 

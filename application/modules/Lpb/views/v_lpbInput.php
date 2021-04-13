@@ -13,22 +13,22 @@
                 <div class="row div_form_1">
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
+                            <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
                             </label>
                             <div class="col-lg-7 col-11 row">
                                 <select class="js-data-example-ajax form-control select2" id="select2">
                                 </select>
-                                <input style="display:none;" id="multiple" class="form-control" type="text" class="col-2" onkeyup="cariPoqr()">
-                                <input type="hidden" id="txt_no_po">
+                                <input style="display:none;" id="multiple" class="form-control bg-light" type="text" class="col-2" readonly>
+                                <input type="hidden" id="txt_ref_po">
                                 <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
                             </div>
-                            <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button>
+                            <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
                         </div>
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
                             <div class="col-md-8 row">
-                                <input id="txt_ref_po" name="txt_ref_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
+                                <input id="txt_no_po" name="txt_no_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
                             </div>
                         </div>
                     </div>
@@ -263,6 +263,21 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="showCamera">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Scan QRcode</h4>
+                <button type="button" id="modalCameraClose" onclick="modalCameraClose()" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <video id="preview" width="100%"></video>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function getGrupBarang(kodebar, n) {
         $.ajax({
@@ -382,47 +397,91 @@
         });
     }
 
-    //scan qr code
-    $(function() {
+    // //scan qr code
+    // $(function() {
 
-        // overriding path of JS script and audio 
-        $.qrCodeReader.jsQRpath = "<?php echo base_url() ?>assets/dist/js/jsQR/jsQR.min.js";
-        $.qrCodeReader.beepPath = "<?php echo base_url() ?>assets/dist/audio/beep.mp3";
+    //     // overriding path of JS script and audio 
+    //     $.qrCodeReader.jsQRpath = "<?php echo base_url() ?>assets/dist/js/jsQR/jsQR.min.js";
+    //     $.qrCodeReader.beepPath = "<?php echo base_url() ?>assets/dist/audio/beep.mp3";
 
-        // bind all elements of a given class
-        $(".qrcode-reader").qrCodeReader();
+    //     // bind all elements of a given class
+    //     $(".qrcode-reader").qrCodeReader();
 
-        // bind elements by ID with specific options
-        $("#openreader-multi2").qrCodeReader({
-            multiple: true,
-            target: "#multiple2",
-            skipDuplicates: false
-        });
-        $("#openreader-multi3").qrCodeReader({
-            multiple: true,
-            target: "#multiple3"
-        });
+    //     // bind elements by ID with specific options
+    //     $("#openreader-multi2").qrCodeReader({
+    //         multiple: true,
+    //         target: "#multiple2",
+    //         skipDuplicates: false
+    //     });
+    //     $("#openreader-multi3").qrCodeReader({
+    //         multiple: true,
+    //         target: "#multiple3"
+    //     });
 
-        // read or follow qrcode depending on the content of the target input
-        $("#openreader-single2").qrCodeReader({
-            callback: function(code) {
-                if (code) {
-                    window.location.href = code;
-                }
-            }
-        }).off("click.qrCodeReader").on("click", function() {
-            var qrcode = $("#single2").val().trim();
-            if (qrcode) {
-                window.location.href = qrcode;
-            } else {
-                $.qrCodeReader.instance.open.call(this);
-            }
-        });
+    //     // read or follow qrcode depending on the content of the target input
+    //     $("#openreader-single2").qrCodeReader({
+    //         callback: function(code) {
+    //             if (code) {
+    //                 window.location.href = code;
+    //             }
+    //         }
+    //     }).off("click.qrCodeReader").on("click", function() {
+    //         var qrcode = $("#single2").val().trim();
+    //         if (qrcode) {
+    //             window.location.href = qrcode;
+    //         } else {
+    //             $.qrCodeReader.instance.open.call(this);
+    //         }
+    //     });
+    // });
+
+    // qrcode
+    function modalCameraClose() {
+        scanner.stop();
+        $('#multiple').css('display', 'none');
+        $('#select2').next(".select2-container").show();
+    }
+
+    $(document).ready(function() {
+        $('#showCamera').modal('show');
+        $('#preview').show();
+        $('#multiple').css('display', 'block');
+        $('#select2').next(".select2-container").hide();
     });
 
-    function cariPoqr() {
+    function showCamera() {
+        $('#showCamera').modal('show');
+        $('#preview').show();
+        $('#multiple').css('display', 'block');
+        $('#select2').next(".select2-container").hide();
+        scanner.start();
+    }
 
-        var nopo = $('#multiple').val();
+    let scanner = new Instascan.Scanner({
+        video: document.getElementById('preview')
+    });
+    scanner.addListener('scan', function(content) {
+        console.log(content);
+        $('#preview').hide();
+        cariPoqr(content);
+        $('#showCamera').modal('hide');
+        $('#multiple').val(content);
+        scanner.stop();
+    });
+    Instascan.Camera.getCameras().then(function(cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            console.error('No cameras found.');
+        }
+    }).catch(function(e) {
+        console.error(e);
+    });
+    // end qrcode
+
+    function cariPoqr(noref) {
+
+        // var nopo = $('#multiple').val();
         // console.log(n + 'yeyelala');
 
         $.ajax({
@@ -434,7 +493,7 @@
             },
 
             data: {
-                'nopotxt': nopo
+                'noref': noref
             },
             success: function(data) {
 
@@ -443,8 +502,8 @@
 
                 console.log(data_po);
 
-                $('#txt_no_po').val(data_po.nopotxt);
                 $('#txt_ref_po').val(data_po.noreftxt);
+                $('#txt_no_po').val(data_po.nopotxt);
                 $('#txt_tgl_po').val(data_po.tglpo);
                 var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
                 $('#txt_kd_name_supplier').val(namesup);
@@ -489,15 +548,15 @@
             delay: 250,
             data: function(params) {
                 return {
-                    nopo: params.term, // search term
+                    noref: params.term, // search term
                 };
             },
             processResults: function(data) {
                 var results = [];
                 $.each(data, function(index, item) {
                     results.push({
-                        id: item.nopo,
-                        text: item.nopo
+                        id: item.noreftxt,
+                        text: item.noreftxt
                     });
                 });
                 return {
@@ -513,21 +572,12 @@
         // var data = $(".select2 option:selected").val(b);
         // $('#kd_supplier').val(kode);
         var data = $(".select2 option:selected").text();
-        $('#txt_no_po').val(data);
-        $('#multiple').val(data);
+        $('#txt_ref_po').val(data);
+        // $('#multiple').val(data);
         // $('#hidden_no_ref_spp_').val(data);
         // console.log(data);
-        cariPoqr();
+        cariPoqr(data);
 
-    });
-
-    $(document).ready(function() {
-        $(document).on('click', '#openreader-multi', function() {
-
-            $('#multiple').css('display', 'block');
-            $('#select2').next(".select2-container").hide();
-
-        });
     });
 
     function saveRinciClick(n) {
@@ -635,8 +685,8 @@
                     $('#no_lpb').html('No. SPP : ' + data.nolpb);
                     $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
 
-                    $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                    $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
                     $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
                     $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
