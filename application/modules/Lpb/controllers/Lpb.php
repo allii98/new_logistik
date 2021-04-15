@@ -399,11 +399,7 @@ class Lpb extends CI_Controller
 
             //insert stock awal
             if ($cari_kodebar_stock_awal == 0) {
-                // $result_stok_awal =  "NULL";
-                // $result_insert_stok_awal_harian = FALSE;
-                // $result_update_stok_awal = FALSE;
-                // $data = FALSE;
-                // $data2 = FALSE;
+
                 $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp']);
             }
 
@@ -412,11 +408,7 @@ class Lpb extends CI_Controller
         } else {
 
             if ($cari_kodebar_stock_awal == 0) {
-                // $result_stok_awal =  "NULL";
-                // $result_insert_stok_awal_harian = FALSE;
-                // $result_update_stok_awal = FALSE;
-                // $data = FALSE;
-                // $data2 = FALSE;
+
                 $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp']);
             }
 
@@ -527,7 +519,7 @@ class Lpb extends CI_Controller
             'QTY_ADJMASUK' => '0',
             'QTY_ADJKELUAR' => '0',
             'HARGAPORAT' => '0',
-            'periode' => $this->session->userdata('ymd_periode'),
+            'periode' => $this->session->userdata('Ymd_periode'),
             'txtperiode' => $this->session->userdata('ym_periode'),
             'ket' => '-',
             'account' => '-',
@@ -536,7 +528,15 @@ class Lpb extends CI_Controller
             'tgl_transaksi' => date("Y-m-d H:i:s")
         ];
 
-        return $this->M_lpb->saveStockAwal($data_insert_stok_harian);
+        $cek_stokawal_harian = $this->M_lpb->cek_stokawal_harian($data_insert_stok_harian['kodebar'], $data_insert_stok_harian['periode']);
+
+        if ($cek_stokawal_harian >= 1) {
+            //update stok awal harian
+            return $this->M_lpb->updateStokAwalHarian($data_insert_stok_harian['kodebar'], $data_insert_stok_harian['periode'], $qty, $harga_item_po['harga']);
+        } else {
+            //insert stok awal harian
+            return $this->M_lpb->saveStokAwal($data_insert_stok_harian);
+        }
     }
 
     function update_stok_awal($kodebar)
