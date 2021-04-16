@@ -746,7 +746,10 @@
                 txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
                 hidden_no_lpb: $('#hidden_no_lpb').val(),
                 hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
-                hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val()
+                hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
+                nopo: no_po,
+                norefpo: no_ref_po,
+                kodebar: kodebar
             },
 
             success: function(data) {

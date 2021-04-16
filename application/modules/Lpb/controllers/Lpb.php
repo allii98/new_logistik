@@ -544,7 +544,12 @@ class Lpb extends CI_Controller
         $sum_qty_kodebar = $this->M_lpb->sum_qty_kodebar_harian($kodebar);
         $sum_harga_kodebar = $this->M_lpb->sum_harga_kodebar_harian($kodebar);
 
-        $rata2 = $sum_harga_kodebar->saldo_awal_harian / $sum_qty_kodebar->qty_harian;
+        //tidak bisa dibagi 0
+        if ($sum_harga_kodebar->saldo_awal_harian == 0 and $sum_qty_kodebar->qty_harian == 0) {
+            $rata2 = 0;
+        } else {
+            $rata2 = $sum_harga_kodebar->saldo_awal_harian / $sum_qty_kodebar->qty_harian;
+        }
 
         $data_update = [
             'QTY_MASUK' => $sum_qty_kodebar->qty_harian,
@@ -617,10 +622,40 @@ class Lpb extends CI_Controller
             'ket' => $this->input->post('txt_ket_rinci')
         ];
         $id = $this->input->post('hidden_id_item_lpb');
+        $nopo = $this->input->post('nopo');
+        // $norefpo = $this->input->post('norefpo');
+        $kodebar = $this->input->post('kodebar');
+
+        //cari harga
+        $harga_item_po = $this->M_lpb->cari_harga_po($nopo, $kodebar);
+
+        //cari periode di masukitem
+        $periode = $this->M_lpb->cari_periode_barang($id);
+
+        //update stok awal harian
+        if ($periode['qty'] != $data_item_lpb['qty']) {
+            $this->M_lpb->editStokAwalHarian($kodebar, $periode['periode'], $periode['qty'], $data_item_lpb['qty'], $harga_item_po['harga']);
+        }
+
+        //update stok awal
+        $this->update_stok_awal($kodebar);
 
         $data = $this->M_lpb->updateLpb($data_item_lpb, $id);
         echo json_encode($data);
     }
+
+    // public function test()
+    // {
+    //     //kalo angka nya sama muncul error dah
+    //     $kodebar = '102505490000126';
+    //     $periode = '2021-04-15 00:00:00';
+    //     $qty_masukitem = '6';
+    //     $qty_input = '5';
+    //     $harga = '10000';
+
+    //     $test = $this->M_lpb->editStokAwalHarian($kodebar, $periode, $qty_masukitem, $qty_input, $harga);
+    //     echo $test;
+    // }
 
     public function cancelUpdateItemLpb()
     {

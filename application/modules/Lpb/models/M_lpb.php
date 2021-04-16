@@ -308,6 +308,43 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode]);
         return $this->db_logistik_pt->update('stockawal_harian');
     }
+
+    public function cari_periode_barang($id)
+    {
+        $this->db_logistik_pt->select('periode, qty');
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->from('masukitem');
+        return $this->db_logistik_pt->get()->row_array();
+    }
+
+    public function editStokAwalHarian($kodebar, $periode, $qty_masukitem, $qty_input, $harga)
+    {
+        $this->db_logistik_pt->select_sum('QTY_MASUK', 'qtymasuk');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode]);
+        $this->db_logistik_pt->from('stockawal_harian');
+        $sum_harian = $this->db_logistik_pt->get()->row();
+
+        //jika qty masukitem > dari qty yang di input saat edit, maka QTY_MASUK - hasil pengurangan (qty masukitem - qty input) 
+        if ($qty_masukitem > $qty_input) {
+            $kurangin_awal = $qty_masukitem - $qty_input;
+            $total_stok_harian = $sum_harian->qtymasuk - $kurangin_awal;
+        } elseif ($qty_masukitem < $qty_input) {
+            $kurangin_awal = $qty_input - $qty_masukitem;
+            $total_stok_harian = $sum_harian->qtymasuk + $kurangin_awal;
+        } else {
+            $total_stok_harian = $sum_harian;
+        }
+        // $total_harian = $sum_harian->qtymasuk + $qty;
+
+        $total_harga = $harga * $total_stok_harian;
+
+        // return $total_harga;
+
+        $this->db_logistik_pt->set('QTY_MASUK', $total_stok_harian);
+        $this->db_logistik_pt->set('saldoawal_nilai', $total_harga);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode]);
+        return $this->db_logistik_pt->update('stockawal_harian');
+    }
 }
 
 /* End of file ModelName.php */
