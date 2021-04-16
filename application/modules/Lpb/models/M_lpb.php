@@ -129,7 +129,7 @@ class M_lpb extends CI_Model
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $noref = $this->input->get('noref');
-        $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%'";
+        $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0";
         return $this->db_logistik_pt->query($query)->result_array();
     }
 
@@ -344,6 +344,36 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->set('saldoawal_nilai', $total_harga);
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode]);
         return $this->db_logistik_pt->update('stockawal_harian');
+    }
+
+    public function updateStatusItemLpb($no_ref_po, $kodebar)
+    {
+        $this->db_logistik_pt->set('status_item_lpb', 1);
+        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->update('item_po');
+
+        $this->db_logistik_pt->select('kodebar');
+        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->from('item_po');
+        $count_item_po = $this->db_logistik_pt->get()->num_rows();
+
+        $this->db_logistik_pt->select_sum('status_item_lpb', 'sum_item_lpb');
+        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->from('item_po');
+        $sumqty_lpb = $this->db_logistik_pt->get()->row();
+
+        if ($count_item_po == $sumqty_lpb->sum_item_lpb) {
+            $this->db_logistik_pt->set('status_lpb', 1);
+            $this->db_logistik_pt->where('noreftxt', $no_ref_po);
+            $this->db_logistik_pt->update('po');
+        }
+    }
+
+    public function updateStatusItemLpb2($no_ref_po, $kodebar)
+    {
+        $this->db_logistik_pt->set('status_item_lpb', 0);
+        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
+        return $this->db_logistik_pt->update('item_po');
     }
 }
 

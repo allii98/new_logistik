@@ -574,6 +574,13 @@ class Lpb extends CI_Controller
         $data_sisa_qty_lpb = $this->db_logistik_pt->query($query_sisa_qty_lpb)->row();
 
         $sisa_qty_po  =  number_format($data_qty_po->qty - $data_sisa_qty_lpb->qty_lpb, 0);
+
+        if ($sisa_qty_po == 0) {
+            $this->M_lpb->updateStatusItemLpb($no_ref_po, $kodebar);
+        } else {
+            $this->M_lpb->updateStatusItemLpb2($no_ref_po, $kodebar);
+        }
+
         echo json_encode($sisa_qty_po);
     }
 
