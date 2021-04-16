@@ -443,7 +443,7 @@
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
         var td_col_2 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
-            '<input type="text" class="form-control col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" onfocus="cari_barang(' + row + ')" readonly>' +
+            '<input type="text" class="form-control col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
             '<label class="ml-1 mt-1">' +
             '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
             '<span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>' +
@@ -821,7 +821,10 @@
                 txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
                 hidden_no_lpb: $('#hidden_no_lpb').val(),
                 hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
-                hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val()
+                hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
+                nopo: no_po,
+                norefpo: no_ref_po,
+                kodebar: kodebar
             },
 
             success: function(data) {
