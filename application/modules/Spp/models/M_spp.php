@@ -182,12 +182,24 @@ class M_spp extends CI_Model
         return TRUE;
     }
 
-    public function cari_item_spp($kodebar, $qty, $ket)
+    public function cari_item_spp($kodebar, $noreftxt)
     {
         $this->db_logistik_pt->select('*');
         $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'qty' => $qty, 'ket' => $ket]);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noreftxt' => $noreftxt]);
         return $this->db_logistik_pt->get()->num_rows();
+    }
+
+    public function urut_cetak($noppo)
+    {
+        $this->db_logistik_pt->set('main_acct', 'main_acct+1', FALSE);
+        $this->db_logistik_pt->where('noppo', $noppo);
+        $this->db_logistik_pt->update('ppo');
+
+        $this->db_logistik_pt->select('main_acct');
+        $this->db_logistik_pt->from('ppo');
+        $this->db_logistik_pt->where('noppo', $noppo);
+        return $this->db_logistik_pt->get()->row_array();
     }
 }
 

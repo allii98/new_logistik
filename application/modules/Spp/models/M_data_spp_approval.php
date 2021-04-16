@@ -18,9 +18,10 @@ class M_data_spp_approval extends CI_Model
 
     private function _get_datatables_query()
     {
+        $role_user = $this->session->userdata('user');
 
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('status2', 0);
+        $this->db_logistik_pt->where(['status2' => 0, 'user' => $role_user]);
         // $this->db_logistik_pt->select('id, noppotxt, noreftxt, tglref,tglppo,tgltrm,namadept,lokasi,ket,user');
         // $this->db_logistik_pt->order_by('id', 'desc');
 

@@ -240,28 +240,32 @@ class Spp extends CI_Controller
             'nama_main' => "",
         ];
 
-        $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $data_item_ppo['qty'], $data_item_ppo['ket']);
 
-        if ($cek_isi_item >= 1) {
-            $item_exist = 1;
-            $data2 = NULL;
-        } else {
+        if (empty($this->input->post('hidden_no_spp'))) {
+            $data = $this->M_spp->saveSpp($data_ppo);
+            $data2 = $this->M_spp->saveSpp2($data_item_ppo);
             $item_exist = 0;
-            if (empty($this->input->post('hidden_no_spp'))) {
-                $data = $this->M_spp->saveSpp($data_ppo);
-                $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+        } else {
+
+            $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $data_item_ppo['noreftxt']);
+
+            if ($cek_isi_item >= 1) {
+                $item_exist = 1;
+                $data = NULL;
+                $data2 = NULL;
             } else {
                 $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+                $item_exist = 0;
+                $data = NULL;
             }
         }
 
         // cari id terakhir
-
-        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE id_user = '$id_user'";
+        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_ppo = $generate_id->id_ppo;
 
-        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE id_user = '$id_user'";
+        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
         $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
         $id_item_ppo = $generate_id_item->id_item_ppo;
 
@@ -289,20 +293,22 @@ class Spp extends CI_Controller
 
     public function updateSpp()
     {
-        $data['nama_dept'] = $this->M_spp->namaDept($this->input->post("cmb_departemen"));
+        // $data['nama_dept'] = $this->M_spp->namaDept($this->input->post("cmb_departemen"));
 
         $tgl_trm = date("Y-m-d", strtotime($this->input->post('txt_tgl_terima')));
+
+        $noref = $this->input->post('noref');
 
         $id_ppo = $this->input->post('hidden_id_ppo');
         $id_item_ppo = $this->input->post('hidden_id_item_ppo');
 
-        $data_ppo = [
-            'jenis' => $this->input->post('cmb_jenis_permohonan'),
-            'tgltrm' => $tgl_trm . date(" H:i:s"),
-            'kodedept' => $this->input->post('txt_kode_departemen'),
-            'namadept' => $data['nama_dept']['nama'],
-            'ket' => $this->input->post('txt_keterangan'),
-        ];
+        // $data_ppo = [
+        //     'jenis' => $this->input->post('cmb_jenis_permohonan'),
+        //     'tgltrm' => $tgl_trm . date(" H:i:s"),
+        //     'kodedept' => $this->input->post('txt_kode_departemen'),
+        //     'namadept' => $data['nama_dept']['nama'],
+        //     'ket' => $this->input->post('txt_keterangan'),
+        // ];
 
         $data_item_ppo = [
             // 'kodedept' => $this->input->post('txt_kode_departemen'),
@@ -317,9 +323,29 @@ class Spp extends CI_Controller
         ];
 
         // $data = $this->M_spp->updateSpp($id_ppo, $data_ppo);
-        $data2 = $this->M_spp->updateSpp2($id_item_ppo, $data_item_ppo);
 
-        echo json_encode($data, $data2);
+        $cari_kodebar = $this->db_logistik_pt->get_where('item_ppo', array('id' => $id_item_ppo))->row_array();
+
+        if ($cari_kodebar['kodebar'] != $data_item_ppo['kodebar']) {
+            $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $noref);
+            if ($cek_isi_item >= 1) {
+                $item_exist = 1;
+                $data2 = NULL;
+            } else {
+                $item_exist = NULL;
+                $data2 = $this->M_spp->updateSpp2($id_item_ppo, $data_item_ppo);
+            }
+        } else {
+            $data2 = $this->M_spp->updateSpp2($id_item_ppo, $data_item_ppo);
+            $item_exist = NULL;
+        }
+
+        $data_return = [
+            'data2' => $data2,
+            'item_exist' => $item_exist,
+        ];
+
+        echo json_encode($data_return);
     }
 
     public function deleteItemSpp()
@@ -355,13 +381,13 @@ class Spp extends CI_Controller
             $no++;
 
             if ($field->status2 == 1) {
-                $stat = '<h5><span class="badge badge-success">Approved</span></h5>';
+                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-success">Approved</span></h5>';
             } else {
-                $stat = '<h5><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             }
 
             if ($field->status2 == 1) {
-                $aks = '<a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_spp"></a>';
+                $aks = '<a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             } else {
                 $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
                 data-noppo="' . $field->noppo . '"
@@ -370,7 +396,8 @@ class Spp extends CI_Controller
                 <button class="btn btn-danger btn-xs fa fa-trash" id="print_spp" name="print_spp"
                 data-noppotxt="' . $field->noppotxt . '"
                 data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
-                </button>';
+                </button>
+                <a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             }
             $row = array();
             $row[] = $no;
@@ -378,7 +405,6 @@ class Spp extends CI_Controller
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
             $row[] = $field->tglref;
-            $row[] = $field->tglppo;
             $row[] = $field->tgltrm;
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
@@ -423,12 +449,11 @@ class Spp extends CI_Controller
             $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
             $row[] = $field->tglref;
-            $row[] = $field->tglppo;
             $row[] = $field->tgltrm;
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
-            $row[] = '<h5><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+            $row[] = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             $row[] = $field->user;
 
             $data[] = $row;
@@ -480,10 +505,12 @@ class Spp extends CI_Controller
         $nospp = $this->uri->segment('3');
         $id = $this->uri->segment('4');
 
+        $data['urut'] = $this->M_spp->urut_cetak($nospp);
+
         $data['ppo'] = $this->db_logistik_pt->get_where('ppo', array('noppotxt' => $nospp, 'id' => $id))->row();
 
         $noreftxt = $data['ppo']->noreftxt;
-        $data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noreftxt,  'status2' => '1'))->result();
+        $data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noreftxt))->result();
 
         $query_approval = "SELECT DISTINCT nama_approval_ktu, tgl_approval_ktu, nama_approval_dept_head, tgl_approval_dept_head, nama_approval_gm, tgl_approval_gm FROM item_ppo_approval WHERE noreftxt = '$noreftxt' AND status2_ktu = '4' AND status2_dept_head = '1'";
         $data['item_ppo_approval'] = $this->db_logistik_pt->query($query_approval)->row();

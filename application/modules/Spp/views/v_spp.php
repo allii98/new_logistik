@@ -20,7 +20,7 @@
                                     <th style="padding: 0.4em;">
                                         <font face="Verdana" size="2.5">No</font>
                                     </th>
-                                    <th style="padding: 0.4em; width: 88px;">
+                                    <th style="padding: 0.4em; width: 130px;">
                                         <font face="Verdana" size="2.5">#</font>
                                     </th>
                                     <th style="padding: 0.4em;">
@@ -31,9 +31,6 @@
                                     </th>
                                     <th style="padding: 0.4em;">
                                         <font face="Verdana" size="2.5">Tgl. Ref</font>
-                                    </th>
-                                    <th style="padding: 0.4em;">
-                                        <font face="Verdana" size="2.5">Tanggal</font>
                                     </th>
                                     <th style="padding: 0.4em;">
                                         <font face="Verdana" size="2.5">Tgl. Terima</font>

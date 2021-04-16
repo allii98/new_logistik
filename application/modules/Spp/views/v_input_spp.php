@@ -150,11 +150,17 @@
                     <div class="row div_form_2">
                         <div class="col-sm-12">
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                                <h6 id="lbl_spp_status" name="lbl_spp_status">
-                                    <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
-                                </h6>
+                                <div class="row ml-1 mr-1 justify-content-between">
+                                    <h6 id="lbl_spp_status" name="lbl_spp_status">
+                                        <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
+                                    </h6>
+                                    <h6>
+                                        <button class="btn btn-danger btn-xs fa fa-print" id="a_print_spp" onclick="cetak_spp()"></button>
+                                    </h6>
+                                </div>
                             </div>
                             <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
+                            <input type="hidden" id="hidden_no_ref_ppo" name="hidden_no_ref_ppo">
                             <div class="row" style="margin-left:4px;">
                                 <h6 id="h4_no_spp" name="h4_no_spp"></h6>&emsp;&emsp;
                                 <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
@@ -290,6 +296,10 @@
 
 <script>
     $(document).ready(function() {
+
+        $('#a_print_spp').hide();
+
+
         $('#cmb_departemen').on('change', function() {
             var data = this.value;
             // alert(this.value);
@@ -463,7 +473,7 @@
                 console.log(data);
 
                 if (data.item_exist == "1") {
-                    swal('Sudah ada Item, Qty dan Ket yang sama !');
+                    swal('Sudah ada item yang sama pada SPP ini!');
                     $('#lbl_status_simpan_' + n).empty();
                     $('#lbl_spp_status').empty();
                     $('#btn_simpan_' + n).css('display', 'block');
@@ -482,7 +492,7 @@
                     $('#hidden_no_spp').val(data.nospp);
 
                     $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
-                    // $('#hidden_no_ref_ppo').val(data.no_ref_ppo);
+                    $('#hidden_no_ref_ppo').val(data.noref);
 
                     $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
                     $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
@@ -497,6 +507,9 @@
 
                     $('#hidden_id_ppo').val(data.id_ppo);
                     $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+
+                    $('#a_print_spp').show();
+
                 }
             }
         });
@@ -566,6 +579,7 @@
                 $('#stok_' + n).text(item_ppo.STOK);
                 $('#satuan_' + n).text(item_ppo.sat);
                 $('#txt_keterangan_rinci_' + n).val(item_ppo.ket);
+                $('#hidden_kode_brg_' + n).val(item_ppo.kodebar);
 
                 $('#lbl_status_simpan_' + n).empty();
                 $.toast({
@@ -606,6 +620,7 @@
             },
 
             data: {
+                noref: $('#hidden_no_ref_ppo').val(),
                 cmb_alokasi: $('#cmb_alokasi').val(),
                 hidden_no_spp: $('#hidden_no_spp').val(),
                 txt_tanggal: $('#txt_tanggal').val(),
@@ -626,26 +641,31 @@
             },
 
             success: function(data) {
-                console.log(data + "sukses");
 
-                $('#lbl_status_simpan_' + n).empty();
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil Diupdate!',
-                    icon: 'success',
-                    loader: false
-                });
+                if (data.item_exist == "1") {
+                    swal('Sudah ada item yang sama pada SPP ini!');
+                    $('#lbl_status_simpan_' + n).empty();
+                    $('#lbl_spp_status').empty();
+                } else {
+                    $('#lbl_status_simpan_' + n).empty();
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Diupdate!',
+                        icon: 'success',
+                        loader: false
+                    });
 
-                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
-                $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
+                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
+                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').addClass('bg-light');
-                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').attr('disabled', '');
+                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').addClass('bg-light');
+                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').attr('disabled', '');
 
-                $('#btn_ubah_' + n).css('display', 'block');
-                $('#btn_hapus_' + n).css('display', 'block');
-                $('#btn_cancel_update_' + n).css('display', 'none');
+                    $('#btn_ubah_' + n).css('display', 'block');
+                    $('#btn_hapus_' + n).css('display', 'block');
+                    $('#btn_cancel_update_' + n).css('display', 'none');
+                }
             }
         });
         return false;
@@ -817,5 +837,20 @@
     function hapusSpp(n) {
 
         $('#modalKonfirmasiHapusSpp').modal('show');
+    }
+
+    function cetak_spp() {
+
+        var id = $('#hidden_id_ppo').val();
+        var nopo = $('#hidden_no_spp').val();
+
+        window.open("<?= base_url('Spp/cetak/') ?>" + nopo + '/' + id, '_blank');
+
+        // // Spp/cetak/nopo/id
+        // window.open("cetak/" + nopo + "/" + id, '_blank');
+
+        $('#cancelSpp').hide();
+
+        $('.div_form_2').css('pointer-events', 'none');
     }
 </script>

@@ -11,7 +11,7 @@
                         <div class="form-group row mb-1">
                             <label class="col-3 col-form-label mr-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No&nbsp;BPB&nbsp;*</label>
                             <div class="col-6">
-                                <input id="no_bpb" name="no_bpb" class="form-control" required="required" type="text" placeholder="No. BPB" onkeypress="modalBPB(event)">
+                                <input id="no_bpb" name="no_bpb" class="form-control" required="required" type="text" placeholder="No. BPB" onclick="getBPB()">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -127,3 +127,91 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalBPB">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">List BPB</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                    <table id="tableBPB" class="table table-bordered" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>No.</th>
+                                <th>No. BPB</th>
+                                <th>No. Ref BPB</th>
+                                <th>Keperluan</th>
+                                <th>bagian</th>
+                                <th>Tgl BPB</th>
+                                <th>Diminta Oleh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getBPB() {
+        $("#modalBPB").modal('show');
+    }
+
+    // Start Data Table Server Side
+    var table;
+    $(document).ready(function() {
+
+        //datatables
+        table = $('#tableBPB').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+
+            "ajax": {
+                "url": "<?php echo site_url('Bkb/get_data_bpb') ?>",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+
+        });
+
+    });
+    // End Data Table Server Side
+
+    $(document).ready(function() {
+        $(document).on('click', '#data_bpb', function() {
+
+            var nobpb = $(this).data('nobpb');
+            var norefbpb = $(this).data('norefbpb');
+            var keperluan = $(this).data('keperluan');
+            var bag = $(this).data('bag');
+            var user = $(this).data('user');
+            // console.log(nabar);
+
+            // Set data
+            $('#no_bpb').val(nobpb);
+            $('#utk_keperluan').val(keperluan);
+            $('#diberikan_kpd').val(user);
+
+            $("#modalBPB").modal('hide');
+
+        });
+    });
+</script>

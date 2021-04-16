@@ -1,14 +1,13 @@
 <?php
-
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_data_spp extends CI_Model
+class M_bkb extends CI_Model
 {
-
-    var $table = 'ppo'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
-    var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'desc'); // default order 
+    // Start Data Table Server Side
+    var $table = 'bpb'; //nama tabel dari database
+    var $column_order = array(null, 'id', 'nobpb', 'norefbpb', 'keperluan', 'bag', 'tglbpb', 'user', 'alokasi'); //field yang ada di table user
+    var $column_search = array('id', 'nobpb', 'norefbpb', 'keperluan', 'bag', 'tglbpb', 'user', 'alokasi'); //field yang diizin untuk pencarian 
+    var $order = array('id' => 'asc'); // default order 
 
     public function __construct()
     {
@@ -18,11 +17,8 @@ class M_data_spp extends CI_Model
 
     private function _get_datatables_query()
     {
-        $role_user = $this->session->userdata('user');
+
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('user', $role_user);
-        // $this->db_logistik_pt->select('id, noppotxt, noreftxt, tglref,tglppo,tgltrm,namadept,lokasi,ket,user');
-        // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
 
@@ -74,32 +70,7 @@ class M_data_spp extends CI_Model
         $this->db_logistik_pt->from($this->table);
         return $this->db_logistik_pt->count_all_results();
     }
-
-    public function getDetailSpp($noppo)
-    {
-        $this->db_logistik_pt->select('*');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('noppotxt', $noppo);
-        return $this->db_logistik_pt->get()->result_array();
-    }
-
-    public function cari_spp_edit($noppo)
-    {
-        $this->db_logistik_pt->select('noref, noreftxt');
-        $this->db_logistik_pt->from('ppo');
-        $this->db_logistik_pt->where('noppo', $noppo);
-        $ppo = $this->db_logistik_pt->get()->row_array();
-
-        $this->db_logistik_pt->select('kodebar, nabar,qty, STOK, sat, ket, noref, noreftxt, id');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('noppo', $noppo);
-        $item_ppo = $this->db_logistik_pt->get()->result_array();
-
-        $data = [
-            'ppo' => $ppo,
-            'item_ppo' => $item_ppo
-        ];
-
-        return $data;
-    }
+    //End Data Table Server Side
 }
+
+/* End of file ModelName.php */
