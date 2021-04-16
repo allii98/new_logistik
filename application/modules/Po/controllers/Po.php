@@ -86,6 +86,23 @@ class Po extends CI_Controller
         echo json_encode($output);
     }
 
+    public function edit($id)
+    {
+        $data = [
+            'nopo' => $id,
+            'sesi_sl' => $this->session->userdata('status_lokasi')
+        ];
+        $this->template->Load('template', 'v_edit_po', $data);
+    }
+
+    public function cari_po_edit()
+    {
+        $nopo = $this->input->post('nopo');
+        $result = $this->M_po->cari_po_edit($nopo);
+
+        echo json_encode($result);
+    }
+
     public function dataPO()
     {
         $list = $this->M_data->get_datatables();
@@ -94,11 +111,12 @@ class Po extends CI_Controller
         foreach ($list as $d) {
             $no++;
             $row = array();
-            $row[] = '<button type="button" id="detail" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-success btn-xs waves-effect waves-light title="Detail">
-            <i class="fas fa-eye"></i></span>
-        </button>
+            $row[] = '
+            <button type="button" id="edit" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-warning btn-xs waves-effect waves-light" title="Edit"><i class="fas fa-edit"></i></button>
+            <button type="button" id="detail" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-success btn-xs waves-effect waves-light" title="Detail"><i class="fas fa-eye"></i></button> 
+        
         <a href="' . base_url('Po/cetak/' . $d->nopotxt . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
-            <i class="fas fa-print"></i></span>
+            <i class="fas fa-print"></i>
         </a>
         ';
             $row[] =  $no . ".";
@@ -152,6 +170,27 @@ class Po extends CI_Controller
     {
         $nopo = $this->uri->segment('3');
         $id = $this->uri->segment('4');
+
+        $this->db->where('id', $id);
+        $this->db->where('nopotxt', $nopo);
+        $cek = $this->db->get_where('po');
+
+        if ($cek->num_rows() > 0) {
+            $cek = $cek->row();
+            $jml_ = (int)$cek->jml_cetak;
+            // echo $jml_;
+            $up = [
+                'jml_cetak' => $jml_ + 1
+            ];
+            $this->db->where('id', $id);
+            $this->db->where('nopotxt', $nopo);
+            $this->db->update('po', $up);
+        } else {
+            $ins = [
+                'jml_cetak' => 1
+            ];
+            $this->db->insert('po', $ins);
+        }
 
         $data['pt'] = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'))->row();
 
@@ -208,7 +247,7 @@ class Po extends CI_Controller
                                 <tr>
                                 <td align="left" style="margin-top:0px;">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
                                 </td>
-                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="' . site_url('assets/qrcode/' . $data['po']->qr_code) . '"></td>
+                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="' . site_url('assets/qrcode/po/' . $data['po']->qr_code) . '"></td>
                                 </tr>
                                
                             </table>
@@ -317,7 +356,6 @@ class Po extends CI_Controller
     public function save()
     {
 
-
         $data['nama_dept'] = $this->M_po->namaDept($this->input->post("hidden_kode_departemen"));
         $lokasibuatspp = substr($this->input->post('hidden_no_ref'), 0, 3);
         switch ($lokasibuatspp) {
@@ -398,9 +436,9 @@ class Po extends CI_Controller
             if ($hidden_jenis_spp == "SPPA") {
                 $norefpo = $lokasibuatspp . "/" . $kodepo . "/POA/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
             } else if ($hidden_jenis_spp == "SPPI") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-Lokal/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-LOKAL/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
             } else if ($hidden_jenis_spp == "SPPK") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-Khusus/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-KHUSUS/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
             } else {
                 $norefpo = $lokasibuatspp . "/" . $kodepo . "/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
             }
@@ -450,7 +488,7 @@ class Po extends CI_Controller
 
         $image_name = $nopo . '.png'; //buat name dari qr code sesuai dengan nopo
 
-        $params['data'] = $nopo; //data yang akan di jadikan QR CODE
+        $params['data'] = $norefpo; //data yang akan di jadikan QR CODE
         $params['level'] = 'H'; //H=High
         $params['size'] = 10;
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/qrcode/
@@ -555,47 +593,43 @@ class Po extends CI_Controller
         ];
 
         //update(dengan cara qty2+qty inputan) where id_ppo = id_ppo yang di dapat
-        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $d = $this->db->query($query)->row();
-        $qtyy = $d->qty;
-        $qty2 = $d->qty2;
-        if ($qty2 == null) {
-            $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $tmbhQTY
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        } else {
-            $a = $this->input->post('txt_qty');
-            $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $qty,
+        // $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $d = $this->db->query($query)->row();
+        // $qtyy = $d->qty;
+        // $qty2 = $d->qty2;
+        // if ($qty2 == null) {
+        //     $tmbhQTY = $this->input->post('txt_qty');
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $tmbhQTY
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // } else {
+        //     $a = $this->input->post('txt_qty');
+        //     $qty = $qty2 + $a;
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $qty,
 
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
-
-
-        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $ambil = $this->db->query($chek)->row();
-        $qtyy = $ambil->qty;
-        $qtyy2 = $ambil->qty2;
-
-        if ($qtyy == $qtyy2) {
-
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'po' => 1
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-            // $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
 
+        // $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $ambil = $this->db->query($chek)->row();
+        // $qtyy = $ambil->qty;
+        // $qtyy2 = $ambil->qty2;
 
+        // if ($qtyy == $qtyy2) {
 
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'po' => 1
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        //     // $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
         //select item_ppo where id_ppo = id_ppo yang di dapat
 
@@ -604,15 +638,15 @@ class Po extends CI_Controller
         $data1 = $this->db->insert('po', $datainsert);
         $data2 = $this->db->insert('item_po', $datainsertitem);
 
-        if ($qtyy == $qtyy2) {
+        // if ($qtyy == $qtyy2) {
 
 
-            $data_ppo =  array(
-                'po' => 1
-            );
-            $this->M_po->editPPO($no_id, $data_ppo);
-            // $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     $data_ppo =  array(
+        //         'po' => 1
+        //     );
+        //     $this->M_po->editPPO($no_id, $data_ppo);
+        //     // $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
         // $this->_cek_flag_po($no_po);
 
@@ -741,10 +775,6 @@ class Po extends CI_Controller
             $pph = "0";
         }
 
-
-
-
-
         $datainsertitem = [
             'id' => $no_id_item,
             'nopo' => $no_po,
@@ -790,42 +820,42 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
-        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $d = $this->db->query($query)->row();
-        $qtyy = $d->qty;
-        $qty2 = $d->qty2;
-        if ($qty2 == null) {
-            $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $tmbhQTY
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        } else {
-            $a = $this->input->post('txt_qty');
-            $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $qty,
+        // $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $d = $this->db->query($query)->row();
+        // $qtyy = $d->qty;
+        // $qty2 = $d->qty2;
+        // if ($qty2 == null) {
+        //     $tmbhQTY = $this->input->post('txt_qty');
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $tmbhQTY
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // } else {
+        //     $a = $this->input->post('txt_qty');
+        //     $qty = $qty2 + $a;
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $qty,
 
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
 
-        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $ambil = $this->db->query($chek)->row();
-        $qtyy = $ambil->qty;
-        $qtyy2 = $ambil->qty2;
+        // $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $ambil = $this->db->query($chek)->row();
+        // $qtyy = $ambil->qty;
+        // $qtyy2 = $ambil->qty2;
 
-        if ($qtyy == $qtyy2) {
+        // if ($qtyy == $qtyy2) {
 
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'po' => 1
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'po' => 1
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
 
         $data = $this->db->insert('item_po', $datainsertitem);
@@ -895,7 +925,7 @@ class Po extends CI_Controller
 
     public function updateItem()
     {
-        $no_id_item = $this->input->post('hidden_id_po_item');
+        $no_id_item = $this->input->post('id_item');
         $norefpo = $this->input->post('hidden_no_ref_po');
         $no_po = $this->input->post('hidden_no_po');
 
@@ -923,8 +953,6 @@ class Po extends CI_Controller
             'refppo' => $this->input->post('hidden_no_ref'),
             'tglppo' =>  $tgl_ppo,
             'tglppotxt' =>  $tgl_ppo_txt,
-            'tglpo' =>  date("Y-m-d"),
-            'tglpotxt' => date("Ymd"),
             'kodebar' => $this->input->post('hidden_kode_brg'),
             'kodebartxt' => $this->input->post('hidden_kode_brg'),
             'nabar' => $this->input->post('hidden_nama_brg'),
@@ -934,11 +962,7 @@ class Po extends CI_Controller
             'jumharga' => $jumharga,
             'kodept' => $this->input->post('hidden_kodept'),
             'namapt' => $this->input->post('hidden_namapt'),
-            'periode' => date('Y-m-d H:i:s'),
-            'periodetxt' => date('Ym'),
-            'thn' => date('Y'),
             'merek' => $this->input->post('txt_merk'),
-            'tglisi' => date('Y-m-d H:i:s'),
             'user' => $this->session->userdata('user'),
             'ket' => $this->input->post('txt_keterangan_rinci'),
             'noref' => $norefpo,
@@ -959,42 +983,42 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
-        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $d = $this->db->query($query)->row();
-        $qtyy = $d->qty;
-        $qty2 = $d->qty2;
-        if ($qty2 == null) {
-            $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $tmbhQTY
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        } else {
-            $a = $this->input->post('txt_qty');
-            $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $qty,
+        // $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $d = $this->db->query($query)->row();
+        // $qtyy = $d->qty;
+        // $qty2 = $d->qty2;
+        // if ($qty2 == null) {
+        //     $tmbhQTY = $this->input->post('txt_qty');
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $tmbhQTY
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // } else {
+        //     $a = $this->input->post('txt_qty');
+        //     $qty = $qty2 + $a;
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $qty,
 
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
 
-        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $ambil = $this->db->query($chek)->row();
-        $qtyy = $ambil->qty;
-        $qtyy2 = $ambil->qty2;
+        // $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $ambil = $this->db->query($chek)->row();
+        // $qtyy = $ambil->qty;
+        // $qtyy2 = $ambil->qty2;
 
-        if ($qtyy == $qtyy2) {
+        // if ($qtyy == $qtyy2) {
 
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'po' => 1
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'po' => 1
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
         $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
         echo json_encode($updateitem);
@@ -1121,42 +1145,42 @@ class Po extends CI_Controller
         ];
 
 
-        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $d = $this->db->query($query)->row();
-        $qtyy = $d->qty;
-        $qty2 = $d->qty2;
-        if ($qty2 == null) {
-            $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $tmbhQTY
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        } else {
-            $a = $this->input->post('txt_qty');
-            $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $qty,
+        // $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $d = $this->db->query($query)->row();
+        // $qtyy = $d->qty;
+        // $qty2 = $d->qty2;
+        // if ($qty2 == null) {
+        //     $tmbhQTY = $this->input->post('txt_qty');
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $tmbhQTY
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // } else {
+        //     $a = $this->input->post('txt_qty');
+        //     $qty = $qty2 + $a;
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'qty2' => $qty,
 
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
 
-        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $ambil = $this->db->query($chek)->row();
-        $qtyy = $ambil->qty;
-        $qtyy2 = $ambil->qty2;
+        // $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        // $ambil = $this->db->query($chek)->row();
+        // $qtyy = $ambil->qty;
+        // $qtyy2 = $ambil->qty2;
 
-        if ($qtyy == $qtyy2) {
+        // if ($qtyy == $qtyy2) {
 
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'po' => 1
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
+        //     $id_ppo = $this->input->post('id_item');
+        //     $data_ppo =  array(
+        //         'po' => 1
+        //     );
+        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
+        // }
 
 
         $updatepo = $this->M_po->updatePO($no_id, $dataupdate);

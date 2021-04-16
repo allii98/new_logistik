@@ -123,6 +123,12 @@
 			var id = $(this).data('id');
 			detailPO(id);
 		});
+		$(document).on('click', '#edit', function() {
+			var id = $(this).data('id');
+			// console.log(nabar);
+
+			window.location.href = "Po/edit/" + id;
+		});
 
 		//datatables
 		dataPO();

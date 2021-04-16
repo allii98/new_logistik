@@ -208,6 +208,26 @@ class M_po extends CI_Model
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'qty' => $qty, 'ket' => $ket]);
         return $this->db_logistik_pt->get()->num_rows();
     }
+
+    public function cari_po_edit($nopo)
+    {
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->from('po');
+        $this->db_logistik_pt->where('nopo', $nopo);
+        $po = $this->db_logistik_pt->get()->row_array();
+
+        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->from('item_po');
+        $this->db_logistik_pt->where('nopo', $nopo);
+        $item_po = $this->db_logistik_pt->get()->result_array();
+
+        $data = [
+            'po' => $po,
+            'item_po' => $item_po
+        ];
+
+        return $data;
+    }
 }
 
 /* End of file M_po.php */
