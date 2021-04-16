@@ -2145,7 +2145,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                     $('#cmb_jenis_budget_' + id).val(item.grup);
                     $('#txt_merk_' + id).val(item.merek);
-                    $('#txt_qty_' + id).val(item.qty2);
+                    $('#txt_qty_' + id).val(item.qty);
                     $('#txt_harga_' + id).val(item.harga);
                     $('#txt_disc_' + id).val(item.disc);
                     $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);

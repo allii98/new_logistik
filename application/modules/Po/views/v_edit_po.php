@@ -419,7 +419,20 @@
                 for (i = 0; i < item_po.length; i++) {
                     // var no = i + 1;
 
-                    tambah_row(i);
+
+                    var lokasi = $('#lokasi').val();
+                    switch (lokasi) {
+                        case 'HO':
+                            tambah_row(i);
+                            break;
+                        case 'RO':
+                        case 'SITE':
+                        case 'PKS':
+                            tambah_item(i)
+                            break;
+                        default:
+                            break;
+                    }
 
                     var refppo = item_po[i].refppo;
                     var grup = item_po[i].grup;
@@ -475,7 +488,8 @@
 
 
                     $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
-                    $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
+                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
+                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
 
                 }
             },
@@ -519,14 +533,14 @@
                     $('#txt_keterangan_rinci_' + id).val(item.ket);
 
                     $('#btn_ubah_' + id).show();
-                    $('#btn_hapus_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
                     $('.div_form_2').find('input,textarea,select').attr('disabled', '');
                     $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
+                    $('.div_form_3').find('input,textarea,select').attr('disabled', '');
+                    $('.div_form_3').find('input,textarea,select').addClass('form-control bg-light');
 
-                    // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-                    // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
+
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
@@ -575,13 +589,14 @@
                     $('#txt_keterangan_rinci_' + id).val(item.ket);
 
                     $('#btn_ubah_' + id).show();
-                    $('#btn_hapus_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
 
 
                     $('.div_form_2').find('input,textarea,select').attr('disabled', '');
                     $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
+                    $('.div_form_3').find('input,textarea,select').attr('disabled', '');
+                    $('.div_form_3').find('input,textarea,select').addClass('form-control bg-light');
 
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
@@ -630,9 +645,9 @@
 
 
 
-    function tambah_item() {
+    function tambah_item(row) {
 
-        row++;
+        // row++;
         console.log("bariske", row);
 
         var tr_buka = '<tr id="tr_' + row + '">';
@@ -663,6 +678,7 @@
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
             '<input type="hidden" id="id_item_' + row + '" name="id_item_' + row + '">' +
             '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
+
             '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
             '<input type="hidden" id="hidden_kd_departemen_' + row + '" name="hidden_kd_departemen_' + row + '">' +
             '<input type="hidden" id="hidden_departemen_' + row + '" name="hidden_departemen_' + row + '">' +
@@ -673,6 +689,7 @@
             '<input type="hidden" class="form-control" id="hidden_kode_brg_' + row + '" name="hidden_kode_brg_' + row + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_nama_brg_' + row + '" name="hidden_nama_brg_' + row + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="id_item_po' + row + '" name="id_item_po' + row + '" >' +
 
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -724,8 +741,8 @@
             '</td>';
         var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<span style="display:none;" id="habis_' + row + '" class="badge badge-danger">Habis</span>' +
-            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
+            '<button class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
@@ -747,6 +764,100 @@
         initPilihSpp(row);
         hitungqty(row);
         jumlah(row);
+    }
+
+    function initPilihSpp(id) {
+
+        $(`#pilihSpp${id}`).select2({
+            ajax: {
+                url: "<?php echo site_url('Po/getSpp') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        noref: params.term // search term
+                    };
+                },
+                processResults: function(data) {
+                    var results = [];
+
+                    $.each(data, function(index, item) {
+                        results.push({
+                            id: item.id,
+                            text: item.noreftxt + ' - ' + item.tglppotxt + ' - ' + item.namadept
+                            // text: item.noreftxt
+                        });
+
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+
+        }).on('select3:select', function(evt) {
+            var data = $(".select3 option:selected").text();
+            $('#hidden_no_ref_spp_').val(data);
+            console.log(data);
+
+        });
+
+        $(`#pilihSpp${id}`).change(function() {
+            // var dd = this.value;
+
+
+            $.ajax({
+                type: 'post',
+                url: '<?= site_url('Po/getid'); ?>',
+                data: {
+                    id: this.value
+                },
+                success: function(response) {
+                    // console.log(response);
+                    data = JSON.parse(response);
+                    $.each(data, function(index, value) {
+                        // console.log(value);
+                        // var idppo = value.id;
+                        var opsi = value.noreftxt;
+                        var tglref = value.tglref;
+                        var kodedept = value.kodedept;
+                        var namadept = value.namadept;
+                        var tglppo = value.tglppo;
+                        var kodept = value.kodept;
+                        var pt = value.pt;
+                        var noppo = value.noppo;
+                        var kodebar = value.kodebar;
+                        var nabar = value.nabar;
+                        var sat = value.sat;
+                        var qty = value.qty;
+                        var qty2 = value.qty2;
+                        $(`#hidden_tgl_ref_${id}`).val(tglref);
+                        $(`#hidden_no_ref_spp_${id}`).val(opsi);
+                        $(`#hidden_kd_departemen_${id}`).val(kodedept);
+                        $(`#hidden_departemen_${id}`).val(namadept);
+                        $(`#hidden_tgl_spp_${id}`).val(tglppo);
+                        $(`#hidden_kd_pt_${id}`).val(kodept);
+                        $(`#hidden_nama_pt_${id}`).val(pt);
+                        $(`#noppo${id}`).val(noppo);
+                        $(`#hidden_kode_brg_${id}`).val(kodebar);
+                        $(`#kode_brg_${id}`).text(kodebar);
+                        $(`#hidden_nama_brg_${id}`).val(nabar);
+                        $(`#nama_brg_${id}`).text(nabar);
+                        $(`#hidden_satuan_brg_${id}`).val(sat);
+                        $(`#txt_qty_${id}`).val(qty);
+                        $(`#qty_${id}`).val(qty);
+                        // $(`#qty2_${id}`).val(qty2);
+                        // console.log("ini adalah id", idppo);
+                        // console.log(nabar);
+                    });
+
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        });
+
     }
 
     // var n = 1;
@@ -921,10 +1032,22 @@
         $('#txt_jumlah_' + id).val(nilai);
     }
 
+    function saveRinciEnter(e, no) {
+        if (e.keyCode == 13 && !e.shiftKey) {
+            if ($('#hidden_proses_status_' + no).val() == 'insert') {
+                saveRinci(no);
+            } else if ($('#hidden_proses_status_' + no).val() == 'update') {
+                updateRinci(no);
+            }
+        }
+    }
+
     function ubah(i) {
 
         $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
         $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
 
 
         $('#btn_ubah_' + i).hide();
