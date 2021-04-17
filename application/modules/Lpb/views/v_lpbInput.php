@@ -97,42 +97,49 @@
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" id="hidden_id_lpb">
                 </div>
 
-                <div class="row mx-0 div_form_2">
-                    <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                        <h6 id="lbl_lpb_status" name="lbl_lpb_status">
-                            <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
-                        </h6>
-                        <input type="hidden" id="hidden_no_lpb">
-                        <input type="hidden" id="hidden_no_ref_lpb">
-                    </div>
-                    <div class="row" style="margin-left:4px;">
-                        <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
-                        <h6><span id="no_ref_lpb"></span></h6>
-                        <label id="lbl_status_simpan" class="align-right"></label>
-                    </div>
+                <div class="row div_form_2">
+                    <div class="col-12">
+                        <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
+                            <div class="row ml-1 mr-1 justify-content-between">
+                                <h6 id="lbl_lpb_status" name="lbl_lpb_status">
+                                    <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
+                                </h6>
+                                <h6>
+                                    <button class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb" onclick="cetak_lpb()"></button>
+                                </h6>
+                            </div>
+                            <input type="hidden" id="hidden_no_lpb">
+                            <input type="hidden" id="hidden_no_ref_lpb">
+                        </div>
+                        <div class="row" style="margin-left:4px;">
+                            <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
+                            <h6><span id="no_ref_lpb"></span></h6>
+                            <label id="lbl_status_simpan" class="align-right"></label>
+                        </div>
 
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
-                            <thead>
-                                <tr>
-                                    <!-- <th width="3%">#</th> -->
-                                    <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan / Grup</th>
-                                    <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
-                                    <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
-                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
-                                    <th width="3%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Aksi</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_rincian" name="tbody_rincian">
-                                <!-- <tr id="tr_1">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="3%">#</th> -->
+                                        <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan / Grup</th>
+                                        <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
+                                        <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
+                                        <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
+                                        <th width="3%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_rincian" name="tbody_rincian">
+                                    <!-- <tr id="tr_1">
                                     <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                         <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
                                         <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br /> -->
-                                <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
-                                <!-- </td>
+                                    <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
+                                    <!-- </td>
                                     <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                         <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                             <div class="row">
@@ -172,8 +179,9 @@
                                         </td>
                                     </form>
                                 </tr> -->
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -443,6 +451,7 @@
     }
 
     $(document).ready(function() {
+        $('#a_print_lpb').hide();
         $('#showCamera').modal('show');
         $('#preview').show();
         $('#multiple').css('display', 'block');
@@ -689,8 +698,10 @@
 
                 $('#hidden_no_lpb').val(data.nolpb);
                 $('#hidden_no_ref_lpb').val(data.noreflpb);
+                $('#hidden_id_lpb').val(data.id_lpb);
                 $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
                 // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+                $('#a_print_lpb').show();
 
             }
         });
@@ -834,8 +845,6 @@
     }
 
     function cek_qty(n) {
-
-
         $('#txt_qty_' + n).keyup(function() {
             var qty = $('#txt_qty_' + n).val();
             var hidden_qty = $('#sisa_qty_' + n).text();
@@ -846,5 +855,17 @@
                 $('#txt_qty_' + n).val('');
             }
         });
+    }
+
+    function cetak_lpb() {
+
+        var no_lpb = $('#hidden_no_lpb').val();
+        var id = $('#hidden_id_lpb').val();
+        console.log(no_lpb);
+        console.log(id);
+
+        window.open("<?= base_url('Lpb/cetak/') ?>" + no_lpb + '/' + id, '_blank');
+
+        $('.div_form_2').css('pointer-events', 'none');
     }
 </script>

@@ -63,9 +63,7 @@ class Lpb extends CI_Controller
                         </button>
                         <a href="' . site_url('lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
-            $row[] = $field->ttg;
             $row[] = $field->noref;
-            $row[] = $field->nopo;
             $row[] = $field->refpo;
             $row[] = $field->nama_supply;
             $row[] = $field->ket;
@@ -422,9 +420,13 @@ class Lpb extends CI_Controller
 
         // $result_stok_awal =  FALSE;
 
-        $query_id = "SELECT MAX(id) as id_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
+        $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_item_lpb = $generate_id->id_lpb;
+        $id_lpb = $generate_id->id_lpb;
+
+        $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_item_lpb = $generate_id->id_item_lpb;
 
         $data_return = [
             // 'result_stok_awal' => $result_stok_awal,
@@ -433,6 +435,7 @@ class Lpb extends CI_Controller
             'data' => $data,
             'data2' => $data2,
             'nolpb' => $no_lpb,
+            'id_lpb' => $id_lpb,
             'id_item_lpb' => $id_item_lpb,
             'noreflpb' => $no_ref_lpb
         ];

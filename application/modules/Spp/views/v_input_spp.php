@@ -842,9 +842,9 @@
     function cetak_spp() {
 
         var id = $('#hidden_id_ppo').val();
-        var nopo = $('#hidden_no_spp').val();
+        var noppo = $('#hidden_no_spp').val();
 
-        window.open("<?= base_url('Spp/cetak/') ?>" + nopo + '/' + id, '_blank');
+        window.open("<?= base_url('Spp/cetak/') ?>" + noppo + '/' + id, '_blank');
 
         // // Spp/cetak/nopo/id
         // window.open("cetak/" + nopo + "/" + id, '_blank');
