@@ -1,3 +1,6 @@
+<?php
+date_default_timezone_set('Asia/Jakarta');
+?>
 <div class="container-fluid">
     <!-- start row-->
     <div class="row justify-content-center">
@@ -70,7 +73,7 @@
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
-                                <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
+                                <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="datetime" value="<?= date('Y-m-d H:i:s') ?>">
                             </div>
                         </div>
                         <div class="form-group row">

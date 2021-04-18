@@ -67,6 +67,7 @@ class Lpb extends CI_Controller
             $row[] = $field->refpo;
             $row[] = $field->nama_supply;
             $row[] = $field->ket;
+            $row[] = $field->tgl;
             $row[] = $field->tglinput;
             $row[] = $field->USER;
 
@@ -271,7 +272,7 @@ class Lpb extends CI_Controller
             $mutasi = "0";
         }
 
-        $tgl_terima = date("Y-m-d", strtotime($this->input->post('txt_tgl_terima')));
+        $tgl_terima = date("Y-m-d H:i:s", strtotime($this->input->post('txt_tgl_terima')));
 
         $txttgl = date("Ymd", strtotime($this->input->post('txt_tgl_terima')));
         $thn = date("Y", strtotime($this->input->post('txt_tgl_terima')));

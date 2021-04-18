@@ -18,8 +18,9 @@ class M_lpb extends CI_Model
 
     private function _get_datatables_query()
     {
-
+        $role_user = $this->session->userdata('user');
         $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_pt->where('user', $role_user);
         // $this->db_logistik_pt->select('id', 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli');
         // $this->db_logistik_pt->from('po');
         // $this->db_logistik_pt->order_by('id', 'desc');
