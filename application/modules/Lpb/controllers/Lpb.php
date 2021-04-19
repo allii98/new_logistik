@@ -67,7 +67,7 @@ class Lpb extends CI_Controller
             $row[] = $field->refpo;
             $row[] = $field->nama_supply;
             $row[] = $field->ket;
-            $row[] = $field->tgl;
+            $row[] = date("Y-m-d", strtotime($field->tgl));
             $row[] = $field->tglinput;
             $row[] = $field->USER;
 

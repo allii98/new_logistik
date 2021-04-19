@@ -13,6 +13,22 @@
                     </div>
 
                     <div class="row div_form_1">
+                        <div class="col-lg-2 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Tgl Referensi*</font>
+                                </label>
+                                <input type="text" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Tgl terima*</font>
+                                </label>
+                                <input type="date" class="form-control" id="txt_tgl_terima">
+                            </div>
+                        </div>
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">
@@ -91,22 +107,6 @@
                                     }
                                     ?>
                                 </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Tgl Referensi*</font>
-                                </label>
-                                <input type="text" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Tgl terima*</font>
-                                </label>
-                                <input type="date" class="form-control" id="txt_tgl_terima">
                             </div>
                         </div>
                         <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" placeholder="Tanggal" readonly>

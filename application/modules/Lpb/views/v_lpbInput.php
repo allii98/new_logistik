@@ -16,6 +16,13 @@ date_default_timezone_set('Asia/Jakarta');
                 <div class="row div_form_1">
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
+                            <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
+                            </label>
+                            <div class="col-md-8">
+                                <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
                             <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
                             </label>
                             <div class="col-lg-7 col-11 row">
@@ -27,31 +34,24 @@ date_default_timezone_set('Asia/Jakarta');
                             </div>
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
                         </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
-                            </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_no_po" name="txt_no_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO<span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_tgl_po" name="txt_tgl_po" class="form-control bg-light" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
+                            <div class="col-md-8">
+                                <input id="txt_no_po" name="txt_no_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier<span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-md-8 row">
-                                <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly>
-                                <input type="hidden" id="txt_kd_supplier">
-                                <input type="hidden" id="txt_supplier">
+                            <div class="col-md-8">
+                                <input id="txt_tgl_po" name="txt_tgl_po" class="form-control bg-light" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
                             </div>
                         </div>
+
                     </div>
                     <div class="col-md-3">
                         <!-- <div class="form-group row mb-1">
@@ -69,11 +69,14 @@ date_default_timezone_set('Asia/Jakarta');
                                 </select>
                             </div>
                         </div> -->
+
                         <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
+                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
-                                <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="datetime" value="<?= date('Y-m-d H:i:s') ?>">
+                                <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly>
+                                <input type="hidden" id="txt_kd_supplier">
+                                <input type="hidden" id="txt_supplier">
                             </div>
                         </div>
                         <div class="form-group row">
