@@ -751,6 +751,8 @@ class Lpb extends CI_Controller
         $data['stokmasuk'] = $this->db_logistik_pt->get_where('stokmasuk', array('id' => $id, 'ttgtxt' => $no_lpb))->row();
         $data['masukitem'] = $this->db_logistik_pt->get_where('masukitem', array('ttgtxt' => $no_lpb, 'noref' => $data['stokmasuk']->noref))->result();
 
+        $data['urut'] = $this->M_lpb->urut_cetak($no_lpb);
+
         $noref = $data['stokmasuk']->noref;
         $this->qrcode($no_lpb, $id, $noref);
         // $data['po'] = $this->db_logistik_pt->get_where('po', array('nopotxt' => $data['stokmasuk']->nopotxt, 'noreftxt' => $data['stokmasuk']->refpo ))->row();
@@ -773,16 +775,16 @@ class Lpb extends CI_Controller
         $lokasibuatlpb = substr($noref, 0, 3);
         switch ($lokasibuatlpb) {
             case 'LPB': // HO
-                $lokasilpb = "HO";
+                $data['lokasilpb'] = "HO";
                 break;
             case 'ROM': // RO
-                $lokasilpb = "RO";
+                $data['lokasilpb'] = "RO";
                 break;
             case 'FAC': // PKS
-                $lokasilpb = "PKS";
+                $data['lokasilpb'] = "PKS";
                 break;
             case 'EST': // SITE
-                $lokasilpb = "SITE";
+                $data['lokasilpb'] = "SITE";
                 break;
             default:
                 break;
@@ -793,7 +795,7 @@ class Lpb extends CI_Controller
                             <table width="100%" border="0" align="center">
                                 <tr>
                                     <td rowspan="5" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
-                                    <td rowspan="5" align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $lokasilpb . ')</td>
+                                    <td rowspan="5" align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $data['stokmasuk']->lokasi . ')</td>
                                     <td>Putih</td>
                                     <td>:</td>
                                     <td>Finance HO</td>

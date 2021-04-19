@@ -376,6 +376,18 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
         return $this->db_logistik_pt->update('item_po');
     }
+
+    public function urut_cetak($no_lpb)
+    {
+        $this->db_logistik_pt->set('cetak', 'cetak+1', FALSE);
+        $this->db_logistik_pt->where('ttg', $no_lpb);
+        $this->db_logistik_pt->update('stokmasuk');
+
+        $this->db_logistik_pt->select('cetak');
+        $this->db_logistik_pt->from('stokmasuk');
+        $this->db_logistik_pt->where('ttg', $no_lpb);
+        return $this->db_logistik_pt->get()->row_array();
+    }
 }
 
 /* End of file ModelName.php */
