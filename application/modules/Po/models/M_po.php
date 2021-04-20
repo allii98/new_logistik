@@ -20,7 +20,7 @@ class M_po extends CI_Model
         // $Value = ;
         $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
         $this->db_logistik_pt->from('item_ppo');
-        // $this->db_logistik_pt->where('po', 0);
+        $this->db_logistik_pt->where('po', 0);
         $this->db_logistik_pt->where('status2', 1);
         $this->db_logistik_pt->order_by('id', 'desc');
 
@@ -75,6 +75,19 @@ class M_po extends CI_Model
         return $this->db_logistik_pt->count_all_results();
     }
 
+    public function updatePPO2($noppo)
+    {
+        $this->db_logistik_pt->set('po', 1);
+        $this->db_logistik_pt->where(['noref' => $noppo]);
+        $this->db_logistik_pt->update('ppo');
+    }
+    public function updatePPO3($noppo)
+    {
+        $this->db_logistik_pt->set('po', 0);
+        $this->db_logistik_pt->where(['noref' => $noppo]);
+        $this->db_logistik_pt->update('ppo');
+    }
+
     public function get_detail_ppo($no_spp, $no_ref_spp)
     {
         $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, tglref, tglppo, tgltrm, kodedept, namadept, ket, pt, kodept, lokasi, status, status2, po, jenis FROM ppo WHERE  noppo = '$no_spp' AND noreftxt = '$no_ref_spp' ORDER BY id DESC";
@@ -116,7 +129,7 @@ class M_po extends CI_Model
 
     public function get_id()
     {
-        $query = "SELECT * FROM ppo p LEFT JOIN item_ppo i ON p.noppo = i.noppo WHERE p.id = '" . $this->input->post('id') . "'";
+        $query = "SELECT * FROM ppo p LEFT JOIN item_ppo i ON p.noppo = i.noppo WHERE p.id = '" . $this->input->post('id') . "' AND i.po = '0'";
         $data = $this->db->query($query)->result_array();
         return $data;
     }

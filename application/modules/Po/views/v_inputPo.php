@@ -383,7 +383,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required />
                                                 </td>
                                                 <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')">
+                                                    <input type="text" class="form-control bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
                                                     <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="julah('1')" />
                                                     <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                 </td>
@@ -451,11 +451,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     case 'PKS':
                     ?>
                         <div class="x_content mb-0 div_form_3">
-
-
-                            <label id="lbl_spp_status" name="lbl_spp_status">
-                                <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
-                            </label>
+                            <div class="row justify-content-center">
+                                <div class="col-6">
+                                    <label id="lbl_spp_status" name="lbl_spp_status">
+                                        <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
+                                    </label>
+                                </div>
+                                <div class="col-6">
+                                    <div style="text-align: right;">
+                                        <a href="#" style="display:none;" onclick="cetak()" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
+                                            <i class="fas fa-print">&nbsp;Print</i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
                             <h6 id="h4_no_po" name="h4_no_po"></h6>
                             <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                             <input type="hidden" id="hidden_no_po" name="hidden_no_po">
@@ -466,26 +475,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <table id="tableItemPO" class="table table-striped table-bordered table-in">
                                     <thead>
                                         <tr>
-                                            <?php
-                                            switch ($sesi_sl) {
-                                                case 'HO':
-                                            ?>
-                                                    <th>#</th>
-                                                    <th width="250px">
-                                                        <font face="Verdana" size="2.5">SPP</font>
-                                                    </th>
-                                                <?php
-                                                    break;
-                                                case 'RO':
-                                                case 'SITE':
-                                                case 'PKS':
-                                                ?>
-                                            <?php
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-                                            ?>
+
 
                                             <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
@@ -1087,7 +1077,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
-            '<input type="hidden" class="form-control" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
+            '<input type="hidden" class="form-control bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
             '<input type="hidden" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
             '</td>';
@@ -1202,7 +1192,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         '</td>';
         var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
-            '<span id="nama_brg_' + n + '"></span><span> | </span><span id="kode_brg_' + n + '" ></span>' +
+            '<span id="nama_brg_' + n + '"></span><br><span id="kode_brg_' + n + '" ></span>' +
 
             '<input type="hidden" class="form-control" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
@@ -1214,7 +1204,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="text" class="form-control bg-light" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" readonly>' +
             '<input type="hidden" class="form-control" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
             '<input type="hidden" class="form-control" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
 
@@ -1662,6 +1652,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                 hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
             });
+
+            noppo = $('#noppo' + id).val();
+
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('Po/save') ?>",
@@ -1730,6 +1723,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             // reload: false
                         });
 
+                        sum_qty(noppo, id);
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
@@ -1808,7 +1802,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                 hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                 id_item: $('#id_item_' + id).val(),
-            })
+            });
+
+            noppo = $('#noppo' + id).val();
 
             $.ajax({
                 type: "POST",
@@ -1877,6 +1873,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             // reload: false
                         });
 
+                        sum_qty(noppo, id);
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
@@ -1915,6 +1912,22 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         }
 
+    }
+
+    function sum_qty(noppo, id) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/sum_ppo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'noppo': noppo,
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
     }
 
     function update(id) {
@@ -2110,8 +2123,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function ubah(id) {
-        $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
-        $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
+        // $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
+        // $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
+        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
+        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+
         $('#btn_ubah_' + id).hide();
         $('#btn_hapus_' + id).hide();
         $('#btn_update_' + id).show();

@@ -317,6 +317,23 @@ class Po extends CI_Controller
         echo json_encode($data);
     }
 
+    function sum_ppo()
+    {
+        $noppo = $this->input->post('noppo');
+        $kodebar = $this->input->post('kodebar');
+
+        $queryPPO = "SELECT noppo, kodebar, qty, qty2 FROM item_ppo WHERE noppo = '$noppo' ";
+        $data_qty_ppo = $this->db_logistik_pt->query($queryPPO)->row();
+
+        $sisa_qty_ppo  =  number_format($data_qty_ppo->qty - $data_qty_ppo->qty2, 0);
+
+        if ($sisa_qty_ppo == 0) {
+            $this->M_po->updatePPO2($noppo);
+        } else {
+            $this->M_po->updatePPO3($noppo);
+        }
+    }
+
     function total_bayar()
     {
         $no_po = $this->input->post('no_po');
@@ -593,43 +610,43 @@ class Po extends CI_Controller
         ];
 
         //update(dengan cara qty2+qty inputan) where id_ppo = id_ppo yang di dapat
-        // $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        // $d = $this->db->query($query)->row();
-        // $qtyy = $d->qty;
-        // $qty2 = $d->qty2;
-        // if ($qty2 == null) {
-        //     $tmbhQTY = $this->input->post('txt_qty');
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'qty2' => $tmbhQTY
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // } else {
-        //     $a = $this->input->post('txt_qty');
-        //     $qty = $qty2 + $a;
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'qty2' => $qty,
+        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        $d = $this->db->query($query)->row();
+        $qtyy = $d->qty;
+        $qty2 = $d->qty2;
+        if ($qty2 == null) {
+            $tmbhQTY = $this->input->post('txt_qty');
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
+                'qty2' => $tmbhQTY
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+        } else {
+            $a = $this->input->post('txt_qty');
+            $qty = $qty2 + $a;
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
+                'qty2' => $qty,
 
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // }
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+        }
 
 
-        // $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        // $ambil = $this->db->query($chek)->row();
-        // $qtyy = $ambil->qty;
-        // $qtyy2 = $ambil->qty2;
+        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
+        $ambil = $this->db->query($chek)->row();
+        $qtyy = $ambil->qty;
+        $qtyy2 = $ambil->qty2;
 
-        // if ($qtyy == $qtyy2) {
+        if ($qtyy == $qtyy2) {
 
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'po' => 1
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        //     // $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // }
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
+                'po' => 1
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+            // $this->M_po->updatePPO($id_ppo, $data_ppo);
+        }
 
         //select item_ppo where id_ppo = id_ppo yang di dapat
 
