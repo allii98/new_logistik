@@ -172,8 +172,8 @@ class Spp extends CI_Controller
             'noppo' => $nospp,
             'noppotxt' => $nospp,
             'jenis' => $this->input->post('cmb_jenis_permohonan'),
-            'tglppo' => date("Y-m-d H:i:s"),
-            'tglppotxt' => date("Ymd"),
+            'tglppo' => $this->input->post('txt_tgl_spp'),
+            'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
             'tgltrm' => $tgl_trm . date(" H:i:s"),
             'kodedept' => $this->input->post('txt_kode_departemen'),
             'namadept' => $data['nama_dept']['nama'],
@@ -204,8 +204,8 @@ class Spp extends CI_Controller
         $data_item_ppo = [
             'noppo' => $nospp,
             'noppotxt' => $nospp,
-            'tglppo' => date("Y-m-d H:i:s"),
-            'tglppotxt' => date("Ymd"),
+            'tglppo' => $this->input->post('txt_tgl_spp'),
+            'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
             'kodedept' => $this->input->post('txt_kode_departemen'),
             'namadept' => $data['nama_dept']['nama'],
             'noref' => $nospp,
@@ -402,10 +402,9 @@ class Spp extends CI_Controller
             $row = array();
             $row[] = $no;
             $row[] = $aks;
-            $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
-            $row[] = $field->tglref;
-            $row[] = $field->tgltrm;
+            $row[] = date('Y-m-d', strtotime($field->tglref));
+            $row[] = date('Y-m-d', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
@@ -446,10 +445,9 @@ class Spp extends CI_Controller
                         data-noppotxt="' . $field->noppotxt . '"
                         data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Approve
                         </button>';
-            $row[] = $field->noppotxt;
             $row[] = $field->noreftxt;
-            $row[] = $field->tglref;
-            $row[] = $field->tgltrm;
+            $row[] = date('Y-m-d', strtotime($field->tglref));
+            $row[] = date('Y-m-d', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;

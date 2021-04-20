@@ -24,10 +24,7 @@
                                         <font face="Verdana" size="2.5">#</font>
                                     </th>
                                     <th style="padding: 0.4em;">
-                                        <font face="Verdana" size="2.5">No. SPP</font>
-                                    </th>
-                                    <th style="padding: 0.4em;">
-                                        <font face="Verdana" size="2.5">No. Ref</font>
+                                        <font face="Verdana" size="2.5">No. Ref. SPP</font>
                                     </th>
                                     <th style="padding: 0.4em;">
                                         <font face="Verdana" size="2.5">Tgl. Ref</font>

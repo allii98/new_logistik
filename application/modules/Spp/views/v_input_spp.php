@@ -11,14 +11,15 @@
                         </p>
                         <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelSpp" onclick="hapusSpp()" disabled>Batalkan SPP</button>
                     </div>
-
                     <div class="row div_form_1">
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Tgl Referensi*</font>
-                                </label>
-                                <input type="text" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
+                                <div class="form-group">
+                                    <label for="example-select">
+                                        <font face="Verdana" size="2.5">Tgl SPP*</font>
+                                    </label>
+                                    <input type="date" class="form-control" id="txt_tgl_spp" value="<?= date('Y-m-d'); ?>">
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
@@ -29,22 +30,15 @@
                                 <input type="date" class="form-control" id="txt_tgl_terima">
                             </div>
                         </div>
-                        <div class="col-lg-1 col-12">
+                        <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">
-                                    <font face="Verdana" size="2.5">Devisi*</font>
+                                    <font face="Verdana" size="2.5">Tgl Referensi*</font>
                                 </label>
-                                <select class="form-control" id="devisi">
-                                    <option value="" selected disabled>Pilih</option>
-                                    <?php
-                                    foreach ($devisi as $d) : { ?>
-                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
-                                    <?php }
-                                    endforeach;
-                                    ?>
-                                </select>
+                                <input type="text" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
                             </div>
                         </div>
+
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">
@@ -136,7 +130,7 @@
                                 <input type="text" id="txt_kode_departemen" class="form-control bg-light" readonly>
                             </div>
                         </div>
-                        <div class="col-lg-2 col-12">
+                        <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">
                                     <font face="Verdana" size="2.5">Keterangan</font>
@@ -394,22 +388,22 @@
     function saveRinciClick(n) {
 
         console.log(n);
-        var dev = $('#devisi').val();
+        var tgl = $('#txt_tgl_spp').val();
+        var tgl_trm = $('#txt_tgl_terima').val();
         var jp = $('#cmb_jenis_permohonan').val();
         var alok = $('#cmb_alokasi').val();
-        var tgl_trm = $('#txt_tgl_terima').val();
         var dept = $('#cmb_departemen').val();
         var nakobar = $('#nakobar_' + n).val();
         var qty = $('#txt_qty_' + n).val();
 
-        if (!dev) {
-            toast('Devisi');
+        if (!tgl) {
+            toast('Tgl SPP');
+        } else if (!tgl_trm) {
+            toast('Tgl Terima');
         } else if (!jp) {
             toast('Jenis SPP');
         } else if (!alok) {
             toast('Alokasi');
-        } else if (!tgl_trm) {
-            toast('Tgl Terima');
         } else if (!dept) {
             toast('Department');
         } else if (!nakobar) {
@@ -452,6 +446,7 @@
             },
 
             data: {
+                txt_tgl_spp: $('#txt_tgl_spp').val(),
                 cmb_alokasi: $('#cmb_alokasi').val(),
                 hidden_no_spp: $('#hidden_no_spp').val(),
                 txt_tanggal: $('#txt_tanggal').val(),
@@ -467,6 +462,7 @@
                 txt_qty: $('#txt_qty_' + n).val(),
                 hidden_stok: $('#hidden_stok_' + n).val(),
                 txt_keterangan_rinci: $('#txt_keterangan_rinci_' + n).val()
+
             },
 
             success: function(data) {
@@ -494,8 +490,8 @@
                     $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
                     $('#hidden_no_ref_ppo').val(data.noref);
 
-                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
-                    $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
+                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
+                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
 
                     $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
                     $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');

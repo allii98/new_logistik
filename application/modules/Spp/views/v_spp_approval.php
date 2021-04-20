@@ -23,10 +23,7 @@
                                     <font face="Verdana" size="2.5">Approval</font>
                                 </th>
                                 <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">No. SPP</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">No. Ref</font>
+                                    <font face="Verdana" size="2.5">No. Ref. SPP</font>
                                 </th>
                                 <th style="padding: 0.4em;">
                                     <font face="Verdana" size="2.5">Tgl. Ref</font>
@@ -75,6 +72,7 @@
                 </button>
             </div>
             <div class="modal-body">
+                <h6 id="h4_no_ref_spp" class="mt-0"></h6>
                 <div class="table-responsive">
                     <table id="detail_spp" class="table-sm table-striped table-bordered">
                         <thead>
@@ -181,6 +179,8 @@
             success: function(data) {
 
                 console.log(data);
+                $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data[0].noreftxt);
+
                 var html = '';
                 var i;
                 for (i = 0; i < data.length; i++) {
