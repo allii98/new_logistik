@@ -10,7 +10,6 @@ class Spp extends CI_Controller
         $this->load->model('M_spp');
         $this->load->model('M_data_spp');
         $this->load->model('M_data_spp_approval');
-        $this->load->model('M_approval_spp');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -180,13 +179,13 @@ class Spp extends CI_Controller
             'namadept' => $data['nama_dept']['nama'],
             'noref' => $nospp,
             'noreftxt' => $noref,
-            'tglref' => $periode,
+            'tglref' => date("Y-m-d H:i:s"),
             'ket' => $this->input->post('txt_keterangan'),
             'no_acc' => 0,
             'ket_acc' => "",
             'pt' => $this->session->userdata('pt'),
             'kodept' => $this->session->userdata('kode_pt'),
-            'periode' => $periode,
+            'periode' => $periode . date(" H:i:s"),
             'periodetxt' => $periodetxt,
             'thn' => $thn,
             'tglisi' => date("Y-m-d H:i:s"),
@@ -222,8 +221,8 @@ class Spp extends CI_Controller
             'jumharga' => "0",
             'kodept' => $this->session->userdata('kode_pt'),
             'namapt' => $this->session->userdata('pt'),
-            'periode' => $periode,
-            'periodetxt' => $periodetxt,
+            'periode' => $periode . date(" H:i:s"),
+            'periodetxt' => $periode . date(" H:i:s"),
             'thn' => $thn,
             'ket' => $this->input->post('txt_keterangan_rinci'),
             'tglisi' => date("Y-m-d H:i:s"),
@@ -444,7 +443,7 @@ class Spp extends CI_Controller
             $row[] = $no;
             $row[] = '<button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval"
                         data-noppotxt="' . $field->noppotxt . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_approval(' . $field->id . ')">Approve
+                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Approve
                         </button>';
             $row[] = $field->noreftxt;
             $row[] = date('Y-m-d', strtotime($field->tglref));
@@ -555,46 +554,6 @@ class Spp extends CI_Controller
 
         $mpdf->WriteHTML($html);
         $mpdf->Output();
-    }
-
-    function get_detail_approval()
-    {
-        $id_ppo = $this->input->post('id_ppo');
-        $noreftxt = $this->M_approval_spp->get_noref($id_ppo);
-        $this->M_approval_spp->getWhere($noreftxt['noreftxt']);
-        $list = $this->M_approval_spp->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $d) {
-            if ($d->status2 == "1") {
-                $status = "<span style='color: green'><b>DISETUJUI<br>" . $d->TGL_APPROVE . "</b></span>";
-            } else {
-                $status = "DALAM PROSES";
-            }
-            $no++;
-            $row = array();
-            $row[] = $no . ".";
-            $row[] = $d->id;
-            // $row[] = $d->noreftxt;
-            $row[] = $d->kodebar;
-            $row[] = $d->nabar;
-            $row[] = $d->sat;
-            $row[] = $d->qty;
-            $row[] = $d->STOK;
-            $row[] = $d->ket;
-            $row[] = '<button class="btn btn-xs btn-primary" type="button" disabled>Qty</button>';
-            $row[] = $status;
-
-            $data[] = $row;
-        }
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_approval_spp->count_all(),
-            "recordsFiltered" => $this->M_approval_spp->count_filtered(),
-            "data" => $data,
-        );
-        // output to json format
-        echo json_encode($output);
     }
 }
 

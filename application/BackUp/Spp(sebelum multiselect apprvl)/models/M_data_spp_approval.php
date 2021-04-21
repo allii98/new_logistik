@@ -87,68 +87,58 @@ class M_data_spp_approval extends CI_Model
     public function approval_spp1($id)
     {
         $this->db_logistik_pt->select('*');
-        $this->db_logistik_pt->where('no_id_item_ppo', $id);
-        $this->db_logistik_pt->from('approval_spp');
-        $cek = $this->db_logistik_pt->get()->num_rows();
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where('id', $id);
+        $data_item_ppo = $this->db_logistik_pt->get()->row_array();
 
-        if ($cek >= 1) {
-            $cek_r = 0;
-            return $cek_r;
-        } else {
-            $this->db_logistik_pt->select('*');
-            $this->db_logistik_pt->from('item_ppo');
-            $this->db_logistik_pt->where('id', $id);
-            $data_item_ppo = $this->db_logistik_pt->get()->row_array();
+        $data_insert = [
+            'no_id_item_ppo' => $id,
+            'noppotxt' => $data_item_ppo['noppotxt'],
+            'tglppotxt' => $data_item_ppo['tglppotxt'],
+            'noreftxt' => $data_item_ppo['noreftxt'],
+            'kodebartxt' => $data_item_ppo['kodebartxt'],
+            'nabar' => $data_item_ppo['nabar'],
+            'sat' => $data_item_ppo['sat'],
+            'qty' => $data_item_ppo['qty'],
+            'stok' => $data_item_ppo['STOK'],
+            'status' => $data_item_ppo['status'],
+            'po' => $data_item_ppo['po'],
+            'kodedept' => $data_item_ppo['kodedept'],
+            'namadept' => $data_item_ppo['namadept'],
+            'dept_head1' => '1',
+            'tgl_dept_head1' => date("Y-m-d H:i:s")
+        ];
 
-            $data_insert = [
-                'no_id_item_ppo' => $id,
-                'noppotxt' => $data_item_ppo['noppotxt'],
-                'tglppotxt' => $data_item_ppo['tglppotxt'],
-                'noreftxt' => $data_item_ppo['noreftxt'],
-                'kodebartxt' => $data_item_ppo['kodebartxt'],
-                'nabar' => $data_item_ppo['nabar'],
-                'sat' => $data_item_ppo['sat'],
-                'qty' => $data_item_ppo['qty'],
-                'stok' => $data_item_ppo['STOK'],
-                'status' => $data_item_ppo['status'],
-                'po' => $data_item_ppo['po'],
-                'kodedept' => $data_item_ppo['kodedept'],
-                'namadept' => $data_item_ppo['namadept'],
-                'dept_head1' => '1',
-                'tgl_dept_head1' => date("Y-m-d H:i:s")
-            ];
+        $data_update_item_ppo = [
+            'status' => 'DISETUJUI',
+            'status2' => '1',
+            'TGL_APPROVE' => date("Y-m-d H:i:s")
+        ];
 
-            $data_update_item_ppo = [
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->update('item_ppo', $data_update_item_ppo);
+
+        $this->db_logistik_pt->select_sum('status2', 'sum_status2');
+        $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
+        $this->db_logistik_pt->from('item_ppo');
+        $return_sum = $this->db_logistik_pt->get()->row();
+
+        $this->db_logistik_pt->select('status2');
+        $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
+        $this->db_logistik_pt->from('item_ppo');
+        $return_count = $this->db_logistik_pt->count_all_results();
+
+        if ($return_sum->sum_status2 == $return_count) {
+            $data_sum_count = [
                 'status' => 'DISETUJUI',
                 'status2' => '1',
                 'TGL_APPROVE' => date("Y-m-d H:i:s")
             ];
 
-            $this->db_logistik_pt->where('id', $id);
-            $this->db_logistik_pt->update('item_ppo', $data_update_item_ppo);
-
-            $this->db_logistik_pt->select_sum('status2', 'sum_status2');
             $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
-            $this->db_logistik_pt->from('item_ppo');
-            $return_sum = $this->db_logistik_pt->get()->row();
-
-            $this->db_logistik_pt->select('status2');
-            $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
-            $this->db_logistik_pt->from('item_ppo');
-            $return_count = $this->db_logistik_pt->count_all_results();
-
-            if ($return_sum->sum_status2 == $return_count) {
-                $data_sum_count = [
-                    'status' => 'DISETUJUI',
-                    'status2' => '1',
-                    'TGL_APPROVE' => date("Y-m-d H:i:s")
-                ];
-
-                $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
-                $this->db_logistik_pt->update('ppo', $data_sum_count);
-            }
-
-            return $this->db_logistik_pt->insert('approval_spp', $data_insert);
+            $this->db_logistik_pt->update('ppo', $data_sum_count);
         }
+
+        return $this->db_logistik_pt->insert('approval_spp', $data_insert);
     }
 }

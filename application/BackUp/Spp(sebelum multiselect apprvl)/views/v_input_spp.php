@@ -35,7 +35,7 @@
                                 <label for="example-select">
                                     <font face="Verdana" size="2.5">Tgl Referensi*</font>
                                 </label>
-                                <input type="date" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('Y-m-d'); ?>" readonly>
+                                <input type="text" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('d/m/Y'); ?>" readonly>
                             </div>
                         </div>
 
