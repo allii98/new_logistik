@@ -63,64 +63,6 @@
 
 </div> <!-- container -->
 
-<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalDetailSppApproval">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Detail SPP</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <h6 id="h4_no_ref_spp" class="mt-0"></h6>
-                <div class="table-responsive">
-                    <table id="detail_spp" class="table-sm table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <th style="margin-top: 10px;">
-                                    <font face="Verdana" size="2.5">No</font>
-                                </th>
-                                <th style="padding-left: 0.4em;">
-                                    <font face="Verdana" size="2.5">Kode Barang</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Nama Barang</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Sat</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Qty</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Stok</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Ket</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Status SPP</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Koreksi</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Approval</font>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody id="data_detail_spp">
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp-approval">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
@@ -357,17 +299,6 @@
                     "aTargets": [1]
                 }, ]
             });
-
-            // $(document).on('click', '#pilih', function() {
-            //     var id = $(this).data('id');
-            //     // console.log(id);
-            //     var kode = $(this).data('kode');
-            //     var supplier = $(this).data('supplier');
-            //     $('#id-supplier').val(id);
-            //     $('#kd_supplier').val(kode);
-            //     $('#supplier').val(supplier);
-            //     $("#modal-supllier").modal('hide');
-            // });
         });
     }
 

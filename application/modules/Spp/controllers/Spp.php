@@ -176,8 +176,9 @@ class Spp extends CI_Controller
             'tglppo' => $this->input->post('txt_tgl_spp'),
             'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
             'tgltrm' => $tgl_trm . date(" H:i:s"),
-            'kodedept' => $this->input->post('txt_kode_departemen'),
+            'kodedept' => $this->input->post('cmb_departemen'),
             'namadept' => $data['nama_dept']['nama'],
+            'devisi' => $this->input->post('devisi'),
             'noref' => $nospp,
             'noreftxt' => $noref,
             'tglref' => $periode,
@@ -207,7 +208,7 @@ class Spp extends CI_Controller
             'noppotxt' => $nospp,
             'tglppo' => $this->input->post('txt_tgl_spp'),
             'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
-            'kodedept' => $this->input->post('txt_kode_departemen'),
+            'kodedept' => $this->input->post('cmb_departemen'),
             'namadept' => $data['nama_dept']['nama'],
             'noref' => $nospp,
             'noreftxt' => $noref,
@@ -535,7 +536,7 @@ class Spp extends CI_Controller
         // 			'margin_footer' => 0,
         // 		]);
 
-        $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3>');
+        $mpdf->SetHTMLHeader('<h3>' . $data['ppo']->devisi . '</h3>');
         // $mpdf->SetHTMLHeader('
         //                     <table width="100%" border="0" align="center">
         //                         <tr>

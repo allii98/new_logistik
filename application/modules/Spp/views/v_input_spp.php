@@ -104,7 +104,7 @@
                             </div>
                         </div>
                         <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" placeholder="Tanggal" readonly>
-                        <div class="col-lg-2 col-12">
+                        <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">
                                     <font face="Verdana" size="2.5">Department*</font>
@@ -114,7 +114,7 @@
                                     <?php
                                     foreach ($dept as $d) : {
                                     ?>
-                                            <option value="<?= $d['kode']; ?>"><?= $d['nama']; ?></option>
+                                            <option value="<?= $d['kode']; ?>"><?= $d['kode'] . ' - ' . $d['nama']; ?></option>
                                     <?php
                                         }
                                     endforeach;
@@ -125,12 +125,20 @@
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">
-                                    <font face="Verdana" size="2.5">Kode</font>
+                                    <font face="Verdana" size="2.5">Devisi*</font>
                                 </label>
-                                <input type="text" id="txt_kode_departemen" class="form-control bg-light" readonly>
+                                <select class="form-control" id="devisi">
+                                    <option value="" selected disabled>Pilih</option>
+                                    <?php
+                                    foreach ($devisi as $d) : { ?>
+                                            <option value="<?= $d['PT'] ?>"><?= $d['PT'] ?></option>
+                                    <?php }
+                                    endforeach;
+                                    ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="col-lg-1 col-12">
+                        <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">
                                     <font face="Verdana" size="2.5">Keterangan</font>
@@ -140,6 +148,7 @@
                         </div>
                         <input type="hidden" id="hidden_id_ppo">
                     </div>
+                    <hr class="mt-0 mb-2">
                     <!-- end row-->
                     <div class="row div_form_2">
                         <div class="col-sm-12">
@@ -393,6 +402,7 @@
         var jp = $('#cmb_jenis_permohonan').val();
         var alok = $('#cmb_alokasi').val();
         var dept = $('#cmb_departemen').val();
+        var dev = $('#devisi').val();
         var nakobar = $('#nakobar_' + n).val();
         var qty = $('#txt_qty_' + n).val();
 
@@ -406,6 +416,8 @@
             toast('Alokasi');
         } else if (!dept) {
             toast('Department');
+        } else if (!dev) {
+            toast('Devisi');
         } else if (!nakobar) {
             toast('Nama & Kode Barang');
         } else if (!qty) {
@@ -456,13 +468,13 @@
                 cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
                 txt_kode_departemen: $('#txt_kode_departemen').val(),
                 cmb_departemen: $('#cmb_departemen').val(),
+                devisi: $('#devisi').val(),
                 hidden_kode_brg: $('#hidden_kode_brg_' + n).val(),
                 hidden_nama_brg: $('#hidden_nama_brg_' + n).val(),
                 hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
                 txt_qty: $('#txt_qty_' + n).val(),
                 hidden_stok: $('#hidden_stok_' + n).val(),
                 txt_keterangan_rinci: $('#txt_keterangan_rinci_' + n).val()
-
             },
 
             success: function(data) {
@@ -490,8 +502,8 @@
                     $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
                     $('#hidden_no_ref_ppo').val(data.noref);
 
-                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').addClass('bg-light');
-                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').attr('disabled', '');
+                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan, #devisi').addClass('bg-light');
+                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan, #devisi').attr('disabled', '');
 
                     $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
                     $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
