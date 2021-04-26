@@ -6,33 +6,32 @@
 			<div class="">
 				<!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<table id="tableListPO" class="table dt-responsive nowrap w-100 dataTable table-bordered table-striped" width="100%">
+					<table id="tableListPO" class="table dt-responsive nowrap w-100 dataTable table-sm table-bordered table-striped" width="100%">
 						<thead>
 							<tr>
 								<th style="width: 75px;">
-									<font face="Verdana" size="2.5">#</font>
+									#
 								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">No.</font>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									No.
 								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">No. Ref</font>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									No. Ref
 								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">No. PO</font>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									No. PO
 								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Tgl. PO</font>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									Tgl. PO
 								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Supplier</font>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									Supplier
 								</th>
-
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Ket</font>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									Ket
 								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Terbayar</font>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									Terbayar
 								</th>
 
 							</tr>
@@ -64,30 +63,30 @@
 					<div class="col-12">
 						<div class="table-responsive">
 							<input type="hidden" id="hidden_no_row" name="hidden_no_row">
-							<table id="datapo" class="table table-striped table-bordered table-in" width="100%">
+							<table id="datapo" class="table table-striped table-bordered" width="100%">
 								<thead>
 									<tr>
-										<th>
-											<font face="Verdana" size="2.5">No</font>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											No
 										</th>
-										<th>
-											<font face="Verdana" size="2.5">No PO</font>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											No PO
 										</th>
 
-										<th>
-											<font face="Verdana" size="2.5">Ref. PO</font>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											Ref. PO
 										</th>
-										<th>
-											<font face="Verdana" size="2.5">Jenis Budget</font>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											Jenis&nbsp;Budget
 										</th>
-										<th>
-											<font face="Verdana" size="2.5">Nama & Kode Barang</font>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											Nama & Kode Barang
 										</th>
-										<th>
-											<font face="Verdana" size="2.5">QTY</font>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											QTY
 										</th>
-										<th>
-											<font face="Verdana" size="2.5">Tanggal</font>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											Tanggal
 										</th>
 									</tr>
 								</thead>

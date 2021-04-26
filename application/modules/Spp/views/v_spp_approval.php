@@ -13,7 +13,7 @@
                         </div>
                     </div>
 
-                    <table id="datasppapproval" class="table w-100 dataTable no-footer table-sm table-striped">
+                    <table id="datasppapproval" class="table w-100 dataTable no-footer  table-sm table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th style="padding: 0.4em;">
@@ -76,38 +76,38 @@
                 <div class="col-12">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
-                        <table id="spp_approval" class="table table-striped table-bordered table-in" width="60px">
+                        <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <font face="Verdana" size="2.5">No.</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        No
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">ID</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        ID
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Kode Barang</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;;">
+                                        Kode&nbsp;Barang
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Nama Barang</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        Nama&nbsp;Barang
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Sat</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        Sat
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Qty</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        Qty
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Stok</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        Stok
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Ket</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        Ket
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Revisi Qty</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                        Revisi&nbsp;Qty
                                     </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Status SPP</font>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.4em;">
+                                        Status&nbsp;SPP
                                     </th>
                                 </tr>
                             </thead>
@@ -115,7 +115,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
+                                    <th style="text-align: center;" colspan="10"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
                                 </tr>
                             </tfoot>
                         </table>

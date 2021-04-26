@@ -65,11 +65,11 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no . ".";
-            $row[] = $d->nopo;
-            $row[] = $d->noref;
-            $row[] = $d->grup;
-            $row[] = $d->nabar . ' | ' . $d->kodebar;
-            $row[] = $d->qty;
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nopo . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->noref . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->grup . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nabar . ' | ' . $d->kodebar . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->qty . '</font>';
             // $row[] = $d->tglpo;
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
             // $row[] = $d->ket;

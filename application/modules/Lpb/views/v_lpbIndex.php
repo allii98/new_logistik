@@ -13,7 +13,7 @@
                     </div>
                 </div>
 
-                <table id="tableListLPB" class="table table-striped table-bordered" width="100%">
+                <table id="tableListLPB" class="table table-sm table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
                             <th style="width: 75px;">#</th>
@@ -47,18 +47,18 @@
                 <div class="form-horizontal">
                     <div class="form-group">
                         <div class="table-responsive">
-                            <table id="tableDetailItemLpb" class="table table-bordered" style="width: 100%;">
+                            <table id="tableDetailItemLpb" class="table table-striped table-bordered" style="width: 100%;">
                                 <thead>
                                     <tr>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">No</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Kode Barang</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Nama&nbsp;Barang</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Satuan</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Grup</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Qty&nbsp;PO</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Qty&nbsp;LPB</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Sisa&nbsp;LPB</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:10px">Ket</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Kode Barang</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Nama&nbsp;Barang</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Satuan</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Grup</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty&nbsp;PO</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty&nbsp;LPB</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Sisa&nbsp;LPB</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Ket</th>
                                     </tr>
                                 </thead>
                                 <tbody id="data_detail_item_lpb">

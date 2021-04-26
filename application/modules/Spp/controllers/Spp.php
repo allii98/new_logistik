@@ -577,14 +577,14 @@ class Spp extends CI_Controller
             $row[] = $no . ".";
             $row[] = $d->id;
             // $row[] = $d->noreftxt;
-            $row[] = $d->kodebar;
-            $row[] = $d->nabar;
-            $row[] = $d->sat;
-            $row[] = $d->qty;
-            $row[] = $d->STOK;
-            $row[] = $d->ket;
-            $row[] = '<button class="btn btn-xs btn-primary" type="button" disabled>Qty</button>';
-            $row[] = $status;
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->kodebar . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
+            $row[] = '<font style="padding: 0.6em; border-spacing: 0 50px" face="Verdana" size="2">' . $d->sat . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->qty . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->STOK . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->ket . '</font>';
+            $row[] = '<button style="padding: 0.6em;" class="btn btn-xs btn-primary" type="button" disabled>Qty</button>';
+            $row[] = '<font face="Verdana" size="2"><span>' . $status . '</span></font>';
 
             $data[] = $row;
         }

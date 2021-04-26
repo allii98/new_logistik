@@ -21,7 +21,7 @@
                         <table id="tableListBPB" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="width: 10px;">#</th>
+                                    <th style="width: 1px;">#</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. BPB</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Item Barang</th>
@@ -123,16 +123,15 @@
                         <table id="tableListBPBItem" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>No. BPB</th>
-                                    <th>No. REF BPB</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama Barang</th>
-                                    <th>Qty Diminta</th>
-                                    <th>Qty Disetujui</th>
-                                    <th>Satuan</th>
-                                    <th>Approval</th>
-
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No.</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. BPB</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. REF BPB</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Kode Barang</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Nama Barang</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Diminta</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Disetujui</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Satuan</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Approval</th>
                                 </tr>
                             </thead>
 
