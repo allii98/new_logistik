@@ -1262,10 +1262,12 @@
             $('#cmb_alokasi_est').addClass('form-control bg-light');
             $('#cmb_alokasi_est').attr('disabled', '');
             // $('#cmb_tm_tbm_'+row).html(strip_cmb);
-        } else {
             if ($('#cmb_bagian :selected').text() == "TEKNIK") {
                 $('#bhnbakar').show();
+                // console.log("hello");
             }
+        } else {
+
             $('#cmb_alokasi_est').removeAttr('disabled', '');
             $('#cmb_alokasi_est').removeClass('bg-light');
             var cmb_tm_tbm = '<option value=""></option>';
