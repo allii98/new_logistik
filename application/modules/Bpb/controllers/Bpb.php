@@ -124,7 +124,7 @@ class Bpb extends CI_Controller
         }
         // $query_thn_tanam = "SELECT DISTINCT thn_tanam FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' ORDER BY thn_tanam ASC";
         // $data_thn_tanam = $this->db_logistik_pt->query($query_thn_tanam)->result();
-        $query_thn_tanam = "SELECT DISTINCT tahuntanam FROM masterblok WHERE AFD = '$afd_unit' AND blok = '$blok_sub' ORDER BY tahuntanam ASC";
+        $query_thn_tanam = "SELECT DISTINCT tahuntanam FROM masterblok WHERE afd = '$afd_unit' AND blok = '$blok_sub' ORDER BY tahuntanam ASC";
         $data = $this->db_msal_personalia->query($query_thn_tanam)->result();
 
         echo json_encode($data);
@@ -145,7 +145,7 @@ class Bpb extends CI_Controller
                 break;
         }
         // $query = "SELECT DISTINCT ket, coa_material FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' AND thn_tanam = '$thn_tanam' ORDER BY thn_tanam ASC";
-        $query = "SELECT DISTINCT coa_material FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' AND thn_tanam = '$thn_tanam' ORDER BY thn_tanam ASC";
+        $query = "SELECT DISTINCT coa_material FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' AND thn_tanam = '$thn_tanam'";
         $data_coa_material = $this->db_logistik_pt->query($query)->result();
         $data = array();
         foreach ($data_coa_material as $list_coa_material) {

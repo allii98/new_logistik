@@ -105,8 +105,8 @@
                                         <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Thn Tanam</th>
                                         <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
                                         <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
-                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang</th>
-                                        <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan /Stok/Booking</th>
+                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang/Satuan</th>
+                                        <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok/Booking</th>
                                         <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty&nbsp;Diminta</th>
                                         <!-- <th width="8%">Qty Disetujui</th> -->
                                         <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
@@ -167,16 +167,17 @@
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- Barang -->
                                                 <input type="text" class="form-control" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
-                                                <label id="lbl_kode_barang_1"></label>
-                                                <label id="lbl_nama_barang_1"></label>
+                                                <!-- <label id="lbl_kode_barang_1"></label>
+                                                <label id="lbl_nama_barang_1"></label> -->
+
                                                 <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1" value="0">
                                                 <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1" value="0">
                                                 <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                <!-- <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                                                     Satuan :<b id="b_satuan_1" name="b_satuan_1"></b>
-                                                </span><br>
+                                                </span><br> -->
                                                 <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
                                                 <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                                                     Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
