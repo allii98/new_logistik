@@ -296,9 +296,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             }
                                             ?>
 
-                                            <th>
+                                            <!-- <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
-                                            </th>
+                                            </th> -->
                                             <th width="500px">
                                                 <font face="Verdana" size="2.5">Nama & Kode Barang</font>
                                             </th>
@@ -358,7 +358,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <input type="hidden" class="form-control" id="hidden_nama_pt_1" name="hidden_nama_pt_">
                                                     <input type="hidden" class="form-control" id="noppo1" name="noppo1">
                                                 </td>
-                                                <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                <!-- <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <select class="form-control" id="cmb_jenis_budget_1" name="cmb_jenis_budget_1" required>
                                                         <option value="">-- Pilih --</option>
                                                         <option value="TEKNIK">TEKNIK</option>
@@ -372,7 +372,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <option value="Kendaraan">Kendaraan</option>
                                                         <option value="TBM">TBM</option>
                                                     </select>
-                                                </td>
+                                                </td> -->
                                                 <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <span id="nama_brg_1"></span><span>|</span><span id="kode_brg_1"></span>
                                                     <input type="hidden" class="form-control" id="hidden_kode_brg_1" name="hidden_kode_brg_1" />
@@ -477,9 +477,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <tr>
 
 
-                                            <th>
+                                            <!-- <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
-                                            </th>
+                                            </th> -->
                                             <th width="500px">
                                                 <font face="Verdana" size="2.5">Nama & Kode Barang</font>
                                             </th>
@@ -1133,7 +1133,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-        $('#tbody_item').append(tr_buka + form_buka + td_col_3 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_' + row).number(true, 2);
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
@@ -1262,7 +1262,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_' + n).number(true, 2);
         hitungqty(n);
         jumlah(n);
@@ -2476,11 +2476,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         } else if (!keterangan) {
             toast('Keterangan is required!');
             $('#keterangan').css({
-                "background": "#FFCECE"
-            });
-        } else if (!jnbudget) {
-            toast('Jenis Budget is required!');
-            $('#cmb_jenis_budget_' + id).css({
                 "background": "#FFCECE"
             });
         } else if (!merk) {

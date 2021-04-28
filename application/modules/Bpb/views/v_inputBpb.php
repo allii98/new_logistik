@@ -11,52 +11,74 @@
                     </p>
 
                     <div class="row div_form_1">
-                        <div class="form-group row col-md-3">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Untuk keperluan <span class="required">*</span>
-                            </label>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-7">
-                                <textarea class="resizable_textarea form-control" rows="1" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
+                        <div class="col-md-3">
+                            <div class="form-group row mb-1">
+
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off" readonly>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Untuk keperluan
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <textarea class="resizable_textarea form-control" rows="1" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row col-md-3">
-                            <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian<span class="required">*</span>
-                            </label>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-7">
-                                <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
-                                    <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
-                                </select>
+                        <div class="col-md-3">
+                            <div class="form-group row mb-1">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian
+                                </label>&nbsp;&nbsp;
+                                <div class="col-md-7">
+                                    <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
+                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row col-md-3">
-                            <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB <span class="required">*</span>
-                            </label>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-7">
-                                <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off" readonly>
+                            <div class="form-group row mb-1" style="display:none;" id="bhnbakar">
+                                <div class="form-check">
+                                    <input type="radio" id="bbm" name="customRadio" class="form-check-input">
+                                    <label class="form-check-label" for="bbm">BBM</label>
+                                </div>&nbsp;&nbsp;
+                                <div class="form-check">
+                                    <input type="radio" id="nonbbm" name="customRadio" class="form-check-input">
+                                    <label class="form-check-label" for="nonbbm">NON BBM</label>
+                                </div>
                             </div>
+
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group row mb-1">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-6">
+                                    <select class="form-control bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
+                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
+                                        <option value="03">03</option>
+                                        <option value="06">06</option>
+                                        <option value="07">07</option>
+                                        <option value="08">08</option>
+                                        <option value="09">09</option>
+                                        <option value="10">10</option>
+                                        <option value="21">21</option>
+                                        <option value="22">22</option>
+                                    </select>
+                                    <div id="txt_estate"></div>
+                                </div>
+                            </div>
+
+                        </div>
+
 
                         <div class="form-group row col-md-3">
                             <div class="col-md-1"></div>
-                            <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate<span class="required">*</span>
-                            </label>
-                            <div class="col-md-1"></div>
-                            <div class="col-md-6">
-                                <select class="form-control" id="cmb_alokasi_est" name="cmb_alokasi_est" required="">
-                                    <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
-                                    <option value="03">03</option>
-                                    <option value="06">06</option>
-                                    <option value="07">07</option>
-                                    <option value="08">08</option>
-                                    <option value="09">09</option>
-                                    <option value="10">10</option>
-                                    <option value="21">21</option>
-                                    <option value="22">22</option>
-                                </select>
-                                <div id="txt_estate"></div>
-                            </div>
+
                             <div class="col-md-5 col-sm-6 col-xs-12">
                             </div>
                         </div>
@@ -64,7 +86,7 @@
                     </div>
                     <hr class="mt-0 mb-2">
                     <div class="row">
-                        <label id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp; No. Ref. BPB : ...</label>
+                        <label id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp; No. Ref. BPB : ...</label>
                         <h4 id="h4_no_bpb" name="h4_no_bpb"></h4>
                         <h4 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h4>
                         <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
@@ -425,13 +447,17 @@
             $('#hidden_nama_acc_' + row).val(nama_account);
 
             $('#modalAccBeban').modal('hide');
-        })
+        });
+
+        // $('#cmb_bagian').change(function() {
+        //     console.log(this.value);
+        // })
 
     });
 
 
     function check_form_2() {
-        if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
+        if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '') {
 
             $('#btn_simpan_1').removeAttr('disabled', '');
             $('#btn_tambah_row_1').removeAttr('disabled', '');
@@ -1233,8 +1259,15 @@
             // $('.set_strip_cmb').empty();
             // $('.set_strip_cmb').append(strip_cmb);
             $('.set_strip_cmb').html(strip_cmb);
+            $('#cmb_alokasi_est').addClass('form-control bg-light');
+            $('#cmb_alokasi_est').attr('disabled', '');
             // $('#cmb_tm_tbm_'+row).html(strip_cmb);
         } else {
+            if ($('#cmb_bagian :selected').text() == "TEKNIK") {
+                $('#bhnbakar').show();
+            }
+            $('#cmb_alokasi_est').removeAttr('disabled', '');
+            $('#cmb_alokasi_est').removeClass('bg-light');
             var cmb_tm_tbm = '<option value=""></option>';
             cmb_tm_tbm += '<option value="TM">TM</option>';
             cmb_tm_tbm += '<option value="TBM">TBM</option>';
