@@ -40,8 +40,10 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1" style="display:none;" id="bhnbakar">
-                                <div class="form-check">
+                            <!-- <div class="form-group row mb-1" style="display:none;" id="bhnbakar"> -->
+                            <div class="form-group row mt-2 mb-1" style="display:none;" id="bhnbakar">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih</label>
+                                <div class="form-check ml-3 mr-2">
                                     <input type="radio" id="bbm" name="customRadio" class="form-check-input">
                                     <label class="form-check-label" for="bbm">BBM</label>
                                 </div>&nbsp;&nbsp;
@@ -93,7 +95,7 @@
                         <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
                         <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
                         <div class="table-responsive">
-                            <table class="table w-100 nowrap dataTable no-footer table-striped" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
+                            <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
                                 <thead>
                                     <tr>
                                         <th width="3%"></th>
@@ -102,10 +104,10 @@
                                         <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Blok/Sub</th>
                                         <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Thn Tanam</th>
                                         <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
-                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
-                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang</th>
-                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan /Stok/Booking</th>
-                                        <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty Diminta</th>
+                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
+                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang</th>
+                                        <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Satuan /Stok/Booking</th>
+                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty&nbsp;Diminta</th>
                                         <!-- <th width="8%">Qty Disetujui</th> -->
                                         <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
                                         <th width="3%"></th>
@@ -154,7 +156,7 @@
                                                     <option value="-">-</option>
                                                 </select>
                                             </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0;">
+                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
                                                 <!-- Account Beban -->
                                                 <input type="text" class="form-control" id="txt_account_beban_1" value="-" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
                                                 <label class="control-label" id="lbl_no_acc_1"></label>
@@ -172,16 +174,16 @@
                                                 <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <span>
-                                                    <label>Satuan :<b id="b_satuan_1" name="b_satuan_1"></b></label><br>
-                                                </span>
+                                                <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                    Satuan :<b id="b_satuan_1" name="b_satuan_1"></b>
+                                                </span><br>
                                                 <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
-                                                <span>
-                                                    <label>Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b></label><br>
-                                                </span>
+                                                <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                    Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
+                                                </span><br>
                                                 <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
-                                                <span>
-                                                    <label>Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b></label><br>
+                                                <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                    Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b>
                                                 </span>
                                                 <input type="hidden" id="hidden_stok_booking_1" name="hidden_stok_booking_1">
                                             </td>
