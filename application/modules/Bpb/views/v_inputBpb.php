@@ -11,7 +11,7 @@
                     </p>
 
                     <div class="row div_form_1">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group row mb-1">
 
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB
@@ -30,10 +30,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group row mb-1">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian
-                                </label>&nbsp;&nbsp;
+                                </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <div class="col-md-7">
                                     <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
                                         <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
@@ -41,12 +41,24 @@
                                 </div>
                             </div>
                             <!-- <div class="form-group row mb-1" style="display:none;" id="bhnbakar"> -->
+                            <div class="form-group row mb-1 mt-2" id="bhnbakar">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih</label>
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <div class="form-check ml-3">
+                                    <input type="radio" id="bbm" name="customRadio" class="form-check-input" disabled>
+                                    <label class="form-check-label" for="bbm">BBM</label>
+                                </div>&nbsp;&nbsp;
+                                <div class="form-check">
+                                    <input type="radio" id="nonbbm" name="customRadio" class="form-check-input" disabled>
+                                    <label class="form-check-label" for="nonbbm">NON BBM</label>
+                                </div>
+                            </div>
 
                             <div class="form-group row mb-1">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate
                                 </label>
                                 <div class="col-md-1"></div>
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     <select class="form-control bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
                                         <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
                                         <option value="03">03</option>
@@ -62,12 +74,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-
-
-                            <div class="form-group row mt-2 mb-1" id="bhnbakar">
+                        <!-- <div class="col-md-2">
+                            <div class="form-group row mb-1" id="bhnbakar">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih</label>
-                                <div class="form-check ml-3 mr-2">
+                                <div class="form-check ml-3">
                                     <input type="radio" id="bbm" name="customRadio" class="form-check-input" disabled>
                                     <label class="form-check-label" for="bbm">BBM</label>
                                 </div>&nbsp;&nbsp;
@@ -76,16 +86,54 @@
                                     <label class="form-check-label" for="nonbbm">NON BBM</label>
                                 </div>
                             </div>
+                        </div> -->
+                        &nbsp;
+                        <div class="col-md-3">
+                            <div class="form-group row mb-1">
 
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;Alat/Kend
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode/Nomor
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">HM/KM
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Kerja
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                </div>
+                            </div>
                         </div>
 
 
-                        <div class="form-group row col-md-3">
+                        <!-- <div class="form-group row col-md-3">
                             <div class="col-md-1"></div>
 
                             <div class="col-md-5 col-sm-6 col-xs-12">
                             </div>
-                        </div>
+                        </div> -->
 
                     </div>
                     <hr class="mt-0 mb-2">
