@@ -118,6 +118,14 @@ class M_bpb extends CI_Model
         $nobkb_ro       = "";
         $nopo_ro        = "";
 
+        $bhnbakar        = $this->input->post('bhnbakar');
+        $jns_alat        = $this->input->post('jns_alat');
+        $kd_nmr        = $this->input->post('kd_nmr');
+        $hm_km        = $this->input->post('hm_km');
+        $lokasi_kerja       = $this->input->post('lokasi_kerja');
+
+
+
 
         $user = $this->session->userdata('user');
         $ip = $this->input->ip_address();
@@ -211,6 +219,11 @@ class M_bpb extends CI_Model
         $databpb['posting']         = "";
         $databpb['approval']        = "0";
         $databpb['flag_bkb']        = "0";
+        $databpb['bhn_bakar']        = $bhnbakar;
+        $databpb['jn_alat']        = $jns_alat;
+        $databpb['no_kode']        = $kd_nmr;
+        $databpb['hm_km']        = $hm_km;
+        $databpb['lok_kerja']        = $lokasi_kerja;
 
         $databpbitem['id']            = $id_bpbitem;
         $databpbitem['kodebar']       = $kodebar;
@@ -390,6 +403,11 @@ class M_bpb extends CI_Model
         // $periode        =  date("Ym",strtotime($sess_periode));
         $nobkb_ro       = "";
         $nopo_ro        = "";
+        $bhnbakar        = $this->input->post('bhnbakar');
+        $jns_alat        = $this->input->post('jns_alat');
+        $kd_nmr        = $this->input->post('kd_nmr');
+        $hm_km        = $this->input->post('hm_km');
+        $lokasi_kerja       = $this->input->post('lokasi_kerja');
 
 
         $databpb['id']              = $id_bpb;
@@ -411,6 +429,11 @@ class M_bpb extends CI_Model
         $databpb['USER']            = $this->session->userdata('user');
         $databpb['cetak']           = "";
         $databpb['posting']         = "";
+        $databpb['bhn_bakar']        = $bhnbakar;
+        $databpb['jn_alat']        = $jns_alat;
+        $databpb['no_kode']        = $kd_nmr;
+        $databpb['hm_km']        = $hm_km;
+        $databpb['lok_kerja']        = $lokasi_kerja;
 
         $databpbitem['id']            = $id_bpbitem;
         $databpbitem['kodebar']       = $kodebar;

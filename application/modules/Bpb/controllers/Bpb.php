@@ -165,22 +165,6 @@ class Bpb extends CI_Controller
         $list = $this->M_databpb->get_datatables();
         $data = array();
         $no = $_POST['start'];
-        // foreach ($list as $field) {
-
-        //     $no++;
-        //     $row = array();
-        //     $row[] = '<a href="javascript:;" id="btn_data_barang">
-        //     <button class="btn btn-success btn-xs" id="data_barang" name="data_barang" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button></a>';
-        //     $row[] = $no;
-        //     $row[] = $field->nobpb;
-        //     $row[] = $field->nabar;
-        //     $row[] = $field->grp;
-        //     $row[] = $field->satuan;
-
-
-        //     $data[] = $row;
-        // }
-
         foreach ($list as $hasil) {
             $row   = array();
             $id = $hasil->id;
@@ -409,13 +393,15 @@ class Bpb extends CI_Controller
     {
         $id = $this->input->post('kodbar');
 
-        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem_booking WHERE kodebar = '$id'";
+        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id'";
+        $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id'";
         $get_booking = $this->db_logistik_pt->query($query_booking)->row();
+        $get_booking2 = $this->db_logistik_pt->query($query_booking2)->row();
 
         if (empty($get_booking->stokbooking)) {
             $data = 0;
         } else {
-            $data = $get_booking->stokbooking;
+            $data = $get_booking->stokbooking - $get_booking2->stokbooking2;
         }
 
         echo json_encode($data);

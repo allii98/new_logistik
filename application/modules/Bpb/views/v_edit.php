@@ -11,14 +11,14 @@
                     </p>
 
                     <div class="row div_form_1">
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group row mb-1">
 
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB
                                 </label>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
-                                    <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" autocomplite="off">
+                                    <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off">
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
@@ -30,36 +30,35 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="form-group row mb-1">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian
-                                </label>&nbsp;&nbsp;
+                                </label>
+                                <div class="col-md-1"></div>
                                 <div class="col-md-7">
                                     <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
                                         <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="form-group row mb-1" style="display:none;" id="bhnbakar"> -->
-                            <div class="form-group row mt-2 mb-1" id="bhnbakar">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih</label>
-                                <div class="form-check ml-3 mr-2">
-                                    <input type="radio" id="bbm" name="customRadio" class="form-check-input">
-                                    <label class="form-check-label" for="bbm">BBM</label>
-                                </div>&nbsp;&nbsp;
-                                <div class="form-check">
-                                    <input type="radio" id="nonbbm" name="customRadio" class="form-check-input">
-                                    <label class="form-check-label" for="nonbbm">NON BBM</label>
+                            <div class="form-group row mb-1">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan Bakar
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <select class="form-control bg-light" id="bhnbakar" name="bhnbakar" disabled>
+                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
+                                        <option value="BBM">BBM</option>
+                                        <option value="NONBBM">NON BBM</option>
+                                    </select>
                                 </div>
                             </div>
 
-                        </div>
-                        <div class="col-md-3">
                             <div class="form-group row mb-1">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate
                                 </label>
                                 <div class="col-md-1"></div>
-                                <div class="col-md-6">
+                                <div class="col-md-7">
                                     <select class="form-control bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
                                         <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
                                         <option value="03">03</option>
@@ -74,16 +73,47 @@
                                     <div id="txt_estate"></div>
                                 </div>
                             </div>
-
                         </div>
+                        &nbsp;
+                        <div class="col-md-3" id="databbm">
+                            <div class="form-group row mb-1">
 
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;Alat/Kend
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
 
-                        <div class="form-group row col-md-3">
-                            <div class="col-md-1"></div>
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode/Nomor
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
 
-                            <div class="col-md-5 col-sm-6 col-xs-12">
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">HM/KM
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+
+                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Kerja
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
                             </div>
                         </div>
+
 
                     </div>
                     <hr class="mt-0 mb-2">
@@ -201,11 +231,6 @@
                                 </table>
                             </div>
                         </div>
-                        <!-- <div class="form-group">
-							<div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-6">
-								<button class="btn btn-sm btn-info" data-toggle="tooltip" data-placement="bottom" title="Setujui Semua" id="btn_setuju_all" name="btn_setuju_all" onclick="pilihItem()">Pilih Item</button>
-							</div>
-						</div> -->
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -311,19 +336,24 @@
                 'no_bpb': no_bpb
             },
             success: function(data) {
-                // console.log(data);
-                var tglbpb = new Date(data.data_bpb.tglinput);
+                console.log(data);
+                // var tglbpb = new Date(data.data_bpb.tglinput);
 
                 // $('#txt_diberikan_kpd').val(data.data_bpb.kpd);
                 $('#txt_untuk_keperluan').val(data.data_bpb.keperluan);
                 $('#cmb_bagian :selected').text(data.data_bpb.bag);
-                $('#txt_tgl_bpb').val(tglbpb);
+                $('#txt_tgl_bpb').val(data.data_bpb.tglinput);
                 $('#txt_no_bpb').val(data.data_bpb.nobpb);
                 $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
 
                 $('#hidden_no_bpb').val(data.data_bpb.nobpb);
                 $('#hidden_id_bpb').val(data.data_bpb.id);
                 $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
+                $('#bhnbakar').val(data.data_bpb.bhn_bakar);
+                $('#txt_jns_alat').val(data.data_bpb.jn_alat);
+                $('#txt_kd_nmr').val(data.data_bpb.no_kode);
+                $('#txt_hm_km').val(data.data_bpb.hm_km);
+                $('#txt_lokasi_kerja').val(data.data_bpb.lok_kerja);
 
                 $('#lbl_bpb_status').empty();
                 $('#h4_no_bpb').html('No. BPB : ' + data.data_bpb.nobpb);
@@ -380,8 +410,8 @@
                     var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                         '<!-- Account Beban -->' +
                         '<input type="text" class="form-control" id="txt_account_beban_' + n + '" value="-" name="txt_account_beban_' + n + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + n + ')" >' +
-                        '<label class="control-label" id="lbl_no_acc_' + n + '"></label>' +
-                        '<label class="control-label" id="lbl_nama_acc_' + n + '"></label>' +
+                        // '<label class="control-label" id="lbl_no_acc_' + n + '"></label>' +
+                        // '<label class="control-label" id="lbl_nama_acc_' + n + '"></label>' +
                         '<input type="hidden" id="hidden_no_acc_' + n + '" name="hidden_no_acc_' + n + '" value="0">' +
                         '<input type="hidden" id="hidden_nama_acc_' + n + '" name="hidden_nama_acc_' + n + '" value="0">' +
                         '</td>';
@@ -401,8 +431,8 @@
                         '<input type="hidden" id="hidden_stok_tgl_ini_' + n + '" name="hidden_stok_tgl_ini_' + n + '">&nbsp;' +
 
                         '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Booking :<b id="b_stok_booking_' + n + '"  name="b_stok_booking_' + n + '"></b></span>' +
-                        '<input type="hidden" id="hidden_stok_booking_' + n + '" name="hidden_stok_booking_' + n + '">' +
-                        '<input type="hidden" id="hidden_satuan_' + n + '" name="hidden_satuan_' + n + '">' +
+                        '<input type="text" id="hidden_stok_booking_' + n + '" name="hidden_stok_booking_' + n + '">' +
+                        '<input type="text" id="hidden_satuan_' + n + '" name="hidden_satuan_' + n + '">' +
                         '</td>';
                     var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
                         '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
@@ -416,8 +446,8 @@
                         '<input type="hidden" id="hidden_id_bpbitem_' + n + '" name="hidden_id_bpbitem_' + n + '">' +
                         '</td>';
                     var td_col_12 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
-                        '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
-                        '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
+                        '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
+                        '<button class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
                         '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
                         '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
                         '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
@@ -486,6 +516,8 @@
 
                     n++;
                     $('#hidden_no_table').val(n);
+                    var kodbar = data.data_bpbitem[index].kodebar;
+                    sum_stok_booking(kodbar, n)
                 })
             },
             error: function(request) {
@@ -1183,8 +1215,8 @@
     function ubahRinci(no) {
         // $('.div_form_1').find('input,textarea').not('#txt_tgl_bpb').removeAttr('readonly');
         // $('.div_form_1').find('select').removeAttr('disabled');
-        $('#tr_' + no).find('#txt_qty_diminta_' + no).removeAttr('disabled', '');
-        $('#tr_' + no).find('#txt_qty_diminta_' + no).removeClass('bg-light');
+        $('#txt_qty_diminta_' + no).removeAttr('disabled', '');
+        $('#txt_qty_diminta_' + no).removeClass('bg-light');
 
 
         $('#lbl_status_simpan_' + no).empty();
@@ -1743,9 +1775,6 @@
             dataType: "JSON",
             beforeSend: function() {},
             cache: false,
-            // contentType : false,
-            // processData : false,
-
             data: {
                 'kodbar': kodbar
             },
@@ -1758,9 +1787,5 @@
                 alert(request.responseText);
             }
         });
-    }
-
-    function simpan() {
-
     }
 </script>

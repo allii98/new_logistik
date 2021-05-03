@@ -33,26 +33,28 @@
                         <div class="col-md-4">
                             <div class="form-group row mb-1">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian
-                                </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                </label>
+                                <div class="col-md-1"></div>
                                 <div class="col-md-7">
                                     <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
                                         <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="form-group row mb-1" style="display:none;" id="bhnbakar"> -->
-                            <div class="form-group row mb-1 mt-2" id="bhnbakar">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih</label>
-                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                <div class="form-check ml-3">
-                                    <input type="radio" id="bbm" name="customRadio" class="form-check-input" disabled>
-                                    <label class="form-check-label" for="bbm">BBM</label>
-                                </div>&nbsp;&nbsp;
-                                <div class="form-check">
-                                    <input type="radio" id="nonbbm" name="customRadio" class="form-check-input" disabled>
-                                    <label class="form-check-label" for="nonbbm">NON BBM</label>
+                            <div class="form-group row mb-1">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan Bakar
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <select class="form-control bg-light" id="bhnbakar" name="bhnbakar" disabled>
+                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
+                                        <option value="BBM">BBM</option>
+                                        <option value="NONBBM">NON BBM</option>
+                                    </select>
                                 </div>
                             </div>
+                            <!-- <div class="form-group row mb-1" style="display:none;" id="bhnbakar"> -->
+
 
                             <div class="form-group row mb-1">
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate
@@ -74,28 +76,15 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-md-2">
-                            <div class="form-group row mb-1" id="bhnbakar">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pilih</label>
-                                <div class="form-check ml-3">
-                                    <input type="radio" id="bbm" name="customRadio" class="form-check-input" disabled>
-                                    <label class="form-check-label" for="bbm">BBM</label>
-                                </div>&nbsp;&nbsp;
-                                <div class="form-check">
-                                    <input type="radio" id="nonbbm" name="customRadio" class="form-check-input" disabled>
-                                    <label class="form-check-label" for="nonbbm">NON BBM</label>
-                                </div>
-                            </div>
-                        </div> -->
                         &nbsp;
-                        <div class="col-md-3">
+                        <div class="col-md-3" id="databbm">
                             <div class="form-group row mb-1">
 
                                 <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;Alat/Kend
                                 </label>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
-                                    <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                    <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
@@ -104,7 +93,7 @@
                                 </label>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
-                                    <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                    <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
@@ -113,7 +102,7 @@
                                 </label>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
-                                    <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                    <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
@@ -122,7 +111,7 @@
                                 </label>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
-                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off">
+                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
                                 </div>
                             </div>
                         </div>
@@ -209,8 +198,8 @@
                                             <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
                                                 <!-- Account Beban -->
                                                 <input type="text" class="form-control" id="txt_account_beban_1" value="-" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
-                                                <label class="control-label" id="lbl_no_acc_1"></label>
-                                                <label class="control-label" id="lbl_nama_acc_1"></label>
+                                                <!-- <label class="control-label" id="lbl_no_acc_1"></label>
+                                                <label class="control-label" id="lbl_nama_acc_1"></label> -->
                                                 <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1" value="0">
                                                 <input type="hidden" id="hidden_nama_acc_1" name="hidden_nama_acc_1" value="0">
                                             </td>
@@ -395,9 +384,6 @@
     function pilihEST() {
         $('#modalPilihEstate').modal('hide');
         var est = $('#cmb_pilih_est').val();
-        // $('#_est').remove();
-        // $('#txt_estate').append('<label class="control-label col-md-12 col-sm-6 col-xs-12" id="_est">Kebun '+est+'</label>');
-        // $('#txt_input_estate').val(est);
     }
 
     function pilihDevisi() {
@@ -462,7 +448,17 @@
 
         }, 1000);
 
-
+        $('#bhnbakar').change(function() {
+            var dt = this.value;
+            // console.log(dt);
+            if (dt != "BBM") {
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
+            } else {
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeAttr('disabled', '');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeClass('bg-light');
+            }
+        });
 
 
         $('#cmb_alokasi_est').change(function() {
@@ -502,9 +498,9 @@
             $('#modalAccBeban').modal('hide');
         });
 
-        // $('#cmb_bagian').change(function() {
-        //     console.log(this.value);
-        // })
+        $('#bbm').change(function() {
+            console.log(this.value);
+        })
 
     });
 
@@ -539,13 +535,7 @@
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- TM/TBM -->' +
-            '<select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" onchange="cmb_afd_unit(' + row + ')">'
-            // +'<option value=""></option>'
-            // +'<option value="TM">TM</option>'
-            // +'<option value="TBM">TBM</option>'
-            // +'<option value="LANDCLEARING">LANDCLEARING</option>'
-            // +'<option value="PEMBIBITAN">PEMBIBITAN</option>'
-            +
+            '<select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" onchange="cmb_afd_unit(' + row + ')">' +
             '</select>' +
             '</td>';
         var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -575,8 +565,8 @@
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Account Beban -->' +
             '<input type="text" class="form-control" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
-            '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
-            '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
+            // '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
+            // '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
             '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_nama_acc_' + row + '" name="hidden_nama_acc_' + row + '" value="0">' +
             '</td>';
@@ -1045,6 +1035,11 @@
         // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
         form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
         form_data.append('cmb_alokasi_est', $('#cmb_alokasi_est').val());
+        form_data.append('bhnbakar', $('#bhnbakar').val());
+        form_data.append('jns_alat', $('#txt_jns_alat').val());
+        form_data.append('kd_nmr', $('#txt_kd_nmr').val());
+        form_data.append('hm_km', $('#txt_hm_km').val());
+        form_data.append('lokasi_kerja', $('#txt_lokasi_kerja').val());
 
         form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
@@ -1328,15 +1323,16 @@
             $('#cmb_alokasi_est').addClass('form-control bg-light');
             $('#cmb_alokasi_est').attr('disabled', '');
             // $('#cmb_tm_tbm_'+row).html(strip_cmb);
-            if ($('#cmb_bagian :selected').text() == "TEKNIK") {
-                // $('#bhnbakar').show();
-                $('#bbm').removeAttr('disabled', '');
-                $('#nonbbm').removeAttr('disabled', '');
-                // console.log("hello");
+            if ($('#cmb_bagian :selected').text() != "TEKNIK") {
+                $('#bhnbakar').addClass('form-control bg-light');
+                $('#bhnbakar').attr('disabled', '');
             } else {
-                $('#bbm').attr('disabled', '');
-                $('#nonbbm').attr('disabled', '');
+                $('#bhnbakar').removeAttr('disabled', '');
+                $('#bhnbakar').removeClass('bg-light');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
             }
+
         } else {
 
             $('#cmb_alokasi_est').removeAttr('disabled', '');
@@ -1360,6 +1356,15 @@
 
             // $('#txt_account_beban_'+row).attr('disabled','');
         }
+
+
+        // if ($('#bhnbakar :selected').text() === "BBM") {
+        //     $('#txt_jns_alat').removeAttr('disabled', '');
+        //     $('#txt_jns_alat').removeClass('bg-light');
+        // } else {
+        //     $('#txt_jns_alat').attr('disabled', '');
+        //     $('#txt_jns_alat').addClass('form-control bg-light');
+        // }
     }
 
     function cmb_afd_unit(row) {
