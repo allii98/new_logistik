@@ -21,6 +21,8 @@ class Stok extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $d) {
+
+            $akhir_qty = $d->QTY_MASUK - $d->QTY_KELUAR;
             $row = array();
             $id    = $d->id;
             $no++;
@@ -32,7 +34,7 @@ class Stok extends CI_Controller
             $row[] = $d->grp;
             $row[] = $d->QTY_MASUK;
             $row[] = number_format($d->saldoawal_nilai, 0, ',', '.');
-            $row[] = $d->saldoakhir_qty;
+            $row[] = $akhir_qty;
             $row[] = $d->saldoakhir_nilai;
             $row[] = number_format(round($d->nilai_masuk), 0, ',', '.');
             $row[] = $d->ket;
