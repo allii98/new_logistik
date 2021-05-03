@@ -28,7 +28,7 @@ date_default_timezone_set('Asia/Jakarta');
                             <div class="col-lg-7 col-11 row">
                                 <select class="js-data-example-ajax form-control select2" id="select2">
                                 </select>
-                                <input style="display:none;" id="multiple" class="form-control bg-light" type="text" class="col-2" readonly>
+                                <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
                                 <input type="hidden" id="txt_ref_po">
                                 <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
                             </div>
@@ -105,7 +105,7 @@ date_default_timezone_set('Asia/Jakarta');
                     </div>
                     <input type="hidden" id="hidden_id_lpb">
                 </div>
-
+                <hr class="mt-0 mb-2">
                 <div class="row div_form_2">
                     <div class="col-12">
                         <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">

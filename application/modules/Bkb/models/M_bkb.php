@@ -3,11 +3,11 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class M_bkb extends CI_Model
 {
-    // Start Data Table Server Side
-    var $table = 'bpb'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'nobpb', 'norefbpb', 'keperluan', 'bag', 'tglbpb', 'user', 'alokasi'); //field yang ada di table user
-    var $column_search = array('id', 'nobpb', 'norefbpb', 'keperluan', 'bag', 'tglbpb', 'user', 'alokasi'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'asc'); // default order 
+    // start server side table
+    var $table = 'stockkeluar'; //nama tabel dari database
+    var $column_order = array(null, 'id', 'NO_REF', 'nobpb', 'no_mutasi', 'bag', 'keperluan', 'tgl', 'USER'); //field yang ada di table user
+    var $column_search = array('id', 'NO_REF', 'nobpb', 'no_mutasi', 'bag', 'keperluan', 'tgl', 'USER'); //field yang diizin untuk pencarian 
+    var $order = array('id' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -17,8 +17,12 @@ class M_bkb extends CI_Model
 
     private function _get_datatables_query()
     {
-
+        $role_user = $this->session->userdata('user');
         $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_pt->where('user', $role_user);
+        // $this->db_logistik_pt->select('id', 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli');
+        // $this->db_logistik_pt->from('po');
+        // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
 
@@ -70,7 +74,92 @@ class M_bkb extends CI_Model
         $this->db_logistik_pt->from($this->table);
         return $this->db_logistik_pt->count_all_results();
     }
-    //End Data Table Server Side
+    // end server side table
+
+    public function get_bpb()
+    {
+        // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
+        $noref = $this->input->get('noref');
+        $query = "SELECT norefbpb FROM bpb WHERE norefbpb LIKE '%$noref%' AND batal = 0";
+        return $this->db_logistik_pt->query($query)->result_array();
+    }
+
+    public function get_data_bpb_qr($noref)
+    {
+        $this->db_logistik_pt->select('bag, alokasi, user, keperluan');
+        $this->db_logistik_pt->where('norefbpb', $noref);
+        $this->db_logistik_pt->from('bpb');
+        $data_bpb = $this->db_logistik_pt->get()->row_array();
+
+        $this->db_logistik_pt->select('afd, blok, kodebebantxt, nabar, qty, satuan, kodesubtxt, ketsub, kodebar, ket, grp');
+        $this->db_logistik_pt->where('norefbpb', $noref);
+        $this->db_logistik_pt->from('bpbitem');
+        $data_item_bpb = $this->db_logistik_pt->get()->result_array();
+
+        $d_return = [
+            'data_bpb' => $data_bpb,
+            'data_item_bpb' => $data_item_bpb
+        ];
+        return $d_return;
+    }
+
+    public function get_tahun_tanam($coa_material)
+    {
+        $this->db_logistik_pt->select('thn_tanam, tmtbm');
+        $this->db_logistik_pt->where('coa_material', $coa_material);
+        $this->db_logistik_pt->from('tahun_tanam');
+        return $this->db_logistik_pt->get()->row_array();
+    }
+
+    public function get_stok($kodebar)
+    {
+        $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR');
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->from('stockawal');
+        $stock_awal = $this->db_logistik_pt->get()->row_array();
+
+        $stok = $stock_awal['QTY_MASUK'] - $stock_awal['QTY_KELUAR'];
+        return $stok;
+    }
+
+    public function savedatastockkeluar($data)
+    {
+        return $this->db_logistik_pt->insert('stockkeluar', $data);
+    }
+
+    public function savedatakeluarbrgitem($data)
+    {
+        return $this->db_logistik_pt->insert('keluarbrgitem', $data);
+    }
+
+    public function update_qtykeluar($kodebar, $qty2)
+    {
+        $this->db_logistik_pt->select('QTY_KELUAR');
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->from('stockawal');
+        $stock_awal = $this->db_logistik_pt->get()->row_array();
+
+        $jumlah = $stock_awal['QTY_KELUAR'] + $qty2;
+
+        $this->db_logistik_pt->set('QTY_KELUAR', $jumlah);
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        return $this->db_logistik_pt->update('stockawal');
+    }
+
+    public function update_saldoakhir_nilai($kodebar)
+    {
+        $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR, nilai_masuk');
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->from('stockawal');
+        $qty = $this->db_logistik_pt->get()->row_array();
+
+        $subtotal = $qty['QTY_MASUK'] - $qty['QTY_KELUAR'];
+        $saldo_akhir_nilai = $subtotal * $qty['nilai_masuk'];
+
+        $this->db_logistik_pt->set('saldoakhir_nilai', $saldo_akhir_nilai);
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        return $this->db_logistik_pt->update('stockawal');
+    }
 }
 
 /* End of file ModelName.php */

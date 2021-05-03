@@ -247,7 +247,7 @@ class Lpb extends CI_Controller
         }
 
         if (empty($this->input->post('hidden_no_ref_lpb'))) {
-            $no_ref_lpb = $ref_1 . "/" . $ref_2 . "/" . $ref_3 . "/" . $print_masuk_item; //LPB/PST/01/00233 // Est-LPB/swj/12/18/07836 // EST/SWJ/RETURN/642/XIV/12/2018
+            $no_ref_lpb = $ref_1 . "/" . $ref_2 . "/" . $ref_3 . "/" . $no_lpb; //LPB/PST/01/00233 // Est-LPB/swj/12/18/07836 // EST/SWJ/RETURN/642/XIV/12/2018
         } else {
             $no_ref_lpb = $this->input->post('hidden_no_ref_lpb');
         }
