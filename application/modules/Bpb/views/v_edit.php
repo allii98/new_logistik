@@ -336,7 +336,7 @@
                 'no_bpb': no_bpb
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 // var tglbpb = new Date(data.data_bpb.tglinput);
 
                 // $('#txt_diberikan_kpd').val(data.data_bpb.kpd);
@@ -431,8 +431,8 @@
                         '<input type="hidden" id="hidden_stok_tgl_ini_' + n + '" name="hidden_stok_tgl_ini_' + n + '">&nbsp;' +
 
                         '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Booking :<b id="b_stok_booking_' + n + '"  name="b_stok_booking_' + n + '"></b></span>' +
-                        '<input type="text" id="hidden_stok_booking_' + n + '" name="hidden_stok_booking_' + n + '">' +
-                        '<input type="text" id="hidden_satuan_' + n + '" name="hidden_satuan_' + n + '">' +
+                        '<input type="hidden" id="hidden_stok_booking_' + n + '" name="hidden_stok_booking_' + n + '">' +
+                        '<input type="hidden" id="hidden_satuan_' + n + '" name="hidden_satuan_' + n + '">' +
                         '</td>';
                     var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
                         '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
@@ -513,11 +513,11 @@
                     sum_stok(data.data_bpbitem[index].kodebar, n);
 
                     get_all_cmb(data.data_bpbitem[index].kodebebantxt, n);
+                    sum_stok_booking(data.data_bpbitem[index].kodebar, n);
 
                     n++;
                     $('#hidden_no_table').val(n);
-                    var kodbar = data.data_bpbitem[index].kodebar;
-                    sum_stok_booking(kodbar, n)
+                    // var kodbar = data.data_bpbitem[index].kodebar;
                 })
             },
             error: function(request) {

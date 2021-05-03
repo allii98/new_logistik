@@ -1706,6 +1706,8 @@
                 } else {
                     if (data == '0' || data == '0.00') {
                         swal('Tidak ada stok di gudang, silahkan lakukan pengajuan SPP');
+                        $('#txt_barang_' + row).val('');
+                        $('#modalListBarang').modal('hide');
                     } else {
                         $('#b_stok_tgl_ini_' + row).html(data);
                         $('#hidden_stok_tgl_ini_' + row).val(data);

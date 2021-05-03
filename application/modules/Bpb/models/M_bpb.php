@@ -85,6 +85,17 @@ class M_bpb extends CI_Model
     }
     // end server side table
 
+    public function get_stok($kodebar)
+    {
+        $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR');
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->from('stockawal');
+        $stock_awal = $this->db_logistik_pt->get()->row_array();
+
+        $stok = $stock_awal['QTY_MASUK'] - $stock_awal['QTY_KELUAR'];
+        return $stok;
+    }
+
     function simpan_rinci_bpb()
     {
 
