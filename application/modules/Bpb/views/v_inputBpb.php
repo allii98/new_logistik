@@ -1699,7 +1699,7 @@
                         });
                     }
                     // if(frombpb == 'frombpb'){
-                    // 	$('#tr_'+row).css('background-color','#ffcece');
+                    // 	$('#tr_'+row).css('background-color','#ffcece');    
                     // 	$('#txt_ket_rinci_'+row).attr('readonly','');
                     // 	$('#btn_simpan_'+row).attr('disabled','');
                     // }

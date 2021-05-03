@@ -319,19 +319,19 @@ class M_bpb extends CI_Model
             }
 
 
-            $this->db_logistik_pt->insert('bpb_booking', $databpb);
-            if ($this->db_logistik_pt->affected_rows() > 0) {
-                $bool_bpb = TRUE;
-            } else {
-                $bool_bpb = FALSE;
-            }
+            // $this->db_logistik_pt->insert('bpb_booking', $databpb);
+            // if ($this->db_logistik_pt->affected_rows() > 0) {
+            //     $bool_bpb = TRUE;
+            // } else {
+            //     $bool_bpb = FALSE;
+            // }
 
-            $this->db_logistik_pt->insert('bpbitem_booking', $databpbitem);
-            if ($this->db_logistik_pt->affected_rows() > 0) {
-                $bool_bpb = TRUE;
-            } else {
-                $bool_bpb = FALSE;
-            }
+            // $this->db_logistik_pt->insert('bpbitem_booking', $databpbitem);
+            // if ($this->db_logistik_pt->affected_rows() > 0) {
+            //     $bool_bpb = TRUE;
+            // } else {
+            //     $bool_bpb = FALSE;
+            // }
 
             if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                 // if ($bool_bpb === TRUE && $bool_bpbitem === TRUE){
