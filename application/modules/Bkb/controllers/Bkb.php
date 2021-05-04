@@ -117,6 +117,7 @@ class Bkb extends CI_Controller
     public function saveBkb()
     {
         $sess_lokasi = $this->session->userdata('status_lokasi');
+        $id_user = $this->session->userdata('id_user');
 
         if ($sess_lokasi == "HO") {
             $text1 = "PST";
@@ -228,6 +229,7 @@ class Bkb extends CI_Controller
         $datastockkeluar['keperluan']       = $this->input->post('txt_untuk_keperluan');
         $datastockkeluar['bag']             = $this->input->post('cmb_bagian');
         $datastockkeluar['batal']           = '0';
+        $datastockkeluar['id_user']         = $id_user;
         $datastockkeluar['USER']            = $this->session->userdata('user');
         $datastockkeluar['SUB']             = NULL;
         $datastockkeluar['USER1']           = NULL;
@@ -284,6 +286,10 @@ class Bkb extends CI_Controller
         //update saldo akhir nilai
         $result_update_saldoakhir_nilai = $this->M_bkb->update_saldoakhir_nilai($kodebar);
 
+        $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_stockkeluar = $generate_id->id_stockkeluar;
+
         $data = [
             'datastockkeluar' => $savedatastockkeluar,
             'datakeluarbrgitem' => $savedatakeluarbrgitem,
@@ -291,8 +297,104 @@ class Bkb extends CI_Controller
             'result_update_saldoakhir_nilai' => $result_update_saldoakhir_nilai,
             'no_bkb' => $skb,
             'noref_bkb' => $no_ref,
+            'id_stockkeluar' => $id_stockkeluar,
         ];
 
         echo json_encode($data);
+    }
+
+    function cetak()
+    {
+        $no_bkb = $this->uri->segment('3');
+        $id = $this->uri->segment('4');
+
+        $data['no_bkb'] = $no_bkb;
+        $data['id'] = $id;
+        $data['stockkeluar'] = $this->db_logistik_pt->get_where('stockkeluar', array('id' => $id, 'SKBTXT' => $no_bkb))->row();
+        $data['keluarbrgitem'] = $this->db_logistik_pt->get_where('keluarbrgitem', array('SKBTXT' => $no_bkb, 'NO_REF' => $data['stockkeluar']->NO_REF))->result();
+
+        $data['urut'] = $this->M_bkb->urut_cetak($data['stockkeluar']->NO_REF);
+
+        $noref = $data['stockkeluar']->NO_REF;
+        $this->qrcode($no_bkb, $id, $noref);
+
+        // var_dump($data['po']);exit();
+        // $mpdf = new \Mpdf\Mpdf([
+        //                       'mode' => 'utf-8', 
+        //                       // 'format' => [190, 236],
+        //                       'format' => 'A4',
+        //                       'setAutoTopMargin' => 'stretch',
+        //                       'orientation' => 'P'
+        //                   ]);
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => [190, 236],
+            'setAutoTopMargin' => 'stretch',
+            'orientation' => 'P'
+        ]);
+
+        $lokasibuatbkb = substr($noref, 0, 3);
+        switch ($lokasibuatbkb) {
+            case 'PST': // HO
+                $lokasibkb = "HO";
+                break;
+            case 'ROM': // RO
+                $lokasibkb = "RO";
+                break;
+            case 'FAC': // PKS
+                $lokasibkb = "PKS";
+                break;
+            case 'EST': // SITE
+                $lokasibkb = "SITE";
+                break;
+            default:
+                break;
+        }
+
+        // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+        $mpdf->SetHTMLHeader('
+                            <table width="100%" border="0" align="center">
+                                <tr>
+                                    <td rowspan="2" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
+                                    <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $lokasibkb . ')</td>
+                                </tr>
+                                <!--tr>
+                                    <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                    </td>
+                                </tr-->
+                            </table>
+                            <hr style="width:100%;margin:0px;">
+                            ');
+        // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+        $html = $this->load->view('v_bkbPrint', $data, true);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+    }
+
+    function qrcode($no_bkb, $id, $noref)
+    {
+        $this->load->library('ciqrcode');
+        // header("Content-Type: image/png");
+
+        $config['cacheable']    = false; //boolean, the default is true
+        $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        $config['imagedir']     = './assets/qrcode/bkb/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = '1024'; //interger, the default is 1024
+        $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        $this->ciqrcode->initialize($config);
+
+        $image_name = $id . '_' . $no_bkb . '.png'; //buat name dari qr code
+
+        // $params['data'] = site_url('bkb/cetak/'.$no_bkb.'/'.$id); //data yang akan di jadikan QR CODE
+        $params['data'] = $noref; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H=High
+        $params['size'] = 10;
+        $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
+        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
     }
 }

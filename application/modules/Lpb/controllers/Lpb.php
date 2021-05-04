@@ -61,7 +61,7 @@ class Lpb extends CI_Controller
                         data-ttg="' . $field->ttg . '" data-nopo="' . $field->nopo . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
-                        <a href="' . site_url('lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                        <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = $field->noref;
             $row[] = $field->refpo;

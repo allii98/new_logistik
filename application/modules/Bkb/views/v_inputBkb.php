@@ -114,7 +114,7 @@
                         </div>
                     </div>
                 </fieldset>
-
+                <input type="hidden" id="hidden_id_bkb">
                 <hr class="mt-0 mb-0">
                 <div class="x_content div_form_2 mb-0">
                     <div class="row justify-content-between">
@@ -432,7 +432,7 @@
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button class="btn btn-xs btn-warning" id="btn_req_rev_qty_1" name="btn_req_rev_qty_1" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="ReqRevQty(1)"><b>Rev</b></button>' +
+            '<button class="badge bagde-warning btn-warning" id="btn_req_rev_qty_1" name="btn_req_rev_qty_1" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="ReqRevQty(1)"><b>Rev</b></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
@@ -572,34 +572,25 @@
 
                 console.log(data);
 
-
                 //hitung ulang stok?
                 get_stok(n, hidden_kode_barang);
 
-                //stok BPB itu di ambil berdasarkan periode atau semua periode???
-
-
-
-
-                // $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                // $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
-
-                // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-                // $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                // // $('.headspp').find('#cancelSpp').removeAttr('disabled');
-
-                // $('#btn_hapus_row_' + n).css('display', 'none');
-                // $('#btn_ubah_' + n).css('display', 'block');
-                // $('#btn_hapus_' + n).css('display', 'block');
-
-                // $('#hidden_no_lpb').val(data.nolpb);
-                // $('#hidden_no_ref_lpb').val(data.noreflpb);
-                // $('#hidden_id_lpb').val(data.id_lpb);
-                // $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
-                // // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
                 $('#a_print_bkb').show();
+
+                $('#hidden_id_bkb').val(data.id_stockkeluar);
+
+                //stok BPB itu di ambil berdasarkan periode atau semua periode???
 
             }
         });
+    }
+
+    function cetak_bkb() {
+        var no_bkb = $('#hidden_no_bkb').val();
+        var id = $('#hidden_id_bkb').val();
+
+        window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
+
+        $('.div_form_2').css('pointer-events', 'none');
     }
 </script>
