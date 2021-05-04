@@ -1285,7 +1285,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 alert('data sudah di pilih');
                 return false;
             }
-            console.log(id, no_spp, no_ref_spp, kodebar);
+            // console.log(id, no_spp, no_ref_spp, kodebar);
             data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
         });
 
@@ -2269,9 +2269,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             $('#modalKonfirmasiHapus').modal('show');
         }
-
-
-
     }
 
     function deletePO(no) {

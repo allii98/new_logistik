@@ -458,6 +458,14 @@
                     // $('#tbody_rincian').append(tr_buka+td_col_1+form_buka+td_col_2+td_col_3+td_col_4+td_col_5+form_tutup+tr_tutup);
                     $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
 
+                    // var opsi_afd = '<option value="' + data.data_bpbitem[index].afd + '">' + data.data_bpbitem[index].afd + '</option>';
+                    // $('#cmb_bahan_' + n).empty();
+                    // $('#cmb_bahan_' + n).append(opsi_afd);
+
+                    // var opsi_blok = '<option value="' + data.data_bpbitem[index].blok + '">' + data.data_bpbitem[index].blok + '</option>';
+                    // $('#cmb_bahan_' + n).empty();
+                    // $('#cmb_bahan_' + n).append(opsi_blok);
+
                     var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].kodebebantxt + '</option>';
                     $('#cmb_bahan_' + n).empty();
                     $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
@@ -551,7 +559,7 @@
     function get_all_cmb(bahan, n) {
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('bpb/get_all_cmb'); ?>",
+            url: "<?php echo site_url('Bpb/get_all_cmb'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
             cache: false,
@@ -568,7 +576,7 @@
                     $('#cmb_tm_tbm_' + n).val('-');
 
                     var opsi_afd_unit = '<option value="' + '-' + '">' + '-' + '</option>';
-                    $('#cmb_afd_unit_' + n).empty();
+                    // $('#cmb_afd_unit_' + n).empty();
                     $('#cmb_afd_unit_' + n).append('-');
 
                     // var opsi_blok_sub = '<option value=""></option>';
@@ -576,7 +584,7 @@
                     // $('#cmb_blok_sub_'+n).append(opsi_blok_sub);
 
                     var opsi_cmb_thn_tanam = '<option value="' + '-' + '">' + '-' + '</option>';
-                    $('#cmb_tahun_tanam_' + n).empty();
+                    // $('#cmb_tahun_tanam_' + n).empty();
                     $('#cmb_tahun_tanam_' + n).append('-');
                 } else {
 
@@ -841,7 +849,7 @@
 
         $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
         $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
-
+        $('#txt_qty_diminta_1').addClass('form-control bg-light');
         $('#btn_cancelUpdate_ubah_' + no).css('display', 'block');
         $('#btn_update_' + no).css('display', 'none');
         $('#btn_cancel_update_' + no).css('display', 'none');
@@ -913,8 +921,12 @@
                 $('#txt_ket_rinci_' + no).val(data.data_bpbitem.ket);
 
                 $('#lbl_status_simpan_' + no).empty();
-                $('#lbl_status_simpan_' + no).append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
-
+                $.toast({
+                    position: 'top-right',
+                    text: 'Edit Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
                 $('#btn_ubah_' + no).css('display', 'block');
                 $('#btn_update_' + no).css('display', 'none');
                 $('#btn_cancel_update_' + no).css('display', 'none');

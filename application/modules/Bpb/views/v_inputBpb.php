@@ -368,9 +368,99 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapus">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                        <h4 class="mt-2">Konfirmasi Hapus</h4>
+                        <input type="hidden" id="hidden_no_delete" name="hidden_no_delete">
+                        <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
+                        <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteData()">Hapus</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 <script>
+    function hapusRinci(id) {
+        $('#hidden_no_delete').val(id);
+        if (id == 1) {
+            deleteData();
+        } else {
+
+            $('#modalKonfirmasiHapus').modal('show');
+        }
+    }
+
+    function deleteData() {
+        var no = $('#hidden_no_delete').val();
+        $('#modalKonfirmasiHapus').modal('hide');
+
+        var rowCount = $("#tableRinciBPB td").closest("tr").length;
+
+        if (rowCount != 1) {
+            var form_data = new FormData();
+
+            // form_data.append('hidden_id_po',$('#hidden_id_po_'+no).val());
+            form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
+            form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Bpb/hapus_rinci'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+
+                data: form_data,
+                success: function(data) {
+                    $('#tr_' + no).remove();
+                    // alert('Data Berhasil dihapus');
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Dihapus!',
+                        icon: 'success',
+                        loader: false
+                    });
+                    // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
+                    // $('.modal-success').modal('show');
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Item PO Tinggal 1',
+                text: "Yakin akan menghapus BPB ini?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Hapus!'
+            }).then((result) => {
+                if (result.value) {
+                    // var no_po = $('#hidden_no_po').val();
+                    deleteBPB(no);
+                }
+            });
+        }
+    }
+
+    function deleteBPB(no) {
+        console.log("untuk baris ke", no);
+    }
+
     function saveRinciEnter(e, no) {
         if (e.keyCode == 13 && !e.shiftKey) {
             if ($('#hidden_proses_status_' + no).val() == 'insert') {
@@ -644,7 +734,7 @@
         var kodebar = $('#hidden_kode_barang_' + no).val();
         sum_stok_booking(kodebar, no);
 
-        console.log(kodebar);
+        // console.log(kodebar);
 
 
         var v_qty = validasi_qty(sudah_booking, qty_diminta, stok_tgl_ini, no);
@@ -1086,7 +1176,7 @@
             data: form_data,
             success: function(data) {
 
-                // console.log(data.kodebar);
+                console.log(data.kodebar);
                 if (data == "kodebar_exist") {
                     swal('Tidak bisa ditambahkan. Barang sudah ada pada BPB yang sama !');
                     $('#lbl_status_simpan_' + no).empty();

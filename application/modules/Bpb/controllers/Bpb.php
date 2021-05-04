@@ -270,6 +270,69 @@ class Bpb extends CI_Controller
         echo json_encode($data);
     }
 
+    function hapus_rinci()
+    {
+
+        $id_bpb = $this->input->post('hidden_id_bpb');
+        $id_bpbitem = $this->input->post('hidden_id_bpbitem');
+
+        $data_delete = $this->db_logistik_pt->delete('bpbitem', array('id' => $id_bpbitem));
+
+        if ($data_delete === TRUE) {
+            $data = TRUE;
+        } else {
+            $data = FALSE;
+        }
+        echo json_encode($data);
+    }
+
+    function batal()
+    {
+        $id_bpb = $this->input->post('id');
+        $no_bpb = $this->input->post('no_bpb');
+        $alasan =  $this->input->post('alasan');
+
+        // $user = $this->session->userdata('user');
+        // $ip = $this->input->ip_address();
+        // $platform = $this->platform->agent();
+
+        // $get_bpb = $this->db_logistik_pt->get_where('bpb', array('id' => $id_bpb, 'nobpb' => $no_bpb))->row();
+
+        // $get_bpbitem = $this->db_logistik_pt->get_where('bpbitem', array('nobpb' => $no_bpb))->result();
+
+        $dataedit['batal'] = "1";
+        $dataedit['alasan_batal'] = $alasan;
+        $this->db_logistik_pt->set($dataedit);
+        $this->db_logistik_pt->where('id', $id_bpb);
+        $this->db_logistik_pt->where('nobpb', $no_bpb);
+        $this->db_logistik_pt->update('bpb');
+        if ($this->db_logistik_pt->affected_rows() > 0) {
+            $bool_bpb = TRUE;
+        } else {
+            $bool_bpb = FALSE;
+        }
+
+        $dataedit_bpbitem['batal'] = '1';
+        $dataedit_bpbitem['alasan_batal'] = $alasan;
+        $this->db_logistik_pt->set($dataedit_bpbitem);
+        $this->db_logistik_pt->where('nobpb', $no_bpb);
+        $this->db_logistik_pt->update('bpbitem');
+
+        if ($this->db_logistik_pt->affected_rows() > 0) {
+            $bool_bpbitem = TRUE;
+        } else {
+            $bool_bpbitem = FALSE;
+        }
+
+        if ($bool_bpb === TRUE && $bool_bpbitem === TRUE) {
+            $data = TRUE;
+        } else {
+            $data = FALSE;
+        }
+
+        echo json_encode($data);
+    }
+
     function cancel_ubah_rinci()
     {
         $no_bpb = $this->input->post('hidden_no_bpb');

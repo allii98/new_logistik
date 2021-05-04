@@ -203,7 +203,7 @@ class M_bpb extends CI_Model
         $format_m_y = date("m/Y");
 
         if (empty($this->input->post('hidden_no_ref_bpb'))) {
-            $norefbpb = $text1 . "-BPB/" . $text2 . "/" . $format_m_y . "/" . $print_bpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+            $norefbpb = $text1 . "-BPB/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
         } else {
             $norefbpb = $this->input->post('hidden_no_ref_bpb');
         }
