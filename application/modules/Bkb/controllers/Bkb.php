@@ -178,9 +178,9 @@ class Bkb extends CI_Controller
 
         // $skb = $this->input->post('txt_no_bpb');
         $nobpb = $this->input->post('txt_no_bpb');
-        if (empty($nobpb) || $nobpb == "-") {
-            $nobpb = $skb;
-        }
+        // if (empty($nobpb) || $nobpb == "-") {
+        //     $nobpb = $skb;
+        // }
 
         $alokasi = $this->input->post('cmb_alokasi_est');
 
@@ -272,10 +272,10 @@ class Bkb extends CI_Controller
 
         if (empty($this->input->post('hidden_no_bkb'))) {
             $savedatastockkeluar = $this->M_bkb->savedatastockkeluar($datastockkeluar);
-            $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem);
+            $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
         } else {
             $savedatastockkeluar = NULL;
-            $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem);
+            $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
         }
 
         //update QTY_KELUAR stokawal
@@ -283,8 +283,6 @@ class Bkb extends CI_Controller
 
         //update saldo akhir nilai
         $result_update_saldoakhir_nilai = $this->M_bkb->update_saldoakhir_nilai($kodebar);
-
-        //item_booking di kurangin berdasarkan no bpb
 
         $data = [
             'datastockkeluar' => $savedatastockkeluar,

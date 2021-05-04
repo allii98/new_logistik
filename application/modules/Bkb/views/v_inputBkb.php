@@ -67,6 +67,54 @@
                     </div>
                     <input type="hidden" id="hidden_id_ppo">
                 </div>
+
+                <fieldset style="display: none;" class="border p-1" id="fieldset_bbm">
+                    <div class="row div_form_bbm mt-0">
+                        <div class="col-lg-2 col-12">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="example-select">
+                                        <font face="Verdana" size="2.5">Bahan Bakar</font>
+                                    </label>
+                                    <input id="bhnbakar" name="bhnbakar" type="text" class="form-control form-control-sm bg-light" placeholder="" disabled>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Jenis Alat/Kend</font>
+                                </label>
+                                <input id="txt_jns_alat" name="txt_jns_alat" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">kode/Nomer</font>
+                                </label>
+                                <input id="txt_kd_nmr" name="txt_kd_nmr" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">HM/KM</font>
+                                </label>
+                                <input id="txt_hm_km" name="txt_hm_km" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Lokasi Kerja</font>
+                                </label>
+                                <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+
                 <hr class="mt-0 mb-0">
                 <div class="x_content div_form_2 mb-0">
                     <div class="row justify-content-between">
@@ -74,6 +122,8 @@
                             <h6 id="lbl_bkb_status" name="lbl_bkb_status">
                                 <font face="Verdana" size="2.5">No. BKB : ... &nbsp; No. Ref. BKB : ...</font>
                             </h6>
+                            <input type="hidden" id="hidden_no_bkb">
+                            <input type="hidden" id="hidden_no_ref_bkb">
                             <div class="row" style="margin-left:4px;">
                                 <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
                                 <h6><span id="h4_no_ref_bkb"></span></h6>
@@ -269,6 +319,20 @@
                 $('#diberikan_kpd').val(data_bpb.user);
                 $('#utk_keperluan').val(data_bpb.keperluan);
 
+                if (data_bpb.bag == 'TEKNIK' && data_bpb.bhn_bakar == 'BBM') {
+                    $('#fieldset_bbm').css('display', 'block');
+                    $('#bhnbakar').val(data_bpb.bhn_bakar);
+                    $('#txt_jns_alat').val(data_bpb.jn_alat);
+                    $('#txt_kd_nmr').val(data_bpb.no_kode);
+                    $('#txt_hm_km').val(data_bpb.hm_km);
+                    $('#txt_lokasi_kerja').val(data_bpb.lok_kerja);
+
+                } else {
+                    $('#fieldset_bbm').css('display', 'none');
+                }
+
+
+
                 for (i = 0; i < data_item_bpb.length; i++) {
                     // var no = i + 1;
 
@@ -455,7 +519,7 @@
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
 
-                if ($.trim($('#hidden_no_lpb').val()) == '') {
+                if ($.trim($('#h4_no_ref_bkb').text()) == '') {
                     $('#lbl_bkb_status').empty();
                     $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
                 }
@@ -464,8 +528,8 @@
             data: {
                 txt_tgl_bkb: $('#tgl_bkb').val(),
                 txt_no_bpb: $('#txt_no_bpb').val(),
-                hidden_no_ref_bkb: $('#h4_no_ref_bkb').text(),
-                hidden_no_bkb: $('#h4_no_bkb').text(),
+                hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+                hidden_no_bkb: $('#hidden_no_bkb').val(),
                 cmb_alokasi_est: $('#alokasi_est').val(),
                 txt_diberikan_kpd: $('#diberikan_kpd').val(),
                 txt_untuk_keperluan: $('#utk_keperluan').val(),
@@ -489,7 +553,13 @@
             success: function(data) {
 
                 $('#lbl_status_simpan_' + n).empty();
+
                 $('#lbl_bkb_status').empty();
+                $('#h4_no_bkb').html('No. BKB : ' + data.no_bkb);
+                $('#hidden_no_bkb').val(data.no_bkb);
+
+                $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
+                $('#hidden_no_ref_bkb').val(data.noref_bkb);
 
                 $.toast({
                     position: 'top-right',
@@ -501,8 +571,6 @@
 
                 console.log(data);
 
-                $('#h4_no_bkb').html('No. BKB : ' + data.no_bkb);
-                $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
 
                 //hitung ulang stok?
                 get_stok(n, hidden_kode_barang);

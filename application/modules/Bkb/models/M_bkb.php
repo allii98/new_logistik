@@ -80,13 +80,13 @@ class M_bkb extends CI_Model
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $noref = $this->input->get('noref');
-        $query = "SELECT norefbpb FROM bpb WHERE norefbpb LIKE '%$noref%' AND batal = 0";
+        $query = "SELECT norefbpb FROM bpb WHERE norefbpb LIKE '%$noref%' AND batal = 0 AND approval = '1' AND status_bkb = '0'";
         return $this->db_logistik_pt->query($query)->result_array();
     }
 
     public function get_data_bpb_qr($noref)
     {
-        $this->db_logistik_pt->select('bag, alokasi, user, keperluan');
+        $this->db_logistik_pt->select('bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja');
         $this->db_logistik_pt->where('norefbpb', $noref);
         $this->db_logistik_pt->from('bpb');
         $data_bpb = $this->db_logistik_pt->get()->row_array();
@@ -127,9 +127,35 @@ class M_bkb extends CI_Model
         return $this->db_logistik_pt->insert('stockkeluar', $data);
     }
 
-    public function savedatakeluarbrgitem($data)
+    public function savedatakeluarbrgitem($data, $kodebar, $norefbpb, $no_ref_bkb)
     {
-        return $this->db_logistik_pt->insert('keluarbrgitem', $data);
+        $this->db_logistik_pt->insert('keluarbrgitem', $data);
+
+        //ubah status bpbitem menjadi 1 where kodebar AND NOREF
+        $this->db_logistik_pt->set('status_item_bkb', 1);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'norefbpb' => $norefbpb]);
+        $this->db_logistik_pt->update('bpbitem');
+
+        //$count_bpbitem = count bpbitem where kodebar AND noref;
+        $this->db_logistik_pt->select('norefbpb');
+        $this->db_logistik_pt->where('norefbpb', $norefbpb);
+        $this->db_logistik_pt->from('bpbitem');
+        $count_bpbitem = $this->db_logistik_pt->count_all_results();
+
+        //$count_keluarbrgitem = count keluarbrgitem where kodebar AND noref;
+        $this->db_logistik_pt->select('NO_REF');
+        $this->db_logistik_pt->where('NO_REF', $no_ref_bkb);
+        $this->db_logistik_pt->from('keluarbrgitem');
+        $count_keluarbrgitem = $this->db_logistik_pt->count_all_results();
+
+        if ($count_bpbitem == $count_keluarbrgitem) {
+            //  update status bpb menjadi 1 where noref
+            $this->db_logistik_pt->set('status_bkb', 1);
+            $this->db_logistik_pt->where('norefbpb', $norefbpb);
+            return $this->db_logistik_pt->update('bpb');
+        } else {
+            return FALSE;
+        }
     }
 
     public function update_qtykeluar($kodebar, $qty2)
