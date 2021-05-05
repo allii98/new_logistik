@@ -8,6 +8,7 @@ class Bkb extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_bkb');
+        $this->load->model('M_approval_bkb');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -51,19 +52,19 @@ class Bkb extends CI_Controller
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
-                        data-ttg="' . $field->NO_REF . '"
+            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
+                        data-noref="' . $field->NO_REF . '"
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
+                        </button>
+                        <button class="btn btn-primary btn-xs fa fa-undo" id="undo_bkb" name="undo_bkb"
+                        data-noref="' . $field->NO_REF . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
-                        <button class="btn btn-primary btn-xs fa fa-undo" id="undo_lpb" name="undo_lpb"
-                        data-ttg="' . $field->NO_REF . '"
+                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
+                        data-noref="' . $field->NO_REF . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
-                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
-                        data-ttg="' . $field->NO_REF . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
-                        <a href="' . site_url('lpb/cetak/' . $field->NO_REF . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                        <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = $field->NO_REF;
             $row[] = $field->nobpb;
@@ -396,5 +397,53 @@ class Bkb extends CI_Controller
         $params['size'] = 10;
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
         $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+    }
+
+    function get_detail_approval()
+    {
+        $id_stockkeluar = $this->input->post('id_stockkeluar');
+        $no_ref = $this->M_approval_bkb->get_noref($id_stockkeluar);
+        $this->M_approval_bkb->getWhere($no_ref['NO_REF']);
+
+        $list = $this->M_approval_bkb->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            if ($d->status_kasie_gudang == "1") {
+                $status = "<span style='color: green'><b>DISETUJUI<br>" . $d->tgl_kasie_gudang . "</b></span>";
+            } else {
+                $status = "DALAM PROSES";
+            }
+
+            $no++;
+            $row = array();
+            $row[] = $no . ".";
+            $row[] = $d->id;
+            $row[] = '<font face="Verdana" size="2">' . $d->NO_REF . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->kodebar . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->satuan . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->qty . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->qty2 . '</font>';
+            $row[] = $status;
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_approval_bkb->count_all(),
+            "recordsFiltered" => $this->M_approval_bkb->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
+
+    public function approval_bkb()
+    {
+        $id_item_bkb = $this->input->post('id_item_bkb');
+        $output = $this->M_approval_bkb->approval_bkb($id_item_bkb);
+
+        echo json_encode($output);
     }
 }
