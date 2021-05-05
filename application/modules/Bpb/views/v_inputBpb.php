@@ -6,9 +6,13 @@
 
                 <div class="card-box">
                     <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BPB</h4>
-                    <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
-                        Input Bon Permintaan Barang
-                    </p>
+                    <div class="row justify-content-between">
+                        <p class="sub-header ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                            Input Bon Permintaan Barang
+                        </p>
+                        <button class="btn btn-xs btn-primary h-50 mr-2" id="inputNew" style="display:none;" onclick="inputBaru()">Input Bpb Baru</button>
+                    </div>
+
 
                     <div class="row div_form_1">
                         <div class="col-md-4">
@@ -117,12 +121,14 @@
                         </div>
 
 
+
                         <!-- <div class="form-group row col-md-3">
                             <div class="col-md-1"></div>
-
+                            
                             <div class="col-md-5 col-sm-6 col-xs-12">
-                            </div>
-                        </div> -->
+                                </div>
+                            </div> -->
+
 
                     </div>
                     <hr class="mt-0 mb-2">
@@ -388,6 +394,10 @@
 </div>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 <script>
+    function inputBaru() {
+        window.location.href = '<?= base_url('bpb/input') ?>';
+    }
+
     function hapusRinci(id) {
         $('#hidden_no_delete').val(id);
         if (id == 1) {
@@ -1185,7 +1195,9 @@
                     if (data.status == true) {
                         var kode_barang = data.kodebar;
                         sum_stok_booking(kode_barang, no);
-                        $('#a_bpb_baru').show();
+                        // $('#a_bpb_baru').show();
+                        // $('#input-baru').show();
+                        $('#inputNew').css('display', 'block');
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
