@@ -124,19 +124,23 @@
                             <thead>
                                 <tr>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No.</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. BPB</th>
+                                    <!-- <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. BPB</th> -->
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. REF BPB</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Kode Barang</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Nama Barang</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Diminta</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Disetujui</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Satuan</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Approval</th>
                                 </tr>
                             </thead>
 
                             <tbody id="tbody_list_po">
                             </tbody>
+                            <!-- <tfoot>
+                                <tr>
+                                    <th style="text-align: center;" colspan="10"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
+                                </tr>
+                            </tfoot> -->
                         </table>
                     </div>
                 </div>
@@ -254,7 +258,7 @@
             "processing": true,
             "serverSide": true,
             "order": [],
-
+            // "select": true,
             "ajax": {
                 "url": "<?php echo site_url('Bpb/detail_itembpb'); ?>",
                 "type": "POST",

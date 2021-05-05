@@ -852,7 +852,7 @@ class Bpb extends CI_Controller
         }
     }
 
-    function cetak()
+    function cetak1()
     {
         $no_bpb = $this->uri->segment('3');
         $id = $this->uri->segment('4');
@@ -883,18 +883,11 @@ class Bpb extends CI_Controller
         $mpdf->SetHTMLHeader('
                             <table width="100%" border="0" align="center">
                                 <tr>
-                                	<td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
+                                	<td align="left" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
                                 </tr>
-                                <!-- <tr>
-                                    <td rowspan="2" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:8px" src="' . base_url() . 'assets/img/msal.jpg"></td>
-                                    <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
-                                </tr> -->
-                                <!-- <tr>
-                                    <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
-                                    </td>
-                                </tr> -->
+
+                                
                             </table>
-                            <hr style="width:100%;margin:0px;">
                             ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
@@ -902,6 +895,110 @@ class Bpb extends CI_Controller
 
         $mpdf->WriteHTML($html);
         $mpdf->Output();
+    }
+
+    function cetak()
+    {
+        $no_bpb = $this->uri->segment('3');
+        $id = $this->uri->segment('4');
+
+        $this->db->where('id', $id);
+        $this->db->where('nobpb', $no_bpb);
+        $cek = $this->db->get_where('bpb');
+
+        if ($cek->num_rows() > 0) {
+            $cek = $cek->row();
+            $jml_ = (int)$cek->jml_cetak;
+            $up = [
+                'jml_cetak' => $jml_ + 1
+            ];
+            $this->db->where('id', $id);
+            $this->db->where('nobpb', $no_bpb);
+            $this->db->update('bpb', $up);
+        } else {
+            $ins = [
+                'jml_cetak' => 1
+            ];
+            $this->db->insert('bpb', $ins);
+        }
+
+
+        $data['no_bpb'] = $no_bpb;
+        $data['id'] = $id;
+        $data['bpb'] = $this->db_logistik_pt->get_where('bpb', array('id' => $id, 'nobpb' => $no_bpb))->row();
+        $data['bpbitem'] = $this->db_logistik_pt->get_where('bpbitem', array('nobpb' => $no_bpb))->result();
+        $data['bpb_approval'] = $this->db_logistik_pt->get_where('approval_bpb', array('no_bpb' => $no_bpb))->result();
+
+        $noref = $data['bpb']->norefbpb;
+        $this->qrcode($no_bpb, $id, $noref);
+
+        // cek bahan bakar
+        $this->db->where('id', $id);
+        $this->db->where('nobpb', $no_bpb);
+        $cekdata = $this->db->get_where('bpb');
+        $d = $cekdata->row();
+        $isi = $d->bhn_bakar;
+
+        if ($isi == "BBM") {
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => [190, 236],
+                'setAutoTopMargin' => 'stretch',
+                'orientation' => 'P'
+            ]);
+
+            // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+            $mpdf->SetHTMLHeader('
+                                <table width="100%" border="0" align="center">
+                                    <tr>
+                                        <td align="left" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</br><h5>Kebun / Unit</h5></td>
+                                        <td align="right" style="font-size:14px;font-weight:bold;"><img width="10%" height="10%" src=" ' . site_url('assets/qrcode/bpb/' . $id . "_" . $no_bpb . '.png') . '"></td>
+                                    </tr>
+                                  
+                                    
+    
+                                    
+                                </table>
+                                ');
+            // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+            $html = $this->load->view('v_cetakbpb', $data, true);
+
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
+        } else {
+            # code...
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => [190, 236],
+                'setAutoTopMargin' => 'stretch',
+                'orientation' => 'P'
+            ]);
+
+            // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+            $mpdf->SetHTMLHeader('
+                                <table width="100%" border="0" align="center">
+                                    <tr>
+                                        <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
+                                    </tr>
+                                    <!-- <tr>
+                                        <td rowspan="2" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:8px" src="' . base_url() . 'assets/img/msal.jpg"></td>
+                                        <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
+                                    </tr> -->
+                                    <!-- <tr>
+                                        <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                        </td>
+                                    </tr> -->
+                                </table>
+                                <hr style="width:100%;margin:0px;">
+                                ');
+            // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+            $html = $this->load->view('v_print_bpb', $data, true);
+
+            $mpdf->WriteHTML($html);
+            $mpdf->Output();
+        }
     }
 
     function qrcode($no_bpb, $id, $noref)
@@ -999,13 +1096,12 @@ class Bpb extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<font face="Verdana" size="2">' . $no . "." . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->nobpb . '</font>';
+            // $row[] = '<font face="Verdana" size="2">' . $d->nobpb . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->norefbpb . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->kodebar . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->qty . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->qty_disetujui . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->satuan . '</font>';
             $query_status_asisten_afd = "SELECT * FROM approval_bpb WHERE status_asisten_afd <> '0' AND no_bpb = '$nobpb_query' AND norefbpb = '$norefbpb_query' AND kodebar = '$kodebar_query'";
             $get_status_asisten_afd = $this->db_logistik_pt->query($query_status_asisten_afd);
             if ($get_status_asisten_afd->num_rows() > 0) {

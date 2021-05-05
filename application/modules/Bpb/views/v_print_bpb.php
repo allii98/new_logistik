@@ -12,11 +12,6 @@
             font-size: 14px;
         }
 
-        h5 {
-            font-size: 9px;
-            font-weight: normal;
-        }
-
         table tr td {
             font-size: 10px;
         }
@@ -43,25 +38,15 @@
 <body>
     <table border="0" width="100%">
         <tr>
-            <td align="center" colspan="2" valign="bottom">
-                <h3 align="center" style="margin: 0px;padding: 0px;">Bon Permintaan Bahan Bakar Minyak</h3>
+            <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bpb/<?php echo $id . "_" . $no_bpb; ?>.png"></td>
+            <td align="center" valign="bottom">
+                <h4 align="center" style="margin: 0px;padding: 0px;">Bon Permintaan Barang</h4>
             </td>
-        </tr><br>
+        </tr>
         <tr>
-            <td>
-                <h5>No. Ref&nbsp;&nbsp;: <?= $bpb->norefbpb; ?><br />Tanggal&nbsp;: <?= $bpb->tglinput; ?><br />Jam&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $bpb->jaminput; ?> WIB</h5>
+            <td align="center" valign="baseline">
+                <h5 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b>No. BPB : <?= $bpb->nobpb; ?> <br /> No. Ref BPB : <?= $bpb->norefbpb; ?></b></h5>
             </td>
-            <td>
-
-                <table class="singleborder" border="1" width="100%">
-                    <tr>
-                        <td>
-                            <h5>Jenis alat/Kend&nbsp;&nbsp;: <?= $bpb->jn_alat; ?><br />Kode/Nomor&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $bpb->no_kode; ?><br />HM/KM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $bpb->hm_km; ?><br />Lokasi kerja&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $bpb->lok_kerja; ?></h5>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-            <!-- <td align="right" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bpb/<?php echo $id . "_" . $no_bpb; ?>.png"></td> -->
         </tr>
     </table>
     <table width="100%">
@@ -95,8 +80,8 @@
         <tr>
             <td colspan="2">
                 Distribusi :<br />
-                -Ke 1,2 Lampiran Ke( CU )<br />
-                -Ke 3 Permintaan Barang
+                -Ke 1 - Kantor Kebun/PKS<br />
+                -Ke 2 - Gudang
             </td>
             <td colspan="4">
                 <table border="0" width="100%">
