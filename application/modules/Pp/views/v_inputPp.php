@@ -177,4 +177,140 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="fullWidthModalLabel" aria-hidden="true" id="modalcariPO">
+        <div class="modal-dialog modal-full-width">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="modalcariPO">PO</h4>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                        <table id="tableDataPO" class="table table-striped table-bordered table-in" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Tgl</th>
+                                    <th>No. Ref. PO</th>
+                                    <th>Supplier</th>
+                                    <th>Bayar</th>
+                                    <th>Harga PO+PPN</th>
+                                    <th>BPO</th>
+                                    <th>Terbayar</th>
+                                    <th>Saldo</th>
+                                    <th>Kurs</th>
+                                    <th>Grup</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </div>
+<script>
+    $(document).ready(function() {
+        tampilModal();
+    });
+
+    function tampilModal() {
+        $('#modalcariPO').modal('show');
+        dataPO();
+    }
+
+    function dataPO() {
+        $('#tableDataPO').DataTable().destroy();
+        $('#tableDataPO').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "select": true,
+
+            "ajax": {
+                "url": "<?php echo site_url('Pp/list_po') ?>",
+                "type": "POST"
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+
+            }, ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+            "aoColumnDefs": [{
+                "bSearchable": false,
+                "bVisible": false,
+                "aTargets": [1]
+            }, ],
+
+        });
+
+        $('#tableDataPO tbody').on('click', 'tr', function() {
+            var dataClick = $('#tableDataPO').DataTable().row(this).data();
+            var tgl_po = new Date(dataClick[0]);
+            var no_ref_po = dataClick[1];
+            var no_po = dataClick[2];
+            var kd_supplier = dataClick[3];
+            var nama_supplier = dataClick[4];
+            var bayar = dataClick[5];
+            var nilai_po = dataClick[6];
+            var nilai_bpo = dataClick[7];
+            var sudah_dibayar = dataClick[8];
+            var kurs = dataClick[10];
+            var grup = dataClick[11];
+
+            $('#txt_tgl_po').val(tgl_po);
+            $('#txt_no_ref_po').val(no_ref_po);
+            $('#hidden_no_po').val(no_po);
+            $('#txt_pembayaran').val(bayar);
+            $('#txt_kode_supplier').val(kd_supplier);
+            $('#txt_supplier').val(nama_supplier);
+            $('#txt_dibayar_ke').val(nama_supplier);
+            $('#txt_nilai_po').val(nilai_po);
+            $('#txt_nilai_bpo2').val(nilai_bpo);
+            $('#lbl_kurs').html(kurs);
+            $('#hidden_kurs').val(kurs);
+            $('#hidden_grup').val(grup);
+
+            $('#txt_sudah_dibayar').val(sudah_dibayar);
+            // $('#lbl_no_acc_'+row).html(no_coa);
+            // $('#lbl_nama_acc_'+row).html(nama_account);
+            // $('#txt_account_beban_'+row).val(no_coa);
+
+            // $('#hidden_no_acc_'+row).val(no_coa);
+            // $('#hidden_nama_acc_'+row).val(nama_account);
+
+            $('#modalcariPO').modal('hide');
+            hitungTotalPO();
+        })
+
+
+    }
+
+    function hitungTotalPO() {
+        var nilai_po = $('#txt_nilai_po').val();
+        var pajak = $('#txt_pajak').val();
+        var nilai_bpo1 = $('#txt_nilai_bpo1').val();
+        var nilai_bpo2 = $('#txt_nilai_bpo2').val();
+        var sudah_dibayar = $('#txt_sudah_dibayar').val();
+
+        var total_po = parseInt(nilai_po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2);
+        var sisabayar = (parseInt(nilai_po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2)) - parseInt(sudah_dibayar);
+
+        $('#txt_total_po').val(total_po);
+        $('#txt_jumlah').val(sisabayar);
+        $('#txt_terbilang').val(terbilang(sisabayar));
+    }
+</script>
