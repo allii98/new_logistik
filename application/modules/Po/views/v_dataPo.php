@@ -68,14 +68,7 @@
 											No
 										</th>
 										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-											No PO
-										</th>
-
-										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
 											Ref. PO
-										</th>
-										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-											Jenis&nbsp;Budget
 										</th>
 										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
 											Nama & Kode Barang

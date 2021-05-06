@@ -65,9 +65,9 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no . ".";
-            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nopo . '</font>';
+            // $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nopo . '</font>';
             $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->noref . '</font>';
-            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->grup . '</font>';
+            // $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->grup . '</font>';
             $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nabar . ' | ' . $d->kodebar . '</font>';
             $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->qty . '</font>';
             // $row[] = $d->tglpo;
