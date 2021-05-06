@@ -120,8 +120,7 @@ class Po extends CI_Controller
         </a>
         ';
             $row[] =  $no . ".";
-            $row[] = $d->no_refppo;
-            $row[] = $d->nopo;
+            $row[] = $d->noreftxt;
             $row[] = $d->tglpo;
             $row[] = $d->nama_supply;
             $row[] = $d->ket;

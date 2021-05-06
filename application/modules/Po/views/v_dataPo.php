@@ -18,9 +18,7 @@
 								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
 									No. Ref
 								</th>
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									No. PO
-								</th>
+
 								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
 									Tgl. PO
 								</th>
