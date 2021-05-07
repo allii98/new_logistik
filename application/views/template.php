@@ -432,6 +432,12 @@
 
         <script src="<?php echo base_url() ?>assets/js/instascan.min.js"></script>
 
+        <!-- Terbilang JS -->
+        <script src="<?php echo base_url(); ?>assets/terbilang/terbilang.js"></script>
+
+        <!-- JQuery Number -->
+        <script src="<?php echo base_url(); ?>assets/jquerynumber/jquery.number.js"></script>
+
         <div class="content-page mt-1">
             <div class="content">
 
@@ -835,8 +841,7 @@
     <script src="<?php echo base_url() ?>assets/libs/datatables.net-select/js/dataTables.select.min.js"></script>
     <script src="<?php echo base_url() ?>assets/libs/pdfmake/build/pdfmake.min.js"></script>
     <script src="<?php echo base_url() ?>assets/libs/pdfmake/build/vfs_fonts.js"></script>
-    <!-- third party js ends -->
-    <script src="<?php echo base_url(); ?>assets/jquerynumber/jquery.number.js"></script>
+
     <!-- Datatables init -->
     <script src="<?php echo base_url() ?>assets/js/pages/datatables.init.js"></script>
 
