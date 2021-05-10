@@ -114,10 +114,10 @@
                                             <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                            <a href="<?= base_url('po/input') ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Po/input') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input PO</font>
                                             </a>
-                                            <a href="<?= base_url('po') ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Po') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data PO</font>
                                             </a>
                                         </div>
@@ -130,10 +130,10 @@
                                             <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('lpb/input'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Lpb/input'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input LPB</font>
                                             </a>
-                                            <a href="<?= base_url('lpb'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Lpb'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data LPB</font>
                                             </a>
                                         </div>
@@ -146,10 +146,10 @@
                                             <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('bpb/input'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Bpb/input'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input BPB</font>
                                             </a>
-                                            <a href="<?= base_url('bpb'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Bpb'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data BPB</font>
                                             </a>
                                         </div>
@@ -163,13 +163,13 @@
                                             </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('bkb/input'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Bkb/input'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input BKB</font>
                                             </a>
-                                            <a href="<?= base_url('bkb'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Bkb'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data BKB</font>
                                             </a>
-                                            <a href="<?= base_url('bkb/menunggu_approval'); ?>" class="dropdown-item">Approval Rev Qty</font></a>
+                                            <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="dropdown-item">Approval Rev Qty</font></a>
                                         </div>
                                     </div>
 
@@ -180,10 +180,10 @@
                                             <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('pp/input'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Pp/input'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input PP</font>
                                             </a>
-                                            <a href="<?= base_url('pp'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Pp'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data PP</font>
                                             </a>
                                         </div>
@@ -197,7 +197,7 @@
                                             </div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('retur/input') ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Retur/input') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Retur BKB</font>
                                             </a>
                                         </div>
