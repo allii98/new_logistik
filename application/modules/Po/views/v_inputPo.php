@@ -430,7 +430,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah('1')" id="btn_ubah_1" name="btn_ubah_" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update('1')"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancleUpdate('1')"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                    <!-- <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button> -->
                                                 </td>
 
                                             </form>
@@ -2266,7 +2266,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         if (id == 1) {
             deleteData();
         } else {
-
             $('#modalKonfirmasiHapus').modal('show');
         }
     }
