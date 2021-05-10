@@ -432,7 +432,7 @@
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button class="badge bagde-warning btn-warning" id="btn_req_rev_qty_1" name="btn_req_rev_qty_1" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="ReqRevQty(1)"><b>Rev</b></button>' +
+            '<button class="badge bagde-warning btn-warning" id="rev_qty_' + row + '" name="rev_qty_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="btnRevQty(' + row + ')"><b>Rev</b></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
@@ -562,6 +562,8 @@
                 $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
                 $('#hidden_no_ref_bkb').val(data.noref_bkb);
 
+                $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
+
                 $.toast({
                     position: 'top-right',
                     heading: 'Success',
@@ -592,5 +594,53 @@
         window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
 
         $('.div_form_2').css('pointer-events', 'none');
+    }
+
+    function btnRevQty(n) {
+        Swal.fire({
+            text: "Request revisi QTY ke KTU?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya Request!'
+        }).then((result) => {
+            if (result.value) {
+                revQty(n);
+            }
+        })
+    }
+
+    function revQty(n) {
+        var no_ref_bpb = $('#txt_no_bpb').val();
+        var kodebar = $('#hidden_kode_barang_' + n + '').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bkb/rev_qty'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref_bpb': no_ref_bpb,
+                'kodebar': kodebar
+            },
+            success: function(data) {
+
+                // tombol simpan disabled
+                $('.div_form_2').find('#btn_simpan_' + n + '').attr('disabled', '');
+                $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
+
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Request QTY Berhasil!',
+                    icon: 'success',
+                    loader: false
+                });
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
     }
 </script>

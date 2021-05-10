@@ -116,6 +116,16 @@ class M_approval_bkb extends CI_Model
             return $this->db_logistik_pt->insert('approval_bkb', $insert_bkb_approval);
         }
     }
+
+    public function rev_qty($no_ref_bpb, $kodebar)
+    {
+        $user = $this->session->userdata('user');
+
+        $this->db_logistik_pt->set('flag_req_rev_qty', '1');
+        $this->db_logistik_pt->set('user_req_rev_qty', $user);
+        $this->db_logistik_pt->where(['norefbpb' => $no_ref_bpb, 'kodebar' => $kodebar]);
+        return $this->db_logistik_pt->update('approval_bpb');
+    }
 }
 
 /* End of file M_approval_bkb.php */

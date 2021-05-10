@@ -56,14 +56,6 @@ class Bkb extends CI_Controller
                         data-noref="' . $field->NO_REF . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
                         </button>
-                        <button class="btn btn-primary btn-xs fa fa-undo" id="undo_bkb" name="undo_bkb"
-                        data-noref="' . $field->NO_REF . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
-                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
-                        data-noref="' . $field->NO_REF . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
                         <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = $field->NO_REF;
@@ -445,5 +437,24 @@ class Bkb extends CI_Controller
         $output = $this->M_approval_bkb->approval_bkb($id_item_bkb);
 
         echo json_encode($output);
+    }
+
+    public function rev_qty()
+    {
+        $no_ref_bpb = $this->input->post('no_ref_bpb');
+        $kodebar = $this->input->post('kodebar');
+
+        $output = $this->M_approval_bkb->rev_qty($no_ref_bpb, $kodebar);
+
+        echo json_encode($output);
+    }
+
+    public function approval_rev_qty()
+    {
+        $data = [
+            'title' => 'Approval Revisi QTY'
+        ];
+
+        $this->template->load('template', 'v_approval_rev_qty', $data);
     }
 }
