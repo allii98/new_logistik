@@ -72,9 +72,10 @@ class Pp extends CI_Controller
             $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$d->nopotxt' AND noref = '$ref_po'";
             $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
 
-
             $row[] = $d->tglpo;
             $row[] = $d->noreftxt;
+            $row[] = $d->nopotxt;
+            $row[] = $d->kode_supply;
             $row[] = $d->nama_supply;
             $row[] = $d->bayar;
             $row[] = number_format($get_harga_po->hargapo);
@@ -82,7 +83,6 @@ class Pp extends CI_Controller
             $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar);
             $row[] = number_format(($d->totalbayar) - $get_jumlah_sudah_bayar->kasir_bayar);
             $row[] = $get_kurs->kurs;
-            $row[] = $d->grup;
             $data[] = $row;
         }
         $output = array(

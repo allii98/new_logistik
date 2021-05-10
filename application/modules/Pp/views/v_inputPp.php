@@ -33,7 +33,7 @@
                                 <input type="text" class="form-control" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" required>
                             </div>
                             <div class="col-5">
-                                <input type="text" class="form-control bg-light" id="supplier" name="supplier" placeholder="Supplier" autocomplite="off" readonly>
+                                <input type="text" class="form-control bg-light" id="txt_supplier" name="txt_supplier" placeholder="Supplier" autocomplite="off" readonly>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -194,6 +194,8 @@
                                 <tr>
                                     <th>Tgl</th>
                                     <th>No. Ref. PO</th>
+                                    <th>No PO</th>
+                                    <th>Kd Supplier</th>
                                     <th>Supplier</th>
                                     <th>Bayar</th>
                                     <th>Harga PO+PPN</th>
@@ -201,7 +203,6 @@
                                     <th>Terbayar</th>
                                     <th>Saldo</th>
                                     <th>Kurs</th>
-                                    <th>Grup</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -252,7 +253,7 @@
             "aoColumnDefs": [{
                 "bSearchable": false,
                 "bVisible": false,
-                "aTargets": [1]
+                "aTargets": [2, 3]
             }, ],
 
         });
@@ -269,7 +270,6 @@
             var nilai_bpo = dataClick[7];
             var sudah_dibayar = dataClick[8];
             var kurs = dataClick[10];
-            var grup = dataClick[11];
 
             $('#txt_tgl_po').val(tgl_po);
             $('#txt_no_ref_po').val(no_ref_po);
@@ -282,7 +282,6 @@
             $('#txt_nilai_bpo2').val(nilai_bpo);
             $('#lbl_kurs').html(kurs);
             $('#hidden_kurs').val(kurs);
-            $('#hidden_grup').val(grup);
 
             $('#txt_sudah_dibayar').val(sudah_dibayar);
             // $('#lbl_no_acc_'+row).html(no_coa);

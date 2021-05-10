@@ -2125,10 +2125,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function ubah(id) {
         // $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
         // $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
-        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
-        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
-        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
-        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeClass('bg-light');
+        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeAttr('disabled', '');
+        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeClass('bg-light');
+        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeAttr('disabled', '');
 
         $('#btn_ubah_' + id).hide();
         $('#btn_hapus_' + id).hide();
