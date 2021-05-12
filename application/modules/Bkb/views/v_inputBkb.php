@@ -607,7 +607,7 @@
             if (result.value) {
                 revQty(n);
             }
-        })
+        });
     }
 
     function revQty(n) {

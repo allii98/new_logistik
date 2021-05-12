@@ -16,7 +16,6 @@
                 <table id="tableApprovalRevQty" class="table table-sm table-striped table-bordered" width="100%">
                     <thead>
                         <tr>
-                            <th style="width: 75px;">#</th>
                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Approval</th>
                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref BPB</th>
@@ -33,3 +32,80 @@
         </div>
     </div>
 </div>
+
+<script>
+    var table;
+    $(document).ready(function() {
+
+        //datatables
+        table = $('#tableApprovalRevQty').DataTable({
+
+            "scrollY": 400,
+            "scrollX": true,
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+
+            "ajax": {
+                "url": "<?php echo site_url('Bkb/get_data_rev_qty') ?>",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+
+        });
+    });
+
+    // pilih item dari data table server side
+    $(document).ready(function() {
+        $(document).on('click', '#approve_rev_qty', function() {
+
+            var id_approval_bpb = $(this).data('id_approval_bpb');
+            var norefbpb = $(this).data('norefbpb');
+
+            Swal.fire({
+                text: "Approve Revisi QTY?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Approve!'
+            }).then((result) => {
+                if (result.value) {
+                    approve_rev_qty(id_approval_bpb, norefbpb);
+                }
+            });
+        });
+    });
+
+    function approve_rev_qty(id_approval_bpb, norefbpb) {
+
+        console.log(id_approval_bpb);
+        console.log(norefbpb);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Bkb/ktu_approve_rev_qty') ?>",
+            dataType: "JSON",
+            data: {
+                id_approval_bpb: id_approval_bpb,
+                norefbpb: norefbpb
+            },
+            success: function(data) {
+                //refresh table
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Approve revisi QTY Berhasil!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                location.reload();
+            }
+        });
+    }
+</script>
