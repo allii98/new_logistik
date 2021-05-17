@@ -6,8 +6,8 @@ class M_databpb extends CI_Model
 {
 
     var $table = 'bpb'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'nobpb', 'norefbpb', 'nobkb_ro', 'nopo_ro', 'tglbpb', 'tglinput', 'jaminput', 'periode', 'alokasi', 'pt', 'kode', 'keperluan', 'bag', 'batal', 'alasan_batal', 'user', 'cetak', 'posting', 'approval', 'flag_bkb'); //field yang ada di table user
-    var $column_search = array('nobpb', 'norefbpb', 'nobkb_ro', 'nopo_ro', 'tglbpb', 'tglinput', 'jaminput', 'periode', 'alokasi', 'pt', 'kode', 'keperluan', 'bag', 'batal', 'alasan_batal', 'user', 'cetak', 'posting', 'approval', 'flag_bkb'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'nobpb', 'norefbpb', 'nobkb_ro', 'nopo_ro', 'tglbpb', 'tglinput', 'jaminput', 'periode', 'alokasi', 'pt', 'kode', 'keperluan', 'bag', 'batal', 'alasan_batal', 'user', 'cetak', 'posting', 'approval', 'req_rev_qty'); //field yang ada di table user
+    var $column_search = array('nobpb', 'norefbpb', 'nobkb_ro', 'nopo_ro', 'tglbpb', 'tglinput', 'jaminput', 'periode', 'alokasi', 'pt', 'kode', 'keperluan', 'bag', 'batal', 'alasan_batal', 'user', 'cetak', 'posting', 'approval', 'req_rev_qty'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'desc'); // default order 
 
     public function __construct()

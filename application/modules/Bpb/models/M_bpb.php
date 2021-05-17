@@ -229,7 +229,7 @@ class M_bpb extends CI_Model
         $databpb['cetak']           = "";
         $databpb['posting']         = "";
         $databpb['approval']        = "0";
-        $databpb['flag_bkb']        = "0";
+        $databpb['req_rev_qty']        = "0";
         $databpb['bhn_bakar']        = $bhnbakar;
         $databpb['jn_alat']        = $jns_alat;
         $databpb['no_kode']        = $kd_nmr;
@@ -539,13 +539,25 @@ class M_bpb extends CI_Model
 
         return TRUE;
     }
-    public function update_item($nobpb, $norefbpb, $aprrove)
+    public function update_item($nobpb, $norefbpb, $aprrove, $kodebar)
     {
+        $this->db_logistik_pt->set('approval', '1');
         $this->db_logistik_pt->where('nobpb', $nobpb);
         $this->db_logistik_pt->where('norefbpb', $norefbpb);
-        $this->db_logistik_pt->update('bpb', $aprrove);
+        $this->db_logistik_pt->update('bpb');
 
-        return TRUE;
+        //approval bpb item (merubah status approval_item menjadi 1)
+        if ($aprrove == '1') {
+            $this->db_logistik_pt->set('approval_item', '1');
+        } else {
+            $this->db_logistik_pt->set('approval_item', '0');
+        }
+        $this->db_logistik_pt->where('nobpb', $nobpb);
+        $this->db_logistik_pt->where('norefbpb', $norefbpb);
+        $this->db_logistik_pt->where('kodebar', $kodebar);
+        return $this->db_logistik_pt->update('bpbitem');
+
+        // return TRUE;
     }
 }
 

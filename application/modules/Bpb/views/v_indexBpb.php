@@ -22,8 +22,8 @@
                             <thead>
                                 <tr>
                                     <th style="width: 1px;">#</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. BPB</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref. BPB</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Item Barang</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em; width: 88px;">Keperluan</th>
 

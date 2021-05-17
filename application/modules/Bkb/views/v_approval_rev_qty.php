@@ -66,6 +66,7 @@
 
             var id_approval_bpb = $(this).data('id_approval_bpb');
             var norefbpb = $(this).data('norefbpb');
+            var kodebar = $(this).data('kodebar');
 
             Swal.fire({
                 text: "Approve Revisi QTY?",
@@ -75,16 +76,17 @@
                 confirmButtonText: 'Ya Approve!'
             }).then((result) => {
                 if (result.value) {
-                    approve_rev_qty(id_approval_bpb, norefbpb);
+                    approve_rev_qty(id_approval_bpb, norefbpb, kodebar);
                 }
             });
         });
     });
 
-    function approve_rev_qty(id_approval_bpb, norefbpb) {
+    function approve_rev_qty(id_approval_bpb, norefbpb, kodebar) {
 
-        console.log(id_approval_bpb);
-        console.log(norefbpb);
+        // console.log(id_approval_bpb);
+        // console.log(norefbpb);
+        // console.log(kodebar);
 
         $.ajax({
             type: "POST",
@@ -92,7 +94,8 @@
             dataType: "JSON",
             data: {
                 id_approval_bpb: id_approval_bpb,
-                norefbpb: norefbpb
+                norefbpb: norefbpb,
+                kodebar: kodebar,
             },
             success: function(data) {
                 //refresh table

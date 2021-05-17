@@ -470,6 +470,7 @@ class Bkb extends CI_Controller
             $row = array();
             $row[] = '<button class="btn btn-warning btn-xs" id="approve_rev_qty" name="approve_rev_qty"
                         data-id_approval_bpb="' . $field->id . '" data-norefbpb="' . $field->norefbpb . '"
+                        data-kodebar="' . $field->kodebar . '"
                         data-toggle="tooltip" data-placement="top" title="detail">
                         Approve</button>';
             $row[] = $no;
@@ -497,8 +498,9 @@ class Bkb extends CI_Controller
     {
         $id_approval_bpb = $this->input->post('id_approval_bpb');
         $norefbpb = $this->input->post('norefbpb');
+        $kodebar = $this->input->post('kodebar');
 
-        $output = $this->M_approval_rev_qty->ktu_approve_rev_qty($id_approval_bpb, $norefbpb);
+        $output = $this->M_approval_rev_qty->ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar);
 
         echo json_encode($output);
     }

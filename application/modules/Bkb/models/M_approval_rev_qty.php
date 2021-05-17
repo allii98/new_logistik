@@ -71,13 +71,23 @@ class M_approval_rev_qty extends CI_Model
         return $this->db_logistik_pt->count_all_results();
     }
 
-    public function ktu_approve_rev_qty($id_approval_bpb, $norefbpb)
+    public function ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar)
     {
         $date = date('Y-m-d H:i:s');
         $this->db_logistik_pt->set('flag_req_rev_qty', '2');
         $this->db_logistik_pt->set('tgl_appr_req_ktu', $date);
         $this->db_logistik_pt->where(['id' => $id_approval_bpb, 'norefbpb' => $norefbpb]);
-        return $this->db_logistik_pt->update('approval_bpb');
+        $this->db_logistik_pt->update('approval_bpb');
+
+        $this->db_logistik_pt->set('req_rev_qty', '1');
+        $this->db_logistik_pt->where('norefbpb', $norefbpb);
+        $this->db_logistik_pt->update('bpb');
+
+        $this->db_logistik_pt->set('req_rev_qty_item', '1');
+        $this->db_logistik_pt->where(['norefbpb' => $norefbpb, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->update('bpbitem');
+
+        return true;
     }
 }
 

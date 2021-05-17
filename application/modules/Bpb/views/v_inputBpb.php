@@ -715,7 +715,7 @@
         cek_bagian(row);
 
         $('#txt_qty_diminta_' + row).addClass('currencyduadigit');
-        $('.currencyduadigit').number(true, 2);
+        $('.currencyduadigit').number(true, 0);
         // $('#txt_account_beban_'+row).attr('disabled','');
 
         $('html, body').animate({

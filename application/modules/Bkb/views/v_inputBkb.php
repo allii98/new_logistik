@@ -333,7 +333,7 @@
                 for (i = 0; i < data_item_bpb.length; i++) {
                     // var no = i + 1;
 
-                    tambah_row(i, data_item_bpb[i].status_item_bkb);
+                    tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item);
                     tahun_tanam(i, data_item_bpb[i].kodebebantxt);
 
                     //sum stok all periode / qtymasuk - qtykeluar
@@ -373,7 +373,7 @@
         });
     }
 
-    function tambah_row(row, status_item_bkb) {
+    function tambah_row(row, status_item_bkb, approval_item) {
         var tr_buka = '<tr id="tr_' + row + '">';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -442,10 +442,10 @@
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        if (status_item_bkb == 1) {
-            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
-        } else {
+        if (status_item_bkb == '0' && approval_item == '1') {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        } else {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
         }
 
         // cek_bagian(row);
