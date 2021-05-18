@@ -349,8 +349,11 @@
                     $('#sat_bpb_' + i).text(satuan);
                     $('#txt_qty_diminta_' + i).val(qty);
                     //jika revisi qty maka tampilkan qty disetujui, jika tidak tampilkan qty
-
-                    $('#txt_qty_disetujui_' + i).val(qty_disetujui);
+                    if (data_item_bpb[i].req_rev_qty_item == '2') {
+                        $('#txt_qty_disetujui_' + i).val(qty_disetujui);
+                    } else {
+                        $('#txt_qty_disetujui_' + i).val(qty);
+                    }
                     $('#txt_ket_rinci_' + i).val(ket);
 
                 }
@@ -507,7 +510,7 @@
 
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('BKB/saveBkb') ?>",
+            url: "<?php echo base_url('Bkb/saveBkb') ?>",
             dataType: "JSON",
 
             beforeSend: function() {

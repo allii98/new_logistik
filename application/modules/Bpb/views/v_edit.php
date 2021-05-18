@@ -456,12 +456,9 @@
                         '</td>';
                     var form_tutup = '</form>';
                     var tr_tutup = '</tr>';
-                    console.log(data.data_bpbitem[i].req_rev_qty_item + "gege");
-                    if (data.data_bpbitem[i].req_rev_qty_item == '1') {
-                        $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
-                    } else {
-                        $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + form_tutup + tr_tutup);
-                    }
+
+                    $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
+
                     // $('#tbody_rincian').append(tr_buka+td_col_1+form_buka+td_col_2+td_col_3+td_col_4+td_col_5+form_tutup+tr_tutup);
 
                     // var opsi_afd = '<option value="' + data.data_bpbitem[index].afd + '">' + data.data_bpbitem[index].afd + '</option>';

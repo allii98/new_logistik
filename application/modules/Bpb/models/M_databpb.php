@@ -16,7 +16,6 @@ class M_databpb extends CI_Model
         $this->load->database();
     }
 
-
     private function _get_datatables_query()
     {
         $periode = $this->session->userdata('ym_periode');

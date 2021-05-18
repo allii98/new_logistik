@@ -176,7 +176,7 @@ class Bpb extends CI_Controller
                             <button class="btn btn-primary btn-xs" id="btn_approval" name="btn_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalListApproval(' . $nobpb . ',' . $norefbpb . ')"> Approval
                             </button>
                         </a>';
-            if ($hasil->approval == '1' && $hasil->req_rev_qty == '1' || $hasil->approval == '0') {
+            if ($hasil->approval == '0') {
                 $print = "";
                 $ubah = '<a href="' . site_url('bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang">';
                 $batal = '<a href="javascript:;" id="a_batal_bpb">
