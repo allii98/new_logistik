@@ -2,13 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_databpb extends CI_Model
+class M_approval_rev_qty extends CI_Model
 {
 
-    var $table = 'bpb'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'nobpb', 'norefbpb', 'nobkb_ro', 'nopo_ro', 'tglbpb', 'tglinput', 'jaminput', 'periode', 'alokasi', 'pt', 'kode', 'keperluan', 'bag', 'batal', 'alasan_batal', 'user', 'cetak', 'posting', 'approval', 'req_rev_qty'); //field yang ada di table user
-    var $column_search = array('nobpb', 'norefbpb', 'nobkb_ro', 'nopo_ro', 'tglbpb', 'tglinput', 'jaminput', 'periode', 'alokasi', 'pt', 'kode', 'keperluan', 'bag', 'batal', 'alasan_batal', 'user', 'cetak', 'posting', 'approval', 'req_rev_qty'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'desc'); // default order 
+    var $table = 'approval_bpb'; //nama tabel dari database
+    var $column_order = array(null, 'id', 'norefbpb', 'kodebar', 'nabar', 'qty_diminta', 'user_req_rev_qty'); //field yang ada di table supplier  
+    var $column_search = array('id', 'norefbpb', 'kodebar', 'nabar', 'qty_diminta', 'user_req_rev_qty'); //field yang diizin untuk pencarian 
+    var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
     {
@@ -16,12 +16,10 @@ class M_databpb extends CI_Model
         $this->load->database();
     }
 
-
     private function _get_datatables_query()
     {
-        $periode = $this->session->userdata('ym_periode');
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where(['batal !=' => 1, 'batal !=' => $periode]);
+        $this->db_logistik_pt->where('flag_req_rev_qty', '1');
 
         $i = 0;
 
@@ -37,7 +35,6 @@ class M_databpb extends CI_Model
                 } else {
                     $this->db_logistik_pt->or_like($item, $_POST['search']['value']);
                 }
-
                 if (count($this->column_search) - 1 == $i)
                     $this->db_logistik_pt->group_end();
             }
@@ -73,8 +70,25 @@ class M_databpb extends CI_Model
         $this->db_logistik_pt->from($this->table);
         return $this->db_logistik_pt->count_all_results();
     }
-    // end server side table
 
+    public function ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar)
+    {
+        $date = date('Y-m-d H:i:s');
+        $this->db_logistik_pt->set('flag_req_rev_qty', '2');
+        $this->db_logistik_pt->set('tgl_appr_req_ktu', $date);
+        $this->db_logistik_pt->where(['id' => $id_approval_bpb, 'norefbpb' => $norefbpb]);
+        $this->db_logistik_pt->update('approval_bpb');
+
+        $this->db_logistik_pt->set('req_rev_qty', '1');
+        $this->db_logistik_pt->where('norefbpb', $norefbpb);
+        $this->db_logistik_pt->update('bpb');
+
+        $this->db_logistik_pt->set('req_rev_qty_item', '1');
+        $this->db_logistik_pt->where(['norefbpb' => $norefbpb, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->update('bpbitem');
+
+        return true;
+    }
 }
 
-/* End of file M_databpb.php */
+/* End of file M_approval_rev_qty.php */

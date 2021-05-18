@@ -9,6 +9,7 @@ class Bkb extends CI_Controller
         parent::__construct();
         $this->load->model('M_bkb');
         $this->load->model('M_approval_bkb');
+        $this->load->model('M_approval_rev_qty');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -55,14 +56,6 @@ class Bkb extends CI_Controller
             $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
                         data-noref="' . $field->NO_REF . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
-                        </button>
-                        <button class="btn btn-primary btn-xs fa fa-undo" id="undo_bkb" name="undo_bkb"
-                        data-noref="' . $field->NO_REF . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
-                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
-                        data-noref="' . $field->NO_REF . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
                         <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
@@ -245,7 +238,7 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['grp']           = $grup_brg;
         $datakeluarbrgitem['alokasi']       = $alokasi;
         $datakeluarbrgitem['kodept']        = $this->session->userdata('kode_pt');
-        $datakeluarbrgitem['nobpb']         = $this->input->post('txt_no_bpb');
+        $datakeluarbrgitem['nobpb']         = $nobpb;
         $datakeluarbrgitem['pt']            = $this->session->userdata('pt');
         $datakeluarbrgitem['afd']           = $afd_unit;
         $datakeluarbrgitem['blok']          = $blok;
@@ -443,6 +436,71 @@ class Bkb extends CI_Controller
     {
         $id_item_bkb = $this->input->post('id_item_bkb');
         $output = $this->M_approval_bkb->approval_bkb($id_item_bkb);
+
+        echo json_encode($output);
+    }
+
+    public function rev_qty()
+    {
+        $no_ref_bpb = $this->input->post('no_ref_bpb');
+        $kodebar = $this->input->post('kodebar');
+
+        $output = $this->M_approval_bkb->rev_qty($no_ref_bpb, $kodebar);
+
+        echo json_encode($output);
+    }
+
+    public function approval_rev_qty()
+    {
+        $data = [
+            'title' => 'Approval Revisi QTY'
+        ];
+
+        $this->template->load('template', 'v_approval_rev_qty', $data);
+    }
+
+    //Start Data Table Server Side
+    public function get_data_rev_qty()
+    {
+        $list = $this->M_approval_rev_qty->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = '<button class="btn btn-warning btn-xs" id="approve_rev_qty" name="approve_rev_qty"
+                        data-id_approval_bpb="' . $field->id . '" data-norefbpb="' . $field->norefbpb . '"
+                        data-kodebar="' . $field->kodebar . '"
+                        data-toggle="tooltip" data-placement="top" title="detail">
+                        Approve</button>';
+            $row[] = $no;
+            $row[] = $field->norefbpb;
+            $row[] = $field->kodebar;
+            $row[] = $field->nabar;
+            $row[] = $field->qty_diminta;
+            $row[] = $field->user_req_rev_qty;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_approval_rev_qty->count_all(),
+            "recordsFiltered" => $this->M_approval_rev_qty->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+    // //End Start Data Table Server Side
+
+    public function ktu_approve_rev_qty()
+    {
+        $id_approval_bpb = $this->input->post('id_approval_bpb');
+        $norefbpb = $this->input->post('norefbpb');
+        $kodebar = $this->input->post('kodebar');
+
+        $output = $this->M_approval_rev_qty->ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar);
 
         echo json_encode($output);
     }

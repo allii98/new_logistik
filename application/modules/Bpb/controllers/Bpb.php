@@ -176,7 +176,7 @@ class Bpb extends CI_Controller
                             <button class="btn btn-primary btn-xs" id="btn_approval" name="btn_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalListApproval(' . $nobpb . ',' . $norefbpb . ')"> Approval
                             </button>
                         </a>';
-            if (empty($hasil->approval) || $hasil->approval == "0") {
+            if ($hasil->approval == '1' && $hasil->req_rev_qty == '1' || $hasil->approval == '0') {
                 $print = "";
                 $ubah = '<a href="' . site_url('bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang">';
                 $batal = '<a href="javascript:;" id="a_batal_bpb">
@@ -195,7 +195,7 @@ class Bpb extends CI_Controller
             $no++;
 
             $row[] =  $no . ".";
-            $row[] = $hasil->nobpb;
+            $row[] = $hasil->norefbpb;
 
             $query_bpbitem = "SELECT nabar FROM bpbitem WHERE nobpb = '$hasil->nobpb'";
             $data_bpbitem = $this->db_logistik_pt->query($query_bpbitem)->result();
@@ -1035,16 +1035,15 @@ class Bpb extends CI_Controller
         if ($setuju == "setuju") {
             $approval = "1";
             $mengetahui = "3";
-            $aprrove = array('approval' =>  $approval);
+            $aprrove = "1";
 
-            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove);
+            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove, $kodebar);
         } else if ($setuju == "tidaksetuju") {
             $approval = "2";
-            $mengetahui = "2";
+            $mengetahui = "3";
+            $aprrove = '0';
 
-            $aprrove = array('approval' =>  "0");
-
-            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove);
+            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove, $kodebar);
         }
 
         $dataedit_approval = array(

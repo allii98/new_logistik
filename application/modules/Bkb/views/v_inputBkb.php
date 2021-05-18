@@ -333,7 +333,7 @@
                 for (i = 0; i < data_item_bpb.length; i++) {
                     // var no = i + 1;
 
-                    tambah_row(i, data_item_bpb[i].status_item_bkb);
+                    tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item);
                     tahun_tanam(i, data_item_bpb[i].kodebebantxt);
 
                     //sum stok all periode / qtymasuk - qtykeluar
@@ -373,7 +373,7 @@
         });
     }
 
-    function tambah_row(row, status_item_bkb) {
+    function tambah_row(row, status_item_bkb, approval_item) {
         var tr_buka = '<tr id="tr_' + row + '">';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -432,7 +432,7 @@
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button class="badge bagde-warning btn-warning" id="btn_req_rev_qty_1" name="btn_req_rev_qty_1" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="ReqRevQty(1)"><b>Rev</b></button>' +
+            '<button class="badge bagde-warning btn-warning" id="rev_qty_' + row + '" name="rev_qty_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="btnRevQty(' + row + ')"><b>Rev</b></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
@@ -442,10 +442,10 @@
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        if (status_item_bkb == 1) {
-            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
-        } else {
+        if (status_item_bkb == '0' && approval_item == '1') {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        } else {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
         }
 
         // cek_bagian(row);
@@ -562,6 +562,8 @@
                 $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
                 $('#hidden_no_ref_bkb').val(data.noref_bkb);
 
+                $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
+
                 $.toast({
                     position: 'top-right',
                     heading: 'Success',
@@ -592,5 +594,53 @@
         window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
 
         $('.div_form_2').css('pointer-events', 'none');
+    }
+
+    function btnRevQty(n) {
+        Swal.fire({
+            text: "Request revisi QTY ke KTU?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya Request!'
+        }).then((result) => {
+            if (result.value) {
+                revQty(n);
+            }
+        });
+    }
+
+    function revQty(n) {
+        var no_ref_bpb = $('#txt_no_bpb').val();
+        var kodebar = $('#hidden_kode_barang_' + n + '').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bkb/rev_qty'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref_bpb': no_ref_bpb,
+                'kodebar': kodebar
+            },
+            success: function(data) {
+
+                // tombol simpan disabled
+                $('.div_form_2').find('#btn_simpan_' + n + '').attr('disabled', '');
+                $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
+
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Request QTY Berhasil!',
+                    icon: 'success',
+                    loader: false
+                });
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
     }
 </script>
