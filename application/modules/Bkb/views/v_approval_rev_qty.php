@@ -21,7 +21,8 @@
                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref BPB</th>
                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Kode Barang</th>
                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Nama Barang</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">qty</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Qty</th>
+                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Revisi Qty</th>
                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Request Oleh</th>
                         </tr>
                     </thead>
@@ -67,6 +68,7 @@
             var id_approval_bpb = $(this).data('id_approval_bpb');
             var norefbpb = $(this).data('norefbpb');
             var kodebar = $(this).data('kodebar');
+            var qty_rev = $(this).data('qty_rev');
 
             Swal.fire({
                 text: "Approve Revisi QTY?",
@@ -76,13 +78,13 @@
                 confirmButtonText: 'Ya Approve!'
             }).then((result) => {
                 if (result.value) {
-                    approve_rev_qty(id_approval_bpb, norefbpb, kodebar);
+                    approve_rev_qty(id_approval_bpb, norefbpb, kodebar, qty_rev);
                 }
             });
         });
     });
 
-    function approve_rev_qty(id_approval_bpb, norefbpb, kodebar) {
+    function approve_rev_qty(id_approval_bpb, norefbpb, kodebar, qty_rev) {
 
         // console.log(id_approval_bpb);
         // console.log(norefbpb);
@@ -96,6 +98,7 @@
                 id_approval_bpb: id_approval_bpb,
                 norefbpb: norefbpb,
                 kodebar: kodebar,
+                qty_rev: qty_rev
             },
             success: function(data) {
                 //refresh table

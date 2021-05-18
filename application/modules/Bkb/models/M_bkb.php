@@ -91,7 +91,7 @@ class M_bkb extends CI_Model
         $this->db_logistik_pt->from('bpb');
         $data_bpb = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('afd, blok, kodebebantxt, nabar, qty, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item');
+        $this->db_logistik_pt->select('afd, blok, kodebebantxt, nabar, qty, qty_disetujui, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item, req_rev_qty_item');
         $this->db_logistik_pt->where('norefbpb', $noref);
         $this->db_logistik_pt->from('bpbitem');
         $data_item_bpb = $this->db_logistik_pt->get()->result_array();

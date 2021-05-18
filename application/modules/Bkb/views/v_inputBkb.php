@@ -166,41 +166,26 @@
     </div>
 </div>
 
-<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalBPB">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalRevQty">
+    <div class="modal-dialog modal-sm modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">List BPB</h4>
+                <h4 class="modal-title" id="myModalLabel">Request revisi QTY ke KTU?</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                    <table id="tableBPB" class="table table-bordered" style="width: 100%;">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>No.</th>
-                                <th>No. BPB</th>
-                                <th>No. Ref BPB</th>
-                                <th>Keperluan</th>
-                                <th>bagian</th>
-                                <th>Tgl BPB</th>
-                                <th>Diminta Oleh</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="modal-body mt-0">
+                <input type="hidden" id="no_table">
+                <label for="">Masukan QTY</label>
+                <input type="number" class="form-control" id="req_rev_qty" name="req_rev_qty">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Batal</button>
+                <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" onclick="revQty()">Simpan</button>
             </div>
         </div>
     </div>
-</div> -->
+</div>
 
 <script>
     // function getBPB() {
@@ -248,7 +233,7 @@
     //         $('#utk_keperluan').val(keperluan);
     //         $('#diberikan_kpd').val(user);
 
-    //         $("#modalBPB").modal('hide');
+    //         $("#modalRevQty").modal('hide');
 
     //     });
     // });
@@ -333,7 +318,7 @@
                 for (i = 0; i < data_item_bpb.length; i++) {
                     // var no = i + 1;
 
-                    tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item);
+                    tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item, data_item_bpb[i].req_rev_qty_item);
                     tahun_tanam(i, data_item_bpb[i].kodebebantxt);
 
                     //sum stok all periode / qtymasuk - qtykeluar
@@ -348,6 +333,7 @@
                     var grp = data_item_bpb[i].grp;
                     var satuan = data_item_bpb[i].satuan;
                     var qty = data_item_bpb[i].qty;
+                    var qty_disetujui = data_item_bpb[i].qty_disetujui;
                     var ketsub = data_item_bpb[i].ketsub;
                     var ket = data_item_bpb[i].ket;
 
@@ -362,7 +348,9 @@
                     $('#hidden_grup_barang_' + i).val(grp);
                     $('#sat_bpb_' + i).text(satuan);
                     $('#txt_qty_diminta_' + i).val(qty);
-                    $('#txt_qty_disetujui_' + i).val(qty);
+                    //jika revisi qty maka tampilkan qty disetujui, jika tidak tampilkan qty
+
+                    $('#txt_qty_disetujui_' + i).val(qty_disetujui);
                     $('#txt_ket_rinci_' + i).val(ket);
 
                 }
@@ -373,7 +361,7 @@
         });
     }
 
-    function tambah_row(row, status_item_bkb, approval_item) {
+    function tambah_row(row, status_item_bkb, approval_item, req_rev_qty_item) {
         var tr_buka = '<tr id="tr_' + row + '">';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -439,10 +427,18 @@
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
+        var td_col_14 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<i><small>waiting approval</small></i>' +
+            '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        if (status_item_bkb == '0' && approval_item == '1') {
+        // req_rev_qty_item == 1 yaitu telah di approve
+        if (req_rev_qty_item == '1') {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_14 + form_tutup + tr_tutup);
+        } else if (req_rev_qty_item == '2') {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        } else if (status_item_bkb == '0' && approval_item == '1') {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         } else {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
@@ -597,22 +593,29 @@
     }
 
     function btnRevQty(n) {
-        Swal.fire({
-            text: "Request revisi QTY ke KTU?",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya Request!'
-        }).then((result) => {
-            if (result.value) {
-                revQty(n);
-            }
-        });
+
+        $("#modalRevQty").modal('show');
+        $('#req_rev_qty').val('');
+        $('#no_table').val(n);
+
+        // Swal.fire({
+        //     text: "Request revisi QTY ke KTU?",
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Ya Request!'
+        // }).then((result) => {
+        //     if (result.value) {
+        //         revQty(n);
+        //     }
+        // });
     }
 
-    function revQty(n) {
+    function revQty() {
+        var n = $('#no_table').val();
         var no_ref_bpb = $('#txt_no_bpb').val();
         var kodebar = $('#hidden_kode_barang_' + n + '').val();
+        var req_rev_qty = $('#req_rev_qty').val();
 
         $.ajax({
             type: "POST",
@@ -622,7 +625,8 @@
 
             data: {
                 'no_ref_bpb': no_ref_bpb,
-                'kodebar': kodebar
+                'kodebar': kodebar,
+                'req_rev_qty': req_rev_qty
             },
             success: function(data) {
 

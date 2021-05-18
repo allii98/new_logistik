@@ -225,7 +225,7 @@
                                                 </span><br> -->
                                                 <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
                                                 <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                                                    Stok di tgl ini :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
+                                                    Stok :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
                                                 </span><br>
                                                 <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
                                                 <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
@@ -682,7 +682,7 @@
         var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             // '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
             // '<label>Stok di tgl ini : <b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></label>' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok di tgl ini :<b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></span><br>' +
+            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok :<b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></span><br>' +
             '<input type="hidden" id="hidden_stok_tgl_ini_' + row + '" name="hidden_stok_tgl_ini_' + row + '">&nbsp;' +
 
             '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Booking :<b id="b_stok_booking_' + row + '"  name="b_stok_booking_' + row + '"></b></span>' +

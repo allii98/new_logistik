@@ -71,7 +71,7 @@ class M_approval_rev_qty extends CI_Model
         return $this->db_logistik_pt->count_all_results();
     }
 
-    public function ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar)
+    public function ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar, $qty_rev)
     {
         $date = date('Y-m-d H:i:s');
         $this->db_logistik_pt->set('flag_req_rev_qty', '2');
@@ -83,7 +83,8 @@ class M_approval_rev_qty extends CI_Model
         $this->db_logistik_pt->where('norefbpb', $norefbpb);
         $this->db_logistik_pt->update('bpb');
 
-        $this->db_logistik_pt->set('req_rev_qty_item', '1');
+        $this->db_logistik_pt->set('req_rev_qty_item', '2');
+        $this->db_logistik_pt->set('qty_disetujui', $qty_rev);
         $this->db_logistik_pt->where(['norefbpb' => $norefbpb, 'kodebar' => $kodebar]);
         $this->db_logistik_pt->update('bpbitem');
 

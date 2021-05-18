@@ -117,14 +117,21 @@ class M_approval_bkb extends CI_Model
         }
     }
 
-    public function rev_qty($no_ref_bpb, $kodebar)
+    public function rev_qty($no_ref_bpb, $kodebar, $qty_rev)
     {
         $user = $this->session->userdata('user');
 
         $this->db_logistik_pt->set('flag_req_rev_qty', '1');
         $this->db_logistik_pt->set('user_req_rev_qty', $user);
+        $this->db_logistik_pt->set('qty_rev', $qty_rev);
         $this->db_logistik_pt->where(['norefbpb' => $no_ref_bpb, 'kodebar' => $kodebar]);
-        return $this->db_logistik_pt->update('approval_bpb');
+        $this->db_logistik_pt->update('approval_bpb');
+
+        $this->db_logistik_pt->set('req_rev_qty_item', '1');
+        $this->db_logistik_pt->where(['norefbpb' => $no_ref_bpb, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->update('bpbitem');
+
+        return true;
     }
 }
 

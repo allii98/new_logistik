@@ -842,6 +842,14 @@
     <script src="<?php echo base_url() ?>assets/libs/pdfmake/build/pdfmake.min.js"></script>
     <script src="<?php echo base_url() ?>assets/libs/pdfmake/build/vfs_fonts.js"></script>
 
+    <!-- plugin autonumeric -->
+    <!-- Plugins js -->
+    <script src="<?php echo base_url() ?>assets/libs/jquery-mask-plugin/jquery.mask.min.js"></script>
+    <script src="<?php echo base_url() ?>assets/libs/autonumeric/autoNumeric-min.js"></script>
+
+    <!-- Init js-->
+    <script src="<?php echo base_url() ?>assets/js/pages/form-masks.init.js"></script>
+
     <!-- Datatables init -->
     <script src="<?php echo base_url() ?>assets/js/pages/datatables.init.js"></script>
 
