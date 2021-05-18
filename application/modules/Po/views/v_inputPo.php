@@ -90,10 +90,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </label>
                             <div class="col-3">
                                 <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
-                                    <option value="1">
+                                    <option value="Cash">
                                         <font face="Verdana" size="2.5">Cash</font>
                                     </option>
-                                    <option value="2">Kredit</option>
+                                    <option value="Kredit">Kredit</option>
                                 </select>
                             </div>
                         </div>
@@ -384,7 +384,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 </td>
                                                 <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <input type="text" class="form-control bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
-                                                    <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="julah('1')" />
+                                                    <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                     <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                 </td>
                                                 <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">

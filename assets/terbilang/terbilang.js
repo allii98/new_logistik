@@ -1,83 +1,127 @@
-function terbilang(bilangan) {
+/*! Copyright (c) 2016 Naufal Rabbani (https://github.com/BosNaufal/terbilang-js)
+* Licensed Under MIT (http://opensource.org/licenses/MIT)
+*
+* Version 0.0.1
+*
+* Inspired By: http://notes.rioastamal.net/2012/03/membuat-fungsi-terbilang-pada-php.html
+*/
 
-    bilangan = String(bilangan);
-    var angka = new Array('0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0');
-    var kata = new Array('', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan');
-    var tingkat = new Array('', 'Ribu', 'Juta', 'Milyar', 'Triliun');
+function terbilang(a) {
+    var bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
 
-    var panjang_bilangan = bilangan.length;
-
-    /* pengujian panjang bilangan */
-    if (panjang_bilangan > 15) {
-        kaLimat = "Diluar Batas";
-        return kaLimat;
+    // 1 - 11
+    if (a < 12) {
+        var kalimat = bilangan[a];
+    }
+    // 12 - 19
+    else if (a < 20) {
+        var kalimat = bilangan[a - 10] + ' Belas';
+    }
+    // 20 - 99
+    else if (a < 100) {
+        var utama = a / 10;
+        var depan = parseInt(String(utama).substr(0, 1));
+        var belakang = a % 10;
+        var kalimat = bilangan[depan] + ' Puluh ' + bilangan[belakang];
+    }
+    // 100 - 199
+    else if (a < 200) {
+        var kalimat = 'Seratus ' + terbilang(a - 100);
+    }
+    // 200 - 999
+    else if (a < 1000) {
+        var utama = a / 100;
+        var depan = parseInt(String(utama).substr(0, 1));
+        var belakang = a % 100;
+        var kalimat = bilangan[depan] + ' Ratus ' + terbilang(belakang);
+    }
+    // 1,000 - 1,999
+    else if (a < 2000) {
+        var kalimat = 'Seribu ' + terbilang(a - 1000);
+    }
+    // 2,000 - 9,999
+    else if (a < 10000) {
+        var utama = a / 1000;
+        var depan = parseInt(String(utama).substr(0, 1));
+        var belakang = a % 1000;
+        var kalimat = bilangan[depan] + ' Ribu ' + terbilang(belakang);
+    }
+    // 10,000 - 99,999
+    else if (a < 100000) {
+        var utama = a / 100;
+        var depan = parseInt(String(utama).substr(0, 2));
+        var belakang = a % 1000;
+        var kalimat = terbilang(depan) + ' Ribu ' + terbilang(belakang);
+    }
+    // 100,000 - 999,999
+    else if (a < 1000000) {
+        var utama = a / 1000;
+        var depan = parseInt(String(utama).substr(0, 3));
+        var belakang = a % 1000;
+        var kalimat = terbilang(depan) + ' Ribu ' + terbilang(belakang);
+    }
+    // 1,000,000 - 	99,999,999
+    else if (a < 100000000) {
+        var utama = a / 1000000;
+        var depan = parseInt(String(utama).substr(0, 4));
+        var belakang = a % 1000000;
+        var kalimat = terbilang(depan) + ' Juta ' + terbilang(belakang);
+    }
+    else if (a < 1000000000) {
+        var utama = a / 1000000;
+        var depan = parseInt(String(utama).substr(0, 4));
+        var belakang = a % 1000000;
+        var kalimat = terbilang(depan) + ' Juta ' + terbilang(belakang);
+    }
+    else if (a < 10000000000) {
+        var utama = a / 1000000000;
+        var depan = parseInt(String(utama).substr(0, 1));
+        var belakang = a % 1000000000;
+        var kalimat = terbilang(depan) + ' Milyar ' + terbilang(belakang);
+    }
+    else if (a < 100000000000) {
+        var utama = a / 1000000000;
+        var depan = parseInt(String(utama).substr(0, 2));
+        var belakang = a % 1000000000;
+        var kalimat = terbilang(depan) + ' Milyar ' + terbilang(belakang);
+    }
+    else if (a < 1000000000000) {
+        var utama = a / 1000000000;
+        var depan = parseInt(String(utama).substr(0, 3));
+        var belakang = a % 1000000000;
+        var kalimat = terbilang(depan) + ' Milyar ' + terbilang(belakang);
+    }
+    else if (a < 10000000000000) {
+        var utama = a / 10000000000;
+        var depan = parseInt(String(utama).substr(0, 1));
+        var belakang = a % 10000000000;
+        var kalimat = terbilang(depan) + ' Triliun ' + terbilang(belakang);
+    }
+    else if (a < 100000000000000) {
+        var utama = a / 1000000000000;
+        var depan = parseInt(String(utama).substr(0, 2));
+        var belakang = a % 1000000000000;
+        var kalimat = terbilang(depan) + ' Triliun ' + terbilang(belakang);
     }
 
-    /* mengambil angka-angka yang ada dalam bilangan, dimasukkan ke dalam array */
-    for (i = 1; i <= panjang_bilangan; i++) {
-        angka[i] = bilangan.substr(-(i), 1);
+    else if (a < 1000000000000000) {
+        var utama = a / 1000000000000;
+        var depan = parseInt(String(utama).substr(0, 3));
+        var belakang = a % 1000000000000;
+        var kalimat = terbilang(depan) + ' Triliun ' + terbilang(belakang);
     }
 
-    i = 1;
-    j = 0;
-    kaLimat = "";
-
-
-    /* mulai proses iterasi terhadap array angka */
-    while (i <= panjang_bilangan) {
-
-        subkaLimat = "";
-        kata1 = "";
-        kata2 = "";
-        kata3 = "";
-
-        /* untuk Ratusan */
-        if (angka[i + 2] != "0") {
-            if (angka[i + 2] == "1") {
-                kata1 = "Seratus";
-            } else {
-                kata1 = kata[angka[i + 2]] + " Ratus";
-            }
-        }
-
-        /* untuk Puluhan atau Belasan */
-        if (angka[i + 1] != "0") {
-            if (angka[i + 1] == "1") {
-                if (angka[i] == "0") {
-                    kata2 = "Sepuluh";
-                } else if (angka[i] == "1") {
-                    kata2 = "Sebelas";
-                } else {
-                    kata2 = kata[angka[i]] + " Belas";
-                }
-            } else {
-                kata2 = kata[angka[i + 1]] + " Puluh";
-            }
-        }
-
-        /* untuk Satuan */
-        if (angka[i] != "0") {
-            if (angka[i + 1] != "1") {
-                kata3 = kata[angka[i]];
-            }
-        }
-
-        /* pengujian angka apakah tidak nol semua, lalu ditambahkan tingkat */
-        if ((angka[i] != "0") || (angka[i + 1] != "0") || (angka[i + 2] != "0")) {
-            subkaLimat = kata1 + " " + kata2 + " " + kata3 + " " + tingkat[j] + " ";
-        }
-
-        /* gabungkan variabe sub kaLimat (untuk Satu blok 3 angka) ke variabel kaLimat */
-        kaLimat = subkaLimat + kaLimat;
-        i = i + 3;
-        j = j + 1;
-
+    else if (a < 10000000000000000) {
+        var utama = a / 1000000000000000;
+        var depan = parseInt(String(utama).substr(0, 1));
+        var belakang = a % 1000000000000000;
+        var kalimat = terbilang(depan) + ' Kuadriliun ' + terbilang(belakang);
     }
 
-    /* mengganti Satu Ribu jadi Seribu jika diperlukan */
-    if ((angka[5] == "0") && (angka[6] == "0")) {
-        kaLimat = kaLimat.replace("Satu Ribu", "Seribu");
+    var pisah = kalimat.split(' ');
+    var full = [];
+    for (var i = 0; i < pisah.length; i++) {
+        if (pisah[i] != "") { full.push(pisah[i]); }
     }
-
-    return kaLimat + "Rupiah";
+    return full.join(' ');
 }

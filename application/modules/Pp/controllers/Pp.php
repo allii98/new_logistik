@@ -48,7 +48,6 @@ class Pp extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $d) {
 
-            $no++;
             $row = array();
 
             $ref_po = $d->noreftxt;
@@ -71,6 +70,8 @@ class Pp extends CI_Controller
             //kurs
             $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$d->nopotxt' AND noref = '$ref_po'";
             $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
+
+
 
             $row[] = $d->tglpo;
             $row[] = $d->noreftxt;

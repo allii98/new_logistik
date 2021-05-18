@@ -19,6 +19,8 @@
                             <label class="col-3  mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref&nbsp;PO&nbsp;*</label>
                             <div class="col-8">
                                 <input id="txt_no_ref_po" name="txt_no_ref_po" class="form-control col-xs-12" required="required" type="text" placeholder="No. Ref. PO" onfocus="modalRefPO()">
+                                <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                                <input type="hidden" id="hidden_grup" name="hidden_grup">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -30,7 +32,7 @@
                         <div class="form-group row mb-1">
                             <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier&nbsp;*</label>
                             <div class="col-3" style="padding-right: 0.01em;">
-                                <input type="text" class="form-control" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" required>
+                                <input type="text" class="form-control bg-light" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" readonly>
                             </div>
                             <div class="col-5">
                                 <input type="text" class="form-control bg-light" id="txt_supplier" name="txt_supplier" placeholder="Supplier" autocomplite="off" readonly>
@@ -39,29 +41,29 @@
                         <div class="form-group row mb-1">
                             <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nilai&nbsp;PO</label>
                             <div class="col-5">
-                                <input id="txt_nilai_po" name="txt_nilai_po" class="form-control col-xs-12 currencyduadigit" required="required" type="text" placeholder="Nilai PO" onkeyup="hitungTotalPO()" value="0" readonly="">
+                                <input id="txt_nilai_po" name="txt_nilai_po" class="form-control col-xs-12" required="required" type="text" placeholder="Nilai PO" onkeyup="hitungTotalPO()" value="0" readonly="">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
                             <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kurs</label>
-                            <div class="col-3">
-                                <input type="text" id="hidden_kurs" name="hidden_kurs" required="" value="Rp" class="form-control">
-                            </div>
                             <label class="control-label col-md-1 col-sm-3 col-xs-12" id="lbl_kurs" name="lbl_kurs"></label>
+                            <div class="col-3">
+                                <input type="hidden" id="hidden_kurs" name="hidden_kurs" required="" value="Rp" class="form-control">
+                            </div>
                         </div>
                         <div class="form-group row mb-1">
                             <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pajak</label>
                             <div class="col-5">
-                                <input id="txt_pajak" name="txt_pajak" class="form-control col-xs-12 currencyduadigit" required="required" type="text" placeholder="Pajak" value="0.00" onkeyup="hitungTotalPO()">
+                                <input id="txt_pajak" name="txt_pajak" class="form-control col-xs-12 currencyduadigit" required="required" type="text" placeholder="Pajak" value="0" onkeyup="hitungTotalPO()">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
                             <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nilai&nbsp;BPO</label>
                             <div class="col-4" style="padding-right: 0.01em;">
-                                <input id="txt_nilai_bpo1" name="txt_nilai_bpo1" class="form-control mb-1 currencyduadigit" required="required" type="text" value="0.00" placeholder="Nilai BPO1" onkeyup="hitungTotalPO()">
+                                <input id="txt_nilai_bpo1" name="txt_nilai_bpo1" class="form-control mb-1 currencyduadigit" required="required" type="text" value="0" placeholder="Nilai BPO1" onkeyup="hitungTotalPO()">
                             </div>
                             <div class="col-4">
-                                <input id="txt_nilai_bpo2" name="txt_nilai_bpo2" class="form-control  currencyduadigit" required="required" type="text" value="0.00" placeholder="Nilai BPO2" onkeyup="hitungTotalPO()">
+                                <input id="txt_nilai_bpo2" name="txt_nilai_bpo2" class="form-control currencyduadigit" required="required" type="number" value="0" placeholder="Nilai BPO2" onkeyup="hitungTotalPO()">
                             </div>
                         </div>
 
@@ -86,14 +88,14 @@
 
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PP</label>
                             <div class="col-5">
-                                <input id="txt_tgl_pp" name="txt_tgl_pp" class="form-control col-xs-12" required="required" type="date" value="<?= date('Y-m-d') ?>" placeholder="Tgl. PP">
+                                <input id="txt_tgl_pp" name="txt_tgl_pp" class="form-control col-xs-12" required="required" type="text" placeholder="Tgl. PP">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
 
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO</label>
                             <div class="col-5">
-                                <input id="txt_tgl_po" name="txt_tgl_po" class="form-control col-xs-12 bg-light" required="required" type="date" value="<?= date('Y-m-d') ?>" placeholder="Tgl. PO" readonly="" disabled>
+                                <input id="txt_tgl_po" name="txt_tgl_po" class="form-control bg-light" type="text" readonly>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -149,7 +151,7 @@
                             <input type="hidden" id="hidden_nama_account" name="hidden_nama_account">
                         </div>
                         <div>
-                            <label class=" col-md-12 col-sm-3 col-xs-12 row mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">User : User SITE</label>
+                            <label class=" col-md-12 col-sm-3 col-xs-12 row mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">User : <?php echo $this->session->userdata('user'); ?></label>
                         </div>
                         <div class=" form-group row mb-1">
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;Voucher</label>
@@ -221,7 +223,25 @@
 </div>
 <script>
     $(document).ready(function() {
+        $('#a_pp_baru').hide();
+
+        $('#txt_tgl_pp,#txt_tgl_po,#txt_tgl_voucher').daterangepicker({
+            singleDatePicker: !0,
+            singleClasses: "picker_1"
+
+            // "singleDatePicker": true,
+            //    "timePicker": true,
+            //    "timePicker24Hour": true,
+            //    "timePickerSeconds": true,
+            //    "startDate": "03/20/2019",
+            //    "endDate": "03/26/2019"
+        }, function(start, end, label) {
+            // start.format('YYYY-MM-DD')
+        });
+
         tampilModal();
+
+        $('#txt_tgl_voucher').val('');
     });
 
     function tampilModal() {
@@ -232,14 +252,24 @@
     function dataPO() {
         $('#tableDataPO').DataTable().destroy();
         $('#tableDataPO').DataTable({
+            "paging": true,
+            "scrollY": true,
+            "scrollX": true,
+            "searching": true,
+            "select": false,
+            "bLengthChange": true,
+            "scrollCollapse": true,
+            "bPaginate": true,
+            "bInfo": false,
+            "bSort": false,
             "processing": true,
             "serverSide": true,
             "order": [],
-            "select": true,
-
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
             "ajax": {
                 "url": "<?php echo site_url('Pp/list_po') ?>",
-                "type": "POST"
+                "type": "POST",
+                "data": {}
             },
             "columnDefs ": [{
                 "targets": [0],
@@ -268,14 +298,18 @@
             var bayar = dataClick[5];
             var nilai_po = dataClick[6];
             var nilai_bpo = dataClick[7];
-            var sudah_dibayar = dataClick[8];
+            var sudah_dibayar = dataClick[9];
             var kurs = dataClick[10];
 
-            $('#txt_tgl_po').val(tgl_po);
+            // $('#txt_tgl_po').val(tgl_po);
+            var tgl = dateToMDY(tgl_po);
+            // console.log(d);
+            $('#txt_tgl_po').val(tgl);
+
             $('#txt_no_ref_po').val(no_ref_po);
             $('#hidden_no_po').val(no_po);
             $('#txt_pembayaran').val(bayar);
-            $('#txt_kode_supplier').val(kd_supplier);
+            $('#kd_supplier').val(kd_supplier);
             $('#txt_supplier').val(nama_supplier);
             $('#txt_dibayar_ke').val(nama_supplier);
             $('#txt_nilai_po').val(nilai_po);
@@ -284,21 +318,48 @@
             $('#hidden_kurs').val(kurs);
 
             $('#txt_sudah_dibayar').val(sudah_dibayar);
-            // $('#lbl_no_acc_'+row).html(no_coa);
-            // $('#lbl_nama_acc_'+row).html(nama_account);
-            // $('#txt_account_beban_'+row).val(no_coa);
-
-            // $('#hidden_no_acc_'+row).val(no_coa);
-            // $('#hidden_nama_acc_'+row).val(nama_account);
 
             $('#modalcariPO').modal('hide');
             hitungTotalPO();
-        })
-
-
+        });
     }
 
     function hitungTotalPO() {
+        // var nilai = $('#txt_nilai_po').val();
+        // var pjk = $('#txt_pajak').val();
+        // var n_bpo1 = $('#txt_nilai_bpo1').val();
+        // var n_bpo2 = $('#txt_nilai_bpo2').val();
+        // var s_dibayar = $('#txt_sudah_dibayar').val();
+
+        // var nilai_po = Number(nilai);
+        // var pajak = Number(pjk);
+        // var nilai_bpo1 = Number(n_bpo1);
+        // var nilai_bpo2 = Number(n_bpo2);
+        // var sudah_dibayar = Number(s_dibayar);
+
+        var nilai_po = $('#txt_nilai_po').val();
+        var pajak = $('#txt_pajak').val();
+        var nilai_bpo1 = $('#txt_nilai_bpo1').val();
+        var nilai_bpo2 = $('#txt_nilai_bpo2').val();
+        var sudah_dibayar = $('#txt_sudah_dibayar').val();
+
+        var dt = parseFloat(nilai_po);
+
+
+        // var total_po = nilai_po + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2);
+        var total_po = nilai_po + pajak + nilai_bpo1 + nilai_bpo2;
+        // var sisabayar = parseInt(nilai_po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2) - parseInt(sudah_dibayar);
+        // var sisabayar = (nilai_po + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2)) - sudah_dibayar;
+        // var dt = parseInt(nilai_bpo1);
+        // var dt = Number(total_po);
+        console.log("ini datannya", dt);
+
+        // $('#txt_total_po').val(total_po);
+        // $('#txt_jumlah').val(sisabayar);
+        // $('#txt_terbilang').val(terbilang(sisabayar));
+    }
+
+    function getTerbilang() {
         var nilai_po = $('#txt_nilai_po').val();
         var pajak = $('#txt_pajak').val();
         var nilai_bpo1 = $('#txt_nilai_bpo1').val();
@@ -307,9 +368,16 @@
 
         var total_po = parseInt(nilai_po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2);
         var sisabayar = (parseInt(nilai_po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2)) - parseInt(sudah_dibayar);
+        if ($('#txt_jumlah').val() < 0) $('#txt_jumlah').val(sisabayar);
+        if ($('#txt_jumlah').val() > sisabayar) $('#txt_jumlah').val(sisabayar);
+        $('#txt_terbilang').val(terbilang($('#txt_jumlah').val()));
+    }
 
-        $('#txt_total_po').val(total_po);
-        $('#txt_jumlah').val(sisabayar);
-        $('#txt_terbilang').val(terbilang(sisabayar));
+    function dateToMDY(date) {
+        var d = date.getDate();
+        var m = date.getMonth() + 1;
+        var y = date.getFullYear();
+        // return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
+        return (m <= 9 ? '0' + m : m) + '/' + (d <= 9 ? '0' + d : d) + '/' + y;
     }
 </script>
