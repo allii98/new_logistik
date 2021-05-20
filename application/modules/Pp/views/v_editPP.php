@@ -68,17 +68,17 @@
                             <div class="form-group row mb-1">
                                 <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pajak</label>
                                 <div class="col-5">
-                                    <input type="number" placeholder="" class="form-control " value="0" id="txt_pajak" name="txt_pajak" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="number" placeholder="" class="form-control" value="0" id="txt_pajak" name="txt_pajak" onkeyup="hitungTotalPO()" required="required">
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
                                 <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nilai&nbsp;BPO</label>
                                 <div class="col-4" style="padding-right: 0.01em;">
-                                    <input type="number" placeholder="" class="form-control " value="0" id="txt_nilai_bpo1" name="txt_nilai_bpo1" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="number" placeholder="" class="form-control" value="0" id="txt_nilai_bpo1" name="txt_nilai_bpo1" onkeyup="hitungTotalPO()" required="required">
 
                                 </div>
                                 <div class="col-4">
-                                    <input type="number" placeholder="" class="form-control " value="0" id="txt_nilai_bpo2" name="txt_nilai_bpo2" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="number" placeholder="" class="form-control" value="0" id="txt_nilai_bpo2" name="txt_nilai_bpo2" onkeyup="hitungTotalPO()" required="required">
                                 </div>
                             </div>
 
@@ -89,7 +89,7 @@
 
                                 <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total&nbsp;PO</label>
                                 <div class="col-6">
-                                    <input id="txt_total_po" name="txt_total_po" class="form-control  bg-light" required="required" type="text" placeholder="Total PO" readonly="">
+                                    <input id="txt_total_po" name="txt_total_po" class="form-control bg-light" required="required" type="text" placeholder="Total PO" readonly="">
 
                                     <!-- <input type="text" name="total_po" id="total_po"> -->
                                 </div>
@@ -98,7 +98,7 @@
 
                                 <label class="col-4 col-sm-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Sudah&nbsp;Bayar</label>
                                 <div class="col-5 col-sm-5">
-                                    <input id="txt_sudah_dibayar" name="txt_sudah_dibayar" class="form-control autonumber bg-light" required="required" type="text" placeholder="Sudah dibayar" readonly="">
+                                    <input id="txt_sudah_dibayar" name="txt_sudah_dibayar" class="form-control bg-light" required="required" type="text" placeholder="Sudah dibayar" readonly="">
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
@@ -190,7 +190,7 @@
                         <div class="col-md-2">
                             <br>
                             <div class="form-group">
-                                <button class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Simpan" id="btn_simpan" name="btn_simpan">Simpan</button>
+                                <button class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Update" id="btn_simpan" name="btn_simpan">Update</button>
                             </div>
                         </div>
                         <div class="col-md-5"></div>
@@ -240,97 +240,93 @@
 
 
 </div>
+
 <script>
     $(document).ready(function() {
-        $('#a_pp_baru').hide();
+        var id = '<?php echo $this->uri->segment('3'); ?>';
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Pp/get_data_pp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'id': id
+            },
+            success: function(data) {
+                // console.log(data);
+                if (data.tglpp === null) {
+                    var tgl_pp = "";
+                } else {
+                    var tgl_pp = dateToMDY(new Date(data.data_pp.tglpp));
+                }
+
+                if (data.data_pp.tglpo === null) {
+                    var tglpo = "";
+                } else {
+                    var tgl_po = dateToMDY(new Date(data.data_pp.tglpo));
+                }
+
+                if (data.data_pp.tgl_vou === null) {
+                    var tgl_voucher = "";
+                } else {
+                    var tgl_voucher = dateToMDY(new Date(data.data_pp.tgl_vou));
+                }
+
+                $('#lbl_no_pp').html(data.data_pp.nopptxt);
+                $('#lbl_kurs').html(data.data_pp.KURS);
+
+                $('#hidden_no_pp').val(data.data_pp.nopptxt);
+                $('#txt_no_ref_po').val(data.data_pp.ref_po);
+                $('#hidden_no_po').val(data.data_pp.nopotxt);
+                $('#hidden_grup').val(data.data_pp.grup);
+                $('#txt_tgl_pp').val(tgl_pp);
+                $('#txt_tgl_po').val(tgl_po);
+                $('#txt_pembayaran').val(data.data_pp.bayar);
+                $('#kd_supplier').val(data.data_pp.kode_supplytxt);
+                $('#txt_supplier').val(data.data_pp.nama_supply);
+                $('#txt_nilai_po').val(data.data_pp.jumlahpo);
+                $('#hidden_kurs').val(data.data_pp.KURS);
+                $('#txt_pajak').val(data.data_pp.pajak);
+                $('#txt_nilai_bpo1').val(data.data_pp.KODE_BPO);
+                $('#txt_nilai_bpo2').val(data.data_pp.jumlah_bpo);
+                $('#txt_total_po').val(data.data_pp.total_po);
+                $('#txt_sudah_dibayar').val(data.sudah_bayar);
+                $('#txt_dibayar_ke').val(data.data_pp.kepada);
+                $('#txt_jumlah').val(data.data_pp.jumlah);
+                $('#txt_terbilang').val(data.data_pp.terbilang);
+                $('#txt_keterangan').val(data.data_pp.ket);
+                $('#hidden_main_account').val(data.data_pp.main_account);
+                $('#hidden_nama_account').val(data.data_pp.hidden_main_account);
+                $('#txt_no_voucher').val(data.data_pp.no_voutxt);
+                $('#txt_tgl_voucher').val(tgl_voucher);
+            },
+            error: function(request) {
+                alert('Error Save Data : ' + request.responseText);
+
+                // $('#lbl_status_simpan_'+no).empty();
+                // $('#lbl_status_simpan_'+no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
+
+                // if($.trim($('#hidden_no_bkb').val()) == ''){
+                //   $('#lbl_spp_status').empty();
+                //   $('#lbl_spp_status').append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Generate !</label>');
+                // }
+            }
+        });
 
         $('#txt_tgl_pp,#txt_tgl_po,#txt_tgl_voucher').daterangepicker({
             singleDatePicker: !0,
             singleClasses: "picker_1"
-
         }, function(start, end, label) {
             // start.format('YYYY-MM-DD')
         });
 
 
-        tampilModal();
-
-        $('#txt_tgl_voucher').val('');
-        // $('#txt_jumlah').autoNumeric('init', {
-        //     aSep: '.',
-        //     aDec: ',',
-        //     mDec: '0'
-        // });
-        // $('#txt_sudah_dibayar').autoNumeric('init', {
-        //     aSep: '.',
-        //     aDec: ',',
-        //     mDec: '0'
-        // });
     });
-
-    $("#form_input_pp").validate({
-        ignore: [],
-        submitHandler: function(form) {
-            saveData();
-        }
-    });
-
-    function saveData() {
-        // console.log("OKE");
-
-        var form_data = new FormData();
-
-        form_data.append('hidden_no_pp', $('#hidden_no_pp').val());
-        form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
-        form_data.append('hidden_no_po', $('#hidden_no_po').val());
-        form_data.append('hidden_grup', $('#hidden_grup').val());
-        form_data.append('txt_tgl_pp', $('#txt_tgl_pp').val());
-        form_data.append('txt_tgl_po', $('#txt_tgl_po').val());
-        form_data.append('txt_pembayaran', $('#txt_pembayaran').val());
-        form_data.append('kd_supplier', $('#kd_supplier').val());
-        form_data.append('txt_supplier', $('#txt_supplier').val());
-        var total_po = $('#txt_nilai_po').val();
-        var hasil = total_po.replace(/,/g, "");
-        form_data.append('txt_nilai_po', hasil);
-        form_data.append('hidden_kurs', $('#hidden_kurs').val());
-        form_data.append('txt_pajak', $('#txt_pajak').val());
-        form_data.append('txt_nilai_bpo1', $('#txt_nilai_bpo1').val());
-        form_data.append('txt_nilai_bpo2', $('#txt_nilai_bpo2').val());
-        form_data.append('txt_total_po', $('#txt_total_po').val());
-        form_data.append('txt_dibayar_ke', $('#txt_dibayar_ke').val());
-        form_data.append('txt_jumlah', $('#txt_jumlah').val());
-        form_data.append('txt_terbilang', $('#txt_terbilang').val());
-        form_data.append('txt_keterangan', $('#txt_keterangan').val());
-        form_data.append('hidden_main_account', $('#hidden_main_account').val());
-        form_data.append('hidden_nama_account', $('#hidden_nama_account').val());
-        form_data.append('txt_no_voucher', $('#txt_no_voucher').val());
-        form_data.append('txt_tgl_voucher', $('#txt_tgl_voucher').val());
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Pp/simpan_pp'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-            cache: false,
-            contentType: false,
-            processData: false,
-
-            data: form_data,
-            success: function(data) {
-                if (data.status == true) {
-                    $('#a_pp_baru').show();
-                    window.location.href = "<?php echo site_url('Pp'); ?>";
-
-                }
-
-            },
-            error: function(request) {
-                alert('Error Save Data : ' + request.responseText);
-
-
-            }
-        });
-    }
 
     function tampilModal() {
         $('#modalcariPO').modal('show');
@@ -406,6 +402,14 @@
         });
     }
 
+
+    function dateToMDY(date) {
+        var d = date.getDate();
+        var m = date.getMonth() + 1;
+        var y = date.getFullYear();
+        return (m <= 9 ? '0' + m : m) + '/' + (d <= 9 ? '0' + d : d) + '/' + y;
+    }
+
     function hitungTotalPO() {
         var nilai_po = $('#txt_nilai_po').val();
         var c = $('#txt_pajak').val();
@@ -420,13 +424,10 @@
         var sudah = sudah_dibayar.replace(/,/g, "");
 
 
-        // var data = Number(dt) + Number(pajak) + Number(nilai_bpo1) + Number(nilai_bpo2);
         var total_po = Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2);
-        var a = addCommas(total_po);
-        // console.log(data);
         var sisabayar = (Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2)) - Number(sudah);
 
-        // console.log(total_po);
+        console.log(total_po);
 
 
         $('#txt_total_po').val(total_po);
@@ -450,57 +451,76 @@
         var sudah = sudah_dibayar.replace(/,/g, "");
 
         var total_po = Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2);
-        // var total_po = addCommas(nStr);
         var sisabayar = (Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2)) - Number(sudah);
 
-        // var sisa = addCommas(sisabayar);
-
         var jml = $('#txt_jumlah').val();
-        // var d = jml.split('.').join("");
-        // // console.log("jumlah ", d);
         if (jml < 0) {
             $('#txt_jumlah').val(sisabayar);
-            // console.log(sisabayar);
-            // $('#jumlah').val(sisabayar); 
-            // $('#txt_terbilang').val('');
         }
         if (jml > sisabayar) {
             $('#txt_jumlah').val(sisabayar);
-            // console.log(sisabayar);  
             $('#jumlah').val(sisabayar);
-            // $('#txt_terbilang').val('');
         }
-        // // if (jml < 0) $('#txt_jumlah').val(sisabayar);
-        // // if (jml > sisabayar) $('#txt_jumlah').val(sisabayar);
-        // // console.log(d);
-        // var terbi = $('#txt_jumlah').val();
-        // var data = jml.split('.').join("");
-        // // console.log(data)
-        // // tes(terbi);
         $('#txt_terbilang').val(terbilang($('#txt_jumlah').val()));
     }
 
-    function tes(data) {
-        $('#jumlah').val(data);
-    }
 
-    function addCommas(nStr) {
-        nStr += '';
-        x = nStr.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+    $("#form_input_pp").validate({
+        ignore: [],
+        submitHandler: function(form) {
+            saveData();
         }
-        return x1 + x2;
-    }
+    });
 
-    function dateToMDY(date) {
-        var d = date.getDate();
-        var m = date.getMonth() + 1;
-        var y = date.getFullYear();
-        // return '' + y + '-' + (m<=9 ? '0' + m : m) + '-' + (d <= 9 ? '0' + d : d);
-        return (m <= 9 ? '0' + m : m) + '/' + (d <= 9 ? '0' + d : d) + '/' + y;
+    function saveData() {
+        var form_data = new FormData();
+
+        var id = '<?php echo $this->uri->segment('3'); ?>';
+
+        form_data.append('id_pp', id);
+        form_data.append('hidden_no_pp', $('#hidden_no_pp').val());
+        form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
+        form_data.append('hidden_no_po', $('#hidden_no_po').val());
+        form_data.append('hidden_grup', $('#hidden_grup').val());
+        form_data.append('txt_tgl_pp', $('#txt_tgl_pp').val());
+        form_data.append('txt_tgl_po', $('#txt_tgl_po').val());
+        form_data.append('txt_pembayaran', $('#txt_pembayaran').val());
+        form_data.append('txt_kode_supplier', $('#txt_kode_supplier').val());
+        form_data.append('txt_supplier', $('#txt_supplier').val());
+        form_data.append('txt_nilai_po', $('#txt_nilai_po').val());
+        form_data.append('hidden_kurs', $('#hidden_kurs').val());
+        form_data.append('txt_pajak', $('#txt_pajak').val());
+        form_data.append('txt_nilai_bpo1', $('#txt_nilai_bpo1').val());
+        form_data.append('txt_nilai_bpo2', $('#txt_nilai_bpo2').val());
+        form_data.append('txt_total_po', $('#txt_total_po').val());
+        form_data.append('txt_dibayar_ke', $('#txt_dibayar_ke').val());
+        form_data.append('txt_jumlah', $('#txt_jumlah').val());
+        form_data.append('txt_terbilang', $('#txt_terbilang').val());
+        form_data.append('txt_keterangan', $('#txt_keterangan').val());
+        form_data.append('hidden_main_account', $('#hidden_main_account').val());
+        form_data.append('hidden_nama_account', $('#hidden_nama_account').val());
+        form_data.append('txt_no_voucher', $('#txt_no_voucher').val());
+        form_data.append('txt_tgl_voucher', $('#txt_tgl_voucher').val());
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Pp/simpan_pp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            data: form_data,
+            success: function(data) {
+                if (data.status == true) {
+                    window.location.href = "<?php echo site_url('Pp'); ?>";
+                }
+            },
+            error: function(request) {
+                alert('Error Save Data : ' + request.responseText);
+
+            }
+        });
     }
 </script>
