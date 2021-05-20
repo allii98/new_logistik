@@ -807,7 +807,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             var n = 1;
                             $.each(data, function(index, value) {
 
-                                tambah_item();
+                                tambah_item(value.status2);
                                 // console.log(value);
 
                                 var idppo = value.id;
@@ -876,9 +876,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             default:
                 break;
         }
-
-
-
 
     });
 
@@ -970,7 +967,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 var n = 1;
                 $.each(data, function(index, value) {
 
-                    tambah_item();
+                    tambah_item(value.status2);
                     console.log(value);
 
                     var idppo = value.id;
@@ -1026,7 +1023,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     });
 
 
-    function tambah_item() {
+    function tambah_item(status2) {
 
         row++;
         console.log("bariske", row);
@@ -1131,9 +1128,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var tr_tutup = '</tr>';
         var lokasi = $('#lokasi').val();
 
-
-
-        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        if (status2 == '1') {
+            $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        }
         $('#txt_qty_' + row).number(true, 2);
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
