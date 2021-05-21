@@ -124,23 +124,23 @@
                             <thead>
                                 <tr>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No.</th>
-                                    <!-- <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. BPB</th> -->
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. BPB</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. REF BPB</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Kode Barang</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Nama Barang</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Diminta</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Disetujui</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Approval</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Status BPB</th>
                                 </tr>
                             </thead>
 
                             <tbody id="tbody_list_po">
                             </tbody>
-                            <!-- <tfoot>
+                            <tfoot>
                                 <tr>
-                                    <th style="text-align: center;" colspan="10"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
+                                    <th style="text-align: center;" colspan="8"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
                                 </tr>
-                            </tfoot> -->
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -160,6 +160,42 @@
         var filter = "Semua";
         listBPB(filter);
     });
+
+    function approve_barang() {
+        Swal.fire({
+            text: "Apakah anda yakin?",
+            showCancelButton: true,
+            position: 'top',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, Setujui'
+        }).then((result) => {
+            if (result.value) {
+                pilihItem();
+            }
+        })
+    }
+
+    function pilihItem() {
+        // console.log("Oke deh sippp");
+        var rowcollection = $('#tableListBPBItem').DataTable().rows({
+            selected: true,
+
+        }).data().toArray();
+        // console.log(rowcollection);
+        $.each(rowcollection, function(index, elem) {
+            var nobpb = rowcollection[index][1];
+            var norefbpb = rowcollection[index][2];
+            var kodebar = rowcollection[index][3];
+            var setuju = 'setuju';
+            // console.log(id, no_spp, no_ref_spp, kodebar);
+            data_bpb_dipilih(nobpb, norefbpb, kodebar, setuju);
+        });
+    }
+
+    function data_bpb_dipilih(nobpb, norefbpb, kodebar, setuju) {
+        console.log(nobpb, norefbpb, kodebar, setuju);
+    }
 
     function konfirmasi(nobpb, norefbpb, kodebar, approval) {
         var conf = confirm("Apakah Anda Yakin ?");
@@ -257,6 +293,7 @@
         var dt = $('#tableListBPBItem').DataTable({
             "processing": true,
             "serverSide": true,
+            "select": true,
             "order": [],
             // "select": true,
             "ajax": {
@@ -270,13 +307,35 @@
                     alert(request.responseText);
                 }
             },
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#tableListBPBItem').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#tableListBPBItem').DataTable().rows().deselect();
+                    }
+                }
+            ],
             "columnDefs": [{
-                "targets": [],
-                "orderable": false,
-            }, ],
+                    "targets": [1],
+                    "visible": false,
+                    "searchable": false
+                },
+                // {
+                //     "targets": [3],
+                //     "visible": false
+                // }
+            ],
             "language": {
                 "infoFiltered": ""
-            }
+            },
+
+
         });
         var rel = setInterval(function() {
             $('#tableListBPBItem').DataTable().ajax.reload();
