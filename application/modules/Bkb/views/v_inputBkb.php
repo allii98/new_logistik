@@ -24,8 +24,9 @@
                             </label>
                             <div class="row">
                                 <div class="row col-lg-10 col-md-10 col-11 ml-0">
-                                    <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
-                                    </select>
+                                    <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
+                                    </select> -->
+                                    <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()">
                                     <input style="display:none;" id="multiple" class="form-control bg-light col-9" type="text" readonly>
                                     <input type="hidden" id="txt_no_bpb">
                                 </div>
@@ -177,7 +178,7 @@
             <div class="modal-body mt-0">
                 <input type="hidden" id="no_table">
                 <label for="">Masukan QTY</label>
-                <input type="number" class="form-control" id="req_rev_qty" name="req_rev_qty">
+                <input type="number" class="form-control" id="req_rev_qty" name="req_rev_qty" onkeyup="validasi_qty()">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Batal</button>
@@ -187,94 +188,123 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListBpb">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">List Data BPB</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                    <table id="databpb" class="table table-bordered" style="width: 100%;">
+                        <thead>
+                            <tr>
+                                <th style="width: 3% !important;">#</th>
+                                <th style="width: 5% !important;">No</th>
+                                <th style="width: 10% !important;">No. Ref. Bpb</th>
+                                <th style="width: 20% !important;">Keperluan</th>
+                                <th style="width: 20% !important;">Tgl Input</th>
+                                <th style="width: 20% !important;">Diminta Oleh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    // function getBPB() {
-    //     $("#modalBPB").modal('show');
-    // }
+    function cari_bpb() {
+        $("#modalListBpb").modal('show');
+    }
 
-    // // Start Data Table Server Side
-    // var table;
-    // $(document).ready(function() {
+    // Start Data Table Server Side
+    var table;
+    $(document).ready(function() {
 
-    //     //datatables
-    //     table = $('#tableBPB').DataTable({
+        //datatables
+        table = $('#databpb').DataTable({
 
-    //         "processing": true,
-    //         "serverSide": true,
-    //         "order": [],
+            "processing": true,
+            "serverSide": true,
+            "order": [],
 
-    //         "ajax": {
-    //             "url": "<?php echo site_url('Bkb/get_data_bpb') ?>",
-    //             "type": "POST"
-    //         },
-
-    //         "columnDefs": [{
-    //             "targets": [0],
-    //             "orderable": false,
-    //         }, ],
-
-    //     });
-
-    // });
-    // // End Data Table Server Side
-
-    // $(document).ready(function() {
-    //     $(document).on('click', '#data_bpb', function() {
-
-    //         var nobpb = $(this).data('nobpb');
-    //         var norefbpb = $(this).data('norefbpb');
-    //         var keperluan = $(this).data('keperluan');
-    //         var bag = $(this).data('bag');
-    //         var user = $(this).data('user');
-    //         // console.log(nabar);
-
-    //         // Set data
-    //         $('#no_bpb').val(nobpb);
-    //         $('#utk_keperluan').val(keperluan);
-    //         $('#diberikan_kpd').val(user);
-
-    //         $("#modalRevQty").modal('hide');
-
-    //     });
-    // });
-
-    $("#select2").select2({
-        ajax: {
-            url: "<?php echo site_url('Bkb/select2_get_bpb') ?>",
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    noref: params.term, // search term
-                };
+            "ajax": {
+                "url": "<?php echo site_url('Bkb/get_data_bpb') ?>",
+                "type": "POST"
             },
-            processResults: function(data) {
-                var results = [];
-                $.each(data, function(index, item) {
-                    results.push({
-                        id: item.norefbpb,
-                        text: item.norefbpb
-                    });
-                });
-                return {
-                    results: results
-                };
-            }
-        }
-    }).on('select2:select', function(evt) {
-        // var selected = evt.params.data;
-        // var a = "0475";
-        // var b = "TOKO ( KAS )";
-        // var kode = $(".select2 option:selected").text(a);
-        // var data = $(".select2 option:selected").val(b);
-        // $('#kd_supplier').val(kode);
-        var data = $(".select2 option:selected").text();
-        $('#txt_no_bpb').val(data);
-        // $('#multiple').val(data);
-        // $('#hidden_no_ref_spp_').val(data);
-        // console.log(data);
-        cariBpbqr(data);
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+
+        });
+
     });
+    // End Data Table Server Side
+
+    $(document).ready(function() {
+        $(document).on('click', '#data_bpb', function() {
+
+            var norefbpb = $(this).data('norefbpb');
+
+            // Set data
+            $('#cari_bpb').val(norefbpb);
+            $('#txt_no_bpb').val(norefbpb);
+
+
+            $("#modalListBpb").modal('hide');
+            cariBpbqr(norefbpb);
+        });
+    });
+
+    // $("#select2").select2({
+    //     ajax: {
+    //         url: "<?php echo site_url('Bkb/select2_get_bpb') ?>",
+    //         dataType: 'json',
+    //         delay: 250,
+    //         data: function(params) {
+    //             return {
+    //                 noref: params.term, // search term
+    //             };
+    //         },
+    //         processResults: function(data) {
+    //             var results = [];
+    //             $.each(data, function(index, item) {
+    //                 results.push({
+    //                     id: item.norefbpb,
+    //                     text: item.norefbpb
+    //                 });
+    //             });
+    //             return {
+    //                 results: results
+    //             };
+    //         }
+    //     }
+    // }).on('select2:select', function(evt) {
+    //     // var selected = evt.params.data;
+    //     // var a = "0475";
+    //     // var b = "TOKO ( KAS )";
+    //     // var kode = $(".select2 option:selected").text(a);
+    //     // var data = $(".select2 option:selected").val(b);
+    //     // $('#kd_supplier').val(kode);
+    //     var data = $(".select2 option:selected").text();
+    //     $('#txt_no_bpb').val(data);
+    //     // $('#multiple').val(data);
+    //     // $('#hidden_no_ref_spp_').val(data);
+    //     // console.log(data);
+    //     cariBpbqr(data);
+    // });
 
     function cariBpbqr(noref) {
 
@@ -439,9 +469,9 @@
         // req_rev_qty_item == 1 yaitu telah di approve
         if (req_rev_qty_item == '1') {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_14 + form_tutup + tr_tutup);
-        } else if (req_rev_qty_item == '2') {
+        } else if (req_rev_qty_item == '2' && !status_item_bkb) {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-        } else if (status_item_bkb == '0' && approval_item == '1') {
+        } else if (!status_item_bkb && approval_item == '1') {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         }
         // else {
@@ -621,34 +651,56 @@
         var kodebar = $('#hidden_kode_barang_' + n + '').val();
         var req_rev_qty = $('#req_rev_qty').val();
 
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Bkb/rev_qty'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
+        if (req_rev_qty == '') {
+            swal('Masukan angka!');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Bkb/rev_qty'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
 
-            data: {
-                'no_ref_bpb': no_ref_bpb,
-                'kodebar': kodebar,
-                'req_rev_qty': req_rev_qty
-            },
-            success: function(data) {
+                data: {
+                    'no_ref_bpb': no_ref_bpb,
+                    'kodebar': kodebar,
+                    'req_rev_qty': req_rev_qty
+                },
+                success: function(data) {
 
-                // tombol simpan disabled
-                $('.div_form_2').find('#btn_simpan_' + n + '').attr('disabled', '');
-                $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
+                    console.log(data);
+                    // tombol simpan disabled
+                    $('.div_form_2').find('#btn_simpan_' + n + '').attr('disabled', '');
+                    $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
 
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Request QTY Berhasil!',
-                    icon: 'success',
-                    loader: false
-                });
-            },
-            error: function(response) {
-                alert('ERROR! ' + response.responseText);
-            }
-        });
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Request QTY Berhasil!',
+                        icon: 'success',
+                        loader: false
+                    });
+                },
+                error: function(response) {
+                    alert('ERROR! ' + response.responseText);
+                }
+            });
+        }
+    }
+
+    function validasi_qty() {
+        var n = $('#no_table').val();
+        var a = $('#txt_qty_diminta_' + n + '').val();
+        var b = $('#req_rev_qty').val();
+
+        var txt_qty_diminta = Number(a);
+        var req_rev_qty = Number(b);
+
+        if (req_rev_qty > txt_qty_diminta) {
+            swal('Melibihi QTY diminta!');
+            $('#req_rev_qty').val('');
+        } else if (req_rev_qty == 0) {
+            swal('Tidak boleh 0!');
+            $('#req_rev_qty').val('');
+        }
     }
 </script>

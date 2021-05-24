@@ -76,13 +76,13 @@ class M_bkb extends CI_Model
     }
     // end server side table
 
-    public function get_bpb()
-    {
-        // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
-        $noref = $this->input->get('noref');
-        $query = "SELECT norefbpb FROM bpb WHERE norefbpb LIKE '%$noref%' AND batal = 0 AND approval = '1' AND status_bkb = '0'";
-        return $this->db_logistik_pt->query($query)->result_array();
-    }
+    // public function get_bpb()
+    // {
+    //     // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
+    //     $noref = $this->input->get('noref');
+    //     $query = "SELECT norefbpb FROM bpb WHERE norefbpb LIKE '%$noref%' AND batal = 0 AND approval = '1' AND status_bkb = '0'";
+    //     return $this->db_logistik_pt->query($query)->result_array();
+    // }
 
     public function get_data_bpb_qr($noref)
     {
