@@ -1094,13 +1094,13 @@ class Bpb extends CI_Controller
 
             $no++;
             $row = array();
-            $row[] = '<font face="Verdana" size="2">' . $no . "." . '</font>';
-            // $row[] = '<font face="Verdana" size="2">' . $d->nobpb . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->norefbpb . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->kodebar . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->qty . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->qty_disetujui . '</font>';
+            $row[] = $no . ".";
+            $row[] = $d->nobpb;
+            $row[] = $d->norefbpb;
+            $row[] = $d->kodebar;
+            $row[] = $d->nabar;
+            $row[] = $d->qty;
+            $row[] = $d->qty_disetujui;
             $query_status_asisten_afd = "SELECT * FROM approval_bpb WHERE status_asisten_afd <> '0' AND no_bpb = '$nobpb_query' AND norefbpb = '$norefbpb_query' AND kodebar = '$kodebar_query'";
             $get_status_asisten_afd = $this->db_logistik_pt->query($query_status_asisten_afd);
             if ($get_status_asisten_afd->num_rows() > 0) {
@@ -1111,13 +1111,14 @@ class Bpb extends CI_Controller
                     $button = "<strong style='color:red'>TDK DISETUJUI <br/>" . $get_status_approval_asisten_afd->tgl_asisten_afd . "</strong><br/>";
                 }
             } else {
-                $button = '<a href="javascript:;" id="a_appproval">
-                    <button class="btn btn-success btn-xs fa fa-check" id="btn_setuju" name="btn_setuju" data-toggle="tooltip" data-placement="top" title="Setuju" onClick="konfirmasi(' . $nobpb . ',' . $norefbpb . ',' . $kodebar . ',' . $setuju . ')">
-                    </button>
-                </a>
-                <a href="javascript:;" id="a_appproval">
-                <button class="btn btn-danger btn-xs fa fa-times" id="btn_tdk_setuju" name="btn_tdk_setuju" data-toggle="tooltip" data-placement="top" title="Tdk Setuju" onClick="konfirmasi(' . $nobpb . ',' . $norefbpb . ',' . $kodebar . ',' . $tidaksetuju . ')">
-                </button></a>';
+                $button = "<strong style='color:yellow'>DALAM PROSES</strong>";
+                // $button = '<a href="javascript:;" id="a_appproval">
+                //     <button class="btn btn-success btn-xs fa fa-check" id="btn_setuju" name="btn_setuju" data-toggle="tooltip" data-placement="top" title="Setuju" onClick="konfirmasi(' . $nobpb . ',' . $norefbpb . ',' . $kodebar . ',' . $setuju . ')">
+                //     </button>
+                // </a>
+                // <a href="javascript:;" id="a_appproval">
+                // <button class="btn btn-danger btn-xs fa fa-times" id="btn_tdk_setuju" name="btn_tdk_setuju" data-toggle="tooltip" data-placement="top" title="Tdk Setuju" onClick="konfirmasi(' . $nobpb . ',' . $norefbpb . ',' . $kodebar . ',' . $tidaksetuju . ')">
+                // </button></a>';
             }
             $row[] = $button;
 
