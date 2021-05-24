@@ -10,6 +10,7 @@ class Bkb extends CI_Controller
         $this->load->model('M_bkb');
         $this->load->model('M_approval_bkb');
         $this->load->model('M_approval_rev_qty');
+        $this->load->model('M_get_bpb');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -81,11 +82,44 @@ class Bkb extends CI_Controller
     }
     // //End Start Data Table Server Side
 
-    public function select2_get_bpb()
+    // public function select2_get_bpb()
+    // {
+    //     $data = $this->M_bkb->get_bpb();
+    //     echo json_encode($data);
+    // }
+
+    // //Start Data Table Server Side
+    public function get_data_bpb()
     {
-        $data = $this->M_bkb->get_bpb();
-        echo json_encode($data);
+        $list = $this->M_get_bpb->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = '<button class="btn btn-success btn-xs" id="data_bpb" name="data_bpb"
+                        data-norefbpb="' . $field->norefbpb . '"
+                        data-toggle="tooltip" data-placement="top" title="detail">pilih
+                        </button>';
+            $row[] = $no;
+            $row[] = $field->norefbpb;
+            $row[] = $field->keperluan;
+            $row[] = date("Y-m-d", strtotime($field->tglinput));
+            $row[] = $field->user;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_get_bpb->count_all(),
+            "recordsFiltered" => $this->M_get_bpb->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
+    // //End Start Data Table Server Side
 
     public function get_data_bpb_qr()
     {
