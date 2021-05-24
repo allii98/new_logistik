@@ -1057,7 +1057,7 @@ class Bpb extends CI_Controller
             $mengetahui = "3";
             $aprrove = "1";
 
-            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove, $kodebar);
+            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove, $kodebar, $alasan);
         } else if ($setuju == "0") {
             $approval = "2";
             $mengetahui = "3";
