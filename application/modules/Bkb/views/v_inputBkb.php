@@ -27,7 +27,7 @@
                                     <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
                                     </select> -->
                                     <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()">
-                                    <input style="display:none;" id="multiple" class="form-control bg-light col-9" type="text" readonly>
+                                    <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
                                     <input type="hidden" id="txt_no_bpb">
                                 </div>
                                 <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
@@ -222,7 +222,69 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="showCamera">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Scan QRcode</h4>
+                <button type="button" id="modalCameraClose" onclick="modalCameraClose()" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <video id="preview" width="100%"></video>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
+    // qrcode
+    $(document).ready(function() {
+        $('#showCamera').modal('show');
+        $('#preview').show();
+        $('#multiple').css('display', 'block');
+        $('#cari_bpb').css('display', 'none');
+        // $('#select2').next(".select2-container").hide();
+    });
+
+    function modalCameraClose() {
+        scanner.stop();
+        $('#multiple').css('display', 'none');
+        $('#cari_bpb').css('display', 'block');
+        // $('#select2').next(".select2-container").show();
+    }
+
+    function showCamera() {
+        $('#showCamera').modal('show');
+        $('#preview').show();
+        $('#multiple').css('display', 'block');
+        $('#cari_bpb').css('display', 'none');
+        // $('#select2').next(".select2-container").hide();
+        scanner.start();
+    }
+
+    let scanner = new Instascan.Scanner({
+        video: document.getElementById('preview')
+    });
+    scanner.addListener('scan', function(content) {
+        console.log(content);
+        $('#preview').hide();
+        cariBpbqr(content);
+        $('#showCamera').modal('hide');
+        $('#multiple').val(content);
+        scanner.stop();
+    });
+    Instascan.Camera.getCameras().then(function(cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+        } else {
+            console.error('No cameras found.');
+        }
+    }).catch(function(e) {
+        console.error(e);
+    });
+    // end qrcode
+
     function cari_bpb() {
         $("#modalListBpb").modal('show');
     }
@@ -578,7 +640,6 @@
                 cmb_bahan: $('#cmb_bahan_' + n).val(),
                 hidden_no_acc: $('#hidden_no_acc_' + n).val(),
                 hidden_nama_acc: $('#txt_account_beban_' + n).val()
-
             },
 
             success: function(data) {
