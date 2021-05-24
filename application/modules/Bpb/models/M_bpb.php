@@ -539,7 +539,7 @@ class M_bpb extends CI_Model
 
         return TRUE;
     }
-    public function update_item($nobpb, $norefbpb, $aprrove, $kodebar)
+    public function update_item($nobpb, $norefbpb, $aprrove, $kodebar, $alasan)
     {
         $this->db_logistik_pt->set('approval', '1');
         $this->db_logistik_pt->where('nobpb', $nobpb);
@@ -551,6 +551,8 @@ class M_bpb extends CI_Model
             $this->db_logistik_pt->set('approval_item', '1');
         } else {
             $this->db_logistik_pt->set('approval_item', '0');
+            $this->db_logistik_pt->set('batal', '1');
+            $this->db_logistik_pt->set('alasan_batal', $alasan);
         }
         $this->db_logistik_pt->where('nobpb', $nobpb);
         $this->db_logistik_pt->where('norefbpb', $norefbpb);
@@ -558,6 +560,46 @@ class M_bpb extends CI_Model
         return $this->db_logistik_pt->update('bpbitem');
 
         // return TRUE;
+    }
+
+    public function cekAprrove($nobpb, $kodebar, $norefbpb)
+    {
+        $cek = "SELECT nobpb, kodebar, norefbpb, approval_item FROM bpbitem WHERE nobpb='$nobpb' AND norefbpb='$norefbpb' AND kodebar='$kodebar' ";
+
+        $approve = $this->db_logistik_pt->query($cek)->row();
+
+        $d = $approve->approval_item;
+        if ($d === null) {
+            $data = [
+                'status' => true
+            ];
+        } else {
+            $data = [
+                'status' => false
+            ];
+        }
+
+        return $data;
+    }
+
+    public function batalAprrove($nobpb, $kodebar, $norefbpb)
+    {
+        $cek = "SELECT nobpb, kodebar, norefbpb, batal FROM bpbitem WHERE nobpb='$nobpb' AND norefbpb='$norefbpb' AND kodebar='$kodebar' ";
+
+        $approve = $this->db_logistik_pt->query($cek)->row();
+
+        $d = $approve['batal'];
+        if ($d != 0) {
+            $data = [
+                'status' => false
+            ];
+        } else {
+            $data = [
+                'status' => true
+            ];
+        }
+
+        return $data;
     }
 }
 

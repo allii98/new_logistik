@@ -1025,25 +1025,45 @@ class Bpb extends CI_Controller
         $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
     }
 
+    function cek_approve()
+    {
+        $nobpb        = $this->input->post('nobpb');
+        $norefbpb    = $this->input->post('norefbpb');
+        $kodebar    = $this->input->post('kodebar');
+        $setuju = $this->input->post('approval');
+
+        // $data = $this->M_bpb->cekAprrove($nobpb, $kodebar, $norefbpb);
+        if ($setuju == 1) {
+
+            $data = $this->M_bpb->cekAprrove($nobpb, $kodebar, $norefbpb);
+        } else if ($setuju == 0) {
+
+            $data = $this->M_bpb->batalAprrove($nobpb, $norefbpb, $kodebar);
+        }
+
+        echo json_encode($data);
+    }
+
     function approve()
     {
         $nobpb        = $this->input->post('nobpb');
         $norefbpb    = $this->input->post('norefbpb');
         $kodebar    = $this->input->post('kodebar');
         $setuju    = $this->input->post('approval');
+        $alasan    = $this->input->post('alasan');
 
-        if ($setuju == "setuju") {
+        if ($setuju == "1") {
             $approval = "1";
             $mengetahui = "3";
             $aprrove = "1";
 
             $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove, $kodebar);
-        } else if ($setuju == "tidaksetuju") {
+        } else if ($setuju == "0") {
             $approval = "2";
             $mengetahui = "3";
             $aprrove = '0';
 
-            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove, $kodebar);
+            $this->M_bpb->update_item($nobpb, $norefbpb, $aprrove, $kodebar, $alasan);
         }
 
         $dataedit_approval = array(
@@ -1106,9 +1126,9 @@ class Bpb extends CI_Controller
             if ($get_status_asisten_afd->num_rows() > 0) {
                 $get_status_approval_asisten_afd = $this->db_logistik_pt->query($query_status_asisten_afd)->row();
                 if ($get_status_approval_asisten_afd->status_asisten_afd ==  "1") {
-                    $button = "<strong style='color:green;'>DISETUJUI <br/>" . $get_status_approval_asisten_afd->tgl_asisten_afd . "</strong><br/>";
+                    $button = "<strong style='color:green;' disabled>DISETUJUI <br/>" . $get_status_approval_asisten_afd->tgl_asisten_afd . "</strong><br/>";
                 } else if ($get_status_approval_asisten_afd->status_asisten_afd ==  "2") {
-                    $button = "<strong style='color:red'>TDK DISETUJUI <br/>" . $get_status_approval_asisten_afd->tgl_asisten_afd . "</strong><br/>";
+                    $button = "<strong style='color:red' disabled>TDK DISETUJUI <br/>" . $get_status_approval_asisten_afd->tgl_asisten_afd . "</strong><br/>";
                 }
             } else {
                 $button = "<strong style='color:yellow'>DALAM PROSES</strong>";

@@ -2511,7 +2511,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             heading: 'Failed!',
             text: v_text + ' ',
             icon: 'error',
-            loader: true,
+            loader: false,
             loaderBg: 'red'
         });
     }

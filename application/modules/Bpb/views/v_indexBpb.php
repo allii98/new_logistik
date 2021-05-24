@@ -138,7 +138,10 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th style="text-align: center;" colspan="8"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
+                                    <th style="text-align: center;" colspan="8"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button><br>
+                                        <br>
+                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" id="btn_setuju_all" onclick="no_approve()" data-placement="left">No Approve</button>
+                                    </th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -146,6 +149,26 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalbatal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                        <h4 class="mt-2">Alasan Batal</h4>
+                        <input type="hidden" id="nobpb" name="nobpb">
+                        <input type="hidden" id="norefbpb" name="norefbpb">
+                        <input type="hidden" id="kodebar" name="kodebar">
+                        <input type="hidden" id="approval" name="approval">
+                        <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                        <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasi()">Simpan</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -160,6 +183,31 @@
         var filter = "Semua";
         listBPB(filter);
     });
+
+    function validasi() {
+        var alasan = $('#alasan').val();
+        var nobpb = $('#nobpb').val();
+        var norefbpb = $('#norefbpb').val();
+        var kodebar = $('#kodebar').val();
+        var approval = $('#approval').val();
+
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            // console.log("Oke");
+            data_bpb_dipilih(nobpb, norefbpb, kodebar, approval, alasan);
+            $('#modalbatal').modal('hide');
+        }
+    }
+
 
     function approve_barang() {
         Swal.fire({
@@ -176,6 +224,21 @@
         })
     }
 
+    function no_approve() {
+        Swal.fire({
+            text: "Apakah anda yakin?",
+            showCancelButton: true,
+            position: 'top',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then((result) => {
+            if (result.value) {
+                batalItem();
+            }
+        })
+    }
+
     function pilihItem() {
         // console.log("Oke deh sippp");
         var rowcollection = $('#tableListBPBItem').DataTable().rows({
@@ -187,46 +250,151 @@
             var nobpb = rowcollection[index][1];
             var norefbpb = rowcollection[index][2];
             var kodebar = rowcollection[index][3];
-            var setuju = 'setuju';
+            var approval = '1';
             // console.log(id, no_spp, no_ref_spp, kodebar);
-            data_bpb_dipilih(nobpb, norefbpb, kodebar, setuju);
+            // console.log(nobpb, norefbpb, kodebar, approval);
+            cek_approve(nobpb, norefbpb, kodebar, approval);
         });
     }
 
-    function data_bpb_dipilih(nobpb, norefbpb, kodebar, setuju) {
-        console.log(nobpb, norefbpb, kodebar, setuju);
+    function batalItem() {
+        // console.log("Oke deh sippp");
+        var rowcollection = $('#tableListBPBItem').DataTable().rows({
+            selected: true,
+
+        }).data().toArray();
+        // console.log(rowcollection);
+        $.each(rowcollection, function(index, elem) {
+            var nobpb = rowcollection[index][1];
+            var norefbpb = rowcollection[index][2];
+            var kodebar = rowcollection[index][3];
+            var approval = '0';
+            // console.log(id, no_spp, no_ref_spp, kodebar);
+            batal_approve(nobpb, norefbpb, kodebar, approval);
+        });
+    }
+
+    function modalBatal(nobpb, norefbpb, kodebar, approval) {
+        var a = $('#nobpb').val(nobpb);
+        var b = $('#norefbpb').val(norefbpb);
+        var d = $('#kodebar').val(kodebar);
+        var e = $('#approval').val(approval);
+        $('#modalbatal').modal('show');
+    }
+
+    function data_bpb_dipilih(nobpb, norefbpb, kodebar, approval, alasan) {
+        // console.log(nobpb, norefbpb, kodebar, approval);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/approve'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+
+            },
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'nobpb': nobpb,
+                'norefbpb': norefbpb,
+                'kodebar': kodebar,
+                'approval': approval,
+                'alasan': alasan,
+            },
+            success: function(data) {
+                listBPBItem(nobpb, norefbpb);
+            },
+            error: function(request) {
+                alert(request.responseText);
+                // alert('error');
+            }
+        });
+    }
+
+
+    function cek_approve(nobpb, norefbpb, kodebar, approval) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Bpb/cek_approve') ?>",
+            dataType: "JSON",
+            data: {
+                'nobpb': nobpb,
+                'norefbpb': norefbpb,
+                'kodebar': kodebar,
+                'approval': approval
+            },
+
+            success: function(data) {
+                var x = data.status;
+                console.log(x);
+
+                if (x == true) {
+                    konfirmasi(nobpb, norefbpb, kodebar, approval);
+                    // console.log("oke");
+                } else {
+                    swal('Item sudah di approve!');
+                }
+
+            }
+        });
+
+    }
+
+    function batal_approve(nobpb, norefbpb, kodebar, approval) {
+        // console.log(nobpb, norefbpb, kodebar, approval);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Bpb/cek_approve') ?>",
+            dataType: "JSON",
+            data: {
+                'nobpb': nobpb,
+                'norefbpb': norefbpb,
+                'kodebar': kodebar,
+                'approval': approval
+            },
+
+            success: function(data) {
+                var x = data.status;
+                // console.log(x);
+
+                if (x == true) {
+                    // data_bpb_dipilih(nobpb, norefbpb, kodebar, approval);
+                    modalBatal(nobpb, norefbpb, kodebar, approval);
+                    // console.log("oke");
+                } else {
+                    swal('Item sudah di Batalkan!');
+                }
+
+            }
+        });
+
     }
 
     function konfirmasi(nobpb, norefbpb, kodebar, approval) {
-        var conf = confirm("Apakah Anda Yakin ?");
-        if (conf == true) {
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('Bpb/approve'); ?>",
-                dataType: "JSON",
-                beforeSend: function() {
+        // var conf = confirm("Apakah Anda Yakin ?");
 
-                },
-                cache: false,
-                // contentType : false,
-                // processData : false,
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/approve'); ?>",
+            dataType: "JSON",
+            data: {
+                'nobpb': nobpb,
+                'norefbpb': norefbpb,
+                'kodebar': kodebar,
+                // 'jabatan': jabatan,
+                'approval': approval
+            },
+            success: function(data) {
+                // console.log(data);
+                listBPBItem(nobpb, norefbpb);
+            },
+            error: function(request) {
+                alert(request.responseText);
+                // alert('error');
+            }
+        });
 
-                data: {
-                    'nobpb': nobpb,
-                    'norefbpb': norefbpb,
-                    'kodebar': kodebar,
-                    // 'jabatan': jabatan,
-                    'approval': approval
-                },
-                success: function(data) {
-                    listBPBItem(nobpb, norefbpb);
-                },
-                error: function(request) {
-                    alert(request.responseText);
-                    // alert('error');
-                }
-            });
-        }
     }
 
     function listBPB(filter) {
@@ -282,8 +450,8 @@
     }
 
     function modalListApproval(nobpb, norefbpb) {
-        console.log(nobpb);
-        console.log(norefbpb);
+        // console.log(nobpb);
+        // console.log(norefbpb);
         $('#modalListApproval').modal('show');
         listBPBItem(nobpb, norefbpb);
     }
