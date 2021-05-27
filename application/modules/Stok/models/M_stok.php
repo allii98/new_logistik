@@ -6,8 +6,8 @@ class M_stok extends CI_Model
 {
 
     var $table = 'stockawal'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'nilai_masuk', 'ket', 'minstok'); //field yang ada di table supplier  
-    var $column_search = array('kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'saldoawal_nilai', 'QTY_MASUK', 'QTY_KELUAR', 'saldoakhir_qty', 'saldoakhir_nilai', 'nilai_masuk', 'ket', 'minstok'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'HARGARAT', 'ket', 'minstok', 'txtperiode'); //field yang ada di table supplier  
+    var $column_search = array('id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'HARGARAT', 'ket', 'minstok', 'txtperiode'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -19,8 +19,8 @@ class M_stok extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $lokasi_sesi = $this->session->userdata('status_lokasi');
-        $this->db_logistik_pt->select('id, kodebartxt, nabar, satuan, grp, saldoawal_qty, saldoawal_nilai, saldoakhir_qty,QTY_MASUK, QTY_KELUAR, saldoakhir_nilai,nilai_masuk, ket, minstok');
+        // $lokasi_sesi = $this->session->userdata('status_lokasi');
+        // $this->db_logistik_pt->select('id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'HARGARAT', 'ket', 'minstok', 'txtperiode');
         $this->db_logistik_pt->from('stockawal');
         // $this->db_logistik_pt->where('po');
         $this->db_logistik_pt->order_by('id', 'desc');

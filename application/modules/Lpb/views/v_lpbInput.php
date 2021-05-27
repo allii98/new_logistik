@@ -29,6 +29,7 @@ date_default_timezone_set('Asia/Jakarta');
                                 <select class="js-data-example-ajax form-control select2" id="select2">
                                 </select>
                                 <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
+                                <input id="txt_no_po" name="txt_no_po" class="form-control bg-light" type="hidden" placeholder="No.Ref PO" autocomplete="off" readonly>
                                 <input type="hidden" id="txt_ref_po">
                                 <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
                             </div>
@@ -38,10 +39,12 @@ date_default_timezone_set('Asia/Jakarta');
                     </div>
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
+                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier<span class="required">*</span>
                             </label>
                             <div class="col-md-8">
-                                <input id="txt_no_po" name="txt_no_po" class="form-control bg-light" type="text" placeholder="No.Ref PO" autocomplete="off" readonly>
+                                <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly>
+                                <input type="hidden" id="txt_kd_supplier">
+                                <input type="hidden" id="txt_supplier">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -54,29 +57,19 @@ date_default_timezone_set('Asia/Jakarta');
 
                     </div>
                     <div class="col-md-3">
-                        <!-- <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi<span class="required">*</span>
+                        <div class="form-group row mb-1">
+                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi<span class="required">*</span>
                             </label>
-                            <div class="col-md-8">
+                            <div class="col-md-7">
                                 <select class="form-control" id="devisi">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     foreach ($devisi as $d) : { ?>
-                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
+                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
                                     <?php }
                                     endforeach;
                                     ?>
                                 </select>
-                            </div>
-                        </div> -->
-
-                        <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier<span class="required">*</span>
-                            </label>
-                            <div class="col-md-7">
-                                <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly>
-                                <input type="hidden" id="txt_kd_supplier">
-                                <input type="hidden" id="txt_supplier">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -140,51 +133,6 @@ date_default_timezone_set('Asia/Jakarta');
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_rincian" name="tbody_rincian">
-                                    <!-- <tr id="tr_1">
-                                    <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                        <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                        <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br /> -->
-                                    <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
-                                    <!-- </td>
-                                    <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                        <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                            <div class="row">
-                                                <input type="text" class="form-control col-8" id="txt_kode_barang_1" name="txt_kode_barang_1" placeholder="Kode Barang" onfocus="cari_barang('1')" readonly>
-                                                <label class="ml-1 mt-1">
-                                                    <input type="checkbox" id="chk_asset_1" name="chk_asset_1" value="">
-                                                    <span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>
-                                                </label>
-                                            </div>
-                                        </td>
-                                        <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                            <div class="row">
-                                                <span face="Verdana" class="ml-2" id="txt_nama_brg_1" size="1.8">Nama Barang</span>
-                                                &emsp;/
-                                                <span face="Verdana" class="ml-2" id="txt_satuan_1" size="1.8">Satuan</span>
-                                                &emsp;/
-                                                <span face="Verdana" class="ml-2" id="hidden_grup_1" size="1.8">Grup</span>
-                                            </div>
-                                        </td>
-                                        <td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">
-                                            <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty&nbsp;po&emsp;:&nbsp;</span><span id="qty_po_1" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span><br>
-                                            <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_1" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>
-                                        </td>
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                            <input type="text" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" autocomplite="off">
-                                        </td>
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                            <textarea class="resizable_textarea form-control" id="txt_ket_rinci_1" name="txt_ket_rinci_1" placeholder="Keterangan" rows="1"></textarea>
-                                            <label id="lbl_status_simpan_1"></label>
-                                        </td>
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                            <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
-                                            <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
-                                            <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
-                                            <button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
-                                            <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
-                                        </td>
-                                    </form>
-                                </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -330,7 +278,7 @@ date_default_timezone_set('Asia/Jakarta');
 
     var n = 0;
 
-    function tambah_row(row) {
+    function tambah_row(row, status_item_lpb) {
         // var row = ++num_last;
         console.log(row);
         // var row = $('#hidden_no_table').val();
@@ -368,6 +316,7 @@ date_default_timezone_set('Asia/Jakarta');
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
+            '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -377,10 +326,17 @@ date_default_timezone_set('Asia/Jakarta');
             // '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
+        var td_col_7b = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"><i>Habis!</i></span>' +
+            '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
+        if (status_item_lpb == 1) {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7b + form_tutup + tr_tutup);
+        } else {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
+        }
 
         $('#txt_qty_' + row).number(true);
 
@@ -410,44 +366,6 @@ date_default_timezone_set('Asia/Jakarta');
             }
         });
     }
-
-    // //scan qr code
-    // $(function() {
-
-    //     // overriding path of JS script and audio 
-    //     $.qrCodeReader.jsQRpath = "<?php echo base_url() ?>assets/dist/js/jsQR/jsQR.min.js";
-    //     $.qrCodeReader.beepPath = "<?php echo base_url() ?>assets/dist/audio/beep.mp3";
-
-    //     // bind all elements of a given class
-    //     $(".qrcode-reader").qrCodeReader();
-
-    //     // bind elements by ID with specific options
-    //     $("#openreader-multi2").qrCodeReader({
-    //         multiple: true,
-    //         target: "#multiple2",
-    //         skipDuplicates: false
-    //     });
-    //     $("#openreader-multi3").qrCodeReader({
-    //         multiple: true,
-    //         target: "#multiple3"
-    //     });
-
-    //     // read or follow qrcode depending on the content of the target input
-    //     $("#openreader-single2").qrCodeReader({
-    //         callback: function(code) {
-    //             if (code) {
-    //                 window.location.href = code;
-    //             }
-    //         }
-    //     }).off("click.qrCodeReader").on("click", function() {
-    //         var qrcode = $("#single2").val().trim();
-    //         if (qrcode) {
-    //             window.location.href = qrcode;
-    //         } else {
-    //             $.qrCodeReader.instance.open.call(this);
-    //         }
-    //     });
-    // });
 
     // qrcode
     function modalCameraClose() {
@@ -530,7 +448,7 @@ date_default_timezone_set('Asia/Jakarta');
                 for (i = 0; i < data_item_po.length; i++) {
                     // var no = i + 1;
 
-                    tambah_row(i);
+                    tambah_row(i, data_item_po[i].status_item_lpb);
                     sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
 
                     var kodebar = data_item_po[i].kodebar;
@@ -599,9 +517,12 @@ date_default_timezone_set('Asia/Jakarta');
 
         var lok_gudang = $('#txt_lokasi_gudang').val();
         var nopeng = $('#txt_no_pengantar').val();
+        var devisi = $('#devisi').val();
         var qty = $('#txt_qty_' + n).val();
 
-        if (!lok_gudang) {
+        if (!devisi) {
+            toast('Devisi');
+        } else if (!lok_gudang) {
             toast('Lokasi Gudang');
         } else if (!nopeng) {
             toast('No. pengantar');
@@ -664,6 +585,7 @@ date_default_timezone_set('Asia/Jakarta');
                 txt_kd_supplier: $('#txt_kd_supplier').val(),
                 txt_supplier: $('#txt_supplier').val(),
                 txt_no_pengantar: $('#txt_no_pengantar').val(),
+                devisi: $('#devisi').val(),
                 txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
                 txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
                 txt_satuan: $('#txt_satuan_' + n).text(),
@@ -706,7 +628,9 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#hidden_no_ref_lpb').val(data.noreflpb);
                 $('#hidden_id_lpb').val(data.id_lpb);
                 $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
-                // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+
+                $('#hidden_txtperiode_' + n).val(data.txtperiode);
+
                 $('#a_print_lpb').show();
 
             }
@@ -714,11 +638,6 @@ date_default_timezone_set('Asia/Jakarta');
     }
 
     function ubahRinci(n) {
-
-        // var n = $('#hidden_no_row').val();
-
-        // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
-        // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
 
         $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
         $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
@@ -734,7 +653,6 @@ date_default_timezone_set('Asia/Jakarta');
 
     //Update Data
     function updateRinci(n) {
-
         if ($('#chk_asset_' + n).is(':checked')) {
             var chk_asset = 'yes';
         }
@@ -764,6 +682,8 @@ date_default_timezone_set('Asia/Jakarta');
                 hidden_no_lpb: $('#hidden_no_lpb').val(),
                 hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
+                hidden_txtperiode: $('#hidden_txtperiode_' + n).val(),
+                kode_dev: $('#devisi').val(),
                 nopo: no_po,
                 norefpo: no_ref_po,
                 kodebar: kodebar

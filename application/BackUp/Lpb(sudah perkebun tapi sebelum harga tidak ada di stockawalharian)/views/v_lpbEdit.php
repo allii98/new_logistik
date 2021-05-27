@@ -108,7 +108,6 @@
                         </h6> -->
                         <input type="hidden" id="hidden_no_lpb">
                         <input type="hidden" id="hidden_no_ref_lpb">
-                        <input type="hidden" id="kode_dev">
                     </div>
                     <div class="row" style="margin-left:4px;">
                         <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
@@ -130,7 +129,51 @@
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
-
+                                <!-- <tr id="tr_1">
+                                    <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                        <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
+                                        <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br /> -->
+                                <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
+                                <!-- </td>
+                                    <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
+                                        <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                            <div class="row">
+                                                <input type="text" class="form-control col-8" id="txt_kode_barang_1" name="txt_kode_barang_1" placeholder="Kode Barang" onfocus="cari_barang('1')" readonly>
+                                                <label class="ml-1 mt-1">
+                                                    <input type="checkbox" id="chk_asset_1" name="chk_asset_1" value="">
+                                                    <span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>
+                                                </label>
+                                            </div>
+                                        </td>
+                                        <td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                            <div class="row">
+                                                <span face="Verdana" class="ml-2" id="txt_nama_brg_1" size="1.8">Nama Barang</span>
+                                                &emsp;/
+                                                <span face="Verdana" class="ml-2" id="txt_satuan_1" size="1.8">Satuan</span>
+                                                &emsp;/
+                                                <span face="Verdana" class="ml-2" id="hidden_grup_1" size="1.8">Grup</span>
+                                            </div>
+                                        </td>
+                                        <td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">
+                                            <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty&nbsp;po&emsp;:&nbsp;</span><span id="qty_po_1" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span><br>
+                                            <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_1" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>
+                                        </td>
+                                        <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                            <input type="text" class="form-control currencyduadigit" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" autocomplite="off">
+                                        </td>
+                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                            <textarea class="resizable_textarea form-control" id="txt_ket_rinci_1" name="txt_ket_rinci_1" placeholder="Keterangan" rows="1"></textarea>
+                                            <label id="lbl_status_simpan_1"></label>
+                                        </td>
+                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                            <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
+                                            <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
+                                            <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
+                                            <button style="display:none;" class="btn btn-xs btn-primary fa fa-close" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
+                                            <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                        </td>
+                                    </form>
+                                </tr> -->
                             </tbody>
                         </table>
                     </div>
@@ -264,7 +307,6 @@
                 $('#txt_tgl_po').val(data_lpb.tglpo);
                 $('#no_lpb').text('No. LPB : ' + no_lpb);
                 $('#no_ref_lpb').text('No. Ref LPB : ' + data_lpb.noref);
-                $('#kode_dev').val(data_lpb.kode_dev);
 
 
                 // $("#modalListPo").modal('hide');
@@ -283,7 +325,6 @@
                     var ket = data_item_lpb[i].ket;
                     var grp = data_item_lpb[i].grp;
                     var id_lpb = data_item_lpb[i].id;
-                    var txtperiode = data_item_lpb[i].txtperiode;
                     // var sumsisa = $(this).data('sumsisa');
 
                     // Set data
@@ -301,8 +342,6 @@
                     $('#hidden_txt_qty_' + i).val(qty);
                     $('#hidden_grup_' + i).text(grp);
                     $('#hidden_id_item_lpb_' + i).val(id_lpb);
-                    $('#hidden_txtperiode_' + i).val(txtperiode);
-
                     // $('#sisa_qty_' + no).text(sumsisa);
                     // getGrupBarang(kodebar, i);
 
@@ -349,6 +388,9 @@
             }
         });
     }
+
+
+
 
     function getGrupBarang(kodebar, n) {
         $.ajax({
@@ -426,7 +468,6 @@
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
-            '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -469,6 +510,241 @@
             }
         });
     }
+
+    // //scan qr code
+    // $(function() {
+
+    //     // overriding path of JS script and audio 
+    //     $.qrCodeReader.jsQRpath = "<?php echo base_url() ?>assets/dist/js/jsQR/jsQR.min.js";
+    //     $.qrCodeReader.beepPath = "<?php echo base_url() ?>assets/dist/audio/beep.mp3";
+
+    //     // bind all elements of a given class
+    //     $(".qrcode-reader").qrCodeReader();
+
+    //     // bind elements by ID with specific options
+    //     $("#openreader-multi2").qrCodeReader({
+    //         multiple: true,
+    //         target: "#multiple2",
+    //         skipDuplicates: false
+    //     });
+    //     $("#openreader-multi3").qrCodeReader({
+    //         multiple: true,
+    //         target: "#multiple3"
+    //     });
+
+    //     // read or follow qrcode depending on the content of the target input
+    //     $("#openreader-single2").qrCodeReader({
+    //         callback: function(code) {
+    //             if (code) {
+    //                 window.location.href = code;
+    //             }
+    //         }
+    //     }).off("click.qrCodeReader").on("click", function() {
+    //         var qrcode = $("#single2").val().trim();
+    //         if (qrcode) {
+    //             window.location.href = qrcode;
+    //         } else {
+    //             $.qrCodeReader.instance.open.call(this);
+    //         }
+    //     });
+    // });
+
+    // function cariPoqr() {
+
+    //     var nopo = $('#multiple').val();
+    //     // console.log(n + 'yeyelala');
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
+    //         dataType: "JSON",
+    //         beforeSend: function() {
+    //             $('#tbody_rincian').empty();
+    //         },
+
+    //         data: {
+    //             'nopotxt': nopo
+    //         },
+    //         success: function(data) {
+
+    //             var data_po = data.data_po;
+    //             var data_item_po = data.data_item_po;
+
+    //             console.log(data_po);
+
+    //             $('#txt_no_po').val(data_po.nopotxt);
+    //             $('#txt_ref_po').val(data_po.noreftxt);
+    //             $('#txt_tgl_po').val(data_po.tglpo);
+    //             var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
+    //             $('#txt_kd_name_supplier').val(namesup);
+    //             $('#txt_kd_supplier').val(data_po.kode_supply);
+    //             $('#txt_supplier').val(data_po.nama_supply);
+
+    //             $("#modalListPo").modal('hide');
+
+    //             for (i = 0; i < data_item_po.length; i++) {
+    //                 // var no = i + 1;
+
+    //                 tambah_row(i);
+    //                 sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
+
+    //                 var kodebar = data_item_po[i].kodebar;
+    //                 var nabar = data_item_po[i].nabar;
+    //                 var qty = data_item_po[i].qty;
+    //                 var sat = data_item_po[i].sat;
+    //                 var ket = data_item_po[i].ket;
+    //                 // var sumsisa = $(this).data('sumsisa');
+
+    //                 // Set data
+    //                 $('#txt_kode_barang_' + i).val(kodebar);
+    //                 $('#txt_nama_brg_' + i).text(nabar);
+    //                 $('#txt_satuan_' + i).text(sat);
+    //                 $('#txt_ket_rinci_' + i).text(ket);
+    //                 $('#qty_po_' + i).text(qty);
+    //                 // $('#sisa_qty_' + no).text(sumsisa);
+    //                 getGrupBarang(kodebar, i);
+    //             }
+    //         },
+    //         error: function(response) {
+    //             console.log(response.responseText);
+    //         }
+    //     });
+    // }
+
+    // $("#select2").select2({
+    //     ajax: {
+    //         url: "<?php echo site_url('Lpb/select2_get_po') ?>",
+    //         dataType: 'json',
+    //         delay: 250,
+    //         data: function(params) {
+    //             return {
+    //                 nopo: params.term, // search term
+    //             };
+    //         },
+    //         processResults: function(data) {
+    //             var results = [];
+    //             $.each(data, function(index, item) {
+    //                 results.push({
+    //                     id: item.nopo,
+    //                     text: item.nopo
+    //                 });
+    //             });
+    //             return {
+    //                 results: results
+    //             };
+    //         }
+    //     }
+    // }).on('select2:select', function(evt) {
+    //     // var selected = evt.params.data;
+    //     // var a = "0475";
+    //     // var b = "TOKO ( KAS )";
+    //     // var kode = $(".select2 option:selected").text(a);
+    //     // var data = $(".select2 option:selected").val(b);
+    //     // $('#kd_supplier').val(kode);
+    //     var data = $(".select2 option:selected").text();
+    //     $('#txt_no_po').val(data);
+    //     $('#multiple').val(data);
+    //     // $('#hidden_no_ref_spp_').val(data);
+    //     // console.log(data);
+    //     cariPoqr();
+
+    // });
+
+    // $(document).ready(function() {
+    //     $(document).on('click', '#openreader-multi', function() {
+
+    //         $('#multiple').css('display', 'block');
+    //         $('#select2').next(".select2-container").hide();
+
+    //     });
+    // });
+
+    // function saveRinciClick(n) {
+
+    //     var no_ref_po = $('#txt_ref_po').val();
+    //     var no_po = $('#txt_no_po').val();
+    //     var kodebar = $('#txt_kode_barang_' + n).val();
+
+    //     if ($('#chk_asset_' + n).is(':checked')) {
+    //         var chk_asset = 'yes';
+    //     }
+
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo base_url('Lpb/saveLpb') ?>",
+    //         dataType: "JSON",
+
+    //         beforeSend: function() {
+    //             $('#btn_simpan_' + n).css('display', 'none');
+
+    //             $('#lbl_status_simpan_' + n).empty();
+    //             $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+
+    //             if ($.trim($('#hidden_no_lpb').val()) == '') {
+    //                 $('#lbl_lpb_status').empty();
+    //                 $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+    //             }
+    //         },
+
+    //         data: {
+    //             txt_no_po: $('#txt_no_po').val(),
+    //             txt_ref_po: $('#txt_ref_po').val(),
+    //             // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+    //             txt_kode_barang: $('#txt_kode_barang_' + n).val(),
+    //             txt_nama_brg: $('#txt_nama_brg_' + n).text(),
+    //             txt_tgl_terima: $('#txt_tgl_terima').val(),
+    //             hidden_no_lpb: $('#hidden_no_lpb').val(),
+    //             hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+    //             chk_asset: chk_asset,
+    //             txt_kd_supplier: $('#txt_kd_supplier').val(),
+    //             txt_supplier: $('#txt_supplier').val(),
+    //             txt_no_pengantar: $('#txt_no_pengantar').val(),
+    //             txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
+    //             txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
+    //             txt_satuan: $('#txt_satuan_' + n).text(),
+    //             hidden_grup: $('#hidden_grup_' + n).text(),
+    //             txt_qty: $('#txt_qty_' + n).val(),
+    //             txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
+    //         },
+
+    //         success: function(data) {
+    //             console.log(n);
+
+    //             $('#lbl_status_simpan_' + n).empty();
+    //             $('#lbl_lpb_status').empty();
+
+    //             $.toast({
+    //                 position: 'top-right',
+    //                 heading: 'Success',
+    //                 text: 'Berhasil Disimpan!',
+    //                 icon: 'success',
+    //                 loader: false
+    //             });
+
+    //             // hitung sisa qty po guys
+    //             sisaQtyPO(no_ref_po, no_po, kodebar, n);
+
+    //             $('#no_lpb').html('No. SPP : ' + data.nolpb);
+    //             $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+
+    //             $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+    //             $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+
+    //             $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+    //             $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+    //             // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+
+    //             $('#btn_hapus_row_' + n).css('display', 'none');
+    //             $('#btn_ubah_' + n).css('display', 'block');
+    //             $('#btn_hapus_' + n).css('display', 'block');
+
+    //             $('#hidden_no_lpb').val(data.nolpb);
+    //             $('#hidden_no_ref_lpb').val(data.noreflpb);
+    //             $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
+    //             // $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+    //         }
+    //     });
+    // }
 
     function ubahRinci(n) {
 
@@ -546,8 +822,6 @@
                 hidden_no_lpb: $('#hidden_no_lpb').val(),
                 hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                hidden_txtperiode: $('#hidden_txtperiode_' + n).val(),
-                kode_dev: $('#kode_dev').val(),
                 nopo: no_po,
                 norefpo: no_ref_po,
                 kodebar: kodebar

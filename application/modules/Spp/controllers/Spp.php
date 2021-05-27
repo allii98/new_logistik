@@ -85,17 +85,17 @@ class Spp extends CI_Controller
 
         $stockawal = $this->M_spp->stokAwal($kd_bar);
 
-        if (empty($stockawal)) {
-            $get_stockawal = "0";
-        } else {
-            $get_stockawal = $stockawal->QTY_MASUK;
-        }
+        // if (empty($stockawal)) {
+        //     $get_stockawal = "0";
+        // } else {
+        //     $get_stockawal = $stockawal->QTY_MASUK;
+        // }
 
         // $summasuk = $this->M_spp->sumMasuk($kd_bar);
 
         $sumkeluar = $this->M_spp->sumKeluar($kd_bar);
 
-        $data = $get_stockawal - $sumkeluar->stokkeluar;
+        $data = $stockawal->qty_masuk - $sumkeluar->stokkeluar;
 
         echo json_encode($data);
     }

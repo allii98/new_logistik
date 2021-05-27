@@ -28,6 +28,7 @@ class Stok extends CI_Controller
             $no++;
             $row[] = '<a href="javascript:;" class="btn btn-info fa fa-info btn-xs" data-toggle="tooltip" data-placement="top" title="Detail Barang" id="btn_detail_barang" onclick="detail_barang(' . $d->kodebartxt . ',' . $id . ')"></a>';
             $row[] = $no . ".";
+            $row[] = $d->txtperiode;
             $row[] = $d->kodebartxt;
             $row[] = $d->nabar;
             $row[] = $d->satuan;
@@ -36,7 +37,7 @@ class Stok extends CI_Controller
             $row[] = number_format($d->saldoawal_nilai, 0, ',', '.');
             $row[] = $akhir_qty;
             $row[] = $d->saldoakhir_nilai;
-            $row[] = number_format(round($d->nilai_masuk), 0, ',', '.');
+            $row[] = number_format(round($d->HARGARAT), 0, ',', '.');
             $row[] = $d->ket;
             $row[] = $d->minstok;
             $data[] = $row;
