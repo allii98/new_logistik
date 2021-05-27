@@ -4,7 +4,7 @@
         <div class="widget-rounded-circle card-box">
             <div class="row justify-content-between">
                 <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Stock Awal</h4>
-                <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button>
+                <!-- <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button> -->
             </div>
             <hr>
             <div class="row">
@@ -14,7 +14,7 @@
 
                         <thead class="thead-light">
                             <tr role="row">
-                                <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">#</th>
+                                <!-- <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">#</th> -->
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">No.</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Periode</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Kode Barang</th>

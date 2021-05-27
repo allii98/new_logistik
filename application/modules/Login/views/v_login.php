@@ -37,13 +37,13 @@
                                 <div class="auth-logo">
                                     <a href="<?= base_url('Login') ?>" class="logo logo-dark text-center">
                                         <span class="logo-lg">
-                                            <img src="<?php echo base_url() ?>assets/images/logo-dark.png" alt="" height="22">
+                                            <img src="<?php echo base_url() ?>assets/images/logo_msal_transparat.gif" alt="" height="75">
                                         </span>
                                     </a>
 
                                     <a href="<?= base_url('Login') ?>" class="logo logo-light text-center">
                                         <span class="logo-lg">
-                                            <img src="<?php echo base_url() ?>assets/images/logo-light.png" alt="" height="22">
+                                            <img src="<?php echo base_url() ?>assets/images/logo_msal_transparat.gif" alt="" height="75">
                                         </span>
                                     </a>
                                 </div>
