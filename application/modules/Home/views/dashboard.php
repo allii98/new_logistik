@@ -17,14 +17,14 @@
                         </div>
                         <div class="col-3">
                             <a href="<?= base_url('Spp'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">5</span></h3>
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp_approved'] ?></span></h3>
                                 <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Spp/approval'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">2</span></h3>
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp'] ?></span></h3>
                                 <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
                             </a>
                         </div>
@@ -46,7 +46,7 @@
                         <div class="col-4"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Po'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $jumlahpo; ?></span></h3>
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_po'] ?></span></h3>
                                 <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
@@ -90,17 +90,11 @@
                                 <i class="fe-plus-square avatar-title font-22 text-white"></i>
                             </div>
                         </div>
+                        <div class="col-4"></div>
                         <div class="col-3">
-                            <a href="<?= base_url('Lpb/approval'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">0</span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
-                            </a>
-                        </div>
-                        <div class="col-1"></div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Lpb/blmapproval'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">0</span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
+                            <a href="<?= base_url('Lpb'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_lpb'] ?></span></h3>
+                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
                     </div>
@@ -118,15 +112,15 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <a href="<?= base_url('Bpb/approval'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">0</span></h3>
+                            <a href="<?= base_url('Bpb'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb_approved'] ?></span></h3>
                                 <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
-                            <a href="<?= base_url('Bpb/blmapproval'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">0</span></h3>
+                            <a href="<?= base_url('Bpb'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb'] ?></span></h3>
                                 <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
                             </a>
                         </div>
@@ -145,16 +139,16 @@
                             </div>
                         </div>
                         <div class="col-3">
-                            <a href="<?= base_url('Bkb/Approval'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">0</span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
+                            <a href="<?= base_url('Bkb'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb'] ?></span></h3>
+                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
-                            <a href="<?= base_url('Bkb/Blmapproval'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">2</span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
+                            <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb_rev_qty'] ?></span></h3>
+                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu Rev QTY</p>
                             </a>
                         </div>
                     </div>

@@ -14,6 +14,14 @@ class Home extends CI_Controller
             $this->session->set_flashdata('pesan', $pemberitahuan);
             redirect('Login');
         }
+
+        $db_pt = check_db_pt();
+        // $this->db_logistik = $this->load->database('db_logistik',TRUE);
+        $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
+
+        $this->db_logistik = $this->load->database('db_logistik', TRUE);
+
+        $this->load->model('M_home');
     }
 
 
@@ -22,7 +30,11 @@ class Home extends CI_Controller
         $data = [
             'tittle' => "Dashboard"
         ];
-        $data['jumlahpo'] = $this->db->query("SELECT * FROM po")->num_rows();
+        $data['count'] = $this->M_home->count_spp();
+
+        // var_dump($data['count_spp']);
+        // die;
+
         $this->template->load('template', 'dashboard', $data);
     }
     public function tes()

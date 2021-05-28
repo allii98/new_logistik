@@ -18,8 +18,11 @@ class M_approval_rev_qty extends CI_Model
 
     private function _get_datatables_query()
     {
+        $role_user = $this->session->userdata('user');
+
         $this->db_logistik_pt->from($this->table);
         $this->db_logistik_pt->where('flag_req_rev_qty', '1');
+
 
         $i = 0;
 
