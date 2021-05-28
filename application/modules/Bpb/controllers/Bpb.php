@@ -1034,10 +1034,8 @@ class Bpb extends CI_Controller
 
         // $data = $this->M_bpb->cekAprrove($nobpb, $kodebar, $norefbpb);
         if ($setuju == 1) {
-
             $data = $this->M_bpb->cekAprrove($nobpb, $kodebar, $norefbpb);
         } else if ($setuju == 0) {
-
             $data = $this->M_bpb->batalAprrove($nobpb, $norefbpb, $kodebar);
         }
 

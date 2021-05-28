@@ -214,10 +214,10 @@
                                     </div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
-                                    <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-table-outline mr-1"></i>
+                                    <a href="<?= base_url('Laporan/lapBarang') ?>" class="dropdown-item"><i class="mdi mdi-file-table-outline mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Barang</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="mdi mdi-file-outline mr-1"></i>
+                                    <a href="#" onclick="lap_spp();" class="dropdown-item"><i class="mdi mdi-file-outline mr-1"></i>
                                         <font face="Verdana" size="2.5">Surat Permintaan Pembelian (SPP)</font>
                                     </a>
                                     <a href="#" onclick="lap_po();" class="dropdown-item"><i class="mdi mdi-file-upload-outline mr-1"></i>
@@ -290,10 +290,7 @@
                                         <font face="Verdana" size="2.5">Kode Barang</font>
                                     </a>
                                     <a href="<?= base_url('Stok') ?>" class="dropdown-item"><i class="fe-edit mr-1"></i>
-                                        <font face="Verdana" size="2.5">Stok Awal</font>
-                                    </a>
-                                    <a href="<?= base_url('Stok/stok_harian') ?>" class="dropdown-item"><i class="fe-edit mr-1"></i>
-                                        <font face="Verdana" size="2.5">Stok Awal Harian</font>
+                                        <font face="Verdana" size="2.5">Input Stok Awal</font>
                                     </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-check-square mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Rinci Stok</font>
@@ -390,6 +387,71 @@
                                 <label for="rbt_po_lokal_t">PO Lokal (Total PO)</label>
                             </div>
 
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkanpo()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal lap PO -->
+
+        <!-- modal lap SPP -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapSpp">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Laporan SPP</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">PT *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="cmb_devisi" name="cmb_devisi" required="">
+                                    <option value="" selected>-- Pilih --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">BAGIAN *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="">
+                                    <option value="" selected>-- Pilih --</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Periode *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="txt_periode" name="txt_periode">
+                                <input type="hidden" class="form-control" id="tanggalawal" name="tanggalawalPO">
+                                <input type="hidden" class="form-control" id="tanggalakhir" name="tanggalakhirPO">
+                            </div>
+                        </div>
+
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="semua" id="rbt_semua" name="rbt_pilihan" checked>
+                                <label for="rbt_semua">Semua SPP</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="proses" id="rbt_proses" name="rbt_pilihan">
+                                <label for="rbt_proses">Dalam Proses</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="setujui" id="rbt_setujui" name="rbt_pilihan">
+                                <label for="rbt_setujui">Disetujui</label>
+                            </div>
                         </div>
 
                     </div>
@@ -867,6 +929,13 @@
             pilihTanggal1();
         }
 
+        function lap_spp() {
+            $('#modalLapSpp').modal('show');
+            $('#cmb_company').empty();
+            pilihDevisi();
+            pilihTanggal();
+        }
+
         function pilihCompany() {
             $.ajax({
                 type: "POST",
@@ -892,6 +961,32 @@
             });
         }
 
+        function pilihDevisi() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_devisi'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    console.log(data);
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+                    if (stl == 'HO') {
+                        var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
+                        $('#cmb_devisi').append(opsi_cmb_all);
+                    }
+                    $.each(data, function(index) {
+                        var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                        $('#cmb_devisi').append(opsi_cmb_devisi);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
         function pilihTanggal1() {
             var d = new Date();
             var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
@@ -908,6 +1003,27 @@
             }, function(start, end, label) {
                 $('#tanggalawalPO').val(start.format('DD/MM/YYYY'));
                 $('#tanggalakhirPO').val(end.format('DD/MM/YYYY'));
+
+                // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            });
+        }
+
+        function pilihTanggal() {
+            var d = new Date();
+            var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
+            var today1 = (25) + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+            $('#tanggalawalPO').val(today);
+            $('#tanggalakhirPO').val(today1);
+            $('#txt_periode').val(today + ' - ' +
+                today1);
+
+            $('#txt_periode').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+            }, function(start, end, label) {
+                $('#tanggalawal').val(start.format('DD/MM/YYYY'));
+                $('#tanggalakhir').val(end.format('DD/MM/YYYY'));
 
                 // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
             });

@@ -4,20 +4,53 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Laporan extends CI_Controller
 {
-
-
-
     public function __construct()
     {
         parent::__construct();
         $db_pt = check_db_pt();
-        // $this->db_logistik = $this->load->database('db_logistik',TRUE);
+        $this->db_logistik = $this->load->database('db_logistik', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
+
+        $this->load->model('M_laporan');
+
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
             $this->session->set_flashdata('pesan', $pemberitahuan);
             redirect('Login');
         }
+    }
+
+    function list_lapbarang()
+    {
+        $list = $this->M_laporan->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $hasil) {
+            $row   = array();
+            $id    = "'" . $hasil->id . "'";
+            // $row[] = '<a href="javascript:;" id="btn_data_barang">
+            //         <button class="btn btn-success btn-xs" id="data_barang" name="data_barang" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
+            //             Pilih
+            //         </button>
+            //     </a>
+            //     ';
+            $row[] = $no++;
+            $row[] = $hasil->kodebartxt;
+            $row[] = $hasil->nopart;
+            $row[] = $hasil->nabar;
+            // $row[] = $hasil->grp;
+            $row[] = $hasil->satuan;
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_laporan->count_all(),
+            "recordsFiltered" => $this->M_laporan->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
 
 
@@ -130,6 +163,44 @@ class Laporan extends CI_Controller
         $mpdf->WriteHTML($html);
         $mpdf->Output();
         // var_dump($query);
+    }
+
+    public function lapBarang()
+    {
+        $data = [
+            'title' => 'Data Laporan Barang',
+        ];
+
+        $this->template->load('template', 'barang/v_lap_barang', $data);
+    }
+
+    public function barang()
+    {
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => [190, 236],
+            'setAutoTopMargin' => 'stretch',
+            'orientation' => 'P'
+        ]);
+
+        $query_grp = "SELECT DISTINCT grp FROM  kodebar ORDER BY grp ASC LIMIT 100";
+        $data['data_grp'] = $this->db_logistik->query($query_grp)->result();
+
+        $query = "SELECT id, kodebartxt, nabar, nopart, satuan FROM kodebar ORDER BY nabar ASC LIMIT 100";
+        $data['data_barang'] = $this->db_logistik->query($query)->result();
+
+        // var_dump(json_decode($this->list_barang()));exit();
+        // $data['data_barang'] = json_decode($this->list_barang());
+
+
+        $mpdf->SetHTMLHeader('<h4 align="center">MASTER KODE BARANG</h4>');
+        $mpdf->SetHTMLFooter('<h5 align="left">{DATE j-m-Y H:i:s} - ' . $this->input->ip_address() . ' - ' . $this->platform->agent() . '</h5> <h5 align="right">Halaman {PAGENO} dari {nb}</h5>');
+
+        $html = $this->load->view('barang/vw_lap_barang_print', $data, true);
+        // $html = $this->load->view('V_lap_barang/vw_lap_barang_print',null,TRUE);
+
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
     }
 }
 
