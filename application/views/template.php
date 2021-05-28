@@ -321,7 +321,7 @@
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="fe-calendar"></i>
-                                    <span>Periode : 202103</span>
+                                    <span>Periode : <?= $this->session->userdata('ym_periode'); ?></span>
                                 </a>
                             </div>
                         </li>
