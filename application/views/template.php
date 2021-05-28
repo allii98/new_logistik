@@ -290,7 +290,10 @@
                                         <font face="Verdana" size="2.5">Kode Barang</font>
                                     </a>
                                     <a href="<?= base_url('Stok') ?>" class="dropdown-item"><i class="fe-edit mr-1"></i>
-                                        <font face="Verdana" size="2.5">Input Stok Awal</font>
+                                        <font face="Verdana" size="2.5">Stok Awal</font>
+                                    </a>
+                                    <a href="<?= base_url('Stok/stok_harian') ?>" class="dropdown-item"><i class="fe-edit mr-1"></i>
+                                        <font face="Verdana" size="2.5">Stok Awal Harian</font>
                                     </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-check-square mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Rinci Stok</font>
