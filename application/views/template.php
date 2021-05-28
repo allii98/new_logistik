@@ -426,7 +426,7 @@
                                 <font face="Verdana" size="2">BAGIAN *</font>
                             </label>
                             <div class="col-12">
-                                <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="">
+                                <select class="form-control" id="cmb_dept" name="cmb_dept" required="">
                                     <option value="" selected>-- Pilih --</option>
                                 </select>
                             </div>
