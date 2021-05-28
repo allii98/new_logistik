@@ -585,10 +585,16 @@ class M_bpb extends CI_Model
     public function batalAprrove($nobpb, $kodebar, $norefbpb)
     {
         $cek = "SELECT nobpb, kodebar, norefbpb, batal FROM bpbitem WHERE nobpb='$nobpb' AND norefbpb='$norefbpb' AND kodebar='$kodebar' ";
+        // $query = "SELECT nobpb, kodebar, norefbpb, approval_item FROM bpbitem WHERE nobpb='$nobpb' AND norefbpb='$norefbpb' AND kodebar='$kodebar' ";
 
         $approve = $this->db_logistik_pt->query($cek)->row();
+        // $dt = $this->db_logistik_pt->query($query)->row();
 
         $d = $approve['batal'];
+
+
+        // $c = $dt->approval_item;
+
         if ($d != 0) {
             $data = [
                 'status' => false
