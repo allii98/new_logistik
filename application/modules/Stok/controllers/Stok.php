@@ -71,47 +71,47 @@ class Stok extends CI_Controller
         $this->template->load('template', 'v_stok_harian', $data);
     }
 
-    // function detail_stock()
-    // {
-    //     $id = $this->input->post('id');
-    //     $kodebar = $this->input->post('kodebar');
+    function detail_stock()
+    {
+        $id = $this->input->post('id');
+        $kodebar = $this->input->post('kodebar');
 
-    //     $data = $this->db_logistik_pt->get_where('stockawal', array('id' => $id, 'kodebartxt' => $kodebar))->row();
-    //     echo json_encode($data);
-    // }
+        $data = $this->db_logistik_pt->get_where('stockawal', array('id' => $id, 'kodebartxt' => $kodebar))->row();
+        echo json_encode($data);
+    }
 
-    // function list_barang()
-    // {
-    //     $list = $this->M_barang->get_datatables();
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $d) {
-    //         $no++;
-    //         $id    = $d->id;
-    //         $row = array();
-    //         $row[] = $no . ".";
-    //         $row[] = $d->kodebar;
-    //         $row[] = $d->nabar;
-    //         $row[] = $d->grp;
-    //         $row[] = $d->satuan;
+    function list_barang()
+    {
+        $list = $this->M_barang->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            $no++;
+            $id    = $d->id;
+            $row = array();
+            $row[] = $no . ".";
+            $row[] = $d->kodebar;
+            $row[] = $d->nabar;
+            $row[] = $d->grp;
+            $row[] = $d->satuan;
 
-    //         $data[] = $row;
-    //     }
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "recordsTotal" => $this->M_barang->count_all(),
-    //         "recordsFiltered" => $this->M_barang->count_filtered(),
-    //         "data" => $data,
-    //     );
-    //     // output to json format
-    //     echo json_encode($output);
-    // }
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_barang->count_all(),
+            "recordsFiltered" => $this->M_barang->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
 
-    // public function simpan_stock()
-    // {
-    //     $data = $this->M_stok->simpan_stock();
-    //     echo json_encode($data);
-    // }
+    public function simpan_stock()
+    {
+        $data = $this->M_stok->simpan_stock();
+        echo json_encode($data);
+    }
 
     function get_ajax_harian()
     {
@@ -127,7 +127,8 @@ class Stok extends CI_Controller
             // $row[] = '<a href="javascript:;" class="btn btn-info fa fa-info btn-xs" data-toggle="tooltip" data-placement="top" title="Detail Barang" id="btn_detail_barang" onclick="detail_barang(' . $d->kodebartxt . ',' . $id . ')"></a>';
             $row[] = $no . ".";
             $row[] = $d->txtperiode;
-            $row[] = $d->periode;
+            $row[] = date("Y-m-d", strtotime($d->periode));
+            $row[] = $d->devisi;
             $row[] = $d->kodebartxt;
             $row[] = $d->nabar;
             $row[] = $d->satuan;
@@ -138,7 +139,6 @@ class Stok extends CI_Controller
             $row[] = $d->saldoakhir_nilai;
             $row[] = $d->ket;
             $row[] = $d->minstok;
-
             $data[] = $row;
         }
         $output = array(
