@@ -128,8 +128,8 @@
                             </h6>
                             <input type="hidden" id="hidden_no_bkb">
                             <input type="hidden" id="hidden_no_ref_bkb">
-                            <input type="" id="hidden_kode_dev">
-                            <input type="" id="hidden_devisi">
+                            <input type="hidden" id="hidden_kode_dev">
+                            <input type="hidden" id="hidden_devisi">
                             <div class="row" style="margin-left:4px;">
                                 <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
                                 <h6><span id="h4_no_ref_bkb"></span></h6>
@@ -607,87 +607,87 @@
         });
     }
 
-    saat hitung stock awal harian gunakan where devisi!
-        function saveRinciClick(n) {
+    // saat hitung stock awal harian gunakan where devisi!
+    function saveRinciClick(n) {
 
-            var hidden_kode_barang = $('#hidden_kode_barang_' + n).val();
+        var hidden_kode_barang = $('#hidden_kode_barang_' + n).val();
 
-            $.ajax({
-                type: "POST",
-                url: "<?php echo base_url('Bkb/saveBkb') ?>",
-                dataType: "JSON",
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Bkb/saveBkb') ?>",
+            dataType: "JSON",
 
-                beforeSend: function() {
-                    $('#btn_simpan_' + n).css('display', 'none');
+            beforeSend: function() {
+                $('#btn_simpan_' + n).css('display', 'none');
 
-                    $('#lbl_status_simpan_' + n).empty();
-                    $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
 
-                    if ($.trim($('#h4_no_ref_bkb').text()) == '') {
-                        $('#lbl_bkb_status').empty();
-                        $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
-                    }
-                },
-
-                data: {
-                    txt_tgl_bkb: $('#tgl_bkb').val(),
-                    txt_no_bpb: $('#txt_no_bpb').val(),
-                    hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
-                    hidden_no_bkb: $('#hidden_no_bkb').val(),
-                    cmb_alokasi_est: $('#alokasi_est').val(),
-                    txt_diberikan_kpd: $('#diberikan_kpd').val(),
-                    txt_untuk_keperluan: $('#utk_keperluan').val(),
-                    cmb_bagian: $('#bagian').val(),
-
-                    hidden_kode_barang: $('#hidden_kode_barang_' + n).val(),
-                    hidden_nama_barang: $('#txt_barang_' + n).val(),
-                    hidden_satuan: $('#sat_bpb_' + n).text(),
-                    hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
-                    cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
-                    cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
-                    txt_qty_diminta: $('#txt_qty_diminta_' + n).val(),
-                    txt_qty_disetujui: $('#txt_qty_disetujui_' + n).val(),
-                    txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
-                    cmb_bahan: $('#cmb_bahan_' + n).val(),
-                    hidden_no_acc: $('#hidden_no_acc_' + n).val(),
-                    hidden_nama_acc: $('#txt_account_beban_' + n).val()
-                },
-
-                success: function(data) {
-
-                    $('#lbl_status_simpan_' + n).empty();
-
+                if ($.trim($('#h4_no_ref_bkb').text()) == '') {
                     $('#lbl_bkb_status').empty();
-                    $('#h4_no_bkb').html('No. BKB : ' + data.no_bkb);
-                    $('#hidden_no_bkb').val(data.no_bkb);
-
-                    $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
-                    $('#hidden_no_ref_bkb').val(data.noref_bkb);
-
-                    $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
-
-                    $.toast({
-                        position: 'top-right',
-                        heading: 'Success',
-                        text: 'Berhasil Disimpan!',
-                        icon: 'success',
-                        loader: false
-                    });
-
-                    console.log(data);
-
-                    //hitung ulang stok?
-                    get_stok(n, hidden_kode_barang, data.txtperiode);
-
-                    $('#a_print_bkb').show();
-
-                    $('#hidden_id_bkb').val(data.id_stockkeluar);
-
-                    //stok BPB itu di ambil berdasarkan periode atau semua periode???
-
+                    $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
                 }
-            });
-        }
+            },
+
+            data: {
+                txt_tgl_bkb: $('#tgl_bkb').val(),
+                txt_no_bpb: $('#txt_no_bpb').val(),
+                hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+                hidden_no_bkb: $('#hidden_no_bkb').val(),
+                cmb_alokasi_est: $('#alokasi_est').val(),
+                txt_diberikan_kpd: $('#diberikan_kpd').val(),
+                txt_untuk_keperluan: $('#utk_keperluan').val(),
+                cmb_bagian: $('#bagian').val(),
+
+                hidden_kode_barang: $('#hidden_kode_barang_' + n).val(),
+                hidden_nama_barang: $('#txt_barang_' + n).val(),
+                hidden_satuan: $('#sat_bpb_' + n).text(),
+                hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
+                cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
+                cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
+                txt_qty_diminta: $('#txt_qty_diminta_' + n).val(),
+                txt_qty_disetujui: $('#txt_qty_disetujui_' + n).val(),
+                txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                cmb_bahan: $('#cmb_bahan_' + n).val(),
+                hidden_no_acc: $('#hidden_no_acc_' + n).val(),
+                hidden_nama_acc: $('#txt_account_beban_' + n).val()
+            },
+
+            success: function(data) {
+
+                $('#lbl_status_simpan_' + n).empty();
+
+                $('#lbl_bkb_status').empty();
+                $('#h4_no_bkb').html('No. BKB : ' + data.no_bkb);
+                $('#hidden_no_bkb').val(data.no_bkb);
+
+                $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
+                $('#hidden_no_ref_bkb').val(data.noref_bkb);
+
+                $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
+
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil Disimpan!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                console.log(data);
+
+                //hitung ulang stok?
+                get_stok(n, hidden_kode_barang, data.txtperiode);
+
+                $('#a_print_bkb').show();
+
+                $('#hidden_id_bkb').val(data.id_stockkeluar);
+
+                //stok BPB itu di ambil berdasarkan periode atau semua periode???
+
+            }
+        });
+    }
 
     function cetak_bkb() {
         var no_bkb = $('#hidden_no_bkb').val();
