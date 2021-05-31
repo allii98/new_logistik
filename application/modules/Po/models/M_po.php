@@ -241,6 +241,25 @@ class M_po extends CI_Model
 
         return $data;
     }
+
+    public function cariDevisi()
+    {
+        $lokasi = $this->session->userdata('status_lokasi');
+
+        if ($lokasi == 'SITE') {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->where('kodetxt', '06');
+            $this->db_logistik_pt->or_where('kodetxt', '07');
+            $this->db_logistik_pt->from('pt_copy');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        } else {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->from('pt_copy');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        }
+    }
 }
 
 /* End of file M_po.php */

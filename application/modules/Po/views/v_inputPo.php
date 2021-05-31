@@ -117,7 +117,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     <div class="col-md-4">
                         <div class="form-group row mb-1">
                             <label class="col-4 mr-1 col-form-label">
-                                <font face="Verdana" size="2">Lokasi&nbsp;Pengirim*</font>
+                                <font face="Verdana" size="2">Lokasi&nbsp;Pengiriman*</font>
                             </label>
                             <div class="col-5">
                                 <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
@@ -125,8 +125,25 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </div>
                         </div>
                         <div class="form-group row mb-1">
+                            <label class="col-4 mr-1 col-form-label">
+                                <font face="Verdana" size="2">Devisi*</font>
+                            </label>
+                            <div class="col-5">
+                                <!-- <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required> -->
+                                <select class="form-control" id="devisi">
+                                    <option value="" selected disabled>Pilih</option>
+                                    <?php
+                                    foreach ($devisi as $d) : { ?>
+                                            <option value="<?= $d['PT'] ?>"><?= $d['PT'] ?></option>
+                                    <?php }
+                                    endforeach;
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row mb-1">
                             <label class="col-4 col-form-label  mr-1">
-                                <font face="Verdana" size="2">Lokasi&nbsp;Pembeli*</font>
+                                <font face="Verdana" size="2">Lokasi&nbsp;Pembelian*</font>
                             </label>
                             <div class="col-4">
                                 <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
@@ -436,11 +453,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             </form>
                                         </tr>
                                     </tbody>
-                                    <!-- <tfoot>
-                <tr>
-                    <th colspan="13"><button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" onclick="tambah_row()"></button></th>
-                </tr>
-            </tfoot> -->
                                 </table>
                             </div>
                         </div>
@@ -1631,6 +1643,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 txt_ket_pengiriman: $('#ket_pengiriman').val(),
                 txt_uang_muka: $('#txt_uang_muka').val(),
                 txt_no_voucher: $('#txt_no_voucher').val(),
+                devisi: $('#devisi').val(),
                 txt_no_spp: $('#noppo' + id).val(),
                 hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
                 hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
@@ -1649,8 +1662,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                 hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
             });
-
             noppo = $('#noppo' + id).val();
+
 
             $.ajax({
                 type: "POST",
@@ -1706,6 +1719,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                     id_item: $('#id_item_' + id).val(),
                     hidden_no_po: $('#hidden_no_po').val(),
+                    devisi: $('#devisi').val(),
 
                 },
                 success: function(data) {
@@ -1854,6 +1868,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                     id_item: $('#id_item_' + id).val(),
                     hidden_no_po: $('#hidden_no_po').val(),
+                    devisi: $('#devisi').val(),
 
                 },
 
@@ -2369,6 +2384,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var keterangan = $('#keterangan').val();
         var jnSPP = $('#hidden_jenis_spp').val();
         var lokasi = $('#status_lokasi').val();
+        var lokasi = $('#devisi').val();
 
 
         var jnbudget = $('#cmb_jenis_budget_' + id).val();
@@ -2408,6 +2424,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         if (!jnpo) {
             toast('Jenis PO is required!');
             $('#cmb_pilih_jenis_po').css({
+                "background": "#FFCECE"
+            });
+
+        } else if (!devisi) {
+            toast('Devisi PO is required!');
+            $('#devisi').css({
                 "background": "#FFCECE"
             });
         } else if (!tglpo) {

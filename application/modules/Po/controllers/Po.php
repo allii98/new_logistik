@@ -273,7 +273,8 @@ class Po extends CI_Controller
     {
         $data = [
             'title' => "Permohonan Order",
-            'sesi_sl' => $this->session->userdata('status_lokasi')
+            'sesi_sl' => $this->session->userdata('status_lokasi'),
+            'devisi' => $this->M_po->cariDevisi()
         ];
         $this->template->load('template', 'v_inputPo', $data);
     }
@@ -516,6 +517,7 @@ class Po extends CI_Controller
             'id' => $no_id,
             'kd_dept' => $data['nama_dept']['kode'],
             'ket_dept' => $this->input->post('hidden_departemen'),
+            'devisi' => $this->input->post('devisi'),
             'grup' => $this->input->post('cmb_jenis_budget'),
             'kode_budet' => "0",
             'kd_subbudget' => "0",
