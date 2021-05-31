@@ -85,10 +85,29 @@ class M_bpb extends CI_Model
     }
     // end server side table
 
-    public function get_stok($kodebar)
+    public function cariDevisi()
+    {
+        $lokasi = $this->session->userdata('status_lokasi');
+
+        if ($lokasi == 'SITE') {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->where('kodetxt', '06');
+            $this->db_logistik_pt->or_where('kodetxt', '07');
+            $this->db_logistik_pt->from('pt_copy');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        } else {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->from('pt_copy');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        }
+    }
+
+    public function get_stok($kodebar, $txtperiode)
     {
         $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR');
-        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
 
@@ -102,6 +121,7 @@ class M_bpb extends CI_Model
 
         // $diberikan_kpd = $this->input->post('txt_diberikan_kpd');
         $keperluan      = $this->input->post('txt_untuk_keperluan');
+        $kode_devisi    = $this->input->post('devisi');
         // $tgl           = $this->input->post('txt_tgl_bpb');
         $tgl            = date("Y-m-d", strtotime($this->input->post('txt_tgl_bpb')));
         $bagian         = $this->input->post('cmb_bagian');
@@ -134,9 +154,6 @@ class M_bpb extends CI_Model
         $kd_nmr        = $this->input->post('kd_nmr');
         $hm_km        = $this->input->post('hm_km');
         $lokasi_kerja       = $this->input->post('lokasi_kerja');
-
-
-
 
         $user = $this->session->userdata('user');
         $ip = $this->input->ip_address();
@@ -208,6 +225,8 @@ class M_bpb extends CI_Model
             $norefbpb = $this->input->post('hidden_no_ref_bpb');
         }
 
+        $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
+
         $databpb['id']              = $id_bpb;
         $databpb['nobpb']           = $nobpb;
         $databpb['norefbpb']        = $norefbpb;
@@ -220,6 +239,8 @@ class M_bpb extends CI_Model
         $databpb['alokasi']         = $alokasi;
         $databpb['pt']              = $this->session->userdata('pt');
         $databpb['kode']            = $this->session->userdata('kode_pt');
+        $databpb['devisi']          = $data['devisi']['PT'];
+        $databpb['kode_dev']        = $kode_devisi;
         // $databpb['kpd']             = "";
         $databpb['keperluan']       = $keperluan;
         $databpb['bag']             = $bagian;

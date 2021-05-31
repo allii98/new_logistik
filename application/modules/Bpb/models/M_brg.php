@@ -6,8 +6,8 @@ class M_brg extends CI_Model
 {
 
     var $table = 'stockawal'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan'); //field yang ada di table supplier  
-    var $column_search = array('kodebar', 'nabar', 'grp', 'satuan'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan', 'txtperiode'); //field yang ada di table supplier  
+    var $column_search = array('kodebar', 'nabar', 'grp', 'satuan', 'txtperiode'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -21,7 +21,7 @@ class M_brg extends CI_Model
         // $Value = ;
         $txtperiode = $this->session->userdata('ym_periode');
 
-        $this->db_logistik_pt->select('id, kodebar, nabar, grp, satuan');
+        $this->db_logistik_pt->select('id, kodebar, nabar, grp, satuan, txtperiode');
         $this->db_logistik_pt->from('stockawal');
         $this->db_logistik_pt->where('txtperiode', $txtperiode);
         $this->db_logistik_pt->order_by('id', 'desc');

@@ -13,11 +13,9 @@
                         <button class="btn btn-xs btn-primary h-50 mr-2" id="inputNew" style="display:none;" onclick="inputBaru()">Input Bpb Baru</button>
                     </div>
 
-
                     <div class="row div_form_1">
                         <div class="col-md-4">
                             <div class="form-group row mb-1">
-
                                 <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB
                                 </label>
                                 <div class="col-md-1"></div>
@@ -31,6 +29,22 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
                                     <textarea class="resizable_textarea form-control" rows="1" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi*
+                                </label>
+                                <div class="col-md-1"></div>
+                                <div class="col-md-7">
+                                    <select class="form-control" id="devisi">
+                                        <option value="" selected disabled>Pilih</option>
+                                        <?php
+                                        foreach ($devisi as $d) : { ?>
+                                                <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
+                                        <?php }
+                                        endforeach;
+                                        ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -119,17 +133,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-
-                        <!-- <div class="form-group row col-md-3">
-                            <div class="col-md-1"></div>
-                            
-                            <div class="col-md-5 col-sm-6 col-xs-12">
-                                </div>
-                            </div> -->
-
-
                     </div>
                     <hr class="mt-0 mb-2">
                     <div class="row">
@@ -218,6 +221,7 @@
                                                 <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1" value="0">
                                                 <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1" value="0">
                                                 <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
+                                                <input type="hidden" id="hidden_txtperiode_1" name="hidden_txtperiode_1">
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
@@ -606,7 +610,7 @@
 
 
     function check_form_2() {
-        if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '') {
+        if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#devisi').val()) != '') {
 
             $('#btn_simpan_1').removeAttr('disabled', '');
             $('#btn_tambah_row').removeAttr('disabled', '');
@@ -678,6 +682,7 @@
             '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_nama_barang_' + row + '" name="hidden_nama_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '</td>';
         var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             // '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
@@ -745,7 +750,6 @@
         sum_stok_booking(kodebar, no);
 
         // console.log(kodebar);
-
 
         var v_qty = validasi_qty(sudah_booking, qty_diminta, stok_tgl_ini, no);
         if (v_qty === true) {
@@ -1131,6 +1135,7 @@
 
         // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
         form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
+        form_data.append('devisi', $('#devisi').val());
         form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
         // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
         form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
@@ -1742,7 +1747,10 @@
         var nama_barang = dataClick[3];
         var grup_barang = dataClick[4];
         var satuan = dataClick[5];
+        var txtperiode = dataClick[6];
         var row = $('#hidden_no_row_barang').val();
+
+        console.log(txtperiode);
 
         $('#lbl_kode_barang_' + row).html(kode_barang);
         $('#lbl_nama_barang_' + row).html(nama_barang);
@@ -1751,6 +1759,7 @@
         $('#hidden_kode_barang_' + row).val(kode_barang);
         $('#hidden_nama_barang_' + row).val(nama_barang);
         $('#hidden_grup_barang_' + row).val(grup_barang);
+        $('#hidden_txtperiode_' + row).val(txtperiode);
 
         $('#b_satuan_' + row).html(satuan);
         $('#hidden_satuan_' + row).val(satuan);
@@ -1762,6 +1771,9 @@
     });
 
     function sum_stok(kodbar, row) {
+
+        var hidden_txtperiode = $('#hidden_txtperiode_' + row).val();
+
         $.ajax({
             type: "POST",
             // url     : "<?php // echo site_url('bpb/sum_stok'); 
@@ -1774,7 +1786,8 @@
             // processData : false,
 
             data: {
-                'kodbar': kodbar
+                'kodbar': kodbar,
+                'hidden_txtperiode': hidden_txtperiode
             },
             success: function(data) {
 
