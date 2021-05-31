@@ -19,8 +19,11 @@ class M_brg extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
+        $txtperiode = $this->session->userdata('ym_periode');
+
         $this->db_logistik_pt->select('id, kodebar, nabar, grp, satuan');
         $this->db_logistik_pt->from('stockawal');
+        $this->db_logistik_pt->where('txtperiode', $txtperiode);
         $this->db_logistik_pt->order_by('id', 'desc');
 
 
