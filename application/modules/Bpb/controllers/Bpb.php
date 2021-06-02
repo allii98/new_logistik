@@ -29,6 +29,7 @@ class Bpb extends CI_Controller
         $data = [
             'title' => 'Bon Permintaan Barang'
         ];
+
         $this->template->load('template', 'v_indexBpb', $data);
     }
 
@@ -60,6 +61,9 @@ class Bpb extends CI_Controller
         $data = [
             'title' => 'Bon Permintaan Barang'
         ];
+
+        $data['devisi'] = $this->M_bpb->cariDevisi();
+
         $this->template->load('template', 'v_inputbpb', $data);
     }
 
@@ -370,6 +374,7 @@ class Bpb extends CI_Controller
             $row[] = $field->nabar;
             $row[] = $field->grp;
             $row[] = $field->satuan;
+            $row[] = $field->txtperiode;
 
             $data[] = $row;
         }
@@ -402,7 +407,8 @@ class Bpb extends CI_Controller
     function sum_stok()
     {
         $kodebar = $this->input->post('kodbar');
-        $data = $this->M_bpb->get_stok($kodebar);
+        $hidden_txtperiode = $this->input->post('hidden_txtperiode');
+        $data = $this->M_bpb->get_stok($kodebar, $hidden_txtperiode);
         echo json_encode($data);
     }
 

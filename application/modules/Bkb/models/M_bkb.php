@@ -86,12 +86,12 @@ class M_bkb extends CI_Model
 
     public function get_data_bpb_qr($noref)
     {
-        $this->db_logistik_pt->select('bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja');
+        $this->db_logistik_pt->select('bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev');
         $this->db_logistik_pt->where('norefbpb', $noref);
         $this->db_logistik_pt->from('bpb');
         $data_bpb = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('afd, blok, kodebebantxt, nabar, qty, qty_disetujui, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item, req_rev_qty_item');
+        $this->db_logistik_pt->select('afd, blok, kodebebantxt, nabar, qty, qty_disetujui, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item, req_rev_qty_item, periode');
         $this->db_logistik_pt->where('norefbpb', $noref);
         $this->db_logistik_pt->from('bpbitem');
         $data_item_bpb = $this->db_logistik_pt->get()->result_array();
@@ -111,10 +111,10 @@ class M_bkb extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
-    public function get_stok($kodebar)
+    public function get_stok($kodebar, $txtperiode)
     {
         $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR');
-        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
 
@@ -158,24 +158,24 @@ class M_bkb extends CI_Model
         }
     }
 
-    public function update_qtykeluar($kodebar, $qty2)
+    public function update_qtykeluar($kodebar, $qty2, $txtperiode)
     {
         $this->db_logistik_pt->select('QTY_KELUAR');
-        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
 
         $jumlah = $stock_awal['QTY_KELUAR'] + $qty2;
 
         $this->db_logistik_pt->set('QTY_KELUAR', $jumlah);
-        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         return $this->db_logistik_pt->update('stockawal');
     }
 
-    public function update_saldoakhir_nilai($kodebar)
+    public function update_saldoakhir_nilai($kodebar, $txtperiode)
     {
         $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR, nilai_masuk');
-        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal');
         $qty = $this->db_logistik_pt->get()->row_array();
 
@@ -183,7 +183,7 @@ class M_bkb extends CI_Model
         $saldo_akhir_nilai = $subtotal * $qty['nilai_masuk'];
 
         $this->db_logistik_pt->set('saldoakhir_nilai', $saldo_akhir_nilai);
-        $this->db_logistik_pt->where('kodebar', $kodebar);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         return $this->db_logistik_pt->update('stockawal');
     }
 

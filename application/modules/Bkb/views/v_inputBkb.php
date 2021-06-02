@@ -2,7 +2,10 @@
     <div class="row justify-content-center mt-2">
         <div class="col-md col-xl-3">
             <div class="widget-rounded-circle card-box">
-                <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BKB</h4>
+                <div class="row justify-content-between">
+                    <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BKB</h4>
+                    <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4>
+                </div>
                 <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                     Bukti Keluar Barang
                 </p>
@@ -125,6 +128,8 @@
                             </h6>
                             <input type="hidden" id="hidden_no_bkb">
                             <input type="hidden" id="hidden_no_ref_bkb">
+                            <input type="hidden" id="hidden_kode_dev">
+                            <input type="hidden" id="hidden_devisi">
                             <div class="row" style="margin-left:4px;">
                                 <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
                                 <h6><span id="h4_no_ref_bkb"></span></h6>
@@ -395,6 +400,10 @@
                 $('#alokasi_est').val(data_bpb.alokasi);
                 $('#diberikan_kpd').val(data_bpb.user);
                 $('#utk_keperluan').val(data_bpb.keperluan);
+                $('#hidden_kode_dev').val(data_bpb.kode_dev);
+                $('#hidden_devisi').val(data_bpb.devisi);
+                var dev = data_bpb.kode_dev + ' - ' + data_bpb.devisi;
+                $('#devisi_span').text(dev);
 
                 if (data_bpb.bag == 'TEKNIK' && data_bpb.bhn_bakar == 'BBM') {
                     $('#fieldset_bbm').css('display', 'block');
@@ -414,7 +423,7 @@
                     tahun_tanam(i, data_item_bpb[i].kodebebantxt);
 
                     //sum stok all periode / qtymasuk - qtykeluar
-                    get_stok(i, data_item_bpb[i].kodebar);
+                    get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode);
 
                     var afd = data_item_bpb[i].afd;
                     var blok = data_item_bpb[i].blok;
@@ -576,7 +585,7 @@
         });
     }
 
-    function get_stok(i, kodebar) {
+    function get_stok(i, kodebar, txtperiode) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/get_stok'); ?>",
@@ -584,7 +593,8 @@
             beforeSend: function() {},
 
             data: {
-                'kodebar': kodebar
+                'kodebar': kodebar,
+                'txtperiode': txtperiode
             },
             success: function(data) {
 
@@ -597,6 +607,7 @@
         });
     }
 
+    // saat hitung stock awal harian gunakan where devisi!
     function saveRinciClick(n) {
 
         var hidden_kode_barang = $('#hidden_kode_barang_' + n).val();
@@ -666,7 +677,7 @@
                 console.log(data);
 
                 //hitung ulang stok?
-                get_stok(n, hidden_kode_barang);
+                get_stok(n, hidden_kode_barang, data.txtperiode);
 
                 $('#a_print_bkb').show();
 

@@ -138,7 +138,8 @@ class Bkb extends CI_Controller
     public function get_stok()
     {
         $kodebar = $this->input->post('kodebar');
-        $result = $this->M_bkb->get_stok($kodebar);
+        $txtperiode = $this->input->post('txtperiode');
+        $result = $this->M_bkb->get_stok($kodebar, $txtperiode);
         echo json_encode($result);
     }
 
@@ -308,11 +309,15 @@ class Bkb extends CI_Controller
             $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
         }
 
+
+        // blm ada kebun nya
+
+
         //update QTY_KELUAR stokawal
-        $result_update_qtykeluar = $this->M_bkb->update_qtykeluar($kodebar, $qty2);
+        $result_update_qtykeluar = $this->M_bkb->update_qtykeluar($kodebar, $qty2, $txtperiode);
 
         //update saldo akhir nilai
-        $result_update_saldoakhir_nilai = $this->M_bkb->update_saldoakhir_nilai($kodebar);
+        $result_update_saldoakhir_nilai = $this->M_bkb->update_saldoakhir_nilai($kodebar, $txtperiode);
 
         $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
@@ -326,6 +331,7 @@ class Bkb extends CI_Controller
             'no_bkb' => $skb,
             'noref_bkb' => $no_ref,
             'id_stockkeluar' => $id_stockkeluar,
+            'txtperiode' => $txtperiode
         ];
 
         echo json_encode($data);
