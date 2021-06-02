@@ -5,9 +5,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_spp extends CI_Model
 {
     // Start Data Table Server Side
-    var $table = 'kodebar'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan'); //field yang ada di table user
-    var $column_search = array('id', 'kodebar', 'nabar', 'grp'); //field yang diizin untuk pencarian 
+    var $table = 'ppo'; //nama tabel dari database
+    var $column_order = array(null, 'id', 'tglppo', 'namadept', 'noref'); //field yang ada di table user
+    var $column_search = array('id', 'tglppo', 'namadept', 'noref'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'asc'); // default order 
 
     public function __construct()

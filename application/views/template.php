@@ -336,6 +336,7 @@
         </div> <!-- end topnav-->
 
 
+
         <!-- modal lap PO -->
         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapPO">
             <div class="modal-dialog modal-md">
@@ -382,7 +383,7 @@
                         </div>
                         <div class="form-group">&nbsp;&nbsp;&nbsp;
                             <div class="radio radio-info form-check-inline">
-                                <input type="radio" id="rbt_po_lokal_r" value="po_lokal_r" name="rbt_pilihan1" checked="">
+                                <input type="radio" id="rbt_po_lokal_r" value="po_lokal_r" name="rbt_pilihan1">
                                 <label for="rbt_po_lokal_r"> PO Lokal (Register)</label>
                             </div>
                             <div class="radio radio-info form-check-inline">
@@ -417,7 +418,6 @@
                             </label>
                             <div class="col-12">
                                 <select class="form-control" id="cmb_devisi" name="cmb_devisi" required="">
-                                    <option value="" selected>-- Pilih --</option>
                                 </select>
                             </div>
                         </div>
@@ -426,8 +426,7 @@
                                 <font face="Verdana" size="2">BAGIAN *</font>
                             </label>
                             <div class="col-12">
-                                <select class="form-control" id="cmb_dept" name="cmb_dept" required="">
-                                    <option value="" selected>-- Pilih --</option>
+                                <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="">
                                 </select>
                             </div>
                         </div>
@@ -459,13 +458,141 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkanpo()">Tampilkan</button>
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkanspp()">Tampilkan</button>
                         <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- end modal lap PO -->
+        <!-- end modal lap SPP -->
+
+        <!-- data spp -->
+        <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapSPP">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                                <table id="tableListLapSPP" class="table table-striped table-bordered table-in" width="100%">
+                                    <thead>
+                                        <tr>
+
+                                            <th style="width: 5% !important;">No</th>
+                                            <th style="width: 10% !important;">Tgl</th>
+                                            <th style="width: 10% !important;">Dept</th>
+                                            <th style="width: 25% !important;">Noref</th>
+                                            <th style="width: 10% !important;">Opsi</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end data spp -->
+
+        <!-- data po -->
+        <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">List PO</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                                <table id="tableListLapSPP" class="table table-striped table-bordered table-in" width="100%">
+                                    <thead>
+                                        <tr>
+
+                                            <th style="width: 5% !important;">No</th>
+                                            <th style="width: 20% !important;">Tanggal</th>
+                                            <th style="width: 20% !important;">Noref PO</th>
+                                            <th style="width: 20% !important;">Noref SPP</th>
+                                            <th style="width: 25% !important;">Supplier</th>
+                                            <th style="width: 10% !important;">Opsi</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end data po -->
+
+        <!-- data listPo -->
+        <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapPO">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">List PO</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                                <table id="tableListLapPOCetakan" class="table table-striped table-bordered table-in" width="100%">
+                                    <thead>
+                                        <tr>
+
+                                        <th style="width: 5% !important;">No</th>
+													<th style="width: 20% !important;">Tanggal</th>
+													<th style="width: 20% !important;">Noref PO</th>
+													<th style="width: 20% !important;">Noref SPP</th>
+													<th style="width: 25% !important;">Supplier</th>
+													<th style="width: 10% !important;">Opsi</th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end data po -->
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -937,6 +1064,7 @@
             $('#cmb_company').empty();
             pilihDevisi();
             pilihTanggal();
+            pilihBagian();
         }
 
         function pilihCompany() {
@@ -1034,19 +1162,19 @@
 
         function tampilkanpo() {
             var cmb_company = $('#cmb_company').val();
-            var starDate = $('#tanggalawalPO').val();
-            var endDate = $('#tanggalakhirPO').val();
+            var txt_periode2 = $('#tanggalawalPO').val();
+            var txt_periode3 = $('#tanggalakhirPO').val();
             var rbt_pilihan1 = $("input[name='rbt_pilihan1']:checked").val();
-            console.log(cmb_company, starDate, endDate, rbt_pilihan1);
+            console.log(cmb_company, txt_periode2, txt_periode3, rbt_pilihan1);
 
             if (rbt_pilihan1 == 'register') {
-                window.open('<?= site_url("Laporan/print_lap_po_register"); ?>/' + cmb_company + '/' + starDate + '/' + endDate);
+                window.open('<?= site_url("Laporan/print_lap_po_register"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
             } else if (rbt_pilihan1 == 'po_lokal_r') {
-                window.open('<?= site_url("laporan/print_lap_po_lokal_r"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
+                window.open('<?= site_url("Laporan/print_lap_po_lokal_r"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
             } else if (rbt_pilihan1 == 'cash') {
-                window.open('<?= site_url("laporan/print_lap_po_cash"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
+                window.open('<?= site_url("Laporan/print_lap_po_cash"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
             } else if (rbt_pilihan1 == 'po_lokal_t') {
-                window.open('<?= site_url("laporan/print_lap_po_lokal_t"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
+                window.open('<?= site_url("Laporan/print_lap_po_lokal_t"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
             } else if (rbt_pilihan1 == 'cetakan') {
                 $('#modalListLapPO').modal('show');
                 $('#tableListLapPOCetakan').DataTable().destroy();
@@ -1110,6 +1238,106 @@
                 }, 100);
             }
         }
+
+
+        function tampilkanspp() {
+            $('#modalListLapSPP').modal('show');
+            var cmb_devisi = $('#cmb_devisi').val();
+            var cmb_bagian = $('#cmb_bagian').val();
+            var txt_periode = $('#tanggalawalPO').val();
+            var txt_periode1 = $('#tanggalakhirPO').val();
+            var rbt_pilihan = $("input[name='rbt_pilihan']:checked").val();
+
+            $('#tableListLapSPP').DataTable().destroy();
+            $('#tableListLapSPP').DataTable({
+                "paging": true,
+                "scrollY": false,
+                "scrollX": false,
+                "searching": true,
+                "select": false,
+                "bLengthChange": true,
+                "scrollCollapse": true,
+                "bPaginate": true,
+                "bInfo": true,
+                "bSort": true,
+                "processing": true,
+                "serverSide": true,
+                "stateSave": true,
+                "order": [],
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    // console.log(aData);
+                },
+                "ajax": {
+                    "url": "<?php echo site_url('Laporan/tampilkan_spp'); ?>",
+                    "type": "POST",
+                    "data": {
+                        "cmb_devisi": cmb_devisi,
+                        "cmb_bagian": cmb_bagian,
+                        "txt_periode": txt_periode,
+                        "txt_periode1": txt_periode1,
+                        "rbt_pilihan": rbt_pilihan
+                    },
+                    "error": function(request) {
+                        console.log(request.responseText);
+                    }
+                },
+                "columns": [{
+                        "width": "5%"
+                    },
+                    {
+                        "width": "25%"
+                    },
+                    {
+                        "width": "10%"
+                    },
+                    {
+                        "width": "10%"
+                    },
+                    {
+                        "width": "10%"
+                    },
+                ],
+                "columnDefs": [{
+                    "targets": [],
+                    "orderable": false,
+                }, ],
+            });
+            var rel = setInterval(function() {
+                $('#tableListLapSPP').DataTable().ajax.reload();
+                clearInterval(rel);
+            }, 100);
+        }
+
+
+        function pilihBagian() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_bagian'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
+                    $('#cmb_bagian').append(opsi_cmb_all);
+                    $.each(data, function(index) {
+                        var opsi_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
+                        $('#cmb_bagian').append(opsi_cmb_bagian);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function printClick(noreftxt) {
+            window.open('<?= site_url("Laporan/print_lap_spp"); ?>/' + noreftxt);
+        }
+
+        function printLapPOCetClick(noreftxt, no_refppo, kode_supply) {
+		window.open('<?= site_url("Laporan/print_lap_po_cetakan"); ?>/' + noreftxt + '/' + no_refppo + '/' + kode_supply);
+	}
     </script>
 </body>
 
