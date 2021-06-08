@@ -256,6 +256,242 @@ class M_laporan extends CI_Model
         return $output;
         // var_dump($txt_periode2, $txt_periode3, $query);
     }
+
+    function get_list_pp_cetakan()
+    {
+        $data = array();
+        $start = $_POST['start'];
+        $length = $_POST['length'];
+        $no = $start + 1;
+
+        $cmb_devisi1 = $this->input->post('cmb_devisi1');
+        $txt_periode4 = str_replace('/', '-', $this->input->post('txt_periode4'));
+        $txt_periode5 = str_replace('/', '-', $this->input->post('txt_periode5'));
+
+        $txt_periode4 = date_create($txt_periode4);
+        $txt_periode4 = date_format($txt_periode4, "Y-m-d");
+        $txt_periode5 = date_create($txt_periode5);
+        $txt_periode5 = date_format($txt_periode5, "Y-m-d");
+
+        if (!empty($_POST['search']['value'])) {
+            $keyword = $_POST['search']['value'];
+            $query = "SELECT * FROM pp WHERE tglpp BETWEEN '" . $txt_periode4 . "' AND '" . $txt_periode5 . "' AND kodept = '$cmb_devisi1' AND batal = '0' AND ( 
+                        tglpp LIKE '%$keyword%'
+                        OR nama_supply LIKE '%$keyword%'
+                        OR ref_po LIKE '%$keyword%'
+                        OR nopp LIKE '%$keyword%')
+            			ORDER BY id DESC";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        } else {
+            $query = "SELECT * FROM pp WHERE tglpp BETWEEN '" . $txt_periode4 . "' AND '" . $txt_periode5 . "' AND kodept ='$cmb_devisi1' AND batal = '0'";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        }
+
+        foreach ($data_tabel as $hasil) {
+            $tglpp = date_create($hasil->tglpp);
+            $nopp = "'" . $hasil->nopp . "'";
+            $ref_po = "'" . $hasil->ref_po . "'";
+            $ref_po = str_replace("/", ".", $ref_po);
+            $kode_supply = "'" . $hasil->kode_supply . "'";
+            $row   = array();
+            $row[] = $no++;
+            $row[] = date_format($tglpp, "d-m-Y");
+            $row[] = $hasil->nopp;
+            $row[] = $hasil->ref_po;
+            $row[] = $hasil->nama_supply;
+            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printPPClick(' . $nopp . ',' . $ref_po . ',' . $kode_supply . ')"></button>';
+            $data[] = $row;
+        }
+        $output = array(
+            "draw"              => $_POST['draw'],
+            "recordsTotal"      => $count_all,
+            "recordsFiltered"   => $count_all,
+            "data"              => $data,
+        );
+        return $output;
+        // var_dump($txt_periode2, $txt_periode3, $query);
+    }
+
+    function get_list_lap_lpb_slip()
+    {
+        $data = array();
+        $start = $_POST['start'];
+        $length = $_POST['length'];
+        $no = $start + 1;
+
+        $cmb_devisi3 = $this->input->post('cmb_devisi3');
+        $no_lpb = $this->input->post('no_lpb');
+        $txt_periode12 = str_replace('/', '-', $this->input->post('txt_periode12'));
+        $txt_periode13 = str_replace('/', '-', $this->input->post('txt_periode13'));
+
+        $txt_periode12 = date_create($txt_periode12);
+        $txt_periode12 = date_format($txt_periode12, "Y-m-d");
+        $txt_periode13 = date_create($txt_periode13);
+        $txt_periode13 = date_format($txt_periode13, "Y-m-d");
+        if (!empty($_POST['search']['value'])) {
+            $keyword = $_POST['search']['value'];
+            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode ='$cmb_devisi3' AND a.BATAL = '0' AND ( 
+                        a.tgl LIKE '%$keyword%'
+                        OR a.refpo LIKE '%$keyword%'
+                        OR a.noref LIKE '%$keyword%'
+                        OR a.ttg LIKE '%$keyword%'
+                        OR b.ket_dept LIKE '%$keyword%')
+            			ORDER BY id DESC";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        } else {
+            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode ='$cmb_devisi3' AND a.BATAL = '0'";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        }
+
+        foreach ($data_tabel as $hasil) {
+            $tgl = date_create($hasil->tgl);
+            $noref = "'" . $hasil->noref . "'";
+            $noref = str_replace("/", ".", $noref);
+            $refpo = "'" . $hasil->refpo . "'";
+            $refpo = str_replace("/", ".", $refpo);
+            // $ket_dept = "'" . $hasil->ket_dept . "'";
+            // $ket_dept = str_replace(' ','.',$ket_dept);
+            // $ket_dept = str_replace('&','-',$ket_dept);
+            $row   = array();
+            $row[] = $no++;
+            $row[] = date_format($tgl, "d-m-Y");
+            $row[] = $hasil->refpo;
+            $row[] = $hasil->noref;
+            $row[] = $hasil->ket_dept;
+            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printLPBSlipClick(' . $noref . ',' . $refpo . ')"></button>';
+            $data[] = $row;
+        }
+        $output = array(
+            "draw"              => $_POST['draw'],
+            "recordsTotal"      => $count_all,
+            "recordsFiltered"   => $count_all,
+            "data"              => $data,
+        );
+        return $output;
+    }
+
+    function get_list_lap_lpb_po()
+    {
+        $data = array();
+        $start = $_POST['start'];
+        $length = $_POST['length'];
+        $no = $start + 1;
+
+        $cmb_devisi3 = $this->input->post('cmb_devisi3');
+        // $no_lpb = $this->input->post('no_lpb');
+        $txt_periode12 = str_replace('/', '-', $this->input->post('txt_periode12'));
+        $txt_periode13 = str_replace('/', '-', $this->input->post('txt_periode13'));
+
+        $txt_periode12 = date_create($txt_periode12);
+        $txt_periode12 = date_format($txt_periode12, "Y-m-d");
+        $txt_periode13 = date_create($txt_periode13);
+        $txt_periode13 = date_format($txt_periode13, "Y-m-d");
+        if (!empty($_POST['search']['value'])) {
+            $keyword = $_POST['search']['value'];
+            $query = "SELECT * FROM stokmasuk WHERE tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND kode ='$cmb_devisi3' AND BATAL = '0' AND ( 
+                        tgl LIKE '%$keyword%'
+                        OR refpo LIKE '%$keyword%'
+                        OR noref LIKE '%$keyword%'
+                        OR ttg LIKE '%$keyword%')
+            			ORDER BY id DESC";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        } else {
+            $query = "SELECT * FROM stokmasuk WHERE tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND kode ='$cmb_devisi3' AND BATAL = '0'";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        }
+
+        foreach ($data_tabel as $hasil) {
+            $tgl = date_create($hasil->tgl);
+            $noref = "'" . $hasil->noref . "'";
+            $noref = str_replace("/", ".", $noref);
+            $refpo = "'" . $hasil->refpo . "'";
+            $refpo = str_replace("/", ".", $refpo);
+            $periode1 = "'" . str_replace('/', '-', $this->input->post('txt_periode12')) . "'";
+            $periode2 = "'" . str_replace('/', '-', $this->input->post('txt_periode13')) . "'";
+            // $ket_dept = "'" . $hasil->ket_dept . "'";
+            // $ket_dept = str_replace(' ','.',$ket_dept);
+            // $ket_dept = str_replace('&','-',$ket_dept);
+            $row   = array();
+            $row[] = $no++;
+            $row[] = date_format($tgl, "d-m-Y");
+            $row[] = $hasil->refpo;
+            $row[] = $hasil->noref;
+            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printLPBPOClick(' . $noref . ',' . $refpo . ',' . $periode1 . ',' . $periode2 . ')"></button>';
+            $data[] = $row;
+        }
+        $output = array(
+            "draw"              => $_POST['draw'],
+            "recordsTotal"      => $count_all,
+            "recordsFiltered"   => $count_all,
+            "data"              => $data,
+        );
+        return $output;
+        // var_dump($query);
+    }
+
+    function get_list_lap_lpb_slip_r()
+    {
+        $data = array();
+        $start = $_POST['start'];
+        $length = $_POST['length'];
+        $no = $start + 1;
+
+        $cmb_devisi3 = $this->input->post('cmb_devisi3');
+        // $no_lpb = $this->input->post('no_lpb');
+        $txt_periode12 = str_replace('/', '-', $this->input->post('txt_periode12'));
+        $txt_periode13 = str_replace('/', '-', $this->input->post('txt_periode13'));
+
+        $txt_periode12 = date_create($txt_periode12);
+        $txt_periode12 = date_format($txt_periode12, "Y-m-d");
+        $txt_periode13 = date_create($txt_periode13);
+        $txt_periode13 = date_format($txt_periode13, "Y-m-d");
+        if (!empty($_POST['search']['value'])) {
+            $keyword = $_POST['search']['value'];
+            $query = "SELECT * FROM stokmasuk WHERE tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND kode ='$cmb_devisi3' AND BATAL = '0' AND refpo LIKE '%RET%' AND ( 
+                        a.tgl LIKE '%$keyword%'
+                        OR a.refpo LIKE '%$keyword%'
+                        OR a.noref LIKE '%$keyword%'
+                        OR a.ttg LIKE '%$keyword%'
+                        OR b.ket_dept LIKE '%$keyword%')
+            			ORDER BY id DESC";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        } else {
+            $query = "SELECT * FROM stokmasuk WHERE tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND kode ='$cmb_devisi3' AND BATAL = '0' AND refpo LIKE '%RET%'";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        }
+        $cmb_devisi3 = "'" . $cmb_devisi3 . "'";
+        $cmb_devisi3 = str_replace("/", ".", $cmb_devisi3);
+        foreach ($data_tabel as $hasil) {
+            $tgl = date_create($hasil->tgl);
+            $noref = "'" . $hasil->noref . "'";
+            $noref = str_replace("/", ":", $noref);
+            $noref = str_replace(" ", "-", $noref);
+            $refpo = "'" . $hasil->refpo . "'";
+            $refpo = str_replace("/", ".", $refpo);
+            $row   = array();
+            $row[] = $no++;
+            $row[] = date_format($tgl, "d-m-Y");
+            $row[] = $hasil->refpo;
+            $row[] = $hasil->noref;
+            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printLPBSlipRClick(' . $cmb_devisi3 . ',' . $noref . ',' . $refpo . ')"></button>';
+            $data[] = $row;
+        }
+        $output = array(
+            "draw"              => $_POST['draw'],
+            "recordsTotal"      => $count_all,
+            "recordsFiltered"   => $count_all,
+            "data"              => $data,
+        );
+        return $output;
+    }
 }
 
 /* End of file M_laporan.php */
