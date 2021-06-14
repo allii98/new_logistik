@@ -174,7 +174,7 @@ class Laporan extends CI_Controller
 	public function lapBarang()
 	{
 		$data = [
-			'title' => 'Data Laporan Barang',
+			'title' => 'Data Laporan Barang'
 		];
 
 		$this->template->load('template', 'barang/v_lap_barang', $data);
@@ -858,6 +858,115 @@ class Laporan extends CI_Controller
 		]);
 
 		$html = $this->load->view('lapLPB/vw_lap_lpb_print_retur', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_lpb_po_lokal_lpb()
+	{
+		$lokasi = $this->uri->segment(3);
+		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
+		$query = "SELECT a.*, b.nama_supply FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kdpt = '$lokasi' AND a.refpo LIKE '%PO-Lokal%'";
+		$data['per_po'] = $this->db_logistik_pt->query($query)->result();
+		$data['tgl1'] = $tanggal1;
+		$data['tgl2'] = $tanggal2;
+		$data['lokasi'] = $lokasi;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapLPB/vw_lap_lpb_print_po_lokal_lpb', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_spp_po_semua()
+	{
+		$tanggal1 = "'" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(3) . "'";
+		$tanggal2 = "'" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "/" . $this->uri->segment(6) . "'";
+		$tahun = $this->uri->segment(8);
+		switch ($this->uri->segment(7)) {
+			case '01':
+				$bulan = "Januari";
+				break;
+			case '02':
+				$bulan = "Februari";
+				break;
+			case '03':
+				$bulan = "Maret";
+				break;
+			case '04':
+				$bulan = "April";
+				break;
+			case '05':
+				$bulan = "Mei";
+				break;
+			case '06':
+				$bulan = "Juni";
+				break;
+			case '07':
+				$bulan = "Juli";
+				break;
+			case '08':
+				$bulan = "Agustus";
+				break;
+			case '09':
+				$bulan = "September";
+				break;
+			case '10':
+				$bulan = "Oktober";
+				break;
+			case '11':
+				$bulan = "November";
+				break;
+			case '12':
+				$bulan = "Desember";
+				break;
+			default:
+				$bulan = "";
+				break;
+		}
+
+
+		$query = "SELECT noppo, tglppo, noreftxt, lokasi, user FROM ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2";
+
+		$data['spp'] = $this->db_logistik_pt->query($query)->result();
+
+		$data['periode'] = $bulan . " " . $tahun;
+		// $data['lokasi'] = $lokasi;
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_spp_po_print_semua', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
+
+	function print_lap_po_lpb_semua()
+	{
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_semua', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}

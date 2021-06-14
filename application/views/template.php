@@ -234,13 +234,13 @@
                                             <div class="arrow-down"></div>
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-form">
-                                            <a href="forms-elements.html" class="dropdown-item">
+                                            <a href="#" onclick="lap_spp_po();" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">SPP vs PO</font>
                                             </a>
-                                            <a href="forms-advanced.html" class="dropdown-item">
+                                            <a href="#" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">LPB vs PO</font>
                                             </a>
-                                            <a href="forms-validation.html" class="dropdown-item">
+                                            <a href="#" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Durasi Transaksi</font>
                                             </a>
                                         </div>
@@ -779,7 +779,6 @@
         </div>
         <!-- end data pp -->
 
-
         <!-- data registerLPB -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapLPBSlip">
             <div class="modal-dialog modal-lg modal-dialog-scrollable">
@@ -893,7 +892,55 @@
         </div>
         <!-- end data LPB PO -->
 
+        <!-- modal SPP vs PO -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapSPPPO">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Laporan Monitoring SPP vs PO</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Tanggal PP *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="txt_periode6" name="txt_periode6">
+                                <input type="hidden" class="form-control" id="tglawal" name="tglawal">
+                                <input type="hidden" class="form-control" id="tglakhir" name="tglakhir">
+                            </div>
+                        </div>
 
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="semua_data" id="rbt_semua_data" name="rbt_pilihan3" checked>
+                                <label for="rbt_semua_data"> Semua Data</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="spp_sdh_po" id="rbt_spp_sdh_po" name="rbt_pilihan3">
+                                <label for="rbt_spp_sdh_po">SPP sudah PO</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="spp_blm_po" id="rbt_spp_blm_po" name="rbt_pilihan3">
+                                <label for="rbt_spp_blm_po">Belum PO</label>
+                            </div>
+
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="graphic" id="rbt_graphic" name="rbt_pilihan3">
+                                <label for="rbt_graphic">Graphic</label>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkanspp_po()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal SPP vs PO -->
 
 
 
@@ -2085,6 +2132,90 @@
 
         function printLPBSlipRClick(cmb_devisi3, noref, refpo) {
             window.open('<?= site_url("Laporan/print_lap_lpb_slip_retur"); ?>/' + cmb_devisi3 + '/' + noref + '/' + refpo);
+        }
+
+        function lap_spp_po() {
+            $('#modalLapSPPPO').modal('show');
+            pilihTanggal3();
+        }
+
+        function pilihTanggal3() {
+            var d = new Date();
+            var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
+            var today1 = (25) + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+            $('#tglawal').val(today);
+            $('#tglakhir').val(today1);
+            $('#txt_periode6').val(today + ' - ' +
+                today1);
+
+            $('#txt_periode6').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+            }, function(start, end, label) {
+                $('#tglawal').val(start.format('DD/MM/YYYY'));
+                $('#tglakhir').val(end.format('DD/MM/YYYY'));
+
+                // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            });
+        }
+
+        function tampilkanspp_po() {
+
+            var tglawal = $('#tglawal').val();
+            var tglakhir = $('#tglakhir').val();
+            var rbt_pilihan3 = $("input[name='rbt_pilihan3']:checked").val();
+
+            if (rbt_pilihan3 == 'semua_data') {
+                window.open('<?= site_url("Laporan/print_lap_spp_po_semua"); ?>/' + tglawal + '/' + tglakhir );
+            } else if (rbt_pilihan3 == 'spp_sdh_po') {
+                window.open('<?= site_url("Laporan/print_lap_spp_po_sdhpo"); ?>');
+            } else if (rbt_pilihan3 == 'spp_blm_po') {
+                window.open('<?= site_url("Laporan/print_lap_spp_po_blmpo"); ?>');
+            } else if (rbt_pilihan3 == 'graphic') {
+                window.open('<?= site_url("Laporan/print_lap_spp_po_graphic"); ?>');
+            }
+
+            console.log(tglawal, tglakhir, rbt_pilihan3);
+        }
+
+
+        function tampilkanpo_lpb() {
+            var cmb_devisi2 = $('#cmb_devisi2').val();
+            var noref_po = $('#noref_po').val();
+            var txt_periode8 = $('#txt_periode8').val();
+            var txt_periode9 = $('#txt_periode9').val();
+            var rbt_pilihan4 = $("input[name='rbt_pilihan4']:checked").val();
+            var dValid = true;
+            $('#cmb_devisi2', '#noref_po', '#txt_periode8', '#txt_periode9').each(function(e) {
+                if ($.trim($(this).val()) == '') {
+                    dValid = false;
+                }
+            });
+
+            if (noref_po !== '') {
+                if (rbt_pilihan4 == 'semua_tr') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_semua"); ?>');
+                } else if (rbt_pilihan4 == 'by_barang') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bybrg"); ?>');
+                } else if (rbt_pilihan4 == 'by_supplier') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bysup"); ?>');
+                } else if (rbt_pilihan4 == 'po_blm_lpb_po') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_blm_lpb_po"); ?>');
+                } else if (rbt_pilihan4 == 'po_cash_sh') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_sh"); ?>');
+                } else if (rbt_pilihan4 == 'po_cash_blm_lpb') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_blm_lpb"); ?>');
+                } else if (rbt_pilihan4 == 'po_lokal' || rbt_pilihan4 == 'po_blm_lpb_brg') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_gab"); ?>');
+                }
+            } else {
+                swal('Jangan ada field yang kosong!~');
+            }
+
+
+
+            console.log(cmb_devisi2, noref_po, txt_periode8, txt_periode9, rbt_pilihan4);
         }
     </script>
 </body>
