@@ -451,7 +451,7 @@ class Lpb extends CI_Controller
     function insert_stokawal($kodebar, $nabar, $satuan, $grp, $no_ref_po, $qty)
     {
         $harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar);
-        $saldoawal_nilai = $harga_item_po['harga'] * $qty;
+        $saldoakhir_nilai = $harga_item_po['harga'] * $qty;
 
         $periode = $this->session->userdata('Ymd_periode');
         $txtperiode = $this->session->userdata('ym_periode');
@@ -468,10 +468,12 @@ class Lpb extends CI_Controller
         $data_input_stock_awal["nabar"] = $nabar;
         $data_input_stock_awal["satuan"] = $satuan;
         $data_input_stock_awal["grp"] = $grp;
-        $data_input_stock_awal["saldoawal_nilai"] = $saldoawal_nilai;
+        $data_input_stock_awal["saldoawal_qty"] = 0;
+        $data_input_stock_awal["saldoawal_nilai"] = 0;
+        $data_input_stock_awal["saldoakhir_qty"] = $qty;
+        $data_input_stock_awal["saldoakhir_nilai"] = $saldoakhir_nilai;
         $data_input_stock_awal["tglinput"] = date("Y-m-d H:i:s");
         $data_input_stock_awal["thn"] = date("Y");
-        $data_input_stock_awal["saldoakhir_nilai"] = "0";
         $data_input_stock_awal["QTY_MASUK"] = $qty;
         $data_input_stock_awal["QTY_KELUAR"] = "0";
         $data_input_stock_awal["HARGARAT"] = "0";
@@ -487,7 +489,7 @@ class Lpb extends CI_Controller
     {
         $harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar);
 
-        $saldoawal_nilai = $harga_item_po['harga'] * $qty;
+        $saldoakhir_nilai = $harga_item_po['harga'] * $qty;
 
         $data_insert_stok_harian = [
             'pt' => $this->session->userdata('pt'),
@@ -500,10 +502,12 @@ class Lpb extends CI_Controller
             'nabar' => $nabar,
             'satuan' => $sat,
             'grp' => $grp,
-            'saldoawal_nilai' => $saldoawal_nilai,
+            'saldoawal_qty' => 0,
+            'saldoawal_nilai' => 0,
+            'saldoakhir_qty' => $qty,
+            'saldoakhir_nilai' => $saldoakhir_nilai,
             'tglinput' => date("Y-m-d H:i:s"),
             'thn' => date("Y"),
-            'saldoakhir_nilai' => '0',
             'QTY_MASUK' => $qty,
             'periode' => $this->session->userdata('Ymd_periode'),
             'txtperiode' => $this->session->userdata('ym_periode'),
@@ -538,7 +542,10 @@ class Lpb extends CI_Controller
 
         $data_update = [
             'QTY_MASUK' => $sum_qty_kodebar->qty_harian,
-            'saldoawal_nilai' => $sum_harga_kodebar->saldo_awal_harian
+
+            'saldoakhir_qty' => $sum_qty_kodebar->qty_harian,
+
+            'saldoakhir_nilai' => $sum_harga_kodebar->saldo_awal_harian
             // 'HARGARAT' => $rata2
         ];
 
