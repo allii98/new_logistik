@@ -273,7 +273,7 @@
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-send mr-1"></i>
                                         <font face="Verdana" size="2.5">Transfer Transaksi ke GL</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-book mr-1"></i>
+                                    <a href="#" class="dropdown-item" onclick="tutup_buku_pass()"><i class="fe-book mr-1"></i>
                                         <font face="Verdana" size="2.5">Tutup Buku</font>
                                     </a>
                                 </div>
@@ -942,10 +942,28 @@
         </div>
         <!-- end modal SPP vs PO -->
 
-
-
-
-
+        <!-- modal tutup buku -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalTutupBukuPass">
+            <div class="modal-dialog modal-sm modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Silahkan Masukan Password Untuk Tutup Buku!</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body mt-0">
+                        <input type="hidden" id="no_table">
+                        <label for="">Masukan Password</label>
+                        <input type="text" class="form-control" id="pass_tutup_buku" name="pass_tutup_buku">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">Batal</button>
+                        <button type="button" class="btn btn-sm btn-success" data-dismiss="modal" onclick="konfirmasi_password()">Simpan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal tutup buku -->
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -2167,7 +2185,7 @@
             var rbt_pilihan3 = $("input[name='rbt_pilihan3']:checked").val();
 
             if (rbt_pilihan3 == 'semua_data') {
-                window.open('<?= site_url("Laporan/print_lap_spp_po_semua"); ?>/' + tglawal + '/' + tglakhir );
+                window.open('<?= site_url("Laporan/print_lap_spp_po_semua"); ?>/' + tglawal + '/' + tglakhir);
             } else if (rbt_pilihan3 == 'spp_sdh_po') {
                 window.open('<?= site_url("Laporan/print_lap_spp_po_sdhpo"); ?>');
             } else if (rbt_pilihan3 == 'spp_blm_po') {
@@ -2212,11 +2230,38 @@
             } else {
                 swal('Jangan ada field yang kosong!~');
             }
-
-
-
             console.log(cmb_devisi2, noref_po, txt_periode8, txt_periode9, rbt_pilihan4);
         }
+
+        function tutup_buku_pass() {
+            $('#modalTutupBukuPass').modal('show');
+        }
+
+        function konfirmasi_password() {
+            var pass = $('#pass_tutup_buku').val();
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Tutup_buku'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+
+                data: {
+                    'pass': pass
+                },
+                success: function(data) {
+
+                    if (data == false) {
+                        swal('Password salah!');
+                    }
+
+                },
+                error: function(response) {
+                    alert('ERROR! ' + response.responseText);
+                }
+            });
+        }
+    </script>
     </script>
 </body>
 

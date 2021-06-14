@@ -633,6 +633,9 @@ date_default_timezone_set('Asia/Jakarta');
 
                 $('#a_print_lpb').show();
 
+            },
+            error: function(response) {
+                console.log(response.responseText);
             }
         });
     }
