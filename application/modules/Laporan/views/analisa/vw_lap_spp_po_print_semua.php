@@ -23,7 +23,6 @@
         hr {
             margin-top: 0px #ccc;
             margin-bottom: 3px;
-
         }
 
         td {
@@ -45,8 +44,8 @@
                 <td></td>
             </tr>
             <tr>
-                <td>PT MULIA SAWIT AGRO LESTARI (ESTATE1)</td>
-                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERIODE : 01/07/2020 - 31/07/2020</td>
+                <td>PT MULIA SAWIT AGRO LESTARI (<?= $lokasi; ?>)</td>
+                <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PERIODE : <?= $periode; ?></td>
                 <td>By MIPS</td>
             </tr>
         </table>
@@ -62,13 +61,6 @@
                     <th colspan="9">User Input</th>
                 </tr>
                 <tr>
-                    <td colspan="13">
-                        <hr>
-                    </td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Satuan</th>
@@ -83,58 +75,60 @@
                     <th>Total Harga PO</th>
                     <th>Keterangan</th>
                 </tr>
-                <tr>
-                    <td colspan="13">
-                        <hr>
-                    </td>
-                </tr>
-                <!-- untuk spp -->
-                <tr style="background-color: #d6d6c2;">
-                    <td>6300552</td>
-                    <td>EST-SPP/SWJ/07/20/00552</td>
-                    <td colspan="2">01 July 2020</td>
-                    <td colspan="3">TEKNIK</td>
-                    <td colspan="9">WAWAN</td>
-                </tr>
-                <!-- slesai spp -->
-                <tr>
-                    <td colspan="13">
-                        <hr>
-                    </td>
-                </tr>
-                <!-- untuk PO -->
-                <tr>
-                    <td>1025055790000016</td>
-                    <td>AVO METER KYORITSHU</td>
-                    <td>PCS</td>
-                    <td>2.00</td>
-                    <td>24 July 2020</td>
-                    <td>23 Hari</td>
-                    <td>6100102</td>
-                    <td>SERBA GUNA TEKNIK</td>
-                    <td>2.00</td>
-                    <td>0</td>
-                    <td>Rp 450,000.00</td>
-                    <td>Rp 900,000.00</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>102505579000161</td>
-                    <td>SILICON RED (LEM SILIKON WARNA MERAH)</td>
-                    <td>PCS</td>
-                    <td>50.00</td>
-                    <td>24 July 2020</td>
-                    <td>23 Hari</td>
-                    <td>6100101</td>
-                    <td>VICTORIA CEMERLANG, PT</td>
-                    <td>50.00</td>
-                    <td>0</td>
-                    <td>Rp 12,500.00</td>
-                    <td>Rp 625,000.00</td>
-                    <td>-</td>
-                </tr>
-                <!-- selesai PO -->
+            </thead>
+            <tbody>
+                <?php
+                foreach ($ppo as $list_ppo) {
+                ?>
+                    <!-- untuk spp -->
+                    <tr style="background-color: #d6d6c2;">
+                        <td><?= $list_ppo->noppotxt; ?></td>
+                        <td><?= $list_ppo->noreftxt; ?></td>
+                        <td colspan="2"><?= date_format(date_create($list_ppo->tglppo), "d/m/Y"); ?></td>
+                        <td colspan="3"><?= $list_ppo->LOKASI; ?></td>
+                        <td colspan="9"><?= $list_ppo->user; ?></td>
+                    </tr>
+                    <!-- slesai spp -->
+                    <tr>
+                        <td colspan="13">
+                            <hr>
+                        </td>
+                    </tr>
+                    <!-- untuk PO -->
+                    <?php
+                    $noref = $list_ppo->noreftxt;
+                    $query = "SELECT * FROM item_po WHERE batal = '0' AND refppo ='$noref'";
+                    $item_po = $this->db_logistik_pt->query($query)->result();
+                    foreach ($item_po as $list_item_po) {
+                    ?>
+                        <tr>
+                            <td><?= $list_ppo->kodebartxt; ?></td>
+                            <td><?= $list_ppo->nabar; ?></td>
+                            <td><?= $list_ppo->sat; ?></td>
+                            <td><?= $list_ppo->qty; ?></td>
+                            <?php ?>
+                            <td><?= date_format(date_create($list_item_po->tglpo), "d/m/Y"); ?></td>
+                            <td>23 Hari</td>
+                            <td><?= $list_item_po->nopo; ?></td>
+                            <?php
+                            $nopo = "'" . $list_item_po->nopo . "'";
+                            $query = "SELECT nopo, kode_supply, nama_supply FROM po WHERE nopo = $nopo";
+                            $po = $this->db_logistik_pt->query($query)->result();
+                            foreach ($po as $dt_po) {
+                            ?>
+                                <td><?= $dt_po->nama_supply ?></td>
+                            <?php } ?>
+                            <td><?= $list_item_po->qty; ?></td>
+                            <td>0</td>
+                            <td>Rp <?= number_format((float)$list_item_po->harga, 2, ',', '.'); ?> </td>
+                            <td>Rp <?= number_format((float)$list_item_po->jumharga, 2, ',', '.'); ?> </td>
+                            <td>-</td>
+                        </tr>
 
+                    <?php } ?>
+                    <!-- selesai PO -->
+
+                <?php } ?>
             </tbody>
         </table>
     </div>

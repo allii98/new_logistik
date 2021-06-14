@@ -425,7 +425,7 @@
                                 <font face="Verdana" size="2">BAGIAN *</font>
                             </label>
                             <div class="col-12">
-                                <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="">
+                                <select class="form-control" id="lap_cmb_bagian" name="lap_cmb_bagian" required="">
                                 </select>
                             </div>
                         </div>
@@ -901,6 +901,16 @@
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
+                        <label class="col-3 col-form-label">
+                            <font face="Verdana" size="2">Devisi *</font>
+                        </label>
+                        <div class="form-group">
+                            <div class="col-12">
+                                <select class="form-control" id="cmb_devisi4" name="cmb_devisi4" required="">
+                                    <!-- <option value="" selected>-- Pilih --</option> -->
+                                </select>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <label class="col-3 col-form-label">
                                 <font face="Verdana" size="2">Tanggal PP *</font>
@@ -1678,7 +1688,7 @@
         function tampilkanspp() {
             $('#modalListLapSPP').modal('show');
             var cmb_devisi = $('#cmb_devisi').val();
-            var cmb_bagian = $('#cmb_bagian').val();
+            var lap_cmb_bagian = $('#lap_cmb_bagian').val();
             var txt_periode = $('#tanggalawalPO').val();
             var txt_periode1 = $('#tanggalakhirPO').val();
             var rbt_pilihan = $("input[name='rbt_pilihan']:checked").val();
@@ -1707,7 +1717,7 @@
                     "type": "POST",
                     "data": {
                         "cmb_devisi": cmb_devisi,
-                        "cmb_bagian": cmb_bagian,
+                        "lap_cmb_bagian": lap_cmb_bagian,
                         "txt_periode": txt_periode,
                         "txt_periode1": txt_periode1,
                         "rbt_pilihan": rbt_pilihan
@@ -1754,10 +1764,10 @@
                 data: '',
                 success: function(data) {
                     var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
-                    $('#cmb_bagian').append(opsi_cmb_all);
+                    $('#lap_cmb_bagian').append(opsi_cmb_all);
                     $.each(data, function(index) {
-                        var opsi_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
-                        $('#cmb_bagian').append(opsi_cmb_bagian);
+                        var opsi_lap_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
+                        $('#lap_cmb_bagian').append(opsi_lap_cmb_bagian);
                     });
                 },
                 error: function(request) {
@@ -1812,6 +1822,29 @@
                     $.each(data, function(index) {
                         var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
                         $('#cmb_devisi3').append(opsi_cmb_devisi);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function pilihDevisi3() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_devisi'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    console.log(data);
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+
+                    $.each(data, function(index) {
+                        var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                        $('#cmb_devisi4').append(opsi_cmb_devisi);
                     });
                 },
                 error: function(request) {
@@ -2137,6 +2170,7 @@
         function lap_spp_po() {
             $('#modalLapSPPPO').modal('show');
             pilihTanggal3();
+            pilihDevisi3();
         }
 
         function pilihTanggal3() {
@@ -2162,12 +2196,13 @@
 
         function tampilkanspp_po() {
 
+            var devisi = $('#cmb_devisi4').val();
             var tglawal = $('#tglawal').val();
             var tglakhir = $('#tglakhir').val();
             var rbt_pilihan3 = $("input[name='rbt_pilihan3']:checked").val();
 
             if (rbt_pilihan3 == 'semua_data') {
-                window.open('<?= site_url("Laporan/print_lap_spp_po_semua"); ?>/' + tglawal + '/' + tglakhir );
+                window.open('<?= site_url("Laporan/print_lap_spp_po_semua"); ?>/' + devisi + '/' + tglawal + '/' + tglakhir);
             } else if (rbt_pilihan3 == 'spp_sdh_po') {
                 window.open('<?= site_url("Laporan/print_lap_spp_po_sdhpo"); ?>');
             } else if (rbt_pilihan3 == 'spp_blm_po') {
@@ -2176,7 +2211,7 @@
                 window.open('<?= site_url("Laporan/print_lap_spp_po_graphic"); ?>');
             }
 
-            console.log(tglawal, tglakhir, rbt_pilihan3);
+            console.log(devisi, tglawal, tglakhir, rbt_pilihan3);
         }
 
 

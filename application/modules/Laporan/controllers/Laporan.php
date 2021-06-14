@@ -886,58 +886,33 @@ class Laporan extends CI_Controller
 
 	function print_lap_spp_po_semua()
 	{
-		$tanggal1 = "'" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(3) . "'";
-		$tanggal2 = "'" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "/" . $this->uri->segment(6) . "'";
-		$tahun = $this->uri->segment(8);
-		switch ($this->uri->segment(7)) {
-			case '01':
-				$bulan = "Januari";
-				break;
-			case '02':
-				$bulan = "Februari";
-				break;
-			case '03':
-				$bulan = "Maret";
-				break;
-			case '04':
-				$bulan = "April";
-				break;
-			case '05':
-				$bulan = "Mei";
-				break;
-			case '06':
-				$bulan = "Juni";
-				break;
-			case '07':
-				$bulan = "Juli";
-				break;
-			case '08':
-				$bulan = "Agustus";
-				break;
-			case '09':
-				$bulan = "September";
-				break;
-			case '10':
-				$bulan = "Oktober";
-				break;
-			case '11':
-				$bulan = "November";
-				break;
-			case '12':
-				$bulan = "Desember";
-				break;
-			default:
-				$bulan = "";
-				break;
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
 		}
+		$tanggal1 = "'" . $this->uri->segment(6) . "/" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "'";
+		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
 
+		// $tanggal1 = str_replace("/", "-", ($tanggal1));
+		// $tanggal1 = str_replace("'", "", ($tanggal1));
+		// $tanggal1 = date_format(date_create($tanggal1), 'd/m/Y');
+		// $tanggal2 = str_replace("/", "-", ($tanggal2));
+		// $tanggal2 = str_replace("'", "", ($tanggal2));
+		// $tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
 
-		$query = "SELECT noppo, tglppo, noreftxt, lokasi, user FROM ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2";
+		$query = "SELECT * FROM item_ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2";
+		$data['ppo'] = $this->db_logistik_pt->query($query)->result();
 
-		$data['spp'] = $this->db_logistik_pt->query($query)->result();
-
-		$data['periode'] = $bulan . " " . $tahun;
-		// $data['lokasi'] = $lokasi;
+		$data['periode'] = str_replace("'", " ", ($tanggal1 . ' - ' . $tanggal2));
+		$data['lokasi'] = $lok;
 		$data['lokasi1'] = "Tes";
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
