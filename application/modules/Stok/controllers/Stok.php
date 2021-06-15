@@ -13,6 +13,7 @@ class Stok extends CI_Controller
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->load->model('M_stok');
         $this->load->model('M_stok_harian');
+        $this->load->model('M_stok_bulanan');
         // $this->load->model('Barang/M_barang');
     }
 
@@ -57,7 +58,6 @@ class Stok extends CI_Controller
     {
         $data = [
             'title' => "Stock Awal",
-
         ];
         $this->template->load('template', 'v_stok', $data);
     }
@@ -66,9 +66,16 @@ class Stok extends CI_Controller
     {
         $data = [
             'title' => "Stock Awal Harian",
-
         ];
         $this->template->load('template', 'v_stok_harian', $data);
+    }
+
+    public function stok_bulanan_devisi()
+    {
+        $data = [
+            'title' => "Stock Bulanan Devisi",
+        ];
+        $this->template->load('template', 'v_stok_bulanan_devisi', $data);
     }
 
     function detail_stock()
@@ -145,6 +152,43 @@ class Stok extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->M_stok_harian->count_all(),
             "recordsFiltered" => $this->M_stok_harian->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
+
+    function get_ajax_bulanan()
+    {
+        $list = $this->M_stok_bulanan->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+
+            // $akhir_qty = $d->QTY_MASUK - $d->QTY_KELUAR;
+            $row = array();
+            $id    = $d->id;
+            $no++;
+            // $row[] = '<a href="javascript:;" class="btn btn-info fa fa-info btn-xs" data-toggle="tooltip" data-placement="top" title="Detail Barang" id="btn_detail_barang" onclick="detail_barang(' . $d->kodebartxt . ',' . $id . ')"></a>';
+            $row[] = $no . ".";
+            $row[] = $d->txtperiode;
+            $row[] = $d->devisi;
+            $row[] = $d->kodebartxt;
+            $row[] = $d->nabar;
+            $row[] = $d->satuan;
+            $row[] = $d->grp;
+            $row[] = $d->saldoawal_qty;
+            $row[] = number_format($d->saldoawal_nilai, 0, ',', '.');
+            $row[] = $d->saldoakhir_qty;
+            $row[] = number_format($d->saldoakhir_nilai, 0, ',', '.');
+            $row[] = $d->ket;
+            $row[] = $d->minstok;
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_stok_bulanan->count_all(),
+            "recordsFiltered" => $this->M_stok_bulanan->count_filtered(),
             "data" => $data,
         );
         // output to json format
