@@ -275,6 +275,8 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['kodept']        = $this->session->userdata('kode_pt');
         $datakeluarbrgitem['nobpb']         = $nobpb;
         $datakeluarbrgitem['pt']            = $this->session->userdata('pt');
+        $datakeluarbrgitem['kode_dev']      = $this->input->post('kode_dev');
+        $datakeluarbrgitem['devisi']        = $this->input->post('devisi');
         $datakeluarbrgitem['afd']           = $afd_unit;
         $datakeluarbrgitem['blok']          = $blok;
         $datakeluarbrgitem['qty']           = $qty;
@@ -309,9 +311,11 @@ class Bkb extends CI_Controller
             $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
         }
 
+        // blm ada kebun nya!
 
-        // blm ada kebun nya
+        // update stockawal_bulanan_devisi
 
+        //update stockawal
 
         //update QTY_KELUAR stokawal
         $result_update_qtykeluar = $this->M_bkb->update_qtykeluar($kodebar, $qty2, $txtperiode);

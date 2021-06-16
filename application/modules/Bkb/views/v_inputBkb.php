@@ -638,6 +638,8 @@
                 txt_diberikan_kpd: $('#diberikan_kpd').val(),
                 txt_untuk_keperluan: $('#utk_keperluan').val(),
                 cmb_bagian: $('#bagian').val(),
+                kode_dev: $('#hidden_kode_dev').val(),
+                devisi: $('#hidden_devisi').val(),
 
                 hidden_kode_barang: $('#hidden_kode_barang_' + n).val(),
                 hidden_nama_barang: $('#txt_barang_' + n).val(),
