@@ -514,10 +514,12 @@ class Lpb extends CI_Controller
         $data_input_stock_awal["grp"] = $grp;
         $data_input_stock_awal["saldoawal_qty"] = 0;
         $data_input_stock_awal["saldoawal_nilai"] = 0;
-        $data_input_stock_awal["saldoakhir_qty"] = $qty;
-        $data_input_stock_awal["saldoakhir_nilai"] = $saldoakhir_nilai;
         $data_input_stock_awal["tglinput"] = date("Y-m-d H:i:s");
         $data_input_stock_awal["thn"] = date("Y");
+        $data_input_stock_awal["saldoakhir_qty"] = $qty;
+        $data_input_stock_awal["saldoakhir_nilai"] = $saldoakhir_nilai;
+        $data_input_stock_awal["nilai_masuk"] = 0;
+        $data_input_stock_awal["nilai_keluar"] = 0;
         $data_input_stock_awal["QTY_MASUK"] = $qty;
         $data_input_stock_awal["QTY_KELUAR"] = "0";
         $data_input_stock_awal["HARGARAT"] = "0";
@@ -548,10 +550,11 @@ class Lpb extends CI_Controller
             'grp' => $grp,
             'saldoawal_qty' => 0,
             'saldoawal_nilai' => 0,
-            'saldoakhir_qty' => $qty,
-            'saldoakhir_nilai' => $saldoakhir_nilai,
             'tglinput' => date("Y-m-d H:i:s"),
             'thn' => date("Y"),
+            'saldoakhir_qty' => $qty,
+            'saldoakhir_nilai' => $saldoakhir_nilai,
+            'nilai_masuk' => $saldoakhir_nilai,
             'QTY_MASUK' => $qty,
             'periode' => $this->session->userdata('Ymd_periode'),
             'txtperiode' => $this->session->userdata('ym_periode'),
@@ -574,9 +577,17 @@ class Lpb extends CI_Controller
 
     function update_stok_awal($kodebar, $txtperiode)
     {
-        $sum_qty_kodebar = $this->M_lpb->sum_qty_kodebar_harian($kodebar, $txtperiode);
+        //saldo akhir qty
         $sum_saldo_qty_kodebar = $this->M_lpb->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
+
+        //qty masuk
+        $sum_qty_kodebar = $this->M_lpb->sum_qty_kodebar_harian($kodebar, $txtperiode);
+
+        //saldoakhir_nilai
         $sum_harga_kodebar = $this->M_lpb->sum_harga_kodebar_harian($kodebar, $txtperiode);
+
+        //nilai_masuk
+        $sum_nilai_masuk = $this->M_lpb->sum_nilai_masuk_harian($kodebar, $txtperiode);
 
         //tidak bisa dibagi 0
         // if ($sum_harga_kodebar->saldo_awal_harian == 0 and $sum_qty_kodebar->qty_harian == 0) {
@@ -586,9 +597,11 @@ class Lpb extends CI_Controller
         // }
 
         $data_update = [
+            'saldoakhir_nilai' => $sum_harga_kodebar->saldo_awal_harian,
+
             'saldoakhir_qty' => $sum_saldo_qty_kodebar->saldo_qty_harian,
 
-            'saldoakhir_nilai' => $sum_harga_kodebar->saldo_awal_harian,
+            'nilai_masuk' => $sum_nilai_masuk->nilai_masuk_harian,
 
             'QTY_MASUK' => $sum_qty_kodebar->qty_harian
 

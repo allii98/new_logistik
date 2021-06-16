@@ -234,6 +234,8 @@ class Bkb extends CI_Controller
         $satuan = $this->input->post('hidden_satuan');
         $grup_brg = $this->input->post('hidden_grup_barang');
 
+        $kode_dev = $this->input->post('kode_dev');
+
         // $datastockkeluar['id']              = $id_stockkeluar;
         $datastockkeluar['tgl']             = $tgl . " 00:00:00";
         $datastockkeluar['skb']             = $skb;
@@ -275,7 +277,7 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['kodept']        = $this->session->userdata('kode_pt');
         $datakeluarbrgitem['nobpb']         = $nobpb;
         $datakeluarbrgitem['pt']            = $this->session->userdata('pt');
-        $datakeluarbrgitem['kode_dev']      = $this->input->post('kode_dev');
+        $datakeluarbrgitem['kode_dev']      = $kode_dev;
         $datakeluarbrgitem['devisi']        = $this->input->post('devisi');
         $datakeluarbrgitem['afd']           = $afd_unit;
         $datakeluarbrgitem['blok']          = $blok;
@@ -314,24 +316,24 @@ class Bkb extends CI_Controller
         // blm ada kebun nya!
 
         // update stockawal_bulanan_devisi
+        $result_update_stockawal_bulanan_devisi = $this->M_bkb->update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev);
 
-        //update stockawal
+        //update stokawal
+        $result_update_qtykeluar = $this->M_bkb->update_stockawal($kodebar, $qty2, $txtperiode);
 
-        //update QTY_KELUAR stokawal
-        $result_update_qtykeluar = $this->M_bkb->update_qtykeluar($kodebar, $qty2, $txtperiode);
-
-        //update saldo akhir nilai
-        $result_update_saldoakhir_nilai = $this->M_bkb->update_saldoakhir_nilai($kodebar, $txtperiode);
+        //update saldo akhir nilai stok awal
+        // $result_update_saldoakhir_nilai = $this->M_bkb->update_saldoakhir_nilai($kodebar, $txtperiode);
 
         $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_stockkeluar = $generate_id->id_stockkeluar;
 
         $data = [
+            'update_stockawal_bulanan_devisi' => $result_update_stockawal_bulanan_devisi,
             'datastockkeluar' => $savedatastockkeluar,
             'datakeluarbrgitem' => $savedatakeluarbrgitem,
             'result_update_qtykeluar' => $result_update_qtykeluar,
-            'result_update_saldoakhir_nilai' => $result_update_saldoakhir_nilai,
+            // 'result_update_saldoakhir_nilai' => $result_update_saldoakhir_nilai,
             'no_bkb' => $skb,
             'noref_bkb' => $no_ref,
             'id_stockkeluar' => $id_stockkeluar,
