@@ -930,6 +930,21 @@ class Laporan extends CI_Controller
 		// echo "</pre>";
 	}
 
+	function print_lap_spp_po_sdhpo()
+	{
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_spp_po_print_sdhpo', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
 
 	function print_lap_po_lpb_semua()
 	{

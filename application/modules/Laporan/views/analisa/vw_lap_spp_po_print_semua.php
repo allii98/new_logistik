@@ -51,7 +51,7 @@
         </table>
         <hr>
         <hr>
-        <table width="100%">
+        <table width="100%" border="0">
             <thead>
                 <tr style="background-color: #d6d6c2;">
                     <th>Nomor SPP</th>
@@ -60,21 +60,26 @@
                     <th colspan="3">Alokasi</th>
                     <th colspan="9">User Input</th>
                 </tr>
+
                 <tr>
-                    <th>Kode Barang</th>
-                    <th>Nama Barang</th>
-                    <th>Satuan</th>
-                    <th>Qty Diminta</th>
-                    <th>Tgl PO</th>
-                    <th>Durasi SPP</th>
-                    <th>No PO</th>
-                    <th>Supplier</th>
-                    <th>Qty PO</th>
-                    <th>Saldo SPP</th>
-                    <th>Harga Satuan PO</th>
-                    <th>Total Harga PO</th>
-                    <th>Keterangan</th>
+                    <th>Kode Barang&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Nama Barang&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Satuan&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Qty Diminta&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Durasi SPP&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Tgl PO&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>No PO&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Supplier&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Qty PO&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Saldo SPP&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Harga Satuan PO&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Total Harga PO&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                    <th>Keterangan&nbsp;&nbsp;&nbsp;&nbsp;</th>
+
                 </tr>
+
+
             </thead>
             <tbody>
                 <?php
@@ -94,38 +99,78 @@
                             <hr>
                         </td>
                     </tr>
-                    <!-- untuk PO -->
-                    <?php
-                    $noref = $list_ppo->noreftxt;
-                    $query = "SELECT * FROM item_po WHERE batal = '0' AND refppo ='$noref'";
-                    $item_po = $this->db_logistik_pt->query($query)->result();
-                    foreach ($item_po as $list_item_po) {
-                    ?>
+                    <table width="100%" border="0">
                         <tr>
-                            <td><?= $list_ppo->kodebartxt; ?></td>
-                            <td><?= $list_ppo->nabar; ?></td>
-                            <td><?= $list_ppo->sat; ?></td>
-                            <td><?= $list_ppo->qty; ?></td>
-                            <?php ?>
-                            <td><?= date_format(date_create($list_item_po->tglpo), "d/m/Y"); ?></td>
-                            <td>23 Hari</td>
-                            <td><?= $list_item_po->nopo; ?></td>
-                            <?php
-                            $nopo = "'" . $list_item_po->nopo . "'";
-                            $query = "SELECT nopo, kode_supply, nama_supply FROM po WHERE nopo = $nopo";
-                            $po = $this->db_logistik_pt->query($query)->result();
-                            foreach ($po as $dt_po) {
-                            ?>
-                                <td><?= $dt_po->nama_supply ?></td>
-                            <?php } ?>
-                            <td><?= $list_item_po->qty; ?></td>
-                            <td>0</td>
-                            <td>Rp <?= number_format((float)$list_item_po->harga, 2, ',', '.'); ?> </td>
-                            <td>Rp <?= number_format((float)$list_item_po->jumharga, 2, ',', '.'); ?> </td>
-                            <td>-</td>
-                        </tr>
+                            <td>
+                                <table width="100%" border="0">
 
-                    <?php } ?>
+                                    <tbody>
+
+                                        <?php
+                                        $noppotxt = $list_ppo->noppotxt;
+                                        $query = "SELECT noppotxt, noreftxt,kodebar, nabar, sat, qty FROM item_ppo WHERE noppotxt ='$noppotxt'";
+                                        $item_ppo = $this->db_logistik_pt->query($query)->result();
+
+                                        foreach ($item_ppo as $dt) {
+                                        ?>
+                                            <tr>
+                                                <td><?= $dt->kodebar ?></td>
+                                                <td><?= $dt->nabar ?></td>
+                                                <td><?= $dt->sat ?></td>
+                                                <td><?= $dt->qty ?></td>
+                                                <td>23 Hari</td>
+                                            </tr>
+
+                                        <?php }
+
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>
+                                <table width="100%" border="0">
+
+                                    <tbody>
+                                        <?php
+                                        $noref = $list_ppo->noreftxt;
+                                        $query = "SELECT * FROM item_po WHERE batal = '0' AND refppo ='$noref'";
+                                        $po = $this->db_logistik_pt->query($query)->result();
+
+                                        if (empty($po)) {
+                                        ?>
+                                            <tr>
+                                                <td colspan="8" style="color: red;">Spp belum di PO kan</td>
+
+
+                                            </tr>
+                                            <?php } else {
+                                            if (isset($po)) {
+                                                foreach ($po as $d) { ?>
+                                                    <tr>
+                                                        <td><?= date_format(date_create($d->tglpo), "d/m/Y"); ?></td>
+                                                        <td><?= $d->nopo; ?></td>
+                                                        <td><?= $d->nopo; ?></td>
+                                                        <td><?= $d->qty; ?></td>
+                                                        <td><?= $d->nopo; ?></td>
+                                                        <td>Rp. <?= number_format($d->harga, 2, ',', '.'); ?> </td>
+                                                        <td>Rp. <?= number_format($d->jumharga, 2, ',', '.'); ?> </td>
+                                                        <td><?= $d->ket; ?></td>
+
+                                                    </tr>
+
+
+                                        <?php }
+                                            }
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <!-- untuk PO -->
+
                     <!-- selesai PO -->
 
                 <?php } ?>
