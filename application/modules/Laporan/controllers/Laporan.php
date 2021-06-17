@@ -886,18 +886,7 @@ class Laporan extends CI_Controller
 
 	function print_lap_spp_po_semua()
 	{
-		$lokasi = $this->uri->segment(3);
-		if ($lokasi == '01') {
-			$lok = 'HO';
-		} else if ($lokasi == '02') {
-			$lok = 'RO';
-		} else if ($lokasi == '03') {
-			$lok = 'PKS';
-		} else if ($lokasi == '06') {
-			$lok = 'ESTATE1';
-		} else if ($lokasi == '07') {
-			$lok = 'ESTATE2';
-		}
+
 		$tanggal1 = "'" . $this->uri->segment(6) . "/" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
 
@@ -907,12 +896,12 @@ class Laporan extends CI_Controller
 		// $tanggal2 = str_replace("/", "-", ($tanggal2));
 		// $tanggal2 = str_replace("'", "", ($tanggal2));
 		// $tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
-
-		$query = "SELECT * FROM item_ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2";
+		$lokuser = $this->session->userdata('status_lokasi');
+		$query = "SELECT * FROM item_ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser' ";
 		$data['ppo'] = $this->db_logistik_pt->query($query)->result();
 
 		$data['periode'] = str_replace("'", " ", ($tanggal1 . ' - ' . $tanggal2));
-		$data['lokasi'] = $lok;
+		$data['lokasi'] = $lokuser;
 		$data['lokasi1'] = "Tes";
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
@@ -932,7 +921,31 @@ class Laporan extends CI_Controller
 
 	function print_lap_spp_po_sdhpo()
 	{
-		$data['lokasi1'] = "Tes";
+
+		$tanggal1 = "'" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(3) . "'";
+		$tanggal2 = "'" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "/" . $this->uri->segment(6) . "'";
+
+		// $tanggal1 = str_replace("/", "-", ($tanggal1));
+		// $tanggal1 = str_replace("'", "", ($tanggal1));
+		// $tanggal1 = date_format(date_create($tanggal1), 'd/m/Y');
+		// $tanggal2 = str_replace("/", "-", ($tanggal2));
+		// $tanggal2 = str_replace("'", "", ($tanggal2));
+		// $tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
+		$lokuser = $this->session->userdata('status_lokasi');
+
+		$jmlSpp = $this->db->query("SELECT COUNT(id) AS jmlh FROM ppo WHERE status2='1' AND lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$jmlItem = $this->db->query("SELECT COUNT(id) AS jmlh FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$jmlQTYSpp = $this->db->query("SELECT SUM(qty) AS qty FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$jmlQTYPO = $this->db->query("SELECT SUM(qty) AS qty FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$query = "SELECT * FROM ppo WHERE status2='1' AND LOKASI='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2";
+		$data['ppo'] = $this->db_logistik_pt->query($query)->result();
+
+		$data['periode'] = str_replace("'", " ", ($tanggal1 . ' - ' . $tanggal2));
+		$data['jumlahspp'] = $jmlSpp;
+		$data['jumlahItem'] = $jmlItem;
+		$data['jmlQTYSpp'] = $jmlQTYSpp;
+		$data['jmlQTYPO'] = $jmlQTYPO;
+		$data['lokasi'] = $lokuser;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
@@ -945,6 +958,39 @@ class Laporan extends CI_Controller
 		$mpdf->Output();
 	}
 
+	function print_lap_spp_po_blmpo()
+	{
+		$tanggal1 = "'" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(3) . "'";
+		$tanggal2 = "'" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "/" . $this->uri->segment(6) . "'";
+
+		// $tanggal1 = str_replace("/", "-", ($tanggal1));
+		// $tanggal1 = str_replace("'", "", ($tanggal1));
+		// $tanggal1 = date_format(date_create($tanggal1), 'd/m/Y');
+		// $tanggal2 = str_replace("/", "-", ($tanggal2));
+		// $tanggal2 = str_replace("'", "", ($tanggal2));
+		// $tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
+		$lokuser = $this->session->userdata('status_lokasi');
+		$query = "SELECT * FROM ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser' ";
+		$data['ppo'] = $this->db_logistik_pt->query($query)->result();
+
+		$jmlQTYSpp = $this->db->query("SELECT SUM(qty) AS qty FROM item_ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
+		$jumlah = $this->db->query("SELECT COUNT(id) AS jmlh FROM ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
+
+		$data['jmlQTYSpp'] = $jmlQTYSpp;
+		$data['jumlah'] = $jumlah;
+		$data['periode'] = str_replace("'", " ", ($tanggal1 . ' - ' . $tanggal2));
+		$data['lokasi'] = $lokuser;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_spp_po_print_blmpo', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
 
 	function print_lap_po_lpb_semua()
 	{

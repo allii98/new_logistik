@@ -904,16 +904,7 @@
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">
-                        <label class="col-3 col-form-label">
-                            <font face="Verdana" size="2">Devisi *</font>
-                        </label>
-                        <div class="form-group">
-                            <div class="col-12">
-                                <select class="form-control" id="cmb_devisi4" name="cmb_devisi4" required="">
-                                    <!-- <option value="" selected>-- Pilih --</option> -->
-                                </select>
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <label class="col-3 col-form-label">
                                 <font face="Verdana" size="2">Tanggal PP *</font>
@@ -939,10 +930,10 @@
                                 <label for="rbt_spp_blm_po">Belum PO</label>
                             </div>
 
-                            <div class="radio radio-info form-check-inline">
+                            <!-- <div class="radio radio-info form-check-inline">
                                 <input type="radio" value="graphic" id="rbt_graphic" name="rbt_pilihan3">
                                 <label for="rbt_graphic">Graphic</label>
-                            </div>
+                            </div> -->
                         </div>
 
                     </div>
@@ -2199,22 +2190,18 @@
 
         function tampilkanspp_po() {
 
-            var devisi = $('#cmb_devisi4').val();
             var tglawal = $('#tglawal').val();
             var tglakhir = $('#tglakhir').val();
             var rbt_pilihan3 = $("input[name='rbt_pilihan3']:checked").val();
 
             if (rbt_pilihan3 == 'semua_data') {
-                window.open('<?= site_url("Laporan/print_lap_spp_po_semua"); ?>/' + devisi + '/' + tglawal + '/' + tglakhir);
+                window.open('<?= site_url("Laporan/print_lap_spp_po_semua"); ?>/' + tglawal + '/' + tglakhir);
             } else if (rbt_pilihan3 == 'spp_sdh_po') {
-                window.open('<?= site_url("Laporan/print_lap_spp_po_sdhpo"); ?>');
+                window.open('<?= site_url("Laporan/print_lap_spp_po_sdhpo"); ?>/' + tglawal + '/' + tglakhir);
             } else if (rbt_pilihan3 == 'spp_blm_po') {
-                window.open('<?= site_url("Laporan/print_lap_spp_po_blmpo"); ?>');
-            } else if (rbt_pilihan3 == 'graphic') {
-                window.open('<?= site_url("Laporan/print_lap_spp_po_graphic"); ?>');
+                window.open('<?= site_url("Laporan/print_lap_spp_po_blmpo"); ?>/' + tglawal + '/' + tglakhir);
             }
-
-            console.log(devisi, tglawal, tglakhir, rbt_pilihan3);
+            console.log(tglawal, tglakhir, rbt_pilihan3);
         }
 
 
