@@ -111,14 +111,16 @@ class M_bkb extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
-    public function get_stok($kodebar, $txtperiode)
+    public function get_stok($kodebar, $txtperiode, $kode_dev)
     {
-        $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        $this->db_logistik_pt->from('stockawal');
+        $this->db_logistik_pt->select('saldoawal_qty, QTY_MASUK, QTY_KELUAR');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
+        $this->db_logistik_pt->from('stockawal_bulanan_devisi');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
 
-        $stok = $stock_awal['QTY_MASUK'] - $stock_awal['QTY_KELUAR'];
+        $tambah_saldo = $stock_awal['saldoawal_qty'] + $stock_awal['QTY_MASUK'];
+        $stok = $tambah_saldo - $stock_awal['QTY_KELUAR'];
+        // $stok = $stock_awal['QTY_MASUK'] - $stock_awal['QTY_KELUAR'];
         return $stok;
     }
 

@@ -239,7 +239,7 @@
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- Qty Diminta & Stok di Tgl ini & Satuan -->
-                                                <input type="number" class="form-control currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off">
+                                                <input type="number" class="form-control currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off" onkeyup="validasi_qty_diminta('1')">
                                             </td>
 
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
@@ -608,7 +608,6 @@
 
     });
 
-
     function check_form_2() {
         if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#devisi').val()) != '') {
 
@@ -696,7 +695,7 @@
             '</td>';
         var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-            '<input type="text" class="form-control" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta">' +
+            '<input type="text" class="form-control" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + row + ')">' +
             '</td>';
 
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
@@ -747,7 +746,9 @@
         var stok_tgl_ini = parseInt($('#hidden_stok_tgl_ini_' + no).val());
 
         var kodebar = $('#hidden_kode_barang_' + no).val();
-        sum_stok_booking(kodebar, no);
+        var kode_dev = $('#devisi').val();
+
+        // sum_stok_booking(kodebar, no, kode_dev);
 
         // console.log(kodebar);
 
@@ -1050,6 +1051,8 @@
     function updateData(no) {
         var form_data = new FormData();
 
+        var kode_dev = $('#devisi').val();
+
         // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
         form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
         form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
@@ -1094,8 +1097,9 @@
 
             data: form_data,
             success: function(data) {
-                // var kode_barang = data.kodebar;
-                // sum_stok_booking(kode_barang, no);
+                var kode_barang = data.kodebar;
+                sum_stok_booking(kode_barang, no, kode_dev);
+
                 $('.div_form_1').find('input,textarea').attr('readonly', '');
                 $('.div_form_1').find('select').attr('disabled', '');
 
@@ -1131,6 +1135,7 @@
 
 
     function saveData(no) {
+
         var form_data = new FormData();
 
         // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
@@ -1199,7 +1204,9 @@
                 } else {
                     if (data.status == true) {
                         var kode_barang = data.kodebar;
-                        sum_stok_booking(kode_barang, no);
+                        var kode_dev = data.kode_dev;
+
+                        sum_stok_booking(kode_barang, no, kode_dev);
                         // $('#a_bpb_baru').show();
                         // $('#input-baru').show();
                         $('#inputNew').css('display', 'block');
@@ -1752,6 +1759,8 @@
 
         console.log(txtperiode);
 
+        var kode_dev = $('#devisi').val();
+
         $('#lbl_kode_barang_' + row).html(kode_barang);
         $('#lbl_nama_barang_' + row).html(nama_barang);
         $('#txt_barang_' + row).val(nama_barang);
@@ -1764,20 +1773,21 @@
         $('#b_satuan_' + row).html(satuan);
         $('#hidden_satuan_' + row).val(satuan);
 
+        $('#devisi').attr('disabled', '');
+
+
         // $('#modalListBarang').modal('hide');
 
-        sum_stok(kode_barang, row);
-        sum_stok_booking(kode_barang, row);
+        sum_stok(kode_barang, row, kode_dev);
+        sum_stok_booking(kode_barang, row, kode_dev);
     });
 
-    function sum_stok(kodbar, row) {
+    function sum_stok(kodbar, row, kode_dev) {
 
         var hidden_txtperiode = $('#hidden_txtperiode_' + row).val();
 
         $.ajax({
             type: "POST",
-            // url     : "<?php // echo site_url('bpb/sum_stok'); 
-                            ?>",
             url: "<?php echo site_url('Bpb/sum_stok'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
@@ -1787,7 +1797,8 @@
 
             data: {
                 'kodbar': kodbar,
-                'hidden_txtperiode': hidden_txtperiode
+                'hidden_txtperiode': hidden_txtperiode,
+                'kode_dev': kode_dev
             },
             success: function(data) {
 
@@ -1841,7 +1852,7 @@
         });
     }
 
-    function sum_stok_booking(kodbar, row) {
+    function sum_stok_booking(kodbar, row, kode_dev) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bpb/sum_stok_booking'); ?>",
@@ -1852,7 +1863,8 @@
             // processData : false,
 
             data: {
-                'kodbar': kodbar
+                'kodbar': kodbar,
+                'kode_dev': kode_dev
             },
             success: function(data) {
                 console.log(data);
@@ -1863,5 +1875,21 @@
                 alert(request.responseText);
             }
         });
+    }
+
+    function validasi_qty_diminta(n) {
+        var a = $('#hidden_stok_tgl_ini_' + n + '').val();
+        var b = $('#txt_qty_diminta_' + n + '').val();
+
+        var hidden_stok_tgl_ini = Number(a);
+        var txt_qty_diminta = Number(b);
+
+        if (txt_qty_diminta > hidden_stok_tgl_ini) {
+            swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
+            $('#txt_qty_diminta_' + n + '').val('');
+        } else if (txt_qty_diminta == 0) {
+            swal('Tidak boleh 0!');
+            $('#txt_qty_diminta_' + n + '').val('');
+        }
     }
 </script>

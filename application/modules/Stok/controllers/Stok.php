@@ -35,11 +35,13 @@ class Stok extends CI_Controller
             $row[] = $d->nabar;
             $row[] = $d->satuan;
             $row[] = $d->grp;
-            $row[] = $d->saldoawal_qty;
+            $row[] = number_format($d->saldoawal_qty, 0, ',', '.');
             $row[] = number_format($d->saldoawal_nilai, 0, ',', '.');
+            $row[] = number_format($d->QTY_MASUK, 0, ',', '.');
+            $row[] = number_format($d->QTY_KELUAR, 0, ',', '.');
             $row[] = number_format(round($d->nilai_masuk), 0, ',', '.');
             $row[] = number_format(round($d->nilai_keluar), 0, ',', '.');
-            $row[] = $d->saldoakhir_qty;
+            $row[] = number_format($d->saldoakhir_qty, 0, ',', '.');
             $row[] = number_format($d->saldoakhir_nilai, 0, ',', '.');
             $row[] = number_format(round($d->HARGARAT), 0, ',', '.');
             $row[] = $d->ket;
@@ -182,6 +184,8 @@ class Stok extends CI_Controller
             $row[] = $d->grp;
             $row[] = $d->saldoawal_qty;
             $row[] = number_format($d->saldoawal_nilai, 0, ',', '.');
+            $row[] = number_format($d->QTY_MASUK, 0, ',', '.');
+            $row[] = number_format($d->QTY_KELUAR, 0, ',', '.');
             $row[] = $d->saldoakhir_qty;
             $row[] = number_format($d->saldoakhir_nilai, 0, ',', '.');
             $row[] = $d->ket;

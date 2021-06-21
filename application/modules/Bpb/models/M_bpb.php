@@ -104,14 +104,15 @@ class M_bpb extends CI_Model
         }
     }
 
-    public function get_stok($kodebar, $txtperiode)
+    public function get_stok($kodebar, $txtperiode, $kode_dev)
     {
-        $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        $this->db_logistik_pt->from('stockawal');
+        $this->db_logistik_pt->select('saldoawal_qty, QTY_MASUK, QTY_KELUAR');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
+        $this->db_logistik_pt->from('stockawal_bulanan_devisi');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
 
-        $stok = $stock_awal['QTY_MASUK'] - $stock_awal['QTY_KELUAR'];
+        $tambah_saldo = $stock_awal['saldoawal_qty'] + $stock_awal['QTY_MASUK'];
+        $stok = $tambah_saldo - $stock_awal['QTY_KELUAR'];
         return $stok;
     }
 
@@ -267,6 +268,9 @@ class M_bpb extends CI_Model
         $databpbitem['nobpb']         = $nobpb;
         $databpbitem['norefbpb']      = $norefbpb;
         $databpbitem['pt']            = $this->session->userdata('pt');
+        $databpbitem['kode']          = $this->session->userdata('kode_pt');
+        $databpbitem['devisi']        = $data['devisi']['PT'];
+        $databpbitem['kode_dev']      = $kode_devisi;
         $databpbitem['qty']           = $qty;
         $databpbitem['qty_disetujui'] = "0";
         $databpbitem['tglbpb']        = $tgl . date(' H:i:s');
@@ -356,7 +360,7 @@ class M_bpb extends CI_Model
 
             if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                 // if ($bool_bpb === TRUE && $bool_bpbitem === TRUE){
-                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar);
+                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi);
             } else {
                 return FALSE;
             }
@@ -388,15 +392,15 @@ class M_bpb extends CI_Model
                     $bool_approval_bpb = FALSE;
                 }
 
-                $this->db_logistik_pt->insert('bpbitem_booking', $databpbitem);
-                if ($this->db_logistik_pt->affected_rows() > 0) {
-                    $bool_bpb = TRUE;
-                } else {
-                    $bool_bpb = FALSE;
-                }
+                // $this->db_logistik_pt->insert('bpbitem_booking', $databpbitem);
+                // if ($this->db_logistik_pt->affected_rows() > 0) {
+                //     $bool_bpb = TRUE;
+                // } else {
+                //     $bool_bpb = FALSE;
+                // }
 
                 if ($bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
-                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar);
+                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi);
                 } else {
                     return FALSE;
                 }

@@ -107,29 +107,42 @@ class M_spp extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
-    public function stokAwal($kd_bar)
+    public function get_stok($kodebar, $txtperiode, $kode_dev)
     {
-        $this->db_logistik_pt->select_sum('QTY_MASUK', 'qty_masuk');
-        $this->db_logistik_pt->where('kodebartxt', $kd_bar);
-        $this->db_logistik_pt->from('stockawal');
-        return $this->db_logistik_pt->get()->row();
+        $this->db_logistik_pt->select('saldoawal_qty, QTY_MASUK, QTY_KELUAR');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
+        $this->db_logistik_pt->from('stockawal_bulanan_devisi');
+        $stock_awal = $this->db_logistik_pt->get()->row_array();
+
+        $tambah_saldo = $stock_awal['saldoawal_qty'] + $stock_awal['QTY_MASUK'];
+        $stok = $tambah_saldo - $stock_awal['QTY_KELUAR'];
+        // $stok = $stock_awal['QTY_MASUK'] - $stock_awal['QTY_KELUAR'];
+        return $stok;
     }
 
-    public function sumMasuk($kd_bar)
-    {
-        $this->db_logistik_pt->select_sum('qty', 'stokmasuk');
-        $this->db_logistik_pt->where('kodebartxt', $kd_bar);
-        $this->db_logistik_pt->from('masukitem');
-        return $this->db_logistik_pt->get()->row();
-    }
+    // public function stokAwal($kd_bar)
+    // {
+    //     $this->db_logistik_pt->select_sum('QTY_MASUK', 'qty_masuk');
+    //     $this->db_logistik_pt->where('kodebartxt', $kd_bar);
+    //     $this->db_logistik_pt->from('stockawal');
+    //     return $this->db_logistik_pt->get()->row();
+    // }
 
-    public function sumKeluar($kd_bar)
-    {
-        $this->db_logistik_pt->select_sum('qty', 'stokkeluar');
-        $this->db_logistik_pt->where('kodebartxt', $kd_bar);
-        $this->db_logistik_pt->from('keluarbrgitem');
-        return $this->db_logistik_pt->get()->row();
-    }
+    // public function sumMasuk($kd_bar)
+    // {
+    //     $this->db_logistik_pt->select_sum('qty', 'stokmasuk');
+    //     $this->db_logistik_pt->where('kodebartxt', $kd_bar);
+    //     $this->db_logistik_pt->from('masukitem');
+    //     return $this->db_logistik_pt->get()->row();
+    // }
+
+    // public function sumKeluar($kd_bar)
+    // {
+    //     $this->db_logistik_pt->select_sum('qty', 'stokkeluar');
+    //     $this->db_logistik_pt->where('kodebartxt', $kd_bar);
+    //     $this->db_logistik_pt->from('keluarbrgitem');
+    //     return $this->db_logistik_pt->get()->row();
+    // }
 
     public function saveSpp($data_ppo)
     {

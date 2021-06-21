@@ -407,8 +407,9 @@ class Bpb extends CI_Controller
     function sum_stok()
     {
         $kodebar = $this->input->post('kodbar');
+        $kode_dev = $this->input->post('kode_dev');
         $hidden_txtperiode = $this->input->post('hidden_txtperiode');
-        $data = $this->M_bpb->get_stok($kodebar, $hidden_txtperiode);
+        $data = $this->M_bpb->get_stok($kodebar, $hidden_txtperiode, $kode_dev);
         echo json_encode($data);
     }
 
@@ -416,8 +417,10 @@ class Bpb extends CI_Controller
     {
         $id = $this->input->post('kodbar');
 
-        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id'";
-        $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id'";
+        $kode_dev = $this->input->post('kode_dev');
+
+        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id' AND kode_dev='$kode_dev'";
+        $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id' AND kode_dev='$kode_dev'";
         $get_booking = $this->db_logistik_pt->query($query_booking)->row();
         $get_booking2 = $this->db_logistik_pt->query($query_booking2)->row();
 

@@ -79,11 +79,12 @@ class Spp extends CI_Controller
 
     public function getStok()
     {
-        $kd_bar = $this->input->get('kd_bar');
+        $txtperiode  = $this->session->userdata('ym_periode');
 
-        // $ym_periode  = $this->session->userdata('ym_periode');
+        $kodebar = $this->input->post('kd_bar');
+        $kode_dev = $this->input->post('kode_dev');
 
-        $stockawal = $this->M_spp->stokAwal($kd_bar);
+        $data = $this->M_spp->get_stok($kodebar, $txtperiode, $kode_dev);
 
         // if (empty($stockawal)) {
         //     $get_stockawal = "0";
@@ -93,9 +94,9 @@ class Spp extends CI_Controller
 
         // $summasuk = $this->M_spp->sumMasuk($kd_bar);
 
-        $sumkeluar = $this->M_spp->sumKeluar($kd_bar);
+        // $sumkeluar = $this->M_spp->sumKeluar($kd_bar);
 
-        $data = $stockawal->qty_masuk - $sumkeluar->stokkeluar;
+        // $data = $stockawal->qty_masuk - $sumkeluar->stokkeluar;
 
         echo json_encode($data);
     }
@@ -168,6 +169,10 @@ class Spp extends CI_Controller
         }
         $thn = date("Y", strtotime($this->input->post('txt_tgl_ref')));
 
+        $kode_devisi    = $this->input->post('devisi');
+        $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
+
+
         $data_ppo = [
             'kpd' => 'Bagian Purchasing',
             'noppo' => $nospp,
@@ -178,7 +183,8 @@ class Spp extends CI_Controller
             'tgltrm' => $tgl_trm . date(" H:i:s"),
             'kodedept' => $this->input->post('cmb_departemen'),
             'namadept' => $data['nama_dept']['nama'],
-            'devisi' => $this->input->post('devisi'),
+            'kode_dev' => $kode_devisi,
+            'devisi' => $data['devisi']['PT'],
             'noref' => $nospp,
             'noreftxt' => $noref,
             'tglref' => $periode,
