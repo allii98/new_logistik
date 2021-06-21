@@ -169,7 +169,7 @@ class Spp extends CI_Controller
         }
         $thn = date("Y", strtotime($this->input->post('txt_tgl_ref')));
 
-        $kode_devisi    = $this->input->post('devisi');
+        $kode_devisi    = $this->input->post('kode_dev');
         $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
 
 

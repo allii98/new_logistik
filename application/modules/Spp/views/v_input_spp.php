@@ -382,6 +382,8 @@
             $('#hidden_satuan_brg_' + n).val(satuan);
             $("#modalListBarang").modal('hide');
 
+            $('#devisi').attr('disabled', '');
+
         });
     });
 
@@ -394,7 +396,7 @@
             var kode_dev = $('#devisi').val();
 
             var kd_bar = $(this).data('kodebar');
-            console.log(kode_dev + "kodedevni");
+
             // var id = $(this).attr('data');
             $.ajax({
                 type: "POST",
@@ -459,6 +461,7 @@
     }
 
     function saveRinci(n) {
+
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('Spp/saveSpp') ?>",

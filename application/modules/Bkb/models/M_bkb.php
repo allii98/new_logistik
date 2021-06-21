@@ -162,7 +162,7 @@ class M_bkb extends CI_Model
 
     public function update_stockawal($kodebar, $qty2, $txtperiode)
     {
-        $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai');
+        $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, nilai_keluar');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
@@ -171,9 +171,11 @@ class M_bkb extends CI_Model
 
         $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
 
-        $nilai_keluar = $rata2 * $qty2;
+        $tambah_nilai_keluar = $rata2 * $qty2;
 
-        $kurangin_saldoakhir_nilai = $stock_awal['saldoakhir_nilai'] - $nilai_keluar;
+        $nilai_keluar = $stock_awal['nilai_keluar'] + $tambah_nilai_keluar;
+
+        $kurangin_saldoakhir_nilai = $stock_awal['saldoakhir_nilai'] - $tambah_nilai_keluar;
 
         $saldoakhir_qty = $stock_awal['saldoakhir_qty'] - $qty2;
 

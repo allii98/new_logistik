@@ -575,8 +575,10 @@ class Lpb extends CI_Controller
         }
     }
 
-    function update_stok_awal($kodebar, $txtperiode)
+    function update_stok_awal()
     {
+        $kodebar = 102505990000096;
+        $txtperiode = '202106';
         //saldo akhir qty
         $sum_saldo_qty_kodebar = $this->M_lpb->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
 
@@ -597,9 +599,9 @@ class Lpb extends CI_Controller
         // }
 
         $data_update = [
-            'saldoakhir_nilai' => $sum_harga_kodebar->saldo_awal_harian,
+            'saldoakhir_nilai' => $sum_harga_kodebar,
 
-            'saldoakhir_qty' => $sum_saldo_qty_kodebar->saldo_qty_harian,
+            'saldoakhir_qty' => $sum_saldo_qty_kodebar,
 
             'nilai_masuk' => $sum_nilai_masuk->nilai_masuk_harian,
 
@@ -608,7 +610,10 @@ class Lpb extends CI_Controller
             // 'HARGARAT' => $rata2
         ];
 
-        return $this->M_lpb->updateStokAwal($data_update, $kodebar, $txtperiode);
+        var_dump($data_update);
+        die;
+
+        // return $this->M_lpb->updateStokAwal($data_update, $kodebar, $txtperiode);
     }
 
 

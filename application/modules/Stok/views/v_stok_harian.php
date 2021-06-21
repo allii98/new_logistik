@@ -23,7 +23,7 @@
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nama Barang</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Satuan</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Group</th>
-                                <th colspan="5" rowspan="1" style="text-align: center;">Saldo</th>
+                                <th colspan="4" rowspan="1" style="text-align: center;">Saldo</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Ket</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Min. Stock</th>
                             </tr>
@@ -31,8 +31,7 @@
                                 <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 353.4px;" aria-label="Position: activate to sort column ascending">Awal (Qty)</th>
                                 <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 152.4px;" aria-label="Salary: activate to sort column ascending">Awal (Nilai)</th>
                                 <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 106.4px;" aria-label="Extn.: activate to sort column ascending">Nilai Masuk</th>
-                                <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 177.4px;" aria-label="Office: activate to sort column ascending">Akhir (Qty)</th>
-                                <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 106.4px;" aria-label="Extn.: activate to sort column ascending">Akhir (Nilai)</th>
+                                <th class="sorting" tabindex="0" aria-controls="complex-header-datatable" rowspan="1" colspan="1" style="width: 177.4px;" aria-label="Office: activate to sort column ascending">QTY Masuk</th>
                             </tr>
                         </thead>
 
