@@ -248,7 +248,7 @@
                                     <a href="#" onclick="lap_lpb();" class="dropdown-item"><i class="fe-file-plus  mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Penerimaan Barang (LPB)</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-file-minus mr-1"></i>
+                                    <a href="#" onclick="lap_bkb();" class="dropdown-item"><i class="fe-file-minus mr-1"></i>
                                         <font face="Verdana" size="2.5">Bukti Keluar Barang (BKB)</font>
                                     </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-clipboard mr-1"></i>
@@ -662,6 +662,15 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">BAGIAN *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="lap_cmb_bagian" name="lap_cmb_bagian" required="">
+                                </select>
+                            </div>
+                        </div>
                         <!-- <div class="form-group">
                             <label class="col-3 col-form-label">
                                 <font face="Verdana" size="2">No LPB *</font>
@@ -945,6 +954,181 @@
             </div>
         </div>
         <!-- end modal SPP vs PO -->
+
+        <!-- modal BKB -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalBKB">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Bukti Keluar Barang</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Devisi *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="devisi_bkb" name="devisi_bkb" required="">
+                                    <!-- <option value="" selected>-- Pilih --</option> -->
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">No Bkb *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="number" class="form-control" id="no_bkb" name="no_bkb">
+
+                            </div>
+                        </div> -->
+
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">BAGIAN *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="bagian_bkb" name="bagian_bkb" required="">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Tanggal *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="tgl_bkb" name="tgl_bkb">
+                                <input type="hidden" class="form-control" id="tglawal_bkb" name="tglawal_bkb">
+                                <input type="hidden" class="form-control" id="tglakhir_bkb" name="tglakhir_bkb">
+                            </div>
+                        </div>
+
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="col-md-2"></div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="register_bkb" id="rbt_register_bkb" name="rbt_pilihan7" checked>
+                                        <label for="rbt_register_bkb"> Register BKB</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="slip_bkb" id="rbt_slip_bkb" name="rbt_pilihan7">
+                                        <label for="rbt_slip_bkb">Slip BKB</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_brg_bkb" id="rbt_per_brg_bkb" name="rbt_pilihan7">
+                                        <label for="rbt_per_brg_bkb">Per Barang</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="sum_blok_ub" id="rbt_sum_blok_ub" name="rbt_pilihan7">
+                                        <label for="rbt_sum_blok_ub">Sum Blok Unit Barang</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="sum_blok_pk" id="rbt_sum_blok_pk" name="rbt_pilihan7">
+                                        <label for="rbt_sum_blok_pk">Sum Blok</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_tgl_bkb" id="rbt_per_tgl_bkb" name="rbt_pilihan7">
+                                        <label for="rbt_per_tgl_bkb">Per Tanggal</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_bgn_rinci_tgl" id="rbt_per_bgn_rinci_tgl" name="rbt_pilihan7">
+                                        <label for="rbt_per_bgn_rinci_tgl">Per Bagian Rinci Tgl</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_bgn_grp_brg" id="rbt_per_bgn_grp_brg" name="rbt_pilihan7">
+                                        <label for="rbt_per_bgn_grp_brg">Per Bagian Group</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_kerja" id="rbt_per_kerja" name="rbt_pilihan7">
+                                        <label for="rbt_per_kerja">Per Pekerjaan (Tanaman)</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="mutasi_pt" id="rbt_mutasi_pt" name="rbt_pilihan7">
+                                        <label for="rbt_mutasi_pt">Mutasi Antar PT</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label class="control-label col-md-12 col-sm-3 col-xs-12">Nominal RP </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <hr>
+                                </div>
+                                <div class="col-sm-4">
+
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_bgn_grp_brg_n" id="rbt_per_bgn_grp_brg_n" name="rbt_pilihan7">
+                                        <label for="rbt_per_bgn_grp_brg_n">Per Bagian Group Barang</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_kerja1" id="rbt_per_kerja1" name="rbt_pilihan7">
+                                        <label for="rbt_per_kerja1">Per Pekerjaan</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="summary_rsh" id="rbt_summary_rsh" name="rbt_pilihan7">
+                                        <label for="rbt_summary_rsh">Summary</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="sum_blok_ub" id="rbt_sum_blok_ub" name="rbt_pilihan7">
+                                        <label for="rbt_sum_blok_ub">Sum Blok Unit Barang</label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="sum_blok_pk" id="rbt_sum_blok_pk" name="rbt_pilihan7">
+                                        <label for="rbt_sum_blok_pk">Sum Blok Pekerjaan</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkan_bkb()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal BKB -->
 
 
 
@@ -1428,7 +1612,7 @@
 
         function lap_pp() {
             $('#modalPP').modal('show');
-            $('#cmb_devisi1').empty();
+            // $('#cmb_devisi1').empty();
             pilihDevisi1();
             tanggalPP();
             // pilihTanggal2();
@@ -1436,9 +1620,19 @@
 
         function lap_lpb() {
             $('#modalLPB').modal('show');
-            $('#cmb_devisi1').empty();
+            // $('#cmb_devisi1').empty();
             pilihDevisi2();
             tanggalLPB();
+            // tanggalPP();
+            // pilihTanggal2();
+        }
+
+        function lap_bkb() {
+            $('#modalBKB').modal('show');
+            // $('#cmb_devisi1').empty();
+            devisi_bkb();
+            bagianBKB();
+            tanggal_bkb();
             // tanggalPP();
             // pilihTanggal2();
         }
@@ -1747,6 +1941,193 @@
             }, 100);
         }
 
+        function tampilkan_bkb() {
+            var cmb_devisi4 = $('#cmb_devisi4').val();
+            var no_bkb = $('#no_bkb').val();
+            var cmb_bagian1 = $('#cmb_bagian1').val();
+            var cmb_bagian1 = cmb_bagian1.replaceAll(" ", ".");
+            var cmb_bagian1 = cmb_bagian1.replaceAll("&", "-");
+            var txt_periode14 = $('#txt_periode14').val();
+            var txt_periode15 = $('#txt_periode15').val();
+            var rbt_pilihan7 = $("input[name='rbt_pilihan7']:checked").val();
+
+            if (rbt_pilihan7 == 'register_bkb') {
+                window.open('<?= site_url("laporan/print_lap_bkb_register_bkb"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'slip_bkb') {
+                $('#modalListLapSlipBKB').modal('show');
+                $('#tableListLapSlipBKB').DataTable().destroy();
+                $('#tableListLapSlipBKB').DataTable({
+                    "paging": true,
+                    "scrollY": false,
+                    "scrollX": false,
+                    "searching": true,
+                    "select": false,
+                    "bLengthChange": true,
+                    "scrollCollapse": true,
+                    "bPaginate": true,
+                    "bInfo": true,
+                    "bSort": false,
+                    "processing": true,
+                    "serverSide": true,
+                    "stateSave": true,
+                    "order": [],
+                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        console.log(aData);
+                    },
+                    "ajax": {
+                        "url": "<?php echo site_url('laporan/listLapSlipBKB'); ?>",
+                        "type": "POST",
+                        "data": {
+                            "cmb_devisi4": cmb_devisi4,
+                            "cmb_bagian1": cmb_bagian1,
+                            "no_bkb": no_bkb,
+                            "txt_periode14": txt_periode14,
+                            "txt_periode15": txt_periode15
+                        },
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
+                    },
+                    "columns": [{
+                            "width": "5%"
+                        },
+                        {
+                            "width": "20%"
+                        },
+                        {
+                            "width": "20%"
+                        },
+                        {
+                            "width": "25%"
+                        },
+                        {
+                            "width": "20%"
+
+                        },
+                        {
+                            "width": "10%"
+                        },
+                    ],
+                    "columnDefs": [{
+                        "targets": [],
+                        "orderable": false,
+                    }, ],
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapSlipBKB').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+            } else if (rbt_pilihan7 == 'per_brg_bkb') {
+                window.open('<?= site_url("laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'per_tgl_bkb') {
+                var tgl1 = txt_periode14.replaceAll('/', '.');
+                var tgl2 = txt_periode15.replaceAll('/', '.');
+                window.open('<?= site_url("laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'per_bgn_rinci_tgl') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'per_bgn_grp_brg') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'per_kerja') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_kerja"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'mutasi_pt') {
+                var tgl1 = txt_periode14.replaceAll('/', '.')
+                var tgl2 = txt_periode15.replaceAll('/', '.')
+                window.open('<?= site_url("laporan/print_lap_bkb_mutasi"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'per_bgn_grp_brg_n') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg_n"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'per_kerja1') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_kerja1"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'summary_rsh') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_summary_rsh"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'sum_blok_ub') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_sum_blok_ub"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'sum_blok_pk') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_sum_blok_pk"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            }
+
+            console.log(cmb_devisi4, no_bkb, cmb_bagian1, txt_periode14, txt_periode15, rbt_pilihan7);
+        }
+
 
         function pilihBagian() {
             $.ajax({
@@ -1844,6 +2225,72 @@
                 error: function(request) {
                     alert(request.responseText);
                 }
+            });
+        }
+
+        function devisi_bkb() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_devisi'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    console.log(data);
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+
+                    $.each(data, function(index) {
+                        var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                        $('#devisi_bkb').append(opsi_cmb_devisi);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function bagianBKB() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_bagian'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
+                    $('#bagian_bkb').append(opsi_cmb_all);
+                    $.each(data, function(index) {
+                        var opsi_lap_cmb_bagian = '<option value="' + data[index].nama + '">' + data[index].nama + '</option>';
+                        $('#bagian_bkb').append(opsi_lap_cmb_bagian);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function tanggal_bkb() {
+            var d = new Date();
+            var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
+            var today1 = (25) + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+            $('#tglawal_bkb').val(today);
+            $('#tglakhir_bkb').val(today1);
+            $('#tgl_bkb').val(today + ' - ' +
+                today1);
+
+            $('#tgl_bkb').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+            }, function(start, end, label) {
+                $('#tglawal_bkb').val(start.format('DD/MM/YYYY'));
+                $('#tglakhir_bkb').val(end.format('DD/MM/YYYY'));
+
+                // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
             });
         }
 
@@ -2127,6 +2574,193 @@
                 window.open('<?= site_url("Laporan/print_lap_lpb_regis_retur"); ?>/' + cmb_devisi3 + '/' + txt_periode12 + '/' + txt_periode13);
             }
             console.log(cmb_devisi3, txt_periode12, txt_periode13, rbt_pilihan6);
+        }
+
+        function tampilkan_bkb() {
+            var cmb_devisi4 = $('#devisi_bkb').val();
+            var no_bkb = $('#no_bkb').val();
+            var cmb_bagian1 = $('#bagian_bkb').val();
+            var cmb_bagian1 = cmb_bagian1.replaceAll(" ", ".");
+            var cmb_bagian1 = cmb_bagian1.replaceAll("&", "-");
+            var txt_periode14 = $('#tglawal_bkb').val();
+            var txt_periode15 = $('#tglakhir_bkb').val();
+            var rbt_pilihan7 = $("input[name='rbt_pilihan7']:checked").val();
+
+            if (rbt_pilihan7 == 'register_bkb') {
+                window.open('<?= site_url("Laporan/print_lap_bkb_register_bkb"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'slip_bkb') {
+                $('#modalListLapSlipBKB').modal('show');
+                $('#tableListLapSlipBKB').DataTable().destroy();
+                $('#tableListLapSlipBKB').DataTable({
+                    "paging": true,
+                    "scrollY": false,
+                    "scrollX": false,
+                    "searching": true,
+                    "select": false,
+                    "bLengthChange": true,
+                    "scrollCollapse": true,
+                    "bPaginate": true,
+                    "bInfo": true,
+                    "bSort": false,
+                    "processing": true,
+                    "serverSide": true,
+                    "stateSave": true,
+                    "order": [],
+                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        console.log(aData);
+                    },
+                    "ajax": {
+                        "url": "<?php echo site_url('laporan/listLapSlipBKB'); ?>",
+                        "type": "POST",
+                        "data": {
+                            "cmb_devisi4": cmb_devisi4,
+                            "cmb_bagian1": cmb_bagian1,
+                            "no_bkb": no_bkb,
+                            "txt_periode14": txt_periode14,
+                            "txt_periode15": txt_periode15
+                        },
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
+                    },
+                    "columns": [{
+                            "width": "5%"
+                        },
+                        {
+                            "width": "20%"
+                        },
+                        {
+                            "width": "20%"
+                        },
+                        {
+                            "width": "25%"
+                        },
+                        {
+                            "width": "20%"
+
+                        },
+                        {
+                            "width": "10%"
+                        },
+                    ],
+                    "columnDefs": [{
+                        "targets": [],
+                        "orderable": false,
+                    }, ],
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapSlipBKB').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+            } else if (rbt_pilihan7 == 'per_brg_bkb') {
+                window.open('<?= site_url("laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'per_tgl_bkb') {
+                var tgl1 = txt_periode14.replaceAll('/', '.');
+                var tgl2 = txt_periode15.replaceAll('/', '.');
+                window.open('<?= site_url("laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'per_bgn_rinci_tgl') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'per_bgn_grp_brg') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'per_kerja') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_kerja"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'mutasi_pt') {
+                var tgl1 = txt_periode14.replaceAll('/', '.')
+                var tgl2 = txt_periode15.replaceAll('/', '.')
+                window.open('<?= site_url("laporan/print_lap_bkb_mutasi"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+            } else if (rbt_pilihan7 == 'per_bgn_grp_brg_n') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg_n"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'per_kerja1') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_per_kerja1"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'summary_rsh') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_summary_rsh"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'sum_blok_ub') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_sum_blok_ub"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            } else if (rbt_pilihan7 == 'sum_blok_pk') {
+                var dev = $('#cmb_devisi4 option:selected').text();
+                dev = dev.replaceAll(' ', '-', dev);
+                dev = dev.replaceAll('(', '._', dev);
+                dev = dev.replaceAll(')', '_.', dev);
+                if (cmb_bagian1 == 'Semua') {
+                    swal('Pilih salah satu bagian');
+                } else {
+                    var tgl1 = txt_periode14.replaceAll('/', '.');
+                    var tgl2 = txt_periode15.replaceAll('/', '.');
+                    window.open('<?= site_url("laporan/print_lap_bkb_sum_blok_pk"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                }
+            }
+
+            console.log(cmb_devisi4, no_bkb, cmb_bagian1, txt_periode14, txt_periode15, rbt_pilihan7);
         }
 
         function printLPBSlipClick(noref, refpo) {

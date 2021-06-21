@@ -65,20 +65,19 @@
         <hr>
         <table class="singleborder" width="100%" rules="rows">
             <tr>
-                <td width="3%">No.</td>
-                <td width="12%">Kode Barang</td>
-                <td width="25%">Nama Barang</td>
-                <td width="10%">Keterangan</td>
-                <td width="5%">Satuan</td>
-                <td width="5%">Qty SPP</td>
-                <td width="15%">Qty PO</td>
-                <td width="15%">Saldo SPP</td>
+                <th width="3%">No.</th>
+                <th width="12%">Kode Barang</th>
+                <th width="25%">Nama Barang</th>
+                <th width="10%">Keterangan</th>
+                <th width="5%">Satuan</th>
+                <th width="5%">Qty SPP</th>
+                <th width="15%">Qty PO</th>
+                <th width="15%">Saldo SPP</th>
             </tr>
             <?php
             $nomer = 1;
             if (isset($ppo)) {
                 foreach ($ppo as $d) {
-
             ?>
                     <tr style="background-color: #d6d6c2;">
                         <td><?= $nomer++ ?></td>
@@ -139,7 +138,7 @@
         </thead>
         <tbody>
             <tr>
-                <td>Total SPP = <?= $jumlah->jmlh ?> <br> Total Item Barang = 14 <br> Total Qty Barang = 245 </td>
+                <td>Total SPP = <?= $jumlah->jmlh ?> <br> Total Item Barang = <?= $jmlbrg->jmlh ?> <br> Total Qty Barang = <?= $jmlQTYSpp->qty; ?> </td>
             </tr>
         </tbody>
     </table>

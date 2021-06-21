@@ -975,9 +975,11 @@ class Laporan extends CI_Controller
 
 		$jmlQTYSpp = $this->db->query("SELECT SUM(qty) AS qty FROM item_ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
 		$jumlah = $this->db->query("SELECT COUNT(id) AS jmlh FROM ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
+		$jmlbrg = $this->db->query("SELECT COUNT(id) AS jmlh FROM item_ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
 
 		$data['jmlQTYSpp'] = $jmlQTYSpp;
 		$data['jumlah'] = $jumlah;
+		$data['jmlbrg'] = $jmlbrg;
 		$data['periode'] = str_replace("'", " ", ($tanggal1 . ' - ' . $tanggal2));
 		$data['lokasi'] = $lokuser;
 		$mpdf = new \Mpdf\Mpdf([
@@ -1005,6 +1007,55 @@ class Laporan extends CI_Controller
 		$html = $this->load->view('analisa/vw_lap_po_lpb_print_semua', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+	}
+
+	function print_lap_bkb_register_bkb()
+	{
+		ini_set("pcre.backtrack_limit", "5000000");
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+
+		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
+
+		$bagian = $this->uri->segment(10);
+		if ($bagian == "HRD.-.UMUM") $bagian = "UMUM.-.HRD";
+		$bagian = str_replace('-', '&', $bagian);
+		$bagian = str_replace('.', ' ', $bagian);
+		if ($bagian == 'Semua') {
+			$query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev='$lokasi' ORDER BY a.periode ASC";
+		} else {
+			$query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev='$lokasi' AND b.bag = '$bagian' ORDER BY a.periode ASC";
+		}
+
+		$data['bkb'] = $this->db_logistik_pt->query($query)->result();
+		$data['tgl1'] = $tanggal1;
+		$data['tgl2'] = $tanggal2;
+		$data['lokasi'] = $lokasi;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapBkb/vw_lap_bkb_print_register', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 }
 
