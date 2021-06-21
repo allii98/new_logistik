@@ -139,7 +139,8 @@ class Bkb extends CI_Controller
     {
         $kodebar = $this->input->post('kodebar');
         $txtperiode = $this->input->post('txtperiode');
-        $result = $this->M_bkb->get_stok($kodebar, $txtperiode);
+        $kode_dev = $this->input->post('kode_dev');
+        $result = $this->M_bkb->get_stok($kodebar, $txtperiode, $kode_dev);
         echo json_encode($result);
     }
 

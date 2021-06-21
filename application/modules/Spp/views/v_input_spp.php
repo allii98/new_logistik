@@ -127,11 +127,11 @@
                                 <label for="example-select">
                                     <font face="Verdana" size="2.5">Devisi*</font>
                                 </label>
-                                <select class="form-control" id="devisi">
+                                <select class="form-control" id="devisi" onchange="check_form_2()">
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     foreach ($devisi as $d) : { ?>
-                                            <option value="<?= $d['PT'] ?>"><?= $d['PT'] ?></option>
+                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
                                     <?php }
                                     endforeach;
                                     ?>
@@ -302,14 +302,30 @@
 
         $('#a_print_spp').hide();
 
-
         $('#cmb_departemen').on('change', function() {
             var data = this.value;
             // alert(this.value);
             // console.log(data);
             $('#txt_kode_departemen').val(data);
         });
+
+        check_form_2();
     });
+
+    function check_form_2() {
+        if ($.trim($('#devisi').val()) != '') {
+
+            $('#btn_simpan_1').removeAttr('disabled', '');
+            $('#btn_tambah_row_1').removeAttr('disabled', '');
+            $('#tableRinciBarang').find('input,textarea,select').removeAttr('disabled');
+        } else {
+            $('#btn_simpan_1').attr('disabled', '');
+            $('#btn_tambah_row_1').attr('disabled', '');
+            $('#tableRinciBarang').find('input,textarea,select').attr('disabled', '');
+
+        }
+
+    }
 
     function cari_barang(no_row) {
         // $('#hidden_no_row').empty();
@@ -375,15 +391,18 @@
 
             var n = $('#hidden_no_row').val();
 
+            var kode_dev = $('#devisi').val();
+
             var kd_bar = $(this).data('kodebar');
-            // console.log(kd_bar);
+            console.log(kode_dev + "kodedevni");
             // var id = $(this).attr('data');
             $.ajax({
-                type: "GET",
+                type: "POST",
                 url: "<?php echo base_url('Spp/getStok') ?>",
                 dataType: "JSON",
                 data: {
-                    kd_bar: kd_bar
+                    kd_bar: kd_bar,
+                    kode_dev: kode_dev
                 },
                 success: function(data) {
                     $('#stok_' + n).text(data);
@@ -468,7 +487,7 @@
                 cmb_jenis_permohonan: $('#cmb_jenis_permohonan').val(),
                 txt_kode_departemen: $('#txt_kode_departemen').val(),
                 cmb_departemen: $('#cmb_departemen').val(),
-                devisi: $('#devisi').val(),
+                kode_dev: $('#devisi').val(),
                 hidden_kode_brg: $('#hidden_kode_brg_' + n).val(),
                 hidden_nama_brg: $('#hidden_nama_brg_' + n).val(),
                 hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),

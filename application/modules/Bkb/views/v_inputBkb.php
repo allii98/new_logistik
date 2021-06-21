@@ -423,7 +423,7 @@
                     tahun_tanam(i, data_item_bpb[i].kodebebantxt);
 
                     //sum stok all periode / qtymasuk - qtykeluar
-                    get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode);
+                    get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
 
                     var afd = data_item_bpb[i].afd;
                     var blok = data_item_bpb[i].blok;
@@ -585,7 +585,7 @@
         });
     }
 
-    function get_stok(i, kodebar, txtperiode) {
+    function get_stok(i, kodebar, txtperiode, kode_dev) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/get_stok'); ?>",
@@ -594,7 +594,8 @@
 
             data: {
                 'kodebar': kodebar,
-                'txtperiode': txtperiode
+                'txtperiode': txtperiode,
+                'kode_dev': kode_dev
             },
             success: function(data) {
 
@@ -679,7 +680,7 @@
                 console.log(data);
 
                 //hitung ulang stok?
-                get_stok(n, hidden_kode_barang, data.txtperiode);
+                get_stok(n, hidden_kode_barang, data.txtperiode, kode_dev);
 
                 $('#a_print_bkb').show();
 
