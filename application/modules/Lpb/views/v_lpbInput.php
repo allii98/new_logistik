@@ -596,6 +596,8 @@ date_default_timezone_set('Asia/Jakarta');
 
             success: function(data) {
 
+                console.log(data);
+
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_lpb_status').empty();
 

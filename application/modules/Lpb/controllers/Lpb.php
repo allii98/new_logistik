@@ -575,10 +575,10 @@ class Lpb extends CI_Controller
         }
     }
 
-    function update_stok_awal()
+    function update_stok_awal($kodebar, $txtperiode)
     {
-        $kodebar = 102505990000096;
-        $txtperiode = '202106';
+        // $kodebar = 102505990000096;
+        // $txtperiode = '202106';
         //saldo akhir qty
         $sum_saldo_qty_kodebar = $this->M_lpb->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
 
@@ -610,10 +610,10 @@ class Lpb extends CI_Controller
             // 'HARGARAT' => $rata2
         ];
 
-        var_dump($data_update);
-        die;
+        // var_dump($data_update);
+        // die;
 
-        // return $this->M_lpb->updateStokAwal($data_update, $kodebar, $txtperiode);
+        return $this->M_lpb->updateStokAwal($data_update, $kodebar, $txtperiode);
     }
 
 
@@ -624,7 +624,7 @@ class Lpb extends CI_Controller
         $kodebar = $this->input->post('kodebar');
 
         //QTY PO nya di ambil
-        $query_qty_po = "SELECT id, nopotxt, noppotxt, refppo, noref, kodebartxt, nabar, qty, sat, ket FROM item_po WHERE nopotxt = '$no_po' AND noref = '$no_ref_po' AND kodebartxt = '$kodebar' ORDER BY id DESC";
+        $query_qty_po = "SELECT id, nopotxt, noppotxt, refppo, noref, kodebartxt, nabar, qty, sat, ket FROM item_po WHERE nopotxt = '$no_po' AND noref = '$no_ref_po' AND kodebartxt = '$kodebar'";
         $data_qty_po = $this->db_logistik_pt->query($query_qty_po)->row();
 
         //sum qty LPB nya udah berapa
