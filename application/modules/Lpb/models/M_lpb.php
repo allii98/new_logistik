@@ -80,19 +80,36 @@ class M_lpb extends CI_Model
     public function cariDevisi()
     {
         $lokasi = $this->session->userdata('status_lokasi');
+        $pt = $this->session->userdata('app_pt');
 
-        if ($lokasi == 'SITE') {
-            $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->where('kodetxt', '06');
-            $this->db_logistik_pt->or_where('kodetxt', '07');
-            $this->db_logistik_pt->from('pt_copy');
-            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
-            return $this->db_logistik_pt->get()->result_array();
-        } else {
-            $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->from('pt_copy');
-            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
-            return $this->db_logistik_pt->get()->result_array();
+        if ($pt == "MSAL") {
+            if ($lokasi == 'SITE') {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->where('kodetxt', '06');
+                $this->db_logistik_pt->or_where('kodetxt', '07');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            } else {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            }
+        } elseif ($pt == "MAPA") {
+            if ($lokasi == 'SITE') {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->where('kodetxt', '08');
+                $this->db_logistik_pt->or_where('kodetxt', '09');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            } else {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            }
         }
     }
 

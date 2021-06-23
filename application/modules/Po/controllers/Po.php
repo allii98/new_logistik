@@ -170,9 +170,9 @@ class Po extends CI_Controller
         $nopo = $this->uri->segment('3');
         $id = $this->uri->segment('4');
 
-        $this->db->where('id', $id);
-        $this->db->where('nopotxt', $nopo);
-        $cek = $this->db->get_where('po');
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->where('nopotxt', $nopo);
+        $cek = $this->db_logistik_pt->get_where('po');
 
         if ($cek->num_rows() > 0) {
             $cek = $cek->row();
@@ -181,14 +181,14 @@ class Po extends CI_Controller
             $up = [
                 'jml_cetak' => $jml_ + 1
             ];
-            $this->db->where('id', $id);
-            $this->db->where('nopotxt', $nopo);
-            $this->db->update('po', $up);
+            $this->db_logistik_pt->where('id', $id);
+            $this->db_logistik_pt->where('nopotxt', $nopo);
+            $this->db_logistik_pt->update('po', $up);
         } else {
             $ins = [
                 'jml_cetak' => 1
             ];
-            $this->db->insert('po', $ins);
+            $this->db_logistik_pt->insert('po', $ins);
         }
 
         $data['pt'] = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'))->row();
@@ -612,7 +612,7 @@ class Po extends CI_Controller
 
         //update(dengan cara qty2+qty inputan) where id_ppo = id_ppo yang di dapat
         $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $d = $this->db->query($query)->row();
+        $d = $this->db_logistik_pt->query($query)->row();
         $qtyy = $d->qty;
         $qty2 = $d->qty2;
         if ($qty2 == null) {
@@ -635,7 +635,7 @@ class Po extends CI_Controller
 
 
         $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $ambil = $this->db->query($chek)->row();
+        $ambil = $this->db_logistik_pt->query($chek)->row();
         $qtyy = $ambil->qty;
         $qtyy2 = $ambil->qty2;
 
@@ -653,8 +653,8 @@ class Po extends CI_Controller
 
         //cek isi qty dan qty2, jika qty == qty2, maka update po = 1 
 
-        $data1 = $this->db->insert('po', $datainsert);
-        $data2 = $this->db->insert('item_po', $datainsertitem);
+        $data1 = $this->db_logistik_pt->insert('po', $datainsert);
+        $data2 = $this->db_logistik_pt->insert('item_po', $datainsertitem);
 
         // if ($qtyy == $qtyy2) {
 
@@ -876,7 +876,7 @@ class Po extends CI_Controller
         // }
 
 
-        $data = $this->db->insert('item_po', $datainsertitem);
+        $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
         // $no_ppo = $this->input->post('id_ppo');
         // $data_ppo =  array(
         //     'QTY2' => $this->input->post('txt_qty')

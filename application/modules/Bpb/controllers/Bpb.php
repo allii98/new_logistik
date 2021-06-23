@@ -911,9 +911,9 @@ class Bpb extends CI_Controller
         $no_bpb = $this->uri->segment('3');
         $id = $this->uri->segment('4');
 
-        $this->db->where('id', $id);
-        $this->db->where('nobpb', $no_bpb);
-        $cek = $this->db->get_where('bpb');
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->where('nobpb', $no_bpb);
+        $cek = $this->db_logistik_pt->get_where('bpb');
 
         if ($cek->num_rows() > 0) {
             $cek = $cek->row();
@@ -921,14 +921,14 @@ class Bpb extends CI_Controller
             $up = [
                 'jml_cetak' => $jml_ + 1
             ];
-            $this->db->where('id', $id);
-            $this->db->where('nobpb', $no_bpb);
-            $this->db->update('bpb', $up);
+            $this->db_logistik_pt->where('id', $id);
+            $this->db_logistik_pt->where('nobpb', $no_bpb);
+            $this->db_logistik_pt->update('bpb', $up);
         } else {
             $ins = [
                 'jml_cetak' => 1
             ];
-            $this->db->insert('bpb', $ins);
+            $this->db_logistik_pt->insert('bpb', $ins);
         }
 
 
@@ -942,9 +942,9 @@ class Bpb extends CI_Controller
         $this->qrcode($no_bpb, $id, $noref);
 
         // cek bahan bakar
-        $this->db->where('id', $id);
-        $this->db->where('nobpb', $no_bpb);
-        $cekdata = $this->db->get_where('bpb');
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->where('nobpb', $no_bpb);
+        $cekdata = $this->db_logistik_pt->get_where('bpb');
         $d = $cekdata->row();
         $isi = $d->bhn_bakar;
 

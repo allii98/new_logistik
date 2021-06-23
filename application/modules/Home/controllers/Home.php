@@ -32,6 +32,9 @@ class Home extends CI_Controller
         ];
         $data['count'] = $this->M_home->count_spp();
 
+        $data['pt_login'] = $this->session->userdata('app_pt');
+        $data['pt_periode'] = $this->session->userdata('ym_periode');
+
         // var_dump($data['count_spp']);
         // die;
 

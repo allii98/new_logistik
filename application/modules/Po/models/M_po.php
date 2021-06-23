@@ -130,14 +130,14 @@ class M_po extends CI_Model
     public function get_id()
     {
         $query = "SELECT * FROM ppo p LEFT JOIN item_ppo i ON p.noppo = i.noppo WHERE p.id = '" . $this->input->post('id') . "' AND i.po = '0'";
-        $data = $this->db->query($query)->result_array();
+        $data = $this->db_logistik_pt->query($query)->result_array();
         return $data;
     }
 
     public function get_itemppo()
     {
         $query = "SELECT * FROM item_ppo WHERE id = '" . $this->input->post('id') . "'";
-        $data = $this->db->query($query)->result_array();
+        $data = $this->db_logistik_pt->query($query)->result_array();
         return $data;
     }
 
@@ -245,19 +245,36 @@ class M_po extends CI_Model
     public function cariDevisi()
     {
         $lokasi = $this->session->userdata('status_lokasi');
+        $pt = $this->session->userdata('app_pt');
 
-        if ($lokasi == 'SITE') {
-            $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->where('kodetxt', '06');
-            $this->db_logistik_pt->or_where('kodetxt', '07');
-            $this->db_logistik_pt->from('pt_copy');
-            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
-            return $this->db_logistik_pt->get()->result_array();
-        } else {
-            $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->from('pt_copy');
-            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
-            return $this->db_logistik_pt->get()->result_array();
+        if ($pt == "MSAL") {
+            if ($lokasi == 'SITE') {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->where('kodetxt', '06');
+                $this->db_logistik_pt->or_where('kodetxt', '07');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            } else {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            }
+        } elseif ($pt == "MAPA") {
+            if ($lokasi == 'SITE') {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->where('kodetxt', '08');
+                $this->db_logistik_pt->or_where('kodetxt', '09');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            } else {
+                $this->db_logistik_pt->select('PT, kodetxt');
+                $this->db_logistik_pt->from('pt_copy');
+                $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+                return $this->db_logistik_pt->get()->result_array();
+            }
         }
     }
 }

@@ -67,7 +67,7 @@
                         <div class="col-4"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Pp'); ?>" class="btn btn-outline-light btn-rounded waves-effect text-right">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup">3</span></h3>
+                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_pp'] ?></span></h3>
                                 <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
@@ -162,6 +162,22 @@
         <div class="col-md-5">
             <div class="card">
                 <div class="card-body">
+                    <?php
+                    if ($pt_login == 'MSAL') {
+                        echo "<div class='external-event bg-primary text-right p-0 mt-0' data-class=bg-info'>";
+                        echo "<marquee>";
+                        echo "<h3 class='text-white'>PT . MULIA SAWIT AGRO LESTARI</h3>";
+                        echo "</marquee>";
+                        echo "</div>";
+                    } elseif ($pt_login == 'MAPA') {
+                        echo "<div class='external-event bg-success text-right p-0 mt-0' data-class=bg-info'>";
+                        echo "<marquee>";
+                        echo "<h3 class='text-white'>PT . MITRA AGRO PERSADA ABADI</h3>";
+                        echo "</marquee>";
+                        echo "</div>";
+                    }
+                    ?>
+                    <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small>
                     <h4 class="header-title mb-0">Mutasi Masuk</h4>
 
                     <div id="cardCollpase5" class="collapse pt-3 show">
