@@ -17,7 +17,6 @@
     <link href="<?php echo base_url() ?>assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url() ?>assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- third party css end -->
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/daterangepicker/daterangepicker.css" />
     <link href="<?php echo base_url() ?>assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
     <link href="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
@@ -38,6 +37,7 @@
     <link href="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/qrcode-reader.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/daterangepicker.css" />
 
 
 
@@ -1162,6 +1162,7 @@
 
 
 
+
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
@@ -1209,6 +1210,8 @@
                 <!-- memanggil library unt  uk memanggil content -->
 
                 <?php echo $contents ?>
+
+
 
 
             </div> <!-- content -->
