@@ -1029,19 +1029,8 @@
                                         <label for="rbt_per_brg_bkb">Per Barang</label>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="radio radio-info form-check-inline">
-                                        <input type="radio" value="sum_blok_ub" id="rbt_sum_blok_ub" name="rbt_pilihan7">
-                                        <label for="rbt_sum_blok_ub">Sum Blok Unit Barang</label>
-                                    </div>
-                                </div>
 
-                                <div class="col-sm-4">
-                                    <div class="radio radio-info form-check-inline">
-                                        <input type="radio" value="sum_blok_pk" id="rbt_sum_blok_pk" name="rbt_pilihan7">
-                                        <label for="rbt_sum_blok_pk">Sum Blok</label>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-4">
                                     <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="per_tgl_bkb" id="rbt_per_tgl_bkb" name="rbt_pilihan7">
@@ -1129,6 +1118,44 @@
             </div>
         </div>
         <!-- end modal BKB -->
+
+        <!-- data slip BKB  -->
+        <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapSlipBKB">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">List LPB Slip Retur</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table id="tableListLapSlipBKB" class="table table-striped table-bordered table-in" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5% !important;">No</th>
+                                            <th style="width: 20% !important;">Tgl</th>
+                                            <!-- <th style="width: 20% !important;">No BPB</th> -->
+                                            <th style="width: 20% !important;">No BKB</th>
+                                            <th style="width: 25% !important;">No Ref BKB</th>
+                                            <th style="width: 20% !important;">Departement</th>
+                                            <th style="width: 10% !important;">Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_listbarang"></tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end SLIP BKB -->
 
 
 
@@ -1975,7 +2002,7 @@
                         console.log(aData);
                     },
                     "ajax": {
-                        "url": "<?php echo site_url('laporan/listLapSlipBKB'); ?>",
+                        "url": "<?php echo site_url('Laporan/listLapSlipBKB'); ?>",
                         "type": "POST",
                         "data": {
                             "cmb_devisi4": cmb_devisi4,
@@ -2018,11 +2045,11 @@
                     clearInterval(rel);
                 }, 100);
             } else if (rbt_pilihan7 == 'per_brg_bkb') {
-                window.open('<?= site_url("laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'per_tgl_bkb') {
                 var tgl1 = txt_periode14.replaceAll('/', '.');
                 var tgl2 = txt_periode15.replaceAll('/', '.');
-                window.open('<?= site_url("laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'per_bgn_rinci_tgl') {
                 var dev = $('#cmb_devisi4 option:selected').text();
                 dev = dev.replaceAll(' ', '-', dev);
@@ -2033,7 +2060,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'per_bgn_grp_brg') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -2045,7 +2072,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'per_kerja') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -2607,10 +2634,10 @@
                     "stateSave": true,
                     "order": [],
                     "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        console.log(aData);
+                        // console.log(aData);
                     },
                     "ajax": {
-                        "url": "<?php echo site_url('laporan/listLapSlipBKB'); ?>",
+                        "url": "<?php echo site_url('Laporan/listLapSlipBKB'); ?>",
                         "type": "POST",
                         "data": {
                             "cmb_devisi4": cmb_devisi4,
@@ -2761,6 +2788,13 @@
             }
 
             console.log(cmb_devisi4, no_bkb, cmb_bagian1, txt_periode14, txt_periode15, rbt_pilihan7);
+        }
+
+        function printBKBSlipClick(NO_REF, skb, bag, tgl1, tgl2, id) {
+            if (bag == "HRD & UMUM") bag = "UMUM & HRD";
+            bag = bag.replaceAll(" ", ".");
+            bag = bag.replaceAll("&", "-");
+            window.open('<?= site_url("Laporan/print_lap_bkb_slip_bkb"); ?>/' + NO_REF + '/' + skb + '/' + bag + '/' + tgl1 + '/' + tgl2 + '/' + id);
         }
 
         function printLPBSlipClick(noref, refpo) {
