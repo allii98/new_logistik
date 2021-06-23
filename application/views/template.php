@@ -17,7 +17,7 @@
     <link href="<?php echo base_url() ?>assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url() ?>assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- third party css end -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/daterangepicker/daterangepicker.css" />
     <link href="<?php echo base_url() ?>assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
     <link href="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
@@ -38,7 +38,7 @@
     <link href="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/qrcode-reader.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
 
 
 </head>
@@ -304,10 +304,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Login/logout') ?>">
-                                    <i class="mdi mdi-logout mr-1"></i>
-                                    <font face="Verdana" size="2.5">Logout</font>
-                                </a>
+
                             </li>
 
                         </ul> <!-- end navbar-->
@@ -321,13 +318,17 @@
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                                 <!-- item-->
                                 <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                    <h6 class="text-overflow m-0"><?= $this->session->userdata('pt'); ?></h6>
                                 </div>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="fe-calendar"></i>
                                     <span>Periode : <?= $this->session->userdata('ym_periode'); ?></span>
+                                </a>
+                                <a class="dropdown-item notify-item" href="<?= base_url('Login/logout') ?>">
+                                    <i class="mdi mdi-logout mr-1"></i>
+                                    <span>Logout</span>
                                 </a>
                             </div>
                         </li>
@@ -1161,7 +1162,6 @@
 
 
 
-
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
         <!-- ============================================================== -->
@@ -1186,12 +1186,12 @@
         <!-- Tour page js -->
         <script src="<?php echo base_url() ?>assets/libs/hopscotch/js/hopscotch.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+        <script src="<?php echo base_url() ?>assets/js/jquery.validate.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/dist/js/qrcode-reader.min.js?v=20190604"></script>
 
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/js/moment.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/js/daterangepicker.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/js/instascan.min.js"></script>
 
@@ -1209,8 +1209,6 @@
                 <!-- memanggil library unt  uk memanggil content -->
 
                 <?php echo $contents ?>
-
-
 
 
             </div> <!-- content -->
