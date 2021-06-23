@@ -492,6 +492,92 @@ class M_laporan extends CI_Model
         );
         return $output;
     }
+
+
+    function get_list_lap_slip_bkb()
+    {
+        $data = array();
+        $start = $_POST['start'];
+        $length = $_POST['length'];
+        $no = $start + 1;
+
+        $cmb_devisi4 = $this->input->post('cmb_devisi4');
+        $cmb_bagian1 = $this->input->post('cmb_bagian1');
+        if ($cmb_bagian1 == "HRD.-.UMUM") $cmb_bagian1 = "UMUM.-.HRD";
+        $cmb_bagian1 = str_replace('-', '&', $cmb_bagian1);
+        $cmb_bagian1 = str_replace('.', ' ', $cmb_bagian1);
+        if ($cmb_bagian1 == 'Semua') {
+            $q_bag = '';
+        } else {
+            $q_bag = "AND bag = '" . $cmb_bagian1 . "'";
+        }
+
+        $no_bkb = $this->input->post('no_bkb');
+        $txt_periode14 = str_replace('/', '-', $this->input->post('txt_periode14'));
+        $txt_periode15 = str_replace('/', '-', $this->input->post('txt_periode15'));
+
+        $txt_periode14 = date_create($txt_periode14);
+        $txt_periode14 = date_format($txt_periode14, "Y-m-d");
+        $txt_periode15 = date_create($txt_periode15);
+        $txt_periode15 = date_format($txt_periode15, "Y-m-d");
+        if (!empty($_POST['search']['value'])) {
+            $keyword = $_POST['search']['value'];
+            $query = "SELECT * FROM stockkeluar WHERE kode = '$cmb_devisi4' AND tgl BETWEEN '$txt_periode14' AND '$txt_periode15' $q_bag  AND ( 
+                        tgl LIKE '%$keyword%'
+                        OR bag LIKE '%$keyword%'
+                        OR skb LIKE '%$keyword%'
+                        OR NO_REF LIKE '%$keyword%'
+                        OR nobpb LIKE '%$keyword%')
+            			ORDER BY tgl ASC";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        } else {
+            $query = "SELECT * FROM stockkeluar WHERE kode = '$cmb_devisi4' AND tgl BETWEEN '$txt_periode14' AND '$txt_periode15' $q_bag ";
+            $count_all = $this->db_logistik_pt->query($query)->num_rows();
+            $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
+        }
+        $txt_periode14 = "'" . $txt_periode14 . "'";
+        $txt_periode15 = "'" . $txt_periode15 . "'";
+        foreach ($data_tabel as $hasil) {
+            $tgl = date_create($hasil->tgl);
+            $NO_REF = "'" . $hasil->NO_REF . "'";
+            $NO_REF = str_replace("/", ".", $NO_REF);
+            $skb = "'" . $hasil->skb . "'";
+            $skb = str_replace("/", ".", $skb);
+            $bag = "'" . $hasil->bag . "'";
+            $bag = str_replace("/", ".", $bag);
+            $id = $hasil->id;
+
+            $row   = array();
+            $row[] = $no++;
+            $row[] = date_format($tgl, "d-m-Y");
+            $row[] = $hasil->skb;
+            $row[] = $hasil->NO_REF;
+            $row[] = $hasil->bag;
+            // $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printBKBSlipClick(' . $noref . ',' . $refpo . ')"></button>';
+            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printBKBSlipClick(' . $NO_REF . ',' . $skb . ',' . $bag . ',' . $txt_periode14 . ',' . $txt_periode15 . ',' . $id . ')"></button>';
+            $data[] = $row;
+        }
+        $output = array(
+            "draw"              => $_POST['draw'],
+            "recordsTotal"      => $count_all,
+            "recordsFiltered"   => $count_all,
+            "data"              => $data,
+        );
+        return $output;
+    }
+
+    public function urut_cetak($no_ref_bkb)
+    {
+        $this->db_logistik_pt->set('cetak', 'cetak+1', FALSE);
+        $this->db_logistik_pt->where('NO_REF', $no_ref_bkb);
+        $this->db_logistik_pt->update('stockkeluar');
+
+        $this->db_logistik_pt->select('cetak');
+        $this->db_logistik_pt->from('stockkeluar');
+        $this->db_logistik_pt->where('NO_REF', $no_ref_bkb);
+        return $this->db_logistik_pt->get()->row_array();
+    }
 }
 
 /* End of file M_laporan.php */

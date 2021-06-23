@@ -17,7 +17,6 @@
     <link href="<?php echo base_url() ?>assets/libs/datatables.net-buttons-bs4/css/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <link href="<?php echo base_url() ?>assets/libs/datatables.net-select-bs4/css//select.bootstrap4.min.css" rel="stylesheet" type="text/css" />
     <!-- third party css end -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link href="<?php echo base_url() ?>assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
 
     <link href="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.css" rel="stylesheet" type="text/css" />
@@ -38,7 +37,8 @@
     <link href="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.css" rel="stylesheet" type="text/css" />
 
     <link rel="stylesheet" href="<?php echo base_url() ?>assets/dist/css/qrcode-reader.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url() ?>assets/css/daterangepicker.css" />
+
 
 
 </head>
@@ -304,10 +304,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link dropdown-toggle arrow-none" href="<?= base_url('Login/logout') ?>">
-                                    <i class="mdi mdi-logout mr-1"></i>
-                                    <font face="Verdana" size="2.5">Logout</font>
-                                </a>
+
                             </li>
 
                         </ul> <!-- end navbar-->
@@ -321,13 +318,17 @@
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown">
                                 <!-- item-->
                                 <div class="dropdown-header noti-title">
-                                    <h6 class="text-overflow m-0">Welcome !</h6>
+                                    <h6 class="text-overflow m-0"><?= $this->session->userdata('pt'); ?></h6>
                                 </div>
 
                                 <!-- item-->
                                 <a href="javascript:void(0);" class="dropdown-item notify-item">
                                     <i class="fe-calendar"></i>
                                     <span>Periode : <?= $this->session->userdata('ym_periode'); ?></span>
+                                </a>
+                                <a class="dropdown-item notify-item" href="<?= base_url('Login/logout') ?>">
+                                    <i class="mdi mdi-logout mr-1"></i>
+                                    <span>Logout</span>
                                 </a>
                             </div>
                         </li>
@@ -1029,19 +1030,8 @@
                                         <label for="rbt_per_brg_bkb">Per Barang</label>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="radio radio-info form-check-inline">
-                                        <input type="radio" value="sum_blok_ub" id="rbt_sum_blok_ub" name="rbt_pilihan7">
-                                        <label for="rbt_sum_blok_ub">Sum Blok Unit Barang</label>
-                                    </div>
-                                </div>
 
-                                <div class="col-sm-4">
-                                    <div class="radio radio-info form-check-inline">
-                                        <input type="radio" value="sum_blok_pk" id="rbt_sum_blok_pk" name="rbt_pilihan7">
-                                        <label for="rbt_sum_blok_pk">Sum Blok</label>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-4">
                                     <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="per_tgl_bkb" id="rbt_per_tgl_bkb" name="rbt_pilihan7">
@@ -1130,6 +1120,44 @@
         </div>
         <!-- end modal BKB -->
 
+        <!-- data slip BKB  -->
+        <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapSlipBKB">
+            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">List LPB Slip Retur</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="col-12">
+                            <div class="table-responsive">
+                                <table id="tableListLapSlipBKB" class="table table-striped table-bordered table-in" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 5% !important;">No</th>
+                                            <th style="width: 20% !important;">Tgl</th>
+                                            <!-- <th style="width: 20% !important;">No BPB</th> -->
+                                            <th style="width: 20% !important;">No BKB</th>
+                                            <th style="width: 25% !important;">No Ref BKB</th>
+                                            <th style="width: 20% !important;">Departement</th>
+                                            <th style="width: 10% !important;">Opsi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_listbarang"></tbody>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end SLIP BKB -->
+
 
 
 
@@ -1159,12 +1187,12 @@
         <!-- Tour page js -->
         <script src="<?php echo base_url() ?>assets/libs/hopscotch/js/hopscotch.min.js"></script>
 
-        <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+        <script src="<?php echo base_url() ?>assets/js/jquery.validate.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/dist/js/qrcode-reader.min.js?v=20190604"></script>
 
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/js/moment.min.js"></script>
+        <script type="text/javascript" src="<?php echo base_url() ?>assets/js/daterangepicker.min.js"></script>
 
         <script src="<?php echo base_url() ?>assets/js/instascan.min.js"></script>
 
@@ -1975,7 +2003,7 @@
                         console.log(aData);
                     },
                     "ajax": {
-                        "url": "<?php echo site_url('laporan/listLapSlipBKB'); ?>",
+                        "url": "<?php echo site_url('Laporan/listLapSlipBKB'); ?>",
                         "type": "POST",
                         "data": {
                             "cmb_devisi4": cmb_devisi4,
@@ -2018,11 +2046,11 @@
                     clearInterval(rel);
                 }, 100);
             } else if (rbt_pilihan7 == 'per_brg_bkb') {
-                window.open('<?= site_url("laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'per_tgl_bkb') {
                 var tgl1 = txt_periode14.replaceAll('/', '.');
                 var tgl2 = txt_periode15.replaceAll('/', '.');
-                window.open('<?= site_url("laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'per_bgn_rinci_tgl') {
                 var dev = $('#cmb_devisi4 option:selected').text();
                 dev = dev.replaceAll(' ', '-', dev);
@@ -2033,7 +2061,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'per_bgn_grp_brg') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -2045,7 +2073,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'per_kerja') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -2607,10 +2635,10 @@
                     "stateSave": true,
                     "order": [],
                     "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        console.log(aData);
+                        // console.log(aData);
                     },
                     "ajax": {
-                        "url": "<?php echo site_url('laporan/listLapSlipBKB'); ?>",
+                        "url": "<?php echo site_url('Laporan/listLapSlipBKB'); ?>",
                         "type": "POST",
                         "data": {
                             "cmb_devisi4": cmb_devisi4,
@@ -2761,6 +2789,13 @@
             }
 
             console.log(cmb_devisi4, no_bkb, cmb_bagian1, txt_periode14, txt_periode15, rbt_pilihan7);
+        }
+
+        function printBKBSlipClick(NO_REF, skb, bag, tgl1, tgl2, id) {
+            if (bag == "HRD & UMUM") bag = "UMUM & HRD";
+            bag = bag.replaceAll(" ", ".");
+            bag = bag.replaceAll("&", "-");
+            window.open('<?= site_url("Laporan/print_lap_bkb_slip_bkb"); ?>/' + NO_REF + '/' + skb + '/' + bag + '/' + tgl1 + '/' + tgl2 + '/' + id);
         }
 
         function printLPBSlipClick(noref, refpo) {

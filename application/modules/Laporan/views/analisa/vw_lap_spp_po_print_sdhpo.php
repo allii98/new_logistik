@@ -99,13 +99,12 @@
                     <td colspan="3">Tidak ada data</td>
                     <td colspan="10">Tidak ada data</td>
                 </tr>
-
                 <?php } else {
-                $no = 1;
+                $nomer = 1;
                 if (isset($ppo)) {
                     foreach ($ppo as $d) { ?>
                         <tr style="background-color: #d6d6c2;">
-                            <td><?= $no++ ?></td>
+                            <td><?= $nomer++ ?></td>
                             <td><?= $d->noppo ?></td>
                             <td><?= $d->noreftxt ?></td>
                             <td colspan="2"><?= date_format(date_create($d->tglppo), "d/m/Y"); ?></td>

@@ -1057,6 +1057,326 @@ class Laporan extends CI_Controller
 		// print_r($data);
 		// echo "</pre>";
 	}
+
+	function listLapSlipBKB()
+	{
+		$data = $this->M_laporan->get_list_lap_slip_bkb();
+		echo json_encode($data);
+	}
+
+	function print_lap_bkb_slip_bkb()
+	{
+		ini_set("pcre.backtrack_limit", "5000000");
+		// $NO_REF = $this->uri->segment(3);
+		// $NO_REF = str_replace('.', '/', $this->uri->segment(3));
+		$skb = str_replace('.', '/', $this->uri->segment(4));
+		$tgl1 = str_replace('-', '/', $this->uri->segment(6));
+		$tgl2 = str_replace('-', '/', $this->uri->segment(7));
+		$bag = $this->uri->segment(5);
+		$id = $this->uri->segment(8);
+		$bag = str_replace('-', '&', $bag);
+		$bag = str_replace('.', ' ', $bag);
+		// $query = "SELECT * FROM stockkeluar WHERE NO_REF = '$NO_REF' AND skb='$skb' ";
+		// $data['slip_bkb'] = $this->db_logistik_pt->query($query)->row();
+		$data['stockkeluar'] = $this->db_logistik_pt->get_where('stockkeluar', array('id' => $id, 'SKBTXT' => $skb))->row();
+		$data['keluarbrgitem'] = $this->db_logistik_pt->get_where('keluarbrgitem', array('SKBTXT' => $skb, 'NO_REF' => $data['stockkeluar']->NO_REF))->result();
+
+		$data['bag'] =  $this->uri->segment(5);
+		$data['tgl1'] = $tgl1;
+		$data['tgl2'] = $tgl2;
+
+		$data['no_bkb'] = $skb;
+		$data['id'] = $id;
+
+		$data['urut'] = $this->M_laporan->urut_cetak($data['stockkeluar']->NO_REF);
+
+		$noref = $data['stockkeluar']->NO_REF;
+		$this->qrcode($skb, $id, $noref);
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'setAutoTopMargin' => 'stretch',
+			'orientation' => 'P'
+		]);
+
+		$lokasibuatbkb = substr($noref, 0, 3);
+		switch ($lokasibuatbkb) {
+			case 'PST': // HO
+				$lokasibkb = "HO";
+				break;
+			case 'ROM': // RO
+				$lokasibkb = "RO";
+				break;
+			case 'FAC': // PKS
+				$lokasibkb = "PKS";
+				break;
+			case 'EST': // SITE
+				$lokasibkb = "SITE";
+				break;
+			default:
+				break;
+		}
+
+		// $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+		$mpdf->SetHTMLHeader('
+                            <table width="100%" border="0" align="center">
+                                <tr>
+                                    <td rowspan="2" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
+                                    <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $lokasibkb . ')</td>
+                                </tr>
+                                <!--tr>
+                                    <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                    </td>
+                                </tr-->
+                            </table>
+                            <hr style="width:100%;margin:0px;">
+                            ');
+		// $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+		$html = $this->load->view('lapBKb/v_print', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function qrcode($no_bkb, $id, $noref)
+	{
+		$this->load->library('ciqrcode');
+		// header("Content-Type: image/png");
+
+		$config['cacheable']    = false; //boolean, the default is true
+		$config['cachedir']     = './assets/'; //string, the default is application/cache/
+		$config['errorlog']     = './assets/'; //string, the default is application/logs/
+		$config['imagedir']     = './assets/qrcode/bkb/'; //direktori penyimpanan qr code
+		$config['quality']      = true; //boolean, the default is true
+		$config['size']         = '1024'; //interger, the default is 1024
+		$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+		$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+		$this->ciqrcode->initialize($config);
+
+		$image_name = $id . '_' . $no_bkb . '.png'; //buat name dari qr code
+
+		// $params['data'] = site_url('bkb/cetak/'.$no_bkb.'/'.$id); //data yang akan di jadikan QR CODE
+		$params['data'] = $noref; //data yang akan di jadikan QR CODE
+		$params['level'] = 'H'; //H=High
+		$params['size'] = 10;
+		$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
+		$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+	}
+
+
+	function print_lap_bkb_per_brg()
+	{
+		ini_set("pcre.backtrack_limit", "5000000");
+		$lokasi = $this->uri->segment(3);
+		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
+
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+		$bagian = $this->uri->segment(10);
+		if ($bagian == "HRD.-.UMUM") $bagian = "UMUM.-.HRD";
+		$bagian = str_replace('-', '&', $bagian);
+		$bagian = str_replace('.', ' ', $bagian);
+
+		if ($bagian == 'Semua') {
+			$query = "SELECT DISTINCT a.kodebar, a.nabar, a.satuan, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND  a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev = '$lokasi'";
+		} else {
+			$query = "SELECT DISTINCT a.kodebar, a.nabar, a.satuan, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND  a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev = '$lokasi' AND b.bag ='" . $bagian . "'";
+		}
+
+		$data['bkb_brg'] = $this->db_logistik_pt->query($query)->result();
+		$data['tgl1'] = $tanggal1;
+		$data['tgl2'] = $tanggal2;
+		$data['lokasi'] = $lokasi;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_brg', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
+	function print_lap_bkb_per_tgl()
+	{
+		ini_set("pcre.backtrack_limit", "50000000");
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+		$tgl1 = str_replace('.', '-', $this->uri->segment(4));
+		$tgl2 = str_replace('.', '-', $this->uri->segment(5));
+
+		$tgl14 = date_format(date_create($tgl1), 'Y-m-d');
+		$tgl15 = date_format(date_create($tgl2), 'Y-m-d');
+		$bag = $this->uri->segment(6);
+
+		if ($bag == 'Semua') {
+		} else {
+			// $q_bag = "AND b.bag = '$bag'";
+			// $query = "SELECT DISTINCT tgl FROM keluarbrgitem WHERE tgl BETWEEN '$tgl14' AND '$tgl15' AND kode_dev ='$lokasi' AND batal = '0' AND b.bag = '$bag'";
+		}
+
+
+		$query = "SELECT DISTINCT tgl FROM keluarbrgitem WHERE tgl BETWEEN '$tgl14' AND '$tgl15' AND kode_dev ='$lokasi' AND batal = '0'";
+
+		$data['p_tgl'] = $this->db_logistik_pt->query($query)->result();
+		$data['lokasi'] = $lokasi;
+		$data['tgl1'] = str_replace('.', '/', $this->uri->segment(4));
+		$data['tgl2'] = str_replace('.', '/', $this->uri->segment(5));
+		$data['bag'] = $bag;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_tgl', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_bkb_per_bgn_rinci_tgl()
+	{
+		set_time_limit(0);
+		ini_set('memory_limit', '20000M');
+		ini_set("pcre.backtrack_limit", "50000000");
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+		$tanggal1 = $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(5);
+		$p1 = date_format(date_create(str_replace('.', '-', $tanggal1)), 'Y-m-d');
+		$p2 = date_format(date_create(str_replace('.', '-', $tanggal2)), 'Y-m-d');
+		$bagian = $this->uri->segment(6);
+		if ($bagian == 'HRD.-.UMUM') $bagian = 'UMUM.-.HRD';
+		$bagian = str_replace('.', ' ', $bagian);
+		$bagian = str_replace('-', '&', $bagian);
+		if ($bagian == 'Semua') {
+			$q_bag = '';
+		} else {
+			$q_bag = "AND bag = '$bagian'";
+		}
+		if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") {
+			$query = "SELECT DISTINCT(afd) FROM keluarbrgitem WHERE pt LIKE '%$lokasi%' AND periode BETWEEN '$p1' AND '$p2' AND batal = '0'";
+			$data['bt'] = $this->db_logistik_pt->query($query)->result();
+		} else {
+			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE pt LIKE '%$lok%' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0'";
+			$data['bt'] = $this->db_logistik_pt->query($query)->result();
+		}
+
+		$data['p1'] = $p1;
+		$data['p2'] = $p2;
+		$data['pt'] = $lok;
+		$data['bagian'] = $bagian;
+		$dev = $this->uri->segment(7);
+		$dev = str_replace('._', '(', $dev);
+		$dev = str_replace('_.', ')', $dev);
+		$dev = str_replace('-', ' ', $dev);
+		$data['dev'] = $dev;
+		$data['periode'] = str_replace('.', '/', $tanggal1) . ' - ' . str_replace('.', '/', $tanggal2);
+
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_bgn_rinci_tgl', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_bkb_per_bgn_grp_brg()
+	{
+		set_time_limit(0);
+		ini_set('memory_limit', '200000M');
+		ini_set('pcre.backtrack_limit', '50000000');
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+		$tanggal1 = $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(5);
+		$p1 = date_format(date_create(str_replace('.', '-', $tanggal1)), 'Y-m-d');
+		$p2 = date_format(date_create(str_replace('.', '-', $tanggal2)), 'Y-m-d');
+		$bagian = $this->uri->segment(6);
+		if ($bagian == 'HRD.-.UMUM') $bagian = 'UMUM.-.HRD';
+		$bagian = str_replace('.', ' ', $bagian);
+		$bagian = str_replace('-', '&', $bagian);
+		if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") {
+			$query = "SELECT DISTINCT(afd) FROM keluarbrgitem WHERE pt LIKE '%$lok%' AND periode BETWEEN '$p1' AND '$p2' AND batal = '0'";
+			$data['bt'] = $this->db_logistik_pt->query($query)->result();
+		} else {
+			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE pt LIKE '%$lok%' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0'";
+			$data['bt'] = $this->db_logistik_pt->query($query)->result();
+		}
+		$data['p1'] = $p1;
+		$data['p2'] = $p2;
+		$data['pt'] = $lok;
+		$data['bagian'] = $bagian;
+		$dev = $this->uri->segment(7);
+		$dev = str_replace('._', '(', $dev);
+		$dev = str_replace('_.', ')', $dev);
+		$dev = str_replace('-', ' ', $dev);
+		$data['dev'] = $dev;
+		$data['periode'] = str_replace('.', '/', $tanggal1) . ' - ' . str_replace('.', '/', $tanggal2);
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_bgn_grp_brg', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
 }
 
 /* End of file Laporan.php */
