@@ -12,6 +12,7 @@ class Login extends CI_Controller
         $this->load->model('M_login');
         $db_pt = check_db_pt();
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
+        $this->db_logistik_center = $this->load->database('db_logistik_center', true);
     }
 
     public function index()
@@ -19,7 +20,9 @@ class Login extends CI_Controller
         if ($this->session->userdata('id_user')) {
             redirect('Home');
         } else {
-            $this->load->view('v_login');
+            $data['pt'] = $this->db_logistik_center->get('tb_pt')->result_array();
+
+            $this->load->view('v_login', $data);
         }
     }
 
@@ -40,28 +43,28 @@ class Login extends CI_Controller
 
                 switch ($user->status_lokasi) {
                     case 'HO':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'));
+                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'HO'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'RO':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '02'));
+                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'RO'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'SITE':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '06'));
+                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'SITE'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'PKS':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '03'));
+                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'PKS'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;

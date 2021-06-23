@@ -72,7 +72,7 @@
                     <input type="hidden" id="hidden_id_ppo">
                 </div>
 
-                <fieldset style="display: none;" class="border p-1" id="fieldset_bbm">
+                <fieldset style="display: none;" class="border mb-1 p-1" id="fieldset_bbm">
                     <div class="row div_form_bbm mt-0">
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
@@ -115,6 +115,36 @@
                                 </label>
                                 <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
                             </div>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="border mb-1 p-1">
+                    <div class="row">
+                        <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
+                            <input type="checkbox" name="idle" class="custom-control-input" id="customCheck1">
+                            <label class="custom-control-label" for="customCheck1">Mutasi?</label>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-control form-control-sm" id="devisi">
+                                <option value="" selected disabled>Pilih PT Tujuan</option>
+                                <?php
+                                foreach ($devisi as $d) : { ?>
+                                        <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
+                                <?php }
+                                endforeach;
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-control form-control-sm" id="devisi">
+                                <option value="" selected disabled>Pilih Divisi Tujuan</option>
+                                <?php
+                                foreach ($devisi as $d) : { ?>
+                                        <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
+                                <?php }
+                                endforeach;
+                                ?>
+                            </select>
                         </div>
                     </div>
                 </fieldset>

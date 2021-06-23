@@ -75,10 +75,14 @@
                                 <div class="form-group mb-3">
                                     <label for="emailaddress" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT</label>
                                     <select class="form-control" id="pt_alias" name="pt_alias">
-                                        <option value="MSAL" selected="" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT MULIA SAWIT AGRO LESTARI</option>
-                                        <option value="MAPA" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT MITRA AGRO PERSADA ABADI</option>
-                                        <option value="PSAM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT PERSADA SEJAHTERA AGRO MAKMUR</option>
-                                        <option value="PEAK" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT PERSADA ERA AGRO KENCANA</option>
+                                        <?php
+                                        foreach ($pt as $d) : {
+                                        ?>
+                                                <option value="<?= $d['alias']; ?>"><?= $d['nama_pt']; ?></option>
+                                        <?php
+                                            }
+                                        endforeach;
+                                        ?>
                                     </select>
                                 </div>
 
