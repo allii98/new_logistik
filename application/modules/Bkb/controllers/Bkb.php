@@ -16,7 +16,14 @@ class Bkb extends CI_Controller
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
 
-        // $this->db_logistik = $this->load->database('db_logistik', TRUE);
+        // DB logistik CENTER
+        $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
+
+        //DB MSAL
+        $this->db_logistik_msal = $this->load->database('db_logistik_msal', TRUE);
+
+        //DB MAPA
+        $this->db_logistik_mapa = $this->load->database('db_logistik_mapa', TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -41,6 +48,8 @@ class Bkb extends CI_Controller
         $data = [
             'title' => 'Bukti Keluar Barang'
         ];
+
+        $data['pt_mutasi'] = $this->db_logistik_center->get('tb_pt')->result_array();
 
         $this->template->load('template', 'v_inputbkb', $data);
     }
@@ -201,8 +210,14 @@ class Bkb extends CI_Controller
             $skb = $this->input->post('hidden_no_bkb');
         }
 
+        $mutasi = $this->input->post('mutasi');
+
         if (empty($this->input->post('hidden_no_ref_bkb'))) {
-            $no_ref = $text1 . "-BKB/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
+            if ($mutasi == '1') {
+                $no_ref = $text1 . "-BKB-MUTASI/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
+            } else {
+                $no_ref = $text1 . "-BKB/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
+            }
         } else {
             $no_ref = $this->input->post('hidden_no_ref_bkb');
         }
@@ -237,16 +252,42 @@ class Bkb extends CI_Controller
 
         $kode_dev = $this->input->post('kode_dev');
 
+        $kode_devisi_mutasi = $this->input->post('kode_devisi_mutasi');
+
+        $kode_pt_mutasi = $this->input->post('kode_pt_mutasi');
+
+        // Mencari alias di PT tujuan untuk mencari nama devisi tujuan
+        $data['get_pt_mutasi'] = $this->db_logistik_center->get_where('tb_pt', ['kode_pt' => $kode_pt_mutasi])->row_array();
+
+        //jika pt Tujuan
+        if ($data['get_pt_mutasi']['alias'] == 'MSAL') {
+            $data['get_devisi_mutasi'] = $this->db_logistik_msal->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
+        } elseif ($data['get_pt_mutasi']['alias'] == 'MAPA') {
+            $data['get_devisi_mutasi'] = $this->db_logistik_mapa->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
+        }
+
         // $datastockkeluar['id']              = $id_stockkeluar;
         $datastockkeluar['tgl']             = $tgl . " 00:00:00";
         $datastockkeluar['skb']             = $skb;
         $datastockkeluar['SKBTXT']          = $skb;
         $datastockkeluar['NO_REF']          = $no_ref;
         $datastockkeluar['nobpb']           = $nobpb;
-        $datastockkeluar['mutasi']          = NULL;
-        $datastockkeluar['no_mutasi']       = NULL;
-        $datastockkeluar['tujuan_mutasi']   = NULL;
-        $datastockkeluar['kode_pt_mutasi']  = NULL;
+        // jika mutasi
+        if ($mutasi == '1') {
+            $datastockkeluar['mutasi']              = '1';
+            $datastockkeluar['no_mutasi']           = $no_ref;
+            $datastockkeluar['kode_devisi_mutasi']  = $kode_devisi_mutasi;
+            $datastockkeluar['devisi_mutasi']       = $data['get_devisi_mutasi']['PT'];
+            $datastockkeluar['kode_pt_mutasi']      = $kode_pt_mutasi;
+            $datastockkeluar['pt_mutasi']           = $data['get_pt_mutasi']['nama_pt'];
+        } else {
+            $datastockkeluar['mutasi']              = NULL;
+            $datastockkeluar['no_mutasi']           = NULL;
+            $datastockkeluar['kode_devisi_mutasi']  = NULL;
+            $datastockkeluar['devisi_mutasi']       = NULL;
+            $datastockkeluar['kode_pt_mutasi']      = NULL;
+            $datastockkeluar['pt_mutasi']           = NULL;
+        }
         $datastockkeluar['tglinput']        = date('Y-m-d H:i:s');
         $datastockkeluar['txttgl']          = $txttgl;
         $datastockkeluar['thn']             = $thn;
@@ -257,6 +298,8 @@ class Bkb extends CI_Controller
         $datastockkeluar['alokasi']         = $alokasi;
         $datastockkeluar['pt']              = $this->session->userdata('pt');
         $datastockkeluar['kode']            = $this->session->userdata('kode_pt');
+        $datastockkeluar['devisi']          = $this->input->post('devisi');
+        $datastockkeluar['kode_dev']        = $kode_dev;
         $datastockkeluar['kpd']             = $this->input->post('txt_diberikan_kpd');
         $datastockkeluar['keperluan']       = $this->input->post('txt_untuk_keperluan');
         $datastockkeluar['bag']             = $this->input->post('cmb_bagian');
@@ -307,23 +350,31 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['posting']       = '0';
 
         if (empty($this->input->post('hidden_no_bkb'))) {
+            if ($mutasi == '1') {
+                $savedatastockkeluar_mutasi = $this->M_bkb->savedatastockkeluar_mutasi($datastockkeluar);
+                $savedatakeluarbrgitem_mutasi = $this->M_bkb->savedatakeluarbrgitem_mutasi($datakeluarbrgitem);
+            }
+            $savedatastockkeluar_mutasi = NULL;
+            $savedatakeluarbrgitem_mutasi = NULL;
             $savedatastockkeluar = $this->M_bkb->savedatastockkeluar($datastockkeluar);
             $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
         } else {
+            $savedatastockkeluar_mutasi = NULL;
+            $savedatakeluarbrgitem_mutasi = NULL;
             $savedatastockkeluar = NULL;
+
+            if ($mutasi == '1') {
+                $savedatakeluarbrgitem_mutasi = $this->M_bkb->savedatakeluarbrgitem_mutasi($datakeluarbrgitem);
+            }
+
             $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
         }
-
-        // blm ada kebun nya!
 
         // update stockawal_bulanan_devisi
         $result_update_stockawal_bulanan_devisi = $this->M_bkb->update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev);
 
         //update stokawal
         $result_update_qtykeluar = $this->M_bkb->update_stockawal($kodebar, $qty2, $txtperiode);
-
-        //update saldo akhir nilai stok awal
-        // $result_update_saldoakhir_nilai = $this->M_bkb->update_saldoakhir_nilai($kodebar, $txtperiode);
 
         $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
@@ -334,7 +385,8 @@ class Bkb extends CI_Controller
             'datastockkeluar' => $savedatastockkeluar,
             'datakeluarbrgitem' => $savedatakeluarbrgitem,
             'result_update_qtykeluar' => $result_update_qtykeluar,
-            // 'result_update_saldoakhir_nilai' => $result_update_saldoakhir_nilai,
+            'savedatastockkeluar_mutasi' => $savedatastockkeluar_mutasi,
+            'savedatakeluarbrgitem_mutasi' => $savedatakeluarbrgitem_mutasi,
             'no_bkb' => $skb,
             'noref_bkb' => $no_ref,
             'id_stockkeluar' => $id_stockkeluar,
@@ -551,6 +603,24 @@ class Bkb extends CI_Controller
         $qty_rev = $this->input->post('qty_rev');
 
         $output = $this->M_approval_rev_qty->ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar, $qty_rev);
+
+        echo json_encode($output);
+    }
+
+    public function get_devisi_mutasi()
+    {
+        $kode_pt = $this->input->post('kode_pt');
+
+        $data['pt_mutasi'] = $this->db_logistik_center->get_where('tb_pt', ['kode_pt' => $kode_pt])->row_array();
+
+        if ($data['pt_mutasi']['alias'] == 'MSAL') {
+            $output = $this->db_logistik_msal->get('tb_devisi')->result_array();
+        } elseif ($data['pt_mutasi']['alias'] == 'MAPA') {
+            $output = $this->db_logistik_mapa->get('tb_devisi')->result_array();
+        }
+        //pt peak dan psam belum!!
+
+        // $output = $this->M_bkb->get_devisi_mutasi($kode_pt);
 
         echo json_encode($output);
     }

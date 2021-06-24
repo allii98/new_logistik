@@ -16,7 +16,7 @@
                                 <label for="example-select">
                                     <font face="Verdana" size="2.5">Tgl BKB*</font>
                                 </label>
-                                <input id="tgl_bkb" name="tgl_bkb" type="date" value="<?= date('Y-m-d') ?>" class="form-control" required="required" placeholder="Diberikan kepada">
+                                <input id="tgl_bkb_txt" name="tgl_bkb_txt" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off" class="form-control" required="required">
                             </div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                                 <div class="row col-lg-10 col-md-10 col-11 ml-0">
                                     <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
                                     </select> -->
-                                    <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()">
+                                    <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()" placeholder="pilih no BPB">
                                     <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
                                     <input type="hidden" id="txt_no_bpb">
                                 </div>
@@ -121,29 +121,25 @@
                 <fieldset class="border mb-1 p-1">
                     <div class="row">
                         <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
-                            <input type="checkbox" name="idle" class="custom-control-input" id="customCheck1">
-                            <label class="custom-control-label" for="customCheck1">Mutasi?</label>
+                            <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
+                            <label class="custom-control-label" for="cexbox_mutasi">Mutasi?</label>
+                            <input type="hidden" id="hidden_cekbox_mutasi" value="">
                         </div>
-                        <div class="col-2">
-                            <select class="form-control form-control-sm" id="devisi">
+                        <div class="col-3">
+                            <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled>
                                 <option value="" selected disabled>Pilih PT Tujuan</option>
                                 <?php
-                                foreach ($devisi as $d) : { ?>
-                                        <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
-                                <?php }
+                                foreach ($pt_mutasi as $d) : {
+                                ?>
+                                        <option value="<?= $d['kode_pt']; ?>"><?= $d['kode_pt'] . ' - ' . $d['nama_pt']; ?></option>
+                                <?php
+                                    }
                                 endforeach;
                                 ?>
                             </select>
                         </div>
-                        <div class="col-2">
-                            <select class="form-control form-control-sm" id="devisi">
-                                <option value="" selected disabled>Pilih Divisi Tujuan</option>
-                                <?php
-                                foreach ($devisi as $d) : { ?>
-                                        <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
-                                <?php }
-                                endforeach;
-                                ?>
+                        <div class="col-3">
+                            <select class="form-control form-control-sm" id="devisi_mutasi" disabled>
                             </select>
                         </div>
                     </div>
@@ -642,6 +638,11 @@
     function saveRinciClick(n) {
 
         var hidden_kode_barang = $('#hidden_kode_barang_' + n).val();
+        var kode_dev = $('#hidden_kode_dev').val();
+
+        if ($('#cexbox_mutasi').is(':checked')) {
+            var cexbox_mutasi = '1';
+        }
 
         $.ajax({
             type: "POST",
@@ -661,7 +662,7 @@
             },
 
             data: {
-                txt_tgl_bkb: $('#tgl_bkb').val(),
+                txt_tgl_bkb: $('#tgl_bkb_txt').val(),
                 txt_no_bpb: $('#txt_no_bpb').val(),
                 hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
                 hidden_no_bkb: $('#hidden_no_bkb').val(),
@@ -669,8 +670,11 @@
                 txt_diberikan_kpd: $('#diberikan_kpd').val(),
                 txt_untuk_keperluan: $('#utk_keperluan').val(),
                 cmb_bagian: $('#bagian').val(),
-                kode_dev: $('#hidden_kode_dev').val(),
+                kode_dev: kode_dev,
                 devisi: $('#hidden_devisi').val(),
+                mutasi: cexbox_mutasi,
+                kode_pt_mutasi: $('#pt_mutasi').val(),
+                kode_devisi_mutasi: $('#devisi_mutasi').val(),
 
                 hidden_kode_barang: $('#hidden_kode_barang_' + n).val(),
                 hidden_nama_barang: $('#txt_barang_' + n).val(),
@@ -716,7 +720,14 @@
 
                 $('#hidden_id_bkb').val(data.id_stockkeluar);
 
-                //stok BPB itu di ambil berdasarkan periode atau semua periode???
+                $('#pt_mutasi').prop('disabled', true);
+                $('#devisi_mutasi').prop('disabled', true);
+                $('#cexbox_mutasi').attr('disabled', true);
+                $('#tgl_bkb_txt').attr('disabled', true);
+                $('#cari_bpb').attr('disabled', true);
+                $('#diberikan_kpd').attr('disabled', true);
+                $('#utk_keperluan').attr('disabled', true);
+                $('#camera').attr('disabled', true);
 
             }
         });
@@ -806,6 +817,57 @@
         } else if (req_rev_qty == 0) {
             swal('Tidak boleh 0!');
             $('#req_rev_qty').val('');
+        }
+    }
+
+    function pt_mutasi() {
+        var kode_pt = $('#pt_mutasi').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bkb/get_devisi_mutasi'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'kode_pt': kode_pt
+            },
+            success: function(data) {
+
+                // console.log(data);
+                var html = '';
+                var i;
+                html += '<option disabled selected>Pilih Devisi</option>';
+                for (i = 0; i < data.length; i++) {
+                    html += '<option value=' + data[i].kodetxt + '>' + data[i].kodetxt + ' - ' + data[i].PT + '</option>';
+                }
+                $('#devisi_mutasi').html(html);
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
+    }
+
+    function cekbox_mutasi() {
+
+        var mutasi = $('#hidden_cekbox_mutasi').val();
+
+        if (mutasi == 0) {
+
+            $('#hidden_cekbox_mutasi').val('1');
+
+            $('#pt_mutasi').removeAttr('disabled');
+            $('#devisi_mutasi').removeAttr('disabled');
+
+        } else if (mutasi == 1) {
+
+            $('#pt_mutasi').prop('disabled', true);
+            $('#devisi_mutasi').prop('disabled', true);
+
+            $('#hidden_cekbox_mutasi').val('');
+            $('#pt_mutasi').val('');
+            $('#devisi_mutasi').val('');
         }
     }
 </script>

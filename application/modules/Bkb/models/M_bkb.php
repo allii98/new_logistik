@@ -129,6 +129,16 @@ class M_bkb extends CI_Model
         return $this->db_logistik_pt->insert('stockkeluar', $data);
     }
 
+    public function savedatastockkeluar_mutasi($data)
+    {
+        return $this->db_logistik_center->insert('tb_mutasi', $data);
+    }
+
+    public function savedatakeluarbrgitem_mutasi($data)
+    {
+        return $this->db_logistik_center->insert('tb_mutasi_item', $data);
+    }
+
     public function savedatakeluarbrgitem($data, $kodebar, $norefbpb, $no_ref_bkb)
     {
         $this->db_logistik_pt->insert('keluarbrgitem', $data);
@@ -186,21 +196,6 @@ class M_bkb extends CI_Model
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         return $this->db_logistik_pt->update('stockawal');
     }
-
-    // public function update_saldoakhir_nilai($kodebar, $txtperiode)
-    // {
-    //     $this->db_logistik_pt->select('QTY_MASUK, QTY_KELUAR, nilai_masuk');
-    //     $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-    //     $this->db_logistik_pt->from('stockawal');
-    //     $qty = $this->db_logistik_pt->get()->row_array();
-
-    //     $subtotal = $qty['QTY_MASUK'] - $qty['QTY_KELUAR'];
-    //     $saldo_akhir_nilai = $subtotal * $qty['nilai_masuk'];
-
-    //     $this->db_logistik_pt->set('saldoakhir_nilai', $saldo_akhir_nilai);
-    //     $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-    //     return $this->db_logistik_pt->update('stockawal');
-    // }
 
     public function urut_cetak($no_ref_bkb)
     {
