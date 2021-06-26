@@ -591,7 +591,8 @@ date_default_timezone_set('Asia/Jakarta');
                 txt_satuan: $('#txt_satuan_' + n).text(),
                 hidden_grup: $('#hidden_grup_' + n).text(),
                 txt_qty: $('#txt_qty_' + n).val(),
-                txt_ket_rinci: $('#txt_ket_rinci_' + n).val()
+                txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                mutasi: '0'
             },
 
             success: function(data) {

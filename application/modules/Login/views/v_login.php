@@ -74,11 +74,11 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="emailaddress" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT</label>
-                                    <select class="form-control" id="pt_alias" name="pt_alias">
+                                    <select class="form-control" id="kode_pt" name="kode_pt">
                                         <?php
                                         foreach ($pt as $d) : {
                                         ?>
-                                                <option value="<?= $d['alias']; ?>"><?= $d['nama_pt']; ?></option>
+                                                <option value="<?= $d['kode_pt']; ?>"><?= $d['nama_pt']; ?></option>
                                         <?php
                                             }
                                         endforeach;

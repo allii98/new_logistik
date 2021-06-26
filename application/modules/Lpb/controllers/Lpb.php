@@ -10,12 +10,15 @@ class Lpb extends CI_Controller
 
         $this->load->model('M_lpb');
         $this->load->model('M_item_lpb');
+        $this->load->model('M_lpb_mutasi');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
 
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
+
+        $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -139,9 +142,9 @@ class Lpb extends CI_Controller
         $nopo = $this->input->post('txt_no_po');
         $refpo = $this->input->post('txt_ref_po');
 
-        if ($refpo == "MUTASI") {
-            $refpo = $this->input->post('hidden_no_ref_bkb');
-        }
+        // if ($refpo == "MUTASI") {
+        //     $refpo = $this->input->post('hidden_no_ref_bkb');
+        // }
 
         $lokasibuatpo = substr($refpo, 0, 3);
         switch ($lokasibuatpo) {
@@ -266,7 +269,9 @@ class Lpb extends CI_Controller
             $asset = "0";
         }
 
-        if (!empty($_POST['txt_bkb_dari_pt'])) {
+        $mutasi_ga = $this->input->post('mutasi');
+
+        if ($mutasi_ga == '1') {
             $mutasi = "1";
         } else {
             $mutasi = "0";
@@ -307,9 +312,9 @@ class Lpb extends CI_Controller
 
         $no_po = $this->input->post('txt_no_po');
         $no_ref_po = $this->input->post('txt_ref_po');
-        if ($no_ref_po == 'MUTASI') {
-            $no_ref_po = str_replace("BKB", "MUTASI", $refpo);
-        }
+        // if ($no_ref_po == 'MUTASI') {
+        //     $no_ref_po = str_replace("BKB", "MUTASI", $refpo);
+        // }
 
         $kode_devisi = $this->input->post('devisi');
         $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
@@ -919,5 +924,58 @@ class Lpb extends CI_Controller
         $params['size'] = 10;
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
         $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+    }
+
+    // FOR LPB MUTASI PREN
+    public function lpb_mutasi()
+    {
+        $data['title'] = 'LPB Mutasi';
+        $this->template->load('template', 'v_lpbInput_mutasi', $data);
+    }
+
+    public function select2_get_bkb_mutasi()
+    {
+        $data = $this->M_lpb_mutasi->get_bkb_mutasi();
+        echo json_encode($data);
+    }
+
+    public function get_data_mutasi_item()
+    {
+        $noref = $this->input->post('noref');
+        $result = $this->M_lpb_mutasi->get_data_mutasi_item($noref);
+        echo json_encode($result);
+    }
+
+    public function sum_qty_mutasi()
+    {
+        $kodebar = $this->input->post('kodebar');
+        $noref = $this->input->post('noref');
+        $qty = $this->input->post('qty');
+        $result = $this->M_lpb_mutasi->sumqtymutasi($kodebar, $noref, $qty);
+        echo json_encode($result);
+    }
+
+    function sum_sisa_qty_mutasi()
+    {
+        $no_ref_po = $this->input->post('no_ref_po');
+        $kodebar = $this->input->post('kodebar');
+
+        //QTY PO nya di ambil
+        $query_qty_mutasi = "SELECT qty FROM tb_mutasi_item WHERE NO_REF = '$no_ref_po' AND kodebartxt = '$kodebar'";
+        $data_qty_mutasi = $this->db_logistik_center->query($query_qty_mutasi)->row();
+
+        //sum qty LPB nya udah berapa
+        $query_sisa_qty_lpb = "SELECT SUM(qty) as qty_lpb FROM masukitem WHERE BATAL<>1 AND kodebartxt = '$kodebar' AND refpo = '$no_ref_po'";
+        $data_sisa_qty_lpb = $this->db_logistik_pt->query($query_sisa_qty_lpb)->row();
+
+        $sisa_qty_po = $data_qty_mutasi->qty - $data_sisa_qty_lpb->qty_lpb;
+
+        if ($sisa_qty_po == 0) {
+            $this->M_lpb_mutasi->updateStatusItemLpb_mutasi($no_ref_po, $kodebar);
+        } else {
+            $this->M_lpb_mutasi->updateStatusItemLpb2_mutasi($no_ref_po, $kodebar);
+        }
+
+        echo json_encode($sisa_qty_po);
     }
 }

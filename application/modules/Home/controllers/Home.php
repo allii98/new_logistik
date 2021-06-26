@@ -21,6 +21,8 @@ class Home extends CI_Controller
 
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
 
+        $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
+
         $this->load->model('M_home');
     }
 
@@ -40,13 +42,43 @@ class Home extends CI_Controller
 
         $this->template->load('template', 'dashboard', $data);
     }
-    public function tes()
+
+    public function get_data_mutasi()
     {
-        $data = [
-            'tittle' => "Dashboard"
-        ];
-        $this->template->load('template', 'v_contohTabel', $data);
+        $list = $this->M_home->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+
+            $row = array();
+            $row[] = $no;
+            $row[] = date('d-m-Y', strtotime($field->tgl));;
+            $row[] = $field->NO_REF;
+            $row[] = $field->pt;
+            $row[] = $field->devisi;
+            $row[] = $field->pt_mutasi;
+            $row[] = $field->devisi_mutasi;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_home->count_all(),
+            "recordsFiltered" => $this->M_home->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
     }
+    // public function tes()
+    // {
+    //     $data = [
+    //         'tittle' => "Dashboard"
+    //     ];
+    //     $this->template->load('template', 'v_contohTabel', $data);
+    // }
 }
 
 /* End of file Home.php */

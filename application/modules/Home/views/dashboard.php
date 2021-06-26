@@ -166,59 +166,40 @@
                     if ($pt_login == 'MSAL') {
                         echo "<div class='external-event bg-primary text-right p-0 mt-0' data-class=bg-info'>";
                         echo "<marquee>";
-                        echo "<h3 class='text-white'>PT . MULIA SAWIT AGRO LESTARI</h3>";
+                        echo "<h3 class='text-white'>PT. MULIA SAWIT AGRO LESTARI</h3>";
                         echo "</marquee>";
                         echo "</div>";
                     } elseif ($pt_login == 'MAPA') {
                         echo "<div class='external-event bg-success text-right p-0 mt-0' data-class=bg-info'>";
                         echo "<marquee>";
-                        echo "<h3 class='text-white'>PT . MITRA AGRO PERSADA ABADI</h3>";
+                        echo "<h3 class='text-white'>PT. MITRA AGRO PERSADA ABADI</h3>";
                         echo "</marquee>";
                         echo "</div>";
                     }
                     ?>
-                    <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small>
-                    <h4 class="header-title mb-0">Mutasi Masuk</h4>
+                    <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small><br>
+                    <div class="row justify-content-between ml-0 mr-0 mt-2">
+                        <h4 class="header-title mb-0">Mutasi Masuk</h4>
+                        <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a>
+                    </div>
 
-                    <div id="cardCollpase5" class="collapse pt-3 show">
-                        <div class="table-responsive">
-                            <table class="table table-sm table-hover table-bordered m-0" id="myTable">
-                                <thead class="thead-light">
-                                    <tr>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl BKB</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BKB</th>
-                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref. BKB</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT. KERENG PANGI PERDANA (ESTATE)</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">xs</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT. KERENG PANGI PERDANA (ESTATE)</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT. KERENG PANGI PERDANA (ESTATE)</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT. KERENG PANGI PERDANA (ESTATE)</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                        <td style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">x</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div> <!-- end table responsive-->
+                    <div id="cardCollpase5" class="collapse mt-2 show">
+                        <table class="table table-sm table-hover table-bordered m-0" id="tabel_mutasi">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl BKB</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref. BKB</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;PT</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;Divisi</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT&nbsp;Tujuan</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi&nbsp;Tujuan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
                     </div> <!-- collapsed end -->
                 </div> <!-- end card-body -->
             </div> <!-- end card-->
@@ -229,17 +210,40 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        tableDetailMutasi();
-        $('.dataTables_filter').addClass('pull-left');
-    });
+    // $(document).ready(function() {
+    //     $('#tabel_mutasi').DataTable({
+    //         "dom": 'lfrtip',
+    //         "select": false,
+    //         "bLengthChange": false,
+    //         "scrollCollapse": false,
+    //     });
+    //     // $('.dataTables_filter').addClass('pull-left');
+    // });
 
-    function tableDetailMutasi() {
-        $('#myTable').DataTable({
-            "dom": 'lfrtip',
-            "select": false,
-            "bLengthChange": false,
-            "scrollCollapse": false,
+    var table;
+    $(document).ready(function() {
+
+        //datatables
+        table = $('#tabel_mutasi').DataTable({
+
+            "scrollY": 400,
+            "scrollX": true,
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+
+            "ajax": {
+                "url": "<?php echo site_url('Home/get_data_mutasi') ?>",
+                "type": "POST"
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+
         });
-    };
+
+    });
 </script>

@@ -37,7 +37,10 @@ class Login extends CI_Controller
             $get_username = $this->db_logistik_pt->get_where('user', array('username' => $username));
             $user = $get_username->row();
 
-            $pt_alias = $this->input->post('pt_alias');
+            $kode_pt_login = $this->input->post('kode_pt');
+
+            // cari kode pt di tb central
+            $data['get_tb_pt_central'] = $this->db_logistik_center->get_where('tb_pt', array('kode_pt' => $kode_pt_login))->row_array();
 
             if ($get_username->num_rows() > 0 && password_verify($password, $user->password)) {
 
@@ -89,8 +92,8 @@ class Login extends CI_Controller
                     'id_user' => $user->no,
                     'user' => $user->nama,
                     'status_lokasi' => $user->status_lokasi, //HO, RO, SITE, PKS
-                    // 'app_pt' => 'MSAL', //MSAL, MAPA, PSAM, PEAK
-                    'app_pt' => $pt_alias,
+                    'kode_pt_login' => $kode_pt_login,
+                    'app_pt' => $data['get_tb_pt_central']['alias'], //MSAL, MAPA, PSAM, PEAK
                     'kode_pt' => $kode_pt,
                     'pt' => $nama_pt,
                     'level' => $user->level,
