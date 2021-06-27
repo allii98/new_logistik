@@ -428,7 +428,7 @@ class Lpb extends CI_Controller
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         }
 
-        $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
+        $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi);
 
         // insert stockawal_bulanan_devisi jika bulan ini barang blm ada maka insert else update
         $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
@@ -536,11 +536,16 @@ class Lpb extends CI_Controller
         $this->db_logistik_pt->insert('stockawal', $data_input_stock_awal);
     }
 
-    function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $qty, $devisi, $kode_dev)
+    function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $qty, $devisi, $kode_dev, $mutasi)
     {
-        $harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar);
 
-        $saldoakhir_nilai = $harga_item_po['harga'] * $qty;
+        if ($mutasi == '1') {
+            $harga_item_po = $this->M_lpb->cari_harga_mutasi($no_ref_po, $kodebar);
+            $saldoakhir_nilai = $harga_item_po * $qty;
+        } else {
+            $harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar);
+            $saldoakhir_nilai = $harga_item_po['harga'] * $qty;
+        }
 
         $data_insert_stok_harian = [
             'pt' => $this->session->userdata('pt'),

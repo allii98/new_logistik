@@ -249,6 +249,17 @@ class M_lpb extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
+    public function cari_harga_mutasi($no_ref_po, $kodebar)
+    {
+        $this->db_logistik_center->select('qty2, nilai_item');
+        $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $no_ref_po]);
+        $this->db_logistik_center->from('tb_mutasi_item');
+        $data = $this->db_logistik_center->get()->row_array();
+
+        $harga = $data['nilai_item'] / $data['qty2'];
+        return $harga;
+    }
+
     public function saveStokAwalHarian($data)
     {
         return $this->db_logistik_pt->insert('stockawal_harian', $data);
@@ -506,7 +517,11 @@ class M_lpb extends CI_Model
     {
         $this->db_logistik_pt->set('status_item_lpb', 0);
         $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
-        return $this->db_logistik_pt->update('item_po');
+        $this->db_logistik_pt->update('item_po');
+
+        $this->db_logistik_pt->set('status_lpb', 0);
+        $this->db_logistik_pt->where('noreftxt', $no_ref_po);
+        $this->db_logistik_pt->update('po');
     }
 
     public function urut_cetak($no_lpb)

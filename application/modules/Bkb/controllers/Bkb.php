@@ -266,6 +266,9 @@ class Bkb extends CI_Controller
             $data['get_devisi_mutasi'] = $this->db_logistik_mapa->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
         }
 
+        // mendapatkan nilai rata2
+        $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);
+
         // $datastockkeluar['id']              = $id_stockkeluar;
         $datastockkeluar['tgl']             = $tgl . " 00:00:00";
         $datastockkeluar['skb']             = $skb;
@@ -327,6 +330,7 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['blok']          = $blok;
         $datakeluarbrgitem['qty']           = $qty;
         $datakeluarbrgitem['qty2']          = $qty2;
+        $datakeluarbrgitem['nilai_item']    = $nilai_keluarbrgitem;
         $datakeluarbrgitem['tgl']           = $tgl . " 00:00:00";
         $datakeluarbrgitem['skb']           = $skb;
         $datakeluarbrgitem['SKBTXT']        = $skb;

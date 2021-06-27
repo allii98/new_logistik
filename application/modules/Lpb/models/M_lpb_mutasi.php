@@ -74,7 +74,11 @@ class M_lpb_mutasi extends CI_Model
       {
             $this->db_logistik_center->set('status_item_lpb', 0);
             $this->db_logistik_center->where(['NO_REF' => $no_ref_po, 'kodebar' => $kodebar]);
-            return $this->db_logistik_center->update('tb_mutasi_item');
+            $this->db_logistik_center->update('tb_mutasi_item');
+
+            $this->db_logistik_center->set('status_lpb', NULL);
+            $this->db_logistik_center->where('NO_REF', $no_ref_po);
+            $this->db_logistik_center->update('tb_mutasi');
       }
 }
 

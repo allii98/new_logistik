@@ -21,7 +21,7 @@ class M_home extends CI_Model
         $kode_pt_login = $this->session->userdata('kode_pt_login');
         $role_user = $this->session->userdata('user');
 
-        $this->db_logistik_center->where(['USER' => $role_user, 'kode_pt_mutasi' => $kode_pt_login]);
+        $this->db_logistik_center->where(['USER' => $role_user, 'kode_pt_mutasi' => $kode_pt_login, 'status_lpb' => NULL]);
         $this->db_logistik_center->from($this->table);
 
         $i = 0;

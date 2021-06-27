@@ -225,6 +225,20 @@ class M_bkb extends CI_Model
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
         return $this->db_logistik_pt->update('stockawal_bulanan_devisi');
     }
+
+    public function get_rata2_nilai($kodebar, $qty2, $txtperiode)
+    {
+        $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+        $this->db_logistik_pt->from('stockawal');
+        $stock_awal = $this->db_logistik_pt->get()->row_array();
+
+        $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
+
+        $jumlah_nilai =  $qty2 * $rata2;
+
+        return $jumlah_nilai;
+    }
 }
 
 /* End of file ModelName.php */
