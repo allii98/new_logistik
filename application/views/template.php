@@ -133,6 +133,9 @@
                                             <a href="<?= base_url('Lpb/input'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input LPB</font>
                                             </a>
+                                            <a href="<?= base_url('Lpb/lpb_mutasi'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input LPB Mutasi</font>
+                                            </a>
                                             <a href="<?= base_url('Lpb'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data LPB</font>
                                             </a>
@@ -437,11 +440,20 @@
                             <label class="col-3 col-form-label">
                                 <font face="Verdana" size="2">Periode *</font>
                             </label>
-                            <div class="col-12">
-                                <input type="text" class="form-control" id="txt_periode" name="txt_periode">
-                                <input type="hidden" class="form-control" id="tanggalawal" name="tanggalawalPO">
-                                <input type="hidden" class="form-control" id="tanggalakhir" name="tanggalakhirPO">
+                            <div class="row">
+                                <div class="col-5">
+                                    <input type="text" class="form-control" id="tglAwalSPP" name="tglAwalSPP">
+
+                                </div>
+                                <div class="col-1">
+                                    <label class="control-label">s/d</label>
+                                </div>
+                                <div class="col-5">
+                                    <input type="text" class="form-control" id="tglAkhirSPP" name="tglAkhirSPP">
+
+                                </div>
                             </div>
+
                         </div>
 
                         <div class="form-group">&nbsp;&nbsp;&nbsp;
@@ -456,6 +468,17 @@
                             <div class="radio radio-info form-check-inline">
                                 <input type="radio" value="setujui" id="rbt_setujui" name="rbt_pilihan">
                                 <label for="rbt_setujui">Disetujui</label>
+                            </div>
+
+                        </div>
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="sppi" id="rbt_sppi" name="rbt_pilihan">
+                                <label for="rbt_sppi">SPPI</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="sppa" id="rbt_sppa" name="rbt_pilihan">
+                                <label for="rbt_sppa">SPPA</label>
                             </div>
                         </div>
 
@@ -1634,7 +1657,7 @@
             $('#modalLapSpp').modal('show');
             $('#cmb_company').empty();
             pilihDevisi();
-            pilihTanggal();
+            pilihTanggalSpp();
             pilihBagian();
         }
 
@@ -1737,24 +1760,27 @@
             });
         }
 
-        function pilihTanggal() {
+        function pilihTanggalSpp() {
+
             var d = new Date();
             var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
             var today1 = (25) + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
-            $('#tanggalawalPO').val(today);
-            $('#tanggalakhirPO').val(today1);
-            $('#txt_periode').val(today + ' - ' +
-                today1);
+            $('#tglAwalSPP').val(today);
+            $('#tglAkhirSPP').val(today1);
 
-            $('#txt_periode').daterangepicker({
+            $('#tglAwalSPP').daterangepicker({
                 locale: {
                     format: 'DD/MM/YYYY'
                 },
-            }, function(start, end, label) {
-                $('#tanggalawal').val(start.format('DD/MM/YYYY'));
-                $('#tanggalakhir').val(end.format('DD/MM/YYYY'));
-
-                // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+                singleDatePicker: !0,
+                singleClasses: "picker_1"
+            });
+            $('#tglAkhirSPP').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+                singleDatePicker: !0,
+                singleClasses: "picker_1"
             });
         }
 
@@ -1819,6 +1845,7 @@
 
                 // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
             });
+
         }
 
         function tampilkanpo() {
@@ -1902,71 +1929,193 @@
 
 
         function tampilkanspp() {
-            $('#modalListLapSPP').modal('show');
             var cmb_devisi = $('#cmb_devisi').val();
             var lap_cmb_bagian = $('#lap_cmb_bagian').val();
-            var txt_periode = $('#tanggalawalPO').val();
-            var txt_periode1 = $('#tanggalakhirPO').val();
+            var tglAwalSPP = $('#tglAwalSPP').val();
+            var tglAkhirSPP = $('#tglAkhirSPP').val();
             var rbt_pilihan = $("input[name='rbt_pilihan']:checked").val();
 
-            $('#tableListLapSPP').DataTable().destroy();
-            $('#tableListLapSPP').DataTable({
-                "paging": true,
-                "scrollY": false,
-                "scrollX": false,
-                "searching": true,
-                "select": false,
-                "bLengthChange": true,
-                "scrollCollapse": true,
-                "bPaginate": true,
-                "bInfo": true,
-                "bSort": true,
-                "processing": true,
-                "serverSide": true,
-                "stateSave": true,
-                "order": [],
-                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    // console.log(aData);
-                },
-                "ajax": {
-                    "url": "<?php echo site_url('Laporan/tampilkan_spp'); ?>",
-                    "type": "POST",
-                    "data": {
-                        "cmb_devisi": cmb_devisi,
-                        "lap_cmb_bagian": lap_cmb_bagian,
-                        "txt_periode": txt_periode,
-                        "txt_periode1": txt_periode1,
-                        "rbt_pilihan": rbt_pilihan
+            if (rbt_pilihan == 'semua') {
+                $('#modalListLapSPP').modal('show');
+                $('#tableListLapSPP').DataTable().destroy();
+                $('#tableListLapSPP').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+
+                    "ajax": {
+                        "url": "<?php echo site_url('Laporan/tampilkan_spp') ?>",
+                        "type": "POST",
+                        "data": {
+                            cmb_devisi: cmb_devisi,
+                            lap_cmb_bagian: lap_cmb_bagian,
+                            tglAwalSPP: tglAwalSPP,
+                            tglAkhirSPP: tglAkhirSPP,
+                        },
+
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
                     },
-                    "error": function(request) {
-                        console.log(request.responseText);
+                    "columnDefs ": [{
+                        "targets": [0],
+                        "orderable": false,
+
+                    }, ],
+                    "language": {
+                        "infoFiltered": ""
                     }
-                },
-                "columns": [{
-                        "width": "5%"
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapSPP').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+            } else if (rbt_pilihan == 'proses') {
+                $('#modalListLapSPP').modal('show');
+                $('#tableListLapSPP').DataTable().destroy();
+                $('#tableListLapSPP').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+
+                    "ajax": {
+                        "url": "<?php echo site_url('Laporan/tampilkan_spp_prosess') ?>",
+                        "type": "POST",
+                        "data": {
+                            cmb_devisi: cmb_devisi,
+                            lap_cmb_bagian: lap_cmb_bagian,
+                            tglAwalSPP: tglAwalSPP,
+                            tglAkhirSPP: tglAkhirSPP,
+                        },
+
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
                     },
-                    {
-                        "width": "25%"
+                    "columnDefs ": [{
+                        "targets": [0],
+                        "orderable": false,
+
+                    }, ],
+                    "language": {
+                        "infoFiltered": ""
+                    }
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapSPP').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+            } else if (rbt_pilihan == 'setujui') {
+                $('#modalListLapSPP').modal('show');
+                $('#tableListLapSPP').DataTable().destroy();
+                $('#tableListLapSPP').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+
+                    "ajax": {
+                        "url": "<?php echo site_url('Laporan/tampilkan_spp_disetujui') ?>",
+                        "type": "POST",
+                        "data": {
+                            cmb_devisi: cmb_devisi,
+                            lap_cmb_bagian: lap_cmb_bagian,
+                            tglAwalSPP: tglAwalSPP,
+                            tglAkhirSPP: tglAkhirSPP,
+                        },
+
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
                     },
-                    {
-                        "width": "10%"
+                    "columnDefs ": [{
+                        "targets": [0],
+                        "orderable": false,
+
+                    }, ],
+                    "language": {
+                        "infoFiltered": ""
+                    }
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapSPP').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+
+            } else if (rbt_pilihan == 'sppi') {
+                $('#modalListLapSPP').modal('show');
+                $('#tableListLapSPP').DataTable().destroy();
+                $('#tableListLapSPP').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+
+                    "ajax": {
+                        "url": "<?php echo site_url('Laporan/tampilkan_spp_sppi') ?>",
+                        "type": "POST",
+                        "data": {
+                            cmb_devisi: cmb_devisi,
+                            lap_cmb_bagian: lap_cmb_bagian,
+                            tglAwalSPP: tglAwalSPP,
+                            tglAkhirSPP: tglAkhirSPP,
+                        },
+
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
                     },
-                    {
-                        "width": "10%"
+                    "columnDefs ": [{
+                        "targets": [0],
+                        "orderable": false,
+
+                    }, ],
+                    "language": {
+                        "infoFiltered": ""
+                    }
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapSPP').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+
+            } else if (rbt_pilihan == 'sppa') {
+                $('#modalListLapSPP').modal('show');
+                $('#tableListLapSPP').DataTable().destroy();
+                $('#tableListLapSPP').DataTable({
+                    "processing": true,
+                    "serverSide": true,
+                    "order": [],
+
+                    "ajax": {
+                        "url": "<?php echo site_url('Laporan/tampilkan_spp_sppa') ?>",
+                        "type": "POST",
+                        "data": {
+                            cmb_devisi: cmb_devisi,
+                            lap_cmb_bagian: lap_cmb_bagian,
+                            tglAwalSPP: tglAwalSPP,
+                            tglAkhirSPP: tglAkhirSPP,
+                        },
+
+                        "error": function(request) {
+                            console.log(request.responseText);
+                        }
                     },
-                    {
-                        "width": "10%"
-                    },
-                ],
-                "columnDefs": [{
-                    "targets": [],
-                    "orderable": false,
-                }, ],
-            });
-            var rel = setInterval(function() {
-                $('#tableListLapSPP').DataTable().ajax.reload();
-                clearInterval(rel);
-            }, 100);
+                    "columnDefs ": [{
+                        "targets": [0],
+                        "orderable": false,
+
+                    }, ],
+                    "language": {
+                        "infoFiltered": ""
+                    }
+                });
+                var rel = setInterval(function() {
+                    $('#tableListLapSPP').DataTable().ajax.reload();
+                    clearInterval(rel);
+                }, 100);
+
+            }
+
+
         }
 
         function tampilkan_bkb() {

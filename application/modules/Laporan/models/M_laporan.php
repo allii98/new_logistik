@@ -81,48 +81,49 @@ class M_laporan extends CI_Model
         $no = $start + 1;
 
         $cmb_devisi = $this->input->post('cmb_devisi');
-        $cmb_bagian = $this->input->post('cmb_bagian');
-        $txt_periode = str_replace('/', '-', $this->input->post('txt_periode'));
-        $txt_periode1 = str_replace('/', '-', $this->input->post('txt_periode1'));
+        $lap_cmb_bagian = $this->input->post('lap_cmb_bagian');
+        $txt_periode = str_replace('/', '-', $this->input->post('tanggalawalSPP'));
+        $txt_periode1 = str_replace('/', '-', $this->input->post('tanggalakhirSPP'));
         $txt_periode = date_format(date_create($txt_periode), "Y/m/d");
         $txt_periode1 = date_format(date_create($txt_periode1), "Y/m/d");
 
         $rbt_pilihan = $this->input->post('rbt_pilihan');
 
         $tgl = "AND tglppo BETWEEN '$txt_periode' AND '$txt_periode1'";
+        $dev1 = "AND kode_dev = '$cmb_devisi'";
 
-        switch ($cmb_devisi) {
-            case '01':
-                $dev = "AND lokasi = 'HO'";
-                $dev1 = "AND kodept = '01'";
-                break;
-            case '02':
-                $dev = "AND lokasi = 'RO'";
-                $dev1 = "AND kodept = '02'";
-                break;
-            case '03':
-                $dev = "AND lokasi = 'PKS'";
-                $dev1 = "AND kodept = '03'";
-                break;
-            case '06':
-                $dev = "AND noreftxt LIKE '%EST-%'";
-                $dev1 = "AND kodept = '06'";
-                break;
-            case '07':
-                $dev = "AND noreftxt LIKE '%EST2%'";
-                $dev1 = "AND kodept = '07'";
-                break;
-            default:
-                $dev = "";
-                $dev1 = "";
-                break;
-        }
+        // switch ($cmb_devisi) {
+        //     case '01':
+        //         $dev = "AND lokasi = 'HO'";
+        //         $dev1 = "AND kode_dev = '01'";
+        //         break;
+        //     case '02':
+        //         $dev = "AND lokasi = 'RO'";
+        //         $dev1 = "AND kode_dev = '02'";
+        //         break;
+        //     case '03':
+        //         $dev = "AND lokasi = 'PKS'";
+        //         $dev1 = "AND kode_dev = '03'";
+        //         break;
+        //     case '06':
+        //         $dev = "AND noreftxt LIKE '%EST-%'";
+        //         $dev1 = "AND kode_dev = '06'";
+        //         break;
+        //     case '07':
+        //         $dev = "AND noreftxt LIKE '%EST2%'";
+        //         $dev1 = "AND kode_dev = '07'";
+        //         break;
+        //     default:
+        //         $dev = "";
+        //         $dev1 = " ";
+        //         break;
+        // }
 
-        if ($cmb_bagian == "Semua") {
+        if ($lap_cmb_bagian == "Semua") {
             $bag = "";
         } else {
-            if ($cmb_bagian == 'HRD & UMUM') $cmb_bagian = 'UMUM & HRD';
-            $bag = "AND namadept = '" . $cmb_bagian . "'";
+            if ($lap_cmb_bagian == 'HRD & UMUM') $lap_cmb_bagian = 'UMUM & HRD';
+            $bag = "AND namadept = '" . $lap_cmb_bagian . "'";
         }
 
         switch ($rbt_pilihan) {
@@ -138,6 +139,9 @@ class M_laporan extends CI_Model
             case 'sppa':
                 $rbt = "AND noreftxt LIKE '%SPPA%'";
                 break;
+            case 'semua':
+                $rbt = "";
+                break;
             default:
                 $rbt = "";
                 break;
@@ -145,15 +149,15 @@ class M_laporan extends CI_Model
 
         if (!empty($_POST['search']['value'])) {
             $keyword = $_POST['search']['value'];
-            $query = "SELECT noreftxt, tglppo, namadept, kodedept FROM ppo 
-            			WHERE po IN ('0', '1') $dev1 $bag $tgl $rbt AND (noreftxt LIKE '%$keyword%' 
+            $query = "SELECT noreftxt, tglppo, namadept, po, status, kode_dev FROM ppo 
+            			WHERE tglppo BETWEEN '$txt_periode' AND '$txt_periode1' AND (noreftxt LIKE '%$keyword%' 
                         OR tglppo LIKE '%$keyword%'
                         OR namadept LIKE '%$keyword%')
             			ORDER BY id DESC";
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         } else {
-            $query = "SELECT noreftxt, tglppo, namadept, kodedept FROM ppo WHERE po IN ('0', '1') $dev1 $bag $tgl $rbt ORDER BY tglppo DESC";
+            $query = "SELECT noreftxt, tglppo, namadept, po, status, kode_dev FROM ppo WHERE tglppo BETWEEN '$txt_periode' AND '$txt_periode1' ORDER BY tglppo DESC";
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         }

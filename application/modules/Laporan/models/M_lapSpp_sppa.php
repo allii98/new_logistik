@@ -2,8 +2,9 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_lapSpp extends CI_Model
+class M_lapSpp_sppa extends CI_Model
 {
+
     // Start Data Table Server Side
     var $table = 'ppo'; //nama tabel dari database
     var $column_order = array(null, 'id', 'tglppo', 'namadept', 'noreftxt', 'kodedept'); //field yang ada di table user
@@ -15,7 +16,6 @@ class M_lapSpp extends CI_Model
         parent::__construct();
         $this->load->database();
     }
-
 
     public function data_spp($cmb_devisi, $lap_cmb_bagian, $tglAwal, $tglAkhir)
     {
@@ -41,12 +41,14 @@ class M_lapSpp extends CI_Model
             if ($bagian == 'Semua') {
                 # code...
                 $this->db_logistik_pt->from('ppo')
-                    ->select('noreftxt, namadept, po, status,kodedept, kode_dev, date(tglppo) as tglppo')
+                    ->select('noreftxt, namadept, po, status,kodedept,jenis, kode_dev, date(tglppo) as tglppo')
+                    ->where("jenis", "SPPA")
                     ->where("date(tglppo) >=", $tglAwal)
                     ->where("date(tglppo) <=", $tglAkhir);
             } else {
                 $this->db_logistik_pt->from('ppo')
-                    ->select('noreftxt, namadept, po, status,kodedept, kode_dev, date(tglppo) as tglppo')
+                    ->select('noreftxt, namadept, po, status,kodedept,jenis, kode_dev, date(tglppo) as tglppo')
+                    ->where("jenis", "SPPA")
                     ->where("kodedept", $bagian)
                     ->where("date(tglppo) >=", $tglAwal)
                     ->where("date(tglppo) <=", $tglAkhir);
@@ -56,13 +58,15 @@ class M_lapSpp extends CI_Model
             if ($bagian == 'Semua') {
                 # code...
                 $this->db_logistik_pt->from('ppo')
-                    ->select('noreftxt, namadept, po, status,kodedept, kode_dev, date(tglppo) as tglppo')
+                    ->select('noreftxt, namadept, po, status,kodedept,jenis, kode_dev, date(tglppo) as tglppo')
+                    ->where("jenis", "SPPA")
                     ->where("kode_dev", $devisi)
                     ->where("date(tglppo) >=", $tglAwal)
                     ->where("date(tglppo) <=", $tglAkhir);
             } else {
                 $this->db_logistik_pt->from('ppo')
-                    ->select('noreftxt, namadept, po, status,kodedept, kode_dev, date(tglppo) as tglppo')
+                    ->select('noreftxt, namadept, po, status,kodedept,jenis, kode_dev, date(tglppo) as tglppo')
+                    ->where("jenis", "SPPA")
                     ->where("kode_dev", $devisi)
                     ->where("kodedept", $bagian)
                     ->where("date(tglppo) >=", $tglAwal)
@@ -127,4 +131,4 @@ class M_lapSpp extends CI_Model
 
 }
 
-/* End of file M_lapSpp.php */
+/* End of file M_lapSpp_sppi.php */

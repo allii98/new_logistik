@@ -13,6 +13,10 @@ class Laporan extends CI_Controller
 
 		$this->load->model('M_laporan');
 		$this->load->model('M_lapSpp');
+		$this->load->model('M_lapSpp_proses');
+		$this->load->model('M_lapSpp_disetujui');
+		$this->load->model('M_lapSpp_sppi');
+		$this->load->model('M_lapSpp_sppa');
 
 		if (!$this->session->userdata('id_user')) {
 			$pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -49,24 +53,244 @@ class Laporan extends CI_Controller
 	}
 	function tampilkan_spp()
 	{
-		$data = $this->M_laporan->get_data_spp();
-		echo json_encode($data);
+		$cmb_devisi = $this->input->post('cmb_devisi');
+		// $cmb_devisi = '06';
+		$lap_cmb_bagian = $this->input->post('lap_cmb_bagian');
+
+		$txt_periode = str_replace('/', '-', $this->input->post('tglAwalSPP'));
+		$txt_periode1 = str_replace('/', '-', $this->input->post('tglAkhirSPP'));
+
+		$tglAwal = date_format(date_create($txt_periode), "Y/m/d");
+		$tglAkhir = date_format(date_create($txt_periode1), "Y/m/d");
+
+		$this->M_lapSpp->data_spp($cmb_devisi, $lap_cmb_bagian, $tglAwal, $tglAkhir);
+
+		$list = $this->M_lapSpp->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+
+		foreach ($list as $hasil) {
+			$no++;
+			$noref = "'" . $hasil->noreftxt . "'";
+			$noref = str_replace("/", ".", $noref);
+			$tgl = date_create($hasil->tglppo);
+
+			$row   = array();
+
+			$row[] =  $no . ".";
+			$row[] = date_format($tgl, 'd/m/Y');
+			$row[] = $hasil->namadept;
+			$row[] = $hasil->noreftxt;
+			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $this->M_lapSpp->count_all(),
+			"recordsFiltered" => $this->M_lapSpp->count_filtered(),
+			"data" => $data,
+		);
+		//output dalam format JSON
+		echo json_encode($output);
+	}
+
+	public function tampilkan_spp_prosess()
+	{
+		$cmb_devisi = $this->input->post('cmb_devisi');
+		// $cmb_devisi = '06';
+		$lap_cmb_bagian = $this->input->post('lap_cmb_bagian');
+
+		$txt_periode = str_replace('/', '-', $this->input->post('tglAwalSPP'));
+		$txt_periode1 = str_replace('/', '-', $this->input->post('tglAkhirSPP'));
+
+		$tglAwal = date_format(date_create($txt_periode), "Y/m/d");
+		$tglAkhir = date_format(date_create($txt_periode1), "Y/m/d");
+
+		$this->M_lapSpp_proses->data_spp($cmb_devisi, $lap_cmb_bagian, $tglAwal, $tglAkhir);
+
+		$list = $this->M_lapSpp_proses->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+
+		foreach ($list as $hasil) {
+			$no++;
+			$noref = "'" . $hasil->noreftxt . "'";
+			$noref = str_replace("/", ".", $noref);
+			$tgl = date_create($hasil->tglppo);
+
+			$row   = array();
+
+			$row[] =  $no . ".";
+			$row[] = date_format($tgl, 'd/m/Y');
+			$row[] = $hasil->namadept;
+			$row[] = $hasil->noreftxt;
+			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $this->M_lapSpp_proses->count_all(),
+			"recordsFiltered" => $this->M_lapSpp_proses->count_filtered(),
+			"data" => $data,
+		);
+		//output dalam format JSON
+		echo json_encode($output);
+	}
+
+	public function tampilkan_spp_disetujui()
+	{
+		$cmb_devisi = $this->input->post('cmb_devisi');
+		// $cmb_devisi = '06';
+		$lap_cmb_bagian = $this->input->post('lap_cmb_bagian');
+
+		$txt_periode = str_replace('/', '-', $this->input->post('tglAwalSPP'));
+		$txt_periode1 = str_replace('/', '-', $this->input->post('tglAkhirSPP'));
+
+		$tglAwal = date_format(date_create($txt_periode), "Y/m/d");
+		$tglAkhir = date_format(date_create($txt_periode1), "Y/m/d");
+
+		$this->M_lapSpp_disetujui->data_spp($cmb_devisi, $lap_cmb_bagian, $tglAwal, $tglAkhir);
+
+		$list = $this->M_lapSpp_disetujui->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+
+		foreach ($list as $hasil) {
+			$no++;
+			$noref = "'" . $hasil->noreftxt . "'";
+			$noref = str_replace("/", ".", $noref);
+			$tgl = date_create($hasil->tglppo);
+
+			$row   = array();
+
+			$row[] =  $no . ".";
+			$row[] = date_format($tgl, 'd/m/Y');
+			$row[] = $hasil->namadept;
+			$row[] = $hasil->noreftxt;
+			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $this->M_lapSpp_disetujui->count_all(),
+			"recordsFiltered" => $this->M_lapSpp_disetujui->count_filtered(),
+			"data" => $data,
+		);
+		//output dalam format JSON
+		echo json_encode($output);
+	}
+
+	public function tampilkan_spp_sppi()
+	{
+		$cmb_devisi = $this->input->post('cmb_devisi');
+		// $cmb_devisi = '06';
+		$lap_cmb_bagian = $this->input->post('lap_cmb_bagian');
+
+		$txt_periode = str_replace('/', '-', $this->input->post('tglAwalSPP'));
+		$txt_periode1 = str_replace('/', '-', $this->input->post('tglAkhirSPP'));
+
+		$tglAwal = date_format(date_create($txt_periode), "Y/m/d");
+		$tglAkhir = date_format(date_create($txt_periode1), "Y/m/d");
+
+		$this->M_lapSpp_sppi->data_spp($cmb_devisi, $lap_cmb_bagian, $tglAwal, $tglAkhir);
+
+		$list = $this->M_lapSpp_sppi->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+
+		foreach ($list as $hasil) {
+			$no++;
+			$noref = "'" . $hasil->noreftxt . "'";
+			$noref = str_replace("/", ".", $noref);
+			$tgl = date_create($hasil->tglppo);
+
+			$row   = array();
+
+			$row[] =  $no . ".";
+			$row[] = date_format($tgl, 'd/m/Y');
+			$row[] = $hasil->namadept;
+			$row[] = $hasil->noreftxt;
+			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $this->M_lapSpp_sppi->count_all(),
+			"recordsFiltered" => $this->M_lapSpp_sppi->count_filtered(),
+			"data" => $data,
+		);
+		//output dalam format JSON
+		echo json_encode($output);
+	}
+
+	public function tampilkan_spp_sppa()
+	{
+		$cmb_devisi = $this->input->post('cmb_devisi');
+		// $cmb_devisi = '06';
+		$lap_cmb_bagian = $this->input->post('lap_cmb_bagian');
+
+		$txt_periode = str_replace('/', '-', $this->input->post('tglAwalSPP'));
+		$txt_periode1 = str_replace('/', '-', $this->input->post('tglAkhirSPP'));
+
+		$tglAwal = date_format(date_create($txt_periode), "Y/m/d");
+		$tglAkhir = date_format(date_create($txt_periode1), "Y/m/d");
+
+		$this->M_lapSpp_sppa->data_spp($cmb_devisi, $lap_cmb_bagian, $tglAwal, $tglAkhir);
+
+		$list = $this->M_lapSpp_sppa->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+
+		foreach ($list as $hasil) {
+			$no++;
+			$noref = "'" . $hasil->noreftxt . "'";
+			$noref = str_replace("/", ".", $noref);
+			$tgl = date_create($hasil->tglppo);
+
+			$row   = array();
+
+			$row[] =  $no . ".";
+			$row[] = date_format($tgl, 'd/m/Y');
+			$row[] = $hasil->namadept;
+			$row[] = $hasil->noreftxt;
+			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $this->M_lapSpp_sppa->count_all(),
+			"recordsFiltered" => $this->M_lapSpp_sppa->count_filtered(),
+			"data" => $data,
+		);
+		//output dalam format JSON
+		echo json_encode($output);
 	}
 
 
 	public function index()
 	{
+		echo "Hello mau kemana ";
 	}
 
 	function cari_devisi()
 	{
 		$lokasi = $this->session->userdata('status_lokasi');
 		if ($lokasi == 'SITE') {
-			$query = "SELECT PT, kodetxt FROM pt_copy WHERE kodetxt IN ('06', '07') ORDER BY kodetxt ASC";
+			$query = "SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt IN ('06', '07') ORDER BY kodetxt ASC";
 		} else if ($lokasi == 'HO') {
-			$query = "SELECT PT, kodetxt FROM pt_copy ORDER BY kodetxt ASC";
+			$query = "SELECT PT, kodetxt FROM tb_devisi ORDER BY kodetxt ASC";
 		} else {
-			$query = "SELECT PT, kodetxt FROM pt_copy WHERE PT LIKE '%$lokasi%' ORDER BY kodetxt ASC";
+			$query = "SELECT PT, kodetxt FROM tb_devisi WHERE PT LIKE '%$lokasi%' ORDER BY kodetxt ASC";
 		}
 
 		$data = $this->db_logistik_pt->query($query)->result();
