@@ -11,6 +11,7 @@ class Lpb extends CI_Controller
         $this->load->model('M_lpb');
         $this->load->model('M_item_lpb');
         $this->load->model('M_lpb_mutasi');
+        $this->load->model('M_detail_lpb');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -53,7 +54,7 @@ class Lpb extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
-                        data-ttg="' . $field->ttg . '"
+                        data-noref="' . $field->noref . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
                         <button class="btn btn-primary btn-xs fa fa-undo" id="undo_lpb" name="undo_lpb"
@@ -750,11 +751,42 @@ class Lpb extends CI_Controller
 
     public function get_detail_item_lpb()
     {
-        $no_lpb = $this->input->post('no_lpb');
+        $noref = $this->input->post('noref');
+        // $noreftxt = $this->M_detail_lpb->get_noref($noref);
+        $this->M_detail_lpb->getWhere($noref);
+        $list = $this->M_detail_lpb->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            $no++;
+            $row = array();
+            $row[] = $no . ".";
 
-        $data = $this->M_lpb->get_detail_item_lpb($no_lpb);
+            $qty_po = $this->M_lpb->getQtyPo($d->kodebar, $d->refpo);
 
-        echo json_encode($data);
+            $sisa_lpb = $this->M_lpb->get_sisa_lpb($d->kodebar, $d->refpo);
+
+            $result_sisa_lpb = $qty_po['qty'] - $sisa_lpb->qty_lpb;
+
+            $row[] = $d->kodebar;
+            $row[] = $d->nabar;
+            $row[] = $d->satuan;
+            $row[] = $d->grp;
+            $row[] = $qty_po['qty'];
+            $row[] = $d->qty;
+            $row[] = $result_sisa_lpb;
+            $row[] = $d->ket;
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_detail_lpb->count_all(),
+            "recordsFiltered" => $this->M_detail_lpb->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
     }
 
     public function edit_lpb($no_lpb, $nopo)
@@ -793,24 +825,23 @@ class Lpb extends CI_Controller
         echo json_encode($result);
     }
 
-    public function getQtyPo()
-    {
-        $kodebar = $this->input->post('kodebar');
-        $nopo = $this->input->post('nopo');
+    // public function getQtyPo($kodebar, $noref)
+    // {
+    //     // $kodebar = $this->input->post('kodebar');
+    //     // $nopo = $this->input->post('nopo');
 
-        $result = $this->M_lpb->getQtyPo($kodebar, $nopo);
-        echo json_encode($result);
-    }
+    //     return $this->M_lpb->getQtyPo($kodebar, $noref);
+    // }
 
-    public function getSisaLpb()
-    {
-        $qty_po = $this->input->post('qty_po');
-        $kodebar = $this->input->post('kodebar');
-        $no_lpb = $this->input->post('no_lpb');
+    // public function getSisaLpb()
+    // {
+    //     $qty_po = $this->input->post('qty_po');
+    //     $kodebar = $this->input->post('kodebar');
+    //     $no_lpb = $this->input->post('no_lpb');
 
-        $result = $this->M_lpb->getSisaLpb($qty_po, $kodebar, $no_lpb);
-        echo json_encode($result);
-    }
+    //     $result = $this->M_lpb->getSisaLpb($qty_po, $kodebar, $no_lpb);
+    //     echo json_encode($result);
+    // }
 
     function cetak()
     {

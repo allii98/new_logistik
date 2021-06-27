@@ -170,13 +170,13 @@ class M_lpb extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
-    public function get_detail_item_lpb($no_lpb)
-    {
-        $this->db_logistik_pt->select('kodebar, nabar, satuan, grp, ket, qty, nopo');
-        $this->db_logistik_pt->from('masukitem');
-        $this->db_logistik_pt->where('ttg', $no_lpb);
-        return $this->db_logistik_pt->get()->result_array();
-    }
+    // public function get_detail_item_lpb($no_lpb)
+    // {
+    //     $this->db_logistik_pt->select('kodebar, nabar, satuan, grp, ket, qty, nopo');
+    //     $this->db_logistik_pt->from('masukitem');
+    //     $this->db_logistik_pt->where('ttg', $no_lpb);
+    //     return $this->db_logistik_pt->get()->result_array();
+    // }
 
     public function cari_lpb_edit($no_lpb, $nopo)
     {
@@ -222,24 +222,32 @@ class M_lpb extends CI_Model
         return $result;
     }
 
-    public function getQtyPo($kodebar, $nopo)
+    public function getQtyPo($kodebar, $noref)
     {
         $this->db_logistik_pt->select('qty');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'nopo' => $nopo]);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $noref]);
         $this->db_logistik_pt->from('item_po');
         return $this->db_logistik_pt->get()->row_array();
     }
 
-    public function getSisaLpb($qty_po, $kodebar, $no_lpb)
+    public function get_sisa_lpb($kodebar, $refpo)
     {
         $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
-        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'ttg' => $no_lpb]);
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $refpo]);
         $this->db_logistik_pt->from('masukitem');
-        $sumqty_lpb = $this->db_logistik_pt->get()->row();
-
-        $result = $qty_po - $sumqty_lpb->qty_lpb;
-        return $result;
+        return $this->db_logistik_pt->get()->row();
     }
+
+    // public function getSisaLpb($qty_po, $kodebar, $no_lpb)
+    // {
+    //     $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
+    //     $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'ttg' => $no_lpb]);
+    //     $this->db_logistik_pt->from('masukitem');
+    //     $sumqty_lpb = $this->db_logistik_pt->get()->row();
+
+    //     $result = $qty_po - $sumqty_lpb->qty_lpb;
+    //     return $result;
+    // }
 
     public function cari_harga_po($no_ref_po, $kodebar)
     {

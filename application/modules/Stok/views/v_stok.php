@@ -3,7 +3,7 @@
     <div class="col-md">
         <div class="widget-rounded-circle card-box">
             <div class="row justify-content-between">
-                <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Stock Awal</h4>
+                <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Stock Logistik PT. <?= $this->session->userdata('app_pt'); ?></h4>
                 <!-- <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button> -->
             </div>
             <hr>
