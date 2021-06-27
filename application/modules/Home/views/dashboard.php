@@ -35,7 +35,7 @@
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
 
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 ">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -56,7 +56,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 ">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -82,7 +82,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 ">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -103,7 +103,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 ">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -130,7 +130,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-md-6 ">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -182,25 +182,28 @@
                         <h4 class="header-title mb-0">Mutasi Masuk</h4>
                         <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a>
                     </div>
+                    <div class="col-12">
+                        <div class="table-responsive">
+                            <div id="cardCollpase5" class="collapse mt-2 show">
+                                <table class="table table-sm table-hover table-bordered m-0" id="tabel_mutasi">
+                                    <thead class="thead-light">
+                                        <tr>
+                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No</th>
+                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl BKB</th>
+                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref. BKB</th>
+                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;PT</th>
+                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;Divisi</th>
+                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT&nbsp;Tujuan</th>
+                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi&nbsp;Tujuan</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
 
-                    <div id="cardCollpase5" class="collapse mt-2 show">
-                        <table class="table table-sm table-hover table-bordered m-0" id="tabel_mutasi">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl BKB</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref. BKB</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;PT</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;Divisi</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT&nbsp;Tujuan</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi&nbsp;Tujuan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-                    </div> <!-- collapsed end -->
+                                    </tbody>
+                                </table>
+                            </div> <!-- collapsed end -->
+                        </div>
+                    </div>
                 </div> <!-- end card-body -->
             </div> <!-- end card-->
         </div>
@@ -226,13 +229,9 @@
         //datatables
         table = $('#tabel_mutasi').DataTable({
 
-            "scrollY": 400,
-            "scrollX": true,
-
             "processing": true,
             "serverSide": true,
             "order": [],
-
             "ajax": {
                 "url": "<?php echo site_url('Home/get_data_mutasi') ?>",
                 "type": "POST"
@@ -242,6 +241,9 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
+            "language": {
+                "infoFiltered": ""
+            }
 
         });
 
