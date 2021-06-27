@@ -13,6 +13,8 @@ class Login extends CI_Controller
         $db_pt = check_db_pt();
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_logistik_center = $this->load->database('db_logistik_center', true);
+        $this->db_logistik_msal = $this->load->database('db_logistik_msal', true);
+        $this->db_logistik_mapa = $this->load->database('db_logistik_mapa', true);
     }
 
     public function index()
@@ -34,40 +36,49 @@ class Login extends CI_Controller
             $password = $this->security->xss_clean($this->input->post('password'));
             $periode = $this->security->xss_clean($this->input->post('periode'));
 
-            $get_username = $this->db_logistik_pt->get_where('user', array('username' => $username));
-            $user = $get_username->row();
-
             $kode_pt_login = $this->input->post('kode_pt');
 
             // cari kode pt di tb central
             $data['get_tb_pt_central'] = $this->db_logistik_center->get_where('tb_pt', array('kode_pt' => $kode_pt_login))->row_array();
 
+            // membuka PT awal sebelum mendapatkan session PT
+            $pt_login = FALSE;
+            if ($data['get_tb_pt_central']['alias'] == 'MSAL') {
+                $pt_login = 'db_logistik_msal';
+            } else if ($data['get_tb_pt_central']['alias'] == 'MAPA') {
+                $pt_login = 'db_logistik_mapa';
+            }
+
+            $get_username = $this->$pt_login->get_where('user', array('username' => $username));
+            $user = $get_username->row();
+
+
             if ($get_username->num_rows() > 0 && password_verify($password, $user->password)) {
 
                 switch ($user->status_lokasi) {
                     case 'HO':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'HO'));
+                        $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'HO'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'RO':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'RO'));
+                        $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'RO'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'SITE':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'SITE'));
+                        $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'SITE'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'PKS':
-                        $get_pt = $this->db_logistik_pt->get_where('pt', array('lokasi' => 'PKS'));
+                        $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'PKS'));
                         $pt     = $get_pt->row();
 
                         $kode_pt = $pt->kodetxt;

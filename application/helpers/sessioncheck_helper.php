@@ -29,7 +29,7 @@ function check_db_pt()
 	$CI = &get_instance();
 	$session_db_pt = strtolower($CI->session->userdata('app_pt'));
 	if (empty($session_db_pt)) {
-		$db_pt = "msal";
+		$db_pt = "center";
 	} elseif ($session_db_pt == 'msal') {
 		$db_pt = 'msal';
 	} elseif ($session_db_pt == 'mapa') {

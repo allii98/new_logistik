@@ -692,7 +692,8 @@ date_default_timezone_set('Asia/Jakarta');
                 kode_dev: $('#devisi').val(),
                 nopo: no_po,
                 norefpo: no_ref_po,
-                kodebar: kodebar
+                kodebar: kodebar,
+                mutasi: '0'
             },
 
             success: function(data) {

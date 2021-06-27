@@ -423,10 +423,10 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->from('stockawal_harian');
         $sum_saldoakhir_qty = $this->db_logistik_pt->get()->row();
 
-        $this->db_logistik_pt->select_sum('nilai_masuk', 'nilaimasuk');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
-        $this->db_logistik_pt->from('stockawal_harian');
-        $sum_nilai_masuk = $this->db_logistik_pt->get()->row();
+        // $this->db_logistik_pt->select_sum('nilai_masuk', 'nilaimasuk');
+        // $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
+        // $this->db_logistik_pt->from('stockawal_harian');
+        // $sum_nilai_masuk = $this->db_logistik_pt->get()->row();
 
         //jika qty masukitem > dari qty yang di input saat edit, maka QTY_MASUK - hasil pengurangan (qty masukitem - qty input) 
         if ($qty_masukitem > $qty_input) {
