@@ -6,8 +6,8 @@ class M_lpb extends CI_Model
 {
     // start server side table
     var $table = 'stokmasuk'; //nama tabel dari database
-    var $column_order = array(null, 'ttg', 'noref', 'nopo', 'refpo', 'nama_supply', 'ket', 'tglinput', 'USER'); //field yang ada di table user
-    var $column_search = array('ttg', 'noref', 'nopo', 'refpo', 'nama_supply', 'ket', 'tglinput', 'USER'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'ttg', 'noref', 'nopo', 'refpo', 'nama_supply', 'ket', 'tglinput', 'USER', 'mutasi'); //field yang ada di table user
+    var $column_search = array('ttg', 'noref', 'nopo', 'refpo', 'nama_supply', 'ket', 'tglinput', 'USER', 'mutasi'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'desc'); // default order 
 
     public function __construct()
@@ -228,6 +228,14 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $noref]);
         $this->db_logistik_pt->from('item_po');
         return $this->db_logistik_pt->get()->row_array();
+    }
+
+    public function getQtyMutasi($kodebar, $noref)
+    {
+        $this->db_logistik_center->select('qty2');
+        $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $noref]);
+        $this->db_logistik_center->from('tb_mutasi_item');
+        return $this->db_logistik_center->get()->row_array();
     }
 
     public function get_sisa_lpb($kodebar, $refpo)

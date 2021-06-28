@@ -106,14 +106,15 @@
         $(document).on('click', '#detail_lpb', function() {
 
             var noref = $(this).data('noref');
+            var mutasi = $(this).data('mutasi');
             // console.log(noref + 'ninoref');
 
             $("#modalListItemLpb").modal('show');
-            tampil_detail_lpb(noref);
+            tampil_detail_lpb(noref, mutasi);
         });
     });
 
-    function tampil_detail_lpb(noref) {
+    function tampil_detail_lpb(noref, mutasi) {
 
         $(document).ready(function() {
 
@@ -128,7 +129,8 @@
                     "url": "<?php echo site_url('Lpb/get_detail_item_lpb') ?>",
                     "type": "POST",
                     "data": {
-                        noref: noref
+                        noref: noref,
+                        mutasi: mutasi
                     }
                 },
                 "columnDefs ": [{

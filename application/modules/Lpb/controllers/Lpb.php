@@ -54,7 +54,7 @@ class Lpb extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
-                        data-noref="' . $field->noref . '"
+                        data-noref="' . $field->noref . '" data-mutasi="' . $field->mutasi . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
                         <button class="btn btn-primary btn-xs fa fa-undo" id="undo_lpb" name="undo_lpb"
@@ -764,6 +764,7 @@ class Lpb extends CI_Controller
     public function get_detail_item_lpb()
     {
         $noref = $this->input->post('noref');
+        $mutasi = $this->input->post('mutasi');
         // $noreftxt = $this->M_detail_lpb->get_noref($noref);
         $this->M_detail_lpb->getWhere($noref);
         $list = $this->M_detail_lpb->get_datatables();
@@ -774,17 +775,23 @@ class Lpb extends CI_Controller
             $row = array();
             $row[] = $no . ".";
 
-            $qty_po = $this->M_lpb->getQtyPo($d->kodebar, $d->refpo);
+            if ($mutasi == '1') {
+                $result_qty_po = $this->M_lpb->getQtyMutasi($d->kodebar, $d->refpo);
+                $qty_po = $result_qty_po['qty2'];
+            } else {
+                $result_qty_po = $this->M_lpb->getQtyPo($d->kodebar, $d->refpo);
+                $qty_po = $result_qty_po['qty'];
+            }
 
             $sisa_lpb = $this->M_lpb->get_sisa_lpb($d->kodebar, $d->refpo);
 
-            $result_sisa_lpb = $qty_po['qty'] - $sisa_lpb->qty_lpb;
+            $result_sisa_lpb = $qty_po - $sisa_lpb->qty_lpb;
 
             $row[] = $d->kodebar;
             $row[] = $d->nabar;
             $row[] = $d->satuan;
             $row[] = $d->grp;
-            $row[] = $qty_po['qty'];
+            $row[] = $qty_po;
             $row[] = $d->qty;
             $row[] = $result_sisa_lpb;
             $row[] = $d->ket;

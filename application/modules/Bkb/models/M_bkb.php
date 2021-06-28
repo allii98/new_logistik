@@ -155,8 +155,8 @@ class M_bkb extends CI_Model
         $count_bpbitem = $this->db_logistik_pt->count_all_results();
 
         //$count_keluarbrgitem = count keluarbrgitem where kodebar AND noref;
-        $this->db_logistik_pt->select('NO_REF');
-        $this->db_logistik_pt->where('NO_REF', $no_ref_bkb);
+        $this->db_logistik_pt->select('nobpb');
+        $this->db_logistik_pt->where('nobpb', $norefbpb);
         $this->db_logistik_pt->from('keluarbrgitem');
         $count_keluarbrgitem = $this->db_logistik_pt->count_all_results();
 
