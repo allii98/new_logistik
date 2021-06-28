@@ -14,6 +14,7 @@
             font-weight: 400;
             line-height: 20px;
         }
+
         .center {
             margin-left: auto;
             margin-right: auto;
@@ -27,12 +28,14 @@
         td {
             vertical-align: text-top;
         }
+
         .singleborder {
-      border-collapse: collapse;
-      border: 1px solid black;
+            border-collapse: collapse;
+            border: 1px solid black;
         }
+
         #tabelPO tr td {
-            border: 1px solid #4d4d4d   ;
+            border: 1px solid #4d4d4d;
         }
     </style>
 </head>
@@ -68,7 +71,7 @@
         <!-- <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By System MIPS (<?= date("d-m-Y H:i:s"); ?>)</small></p> -->
         <!-- <hr>
         <hr> -->
-        <table border="1"  class="singleborder">
+        <table border="1" class="singleborder">
             <thead>
                 <tr>
                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">No</th>
@@ -121,7 +124,7 @@
                                         <td style="width:20%">Total</td>
                                         <td style="width:7%">PPN 10%</td>
                                     </tr>
-                                    
+
                                 </thead>
                                 <tbody>
                                     <?php
@@ -139,9 +142,9 @@
                                                 <td><?= $list_item_po->qty * $list_item_po->harga; ?></td>
                                                 <td><?= $list_po->ppn ?></td>
                                             <?php } else { ?>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><?= $list_item_po->harga; ?></td>
+                                                <td><?= $list_item_po->qty * $list_item_po->harga; ?></td>
+                                                <td><?= $list_po->ppn ?></td>
                                             <?php } ?>
                                         </tr>
                                     <?php } ?>
@@ -149,7 +152,7 @@
                             </table>
 
                         </td>
-                    <!-- <td></td>
+                        <!-- <td></td>
                     <td></td> -->
                     </tr>
                 <?php $no++;

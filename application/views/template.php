@@ -691,7 +691,7 @@
                                 <font face="Verdana" size="2">BAGIAN *</font>
                             </label>
                             <div class="col-12">
-                                <select class="form-control" id="lap_cmb_bagian" name="lap_cmb_bagian" required="">
+                                <select class="form-control" id="bagian_lpb" name="bagian_lpb" required="">
                                 </select>
                             </div>
                         </div>
@@ -1674,6 +1674,7 @@
             // $('#cmb_devisi1').empty();
             pilihDevisi2();
             tanggalLPB();
+            pilihBagianLPB();
             // tanggalPP();
             // pilihTanggal2();
         }
@@ -2320,6 +2321,28 @@
                     $.each(data, function(index) {
                         var opsi_lap_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
                         $('#lap_cmb_bagian').append(opsi_lap_cmb_bagian);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
+        function pilihBagianLPB() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_bagian'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
+                    $('#bagian_lpb').append(opsi_cmb_all);
+                    $.each(data, function(index) {
+                        var opsi_lap_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
+                        $('#bagian_lpb').append(opsi_lap_cmb_bagian);
                     });
                 },
                 error: function(request) {

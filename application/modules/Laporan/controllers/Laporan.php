@@ -851,6 +851,84 @@ class Laporan extends CI_Controller
 		echo json_encode($data);
 	}
 
+	function print_lap_lpb_po_asset()
+	{
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
+		$query = "SELECT a.*, b.nama_supply FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kdpt = '$lokasi' AND a.ASSET = '1'";
+		$data['per_pol'] = $this->db_logistik_pt->query($query)->result();
+		$data['tgl1'] = $tanggal1;
+		$data['tgl2'] = $tanggal2;
+		$data['lokasi'] = $lokasi;
+		$data['lokasi1'] = $lok;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapLPB/vw_lap_lpb_print_po_asset', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
+	function print_lap_lpb_mutasi()
+	{
+		$lokasi = $this->uri->segment(3);
+		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+		$query = "SELECT a.*, b.nama_supply FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kdpt = '$lokasi' AND b.mutasi = '1'";
+		$data['mutasi'] = $this->db_logistik_pt->query($query)->result();
+		$data['tgl1'] = $tanggal1;
+		$data['tgl2'] = $tanggal2;
+		$data['lokasi'] = $lokasi;
+		$data['lokasi1'] = $lok;
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapLPB/vw_lap_lpb_print_mutasi', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
 	function cekcetak()
 	{
 		ini_set("pcre.backtrack_limit", "50000000");
