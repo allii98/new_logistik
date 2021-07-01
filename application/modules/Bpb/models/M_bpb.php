@@ -227,6 +227,10 @@ class M_bpb extends CI_Model
 
         $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
 
+        $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$bahan'";
+        $get_coa = $this->db_logistik->query($query_coa)->row();
+        $ketbeban = $get_coa->nama;
+
         $databpb['id']              = $id_bpb;
         $databpb['nobpb']           = $nobpb;
         $databpb['norefbpb']        = $norefbpb;
@@ -281,7 +285,7 @@ class M_bpb extends CI_Model
         $databpbitem['blok']          = $blok_sub;
         $databpbitem['noadjust']      = "0";
         $databpbitem['kodebebantxt']  = $bahan;
-        $databpbitem['ketbeban']      = NULL;
+        $databpbitem['ketbeban']      = $ketbeban;
         $databpbitem['kodesubtxt']    = $no_acc;
         $databpbitem['ketsub']        = $nama_acc;
         $databpbitem['batal']         = "0";

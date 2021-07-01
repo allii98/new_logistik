@@ -82,7 +82,7 @@ date_default_timezone_set('Asia/Jakarta');
                         <div class="row mt-1">
                               <div class="col-md-3">
                                     <div class="form-group row mb-1">
-                                          <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
+                                          <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;BKB<span class="required">*</span>
                                           </label>
                                           <div class="col-md-7 row">
                                                 <select class="js-data-example-ajax form-control select2" id="select2">

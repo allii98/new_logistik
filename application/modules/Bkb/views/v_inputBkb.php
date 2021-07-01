@@ -455,6 +455,7 @@
                     var blok = data_item_bpb[i].blok;
                     var kodebebantxt = data_item_bpb[i].kodebebantxt;
                     var kodesubtxt = data_item_bpb[i].kodesubtxt;
+                    var ketbeban = data_item_bpb[i].ketbeban;
                     var nabar = data_item_bpb[i].nabar;
                     var kodebar = data_item_bpb[i].kodebar;
                     var grp = data_item_bpb[i].grp;
@@ -467,7 +468,8 @@
                     // Set data
                     $('#cmb_afd_unit_' + i).val(afd);
                     $('#cmb_blok_sub_' + i).val(blok);
-                    $('#cmb_bahan_' + i).val(kodebebantxt);
+                    $('#cmb_bahan_' + i).val(ketbeban);
+                    $('#hidden_kodebebantxt' + i).val(kodebebantxt);
                     $('#txt_account_beban_' + i).val(ketsub);
                     $('#hidden_no_acc_' + i).val(kodesubtxt);
                     $('#txt_barang_' + i).val(nabar);
@@ -520,7 +522,7 @@
             // '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
             // '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
             '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
-            // '<input type="hidden" id="hidden_nama_acc_' + row + '" name="hidden_nama_acc_' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_kodebebantxt' + row + '" name="hidden_kodebebantxt' + row + '" value="0">' +
             '</td>';
         var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Barang -->' +
@@ -699,7 +701,8 @@
                     txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
                     cmb_bahan: $('#cmb_bahan_' + n).val(),
                     hidden_no_acc: $('#hidden_no_acc_' + n).val(),
-                    hidden_nama_acc: $('#txt_account_beban_' + n).val()
+                    hidden_nama_acc: $('#txt_account_beban_' + n).val(),
+                    hidden_kodebebantxt: $('#hidden_kodebebantxt' + n).val()
                 },
 
                 success: function(data) {

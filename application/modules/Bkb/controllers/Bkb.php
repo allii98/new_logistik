@@ -342,9 +342,9 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['txtperiode']    = $txtperiode;
         $datakeluarbrgitem['noadjust']      = "0";
         $datakeluarbrgitem['ket']           = $this->input->post('txt_ket_rinci');
-        $datakeluarbrgitem['kodebeban']     = $this->input->post('cmb_bahan');
-        $datakeluarbrgitem['kodebebantxt']  = $this->input->post('cmb_bahan');
-        $datakeluarbrgitem['ketbeban']      = NULL;
+        $datakeluarbrgitem['kodebeban']     = $this->input->post('hidden_kodebebantxt');
+        $datakeluarbrgitem['kodebebantxt']  = $this->input->post('hidden_kodebebantxt');
+        $datakeluarbrgitem['ketbeban']      = $this->input->post('cmb_bahan');
         $datakeluarbrgitem['kodesub']       = $this->input->post('hidden_no_acc');
         $datakeluarbrgitem['kodesubtxt']    = $this->input->post('hidden_no_acc');
         $datakeluarbrgitem['ketsub']        = $this->input->post('hidden_nama_acc');
