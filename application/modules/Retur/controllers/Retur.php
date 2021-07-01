@@ -255,6 +255,8 @@ class Retur extends CI_Controller
         $data_retskbitem['ketsub']          = $this->input->post('txt_sub_beban');
         $data_retskbitem['batal']           = "0";
         $data_retskbitem['alasan_batal']    = NULL;
+        $data_retskbitem['id_user']         = $id_user;
+        $data_retskbitem['user']            = $this->session->userdata('user');
 
         if (empty($this->input->post('hidden_noretur'))) {
             $savedataretskb = $this->M_retur->savedataretskb($data_retskb);
@@ -268,16 +270,48 @@ class Retur extends CI_Controller
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_retskb = $generate_id->id_retskb;
 
+        $query_id = "SELECT MAX(id) as id_retskbitem FROM ret_skbitem WHERE id_user = '$id_user' AND norefretur = '$norefretur' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_retskbitem = $generate_id->id_retskbitem;
+
         $data = [
             'dataretskb' => $savedataretskb,
             'dataretskbitem' => $savedataretskbitem,
             'no_retur' => $noretur,
             'noref_retur' => $norefretur,
             'id_retskb' => $id_retskb,
+            'id_retskbitem' => $id_retskbitem,
             'txtperiode' => $txtperiode
         ];
 
         echo json_encode($data);
+    }
+
+    public function updateRetur()
+    {
+        $id_retskbitem = $this->input->post('hidden_id_retskbitem');
+
+        $data_item_retur = [
+            'kodebar' => $this->input->post('hidden_kode_barang'),
+            'kodebartxt' => $this->input->post('hidden_kode_barang'),
+            'nabar' => $this->input->post('txt_barang'),
+            'grp' => $this->input->post('hidden_grup_barang'),
+            'satuan' => $this->input->post('hidden_satuan_brg'),
+            'blok' => $this->input->post('cmb_blok_sub'),
+            'afd' => $this->input->post('cmb_afd_unit'),
+            'kodebeban' => $this->input->post('hidden_kodebeban'),
+            'kodebebantxt' => $this->input->post('hidden_kodebeban'),
+            'ketbeban' => $this->input->post('txt_account_beban'),
+            'kodesub' => $this->input->post('hidden_kodesub'),
+            'kodesubtxt' => $this->input->post('hidden_kodesub'),
+            'ketsub' => $this->input->post('txt_sub_beban'),
+            'qty' => $this->input->post('txt_qty_retur'),
+            'ket' => $this->input->post('txt_ket_rinci'),
+        ];
+
+        $data_return = $this->M_retur->update_retur($id_retskbitem, $data_item_retur);
+
+        echo json_encode($data_return);
     }
 
     function cetak()

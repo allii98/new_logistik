@@ -118,7 +118,7 @@
                             </h6>
                             <input type="hidden" id="hidden_noretur">
                             <input type="hidden" id="hidden_norefretur">
-                            <input type="hidden" id="hidden_id_bkb">
+                            <input type="hidden" id="hidden_id_retskb">
                             <input type="hidden" id="hidden_norefbkb">
                             <input type="hidden" id="hidden_nobkb">
                             <input type="hidden" id="hidden_kode_dev">
@@ -468,7 +468,7 @@
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Barang -->' +
             '<input type="text" class="form-control" id="txt_barang_' + row + '" name="txt_barang_' + row + '" placeholder="Pilih Barang" onClick="cari_barang_bkbitem(' + row + ')">' +
-            '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
+            '<input type="" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '" value="0">' +
             '</td>';
@@ -517,7 +517,7 @@
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Keterangan -->' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="1" placeholder="Keterangan"></textarea>' +
-            // '<input type="hidden" id="hidden_id_bpbitem_' + row + '" name="hidden_id_bpbitem_' + row + '">' +
+            '<input type="hidden" id="hidden_id_retskbitem_' + row + '" name="hidden_id_retskbitem_' + row + '">' +
             '</td>';
         var td_col_14 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -624,8 +624,8 @@
                 $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').attr('disabled', '');
                 $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').addClass('bg-light');
 
-                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#keterangan_' + n + '').attr('disabled', '');
-                $('.div_form_1').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#keterangan_' + n + '').addClass('bg-light');
+                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
+                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
 
                 $('#lbl_bkb_status').attr('disabled', '');
 
@@ -643,11 +643,87 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
-                $('#hidden_id_bkb').val(data.id_stockkeluar);
-
+                $('#hidden_id_retskb').val(data.id_retskb);
+                $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
+            },
+            error: function(request) {
+                console.log(request.responseText);
             }
         });
     }
+
+    function ubahRinci(n) {
+
+        // var n = $('#hidden_no_row').val();
+
+        // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
+        // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
+
+        $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
+        $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
+
+        $('#btn_simpan_' + n).css('display', 'none');
+        $('#btn_hapus_' + n).css('display', 'none');
+        $('#btn_ubah_' + n).css('display', 'none');
+        $('#btn_update_' + n).css('display', 'block');
+        $('#btn_cancel_update_' + n).css('display', 'block');
+    };
+
+    //Update Data
+    function updateRinci(n) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/updateRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+
+                $('#btn_update_' + n).css('display', 'none');
+
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+            },
+
+            data: {
+                hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
+                hidden_kode_barang: $('#hidden_kode_barang_' + n).val(),
+                txt_barang: $('#txt_barang_' + n).val(),
+                hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
+                hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
+                cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
+                txt_account_beban: $('#txt_account_beban_' + n).val(),
+                hidden_kodebeban: $('#hidden_kodebeban_' + n).val(),
+                txt_sub_beban: $('#txt_sub_beban_' + n).val(),
+                hidden_kodesub: $('#hidden_kodesub_' + n).val(),
+                txt_qty_retur: $('#txt_qty_retur_' + n).val(),
+                txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+            },
+
+            success: function(data) {
+
+                $('#lbl_status_simpan_' + n).empty();
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil Diupdate!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
+                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
+
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
+                $('#btn_cancel_update_' + n).css('display', 'none');
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    };
 
 
     // $("#select2").select2({

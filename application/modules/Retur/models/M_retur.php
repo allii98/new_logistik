@@ -146,6 +146,12 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
+    public function update_retur($id_retskbitem, $data_item_retur)
+    {
+        $this->db_logistik_pt->where('id', $id_retskbitem);
+        return $this->db_logistik_pt->update('ret_skbitem', $data_item_retur);
+    }
+
     // public function update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev)
     // {
     //     $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty');
