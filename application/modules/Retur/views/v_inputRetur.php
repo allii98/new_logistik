@@ -468,7 +468,7 @@
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Barang -->' +
             '<input type="text" class="form-control" id="txt_barang_' + row + '" name="txt_barang_' + row + '" placeholder="Pilih Barang" onClick="cari_barang_bkbitem(' + row + ')">' +
-            '<input type="" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '" value="0">' +
             '</td>';
@@ -536,8 +536,7 @@
             $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14 + form_tutup + tr_tutup);
         }
 
-        $('#txt_qty_diminta_' + row).addClass('currencyduadigit');
-        $('#txt_qty_disetujui_' + row).addClass('currencyduadigit');
+        $('#txt_qty_retur_' + row).addClass('currencyduadigit');
         $('.currencyduadigit').number(true, 0);
 
         row++;
@@ -703,6 +702,8 @@
 
             success: function(data) {
 
+                console.log(data);
+
                 $('#lbl_status_simpan_' + n).empty();
                 $.toast({
                     position: 'top-right',
@@ -721,6 +722,62 @@
             },
             error: function(request) {
                 console.log(request.responseText);
+            }
+        });
+    };
+
+    // cancel update
+    function cancelUpdate(n) {
+        // var data = this.value;
+        // console.log(data);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/cancelUpdateRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+
+                $('#btn_cancel_update_' + n).css('display', 'none');
+
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+            },
+
+            data: {
+                hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val()
+            },
+
+            success: function(data) {
+
+                $('#hidden_kode_barang_' + n).val(data.kodebar);
+                $('#txt_barang_' + n).val(data.nabar);
+                $('#hidden_grup_barang_' + n).val(data.grp);
+                $('#hidden_satuan_brg_' + n).val(data.satuan);
+                $('#cmb_blok_sub_' + n).val(data.blok);
+                $('#cmb_afd_unit_' + n).val(data.afd);
+                $('#txt_account_beban_' + n).val(data.ketbeban);
+                $('#hidden_kodebeban_' + n).val(data.kodebeban);
+                $('#txt_sub_beban_' + n).val(data.ketsub);
+                $('#hidden_kodesub_' + n).val(data.kodesub);
+                $('#txt_qty_retur_' + n).val(data.qty);
+                $('#txt_ket_rinci_' + n).val(data.ket);
+
+                $('#lbl_status_simpan_' + n).empty();
+                $.toast({
+                    position: 'top-right',
+                    text: 'Edit Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
+                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
+
+                $('#btn_update_' + n).css('display', 'none');
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
+
             }
         });
     };

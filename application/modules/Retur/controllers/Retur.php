@@ -314,6 +314,15 @@ class Retur extends CI_Controller
         echo json_encode($data_return);
     }
 
+    public function cancelUpdateRetur()
+    {
+        $id_retskbitem = $this->input->post('hidden_id_retskbitem');
+
+        $output = $this->db_logistik_pt->get_where('ret_skbitem', ['id' => $id_retskbitem])->row_array();
+
+        echo json_encode($output);
+    }
+
     function cetak()
     {
         $no_bkb = $this->uri->segment('3');
