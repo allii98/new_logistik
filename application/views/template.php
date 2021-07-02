@@ -136,6 +136,9 @@
                                             <a href="<?= base_url('Lpb/lpb_mutasi'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input LPB Mutasi</font>
                                             </a>
+                                            <a href="<?= base_url('Lpb/lpb_retur'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input LPB Retur</font>
+                                            </a>
                                             <a href="<?= base_url('Lpb'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data LPB</font>
                                             </a>
@@ -686,15 +689,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-3 col-form-label">
-                                <font face="Verdana" size="2">BAGIAN *</font>
-                            </label>
-                            <div class="col-12">
-                                <select class="form-control" id="bagian_lpb" name="bagian_lpb" required="">
-                                </select>
-                            </div>
-                        </div>
+
                         <!-- <div class="form-group">
                             <label class="col-3 col-form-label">
                                 <font face="Verdana" size="2">No LPB *</font>
@@ -1937,6 +1932,8 @@
             var rbt_pilihan = $("input[name='rbt_pilihan']:checked").val();
 
             if (rbt_pilihan == 'semua') {
+
+                // window.open('<?= site_url("Laporan/tampilkan_spp"); ?>/' + cmb_devisi + '/' + lap_cmb_bagian + '/' + tglAwalSPP + '/' + tglAkhirSPP);
                 $('#modalListLapSPP').modal('show');
                 $('#tableListLapSPP').DataTable().destroy();
                 $('#tableListLapSPP').DataTable({

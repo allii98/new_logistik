@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="row mt-2">
         <div class="row col-md">
-            <div class="col-md-6">
+            <div class="col-md-6 col-md-6">
                 <div class="card card-body">
                     <div class="row">
                         <div class="col-3">
@@ -35,7 +35,7 @@
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
 
-            <div class="col-md-6 ">
+            <div class="col-md-6 col-xl-3">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -56,7 +56,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 ">
+            <div class="col-md-6 col-xl-3">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -82,7 +82,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 ">
+            <div class="col-md-6 col-xl-3">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -103,7 +103,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 ">
+            <div class="col-md-6 col-xl-3">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -130,7 +130,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 ">
+            <div class="col-md-6 col-xl-3">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -229,9 +229,14 @@
         //datatables
         table = $('#tabel_mutasi').DataTable({
 
+
+            "scrollY": 300,
+            "scrollX": true,
+
             "processing": true,
             "serverSide": true,
             "order": [],
+
             "ajax": {
                 "url": "<?php echo site_url('Home/get_data_mutasi') ?>",
                 "type": "POST"

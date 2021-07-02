@@ -51,6 +51,25 @@ class Laporan extends CI_Controller
 		//output dalam format JSON
 		echo json_encode($output);
 	}
+
+	function print_lap_spp()
+	{
+		$noref = str_replace('.', '/', $this->uri->segment(3));
+		$data['ppo'] = $this->db_logistik_pt->get_where('ppo', ['noreftxt' => $noref])->row();
+		$data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noref))->result();
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'P'
+		]);
+		// $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3>');
+		$html = $this->load->view('lapSpp/v_lap_spp_print', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
 	function tampilkan_spp()
 	{
 		$cmb_devisi = $this->input->post('cmb_devisi');
@@ -95,7 +114,6 @@ class Laporan extends CI_Controller
 		//output dalam format JSON
 		echo json_encode($output);
 	}
-
 	public function tampilkan_spp_prosess()
 	{
 		$cmb_devisi = $this->input->post('cmb_devisi');
@@ -440,23 +458,7 @@ class Laporan extends CI_Controller
 		echo json_encode($data);
 	}
 
-	function print_lap_spp()
-	{
-		$noref = str_replace('.', '/', $this->uri->segment(3));
-		$data['ppo'] = $this->db_logistik_pt->get_where('ppo', ['noreftxt' => $noref])->row();
-		$data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noref))->result();
 
-		$mpdf = new \Mpdf\Mpdf([
-			'mode' => 'utf-8',
-			'format' => [190, 236],
-			'margin_top' => '15',
-			'orientation' => 'P'
-		]);
-		// $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3>');
-		$html = $this->load->view('lapSpp/v_lap_spp_print', $data, true);
-		$mpdf->WriteHTML($html);
-		$mpdf->Output();
-	}
 
 	function print_lap_po_cetakan()
 	{
