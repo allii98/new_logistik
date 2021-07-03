@@ -227,9 +227,14 @@ class M_bpb extends CI_Model
 
         $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
 
-        $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$bahan'";
-        $get_coa = $this->db_logistik->query($query_coa)->row();
-        $ketbeban = $get_coa->nama;
+        // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
+        if ($bahan == '-') {
+            $ketbeban = NULL;
+        } else {
+            $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$bahan'";
+            $get_coa = $this->db_logistik->query($query_coa)->row();
+            $ketbeban = $get_coa->nama;
+        }
 
         $databpb['id']              = $id_bpb;
         $databpb['nobpb']           = $nobpb;
