@@ -37,7 +37,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
                                     <select class="form-control" id="devisi">
-                                        <option value="" selected disabled>Pilih</option>
+                                        <option selected disabled>Pilih</option>
                                         <?php
                                         foreach ($devisi as $d) : { ?>
                                                 <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
@@ -135,7 +135,7 @@
                         </div>
                     </div>
                     <hr class="mt-0 mb-2">
-                    <div class="row">
+                    <div class="row div_form_2">
                         <label id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp;&nbsp;&nbsp; No. Ref. BPB : ...</label>
                         <h4 id="h4_no_bpb" name="h4_no_bpb"></h4>&nbsp;&nbsp;
                         <h4 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h4>
@@ -244,7 +244,7 @@
 
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                 <!-- Keterangan -->
-                                                <textarea class="resizable_textarea form-control" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')" autocomplite="off"></textarea>
+                                                <textarea class="form-control ket" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')"></textarea>
                                                 <label id="lbl_status_simpan_1"></label>
                                                 <input type="hidden" id="hidden_id_bpbitem_1" name="hidden_id_bpbitem_1">
                                             </td>
@@ -398,6 +398,102 @@
 </div>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 <script>
+    $(document).ready(function() {
+        check_form_2();
+        pilihDevisi();
+        $('#hidden_no_table').val(2);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/cari_dept'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: '',
+            success: function(data) {
+                $.each(data, function(index) {
+                    var opsi_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
+                    $('#cmb_bagian').append(opsi_cmb_bagian);
+                });
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+
+        $('#bhnbakar').change(function() {
+            var dt = this.value;
+            // console.log(dt);
+            if (dt != "BBM") {
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
+            } else {
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeAttr('disabled', '');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeClass('bg-light');
+            }
+        });
+
+
+        $('#cmb_alokasi_est').change(function() {
+            // var ses_lokasi ='<?= $this->session->userdata('status_lokasi') ?>';
+            if (this.value == '06') {
+                $('#_est').remove();
+                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 1</label>');
+            } else if (this.value == '07') {
+                $('#_est').remove();
+                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 2</label>');
+            } else if (this.value == '08') {
+                $('#_est').remove();
+                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 3</label>');
+            } else if (this.value == '09') {
+                $('#_est').remove();
+                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 4</label>');
+            } else {
+                $('#_est').remove();
+                $('#txt_estate').append('');
+            }
+        });
+
+        $('#tableAccBeban tbody').on('click', 'tr', function() {
+            var dataClick = $('#tableAccBeban').DataTable().row(this).data();
+            console.log(dataClick);
+            var no_coa = dataClick[1];
+            var nama_account = dataClick[2];
+            var row = $('#hidden_no_row').val();
+
+            // $('#lbl_no_acc_' + row).html(no_coa);
+            $('#lbl_nama_acc_' + row).html(nama_account);
+            $('#txt_account_beban_' + row).val(no_coa);
+
+            $('#hidden_no_acc_' + row).val(no_coa);
+            $('#hidden_nama_acc_' + row).val(nama_account);
+
+            $('#modalAccBeban').modal('hide');
+        });
+
+        $('#bbm').change(function() {
+            console.log(this.value);
+        });
+
+    });
+
+    function check_form_2() {
+        console.log('oke siap');
+        if ($.trim($('#cmb_bagian').val()) != '') {
+            $('#btn_simpan_1').removeAttr('disabled', '');
+            $('#btn_tambah_row').removeAttr('disabled', '');
+            $('#btn_tambah_row_1').removeAttr('disabled', '');
+            $('#tableRinciBPB').find('input,textarea,select').removeAttr('disabled');
+        } else {
+            // $('.div_form_2').hide();
+            $('#btn_simpan_1').attr('disabled', '');
+            $('#btn_tambah_row').attr('disabled', '');
+            $('#btn_tambah_row_1').attr('disabled', '');
+            $('#tableRinciBPB').find('input,textarea,select').attr('disabled', '');
+
+        }
+
+    }
+
     function inputBaru() {
         window.location.href = '<?= base_url('bpb/input') ?>';
     }
@@ -523,108 +619,7 @@
         }
     }
 
-    $(document).ready(function() {
-        // $('#modalPilihEstate').modal('show');
-        pilihDevisi();
-        $('#hidden_no_table').val(2);
 
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Bpb/cari_dept'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-            cache: false,
-            data: '',
-            success: function(data) {
-                $.each(data, function(index) {
-                    var opsi_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
-                    $('#cmb_bagian').append(opsi_cmb_bagian);
-                });
-            },
-            error: function(request) {
-                alert(request.responseText);
-            }
-        });
-
-        setInterval(function() {
-            check_form_2();
-
-        }, 1000);
-
-        $('#bhnbakar').change(function() {
-            var dt = this.value;
-            // console.log(dt);
-            if (dt != "BBM") {
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
-            } else {
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeAttr('disabled', '');
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeClass('bg-light');
-            }
-        });
-
-
-        $('#cmb_alokasi_est').change(function() {
-            // var ses_lokasi ='<?= $this->session->userdata('status_lokasi') ?>';
-            if (this.value == '06') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 1</label>');
-            } else if (this.value == '07') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 2</label>');
-            } else if (this.value == '08') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 3</label>');
-            } else if (this.value == '09') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 4</label>');
-            } else {
-                $('#_est').remove();
-                $('#txt_estate').append('');
-            }
-        });
-
-        $('#tableAccBeban tbody').on('click', 'tr', function() {
-            var dataClick = $('#tableAccBeban').DataTable().row(this).data();
-            console.log(dataClick);
-            var no_coa = dataClick[1];
-            var nama_account = dataClick[2];
-            var row = $('#hidden_no_row').val();
-
-            // $('#lbl_no_acc_' + row).html(no_coa);
-            $('#lbl_nama_acc_' + row).html(nama_account);
-            $('#txt_account_beban_' + row).val(no_coa);
-
-            $('#hidden_no_acc_' + row).val(no_coa);
-            $('#hidden_nama_acc_' + row).val(nama_account);
-
-            $('#modalAccBeban').modal('hide');
-        });
-
-        $('#bbm').change(function() {
-            console.log(this.value);
-        })
-
-    });
-
-    function check_form_2() {
-        if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#devisi').val()) != '') {
-
-            $('#btn_simpan_1').removeAttr('disabled', '');
-            $('#btn_tambah_row').removeAttr('disabled', '');
-            $('#btn_tambah_row_1').removeAttr('disabled', '');
-            $('#tableRinciBPB').find('input,textarea,select').removeAttr('disabled');
-        } else {
-            // $('.div_form_2').hide();
-            $('#btn_simpan_1').attr('disabled', '');
-            $('#btn_tambah_row').attr('disabled', '');
-            $('#btn_tambah_row_1').attr('disabled', '');
-            $('#tableRinciBPB').find('input,textarea,select').attr('disabled', '');
-
-        }
-
-    }
 
 
     function tambah_row(id) {
@@ -695,12 +690,12 @@
             '</td>';
         var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-            '<input type="text" class="form-control" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + row + ')">' +
+            '<input type="number" class="form-control" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + row + ')">' +
             '</td>';
 
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             '<!-- Keterangan -->' +
-            '<textarea class="resizable_textarea form-control" rows="1" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea>' +
+            '<textarea class="form-control" rows="1" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '<input type="hidden" id="hidden_id_bpbitem_' + row + '" name="hidden_id_bpbitem_' + row + '">' +
             '</td>';
@@ -1205,6 +1200,8 @@
                     if (data.status == true) {
                         var kode_barang = data.kodebar;
                         var kode_dev = data.kode_dev;
+                        $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
+                        console.log('ini nomernya ges', no);
 
                         sum_stok_booking(kode_barang, no, kode_dev);
                         // $('#a_bpb_baru').show();
@@ -1214,7 +1211,6 @@
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
-                        $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
                         $('#lbl_status_simpan_' + no).empty();
@@ -1633,41 +1629,40 @@
     var table;
 
     function tableAccBeban(row) {
-        $(document).ready(function() {
-            var cmb_bahan = $('#cmb_bahan_' + row).val();
-            //datatables
-            // var nopo = nopotxt;
-            console.log(cmb_bahan);
-            table = $('#tableAccBeban').DataTable({
-                "destroy": true,
-                "processing": true,
-                "serverSide": true,
 
-                "order": [],
-                "select": true,
-                "ajax": {
-                    "url": "<?php echo site_url('Bpb/list_acc_beban') ?>",
-                    "type": "POST",
-                    "data": {
-                        cmb_no_ac: cmb_bahan
-                    }
-                },
+        var cmb_bahan = $('#cmb_bahan_' + row).val();
+        //datatables
+        // var nopo = nopotxt;
+        console.log(cmb_bahan);
+        table = $('#tableAccBeban').DataTable({
+            "destroy": true,
+            "processing": true,
+            "serverSide": true,
 
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [10, 15, 20, 25]
-                ],
+            "order": [],
+            "select": true,
+            "ajax": {
+                "url": "<?php echo site_url('Bpb/list_acc_beban') ?>",
+                "type": "POST",
+                "data": {
+                    cmb_no_ac: cmb_bahan
+                }
+            },
 
-                "columnDefs": [{
-                    "targets": [0],
-                    "orderable": false,
-                }, ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
 
 
-
-            });
 
         });
+
     }
     // End Data Table Server Side
 
@@ -1680,72 +1675,72 @@
 
     function listBarang(no_row) {
         var table;
-        $(document).ready(function() {
-            table = $('#tableListBarang').DataTable({
-                "paging": true,
-                "scrollY": false,
-                "scrollX": false,
-                "searching": true,
-                "select": true,
-                "bLengthChange": true,
-                "scrollCollapse": true,
-                "bPaginate": true,
-                "bInfo": true,
-                "bSort": false,
-                "processing": true,
-                "serverSide": true,
-                "stateSave": true,
-                "order": [],
-                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
-                "ajax": {
-                    "url": "<?php echo site_url('Bpb/list_barang') ?>",
-                    "type": "POST"
+
+        table = $('#tableListBarang').DataTable({
+            "paging": true,
+            "scrollY": false,
+            "scrollX": false,
+            "searching": true,
+            "select": true,
+            "bLengthChange": true,
+            "scrollCollapse": true,
+            "bPaginate": true,
+            "bInfo": true,
+            "bSort": false,
+            "processing": true,
+            "serverSide": true,
+            "stateSave": true,
+            "order": [],
+            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
+            "ajax": {
+                "url": "<?php echo site_url('Bpb/list_barang') ?>",
+                "type": "POST"
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+
+            "columns": [{
+                    "width": "3%"
                 },
-                "columnDefs ": [{
-                    "targets": [0],
-                    "orderable": false,
-                }, ],
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [10, 15, 20, 25]
-                ],
+                {
+                    "width": "5%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "20%"
+                },
+                {
+                    "width": "20%"
+                },
+                {
+                    "width": "5%"
+                }
+            ],
+            "drawCallback": function(settings) {
+                $('#tableListBarang tr').each(function() {
+                    var Cell = $(this).find('td');
 
-                "columns": [{
-                        "width": "3%"
-                    },
-                    {
-                        "width": "5%"
-                    },
-                    {
-                        "width": "10%"
-                    },
-                    {
-                        "width": "20%"
-                    },
-                    {
-                        "width": "20%"
-                    },
-                    {
-                        "width": "5%"
-                    }
-                ],
-                "drawCallback": function(settings) {
-                    $('#tableListBarang tr').each(function() {
-                        var Cell = $(this).find('td');
+                    Cell.parent().on('mouseover', Cell, function() {
+                        Cell.parent().css('background-color', '#26b99a');
+                        Cell.parent().css('color', '#ffffff');
 
-                        Cell.parent().on('mouseover', Cell, function() {
-                            Cell.parent().css('background-color', '#26b99a');
-                            Cell.parent().css('color', '#ffffff');
-
-                            Cell.parent().bind("mouseout", function() {
-                                Cell.parent().css('background-color', '');
-                                Cell.parent().css('color', '#73879c');
-                            });
+                        Cell.parent().bind("mouseout", function() {
+                            Cell.parent().css('background-color', '');
+                            Cell.parent().css('color', '#73879c');
                         });
                     });
-                },
-            });
+                });
+            },
         });
+
     }
 
     $('#tableListBarang tbody').on('click', 'tr', function() {

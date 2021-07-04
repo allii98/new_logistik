@@ -313,6 +313,7 @@
     });
 
     function check_form_2() {
+        console.log('oke berjalan!');
         if ($.trim($('#devisi').val()) != '') {
 
             $('#btn_simpan_1').removeAttr('disabled', '');
