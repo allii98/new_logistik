@@ -212,13 +212,13 @@ class Retur extends CI_Controller
 
         $data_retskb['noretur']         = $noretur;
         $data_retskb['norefretur']      = $norefretur;
-        $data_retskb['tgl']             = $tgl . " 00:00:00";
+        $data_retskb['tgl']             = $tgl;
         $data_retskb['nobkb']           = $nobkb;
         $data_retskb['norefbkb']        = $norefbkb;
         $data_retskb['tglinput']        = date("Y-m-d H:i:s");
         $data_retskb['txttgl']          = $txttgl;
         $data_retskb['thn']             = $thn;
-        $data_retskb['periode1']        = $periode1 . " 00:00:00";
+        $data_retskb['periode1']        = $periode1;
         $data_retskb['periode2']        = NULL;
         $data_retskb['txtperiode1']     = $txtperiode;
         $data_retskb['txtperiode2']     = NULL;
@@ -246,13 +246,13 @@ class Retur extends CI_Controller
         $data_retskbitem['afd']             = $this->input->post('cmb_afd_unit');
         $data_retskbitem['blok']            = $this->input->post('cmb_blok_sub');
         $data_retskbitem['qty']             = $quantiti;
-        $data_retskbitem['tgl']             = $tgl . " 00:00:00";
+        $data_retskbitem['tgl']             = $tgl;
         $data_retskbitem['nobkb']           = $nobkb;
         $data_retskbitem['norefbkb']        = $norefbkb;
         $data_retskbitem['tglinput']        = date("Y-m-d H:i:s");
         $data_retskbitem['txttgl']          = $txttgl;
         $data_retskbitem['thn']             = $thn;
-        $data_retskbitem['periode']         = $this->session->userdata('Ymd_periode') . " 00:00:00";
+        $data_retskbitem['periode']         = $this->session->userdata('Ymd_periode');
         $data_retskbitem['txtperiode']      = $txtperiode;
         $data_retskbitem['ket']             = $this->input->post('txt_ket_rinci');
         $data_retskbitem['kodebeban']       = $this->input->post('hidden_kodebeban');
@@ -433,6 +433,9 @@ class Retur extends CI_Controller
     public function updateRetur()
     {
         $id_retskbitem = $this->input->post('hidden_id_retskbitem');
+        $txtperiode = $this->input->post('hidden_txtperiode');
+        $kode_dev = $this->input->post('hidden_kode_dev');
+        $no_ref_bkb = $this->input->post('hidden_norefbkb');
 
         $data_item_retur = [
             'kodebar' => $this->input->post('hidden_kode_barang'),
@@ -452,9 +455,24 @@ class Retur extends CI_Controller
             'ket' => $this->input->post('txt_ket_rinci'),
         ];
 
-        $data_return = $this->M_retur->update_retur($id_retskbitem, $data_item_retur);
+        //cari harga
+        $harga_item_bkb = $this->M_retur->cari_harga_bkb($no_ref_bkb, $data_item_retur['kodebar']);
 
-        echo json_encode($data_return);
+        //cari periode di masukitem
+        $periode = $this->M_retur->cari_periode_barang($id_retskbitem);
+
+        //update stok awal harian
+        if ($periode['qty'] != $data_item_retur['qty']) {
+            $this->M_retur->editStokAwalHarian($data_item_retur['kodebar'], $periode['periode'], $periode['qty'], $data_item_retur['qty'], $harga_item_bkb, $kode_dev);
+            $this->M_retur->editStokAwalBulananDevisi($data_item_retur['kodebar'], $periode['txtperiode'], $periode['qty'], $data_item_retur['qty'], $kode_dev);
+        }
+
+        //update stok awal
+        $this->update_stok_awal($data_item_retur['kodebar'], $txtperiode);
+
+        $result_update = $this->M_retur->update_retur($id_retskbitem, $data_item_retur);
+
+        echo json_encode($result_update);
     }
 
     public function cancelUpdateRetur()

@@ -255,6 +255,9 @@
         // $('#select2').next(".select2-container").hide();
 
         tambah_row();
+
+        $('#btn_tambah_row_1, #txt_barang_1').attr('disabled', '');
+
     });
 
     function modalCameraClose() {
@@ -351,6 +354,8 @@
             $("#modalListBkb").modal('hide');
 
             caribkbitem(norefbkb);
+
+            $('#btn_tambah_row_1, #txt_barang_1').removeAttr('disabled', '');
         });
     });
 
@@ -424,6 +429,8 @@
             $("#modalListBarang").modal('hide');
 
             get_stok(n, kodebar, txtperiode, kode_dev);
+
+            $('#cari_bkb, #camera').attr('disabled', '');
 
         });
     });
@@ -512,12 +519,13 @@
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-            '<input type="text" class="form-control" id="txt_qty_retur_' + row + '" name="txt_qty_retur_' + row + '" placeholder="Qty Retur">' +
+            '<input type="text" class="form-control" id="txt_qty_retur_' + row + '" name="txt_qty_retur_' + row + '" placeholder="Qty Retur" onkeyup="validasi_qty(' + row + ')">' +
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Keterangan -->' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="1" placeholder="Keterangan"></textarea>' +
             '<input type="hidden" id="hidden_id_retskbitem_' + row + '" name="hidden_id_retskbitem_' + row + '">' +
+            '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '</td>';
         var td_col_14 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -564,6 +572,41 @@
 
     function saveRinciClick(n) {
 
+        var cari_bkb = $('#cari_bkb').val();
+        var no_ba = $('#no_ba').val();
+        var qty_retur = $('#txt_qty_retur_' + n).val();
+        var txt_barang = $('#txt_barang_' + n).val();
+
+        if (!cari_bkb) {
+            toast('No BKB');
+        } else if (!no_ba) {
+            toast('NO BA');
+        } else if (!txt_barang) {
+            toast('Barang');
+        } else if (!qty_retur) {
+            toast('QTY Retur');
+        } else {
+            saveRinci(n);
+        }
+        return false;
+    };
+
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' is required!',
+            icon: 'error',
+            loader: true,
+            loaderBg: 'red'
+        });
+    }
+
+    function saveRinci(n) {
+
+        var kodebar = $('#hidden_kode_barang_' + n).val();
+        var kode_dev = $('#hidden_kode_dev').val();
+
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('Retur/saveRetur') ?>",
@@ -590,12 +633,12 @@
                 hidden_nama_pt: $('#hidden_nama_pt').val(),
                 hidden_kode_pt: $('#hidden_kode_pt').val(),
                 hidden_devisi: $('#hidden_devisi').val(),
-                hidden_kode_dev: $('#hidden_kode_dev').val(),
+                hidden_kode_dev: kode_dev,
                 bagian: $('#bagian').val(),
                 no_ba: $('#no_ba').val(),
                 keterangan: $('#keterangan').val(),
 
-                hidden_kode_barang: $('#hidden_kode_barang_' + n).val(),
+                hidden_kode_barang: kodebar,
                 txt_barang: $('#txt_barang_' + n).val(),
                 hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
                 hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
@@ -625,8 +668,8 @@
                 $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').attr('disabled', '');
                 $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').addClass('bg-light');
 
-                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
-                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
+                $('.div_form_2').find('#txt_barang_' + n + ',#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
+                $('.div_form_2').find('#txt_barang_' + n + ',#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
 
                 $('#lbl_bkb_status').attr('disabled', '');
 
@@ -646,6 +689,10 @@
 
                 $('#hidden_id_retskb').val(data.id_retskb);
                 $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
+                $('#hidden_txtperiode_' + n).val(data.txtperiode);
+
+                get_stok(n, kodebar, data.txtperiode, kode_dev);
+
             },
             error: function(request) {
                 alert(request.responseText);
@@ -660,8 +707,8 @@
         // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
         // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
 
-        $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
-        $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
+        $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
+        $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
 
         $('#btn_simpan_' + n).css('display', 'none');
         $('#btn_hapus_' + n).css('display', 'none');
@@ -672,6 +719,10 @@
 
     //Update Data
     function updateRinci(n) {
+
+        var txtperiode = $('#hidden_txtperiode_' + n).val();
+        var kodebar = $('#hidden_kode_barang_' + n).val();
+        var kode_dev = $('#hidden_kode_dev').val();
 
         $.ajax({
             type: "POST",
@@ -687,8 +738,12 @@
             },
 
             data: {
+
+                hidden_kode_dev: kode_dev,
+                hidden_txtperiode: txtperiode,
+                hidden_norefbkb: $('#hidden_norefbkb').val(),
                 hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
-                hidden_kode_barang: $('#hidden_kode_barang_' + n).val(),
+                hidden_kode_barang: kodebar,
                 txt_barang: $('#txt_barang_' + n).val(),
                 hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
                 hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
@@ -715,12 +770,15 @@
                     loader: false
                 });
 
-                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
-                $('.div_form_2').find('#txt_barang_' + n + ', #txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
+                $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
+                $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
 
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
                 $('#btn_cancel_update_' + n).css('display', 'none');
+
+                get_stok(n, kodebar, txtperiode, kode_dev);
+
             },
             error: function(request) {
                 alert(request.responseText);
@@ -787,6 +845,21 @@
         });
     };
 
+    function validasi_qty(n) {
+        var a = $('#txt_qty_bkb_' + n + '').val();
+        var b = $('#txt_qty_retur_' + n + '').val();
+
+        var txt_qty_bkb = Number(a);
+        var txt_qty_retur = Number(b);
+
+        if (txt_qty_retur > txt_qty_bkb) {
+            swal('Melibihi QTY BKB!');
+            $('#txt_qty_retur_' + n + '').val('');
+        } else if (txt_qty_retur == 0) {
+            swal('Tidak boleh 0!');
+            $('#txt_qty_retur_' + n + '').val('');
+        }
+    }
 
     // $("#select2").select2({
     //     ajax: {
@@ -952,22 +1025,5 @@
         window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
 
         $('.div_form_2').css('pointer-events', 'none');
-    }
-
-    function validasi_qty() {
-        var n = $('#no_table').val();
-        var a = $('#txt_qty_diminta_' + n + '').val();
-        var b = $('#req_rev_qty').val();
-
-        var txt_qty_diminta = Number(a);
-        var req_rev_qty = Number(b);
-
-        if (req_rev_qty > txt_qty_diminta) {
-            swal('Melibihi QTY diminta!');
-            $('#req_rev_qty').val('');
-        } else if (req_rev_qty == 0) {
-            swal('Tidak boleh 0!');
-            $('#req_rev_qty').val('');
-        }
     }
 </script>
