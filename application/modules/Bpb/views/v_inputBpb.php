@@ -36,7 +36,7 @@
                                 </label>
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
-                                    <select class="form-control" id="devisi">
+                                    <select class="form-control" id="devisi" onchange="check_form()">
                                         <option selected disabled>Pilih</option>
                                         <?php
                                         foreach ($devisi as $d) : { ?>
@@ -55,7 +55,7 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-7">
                                     <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
+                                        <option disabled selected>--Pilih --</option>
                                     </select>
                                 </div>
                             </div>
@@ -397,11 +397,69 @@
 
 </div>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
+
 <script>
     $(document).ready(function() {
-        check_form_2();
-        pilihDevisi();
+
+        check_form();
+
+        // pilihDevisi();   
+        cari_dept();
         $('#hidden_no_table').val(2);
+
+    });
+
+
+    $('#cmb_alokasi_est').change(function() {
+        // var ses_lokasi ='<?= $this->session->userdata('status_lokasi') ?>';
+        if (this.value == '06') {
+            $('#_est').remove();
+            $('#txt_estate').append('<label id="_est" class="control-label">Kebun 1</label>');
+        } else if (this.value == '07') {
+            $('#_est').remove();
+            $('#txt_estate').append('<label id="_est" class="control-label">Kebun 2</label>');
+        } else if (this.value == '08') {
+            $('#_est').remove();
+            $('#txt_estate').append('<label id="_est" class="control-label">Kebun 3</label>');
+        } else if (this.value == '09') {
+            $('#_est').remove();
+            $('#txt_estate').append('<label id="_est" class="control-label">Kebun 4</label>');
+        } else {
+            $('#_est').remove();
+            $('#txt_estate').append('');
+        }
+    });
+
+    $('#tableAccBeban tbody').on('click', 'tr', function() {
+        var dataClick = $('#tableAccBeban').DataTable().row(this).data();
+        // console.log(dataClick);
+        var no_coa = dataClick[1];
+        var nama_account = dataClick[2];
+        var row = $('#hidden_no_row').val();
+
+        // $('#lbl_no_acc_' + row).html(no_coa);
+        $('#lbl_nama_acc_' + row).html(nama_account);
+        $('#txt_account_beban_' + row).val(no_coa);
+
+        $('#hidden_no_acc_' + row).val(no_coa);
+        $('#hidden_nama_acc_' + row).val(nama_account);
+
+        $('#modalAccBeban').modal('hide');
+    });
+
+    $('#bhnbakar').change(function() {
+        var dt = this.value;
+        console.log(dt);
+        if (dt != "BBM") {
+            $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
+            $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
+        } else {
+            $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeAttr('disabled', '');
+            $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeClass('bg-light');
+        }
+    });
+
+    function cari_dept() {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bpb/cari_dept'); ?>",
@@ -419,66 +477,12 @@
                 alert(request.responseText);
             }
         });
+    }
 
-        $('#bhnbakar').change(function() {
-            var dt = this.value;
-            // console.log(dt);
-            if (dt != "BBM") {
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
-            } else {
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeAttr('disabled', '');
-                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeClass('bg-light');
-            }
-        });
+    function check_form() {
+        console.log('oke siap berjalan');
 
-
-        $('#cmb_alokasi_est').change(function() {
-            // var ses_lokasi ='<?= $this->session->userdata('status_lokasi') ?>';
-            if (this.value == '06') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 1</label>');
-            } else if (this.value == '07') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 2</label>');
-            } else if (this.value == '08') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 3</label>');
-            } else if (this.value == '09') {
-                $('#_est').remove();
-                $('#txt_estate').append('<label id="_est" class="control-label">Kebun 4</label>');
-            } else {
-                $('#_est').remove();
-                $('#txt_estate').append('');
-            }
-        });
-
-        $('#tableAccBeban tbody').on('click', 'tr', function() {
-            var dataClick = $('#tableAccBeban').DataTable().row(this).data();
-            console.log(dataClick);
-            var no_coa = dataClick[1];
-            var nama_account = dataClick[2];
-            var row = $('#hidden_no_row').val();
-
-            // $('#lbl_no_acc_' + row).html(no_coa);
-            $('#lbl_nama_acc_' + row).html(nama_account);
-            $('#txt_account_beban_' + row).val(no_coa);
-
-            $('#hidden_no_acc_' + row).val(no_coa);
-            $('#hidden_nama_acc_' + row).val(nama_account);
-
-            $('#modalAccBeban').modal('hide');
-        });
-
-        $('#bbm').change(function() {
-            console.log(this.value);
-        });
-
-    });
-
-    function check_form_2() {
-        console.log('oke siap');
-        if ($.trim($('#cmb_bagian').val()) != '') {
+        if ($.trim($('#devisi').val()) != '') {
             $('#btn_simpan_1').removeAttr('disabled', '');
             $('#btn_tambah_row').removeAttr('disabled', '');
             $('#btn_tambah_row_1').removeAttr('disabled', '');
@@ -492,6 +496,26 @@
 
         }
 
+    }
+
+    function pilihDevisi() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/cari_devisi'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: '',
+            success: function(data) {
+                $.each(data, function(index) {
+                    var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                    $('#cmb_pilih_est').append(opsi_cmb_devisi);
+                });
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
     }
 
     function inputBaru() {
@@ -586,25 +610,7 @@
         var est = $('#cmb_pilih_est').val();
     }
 
-    function pilihDevisi() {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Bpb/cari_devisi'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-            cache: false,
-            data: '',
-            success: function(data) {
-                $.each(data, function(index) {
-                    var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
-                    $('#cmb_pilih_est').append(opsi_cmb_devisi);
-                });
-            },
-            error: function(request) {
-                alert(request.responseText);
-            }
-        });
-    }
+
 
     function pilihItem() {
         console.log("hello world");
@@ -1191,7 +1197,7 @@
             data: form_data,
             success: function(data) {
 
-                console.log(data.kodebar);
+                // console.log(data.kodebar);
                 if (data == "kodebar_exist") {
                     swal('Tidak bisa ditambahkan. Barang sudah ada pada BPB yang sama !');
                     $('#lbl_status_simpan_' + no).empty();
