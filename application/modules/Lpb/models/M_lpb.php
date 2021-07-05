@@ -573,7 +573,7 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->set('QTY_MASUK', $total_qty);
         $this->db_logistik_pt->set('saldoakhir_qty', $total_saldo_qty);
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
-        $this->db_logistik_pt->update('stockawal_bulanan_devisi');
+        return $this->db_logistik_pt->update('stockawal_bulanan_devisi');
     }
 
     public function saveStokAwalBulananDevisi($data)

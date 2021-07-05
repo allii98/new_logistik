@@ -253,6 +253,9 @@ date_default_timezone_set('Asia/Jakarta');
             },
             success: function(data) {
                 $('#hidden_grup_' + n).text(data.grp);
+            },
+            error: function(response) {
+                alert(response.responseText);
             }
         });
     }
@@ -272,6 +275,9 @@ date_default_timezone_set('Asia/Jakarta');
             success: function(data) {
                 // console.log(data + 'sum');
                 $('#sisa_qty_' + i).text(data);
+            },
+            error: function(response) {
+                alert(response.responseText);
             }
         });
     }
@@ -363,6 +369,9 @@ date_default_timezone_set('Asia/Jakarta');
             },
             success: function(data) {
                 $('#sisa_qty_' + n).text(data);
+            },
+            error: function(response) {
+                alert(response.responseText);
             }
         });
     }
@@ -469,7 +478,7 @@ date_default_timezone_set('Asia/Jakarta');
                 }
             },
             error: function(response) {
-                console.log(response.responseText);
+                alert(response.responseText);
             }
         });
     }
@@ -638,7 +647,7 @@ date_default_timezone_set('Asia/Jakarta');
 
             },
             error: function(response) {
-                console.log(response.responseText);
+                alert(response.responseText);
             }
         });
     }
@@ -717,6 +726,9 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
                 $('#btn_cancel_update_' + n).css('display', 'none');
+            },
+            error: function(response) {
+                alert(response.responseText);
             }
         });
     };
@@ -773,6 +785,9 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
+            },
+            error: function(response) {
+                alert(response.responseText);
             }
         });
     }

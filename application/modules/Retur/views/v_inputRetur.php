@@ -577,7 +577,7 @@
 
                 if ($.trim($('#h4_no_ref_bkb').text()) == '') {
                     $('#lbl_bkb_status').empty();
-                    $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                    $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate Retur Number</label>');
                 }
             },
 
@@ -610,6 +610,8 @@
             },
 
             success: function(data) {
+
+                console.log(data);
 
                 $('#lbl_status_simpan_' + n).empty();
 
@@ -646,7 +648,7 @@
                 $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
             },
             error: function(request) {
-                console.log(request.responseText);
+                alert(request.responseText);
             }
         });
     }
@@ -721,7 +723,7 @@
                 $('#btn_cancel_update_' + n).css('display', 'none');
             },
             error: function(request) {
-                console.log(request.responseText);
+                alert(request.responseText);
             }
         });
     };
@@ -778,6 +780,9 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
+            },
+            error: function(response) {
+                alert(response.responseText);
             }
         });
     };

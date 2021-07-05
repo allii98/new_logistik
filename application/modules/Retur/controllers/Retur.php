@@ -202,6 +202,14 @@ class Retur extends CI_Controller
         $txtperiode = $this->session->userdata('ym_periode');
         $txttgl = date("Ymd", strtotime($this->input->post('txt_tgl_retur')));
 
+        $kodebar = $this->input->post('hidden_kode_barang');
+        $nabar = $this->input->post('txt_barang');
+        $sat = $this->input->post('hidden_satuan_brg');
+        $grp = $this->input->post('hidden_grup_barang');
+        $quantiti = $this->input->post('txt_qty_retur');
+        $devisi = $this->input->post('hidden_devisi');
+        $kode_dev = $this->input->post('hidden_kode_dev');
+
         $data_retskb['noretur']         = $noretur;
         $data_retskb['norefretur']      = $norefretur;
         $data_retskb['tgl']             = $tgl . " 00:00:00";
@@ -216,8 +224,8 @@ class Retur extends CI_Controller
         $data_retskb['txtperiode2']     = NULL;
         $data_retskb['pt']              = $this->input->post('hidden_nama_pt');
         $data_retskb['kode']            = $this->input->post('hidden_kode_pt');
-        $data_retskb['devisi']          = $this->input->post('hidden_devisi');
-        $data_retskb['kode_dev']        = $this->input->post('hidden_kode_dev');
+        $data_retskb['devisi']          = $devisi;
+        $data_retskb['kode_dev']        = $kode_dev;
         $data_retskb['no_ba']           = $this->input->post('no_ba');
         $data_retskb['keterangan']      = $this->input->post('keterangan');
         $data_retskb['bag']             = $this->input->post('bagian');
@@ -228,16 +236,16 @@ class Retur extends CI_Controller
 
         $data_retskbitem['noretur']         = $noretur;
         $data_retskbitem['norefretur']      = $norefretur;
-        $data_retskbitem['kodebar']         = $this->input->post('hidden_kode_barang');
+        $data_retskbitem['kodebar']         = $kodebar;
         $data_retskbitem['kodebartxt']      = $this->input->post('hidden_kode_barang');
-        $data_retskbitem['nabar']           = $this->input->post('txt_barang');
-        $data_retskbitem['satuan']          = $this->input->post('hidden_satuan_brg');
-        $data_retskbitem['grp']             = $this->input->post('hidden_grup_barang');
+        $data_retskbitem['nabar']           = $nabar;
+        $data_retskbitem['satuan']          = $sat;
+        $data_retskbitem['grp']             = $grp;
         $data_retskbitem['kodept']          = $this->input->post('hidden_kode_pt');
         $data_retskbitem['pt']              = $this->input->post('hidden_nama_pt');
         $data_retskbitem['afd']             = $this->input->post('cmb_afd_unit');
         $data_retskbitem['blok']            = $this->input->post('cmb_blok_sub');
-        $data_retskbitem['qty']             = $this->input->post('txt_qty_retur');
+        $data_retskbitem['qty']             = $quantiti;
         $data_retskbitem['tgl']             = $tgl . " 00:00:00";
         $data_retskbitem['nobkb']           = $nobkb;
         $data_retskbitem['norefbkb']        = $norefbkb;
@@ -266,6 +274,15 @@ class Retur extends CI_Controller
             $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
         }
 
+        //insert stock awal harian sama seperti LPB
+        $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $norefbkb, $quantiti, $devisi, $kode_dev);
+
+        // insert stock awal bulanan sama seperli LPB
+        $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $devisi, $kode_dev);
+
+        // update stock awal sama seperli di LPB
+        $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
+
         $query_id = "SELECT MAX(id) as id_retskb FROM retskb WHERE id_user = '$id_user' AND norefretur = '$norefretur' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_retskb = $generate_id->id_retskb;
@@ -275,6 +292,9 @@ class Retur extends CI_Controller
         $id_retskbitem = $generate_id->id_retskbitem;
 
         $data = [
+            'insert_stok_awal_harian' => $result_insert_stok_awal_harian,
+            'insert_stok_awal_bulanan' => $result_insert_stok_awal_bulanan,
+            'update_stok_awal' => $result_update_stok_awal,
             'dataretskb' => $savedataretskb,
             'dataretskbitem' => $savedataretskbitem,
             'no_retur' => $noretur,
@@ -285,6 +305,129 @@ class Retur extends CI_Controller
         ];
 
         echo json_encode($data);
+    }
+
+    function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_bkb, $qty, $devisi, $kode_dev)
+    {
+
+        $harga_item_bkb = $this->M_retur->cari_harga_bkb($no_ref_bkb, $kodebar);
+        $saldoakhir_nilai = $harga_item_bkb * $qty;
+
+        $data_insert_stok_harian = [
+            'pt' => $this->session->userdata('pt'),
+            'KODE' => $this->session->userdata('kode_pt'),
+            'devisi' => $devisi,
+            'kode_dev' => $kode_dev,
+            'afd' => '-',
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'nabar' => $nabar,
+            'satuan' => $sat,
+            'grp' => $grp,
+            'saldoawal_qty' => 0,
+            'saldoawal_nilai' => 0,
+            'tglinput' => date("Y-m-d H:i:s"),
+            'thn' => date("Y"),
+            'saldoakhir_qty' => $qty,
+            'saldoakhir_nilai' => $saldoakhir_nilai,
+            'nilai_masuk' => $saldoakhir_nilai,
+            'QTY_MASUK' => $qty,
+            'periode' => $this->session->userdata('Ymd_periode'),
+            'txtperiode' => $this->session->userdata('ym_periode'),
+            'ket' => '-',
+            'account' => '-',
+            'ket_account' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s")
+        ];
+
+        $cek_stokawal_harian = $this->M_retur->cek_stokawal_harian($kodebar, $data_insert_stok_harian['periode'], $kode_dev);
+
+        if ($cek_stokawal_harian >= 1) {
+            //update stok awal harian
+            return $this->M_retur->updateStokAwalHarian($kodebar, $data_insert_stok_harian['periode'], $data_insert_stok_harian['txtperiode'], $qty, $harga_item_bkb, $kode_dev);
+        } else {
+            //insert stok awal harian
+            return $this->M_retur->saveStokAwalHarian($data_insert_stok_harian);
+        }
+    }
+
+    function insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $qty, $devisi, $kode_dev)
+    {
+        $data_insert_stok_bulanan = [
+            'pt' => $this->session->userdata('pt'),
+            'KODE' => $this->session->userdata('kode_pt'),
+            'devisi' => $devisi,
+            'kode_dev' => $kode_dev,
+            'afd' => '-',
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'nabar' => $nabar,
+            'satuan' => $sat,
+            'grp' => $grp,
+            'saldoawal_qty' => 0,
+            'saldoawal_nilai' => 0,
+            'saldoakhir_qty' => $qty,
+            'tglinput' => date("Y-m-d H:i:s"),
+            'thn' => date("Y"),
+            'QTY_MASUK' => $qty,
+            'periode' => $this->session->userdata('Ymd_periode'),
+            'txtperiode' => $this->session->userdata('ym_periode'),
+            'ket' => '-',
+            'account' => '-',
+            'ket_account' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s")
+        ];
+
+        $cek_stokawal_bulanan_devisi = $this->M_retur->cek_stok_awal_bulanan_devisi($kodebar, $data_insert_stok_bulanan['txtperiode'], $kode_dev);
+
+        if ($cek_stokawal_bulanan_devisi >= 1) {
+            //update stok awal bulanan devisi
+            return $this->M_retur->updateStokAwalBulananDevisi($kodebar, $data_insert_stok_bulanan['txtperiode'], $qty, $kode_dev);
+        } else {
+            //insert stok awal bulanan devisi
+            return $this->M_retur->saveStokAwalBulananDevisi($data_insert_stok_bulanan);
+        }
+    }
+
+    function update_stok_awal($kodebar, $txtperiode)
+    {
+        // $kodebar = 102505990000096;
+        // $txtperiode = '202106';
+        //saldo akhir qty
+        $sum_saldo_qty_kodebar = $this->M_retur->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
+
+        //qty masuk
+        $sum_qty_kodebar = $this->M_retur->sum_qty_kodebar_harian($kodebar, $txtperiode);
+
+        //saldoakhir_nilai
+        $sum_harga_kodebar = $this->M_retur->sum_harga_kodebar_harian($kodebar, $txtperiode);
+
+        //nilai_masuk
+        $sum_nilai_masuk = $this->M_retur->sum_nilai_masuk_harian($kodebar, $txtperiode);
+
+        //tidak bisa dibagi 0
+        // if ($sum_harga_kodebar->saldo_awal_harian == 0 and $sum_qty_kodebar->qty_harian == 0) {
+        //     $rata2 = 0;
+        // } else {
+        //     $rata2 = $sum_harga_kodebar->saldo_awal_harian / $sum_qty_kodebar->qty_harian;
+        // }
+
+        $data_update = [
+            'saldoakhir_nilai' => $sum_harga_kodebar,
+
+            'saldoakhir_qty' => $sum_saldo_qty_kodebar,
+
+            'nilai_masuk' => $sum_nilai_masuk->nilai_masuk_harian,
+
+            'QTY_MASUK' => $sum_qty_kodebar->qty_harian
+
+            // 'HARGARAT' => $rata2
+        ];
+
+        // var_dump($data_update);
+        // die;
+
+        return $this->M_retur->updateStokAwal($data_update, $kodebar, $txtperiode);
     }
 
     public function updateRetur()
