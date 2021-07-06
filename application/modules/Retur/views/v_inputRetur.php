@@ -282,7 +282,7 @@
     scanner.addListener('scan', function(content) {
         console.log(content);
         $('#preview').hide();
-        cariBpbqr(content);
+        cariBkbqr(content);
         $('#showCamera').modal('hide');
         $('#multiple').val(content);
         scanner.stop();
@@ -907,6 +907,44 @@
         }
     }
 
+    function cariBkbqr(noref) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Retur/get_data_bkb_qr'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                // $('#tbody_rincian').empty();
+            },
+
+            data: {
+                'noref': noref
+            },
+            success: function(data) {
+
+                // Set data
+                $('#cari_bkb').val(data.NO_REF);
+                $('#hidden_norefbkb').val(data.NO_REF);
+                $('#hidden_nobkb').val(data.skb);
+                $('#hidden_nama_pt').val(data.pt);
+                $('#hidden_kode_pt').val(data.kode);
+                $('#hidden_kode_dev').val(data.kode_dev);
+                $('#hidden_devisi').val(data.devisi);
+                $('#bagian').val(data.bag);
+                var dev = data.kode_dev + ' - ' + data.devisi;
+                $('#devisi_span').text(dev);
+
+                caribkbitem(data.NO_REF);
+
+                $('#btn_tambah_row_1, #txt_barang_1').removeAttr('disabled', '');
+
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
+    }
+
     // $("#select2").select2({
     //     ajax: {
     //         url: "<?php echo site_url('Bkb/select2_get_bpb') ?>",
@@ -944,98 +982,6 @@
     //     // console.log(data);
     //     cariBpbqr(data);
     // });
-
-    // function cariBpbqr(noref) {
-
-    //     // var nopo = $('#multiple').val();
-    //     // console.log(n + 'yeyelala');
-
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "<?php echo site_url('Bkb/get_data_bkb_qr'); ?>",
-    //         dataType: "JSON",
-    //         beforeSend: function() {
-    //             $('#tbody_rincian').empty();
-    //         },
-
-    //         data: {
-    //             'noref': noref
-    //         },
-    //         success: function(data) {
-
-    //             var data_bpb = data.data_bpb;
-    //             var data_item_bpb = data.data_item_bpb;
-
-    //             console.log(data);
-
-    //             $('#bagian').val(data_bpb.bag);
-    //             $('#alokasi_est').val(data_bpb.alokasi);
-    //             $('#diberikan_kpd').val(data_bpb.user);
-    //             $('#utk_keperluan').val(data_bpb.keperluan);
-    //             $('#hidden_kode_dev').val(data_bpb.kode_dev);
-    //             $('#hidden_devisi').val(data_bpb.devisi);
-    //             var dev = data_bpb.kode_dev + ' - ' + data_bpb.devisi;
-    //             $('#devisi_span').text(dev);
-
-    //             if (data_bpb.bag == 'TEKNIK' && data_bpb.bhn_bakar == 'BBM') {
-    //                 $('#fieldset_bbm').css('display', 'block');
-    //                 $('#bhnbakar').val(data_bpb.bhn_bakar);
-    //                 $('#txt_jns_alat').val(data_bpb.jn_alat);
-    //                 $('#txt_kd_nmr').val(data_bpb.no_kode);
-    //                 $('#txt_hm_km').val(data_bpb.hm_km);
-    //                 $('#txt_lokasi_kerja').val(data_bpb.lok_kerja);
-    //             } else {
-    //                 $('#fieldset_bbm').css('display', 'none');
-    //             }
-
-    //             for (i = 0; i < data_item_bpb.length; i++) {
-    //                 // var no = i + 1;
-
-    //                 // tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item, data_item_bpb[i].req_rev_qty_item);
-    //                 // tahun_tanam(i, data_item_bpb[i].kodebebantxt);
-
-    //                 //sum stok all periode / qtymasuk - qtykeluar
-    //                 // get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
-
-    //                 // var afd = data_item_bpb[i].afd;
-    //                 // var blok = data_item_bpb[i].blok;
-    //                 // var kodebebantxt = data_item_bpb[i].kodebebantxt;
-    //                 // var kodesubtxt = data_item_bpb[i].kodesubtxt;
-    //                 // var nabar = data_item_bpb[i].nabar;
-    //                 // var kodebar = data_item_bpb[i].kodebar;
-    //                 // var grp = data_item_bpb[i].grp;
-    //                 // var satuan = data_item_bpb[i].satuan;
-    //                 // var qty = data_item_bpb[i].qty;
-    //                 // var qty_disetujui = data_item_bpb[i].qty_disetujui;
-    //                 // var ketsub = data_item_bpb[i].ketsub;
-    //                 // var ket = data_item_bpb[i].ket;
-
-    //                 // // Set data
-    //                 // $('#cmb_afd_unit_' + i).val(afd);
-    //                 // $('#cmb_blok_sub_' + i).val(blok);
-    //                 // $('#cmb_bahan_' + i).val(kodebebantxt);
-    //                 // $('#txt_account_beban_' + i).val(ketsub);
-    //                 // $('#hidden_no_acc_' + i).val(kodesubtxt);
-    //                 // $('#txt_barang_' + i).val(nabar);
-    //                 // $('#hidden_kode_barang_' + i).val(kodebar);
-    //                 // $('#hidden_grup_barang_' + i).val(grp);
-    //                 // $('#sat_bpb_' + i).text(satuan);
-    //                 // $('#txt_qty_diminta_' + i).val(qty);
-    //                 // //jika revisi qty maka tampilkan qty disetujui, jika tidak tampilkan qty
-    //                 // if (data_item_bpb[i].req_rev_qty_item == '2') {
-    //                 //     $('#txt_qty_disetujui_' + i).val(qty_disetujui);
-    //                 // } else {
-    //                 //     $('#txt_qty_disetujui_' + i).val(qty);
-    //                 // }
-    //                 // $('#txt_ket_rinci_' + i).val(ket);
-
-    //             }
-    //         },
-    //         error: function(response) {
-    //             alert('ERROR! ' + response.responseText);
-    //         }
-    //     });
-    // }
 
     // function tahun_tanam(i, coa_material) {
     //     $.ajax({

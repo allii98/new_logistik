@@ -84,32 +84,21 @@ class M_retur extends CI_Model
     //     return $this->db_logistik_pt->query($query)->result_array();
     // }
 
-    // public function get_data_bpb_qr($noref)
-    // {
-    //     $this->db_logistik_pt->select('bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev');
-    //     $this->db_logistik_pt->where('norefbpb', $noref);
-    //     $this->db_logistik_pt->from('bpb');
-    //     $data_bpb = $this->db_logistik_pt->get()->row_array();
+    public function get_data_bkb_qr($noref)
+    {
+        $this->db_logistik_pt->select('NO_REF, skb, pt, kode, kode_dev, devisi, bag');
+        $this->db_logistik_pt->where('NO_REF', $noref);
+        $this->db_logistik_pt->from('stockkeluar');
+        return $this->db_logistik_pt->get()->row_array();
+    }
 
-    //     $this->db_logistik_pt->select('afd, blok, kodebebantxt, nabar, qty, qty_disetujui, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item, req_rev_qty_item, periode');
-    //     $this->db_logistik_pt->where('norefbpb', $noref);
-    //     $this->db_logistik_pt->from('bpbitem');
-    //     $data_item_bpb = $this->db_logistik_pt->get()->result_array();
-
-    //     $d_return = [
-    //         'data_bpb' => $data_bpb,
-    //         'data_item_bpb' => $data_item_bpb
-    //     ];
-    //     return $d_return;
-    // }
-
-    // public function get_tahun_tanam($coa_material)
-    // {
-    //     $this->db_logistik_pt->select('thn_tanam, tmtbm');
-    //     $this->db_logistik_pt->where('coa_material', $coa_material);
-    //     $this->db_logistik_pt->from('tahun_tanam');
-    //     return $this->db_logistik_pt->get()->row_array();
-    // }
+    public function get_tahun_tanam($coa_material)
+    {
+        $this->db_logistik_pt->select('thn_tanam, tmtbm');
+        $this->db_logistik_pt->where('coa_material', $coa_material);
+        $this->db_logistik_pt->from('tahun_tanam');
+        return $this->db_logistik_pt->get()->row_array();
+    }
 
     public function get_stok($kodebar, $txtperiode, $kode_dev)
     {

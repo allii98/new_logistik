@@ -120,10 +120,10 @@ class Retur extends CI_Controller
     }
     // //End Start Data Table Server Side
 
-    public function get_data_bpb_qr()
+    public function get_data_bkb_qr()
     {
         $noref = $this->input->post('noref');
-        $result = $this->M_bkb->get_data_bpb_qr($noref);
+        $result = $this->M_retur->get_data_bkb_qr($noref);
         echo json_encode($result);
     }
 
