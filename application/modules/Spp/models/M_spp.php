@@ -196,7 +196,7 @@ class M_spp extends CI_Model
 
     public function cari_item_spp($kodebar, $noreftxt)
     {
-        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->select('kodebar');
         $this->db_logistik_pt->from('item_ppo');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noreftxt' => $noreftxt]);
         return $this->db_logistik_pt->get()->num_rows();

@@ -410,6 +410,7 @@
             var ketsub = $(this).data('ketsub');
             var kode_dev = $(this).data('kode_dev');
             var txtperiode = $(this).data('txtperiode');
+            var no_ref = $(this).data('no_ref');
             // console.log(nabar);
 
             // Set data
@@ -430,10 +431,37 @@
 
             get_stok(n, kodebar, txtperiode, kode_dev);
 
+            get_qty_retur(n, no_ref, kodebar);
+
             $('#cari_bkb, #camera').attr('disabled', '');
 
         });
     });
+
+    function get_qty_retur(n, no_ref, kodebar) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Retur/get_qty_retur'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref': no_ref,
+                'kodebar': kodebar
+            },
+            success: function(data) {
+
+                if (!data.qty) {
+                    $('#qty_sudah_retur_' + n).text(0);
+                } else {
+                    $('#qty_sudah_retur_' + n).text(data.qty);
+                }
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
+    }
 
     function get_stok(i, kodebar, txtperiode, kode_dev) {
         $.ajax({
@@ -510,8 +538,8 @@
             '<input type="hidden" id="hidden_kodesub_' + row + '" name="hidden_kodesub_' + row + '" value="0">' +
             '</td>';
         var td_col_10 = '<td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">QTY Retur&emsp;:&nbsp;</span><br>' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok&nbsp;&nbsp;:&nbsp;</span><span id="stok_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>&nbsp;/&nbsp;<span id="sat_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
+            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">QTY Retur&nbsp;:&nbsp;</span><span id="qty_sudah_retur_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span><br>' +
+            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok&nbsp;:&nbsp;</span><span id="stok_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>&nbsp;/&nbsp;<span id="sat_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
             '</td>';
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
@@ -606,6 +634,7 @@
 
         var kodebar = $('#hidden_kode_barang_' + n).val();
         var kode_dev = $('#hidden_kode_dev').val();
+        var no_ref = $('#hidden_norefbkb').val();
 
         $.ajax({
             type: "POST",
@@ -618,7 +647,7 @@
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
 
-                if ($.trim($('#h4_no_ref_bkb').text()) == '') {
+                if ($.trim($('#h4_no_ref_retur').text()) == '') {
                     $('#lbl_bkb_status').empty();
                     $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate Retur Number</label>');
                 }
@@ -628,7 +657,7 @@
                 hidden_noretur: $('#hidden_noretur').val(),
                 hidden_norefretur: $('#hidden_norefretur').val(),
                 hidden_nobkb: $('#hidden_nobkb').val(),
-                hidden_norefbkb: $('#hidden_norefbkb').val(),
+                hidden_norefbkb: no_ref,
                 txt_tgl_retur: $('#txt_tgl_retur').val(),
                 hidden_nama_pt: $('#hidden_nama_pt').val(),
                 hidden_kode_pt: $('#hidden_kode_pt').val(),
@@ -656,42 +685,52 @@
 
                 console.log(data);
 
-                $('#lbl_status_simpan_' + n).empty();
+                if (data.item_exist == 1) {
+                    swal('Sudah ada item yang sama pada Retur ini!');
+                    $('#lbl_status_simpan_' + n).empty();
+                    $('#btn_simpan_' + n).css('display', 'block');
 
-                $('#lbl_bkb_status').empty();
-                $('#h4_no_retur').html('No. Retur BKB : ' + data.no_retur);
-                $('#hidden_noretur').val(data.no_retur);
+                } else {
 
-                $('#h4_no_ref_retur').html('No. Ref. Retur BKB : ' + data.noref_retur);
-                $('#hidden_norefretur').val(data.noref_retur);
+                    $('#lbl_status_simpan_' + n).empty();
 
-                $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').attr('disabled', '');
-                $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').addClass('bg-light');
+                    $('#lbl_bkb_status').empty();
+                    $('#h4_no_retur').html('No. Retur BKB : ' + data.no_retur);
+                    $('#hidden_noretur').val(data.no_retur);
 
-                $('.div_form_2').find('#txt_barang_' + n + ',#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
-                $('.div_form_2').find('#txt_barang_' + n + ',#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
+                    $('#h4_no_ref_retur').html('No. Ref. Retur BKB : ' + data.noref_retur);
+                    $('#hidden_norefretur').val(data.noref_retur);
 
-                $('#lbl_bkb_status').attr('disabled', '');
+                    $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').attr('disabled', '');
+                    $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').addClass('bg-light');
 
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil Disimpan!',
-                    icon: 'success',
-                    loader: false
-                });
+                    $('.div_form_2').find('#txt_barang_' + n + ',#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
+                    $('.div_form_2').find('#txt_barang_' + n + ',#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
 
-                $('#a_print_bkb').show();
+                    $('#lbl_bkb_status').attr('disabled', '');
 
-                $('#btn_hapus_row_' + n).css('display', 'none');
-                $('#btn_ubah_' + n).css('display', 'block');
-                $('#btn_hapus_' + n).css('display', 'block');
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Disimpan!',
+                        icon: 'success',
+                        loader: false
+                    });
 
-                $('#hidden_id_retskb').val(data.id_retskb);
-                $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
-                $('#hidden_txtperiode_' + n).val(data.txtperiode);
+                    $('#a_print_bkb').show();
 
-                get_stok(n, kodebar, data.txtperiode, kode_dev);
+                    $('#btn_hapus_row_' + n).css('display', 'none');
+                    $('#btn_ubah_' + n).css('display', 'block');
+                    $('#btn_hapus_' + n).css('display', 'block');
+
+                    $('#hidden_id_retskb').val(data.id_retskb);
+                    $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
+                    $('#hidden_txtperiode_' + n).val(data.txtperiode);
+
+                    get_stok(n, kodebar, data.txtperiode, kode_dev);
+
+                    get_qty_retur(n, no_ref, kodebar);
+                }
 
             },
             error: function(request) {
@@ -723,6 +762,7 @@
         var txtperiode = $('#hidden_txtperiode_' + n).val();
         var kodebar = $('#hidden_kode_barang_' + n).val();
         var kode_dev = $('#hidden_kode_dev').val();
+        var no_ref = $('#hidden_norefbkb').val();
 
         $.ajax({
             type: "POST",
@@ -741,7 +781,7 @@
 
                 hidden_kode_dev: kode_dev,
                 hidden_txtperiode: txtperiode,
-                hidden_norefbkb: $('#hidden_norefbkb').val(),
+                hidden_norefbkb: no_ref,
                 hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
                 hidden_kode_barang: kodebar,
                 txt_barang: $('#txt_barang_' + n).val(),
@@ -778,6 +818,8 @@
                 $('#btn_cancel_update_' + n).css('display', 'none');
 
                 get_stok(n, kodebar, txtperiode, kode_dev);
+
+                get_qty_retur(n, no_ref, kodebar);
 
             },
             error: function(request) {
@@ -848,12 +890,16 @@
     function validasi_qty(n) {
         var a = $('#txt_qty_bkb_' + n + '').val();
         var b = $('#txt_qty_retur_' + n + '').val();
+        var c = $('#qty_sudah_retur_' + n + '').text();
 
         var txt_qty_bkb = Number(a);
         var txt_qty_retur = Number(b);
+        var qty_sudah_retur = Number(c);
 
-        if (txt_qty_retur > txt_qty_bkb) {
-            swal('Melibihi QTY BKB!');
+        var subto = txt_qty_retur + qty_sudah_retur;
+
+        if (subto > txt_qty_bkb) {
+            swal('Melibihi QTY BKB!, sudah retur sebanyak ' + qty_sudah_retur);
             $('#txt_qty_retur_' + n + '').val('');
         } else if (txt_qty_retur == 0) {
             swal('Tidak boleh 0!');

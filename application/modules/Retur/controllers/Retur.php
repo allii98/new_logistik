@@ -269,19 +269,37 @@ class Retur extends CI_Controller
         if (empty($this->input->post('hidden_noretur'))) {
             $savedataretskb = $this->M_retur->savedataretskb($data_retskb);
             $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
+            $item_exist = 0;
         } else {
-            $savedataretskb = NULL;
-            $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
+            //cek item jika sudah ada tidak bisa save
+            $cek_barang_exist = $this->M_retur->cek_barang_exist($kodebar, $norefretur);
+            if ($cek_barang_exist >= 1) {
+                $item_exist = 1;
+                $savedataretskb = NULL;
+                $savedataretskbitem = NULL;
+            } else {
+                $item_exist = 0;
+                $savedataretskb = NULL;
+                $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
+            }
         }
 
-        //insert stock awal harian sama seperti LPB
-        $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $norefbkb, $quantiti, $devisi, $kode_dev);
+        // jika item sudah ada maka tidak mejalankan script didalam
+        if ($item_exist == 1) {
+            $result_insert_stok_awal_harian = NULL;
+            $result_insert_stok_awal_bulanan = NULL;
+            $result_update_stok_awal = NULL;
+        } else {
 
-        // insert stock awal bulanan sama seperli LPB
-        $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $devisi, $kode_dev);
+            //insert stock awal harian sama seperti LPB
+            $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $norefbkb, $quantiti, $devisi, $kode_dev);
 
-        // update stock awal sama seperli di LPB
-        $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
+            // insert stock awal bulanan sama seperli LPB
+            $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $devisi, $kode_dev);
+
+            // update stock awal sama seperli di LPB
+            $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
+        }
 
         $query_id = "SELECT MAX(id) as id_retskb FROM retskb WHERE id_user = '$id_user' AND norefretur = '$norefretur' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
@@ -301,7 +319,8 @@ class Retur extends CI_Controller
             'noref_retur' => $norefretur,
             'id_retskb' => $id_retskb,
             'id_retskbitem' => $id_retskbitem,
-            'txtperiode' => $txtperiode
+            'txtperiode' => $txtperiode,
+            'item_exist' => $item_exist
         ];
 
         echo json_encode($data);
@@ -597,7 +616,7 @@ class Retur extends CI_Controller
                     data-blok="' . $field->blok . '" data-kodebeban="' . $field->kodebeban . '"
                     data-kodesub="' . $field->kodesub . '" data-kode_dev="' . $field->kode_dev . '"
                     data-ketsub="' . $field->ketsub . '" data-txtperiode="' . $field->txtperiode . '" 
-                    data-ketbeban="' . $field->ketbeban . '"
+                    data-ketbeban="' . $field->ketbeban . '" data-no_ref="' . $field->NO_REF . '"
                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
                         Pilih
                     </button>
@@ -620,6 +639,16 @@ class Retur extends CI_Controller
         echo json_encode($output);
     }
     //End Start Data Table Server Side
+
+    public function get_qty_retur()
+    {
+        $no_ref = $this->input->post('no_ref');
+        $kodebar = $this->input->post('kodebar');
+
+        $output = $this->M_retur->get_qty_retur($no_ref, $kodebar);
+
+        echo json_encode($output);
+    }
 
     // function get_detail_approval()
     // {

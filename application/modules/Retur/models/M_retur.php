@@ -388,6 +388,22 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->update('stockawal_bulanan_devisi');
     }
 
+    public function get_qty_retur($no_ref, $kodebar)
+    {
+        $this->db_logistik_pt->select_sum('qty', 'qty');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'norefbkb' => $no_ref]);
+        $this->db_logistik_pt->from('ret_skbitem');
+        return $this->db_logistik_pt->get()->row();
+    }
+
+    public function cek_barang_exist($kodebar, $norefretur)
+    {
+        $this->db_logistik_pt->select('kodebar');
+        $this->db_logistik_pt->from('ret_skbitem');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'norefretur' => $norefretur]);
+        return $this->db_logistik_pt->get()->num_rows();
+    }
+
     // public function update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev)
     // {
     //     $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty');
