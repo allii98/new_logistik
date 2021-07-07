@@ -1191,8 +1191,8 @@ class Laporan extends CI_Controller
 	function print_lap_spp_po_semua()
 	{
 
-		$tanggal1 = "'" . $this->uri->segment(6) . "/" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "'";
-		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
+		$tanggal1 = "'" . $this->uri->segment(5) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(3) . "'";
+		$tanggal2 = "'" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "/" . $this->uri->segment(6) . "'";
 
 		// $tanggal1 = str_replace("/", "-", ($tanggal1));
 		// $tanggal1 = str_replace("'", "", ($tanggal1));
@@ -1237,11 +1237,11 @@ class Laporan extends CI_Controller
 		// $tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
 		$lokuser = $this->session->userdata('status_lokasi');
 
-		$jmlSpp = $this->db->query("SELECT COUNT(id) AS jmlh FROM ppo WHERE status2='1' AND lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
-		$jmlItem = $this->db->query("SELECT COUNT(id) AS jmlh FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
-		$jmlQTYSpp = $this->db->query("SELECT SUM(qty) AS qty FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
-		$jmlQTYPO = $this->db->query("SELECT SUM(qty) AS qty FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
-		$query = "SELECT * FROM ppo WHERE status2='1' AND LOKASI='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2";
+		$jmlSpp = $this->db_logistik_pt->query("SELECT COUNT(id) AS jmlh FROM ppo WHERE status2='1' AND lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$jmlItem = $this->db_logistik_pt->query("SELECT COUNT(id) AS jmlh FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$jmlQTYSpp = $this->db_logistik_pt->query("SELECT SUM(qty) AS qty FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$jmlQTYPO = $this->db_logistik_pt->query("SELECT SUM(qty) AS qty FROM item_po WHERE lokasi='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2")->row();
+		$query = "SELECT * FROM ppo WHERE po='1' AND LOKASI='$lokuser' AND tglppo BETWEEN $tanggal1 AND $tanggal2";
 		$data['ppo'] = $this->db_logistik_pt->query($query)->result();
 
 		$data['periode'] = str_replace("'", " ", ($tanggal1 . ' - ' . $tanggal2));
@@ -1260,6 +1260,10 @@ class Laporan extends CI_Controller
 		$html = $this->load->view('analisa/vw_lap_spp_po_print_sdhpo', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 
 	function print_lap_spp_po_blmpo()
@@ -1274,12 +1278,12 @@ class Laporan extends CI_Controller
 		// $tanggal2 = str_replace("'", "", ($tanggal2));
 		// $tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
 		$lokuser = $this->session->userdata('status_lokasi');
-		$query = "SELECT * FROM ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser' ";
+		$query = "SELECT * FROM ppo WHERE po=0 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser' ";
 		$data['ppo'] = $this->db_logistik_pt->query($query)->result();
 
-		$jmlQTYSpp = $this->db->query("SELECT SUM(qty) AS qty FROM item_ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
-		$jumlah = $this->db->query("SELECT COUNT(id) AS jmlh FROM ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
-		$jmlbrg = $this->db->query("SELECT COUNT(id) AS jmlh FROM item_ppo WHERE status2=1 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
+		$jmlQTYSpp = $this->db_logistik_pt->query("SELECT SUM(qty) AS qty FROM item_ppo WHERE po=0 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
+		$jumlah = $this->db_logistik_pt->query("SELECT COUNT(id) AS jmlh FROM ppo WHERE po=0 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
+		$jmlbrg = $this->db_logistik_pt->query("SELECT COUNT(id) AS jmlh FROM item_ppo WHERE po=0 AND tglppo BETWEEN $tanggal1 AND $tanggal2 AND LOKASI='$lokuser'")->row();
 
 		$data['jmlQTYSpp'] = $jmlQTYSpp;
 		$data['jumlah'] = $jumlah;
