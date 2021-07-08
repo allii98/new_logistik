@@ -123,15 +123,15 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->insert('ret_skbitem', $data);
     }
 
-    public function urut_cetak($no_ref_bkb)
+    public function urut_cetak($norefretur)
     {
         $this->db_logistik_pt->set('cetak', 'cetak+1', FALSE);
-        $this->db_logistik_pt->where('NO_REF', $no_ref_bkb);
-        $this->db_logistik_pt->update('stockkeluar');
+        $this->db_logistik_pt->where('norefretur', $norefretur);
+        $this->db_logistik_pt->update('retskb');
 
         $this->db_logistik_pt->select('cetak');
-        $this->db_logistik_pt->from('stockkeluar');
-        $this->db_logistik_pt->where('NO_REF', $no_ref_bkb);
+        $this->db_logistik_pt->where('norefretur', $norefretur);
+        $this->db_logistik_pt->from('retskb');
         return $this->db_logistik_pt->get()->row_array();
     }
 

@@ -1246,12 +1246,12 @@
 
 
     function cetak_bkb() {
-        var no_bkb = $('#hidden_no_bkb').val();
-        var id = $('#hidden_id_bkb').val();
+        var noretur = $('#hidden_noretur').val();
+        var id_retskb = $('#hidden_id_retskb').val();
 
-        window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
+        window.open("<?= base_url('Retur/cetak/') ?>" + noretur + '/' + id_retskb, '_blank');
 
-        $('#cancelSpp').hide();
+        $('#cancelRetur').hide();
 
         $('.div_form_2').css('pointer-events', 'none');
     }

@@ -506,27 +506,19 @@ class Retur extends CI_Controller
 
     function cetak()
     {
-        $no_bkb = $this->uri->segment('3');
+        $noretur = $this->uri->segment('3');
         $id = $this->uri->segment('4');
 
-        $data['no_bkb'] = $no_bkb;
-        $data['id'] = $id;
-        $data['stockkeluar'] = $this->db_logistik_pt->get_where('stockkeluar', array('id' => $id, 'SKBTXT' => $no_bkb))->row();
-        $data['keluarbrgitem'] = $this->db_logistik_pt->get_where('keluarbrgitem', array('SKBTXT' => $no_bkb, 'NO_REF' => $data['stockkeluar']->NO_REF))->result();
+        // $data['no_lpb'] = $no_lpb;
+        // $data['id'] = $id;
+        $data['retskb'] = $this->db_logistik_pt->get_where('retskb', array('id' => $id, 'noretur' => $noretur))->row();
+        $data['ret_skbitem'] = $this->db_logistik_pt->get_where('ret_skbitem', array('noretur' => $noretur, 'norefretur' => $data['retskb']->norefretur))->result();
 
-        $data['urut'] = $this->M_bkb->urut_cetak($data['stockkeluar']->NO_REF);
+        $data['urut'] = $this->M_retur->urut_cetak($data['retskb']->norefretur);
 
-        $noref = $data['stockkeluar']->NO_REF;
-        $this->qrcode($no_bkb, $id, $noref);
+        $norefretur = $data['retskb']->norefretur;
+        $this->qrcode($noretur, $id, $norefretur);
 
-        // var_dump($data['po']);exit();
-        // $mpdf = new \Mpdf\Mpdf([
-        //                       'mode' => 'utf-8', 
-        //                       // 'format' => [190, 236],
-        //                       'format' => 'A4',
-        //                       'setAutoTopMargin' => 'stretch',
-        //                       'orientation' => 'P'
-        //                   ]);
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => [190, 236],
@@ -534,65 +526,64 @@ class Retur extends CI_Controller
             'orientation' => 'P'
         ]);
 
-        $lokasibuatbkb = substr($noref, 0, 3);
-        switch ($lokasibuatbkb) {
-            case 'PST': // HO
-                $lokasibkb = "HO";
-                break;
-            case 'ROM': // RO
-                $lokasibkb = "RO";
-                break;
-            case 'FAC': // PKS
-                $lokasibkb = "PKS";
-                break;
-            case 'EST': // SITE
-                $lokasibkb = "SITE";
-                break;
-            default:
-                break;
-        }
+        // $lokasibuatlpb = substr($noref, 0, 3);
+        // switch ($lokasibuatlpb) {
+        //     case 'LPB': // HO
+        //         $data['lokasilpb'] = "HO";
+        //         break;
+        //     case 'ROM': // RO
+        //         $data['lokasilpb'] = "RO";
+        //         break;
+        //     case 'FAC': // PKS
+        //         $data['lokasilpb'] = "PKS";
+        //         break;
+        //     case 'EST': // SITE
+        //         $data['lokasilpb'] = "SITE";
+        //         break;
+        //     default:
+        //         break;
+        // }
 
         // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
         $mpdf->SetHTMLHeader('
                             <table width="100%" border="0" align="center">
                                 <tr>
-                                    <td rowspan="2" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
-                                    <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $lokasibkb . ')</td>
+                                    <td rowspan="5" align="center" style="font-size:14px;font-weight:bold;">' . $data['retskb']->devisi . '</td>
                                 </tr>
                                 <!--tr>
-                                    <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                    <td align="center" rowspan="5">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
                                     </td>
                                 </tr-->
                             </table>
-                            <hr style="width:100%;margin:0px;">
+                            <hr style="width:100%;margin-top:7px;">
                             ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
-        $html = $this->load->view('v_bkbPrint', $data, true);
+        $html = $this->load->view('v_returPrint', $data, true);
 
         $mpdf->WriteHTML($html);
         $mpdf->Output();
     }
 
-    function qrcode($no_bkb, $id, $noref)
+    function qrcode($no_retur, $id, $norefretur)
     {
-        $this->load->library('ciqrcode');
+        $this->load->library('Ciqrcode');
         // header("Content-Type: image/png");
 
         $config['cacheable']    = false; //boolean, the default is true
         $config['cachedir']     = './assets/'; //string, the default is application/cache/
         $config['errorlog']     = './assets/'; //string, the default is application/logs/
-        $config['imagedir']     = './assets/qrcode/bkb/'; //direktori penyimpanan qr code
+        $config['imagedir']     = './assets/qrcode/retur_bkb/'; //direktori penyimpanan qr code
         $config['quality']      = true; //boolean, the default is true
         $config['size']         = '1024'; //interger, the default is 1024
         $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
         $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
         $this->ciqrcode->initialize($config);
 
-        $image_name = $id . '_' . $no_bkb . '.png'; //buat name dari qr code
+        $image_name = $id . '_' . $no_retur . '.png'; //buat name dari qr code
 
-        // $params['data'] = site_url('bkb/cetak/'.$no_bkb.'/'.$id); //data yang akan di jadikan QR CODE
-        $params['data'] = $noref; //data yang akan di jadikan QR CODE
+        // $params['data'] = site_url('lpb/cetak/'.$no_lpb.'/'.$id); //data yang akan di jadikan QR CODE
+        $params['data'] = $norefretur; //data yang akan di jadikan QR CODE
         $params['level'] = 'H'; //H=High
         $params['size'] = 10;
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
