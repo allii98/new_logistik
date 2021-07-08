@@ -513,11 +513,15 @@ class Po extends CI_Controller
 
         // end generate qrcode
 
+        $kode_dev = $this->input->post('devisi');
+        $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_dev))->row_array();
+
         $datainsert = [
             'id' => $no_id,
             'kd_dept' => $data['nama_dept']['kode'],
             'ket_dept' => $this->input->post('hidden_departemen'),
-            'devisi' => $this->input->post('devisi'),
+            'kode_dev' => $kode_dev,
+            'devisi' => $data['devisi']['PT'],
             'grup' => $this->input->post('cmb_jenis_budget'),
             'kode_budet' => "0",
             'kd_subbudget' => "0",

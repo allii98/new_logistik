@@ -134,7 +134,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <option value="" selected disabled>Pilih</option>
                                     <?php
                                     foreach ($devisi as $d) : { ?>
-                                            <option value="<?= $d['PT'] ?>"><?= $d['PT'] ?></option>
+                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
                                     <?php }
                                     endforeach;
                                     ?>
