@@ -650,6 +650,33 @@ class Retur extends CI_Controller
         echo json_encode($output);
     }
 
+    public function deleteItemRetur()
+    {
+        $id_retskbitem = $this->input->post('hidden_id_retskbitem');
+
+        $data = $this->db_logistik_pt->delete('ret_skbitem', array('id' => $id_retskbitem));
+
+        echo json_encode($data);
+    }
+
+    public function cekRetur()
+    {
+        $norefretur = $this->input->post('norefretur');
+
+        $data = $this->M_retur->cekRetur($norefretur);
+
+        echo json_encode($data);
+    }
+
+    public function deleteRetur()
+    {
+        $norefretur = $this->input->post('norefretur');
+
+        $data = $this->M_retur->deleteRetur($norefretur);
+
+        echo json_encode($data);
+    }
+
     // function get_detail_approval()
     // {
     //     $id_stockkeluar = $this->input->post('id_stockkeluar');

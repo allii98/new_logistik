@@ -6,9 +6,12 @@
                     <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Retur <b>BKB</b></h4>
                     <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4>
                 </div>
-                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                    Retur <b>Bukti Keluar Barang</b>
-                </p>
+                <div class="row justify-content-between">
+                    <p class="sub-header ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                        Retur <b>Bukti Keluar Barang</b>
+                    </p>
+                    <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelRetur" onclick="batalRetur()" disabled>Batalkan Retur</button>
+                </div>
                 <div class="row div_form_1 mt-0">
                     <div class="col-lg-2 col-12">
                         <div class="form-group">
@@ -240,6 +243,23 @@
             </div>
             <div class="modal-body">
                 <video id="preview" width="100%"></video>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusRetur">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                    <p class="mt-3">Apakah Anda yakin ingin menghapus Retur ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekRetur()">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
             </div>
         </div>
     </div>
@@ -563,11 +583,19 @@
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
+        var td_col_14_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+            // '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            '<label id="lbl_status_simpan_' + row + '"></label>' +
+            '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
         if (row == 1) {
-            $('#tbody_rincian').append(tr_buka + td_col_1_1 + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14 + form_tutup + tr_tutup);
+            $('#tbody_rincian').append(tr_buka + td_col_1_1 + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14_1 + form_tutup + tr_tutup);
         } else {
             $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14 + form_tutup + tr_tutup);
         }
@@ -726,6 +754,8 @@
                     $('#hidden_id_retskb').val(data.id_retskb);
                     $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
                     $('#hidden_txtperiode_' + n).val(data.txtperiode);
+
+                    $('#cancelRetur').removeAttr('disabled');
 
                     get_stok(n, kodebar, data.txtperiode, kode_dev);
 
@@ -945,6 +975,178 @@
         });
     }
 
+    function hapusRinci(n) {
+        // $('#hidden_no_delete').val(n);
+        Swal.fire({
+            text: "Yakin akan menghapus Data ini?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya Hapus!'
+        }).then((result) => {
+            if (result.value) {
+                updateItemToZero(n);
+            }
+        })
+    }
+
+    function updateItemToZero(n) {
+        var txtperiode = $('#hidden_txtperiode_' + n).val();
+        var kodebar = $('#hidden_kode_barang_' + n).val();
+        var kode_dev = $('#hidden_kode_dev').val();
+        var no_ref = $('#hidden_norefbkb').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/updateRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+            },
+
+            data: {
+
+                hidden_kode_dev: kode_dev,
+                hidden_txtperiode: txtperiode,
+                hidden_norefbkb: no_ref,
+                hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
+                hidden_kode_barang: kodebar,
+                txt_barang: $('#txt_barang_' + n).val(),
+                hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
+                hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
+                cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
+                txt_account_beban: $('#txt_account_beban_' + n).val(),
+                hidden_kodebeban: $('#hidden_kodebeban_' + n).val(),
+                txt_sub_beban: $('#txt_sub_beban_' + n).val(),
+                hidden_kodesub: $('#hidden_kodesub_' + n).val(),
+                txt_qty_retur: 0,
+                txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+            },
+
+            success: function(data) {
+
+                deleteData(n);
+
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+    function deleteData(n) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/deleteItemRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+            },
+
+            data: {
+                hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val()
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil DiHapus!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                $('#tr_' + n).css('display', 'none');
+                $('#txt_barang_' + n).empty();
+                $('#hidden_kode_barang_' + n).empty();
+                $('#hidden_grup_barang_' + n).empty();
+                $('#txt_qty_bkb_' + n).empty();
+                $('#hidden_satuan_brg_' + n).empty();
+                $('#sat_' + n).empty();
+                $('#cmb_afd_unit_' + n).empty();
+                $('#cmb_blok_sub_' + n).empty();
+                $('#txt_account_beban_' + n).empty();
+                $('#hidden_kodebeban_' + n).empty();
+                $('#txt_sub_beban_' + n).empty();
+                $('#hidden_kodesub_' + n).empty();
+
+                if (n == 1) {
+                    hapusRetur();
+                }
+
+            }
+        });
+    };
+
+    // proses hapus retur
+    function batalRetur() {
+        $('#modalKonfirmasiHapusRetur').modal('show');
+    }
+
+    function cekRetur() {
+        var norefretur = $('#hidden_norefretur').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/cekRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_bkb_status').empty();
+                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Cek Retur</label>');
+            },
+
+            data: {
+                norefretur: norefretur
+            },
+
+            success: function(data) {
+
+                $('#lbl_bkb_status').empty();
+
+                if (data > 1) {
+                    swal('Tidak bisa menghapus Retur yang item nya lebih dari 1 !');
+                } else {
+                    updateItemToZero(1);
+                }
+            }
+        });
+    }
+
+    function hapusRetur() {
+
+        var norefretur = $('#hidden_norefretur').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/deleteRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_bkb_status').empty();
+                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Hapus Retur</label>');
+            },
+
+            data: {
+                norefretur: norefretur
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                location.reload();
+            }
+        });
+    }
+
     // $("#select2").select2({
     //     ajax: {
     //         url: "<?php echo site_url('Bkb/select2_get_bpb') ?>",
@@ -1015,6 +1217,8 @@
         var id = $('#hidden_id_bkb').val();
 
         window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
+
+        $('#cancelSpp').hide();
 
         $('.div_form_2').css('pointer-events', 'none');
     }

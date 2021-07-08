@@ -393,6 +393,19 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->get()->num_rows();
     }
 
+    public function deleteRetur($norefretur)
+    {
+        return $this->db_logistik_pt->delete('retskb', array('norefretur' => $norefretur));
+    }
+
+    public  function cekRetur($norefretur)
+    {
+        $this->db_logistik_pt->select('norefretur');
+        $this->db_logistik_pt->from('ret_skbitem');
+        $this->db_logistik_pt->where('norefretur', $norefretur);
+        return $this->db_logistik_pt->get()->num_rows();
+    }
+
     // public function update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev)
     // {
     //     $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty');
