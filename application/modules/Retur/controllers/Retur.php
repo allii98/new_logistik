@@ -10,6 +10,7 @@ class Retur extends CI_Controller
         // $this->load->model('M_approval_bkb');
         $this->load->model('M_cari_bkbitem');
         $this->load->model('M_get_bkb');
+        $this->load->model('M_data_retur');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -33,50 +34,58 @@ class Retur extends CI_Controller
         date_default_timezone_set('Asia/Jakarta');
     }
 
+    public function index()
+    {
+        $data = [
+            'title' => 'data Retur BKB',
+        ];
+        $this->template->load('template', 'v_dataRetur', $data);
+    }
+
     public function input()
     {
         $data = [
-            'title' => 'Retur BKB',
+            'title' => 'Input Retur BKB',
         ];
-        $this->template->load('template', 'v_inputretur', $data);
+        $this->template->load('template', 'v_inputRetur', $data);
     }
 
-    // //Start Data Table Server Side
-    // public function get_data_bkb()
-    // {
-    //     $list = $this->M_bkb->get_datatables();
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $field) {
-    //         $no++;
-    //         $row = array();
-    //         $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
-    //                     data-noref="' . $field->NO_REF . '"
-    //                     data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
-    //                     </button>
-    //                     <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
-    //         $row[] = $no;
-    //         $row[] = $field->NO_REF;
-    //         $row[] = $field->nobpb;
-    //         $row[] = $field->no_mutasi;
-    //         $row[] = $field->bag;
-    //         $row[] = $field->keperluan;
-    //         $row[] = date("Y-m-d", strtotime($field->tgl));
-    //         $row[] = $field->USER;
+    //Start Data Table Server Side
+    public function get_data_retur()
+    {
+        $list = $this->M_data_retur->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_retur" name="detail_retur"
+                        data-noref="' . $field->norefretur . '"
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_retur(' . $field->id . ')">
+                        </button>
+                        <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+            $row[] = $no;
+            $row[] = date("Y-m-d", strtotime($field->tgl));
+            $row[] = $field->norefretur;
+            $row[] = $field->norefbkb;
+            $row[] = $field->bag;
+            $row[] = $field->devisi;
+            $row[] = $field->keterangan;
+            $row[] = $field->user;
 
-    //         $data[] = $row;
-    //     }
+            $data[] = $row;
+        }
 
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "recordsTotal" => $this->M_bkb->count_all(),
-    //         "recordsFiltered" => $this->M_bkb->count_filtered(),
-    //         "data" => $data,
-    //     );
-    //     //output dalam format JSON
-    //     echo json_encode($output);
-    // }
-    // //End Start Data Table Server Side
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_data_retur->count_all(),
+            "recordsFiltered" => $this->M_data_retur->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+    //End Start Data Table Server Side
 
     // public function select2_get_bpb()
     // {
