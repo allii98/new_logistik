@@ -209,6 +209,7 @@ class Retur extends CI_Controller
         $quantiti = $this->input->post('txt_qty_retur');
         $devisi = $this->input->post('hidden_devisi');
         $kode_dev = $this->input->post('hidden_kode_dev');
+        $no_ba = $this->input->post('no_ba');
 
         $data_retskb['noretur']         = $noretur;
         $data_retskb['norefretur']      = $norefretur;
@@ -226,7 +227,7 @@ class Retur extends CI_Controller
         $data_retskb['kode']            = $this->input->post('hidden_kode_pt');
         $data_retskb['devisi']          = $devisi;
         $data_retskb['kode_dev']        = $kode_dev;
-        $data_retskb['no_ba']           = $this->input->post('no_ba');
+        $data_retskb['no_ba']           = str_replace(' ', '', $no_ba);
         $data_retskb['keterangan']      = $this->input->post('keterangan');
         $data_retskb['bag']             = $this->input->post('bagian');
         $data_retskb['batal']           = "0";
@@ -675,6 +676,28 @@ class Retur extends CI_Controller
         $data = $this->M_retur->deleteRetur($norefretur);
 
         echo json_encode($data);
+    }
+
+    public function cekNoBa()
+    {
+        $no_ba = $this->input->post('no_ba');
+        $no_ba_str = str_replace(' ', '', $no_ba);
+        $data = $this->M_retur->cekNoBa($no_ba_str);
+
+        if ($data['no_ba'] == $no_ba_str) {
+            $data = 1;
+        } else {
+            $data = 0;
+        }
+
+        echo json_encode($data);
+    }
+
+    public function str()
+    {
+        $kalimat = 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.';
+        $text = str_replace(' ', '', $kalimat); // kode untuk menghilangkan spasi
+        echo $text;
     }
 
     // function get_detail_approval()

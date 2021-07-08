@@ -642,7 +642,8 @@
         } else if (!qty_retur) {
             toast('QTY Retur');
         } else {
-            saveRinci(n);
+            // saveRinci(n);
+            cekNoBa(n, no_ba);
         }
         return false;
     };
@@ -655,6 +656,38 @@
             icon: 'error',
             loader: true,
             loaderBg: 'red'
+        });
+    }
+
+    function cekNoBa(n, no_ba) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/cekNoBa') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_bkb_status').empty();
+                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Cek No BA</label>');
+            },
+
+            data: {
+                no_ba: no_ba
+            },
+
+            success: function(data) {
+                $('#lbl_bkb_status').empty();
+                $('#lbl_bkb_status').append('<font face="Verdana" size="2.5">No. Retur BKB : ... &nbsp; No. Ref. Retur BKB : ...</font>');
+
+                console.log(data);
+
+                if (data == 1) {
+                    swal('Sudah ada No BA yang sama !');
+                } else {
+                    saveRinci(n);
+                }
+
+            }
         });
     }
 
