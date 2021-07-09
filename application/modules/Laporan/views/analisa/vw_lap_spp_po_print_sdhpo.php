@@ -104,8 +104,6 @@
                     $noref = $d->noppo;
                     $query = "SELECT * FROM item_po WHERE noppo ='$noref' ";
                     $po = $this->db_logistik_pt->query($query)->result();
-
-
                     $no = 1;
                     if (isset($po)) {
                         foreach ($po as $dt) {

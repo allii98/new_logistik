@@ -42,7 +42,7 @@
     <h6 style="z-index: 0; margin-top: 5px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>
     <div style="text-align: center;">
         <h1>MONITORING PO VS LPB</h1>
-        <h4>TAHUN : 2020</h4>
+        <h4>TAHUN : <?= date('Y'); ?></h4>
     </div>
     <div style="text-align: right;">
         <small>Date : <?= date('d/m/Y'); ?></small><br>
@@ -54,166 +54,81 @@
     <table roles="rows">
         <thead>
             <tr>
-                <td>No</td>
-                <td>Nomor PO</td>
-                <td>Tanggal PO</td>
-                <td>Nomor Ref. SPP</td>
-                <td>Tanggal Ref. SPP</td>
-                <td>Keterangan</td>
-                <td>Kode - Nama Supplier</td>
-                <td>Kode - Nama Pemesan</td>
-                <td>Lokasi Pengiriman</td>
-                <td colspan="2">Pembayaran</td>
+                <th style="font-weight: bold;">No</th>
+                <th style="font-weight: bold;">Nomor PO</th>
+                <th style="font-weight: bold;">Tanggal PO</th>
+                <th style="font-weight: bold;">Nomor Ref. SPP</th>
+                <th style="font-weight: bold;">Tanggal Ref. SPP</th>
+                <th style="font-weight: bold;">Keterangan</th>
+                <th style="font-weight: bold;">Kode - Nama Supplier</th>
+                <th style="font-weight: bold;">Kode - Nama Pemesan</th>
+                <th style="font-weight: bold;">Lokasi Pengiriman</th>
+                <th style="font-weight: bold;" colspan="2">Pembayaran</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>PO 6100026</td>
-                <td>02/07/2020</td>
-                <td>EST-SPP/SWJ/04/20/00519</td>
-                <td>20/04/2020</td>
-                <td>U/ CANTER 125 STOCK GUDANG</td>
-                <td>FUUTINDO UTAMAJAYA TEKNIK</td>
-                <td>IRVAN</td>
-                <td>HO</td>
-                <td>CREDIT</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td style="font-weight: bold;">Kode Barang</td>
-                <td style="font-weight: bold;">Nama Barang</td>
-                <td style="font-weight: bold;">Satuan</td>
-                <td style="font-weight: bold;">Kuantitas</td>
-                <td style="font-weight: bold;">Tgl LPB</td>
-                <td style="font-weight: bold;">No LPB</td>
-                <td style="font-weight: bold;">Qty Diterima</td>
-                <td style="font-weight: bold;">Selisih</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td colspan="9">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td>102505410000126</td>
-                <td>PAD SET FR SUSP SPRING MR 631166</td>
-                <td>PCS</td>
-                <td>50</td>
-                <td>01/08/2020</td>
-                <td>6210304</td>
-                <td>50.00</td>
-                <td>0.00</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td>102505410000153</td>
-                <td>STOPER RR SUSP SPRING MB 161571</td>
-                <td>PCS</td>
-                <td>50</td>
-                <td>01/08/2020</td>
-                <td>6210304</td>
-                <td>50.00</td>
-                <td>0.00</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><br></td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>PO 6100027</td>
-                <td>02/07/2020</td>
-                <td>EST-SPP/SWJ/04/20/00519</td>
-                <td>20/04/2020</td>
-                <td>U/ CANTER 125 STOCK GUDANG</td>
-                <td>RAJWALI BENUA SAMUDRA, PT</td>
-                <td>IRVAN</td>
-                <td>HO</td>
-                <td>CREDIT</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td style="font-weight: bold;">Kode Barang</td>
-                <td style="font-weight: bold;">Nama Barang</td>
-                <td style="font-weight: bold;">Satuan</td>
-                <td style="font-weight: bold;">Kuantitas</td>
-                <td style="font-weight: bold;">Tgl LPB</td>
-                <td style="font-weight: bold;">No LPB</td>
-                <td style="font-weight: bold;">Qty Diterima</td>
-                <td style="font-weight: bold;">Selisih</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td colspan="9">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td>102505410000381</td>
-                <td>BEARING RR WHELL HUB MB 161132</td>
-                <td>PCS</td>
-                <td>20.00</td>
-                <td>01/08/2020</td>
-                <td>6210307</td>
-                <td>20.00</td>
-                <td>0.00</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td><br></td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>PO 6100028</td>
-                <td>02/07/2020</td>
-                <td>EST-SPP/SWJ/04/20/00519</td>
-                <td>20/04/2020</td>
-                <td>U/ CANTER 125 STOCK GUDANG</td>
-                <td>HOLINDO, CV</td>
-                <td>IRVAN</td>
-                <td>HO</td>
-                <td>CREDIT</td>
-                <td>30</td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td style="font-weight: bold;">Kode Barang</td>
-                <td style="font-weight: bold;">Nama Barang</td>
-                <td style="font-weight: bold;">Satuan</td>
-                <td style="font-weight: bold;">Kuantitas</td>
-                <td style="font-weight: bold;">Tgl LPB</td>
-                <td style="font-weight: bold;">No LPB</td>
-                <td style="font-weight: bold;">Qty Diterima</td>
-                <td style="font-weight: bold;">Selisih</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td colspan="9">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2"></td>
-                <td>102505410000293</td>
-                <td>CABLE PARKING</td>
-                <td>PCS</td>
-                <td>5.00</td>
-                <td>25/07/2020</td>
-                <td>6210265</td>
-                <td>5.00</td>
-                <td>0.00</td>
-                <td></td>
-            </tr>
+            <?php
+            $nomer = 1;
+            if (isset($po)) {
+                foreach ($po as $d) { ?>
+                    <tr>
+                        <td><?= $nomer++ ?></td>
+                        <td>PO <?= $d->nopo ?></td>
+                        <td><?= date_format(date_create($d->tglpo), "d/m/Y"); ?></td>
+                        <td><?= $d->no_refppo ?></td>
+                        <td><?= date_format(date_create($d->tgl_refppo), "d/m/Y"); ?></td>
+                        <td><?= $d->ket ?></td>
+                        <td><?= $d->kode_supply ?> - <?= $d->nama_supply ?></td>
+                        <td><?= $d->user ?></td>
+                        <td><?= $d->lokasi ?></td>
+                        <td><?= $d->bayar ?></td>
+                        <!-- <td>30</td> -->
+                    </tr>
+
+                    <tr>
+                        <th colspan="2"></th>
+                        <th style="font-weight: bold;">Kode Barang</th>
+                        <th style="font-weight: bold;">Nama Barang</th>
+                        <th style="font-weight: bold;">Satuan</th>
+                        <th style="font-weight: bold;">Kuantitas</th>
+                        <th style="font-weight: bold;">Tgl LPB</th>
+                        <th style="font-weight: bold;">No LPB</th>
+                        <th style="font-weight: bold;">Qty Diterima</th>
+                        <th style="font-weight: bold;">Selisih</th>
+                        <th></th>
+                    </tr>
+                    <?php
+                    $nopo = $d->nopo;
+                    $query = "SELECT a.kodebar, a.nabar, a.tgl, a.satuan, a.qty, a.ttgtxt, b.qty as qtypo FROM masukitem a, item_po b WHERE a.nopo ='$nopo' order by a.id DESC ";
+                    $lpb = $this->db_logistik_pt->query($query)->result();
+                    $no = 1;
+                    if (isset($lpb)) {
+                        foreach ($lpb as $dt) {
+                    ?>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td colspan="9">
+                                    <hr>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"></td>
+                                <td><?= $dt->kodebar ?></td>
+                                <td><?= $dt->nabar ?></td>
+                                <td><?= $dt->satuan ?></td>
+                                <td><?= $dt->qtypo ?></td>
+                                <td><?= date_format(date_create($dt->tgl), "d/m/Y"); ?></td>
+                                <td><?= $dt->ttgtxt ?></td>
+                                <td><?= $dt->qty ?></td>
+                                <td>0.00</td>
+                                <td></td>
+                            </tr>
+                    <?php }
+                    }
+                    ?>
+
+            <?php }
+            } ?>
         </tbody>
     </table>
 </body>

@@ -1302,20 +1302,7 @@ class Laporan extends CI_Controller
 		$mpdf->Output();
 	}
 
-	function print_lap_po_lpb_semua()
-	{
-		$data['lokasi1'] = "Tes";
-		$mpdf = new \Mpdf\Mpdf([
-			'mode' => 'utf-8',
-			'format' => [190, 236],
-			'margin_top' => '15',
-			'orientation' => 'L'
-		]);
 
-		$html = $this->load->view('analisa/vw_lap_po_lpb_print_semua', $data, true);
-		$mpdf->WriteHTML($html);
-		$mpdf->Output();
-	}
 
 	function print_lap_bkb_register_bkb()
 	{
@@ -1682,6 +1669,45 @@ class Laporan extends CI_Controller
 		]);
 
 		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_bgn_grp_brg', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_po_lpb_semua()
+	{
+		$devisi = $this->uri->segment(3);
+		$noref = $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . $this->uri->segment(6) . '/' . $this->uri->segment(7) . '/' . $this->uri->segment(8) . '/' . $this->uri->segment(9);
+
+		$tanggalAwal = $this->uri->segment(12) . '-' . $this->uri->segment(11) . '-' . $this->uri->segment(10);
+		$tanggalAkhir = $this->uri->segment(15) . '-' . $this->uri->segment(14) . '-' . $this->uri->segment(13);
+
+		$query = "SELECT nopo, noreftxt, no_refppo, tglpo, tgl_refppo, ket, kode_supply, nama_supply, user, lokasi, bayar FROM po WHERE noreftxt='$noref' AND tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir'";
+		$data['po'] = $this->db_logistik_pt->query($query)->result();
+
+
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_semua', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+	function print_lap_po_lpb_bybrg()
+	{
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_bybrg', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}

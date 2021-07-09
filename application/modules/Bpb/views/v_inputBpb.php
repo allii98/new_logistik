@@ -141,7 +141,7 @@
                         <h4 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h4>
                         <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
                         <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
-                        <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
+                        <input type="text" id="hidden_id_bpb" name="hidden_id_bpb">
                         <div class="table-responsive">
                             <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
                                 <thead>
@@ -593,6 +593,45 @@
 
     function deleteBPB(no) {
         console.log("untuk baris ke", no);
+        var form_data = new FormData();
+
+        // form_data.append('hidden_id_po',$('#hidden_id_po_'+no).val());
+        form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
+        form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/hapus_all'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            data: form_data,
+            success: function(data) {
+                $('#tr_' + no).remove();
+                // alert('Data Berhasil dihapus');
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil Dihapus!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+                // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
+                // $('.modal-success').modal('show');
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
     }
 
     function saveRinciEnter(e, no) {
@@ -1250,8 +1289,10 @@
 
                 $('#btn_ubah_' + no).css('display', 'block');
                 $('#btn_update_' + no).css('display', 'none');
+                // $('#btn_hapus_' + no).css('display', 'none');
                 $('#btn_cancel_update_' + no).css('display', 'none');
-                $('#btn_hapus_' + no).removeAttr('disabled');
+                $('#btn_hapus_' + no).css('display', 'none');
+                // $('#btn_hapus_' + no).removeAttr('disabled');
 
                 $('#hidden_proses_status_' + no).empty();
                 $('#hidden_proses_status_' + no).val('');
@@ -1713,6 +1754,9 @@
                 [5, 10, 15, -1],
                 [10, 15, 20, 25]
             ],
+            "language": {
+                "infoFiltered": ""
+            },
 
             "columns": [{
                     "width": "3%"

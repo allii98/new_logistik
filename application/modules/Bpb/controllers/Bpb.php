@@ -290,6 +290,23 @@ class Bpb extends CI_Controller
         echo json_encode($data);
     }
 
+    function hapus_all()
+    {
+
+        $id_bpb = $this->input->post('hidden_id_bpb');
+        $id_bpbitem = $this->input->post('hidden_id_bpbitem');
+
+        $data_bpb = $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb));
+        $data_delete = $this->db_logistik_pt->delete('bpbitem', array('id' => $id_bpbitem));
+
+        if ($data_delete === TRUE && $data_bpb === TRUE) {
+            $data = TRUE;
+        } else {
+            $data = FALSE;
+        }
+        echo json_encode($data);
+    }
+
     function batal()
     {
         $id_bpb = $this->input->post('id');

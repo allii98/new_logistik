@@ -136,9 +136,9 @@
                                             <a href="<?= base_url('Lpb/lpb_mutasi'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input LPB Mutasi</font>
                                             </a>
-                                            <a href="<?= base_url('Lpb/lpb_retur'); ?>" class="dropdown-item">
+                                            <!-- <a href="<?= base_url('Lpb/lpb_retur'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input LPB Retur</font>
-                                            </a>
+                                            </a> -->
                                             <a href="<?= base_url('Lpb'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data LPB</font>
                                             </a>
@@ -206,6 +206,9 @@
                                             <a href="<?= base_url('Retur/input') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Retur BKB</font>
                                             </a>
+                                            <a href="<?= base_url('Retur') ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Data Retur</font>
+                                            </a>
                                         </div>
                                     </div>
 
@@ -243,7 +246,7 @@
                                             <a href="#" onclick="lap_spp_po();" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">SPP vs PO</font>
                                             </a>
-                                            <a href="#" class="dropdown-item">
+                                            <a href="#" onclick="lap_lpb_po()" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">LPB vs PO</font>
                                             </a>
                                             <a href="#" class="dropdown-item">
@@ -994,15 +997,6 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- <div class="form-group">
-                            <label class="col-3 col-form-label">
-                                <font face="Verdana" size="2">No Bkb *</font>
-                            </label>
-                            <div class="col-12">
-                                <input type="number" class="form-control" id="no_bkb" name="no_bkb">
-
-                            </div>
-                        </div> -->
 
                         <div class="form-group">
                             <label class="col-3 col-form-label">
@@ -1176,6 +1170,98 @@
         </div>
         <!-- end SLIP BKB -->
 
+        <!-- lpb vs po -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapLPBPO">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">Laporan Monitoring LPB vs PO</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Devisi *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="devisi_lpbpo" name="devisi_lpbpo" required="">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">No Ref PO *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="noref_po" name="noref_po">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Tanggal*</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="txt_periode7" name="txt_periode7">
+                                <input type="hidden" class="form-control" id="tglawalLPBPO" name="tglawalLPBPO">
+                                <input type="hidden" class="form-control" id="tglakhirLPBPO" name="tglakhirLPBPO">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="semua_tr" id="rbt_semua_tr" name="lpbpo" checked>
+                                <label for="rbt_semua_tr"> Semua Transaksi</label>
+                            </div>
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="by_barang" id="rbt_by_barang" name="lpbpo">
+                                <label for="rbt_by_barang">By Barang </label>
+                            </div>
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="by_supplier" id="rbt_by_supplier" name="lpbpo">
+                                <label for="rbt_by_supplier">By Supplier</label>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="po_blm_lpb_po" id="rbt_po_blm_lpb_po" name="lpbpo">
+                                <label for="rbt_po_blm_lpb_po"> PO Belum LPB (Urut PO) </label>
+                            </div>
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="po_cash_sh" id="rbt_po_cash_sh" name="lpbpo">
+                                <label for="rbt_po_cash_sh">PO Cash/0 Hari (Semua Data) </label>
+                            </div>
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="po_lokal" id="rbt_po_lokal" name="lpbpo">
+                                <label for="rbt_po_lokal">PO Lokal Belum LPB</label>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="semua_tr" id="rbt_po_blm_lpb_brg" name="lpbpo">
+                                <label for="rbt_po_blm_lpb_brg"> PO Belum LPB (Urut Barang) </label>
+                            </div>
+                            <div class="radio radio-info form-check">
+                                <input type="radio" value="po_cash_blm_lpb" id="rbt_po_cash_blm" name="lpbpo">
+                                <label for="rbt_po_cash_blm">PO Cash/0 Hari (Belum LPB) </label>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkanlpb_po()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end lpb po -->
 
 
 
@@ -1682,6 +1768,56 @@
             tanggal_bkb();
             // tanggalPP();
             // pilihTanggal2();
+        }
+
+        function lap_spp_po() {
+            $('#modalLapSPPPO').modal('show');
+            pilihTanggal3();
+            // pilihDevisi3();
+        }
+
+        function lap_lpb_po() {
+            $('#modalLapLPBPO').modal('show');
+            pilihTanggal4();
+            pilihDevisi4();
+        }
+
+        function tampilkanlpb_po() {
+            var cmb_devisi2 = $('#devisi_lpbpo').val();
+            var noref_po = $('#noref_po').val();
+            var txt_periode8 = $('#tglawalLPBPO').val();
+            var txt_periode9 = $('#tglakhirLPBPO').val();
+            var rbt_pilihan4 = $("input[name='lpbpo']:checked").val();
+            var dValid = true;
+            $('#devisi_lpbpo', '#noref_po', '#tglawalLPBPO', '#tglakhirLPBPO').each(function(e) {
+                if ($.trim($(this).val()) == '') {
+                    dValid = false;
+                }
+            });
+
+            if (noref_po !== '') {
+                if (rbt_pilihan4 == 'semua_tr') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_semua"); ?>/' + cmb_devisi2 + '/' + noref_po + '/' + txt_periode8 + '/' + txt_periode9);
+                } else if (rbt_pilihan4 == 'by_barang') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bybrg"); ?>');
+                } else if (rbt_pilihan4 == 'by_supplier') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bysup"); ?>');
+                } else if (rbt_pilihan4 == 'po_blm_lpb_po') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_blm_lpb_po"); ?>');
+                } else if (rbt_pilihan4 == 'po_cash_sh') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_sh"); ?>');
+                } else if (rbt_pilihan4 == 'po_cash_blm_lpb') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_blm_lpb"); ?>');
+                } else if (rbt_pilihan4 == 'po_lokal' || rbt_pilihan4 == 'po_blm_lpb_brg') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_gab"); ?>');
+                }
+            } else {
+                swal('Jangan ada field yang kosong!~');
+            }
+
+
+
+            console.log(cmb_devisi2, noref_po, txt_periode8, txt_periode9, rbt_pilihan4);
         }
 
         function pilihCompany() {
@@ -2425,6 +2561,29 @@
             });
         }
 
+        function pilihDevisi4() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_devisi'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    console.log(data);
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+
+                    $.each(data, function(index) {
+                        var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                        $('#devisi_lpbpo').append(opsi_cmb_devisi);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        }
+
         function devisi_bkb() {
             $.ajax({
                 type: "POST",
@@ -2999,11 +3158,6 @@
             window.open('<?= site_url("Laporan/print_lap_lpb_slip_retur"); ?>/' + cmb_devisi3 + '/' + noref + '/' + refpo);
         }
 
-        function lap_spp_po() {
-            $('#modalLapSPPPO').modal('show');
-            pilihTanggal3();
-            pilihDevisi3();
-        }
 
         function pilihTanggal3() {
             var d = new Date();
@@ -3021,6 +3175,27 @@
             }, function(start, end, label) {
                 $('#tglawal').val(start.format('DD/MM/YYYY'));
                 $('#tglakhir').val(end.format('DD/MM/YYYY'));
+
+                // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            });
+        }
+
+        function pilihTanggal4() {
+            var d = new Date();
+            var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
+            var today1 = (25) + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+            $('#tglawalLPBPO').val(today);
+            $('#tglakhirLPBPO').val(today1);
+            $('#txt_periode7').val(today + ' - ' +
+                today1);
+
+            $('#txt_periode7').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+            }, function(start, end, label) {
+                $('#tglawalLPBPO').val(start.format('DD/MM/YYYY'));
+                $('#tglakhirLPBPO').val(end.format('DD/MM/YYYY'));
 
                 // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
             });
