@@ -97,9 +97,6 @@
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         ID
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        No Ref BKB
-                                    </th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;;">
                                         Kode&nbsp;Barang
                                     </th>

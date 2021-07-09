@@ -515,7 +515,6 @@ class Bkb extends CI_Controller
             $row = array();
             $row[] = $no . ".";
             $row[] = $d->id;
-            $row[] = '<font face="Verdana" size="2">' . $d->NO_REF . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->kodebar . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
             $row[] = '<font face="Verdana" size="2">' . $d->satuan . '</font>';

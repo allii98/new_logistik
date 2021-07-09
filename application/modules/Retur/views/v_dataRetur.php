@@ -35,7 +35,7 @@
       </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-detail-bkb">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-approval-retur">
       <div class="modal-dialog modal-xl modal-dialog-scrollable">
             <div class="modal-content">
                   <div class="modal-header">
@@ -47,8 +47,8 @@
 
                         <div class="col-12">
                               <div class="table-responsive">
-                                    <input type="hidden" id="hidden_id_stockkeluar" name="hidden_no_row">
-                                    <table id="bkb_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                                    <input type="hidden" id="hidden_id_retskb" name="hidden_id_retskb">
+                                    <table id="retur_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                                           <thead>
                                                 <tr>
                                                       <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
@@ -57,9 +57,6 @@
                                                       <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                                             ID
                                                       </th>
-                                                      <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                                            No Ref BKB
-                                                      </th>
                                                       <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;;">
                                                             Kode&nbsp;Barang
                                                       </th>
@@ -67,16 +64,16 @@
                                                             Nama&nbsp;Barang
                                                       </th>
                                                       <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                                            Sat
+                                                            Satuan
                                                       </th>
                                                       <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                                            Qty Diminta
+                                                            Qty Retur
                                                       </th>
                                                       <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                                            Qty Disetujui
+                                                            Keterangan
                                                       </th>
                                                       <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                                            Status BKB
+                                                            Status retur
                                                       </th>
                                                 </tr>
                                           </thead>
@@ -136,26 +133,27 @@
       //     });
       // });
 
-      function detail_bkb(id_stockkeluar) {
+      function approval_retur(id_retskb) {
 
-            $("#modal-detail-bkb").modal('show');
+            console.log(id_retskb);
+            $("#modal-approval-retur").modal('show');
 
-            $('#hidden_id_stockkeluar').val(id_stockkeluar);
+            $('#hidden_id_retskb').val(id_retskb);
 
             $(document).ready(function() {
 
-                  $('#bkb_approval').DataTable().destroy();
-                  $('#bkb_approval').DataTable({
+                  $('#retur_approval').DataTable().destroy();
+                  $('#retur_approval').DataTable({
                         "processing": true,
                         "serverSide": true,
                         "order": [],
                         "select": true,
 
                         "ajax": {
-                              "url": "<?php echo site_url('Bkb/get_detail_approval') ?>",
+                              "url": "<?php echo site_url('Retur/get_detail_approval') ?>",
                               "type": "POST",
                               "data": {
-                                    id_stockkeluar: id_stockkeluar
+                                    id_retskb: id_retskb
                               }
                         },
                         "columnDefs ": [{
@@ -167,13 +165,13 @@
                         "buttons": [{
                                     "text": "Select All",
                                     "action": function() {
-                                          $('#bkb_approval').DataTable().rows().select();
+                                          $('#retur_approval').DataTable().rows().select();
                                     }
                               },
                               {
                                     "text": "Unselect All",
                                     "action": function() {
-                                          $('#bkb_approval').DataTable().rows().deselect();
+                                          $('#retur_approval').DataTable().rows().deselect();
                                     }
                               }
                         ],
@@ -194,10 +192,10 @@
 
             $.ajax({
                   type: "POST",
-                  url: "<?php echo base_url('Bkb/approval_bkb') ?>",
+                  url: "<?php echo base_url('Retur/approval_retur') ?>",
                   dataType: "JSON",
                   data: {
-                        id_item_bkb: n
+                        id_ret_skbitem: n
                   },
 
                   success: function(data) {
@@ -205,6 +203,9 @@
                         if (data == 0) {
                               swal('Item sudah di approve!');
                         }
+                  },
+                  error: function(response) {
+                        alert('ERROR! ' + response.responseText);
                   }
             });
       }
@@ -225,18 +226,19 @@
       }
 
       function pilihItem() {
-            var rowcollection = $('#bkb_approval').DataTable().rows({
+            var rowcollection = $('#retur_approval').DataTable().rows({
                   selected: true,
             }).data().toArray();
 
-            var id_stockkeluar = $('#hidden_id_stockkeluar').val();
+            var id_retskb = $('#hidden_id_retskb').val();
 
             $.each(rowcollection, function(index, elem) {
                   var id = rowcollection[index][1];
 
                   setujui_barang(id);
+                  // console.log(id + 'ye');
 
             });
-            detail_bkb(id_stockkeluar);
+            approval_retur(id_retskb);
       }
 </script>

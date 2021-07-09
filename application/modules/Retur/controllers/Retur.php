@@ -10,7 +10,7 @@ class Retur extends CI_Controller
         // $this->load->model('M_approval_bkb');
         $this->load->model('M_cari_bkbitem');
         $this->load->model('M_get_bkb');
-        $this->load->model('M_data_retur');
+        $this->load->model('M_approval_retur');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -53,15 +53,14 @@ class Retur extends CI_Controller
     //Start Data Table Server Side
     public function get_data_retur()
     {
-        $list = $this->M_data_retur->get_datatables();
+        $list = $this->M_retur->get_datatables();
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_retur" name="detail_retur"
-                        data-noref="' . $field->norefretur . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_retur(' . $field->id . ')">
+            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="approval_retur(' . $field->id . ')">
                         </button>
                         <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
@@ -78,8 +77,8 @@ class Retur extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_data_retur->count_all(),
-            "recordsFiltered" => $this->M_data_retur->count_filtered(),
+            "recordsTotal" => $this->M_retur->count_all(),
+            "recordsFiltered" => $this->M_retur->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
@@ -700,137 +699,50 @@ class Retur extends CI_Controller
         echo $text;
     }
 
-    // function get_detail_approval()
-    // {
-    //     $id_stockkeluar = $this->input->post('id_stockkeluar');
-    //     $no_ref = $this->M_approval_bkb->get_noref($id_stockkeluar);
-    //     $this->M_approval_bkb->getWhere($no_ref['NO_REF']);
+    function get_detail_approval()
+    {
+        $id_retskb = $this->input->post('id_retskb');
+        $result_noref = $this->M_approval_retur->get_noref($id_retskb);
+        $this->M_approval_retur->getWhere($result_noref['norefretur']);
 
-    //     $list = $this->M_approval_bkb->get_datatables();
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $d) {
-    //         if ($d->status_kasie_gudang == "1") {
-    //             $status = "<span style='color: green'><b>DISETUJUI<br>" . $d->tgl_kasie_gudang . "</b></span>";
-    //         } else {
-    //             $status = "DALAM PROSES";
-    //         }
+        $list = $this->M_approval_retur->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            if ($d->status_kasie_gudang == "1") {
+                $status = "<span style='color: green'><b>DISETUJUI<br>" . $d->tgl_kasie_gudang . "</b></span>";
+            } else {
+                $status = "DALAM PROSES";
+            }
 
-    //         $no++;
-    //         $row = array();
-    //         $row[] = $no . ".";
-    //         $row[] = $d->id;
-    //         $row[] = '<font face="Verdana" size="2">' . $d->NO_REF . '</font>';
-    //         $row[] = '<font face="Verdana" size="2">' . $d->kodebar . '</font>';
-    //         $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
-    //         $row[] = '<font face="Verdana" size="2">' . $d->satuan . '</font>';
-    //         $row[] = '<font face="Verdana" size="2">' . $d->qty . '</font>';
-    //         $row[] = '<font face="Verdana" size="2">' . $d->qty2 . '</font>';
-    //         $row[] = $status;
+            $no++;
+            $row = array();
+            $row[] = $no . ".";
+            $row[] = $d->id;
+            $row[] = '<font face="Verdana" size="2">' . $d->kodebar . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->satuan . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->qty . '</font>';
+            $row[] = '<font face="Verdana" size="2">' . $d->ket . '</font>';
+            $row[] = $status;
 
-    //         $data[] = $row;
-    //     }
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "recordsTotal" => $this->M_approval_bkb->count_all(),
-    //         "recordsFiltered" => $this->M_approval_bkb->count_filtered(),
-    //         "data" => $data,
-    //     );
-    //     // output to json format
-    //     echo json_encode($output);
-    // }
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_approval_retur->count_all(),
+            "recordsFiltered" => $this->M_approval_retur->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
 
-    // public function approval_bkb()
-    // {
-    //     $id_item_bkb = $this->input->post('id_item_bkb');
-    //     $output = $this->M_approval_bkb->approval_bkb($id_item_bkb);
+    public function approval_retur()
+    {
+        $id_ret_skbitem = $this->input->post('id_ret_skbitem');
+        $output = $this->M_approval_retur->approval_retur($id_ret_skbitem);
 
-    //     echo json_encode($output);
-    // }
-
-    // public function rev_qty()
-    // {
-    //     $no_ref_bpb = $this->input->post('no_ref_bpb');
-    //     $kodebar = $this->input->post('kodebar');
-    //     $req_rev_qty = $this->input->post('req_rev_qty');
-
-    //     $output = $this->M_approval_bkb->rev_qty($no_ref_bpb, $kodebar, $req_rev_qty);
-
-    //     echo json_encode($output);
-    // }
-
-    // public function approval_rev_qty()
-    // {
-    //     $data = [
-    //         'title' => 'Approval Revisi QTY'
-    //     ];
-
-    //     $this->template->load('template', 'v_approval_rev_qty', $data);
-    // }
-
-    //Start Data Table Server Side
-    // public function get_data_rev_qty()
-    // {
-    //     $list = $this->M_approval_rev_qty->get_datatables();
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $field) {
-    //         $no++;
-    //         $row = array();
-    //         $row[] = '<button class="btn btn-warning btn-xs" id="approve_rev_qty" name="approve_rev_qty"
-    //                     data-id_approval_bpb="' . $field->id . '" data-norefbpb="' . $field->norefbpb . '"
-    //                     data-kodebar="' . $field->kodebar . '" data-qty_rev="' . $field->qty_rev . '"
-    //                     data-toggle="tooltip" data-placement="top" title="detail">
-    //                     Approve</button>';
-    //         $row[] = $no;
-    //         $row[] = $field->norefbpb;
-    //         $row[] = $field->kodebar;
-    //         $row[] = $field->nabar;
-    //         $row[] = $field->qty_diminta;
-    //         $row[] = $field->qty_rev;
-    //         $row[] = $field->user_req_rev_qty;
-
-    //         $data[] = $row;
-    //     }
-
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "recordsTotal" => $this->M_approval_rev_qty->count_all(),
-    //         "recordsFiltered" => $this->M_approval_rev_qty->count_filtered(),
-    //         "data" => $data,
-    //     );
-    //     //output dalam format JSON
-    //     echo json_encode($output);
-    // }
-    // //End Start Data Table Server Side
-
-    // public function ktu_approve_rev_qty()
-    // {
-    //     $id_approval_bpb = $this->input->post('id_approval_bpb');
-    //     $norefbpb = $this->input->post('norefbpb');
-    //     $kodebar = $this->input->post('kodebar');
-    //     $qty_rev = $this->input->post('qty_rev');
-
-    //     $output = $this->M_approval_rev_qty->ktu_approve_rev_qty($id_approval_bpb, $norefbpb, $kodebar, $qty_rev);
-
-    //     echo json_encode($output);
-    // }
-
-    // public function get_devisi_mutasi()
-    // {
-    //     $kode_pt = $this->input->post('kode_pt');
-
-    //     $data['pt_mutasi'] = $this->db_logistik_center->get_where('tb_pt', ['kode_pt' => $kode_pt])->row_array();
-
-    //     if ($data['pt_mutasi']['alias'] == 'MSAL') {
-    //         $output = $this->db_logistik_msal->get('tb_devisi')->result_array();
-    //     } elseif ($data['pt_mutasi']['alias'] == 'MAPA') {
-    //         $output = $this->db_logistik_mapa->get('tb_devisi')->result_array();
-    //     }
-    //     //pt peak dan psam belum!!
-
-    //     // $output = $this->M_bkb->get_devisi_mutasi($kode_pt);
-
-    //     echo json_encode($output);
-    // }
+        echo json_encode($output);
+    }
 }
