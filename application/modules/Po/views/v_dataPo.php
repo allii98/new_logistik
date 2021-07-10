@@ -151,7 +151,7 @@
 
 	function detailPO(id) {
 		$('#detailpo').modal('show');
-		table = $('#datapo').DataTable({
+		$('#datapo').DataTable({
 			"destroy": true,
 			"processing": true,
 			"serverSide": true,

@@ -1616,7 +1616,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function simpan(id) {
         if (simpanBaru) {
 
-            console.log('simpan', id);
+            console.log('simpan pertama', id);
             console.table({
                 id_ppo: $('#id_ppo' + id).val(),
                 hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),

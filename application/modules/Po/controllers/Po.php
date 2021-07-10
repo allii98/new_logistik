@@ -729,28 +729,11 @@ class Po extends CI_Controller
         $noUrut++;
         $print = sprintf("%05s", $noUrut);
 
-        if (empty($this->input->post('hidden_no_po'))) {
-            $no_po = $lokasispp . $lokasipo . $print;
-        } else {
-            $no_po = $this->input->post('hidden_no_po');
-        }
 
         $hidden_jenis_spp = $this->input->post('hidden_jenis_spp');
 
-        if (!empty($this->input->post('hidden_no_ref_po'))) {
-            $norefpo = $this->input->post('hidden_no_ref_po');
-        } else {
-            // Est/swj/PO-Lokal/11/18/00034 atau Fac/swj/jkt/12/18/6100005 atau Est-POA/swj/jkt/12/18/6100004 atau Est2/swj/jkt/01/16/7100029
-            if ($hidden_jenis_spp == "SPPA") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/POA/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
-            } else if ($hidden_jenis_spp == "SPPI") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-Lokal/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
-            } else if ($hidden_jenis_spp == "SPPK") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-Khusus/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
-            } else {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
-            }
-        }
+        $no_po = $this->input->post('hidden_no_po');
+        $norefpo = $this->input->post('hidden_no_ref_po');
 
 
         $query_id_item = "SELECT MAX(id)+1 as no_id_item FROM item_po";
@@ -833,6 +816,8 @@ class Po extends CI_Controller
             'po' => 1
         );
         $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+        $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
 
         $data_return = [
             'data' => $data,
