@@ -62,6 +62,10 @@ class Retur extends CI_Controller
             $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="approval_retur(' . $field->id . ')">
                         </button>
+                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_retur" name="edit_retur"
+                        data-id_retskb="' . $field->id . '" 
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                        </button>
                         <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = date("Y-m-d", strtotime($field->tgl));
