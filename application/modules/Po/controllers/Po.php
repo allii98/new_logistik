@@ -327,11 +327,33 @@ class Po extends CI_Controller
 
         $sisa_qty_ppo  =  number_format($data_qty_ppo->qty - $data_qty_ppo->qty2, 0);
 
-        if ($sisa_qty_ppo == 0) {
-            $this->M_po->updatePPO2($noppo);
-        } else {
-            $this->M_po->updatePPO3($noppo);
-        }
+        // if ($sisa_qty_ppo == 0) {
+        //     $this->M_po->updatePPO2($noppo);
+        // } else {
+        //     $this->M_po->updatePPO3($noppo);
+        // }
+    }
+
+    function cekdataspp()
+    {
+        // $noref = "EST-SPPI/SWJ/07/21/6600073";
+        $refspp = $this->input->post('refspp');
+        $data = $this->M_po->cekdata($refspp);
+
+        echo json_encode($data);
+    }
+
+    function updatePPO()
+    {
+        $refspp = $this->input->post('refspp');
+        $data_ppo =  array(
+
+            'po' => 1
+        );
+
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo);
+
+        echo json_encode($data);
     }
 
     function total_bayar()
@@ -489,7 +511,6 @@ class Po extends CI_Controller
             $pph = "0";
         }
 
-
         //  generate qrcode
         $this->load->library('ciqrcode'); //pemanggilan library QR CODE
 
@@ -515,6 +536,7 @@ class Po extends CI_Controller
 
         $kode_dev = $this->input->post('devisi');
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_dev))->row_array();
+        $norefspp = $this->input->post('hidden_no_ref');
 
         $datainsert = [
             'id' => $no_id,
@@ -534,7 +556,7 @@ class Po extends CI_Controller
             'nopotxt' =>  $no_po,
             'noppo' =>  $this->input->post('txt_no_spp'),
             'noppotxt' => $this->input->post('txt_no_spp'),
-            'no_refppo' => $this->input->post('hidden_no_ref'),
+            'no_refppo' => $norefspp,
             'tgl_refppo' =>  $this->input->post('hidden_tglref'),
             'tgl_reftxt' =>  date("Ymd"),
             'tglpo' =>  date("Y-m-d  H:i:s"),
@@ -575,7 +597,7 @@ class Po extends CI_Controller
             'nopotxt' => $no_po,
             'noppo' => $this->input->post('txt_no_spp'),
             'noppotxt' => $this->input->post('txt_no_spp'),
-            'refppo' => $this->input->post('hidden_no_ref'),
+            'refppo' => $norefspp,
             'tglppo' =>  $tgl_ppo,
             'tglppotxt' => $tgl_ppo_txt,
             'tglpo' =>  date("Y-m-d"),
@@ -615,68 +637,29 @@ class Po extends CI_Controller
         ];
 
         //update(dengan cara qty2+qty inputan) where id_ppo = id_ppo yang di dapat
-        $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $d = $this->db_logistik_pt->query($query)->row();
-        $qtyy = $d->qty;
-        $qty2 = $d->qty2;
-        if ($qty2 == null) {
-            $tmbhQTY = $this->input->post('txt_qty');
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $tmbhQTY
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        } else {
-            $a = $this->input->post('txt_qty');
-            $qty = $qty2 + $a;
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $qty,
-
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
 
 
-        $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        $ambil = $this->db_logistik_pt->query($chek)->row();
-        $qtyy = $ambil->qty;
-        $qtyy2 = $ambil->qty2;
+        $id_ppo = $this->input->post('id_item');
+        $data_ppo =  array(
+            'qty2' => $this->input->post('txt_qty'),
+            'po' => 1
+        );
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
 
-        if ($qtyy == $qtyy2) {
-
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'po' => 1
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-            // $this->M_po->updatePPO($id_ppo, $data_ppo);
-        }
-
-        //select item_ppo where id_ppo = id_ppo yang di dapat
 
         //cek isi qty dan qty2, jika qty == qty2, maka update po = 1 
 
         $data1 = $this->db_logistik_pt->insert('po', $datainsert);
         $data2 = $this->db_logistik_pt->insert('item_po', $datainsertitem);
 
-        // if ($qtyy == $qtyy2) {
 
-
-        //     $data_ppo =  array(
-        //         'po' => 1
-        //     );
-        //     $this->M_po->editPPO($no_id, $data_ppo);
-        //     // $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // }
-
-        // $this->_cek_flag_po($no_po);
 
         $data_return = [
             'data' => $data1,
             'data2' => $data2,
             'nopo' => $no_po,
             'noref' => $norefpo,
+            'refspp' => $norefspp,
             'id_po' => $no_id,
             'id_item' => $no_id_item,
         ];
@@ -769,20 +752,11 @@ class Po extends CI_Controller
         }
 
 
-        $tgl_po = date("Y-m-d", strtotime($this->input->post('txt_tgl_po')));
-        $tgl_po_txt = date("Ymd", strtotime($this->input->post('txt_tgl_po')));
 
         $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
         $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
 
-        $tgl_ref = date("Y-m-d", strtotime($this->input->post('hidden_tgl_ref')));
-        $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
 
-        if ($this->input->post('cmb_dikirim_ke_kebun') == 'Y') {
-            $dikirim_ke_kebun = 1;
-        } else {
-            $dikirim_ke_kebun = 0;
-        }
 
         if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00") {
             $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
@@ -796,6 +770,7 @@ class Po extends CI_Controller
         if (empty($pph)) {
             $pph = "0";
         }
+        $norefspp = $this->input->post('hidden_no_ref');
 
         $datainsertitem = [
             'id' => $no_id_item,
@@ -803,7 +778,7 @@ class Po extends CI_Controller
             'nopotxt' => $no_po,
             'noppo' => $this->input->post('txt_no_spp'),
             'noppotxt' => $this->input->post('txt_no_spp'),
-            'refppo' => $this->input->post('hidden_no_ref'),
+            'refppo' => $norefspp,
             'tglppo' =>  $tgl_ppo,
             'tglppotxt' =>  $tgl_ppo_txt,
             'tglpo' =>  date("Y-m-d"),
@@ -842,55 +817,19 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
-        // $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        // $d = $this->db->query($query)->row();
-        // $qtyy = $d->qty;
-        // $qty2 = $d->qty2;
-        // if ($qty2 == null) {
-        //     $tmbhQTY = $this->input->post('txt_qty');
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'qty2' => $tmbhQTY
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // } else {
-        //     $a = $this->input->post('txt_qty');
-        //     $qty = $qty2 + $a;
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'qty2' => $qty,
 
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // }
-
-
-        // $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        // $ambil = $this->db->query($chek)->row();
-        // $qtyy = $ambil->qty;
-        // $qtyy2 = $ambil->qty2;
-
-        // if ($qtyy == $qtyy2) {
-
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'po' => 1
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // }
-
-
-        $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
-        // $no_ppo = $this->input->post('id_ppo');
-        // $data_ppo =  array(
-        //     'QTY2' => $this->input->post('txt_qty')
-        // );
-        // $this->M_po->updatePPO($no_ppo, $data_ppo);
+        $id_ppo = $this->input->post('id_item');
+        $data_ppo =  array(
+            'qty2' => $this->input->post('txt_qty'),
+            'po' => 1
+        );
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
 
         $data_return = [
             'data' => $data,
             'nopo' => $no_po,
             'noref' => $norefpo,
+            'refspp' => $norefspp,
             'id_item' => $no_id_item,
         ];
 
@@ -939,11 +878,17 @@ class Po extends CI_Controller
     public function hapus_rinci()
     {
         $id_po_item = $this->input->post('hidden_id_po_item');
+
+        $id_ppo = $this->input->post('id_item');
+        $refspp = $this->input->post('hidden_no_ref_spp');
+        $data_ppo =  array(
+            'po' => 0
+        );
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo);
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
         $data = $this->db_logistik_pt->delete('item_po', array('id' => $id_po_item));
         echo json_encode($data);
     }
-
-
 
     public function updateItem()
     {

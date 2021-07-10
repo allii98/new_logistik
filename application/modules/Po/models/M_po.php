@@ -75,11 +75,25 @@ class M_po extends CI_Model
         return $this->db_logistik_pt->count_all_results();
     }
 
-    public function updatePPO2($noppo)
+    public function cekdata($refspp)
     {
-        $this->db_logistik_pt->set('po', 1);
-        $this->db_logistik_pt->where(['noref' => $noppo]);
-        $this->db_logistik_pt->update('ppo');
+        $data1 = $this->db_logistik_pt->query("SELECT noreftxt, COUNT(id) AS jmlhSPP1 FROM item_ppo WHERE noreftxt='$refspp' AND po='0'")->row_array();
+        $data2 = $this->db_logistik_pt->query("SELECT noreftxt, COUNT(id) AS jmlhSPP2 FROM item_ppo WHERE noreftxt='$refspp' AND po='1'")->row_array();
+
+        $data_return = [
+            'data1' => $data1,
+            'data2' => $data2,
+            'noref' => $data1
+        ];
+
+        return $data_return;
+    }
+
+    public function updatePPO2($refspp, $data_ppo)
+    {
+        $this->db_logistik_pt->where('noreftxt', $refspp);
+        $this->db_logistik_pt->update('ppo', $data_ppo);
+        return TRUE;
     }
     public function updatePPO3($noppo)
     {
