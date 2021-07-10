@@ -287,6 +287,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                             <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                             <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                            <input type="hidden" id="refspp" name="refspp">
                             <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                             <div class="table-responsive mt-0">
                                 <table id="tableRinciPO" class="table table-striped table-bordered table-in">
@@ -437,7 +438,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <input type="text" class="form-control" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
                                                     <label id="lbl_status_simpan_1"></label>
-                                                    <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_">
+                                                    <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
 
                                                 </td>
                                                 <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
@@ -482,6 +483,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                             <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                             <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                            <input type="hidden" id="refspp" name="refspp">
                             <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                             <div class="table-responsive mt-0">
                                 <table id="tableItemPO" class="table table-striped table-bordered table-in">
@@ -672,8 +674,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 </button>
             </div>
             <div class="modal-body">
-
-
                 <div class="col-12">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_no_row" name="hidden_no_row">
@@ -699,11 +699,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </thead>
                             <tbody>
                             </tbody>
-                            <!-- <tfoot>
-                                <tr>
-                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
-                                </tr>
-                            </tfoot> -->
                         </table>
                     </div>
                 </div>
@@ -718,30 +713,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 <script>
-    function cetak() {
-        var id_po = $('#hidden_id_po').val();
-        var nopo = $('#hidden_no_po').val();
-        console.log(id_po, nopo);
-
-        window.open('cetak/' + nopo + '/' + id_po, '_blank');
-    }
-
-    function isSelected(selectedNoppo) {
-        var noppos = $('[id*=id_item_]');
-        // console.log(noppos);
-        var isSelected = false;
-        var a = noppos.each(function() {
-            var noppo = $(this).val();
-            console.log(noppo)
-            if (noppo == selectedNoppo) {
-                console.log("isSelected sama", noppo, selectedNoppo)
-                isSelected = true;
-                return false;
-            }
-        });
-        return isSelected;
-    }
-
+    var row = 0;
+    var simpanBaru = true;
+    var updateBaru = true;
+    var cancleUpdatePO = true;
+    var hapus = true;
+    var qty = true;
 
     $(document).ready(function() {
         $('.div_form_2').hide();
@@ -766,30 +743,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             }
         });
 
-        // $('#txt_qty_1').keyup(function() {
-        //     var a = $('#txt_qty_1').val();
-        //     var b = $('#qty_1').val();
-        //     var c = $('#qty2_1').val();
-        //     var qty = Number(a);
-        //     var qty2 = Number(b);
-        //     var qty2n = Number(c);
-        //     if (qty2n > 0) {
-        //         var tmbh = qty2 - qty2n;
-        //         if (qty > tmbh) {
-        //             swal('Qty melebihi inputan sebelumnya');
-        //             $('#txt_qty_1').val(tmbh);
-        //         }
-        //     } else {
-        //         if (qty > qty2) {
-        //             // console.log('benar');
-        //             swal("Qty melebihi bataaaas!")
-        //             $('#txt_qty_1').val(qty2);
-        //         } else {
-        //             console.log("sip dah ");
-        //         }
-        //     }
-
-        // });
         var lokasi = $('#lokasi').val();
 
         switch (lokasi) {
@@ -842,6 +795,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#id_ppo' + n).val(idppo);
                                 $('#id_item_' + n).val(idppo);
                                 $('#hidden_no_ref_spp_' + n).val(opsi);
+                                $('#refspp').val(opsi);
                                 // $('#hidden_tgl_hidden' + n).val(tglref);
                                 $('#hidden_kd_departemen_' + n).val(kodedept);
                                 $('#hidden_departemen_' + n).val(namadept);
@@ -854,20 +808,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#hidden_nama_brg_' + n).val(nabar);
                                 $('#nama_brg_' + n).text(nabar);
                                 $('#hidden_satuan_brg_' + n).val(sat);
-                                // $('#txt_qty_' + n).val(qty);
-                                if (qty2 != null) {
-                                    var hasil = qty - qty2;
-                                    $('#txt_qty_' + n).val(hasil);
-                                    console.log(hasil);
-                                    if (hasil == 0) {
+                                $('#txt_qty_' + n).val(qty);
+                                // if (qty2 != null) {
+                                //     var hasil = qty - qty2;
+                                //     $('#txt_qty_' + n).val(hasil);
+                                //     console.log(hasil);
+                                //     if (hasil == 0) {
 
-                                        $('.div_form_3').find('#cmb_jenis_budget_' + n + ',#txt_merk_' + n + ', #txt_qty_' + n + ' ,#cmb_kurs_' + n + ',#txt_disc_' + n + ', #txt_harga_' + n + ',#txt_biaya_lain_' + n + ',txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_rinci_' + n).attr('disabled', '');
-                                        $('#btn_simpan_' + n).hide();
-                                        $('#habis_' + n).show();
-                                    }
-                                } else {
-                                    $('#txt_qty_' + n).val(qty);
-                                }
+                                //         $('.div_form_3').find('#cmb_jenis_budget_' + n + ',#txt_merk_' + n + ', #txt_qty_' + n + ' ,#cmb_kurs_' + n + ',#txt_disc_' + n + ', #txt_harga_' + n + ',#txt_biaya_lain_' + n + ',txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_rinci_' + n).attr('disabled', '');
+                                //         $('#btn_simpan_' + n).hide();
+                                //         $('#habis_' + n).show();
+                                //     }
+                                // } else {
+                                //     $('#txt_qty_' + n).val(qty);
+                                // }
                                 $('#qty_' + n).val(qty);
                                 $('#qty2_' + n).val(qty2);
                                 $('#hidden_tgl_ref_' + n).val(tglref);
@@ -889,15 +843,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 break;
         }
 
-    });
-
-    function cariSPP() {
-        $('#modalcarispp').modal('show');
-    }
-
-    var table;
-    $(document).ready(function() {
-        table = $('#dataspp').DataTable({
+        // dataspp site
+        $('#dataspp').DataTable({
             "processing": true,
             "serverSide": true,
             "order": [],
@@ -909,131 +856,241 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "targets": [0],
                 "orderable": false,
             }, ],
+            "language": {
+                "infoFiltered": ""
+            }
         });
-    });
+        // end dataspp site
 
+        // data spp HO
+        $('#spp').DataTable().destroy();
+        $('#spp').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "select": true,
 
-    var row = 0;
-    var simpanBaru = true;
-    var updateBaru = true;
-    var cancleUpdatePO = true;
-    // var validasiItem = true;
-    var hapus = true;
-
-    var qty = true;
-
-
-    $("#sppSITE").select2({
-        ajax: {
-            url: "<?php echo site_url('Po/getSpp') ?>",
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                // console.log(params);
-                return {
-                    noref: params.term, // search term
-                    tgl: params.term // search term
-                };
+            "ajax": {
+                "url": "<?php echo site_url('Po/get_ajax') ?>",
+                "type": "POST"
             },
-            processResults: function(data) {
-                var results = [];
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
 
-                $.each(data, function(index, item) {
-                    var tglppo = item.tglppo;
-                    var tgl = tglppo.substr(0, 10);
-                    // var tgl2 = date()
-                    results.push({
-                        id: item.id,
-                        text: tgl + ' - ' + item.noreftxt + ' - ' + item.namadept
+            }, ],
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().deselect();
+                    }
+                }
+            ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+            "aoColumnDefs": [{
+                "bSearchable": false,
+                "bVisible": false,
+                "aTargets": [1]
+            }, ]
+        });
+
+        $(document).on('click', '#pilih', function() {
+            var id = $(this).data('id');
+            // console.log(id);
+            var kode = $(this).data('kode');
+            var supplier = $(this).data('supplier');
+            $('#id-supplier').val(id);
+            $('#kd_supplier').val(kode);
+            $('#supplier').val(supplier);
+            $("#modal-supllier").modal('hide');
+        });
+        //end data spp HO
+
+        $("#sppSITE").select2({
+            ajax: {
+                url: "<?php echo site_url('Po/getSpp') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    // console.log(params);
+                    return {
+                        noref: params.term, // search term
+                        tgl: params.term // search term
+                    };
+                },
+                processResults: function(data) {
+                    var results = [];
+
+                    $.each(data, function(index, item) {
+                        var tglppo = item.tglppo;
+                        var tgl = tglppo.substr(0, 10);
+                        // var tgl2 = date()
+                        results.push({
+                            id: item.id,
+                            text: tgl + ' - ' + item.noreftxt + ' - ' + item.namadept
+                        });
+
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+
+        }).on('select4:select', function(evt) {
+            var data = $(".select4 option:selected").text();
+            $('#hidden_no_ref_spp_').val(data);
+
+        });
+
+        $('#sppSITE').change(function() {
+            var dd = this.value;
+            console.log(dd);
+
+            $.ajax({
+                type: 'post',
+                url: '<?= site_url('Po/getid'); ?>',
+                data: {
+                    id: this.value
+                },
+                success: function(response) {
+                    $('.div_form_3').show();
+                    $('.div_form_1').find('#sppSITE').attr('disabled', '');
+                    // console.log(response);
+                    data = JSON.parse(response);
+
+                    var n = 1;
+                    $.each(data, function(index, value) {
+
+                        tambah_item(value.status2);
+                        console.log(value);
+
+                        var idppo = value.id;
+                        var opsi = value.noreftxt;
+                        var tglref = value.tglref;
+                        var kodedept = value.kodedept;
+                        var namadept = value.namadept;
+                        var tglppo = value.tglppo;
+                        var kodept = value.kodept;
+                        var pt = value.pt;
+                        var noppo = value.noppo;
+                        var kodebar = value.kodebar;
+                        var nabar = value.nabar;
+                        var sat = value.sat;
+                        // var tglref = value.tglref;
+                        var qty = value.qty;
+                        var qty2 = value.qty2;
+
+
+                        $('#id_ppo' + n).val(idppo);
+                        $('#id_item_' + n).val(idppo);
+                        $('#hidden_no_ref_spp_' + n).val(opsi);
+                        // $('#hidden_tgl_hidden' + n).val(tglref);
+                        $('#hidden_kd_departemen_' + n).val(kodedept);
+                        $('#hidden_departemen_' + n).val(namadept);
+                        $('#hidden_tgl_spp_' + n).val(tglppo);
+                        $('#hidden_kd_pt_' + n).val(kodept);
+                        $('#hidden_nama_pt_' + n).val(pt);
+                        $('#noppo' + n).val(noppo);
+                        $('#hidden_kode_brg_' + n).val(kodebar);
+                        $('#kode_brg_' + n).text(kodebar);
+                        $('#hidden_nama_brg_' + n).val(nabar);
+                        $('#nama_brg_' + n).text(nabar);
+                        $('#hidden_satuan_brg_' + n).val(sat);
+                        // $('#txt_qty_' + n).val(qty);
+                        if (qty2 != null) {
+                            var hasil = qty - qty2;
+                            $('#txt_qty_' + n).val(hasil);
+                        } else {
+                            $('#txt_qty_' + n).val(qty);
+                        }
+                        $('#qty_' + n).val(qty);
+                        $('#qty2_' + n).val(qty2);
+                        $('#hidden_tgl_ref_' + n).val(tglref);
+                        n++;
                     });
 
-                });
-                return {
-                    results: results
-                };
-            }
-        }
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        });
 
-    }).on('select4:select', function(evt) {
-        var data = $(".select4 option:selected").text();
-        $('#hidden_no_ref_spp_').val(data);
+
+        $("#select2").select2({
+            ajax: {
+                url: "<?php echo site_url('Po/getPoo') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        toko: params.term, // search term
+                    };
+                },
+                processResults: function(data) {
+                    var results = [];
+                    $.each(data, function(index, item) {
+                        results.push({
+                            id: item.kode,
+                            text: item.supplier
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+
+        }).on('select2:select', function(evt) {
+            var a = "0475";
+            var b = "TOKO ( KAS )";
+            var kode = $(".select2 option:selected").text();
+            var data = $(".select2 option:selected").val();
+            $('#kd_supplier').val(kode);
+            $('#txtsupplier').val(data);
+
+        });
 
     });
 
-    $('#sppSITE').change(function() {
-        var dd = this.value;
-        console.log(dd);
+    function cetak() {
+        var id_po = $('#hidden_id_po').val();
+        var nopo = $('#hidden_no_po').val();
+        console.log(id_po, nopo);
 
-        $.ajax({
-            type: 'post',
-            url: '<?= site_url('Po/getid'); ?>',
-            data: {
-                id: this.value
-            },
-            success: function(response) {
-                $('.div_form_3').show();
-                $('.div_form_1').find('#sppSITE').attr('disabled', '');
-                // console.log(response);
-                data = JSON.parse(response);
+        window.open('cetak/' + nopo + '/' + id_po, '_blank');
+    }
 
-                var n = 1;
-                $.each(data, function(index, value) {
-
-                    tambah_item(value.status2);
-                    console.log(value);
-
-                    var idppo = value.id;
-                    var opsi = value.noreftxt;
-                    var tglref = value.tglref;
-                    var kodedept = value.kodedept;
-                    var namadept = value.namadept;
-                    var tglppo = value.tglppo;
-                    var kodept = value.kodept;
-                    var pt = value.pt;
-                    var noppo = value.noppo;
-                    var kodebar = value.kodebar;
-                    var nabar = value.nabar;
-                    var sat = value.sat;
-                    // var tglref = value.tglref;
-                    var qty = value.qty;
-                    var qty2 = value.qty2;
-
-
-                    $('#id_ppo' + n).val(idppo);
-                    $('#id_item_' + n).val(idppo);
-                    $('#hidden_no_ref_spp_' + n).val(opsi);
-                    // $('#hidden_tgl_hidden' + n).val(tglref);
-                    $('#hidden_kd_departemen_' + n).val(kodedept);
-                    $('#hidden_departemen_' + n).val(namadept);
-                    $('#hidden_tgl_spp_' + n).val(tglppo);
-                    $('#hidden_kd_pt_' + n).val(kodept);
-                    $('#hidden_nama_pt_' + n).val(pt);
-                    $('#noppo' + n).val(noppo);
-                    $('#hidden_kode_brg_' + n).val(kodebar);
-                    $('#kode_brg_' + n).text(kodebar);
-                    $('#hidden_nama_brg_' + n).val(nabar);
-                    $('#nama_brg_' + n).text(nabar);
-                    $('#hidden_satuan_brg_' + n).val(sat);
-                    // $('#txt_qty_' + n).val(qty);
-                    if (qty2 != null) {
-                        var hasil = qty - qty2;
-                        $('#txt_qty_' + n).val(hasil);
-                    } else {
-                        $('#txt_qty_' + n).val(qty);
-                    }
-                    $('#qty_' + n).val(qty);
-                    $('#qty2_' + n).val(qty2);
-                    $('#hidden_tgl_ref_' + n).val(tglref);
-                    n++;
-                });
-
-            },
-            error: function(request) {
-                console.log(request.responseText);
+    function isSelected(selectedNoppo) {
+        var noppos = $('[id*=id_item_]');
+        // console.log(noppos);
+        var isSelected = false;
+        var a = noppos.each(function() {
+            var noppo = $(this).val();
+            console.log(noppo)
+            if (noppo == selectedNoppo) {
+                console.log("isSelected sama", noppo, selectedNoppo)
+                isSelected = true;
+                return false;
             }
         });
-    });
+        return isSelected;
+    }
 
+    function cariSPP() {
+        $('#modalcarispp').modal('show');
+    }
 
     function tambah_item(status2) {
 
@@ -1149,10 +1206,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         } else {
             $('#btn_hapus_row_1' + row).show();
         }
-        initPilihSpp(row);
         hitungqty(row);
         jumlah(row);
     }
+
 
     // var n = 2;
     function tambah_row(n) {
@@ -1263,13 +1320,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
 
-
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
         var lokasi = $('#lokasi').val();
-
-
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_' + n).number(true, 2);
@@ -1305,16 +1359,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function data_spp_dipilih(id, no_spp, no_ref_spp, kodebar) {
         var dataClick = $('#spp').DataTable().row(this).data();
         // var no_spp = dataClick[1];
-
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/get_detail_spp'); ?>",
             dataType: "JSON",
             beforeSend: function() {},
             cache: false,
-            // contentType : false,
-            // processData : false,
-
             data: {
                 'id': id,
                 'no_spp': no_spp,
@@ -1400,8 +1450,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
     }
 
-
-
     function hapus_row(id) {
         var rowCount = $("#tableRinciPO td").closest("tr").length;
         if (rowCount != 1) {
@@ -1415,7 +1463,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function totalBayar() {
         var no_po = $('#hidden_no_po').val();
         var no_ref_po = $('#hidden_no_ref_po').val();
-
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/total_bayar'); ?>",
@@ -1452,7 +1499,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     }
 
-
     function check_form_2() {
         if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#dikirim_kebun').val()) != '') {
             $('.div_form_2').show();
@@ -1469,106 +1515,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // $('#getspp').click(function() {
         $("#modal-spp").modal();
         // });
-
-    }
-
-    function initPilihSpp(id) {
-
-        $(`#pilihSpp${id}`).select2({
-            ajax: {
-                url: "<?php echo site_url('Po/getSpp') ?>",
-                dataType: 'json',
-                delay: 250,
-                data: function(params) {
-                    return {
-                        noref: params.term // search term
-                    };
-                },
-                processResults: function(data) {
-                    var results = [];
-
-                    $.each(data, function(index, item) {
-                        results.push({
-                            id: item.id,
-                            text: item.noreftxt + ' - ' + item.tglppotxt + ' - ' + item.namadept
-                            // text: item.noreftxt
-                        });
-
-                    });
-                    return {
-                        results: results
-                    };
-                }
-            }
-
-        }).on('select3:select', function(evt) {
-            var data = $(".select3 option:selected").text();
-            $('#hidden_no_ref_spp_').val(data);
-            console.log(data);
-
-        });
-
-        $(`#pilihSpp${id}`).change(function() {
-            // var dd = this.value;
-
-
-            $.ajax({
-                type: 'post',
-                url: '<?= site_url('Po/getid'); ?>',
-                data: {
-                    id: this.value
-                },
-                success: function(response) {
-                    // console.log(response);
-                    data = JSON.parse(response);
-                    $.each(data, function(index, value) {
-                        // console.log(value);
-                        // var idppo = value.id;
-                        var opsi = value.noreftxt;
-                        var tglref = value.tglref;
-                        var kodedept = value.kodedept;
-                        var namadept = value.namadept;
-                        var tglppo = value.tglppo;
-                        var kodept = value.kodept;
-                        var pt = value.pt;
-                        var noppo = value.noppo;
-                        var kodebar = value.kodebar;
-                        var nabar = value.nabar;
-                        var sat = value.sat;
-                        var qty = value.qty;
-                        var qty2 = value.qty2;
-                        $(`#hidden_tgl_ref_${id}`).val(tglref);
-                        $(`#hidden_no_ref_spp_${id}`).val(opsi);
-                        $(`#hidden_kd_departemen_${id}`).val(kodedept);
-                        $(`#hidden_departemen_${id}`).val(namadept);
-                        $(`#hidden_tgl_spp_${id}`).val(tglppo);
-                        $(`#hidden_kd_pt_${id}`).val(kodept);
-                        $(`#hidden_nama_pt_${id}`).val(pt);
-                        $(`#noppo${id}`).val(noppo);
-                        $(`#hidden_kode_brg_${id}`).val(kodebar);
-                        $(`#kode_brg_${id}`).text(kodebar);
-                        $(`#hidden_nama_brg_${id}`).val(nabar);
-                        $(`#nama_brg_${id}`).text(nabar);
-                        $(`#hidden_satuan_brg_${id}`).val(sat);
-                        $(`#txt_qty_${id}`).val(qty);
-                        $(`#qty_${id}`).val(qty);
-                        $(`#qty2_${id}`).val(qty2);
-                        // console.log("ini adalah id", idppo);
-                        // console.log(nabar);
-                    });
-
-                },
-                error: function(request) {
-                    console.log(request.responseText);
-                }
-            });
-        });
-
     }
 
     function hitungqty(id) {
-
-
         $('#txt_qty_' + id).keyup(function() {
             var a = $('#txt_qty_' + id).val();
             var b = $('#qty_' + id).val();
@@ -1593,8 +1542,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             }
 
         });
-
-
     }
 
     function jumlah(id) {
@@ -1613,8 +1560,57 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         $('#txt_jumlah_' + id).val(nilai);
     }
 
+    function cekdataspp() {
+        var refspp = $('#refspp').val();
+        console.log(refspp);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/cekdataspp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                refspp: refspp
+            },
+            success: function(data) {
+                var a = data.data1;
+                var b = data.data2;
 
+                // // console.log(item);
+                // console.log(a.jmlhSPP1, b.jmlhSPP2);
+                if (a.jmlhSPP1 == 0) {
+                    updatePPO();
+                    // console.log('oke update ppo');
+                } else {
+                    console.log('field po belum 0 semua');
+                }
 
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    }
+
+    function updatePPO(noref) {
+        var refspp = $('#refspp').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/updatePPO'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                refspp: refspp
+            },
+            success: function(data) {
+                console.log('oke field ppo berhasil diupdate', data);
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    }
 
     //Simpan Data
     function simpan(id) {
@@ -1661,6 +1657,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                 hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                 hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+                id_item: $('#id_item_' + id).val(),
             });
             noppo = $('#noppo' + id).val();
 
@@ -1723,6 +1720,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                 },
                 success: function(data) {
+                    console.log(data, 'nah ini');
                     if (true) {
                         $('#lbl_status_simpan_1' + id).empty();
                         $.toast({
@@ -1733,13 +1731,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             showHideTransition: 'plain'
                             // reload: false
                         });
-
-                        sum_qty(noppo, id);
+                        var refspp = data.refspp;
+                        cekdataspp();
+                        // sum_qty(noppo, id);
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
-                        // $('.div_form_2').find('input,textarea,select').attr('disabled', '');
-                        // $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
 
                         $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
@@ -1755,6 +1752,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#h4_no_ref_po').html('No. Ref PO : ' + data.noref);
                         $('#hidden_no_ref_po').val(data.noref);
                         $('#hidden_id_po').val(data.id_po);
+                        $('#ref_spp').val(data.refspp);
                         var idItem = data.id_item;
                         // console.log(idItem);
                         // console.log(id);
@@ -1771,7 +1769,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
         // simpan keduakalinya
         else {
-            console.log('simpan setelah dengan keadaan po dibuat')
+            console.log('simpan setelah dengan keadaan po dibuat');
 
             console.table({
                 id_ppo: $('#id_ppo' + id).val(),
@@ -1884,16 +1882,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             showHideTransition: 'plain'
                             // reload: false
                         });
-
-                        sum_qty(noppo, id);
+                        var refspp = data.refspp;
+                        cekdataspp();
+                        // sum_qty(noppo, id);
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
                         $('.div_form_2').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
 
-                        // $('#tr_1').find('#getspp1', '#cmb_jenis_budget_1', '#txt_merk_1', '#txt_qty_1', '#txt_harga_1', '#cmb_kurs_1', '#txt_disc_1', '#txt_biaya_lain_1', '#txt_keterangan_biaya_lain_1', '#txt_keterangan_rinci_1', '#txt_jumlah_1').attr('disabled', '');
-                        // $('#tr_1').find('input,textarea,select').addClass('form-control bg-light');
                         $('#tr_' + id).find('input,textarea,select').prop('disabled', true);
                         $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
@@ -1908,6 +1905,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#lbl_spp_status').empty();
                         $('#h4_no_ref_po').html('No. Ref PO : ' + data.noref);
                         $('#hidden_no_ref_po').val(data.noref);
+                        $('#ref_spp').val(data.refspp);
                         // $('#hidden_id_po').val(data.id_po);
                         $('#hidden_id_po_item_' + id).val(data.id_item);
                         totalBayar();
@@ -2108,10 +2106,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             stack: true,
                             icon: 'success'
                         });
-
-
-                        // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
-                        // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
                         $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
@@ -2284,26 +2278,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function deletePO(no) {
         var nopo = $('#hidden_no_po').val();
-
         // console.log(nopo);
-
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('Po/deletePO') ?>",
             dataType: "JSON",
-
             beforeSend: function() {
                 $('#lbl_status_simpan_' + no).empty();
                 $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus PO</label>');
             },
-
             data: {
                 nopo: nopo
             },
-
             success: function(data) {
                 // console.log(data);
-
                 location.reload();
             }
         });
@@ -2312,12 +2300,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function deleteData() {
         // console.log("Okeee");
         var no = $('#hidden_no_delete').val();
-        var id_item = $('#hidden_id_po_item_' + no).val();
+        // var id_item = $('#hidden_id_po_item_' + no).val();
         var id_po = $('#hidden_id_po').val();
+        var id_ppo = $('#id_item_' + no).val();
         // var no_po = $('#hidden_no_po').val();
 
         // console.log(id_item);
-        // console.log(id_po);
+        // console.log(id_ppo);
         $('#modalKonfirmasiHapus').modal('hide');
 
         var rowCount = $("#tableItemPO td").closest("tr").length;
@@ -2334,7 +2323,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 },
 
                 data: {
-                    hidden_id_po_item: $('#hidden_id_po_item_' + no).val()
+                    hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                    id_item: $('#id_item_' + no).val(),
+                    hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
                     // hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
                     // hidden_kode_brg: $('#hidden_kode_brg_1' + no).val()
                 },
@@ -2384,42 +2375,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var keterangan = $('#keterangan').val();
         var jnSPP = $('#hidden_jenis_spp').val();
         var lokasi = $('#status_lokasi').val();
-        var lokasi = $('#devisi').val();
-
+        // var lokasi = $('#devisi').val();
 
         var jnbudget = $('#cmb_jenis_budget_' + id).val();
-        // var jnbudget = $('#txt_harga_1' + id).val();
         var merk = $('#txt_merk_' + id).val();
         var hrg = $('#txt_harga_' + id).val();
         var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
         var ketRinci = $('#txt_keterangan_rinci_' + id).val();
         var jml = $('#txt_jumlah_' + id).val();
-
-
-        //hitung qty
-        // var a = $('#txt_qty_' + id).val();
-        // var b = $('#qty_' + id).val();
-        // var c = $('#qty2_' + id).val();
-        // var qty = Number(a);
-        // var qty2 = Number(b);
-        // var qty2n = Number(c);
-
-        // if (qty2n > 0) {
-        //     var tmbh = qty2 - qty2n;
-        //     if (qty > tmbh) {
-        //         swal('melebihi, inputan ke 2');
-        //         $('#txt_qty_' + id).val(tmbh);
-        //     }
-        // } else {
-        //     if (qty > qty2) {
-        //         // console.log('benar');
-        //         swal("Qty melebihi bataaaas!");
-        //         $('#txt_qty_' + id).val(qty2);
-        //     } else {
-        //         console.log("sip dah ");
-        //     }
-        // }
-
 
         if (!jnpo) {
             toast('Jenis PO is required!');
@@ -2513,13 +2476,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             $('#txt_keterangan_rinci_' + id).css({
                 "background": "#FFCECE"
             });
-        } else if (jml > 1500000 && lokasi == "SITE") {
+        } else if (jml > 1500000 && lokasi != "HO") {
             toast('Tidak boleh lebih dari 1.500.000!');
             $('#txt_jumlah_' + id).css({
                 "background": "#FFCECE"
             });
         } else {
-
             simpan(id);
         }
 
@@ -2533,108 +2495,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             heading: 'Failed!',
             text: v_text + ' ',
             icon: 'error',
-            loader: false,
-            loaderBg: 'red'
+            loader: false
         });
     }
-
-    //CANCLE
-
-    // $('#kd_supplier').click(function() {
-    //     $("#modal-supllier").modal();
-    // });
-
-
-
-
-    $("#select2").select2({
-        ajax: {
-            url: "<?php echo site_url('Po/getPoo') ?>",
-            dataType: 'json',
-            delay: 250,
-            data: function(params) {
-                return {
-                    toko: params.term, // search term
-                };
-            },
-            processResults: function(data) {
-                var results = [];
-                $.each(data, function(index, item) {
-                    results.push({
-                        id: item.kode,
-                        text: item.supplier
-                    });
-                });
-                return {
-                    results: results
-                };
-            }
-        }
-
-    }).on('select2:select', function(evt) {
-        // var selected = evt.params.data;
-        var a = "0475";
-        var b = "TOKO ( KAS )";
-        var kode = $(".select2 option:selected").text();
-        var data = $(".select2 option:selected").val();
-        $('#kd_supplier').val(kode);
-        $('#txtsupplier').val(data);
-
-    });
-
-
-
-    $(document).ready(function() {
-        $('#spp').DataTable().destroy();
-        $('#spp').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order": [],
-            "select": true,
-
-            "ajax": {
-                "url": "<?php echo site_url('Po/get_ajax') ?>",
-                "type": "POST"
-            },
-            "columnDefs ": [{
-                "targets": [0],
-                "orderable": false,
-
-            }, ],
-            "dom": 'Bfrtip',
-            "buttons": [{
-                    "text": "Select All",
-                    "action": function() {
-                        $('#spp').DataTable().rows().select();
-                    }
-                },
-                {
-                    "text": "Unselect All",
-                    "action": function() {
-                        $('#spp').DataTable().rows().deselect();
-                    }
-                }
-            ],
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [10, 15, 20, 25]
-            ],
-            "aoColumnDefs": [{
-                "bSearchable": false,
-                "bVisible": false,
-                "aTargets": [1]
-            }, ]
-        });
-
-        $(document).on('click', '#pilih', function() {
-            var id = $(this).data('id');
-            // console.log(id);
-            var kode = $(this).data('kode');
-            var supplier = $(this).data('supplier');
-            $('#id-supplier').val(id);
-            $('#kd_supplier').val(kode);
-            $('#supplier').val(supplier);
-            $("#modal-supllier").modal('hide');
-        });
-    });
 </script>
