@@ -88,10 +88,13 @@ class Po extends CI_Controller
 
     public function edit($id)
     {
+        $dt = str_replace('.', '/', $id);
+
         $data = [
-            'nopo' => $id,
+            'nopo' => $dt,
             'sesi_sl' => $this->session->userdata('status_lokasi')
         ];
+
         $this->template->Load('template', 'v_edit_po', $data);
     }
 
@@ -110,12 +113,14 @@ class Po extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $d) {
             $no++;
+            $noref = str_replace('/', '.', $d->noreftxt);
+
             $row = array();
             $row[] = '
-            <button type="button" id="edit" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-warning btn-xs waves-effect waves-light" title="Edit"><i class="fas fa-edit"></i></button>
-            <button type="button" id="detail" data-id="' . $d->nopo . '"  onClick="return false" class="btn btn-success btn-xs waves-effect waves-light" title="Detail"><i class="fas fa-eye"></i></button> 
+            <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs waves-effect waves-light" title="Edit"><i class="fas fa-edit"></i></button>
+            <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs waves-effect waves-light" title="Detail"><i class="fas fa-eye"></i></button> 
         
-        <a href="' . base_url('Po/cetak/' . $d->nopotxt . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
+        <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
             <i class="fas fa-print"></i>
         </a>
         ';
@@ -167,11 +172,12 @@ class Po extends CI_Controller
 
     function cetak()
     {
-        $nopo = $this->uri->segment('3');
+        $nopo = str_replace('.', '/', $this->uri->segment('3'));
+
         $id = $this->uri->segment('4');
 
         $this->db_logistik_pt->where('id', $id);
-        $this->db_logistik_pt->where('nopotxt', $nopo);
+        $this->db_logistik_pt->where('noreftxt', $nopo);
         $cek = $this->db_logistik_pt->get_where('po');
 
         if ($cek->num_rows() > 0) {
@@ -182,18 +188,21 @@ class Po extends CI_Controller
                 'jml_cetak' => $jml_ + 1
             ];
             $this->db_logistik_pt->where('id', $id);
-            $this->db_logistik_pt->where('nopotxt', $nopo);
+            $this->db_logistik_pt->where('noreftxt', $nopo);
             $this->db_logistik_pt->update('po', $up);
         } else {
             $ins = [
                 'jml_cetak' => 1
             ];
-            $this->db_logistik_pt->insert('po', $ins);
+            $this->db_logistik_pt->where('id', $id);
+            $this->db_logistik_pt->where('noreftxt', $nopo);
+            $this->db_logistik_pt->update('po', $ins);
+            // $this->db_logistik_pt->insert('po', $ins);
         }
 
         $data['pt'] = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'))->row();
 
-        $data['po'] = $this->db_logistik_pt->get_where('po', array('nopotxt' => $nopo, 'id' => $id))->row();
+        $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $nopo, 'id' => $id))->row();
 
         $kode_supplier = $data['po']->kode_supply;
 
@@ -203,7 +212,7 @@ class Po extends CI_Controller
         $data['supplier'] = $this->db_logistik_pt->query($query_supplier)->row();
 
         $no_refpo = $data['po']->noreftxt;
-        $data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('nopotxt' => $nopo, 'noref' => $no_refpo))->result();
+        $data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('noref' => $nopo, 'noref' => $no_refpo))->result();
 
         // $mpdf = new \Mpdf\Mpdf([
         // 		    'mode' => 'utf-8',
@@ -909,8 +918,8 @@ class Po extends CI_Controller
         $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
         $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
 
-        $tgl_ref = date("Y-m-d", strtotime($this->input->post('hidden_tgl_ref')));
-        $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
+        // $tgl_ref = date("Y-m-d", strtotime($this->input->post('hidden_tgl_ref')));
+        // $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
 
         $dataupdateitem = [
             // 'nopo' => $no_po,
@@ -949,43 +958,6 @@ class Po extends CI_Controller
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
             'konversi' => "0"
         ];
-
-        // $query =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        // $d = $this->db->query($query)->row();
-        // $qtyy = $d->qty;
-        // $qty2 = $d->qty2;
-        // if ($qty2 == null) {
-        //     $tmbhQTY = $this->input->post('txt_qty');
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'qty2' => $tmbhQTY
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // } else {
-        //     $a = $this->input->post('txt_qty');
-        //     $qty = $qty2 + $a;
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'qty2' => $qty,
-
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // }
-
-
-        // $chek =  "SELECT qty, qty2 FROM item_ppo WHERE id = '" . $this->input->post('id_item') . "' ";
-        // $ambil = $this->db->query($chek)->row();
-        // $qtyy = $ambil->qty;
-        // $qtyy2 = $ambil->qty2;
-
-        // if ($qtyy == $qtyy2) {
-
-        //     $id_ppo = $this->input->post('id_item');
-        //     $data_ppo =  array(
-        //         'po' => 1
-        //     );
-        //     $this->M_po->updatePPO($id_ppo, $data_ppo);
-        // }
 
         $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
         echo json_encode($updateitem);

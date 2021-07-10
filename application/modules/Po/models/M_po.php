@@ -240,12 +240,12 @@ class M_po extends CI_Model
     {
         $this->db_logistik_pt->select('*');
         $this->db_logistik_pt->from('po');
-        $this->db_logistik_pt->where('nopo', $nopo);
+        $this->db_logistik_pt->where('noreftxt', $nopo);
         $po = $this->db_logistik_pt->get()->row_array();
 
         $this->db_logistik_pt->select('*');
         $this->db_logistik_pt->from('item_po');
-        $this->db_logistik_pt->where('nopo', $nopo);
+        $this->db_logistik_pt->where('noref', $nopo);
         $item_po = $this->db_logistik_pt->get()->result_array();
 
         $data = [

@@ -216,7 +216,7 @@
 
     function update(id) {
         if (updateBaru) {
-            console.log('update', id);
+            // console.log('update', id);
 
             $.ajax({
                 type: "POST",

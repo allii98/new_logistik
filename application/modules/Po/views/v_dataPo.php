@@ -115,9 +115,10 @@
 		});
 		$(document).on('click', '#edit', function() {
 			var id = $(this).data('id');
-			// console.log(nabar);
+			var data = id.replaceAll('/', '.');
+			// console.log(data);
 
-			window.location.href = "Po/edit/" + id;
+			window.location.href = "Po/edit/" + data;
 		});
 
 		//datatables
@@ -140,6 +141,9 @@
 				"targets": [0],
 				"orderable": false,
 			}, ],
+			"language": {
+				"infoFiltered": ""
+			}
 
 		});
 	}
@@ -165,6 +169,9 @@
 				"targets": [0],
 				"orderable": false,
 			}, ],
+			"language": {
+				"infoFiltered": ""
+			}
 
 		});
 

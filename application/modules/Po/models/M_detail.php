@@ -35,13 +35,13 @@ class M_detail extends CI_Model
             # code...
             $this->db_logistik_pt->select('id, noref , nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
             $this->db_logistik_pt->from('item_po');
-            $this->db_logistik_pt->where('nopo', $eee);
+            $this->db_logistik_pt->where('noref', $eee);
             $this->db_logistik_pt->order_by('id', 'desc');
         } else {
             $this->db_logistik_pt->select('id, noref , nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
             $this->db_logistik_pt->from('item_po');
             $this->db_logistik_pt->where('user', $user);
-            $this->db_logistik_pt->where('nopo', $eee);
+            $this->db_logistik_pt->where('noref', $eee);
             $this->db_logistik_pt->order_by('id', 'desc');
             # code...
         }
