@@ -862,8 +862,16 @@ class Po extends CI_Controller
 
     public function deletePO()
     {
-        $no_po = $this->input->post('nopo');
 
+        $id_ppo = $this->input->post('id_item');
+        $refspp = $this->input->post('hidden_no_ref_spp');
+        $data_ppo =  array(
+            'po' => 0
+        );
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo);
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+        $no_po = $this->input->post('nopo');
         $data = $this->M_po->deletePO($no_po);
 
         echo json_encode($data);

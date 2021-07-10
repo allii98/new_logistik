@@ -2278,6 +2278,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function deletePO(no) {
         var nopo = $('#hidden_no_po').val();
+        var id_po = $('#hidden_id_po').val();
+        var id_ppo = $('#id_item_' + no).val();
+        var hidden_no_ref_spp = $('#hidden_no_ref_spp_' + no).val();
         // console.log(nopo);
         $.ajax({
             type: "POST",
@@ -2288,7 +2291,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus PO</label>');
             },
             data: {
-                nopo: nopo
+                nopo: $('#hidden_no_po').val(),
+                hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                id_item: $('#id_item_' + no).val(),
+                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
             },
             success: function(data) {
                 // console.log(data);
