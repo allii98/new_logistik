@@ -246,9 +246,9 @@
             $(document).on('click', '#edit_retur', function() {
 
                   var id_retskb = $(this).data('id_retskb');
-                  console.log(id_retskb);
+                  // console.log(id_retskb);
 
-                  // window.location.href = "Retur/edit_retur/" + no_lpb + '/' + nopo;
+                  window.location.href = "Retur/edit_retur/" + id_retskb;
 
                   // $("#modalListItemLpb").modal('show');
                   // tampil_detail_lpb(no_lpb);
