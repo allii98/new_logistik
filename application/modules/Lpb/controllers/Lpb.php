@@ -57,12 +57,8 @@ class Lpb extends CI_Controller
                         data-noref="' . $field->noref . '" data-mutasi="' . $field->mutasi . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
-                        <button class="btn btn-primary btn-xs fa fa-undo" id="undo_lpb" name="undo_lpb"
-                        data-ttg="' . $field->ttg . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
                         <button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
-                        data-ttg="' . $field->ttg . '" data-nopo="' . $field->nopo . '"
+                        data-id="' . $field->id . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
                         <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
@@ -808,30 +804,27 @@ class Lpb extends CI_Controller
         echo json_encode($output);
     }
 
-    public function edit_lpb($no_lpb, $nopo)
+    public function edit_lpb()
     {
-        $data['no_lpb'] = $no_lpb;
-        $data['nopo'] = $nopo;
-
+        $data['id_stokmasuk'] = $this->uri->segment('3');
         $this->template->load('template', 'v_lpbEdit', $data);
     }
 
     public function cari_lpb_edit()
     {
-        $no_lpb = $this->input->post('no_lpb');
-        $nopo = $this->input->post('nopo');
+        $id_stokmasuk = $this->input->post('id_stokmasuk');
 
-        $data = $this->M_lpb->cari_lpb_edit($no_lpb, $nopo);
+        $data = $this->M_lpb->cari_lpb_edit($id_stokmasuk);
 
         echo json_encode($data);
     }
 
     public function cariQtyPo()
     {
-        $nopo = $this->input->post('nopo');
+        $refpo = $this->input->post('refpo');
         $kodebar = $this->input->post('kodebar');
 
-        $data = $this->M_lpb->cariQtyPo($nopo, $kodebar);
+        $data = $this->M_lpb->cariQtyPo($refpo, $kodebar);
 
         echo json_encode($data);
     }
@@ -839,8 +832,8 @@ class Lpb extends CI_Controller
     public function sum_qty_edit()
     {
         $kodebar = $this->input->post('kodebar');
-        $nopo = $this->input->post('nopo');
-        $result = $this->M_lpb->sumqty_edit($kodebar, $nopo);
+        $refpo = $this->input->post('refpo');
+        $result = $this->M_lpb->sumqty_edit($kodebar, $refpo);
         echo json_encode($result);
     }
 

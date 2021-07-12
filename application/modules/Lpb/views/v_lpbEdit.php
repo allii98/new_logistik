@@ -221,17 +221,15 @@
         </div>
     </div>
 </div>
-<input type="hidden" id="hidden_no_lpb_edit" value="<?= $no_lpb ?>">
-<input type="hidden" id="hidden_nopo_edit" value="<?= $nopo ?>">
+<input type="hidden" id="id_stokmasuk" value="<?= $id_stokmasuk ?>">
 
 <script>
     $(document).ready(function() {
-        var no_lpb_edit = $('#hidden_no_lpb_edit').val();
-        var no_nopo_edit = $('#hidden_nopo_edit').val();
-        cari_lpb_edit(no_lpb_edit, no_nopo_edit);
+        var id_stokmasuk = $('#id_stokmasuk').val();
+        cari_lpb_edit(id_stokmasuk);
     });
 
-    function cari_lpb_edit(no_lpb, nopo) {
+    function cari_lpb_edit(id_stokmasuk) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Lpb/cari_lpb_edit'); ?>",
@@ -239,8 +237,7 @@
             beforeSend: function() {},
 
             data: {
-                'no_lpb': no_lpb,
-                'nopo': nopo
+                'id_stokmasuk': id_stokmasuk
             },
             success: function(data) {
 
@@ -262,7 +259,7 @@
                 $('#txt_no_pengantar').val(data_lpb.no_pengtr);
                 $('#txt_ket_pengiriman').val(data_lpb.ket);
                 $('#txt_tgl_po').val(data_lpb.tglpo);
-                $('#no_lpb').text('No. LPB : ' + no_lpb);
+                $('#no_lpb').text('No. LPB : ' + data_lpb.ttgtxt);
                 $('#no_ref_lpb').text('No. Ref LPB : ' + data_lpb.noref);
                 $('#kode_dev').val(data_lpb.kode_dev);
 
@@ -273,8 +270,8 @@
                     // var no = i + 1;
 
                     tambah_row(i);
-                    cari_qty_po(nopo, data_item_lpb[i].kodebar, i);
-                    sumqty_edit(data_item_lpb[i].kodebar, nopo, i);
+                    cari_qty_po(data_lpb.refpo, data_item_lpb[i].kodebar, i);
+                    sumqty_edit(data_item_lpb[i].kodebar, data_lpb.refpo, i);
 
                     var kodebar = data_item_lpb[i].kodebar;
                     var nabar = data_item_lpb[i].nabar;
@@ -316,7 +313,7 @@
         });
     }
 
-    function cari_qty_po(nopo, kodebar, i) {
+    function cari_qty_po(refpo, kodebar, i) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Lpb/cariQtyPo'); ?>",
@@ -324,7 +321,7 @@
             beforeSend: function() {},
 
             data: {
-                'nopo': nopo,
+                'refpo': refpo,
                 'kodebar': kodebar
             },
             success: function(data) {
@@ -333,8 +330,7 @@
         });
     }
 
-    function sumqty_edit(kodebar, nopotxt, i) {
-        var nopo = nopotxt;
+    function sumqty_edit(kodebar, refpo, i) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Lpb/sum_qty_edit'); ?>",
@@ -342,7 +338,7 @@
 
             data: {
                 'kodebar': kodebar,
-                'nopo': nopo
+                'refpo': refpo
             },
             success: function(data) {
                 $('#sisa_qty_' + i).text(data);
@@ -550,7 +546,8 @@
                 kode_dev: $('#kode_dev').val(),
                 nopo: no_po,
                 norefpo: no_ref_po,
-                kodebar: kodebar
+                kodebar: kodebar,
+                mutasi: '0'
             },
 
             success: function(data) {

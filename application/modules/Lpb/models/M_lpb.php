@@ -178,16 +178,16 @@ class M_lpb extends CI_Model
     //     return $this->db_logistik_pt->get()->result_array();
     // }
 
-    public function cari_lpb_edit($no_lpb, $nopo)
+    public function cari_lpb_edit($id_stokmasuk)
     {
-        $this->db_logistik_pt->select('stokmasuk.nopo, stokmasuk.refpo, stokmasuk.nama_supply, stokmasuk.kode_supply, stokmasuk.tgl, stokmasuk.lokasi_gudang, stokmasuk.no_pengtr, stokmasuk.noref, stokmasuk.ket, stokmasuk.kode_dev, po.tglpo');
-        $this->db_logistik_pt->from('po');
-        $this->db_logistik_pt->join('stokmasuk', 'stokmasuk.nopo = po.nopo');
-        $this->db_logistik_pt->where('ttg', $no_lpb);
+        $this->db_logistik_pt->select('stokmasuk.nopo, stokmasuk.refpo, stokmasuk.nama_supply, stokmasuk.kode_supply, stokmasuk.tgl, stokmasuk.lokasi_gudang, stokmasuk.no_pengtr, stokmasuk.noref, stokmasuk.ttgtxt, stokmasuk.ket, stokmasuk.kode_dev, po.tglpo');
+        $this->db_logistik_pt->from('stokmasuk');
+        $this->db_logistik_pt->join('po', 'po.noreftxt = stokmasuk.refpo');
+        $this->db_logistik_pt->where('stokmasuk.id', $id_stokmasuk);
         $data_lpb = $this->db_logistik_pt->get()->row_array();
 
         $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket, id, txtperiode');
-        $this->db_logistik_pt->where('ttg', $no_lpb);
+        $this->db_logistik_pt->where('noref', $data_lpb['noref']);
         $this->db_logistik_pt->from('masukitem');
         $data_item_lpb = $this->db_logistik_pt->get()->result_array();
 
@@ -198,23 +198,23 @@ class M_lpb extends CI_Model
         return $data;
     }
 
-    public function cariQtyPo($nopo, $kodebar)
+    public function cariQtyPo($refpo, $kodebar)
     {
         $this->db_logistik_pt->select('qty');
-        $this->db_logistik_pt->where(['nopo' => $nopo, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->where(['noref' => $refpo, 'kodebar' => $kodebar]);
         $this->db_logistik_pt->from('item_po');
         return $this->db_logistik_pt->get()->row_array();
     }
 
-    public function sumqty_edit($kodebar, $nopo)
+    public function sumqty_edit($kodebar, $refpo)
     {
         $this->db_logistik_pt->select('qty');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'nopo' => $nopo]);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $refpo]);
         $this->db_logistik_pt->from('item_po');
         $qty_po = $this->db_logistik_pt->get()->row_array();
 
         $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
-        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'nopo' => $nopo]);
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $refpo]);
         $this->db_logistik_pt->from('masukitem');
         $sumqty_lpb = $this->db_logistik_pt->get()->row();
 

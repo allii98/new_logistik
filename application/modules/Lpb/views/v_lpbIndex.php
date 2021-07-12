@@ -200,14 +200,11 @@
     $(document).ready(function() {
         $(document).on('click', '#edit_lpb', function() {
 
-            var no_lpb = $(this).data('ttg');
-            var nopo = $(this).data('nopo');
+            var id_stokmasuk = $(this).data('id');
             // console.log(nabar);
 
-            window.location.href = "Lpb/edit_lpb/" + no_lpb + '/' + nopo;
+            window.location.href = "Lpb/edit_lpb/" + id_stokmasuk;
 
-            // $("#modalListItemLpb").modal('show');
-            // tampil_detail_lpb(no_lpb);
         });
     });
 
