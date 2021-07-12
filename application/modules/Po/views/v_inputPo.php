@@ -2319,33 +2319,46 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         if (rowCount != 1) {
 
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('Po/hapus_rinci'); ?>",
-                dataType: "JSON",
-                beforeSend: function() {
-                    $('#lbl_status_simpan_' + no).empty();
-                    $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
-                },
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "PO akan dihapus",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Hapus!'
+            }).then((result) => {
+                if (result.value) {
+                    // var no_po = $('#hidden_no_po').val();
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('Po/hapus_rinci'); ?>",
+                        dataType: "JSON",
+                        beforeSend: function() {
+                            $('#lbl_status_simpan_' + no).empty();
+                            $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+                        },
 
-                data: {
-                    hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
-                    id_item: $('#id_item_' + no).val(),
-                    hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
-                    // hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
-                    // hidden_kode_brg: $('#hidden_kode_brg_1' + no).val()
-                },
-                success: function(data) {
-                    $('#tr_' + no).remove();
-                    swal('Data Berhasil dihapus');
-                    totalBayar();
-                    // $('#btn_konfirmasi_terima_' + index).removeAttr('disabled');
-                    // $('.modal-success').modal('show');
-                },
-                error: function(request) {
-                    console.log(request.responseText);
+                        data: {
+                            hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                            id_item: $('#id_item_' + no).val(),
+                            hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                            // hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                            // hidden_kode_brg: $('#hidden_kode_brg_1' + no).val()
+                        },
+                        success: function(data) {
+                            $('#tr_' + no).remove();
+                            swal('Data Berhasil dihapus');
+                            totalBayar();
+                            // $('#btn_konfirmasi_terima_' + index).removeAttr('disabled');
+                            // $('.modal-success').modal('show');
+                        },
+                        error: function(request) {
+                            console.log(request.responseText);
+                        }
+                    });
                 }
             });
+
         } else {
             // swal('Tidak Bisa dihapus, item PO tinggal 1');
             Swal.fire({
