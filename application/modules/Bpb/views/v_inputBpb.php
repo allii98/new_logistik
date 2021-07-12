@@ -141,7 +141,7 @@
                         <h4 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h4>
                         <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
                         <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
-                        <input type="text" id="hidden_id_bpb" name="hidden_id_bpb">
+                        <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
                         <div class="table-responsive">
                             <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
                                 <thead>
@@ -206,7 +206,7 @@
                                             </td>
                                             <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
                                                 <!-- Account Beban -->
-                                                <input type="text" class="form-control" id="txt_account_beban_1" value="-" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
+                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
                                                 <!-- <label class="control-label" id="lbl_no_acc_1"></label>
                                                 <label class="control-label" id="lbl_nama_acc_1"></label> -->
                                                 <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1" value="0">
@@ -707,7 +707,7 @@
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Account Beban -->' +
-            '<input type="text" class="form-control" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
+            '<input type="text" class="form-control" id="txt_account_beban_' + row + '" value="" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
             // '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
             // '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
             '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
@@ -1695,7 +1695,7 @@
                 "url": "<?php echo site_url('Bpb/list_acc_beban') ?>",
                 "type": "POST",
                 "data": {
-                    cmb_no_ac: cmb_bahan
+                    cmb_bahan: cmb_bahan
                 }
             },
 

@@ -16,22 +16,20 @@ class M_bpb extends CI_Model
         $this->load->database();
     }
 
-    public function where_datatables($cmb_no_ac)
+    public function where_datatables($cmb_bahan)
     {
         // global $nopo;
-        $this->no_ac = $cmb_no_ac;
+        $this->cmb_bahan = $cmb_bahan;
         // return $nopo;
     }
 
     private function _get_datatables_query()
     {
-        $eee = $this->no_ac;
-        // $nopo = $this->input->post('nopo');
+        $bahan = $this->cmb_bahan;
+        if ($bahan != '-') {
+            $this->db_logistik->where('general', $bahan);
+        }
         $this->db_logistik->from($this->table);
-        $this->db_logistik->where('general', $eee);
-        // $this->db_logistik_pt->select('id', 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli');
-        // $this->db_logistik_pt->from('po');
-        // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
 

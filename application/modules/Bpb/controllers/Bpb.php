@@ -234,8 +234,8 @@ class Bpb extends CI_Controller
 
     public function list_acc_beban()
     {
-        $cmb_no_ac = $this->input->post('cmb_no_ac');
-        $this->M_bpb->where_datatables($cmb_no_ac);
+        $cmb_bahan = $this->input->post('cmb_bahan');
+        $this->M_bpb->where_datatables($cmb_bahan);
         $list = $this->M_bpb->get_datatables();
         $data = array();
         $no = $_POST['start'];
