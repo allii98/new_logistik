@@ -134,7 +134,7 @@
                             </div>
                         </div>
                         <h6 class="mr-2">
-                            <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_bkb()"></button>
+                            <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_retur()"></button>
                         </h6>
                     </div>
                     <div class="table-responsive">
@@ -643,7 +643,11 @@
             toast('QTY Retur');
         } else {
             // saveRinci(n);
-            cekNoBa(n, no_ba);
+            if (n == 1) {
+                cekNoBa(n, no_ba);
+            } else {
+                saveRinci(n);
+            }
         }
         return false;
     };
@@ -1180,6 +1184,17 @@
         });
     }
 
+    function cetak_retur() {
+        var noretur = $('#hidden_noretur').val();
+        var id_retskb = $('#hidden_id_retskb').val();
+
+        window.open("<?= base_url('Retur/cetak/') ?>" + noretur + '/' + id_retskb, '_blank');
+
+        $('#cancelRetur').hide();
+
+        $('.div_form_2').css('pointer-events', 'none');
+    }
+
     // $("#select2").select2({
     //     ajax: {
     //         url: "<?php echo site_url('Bkb/select2_get_bpb') ?>",
@@ -1243,16 +1258,4 @@
     // }
 
     // saat hitung stock awal harian gunakan where devisi!
-
-
-    function cetak_bkb() {
-        var noretur = $('#hidden_noretur').val();
-        var id_retskb = $('#hidden_id_retskb').val();
-
-        window.open("<?= base_url('Retur/cetak/') ?>" + noretur + '/' + id_retskb, '_blank');
-
-        $('#cancelRetur').hide();
-
-        $('.div_form_2').css('pointer-events', 'none');
-    }
 </script>

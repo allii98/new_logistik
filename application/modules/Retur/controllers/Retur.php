@@ -50,6 +50,26 @@ class Retur extends CI_Controller
         $this->template->load('template', 'v_inputRetur', $data);
     }
 
+    public function edit_retur()
+    {
+        $id_retskb = $this->uri->segment('3');
+
+        $data = [
+            'title' => 'Edit Retur BKB',
+            'id_retskb' => $id_retskb
+        ];
+        $this->template->load('template', 'v_editRetur', $data);
+    }
+
+    public function cari_retur_edit()
+    {
+        $id_retskb = $this->input->post('id_retskb');
+
+        $output = $this->M_retur->cari_retur_edit($id_retskb);
+
+        echo json_encode($output);
+    }
+
     //Start Data Table Server Side
     public function get_data_retur()
     {
@@ -90,11 +110,14 @@ class Retur extends CI_Controller
     }
     //End Start Data Table Server Side
 
-    // public function select2_get_bpb()
-    // {
-    //     $data = $this->M_bkb->get_bpb();
-    //     echo json_encode($data);
-    // }
+    public function get_qty_bkb()
+    {
+        $kodebar = $this->input->post('kodebar');
+        $norefbkb = $this->input->post('norefbkb');
+        $data = $this->M_retur->get_qty_bkb($kodebar, $norefbkb);
+
+        echo json_encode($data);
+    }
 
     // //Start Data Table Server Side
     public function get_data_bkb()

@@ -409,6 +409,33 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
+    public function cari_retur_edit($id_retskb)
+    {
+        $this->db_logistik_pt->select('noretur, norefretur, kode_dev, devisi, norefbkb');
+        $this->db_logistik_pt->from('retskb');
+        $this->db_logistik_pt->where('id', $id_retskb);
+        $retskb = $this->db_logistik_pt->get()->row_array();
+
+        $this->db_logistik_pt->select('id, kodebar, nabar, grp, satuan, afd, blok, qty, ket, ketbeban, kodebeban, ketsub, kodesub, txtperiode');
+        $this->db_logistik_pt->from('ret_skbitem');
+        $this->db_logistik_pt->where('norefretur', $retskb['norefretur']);
+        $ret_skbitem = $this->db_logistik_pt->get()->result_array();
+
+        $return_data = [
+            'retskb' => $retskb,
+            'ret_skbitem' => $ret_skbitem,
+        ];
+        return $return_data;
+    }
+
+    public function get_qty_bkb($kodebar, $norefbkb)
+    {
+        $this->db_logistik_pt->select('qty2');
+        $this->db_logistik_pt->from('keluarbrgitem');
+        $this->db_logistik_pt->where(['NO_REF' => $norefbkb, 'kodebar' => $kodebar]);
+        return $this->db_logistik_pt->get()->row_array();
+    }
+
     // public function update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev)
     // {
     //     $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty');
