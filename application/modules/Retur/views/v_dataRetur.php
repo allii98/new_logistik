@@ -239,6 +239,7 @@
                   // console.log(id + 'ye');
 
             });
+            $('#tableListRetur').DataTable().ajax.reload();
             approval_retur(id_retskb);
       }
 
