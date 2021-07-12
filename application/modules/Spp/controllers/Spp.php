@@ -405,10 +405,6 @@ class Spp extends CI_Controller
                 data-noppo="' . $field->noppo . '"
                 data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                 </button>
-                <button class="btn btn-danger btn-xs fa fa-trash" id="print_spp" name="print_spp"
-                data-noppotxt="' . $field->noppotxt . '"
-                data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
-                </button>
                 <a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
                 <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
                 data-noppotxt="' . $field->noppotxt . '"
