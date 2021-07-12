@@ -192,9 +192,7 @@
                                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl BKB</th>
                                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref. BKB</th>
                                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;PT</th>
-                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Asal&nbsp;Divisi</th>
                                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PT&nbsp;Tujuan</th>
-                                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi&nbsp;Tujuan</th>
                                         </tr>
                                     </thead>
                                     <tbody>

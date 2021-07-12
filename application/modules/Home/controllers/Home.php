@@ -56,8 +56,6 @@ class Home extends CI_Controller
             $row[] = date('d-m-Y', strtotime($field->tgl));;
             $row[] = $field->NO_REF;
             $row[] = $field->pt;
-            $row[] = $field->devisi;
-            $row[] = $field->pt_mutasi;
             $row[] = $field->devisi_mutasi;
 
             $data[] = $row;
