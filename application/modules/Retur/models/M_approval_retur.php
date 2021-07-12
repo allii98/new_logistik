@@ -97,10 +97,12 @@ class M_approval_retur extends CI_Model
                   $cek_r = 0;
                   return $cek_r;
             } else {
+
                   $this->db_logistik_pt->select('*');
                   $this->db_logistik_pt->from('ret_skbitem');
                   $this->db_logistik_pt->where('id', $id_ret_skbitem);
                   $data_item_retur = $this->db_logistik_pt->get()->row_array();
+                  $norefretur = $data_item_retur['norefretur'];
 
                   $insert_retur_approval = [
                         'id_ret_skbitem' => $id_ret_skbitem,
@@ -112,7 +114,13 @@ class M_approval_retur extends CI_Model
                         'status_kasie_gudang' => '1',
                         'tgl_kasie_gudang' => date("Y-m-d H:i:s")
                   ];
-                  return $this->db_logistik_pt->insert('approval_retur', $insert_retur_approval);
+
+                  $this->db_logistik_pt->insert('approval_retur', $insert_retur_approval);
+
+                  //update status approve di retskb jadi 1 (approved)
+                  $this->db_logistik_pt->set('status_approval', '1');
+                  $this->db_logistik_pt->where('norefretur', $norefretur);
+                  return $this->db_logistik_pt->update('retskb');
             }
       }
 }

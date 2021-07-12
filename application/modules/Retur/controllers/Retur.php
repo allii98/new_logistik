@@ -77,16 +77,26 @@ class Retur extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $field) {
+
+            if ($field->status_approval == '1') {
+                $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="approval_retur(' . $field->id . ')">
+                </button>
+                <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+            } else {
+                $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="approval_retur(' . $field->id . ')">
+                </button>
+                <button class="btn btn-xs btn-warning fa fa-edit" id="edit_retur" name="edit_retur"
+                data-id_retskb="' . $field->id . '" 
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                </button>
+                <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+            }
+
             $no++;
             $row = array();
-            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="approval_retur(' . $field->id . ')">
-                        </button>
-                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_retur" name="edit_retur"
-                        data-id_retskb="' . $field->id . '" 
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
-                        <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+            $row[] = $aksi;
             $row[] = $no;
             $row[] = date("Y-m-d", strtotime($field->tgl));
             $row[] = $field->norefretur;

@@ -637,6 +637,7 @@
 
                         if (data > 1) {
                               swal('Tidak bisa menghapus Retur yang item nya lebih dari 1 !');
+                              $('#cancelRetur').removeAttr('disabled', '');
                         } else {
                               updateItemToZero(0);
                         }
