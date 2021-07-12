@@ -180,10 +180,9 @@ class M_lpb extends CI_Model
 
     public function cari_lpb_edit($id_stokmasuk)
     {
-        $this->db_logistik_pt->select('stokmasuk.nopo, stokmasuk.refpo, stokmasuk.nama_supply, stokmasuk.kode_supply, stokmasuk.tgl, stokmasuk.lokasi_gudang, stokmasuk.no_pengtr, stokmasuk.noref, stokmasuk.ttgtxt, stokmasuk.ket, stokmasuk.kode_dev, po.tglpo');
+        $this->db_logistik_pt->select('nopo, refpo, nama_supply, kode_supply, tgl, lokasi_gudang, no_pengtr, noref, ttgtxt, ket, kode_dev');
         $this->db_logistik_pt->from('stokmasuk');
-        $this->db_logistik_pt->join('po', 'po.noreftxt = stokmasuk.refpo');
-        $this->db_logistik_pt->where('stokmasuk.id', $id_stokmasuk);
+        $this->db_logistik_pt->where('id', $id_stokmasuk);
         $data_lpb = $this->db_logistik_pt->get()->row_array();
 
         $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket, id, txtperiode');

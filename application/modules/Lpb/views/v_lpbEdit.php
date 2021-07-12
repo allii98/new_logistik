@@ -250,7 +250,6 @@
                 $('#multiple').val(data_lpb.nopo);
                 $('#txt_no_po').val(data_lpb.nopo);
                 $('#txt_ref_po').val(data_lpb.refpo);
-                $('#txt_tgl_po').val();
                 var namesup = data_lpb.kode_supply + ' / ' + data_lpb.nama_supply;
                 $('#txt_kd_name_supplier').val(namesup);
                 $('#txt_kd_supplier').val(data_lpb.kode_supply);
