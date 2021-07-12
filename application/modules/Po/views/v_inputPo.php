@@ -448,7 +448,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah('1')" id="btn_ubah_1" name="btn_ubah_" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update('1')"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancleUpdate('1')"></button>
-                                                    <!-- <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button> -->
+                                                    <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
                                                 </td>
 
                                             </form>
@@ -727,6 +727,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             check_form_2();
         }, 1000);
 
+
+
         $('#cmb_pilih_jenis_po').change(function() {
             var jenis_po = this.value;
 
@@ -767,7 +769,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             $('.div_form_1').find('#sppSITE').attr('disabled', '');
                             // console.log(response);
                             data = JSON.parse(response);
-                            console.log(data);
+                            // console.log(data);
 
                             var n = 1;
                             $.each(data, function(index, value) {
@@ -828,6 +830,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 n++;
 
 
+
                             });
                             $('#modalcarispp').modal('hide');
 
@@ -842,6 +845,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             default:
                 break;
         }
+
+
 
         // dataspp site
         $('#dataspp').DataTable({
@@ -1096,6 +1101,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         row++;
         console.log("bariske", row);
+        var rowCount = $('#tableItemPO tr').length;
+        console.log('ini jumlah row', rowCount);
 
         var tr_buka = '<tr id="tr_' + row + '">';
 
@@ -2269,11 +2276,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function hapusRinci(id) {
         $('#hidden_no_delete').val(id);
-        if (id == 1) {
-            deleteData();
-        } else {
-            $('#modalKonfirmasiHapus').modal('show');
-        }
+        $('#modalKonfirmasiHapus').modal('show');
+        // if (id == 1) {
+        //     deleteData();
+        // } else {
+        // }
     }
 
     function deletePO(no) {
@@ -2315,47 +2322,64 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // console.log(id_ppo);
         $('#modalKonfirmasiHapus').modal('hide');
 
-        var rowCount = $("#tableItemPO td").closest("tr").length;
+
+        var lokasi = $('#lokasi').val();
+
+        switch (lokasi) {
+            case 'HO':
+
+                var rowCount = $("#tableRinciPO td").closest("tr").length;
+                break;
+            case 'RO':
+            case 'SITE':
+            case 'PKS':
+
+                var rowCount = $("#tableItemPO td").closest("tr").length;
+
+                break;
+            default:
+                break;
+        }
 
         if (rowCount != 1) {
 
-            Swal.fire({
-                title: 'Apakah anda yakin?',
-                text: "PO akan dihapus",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya Hapus!'
-            }).then((result) => {
-                if (result.value) {
-                    // var no_po = $('#hidden_no_po').val();
-                    $.ajax({
-                        type: "POST",
-                        url: "<?php echo site_url('Po/hapus_rinci'); ?>",
-                        dataType: "JSON",
-                        beforeSend: function() {
-                            $('#lbl_status_simpan_' + no).empty();
-                            $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
-                        },
+            // Swal.fire({
+            //     title: 'Apakah anda yakin?',
+            //     text: "PO akan dihapus",
+            //     showCancelButton: true,
+            //     confirmButtonColor: '#3085d6',
+            //     cancelButtonColor: '#d33',
+            //     confirmButtonText: 'Ya Hapus!'
+            // }).then((result) => {
+            //     if (result.value) {
 
-                        data: {
-                            hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
-                            id_item: $('#id_item_' + no).val(),
-                            hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
-                            // hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
-                            // hidden_kode_brg: $('#hidden_kode_brg_1' + no).val()
-                        },
-                        success: function(data) {
-                            $('#tr_' + no).remove();
-                            swal('Data Berhasil dihapus');
-                            totalBayar();
-                            // $('#btn_konfirmasi_terima_' + index).removeAttr('disabled');
-                            // $('.modal-success').modal('show');
-                        },
-                        error: function(request) {
-                            console.log(request.responseText);
-                        }
-                    });
+            //     }
+            // });
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Po/hapus_rinci'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+                    $('#lbl_status_simpan_' + no).empty();
+                    $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+                },
+
+                data: {
+                    hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                    id_item: $('#id_item_' + no).val(),
+                    hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                    // hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                    // hidden_kode_brg: $('#hidden_kode_brg_1' + no).val()
+                },
+                success: function(data) {
+                    $('#tr_' + no).remove();
+                    swal('Data Berhasil dihapus');
+                    totalBayar();
+                    // $('#btn_konfirmasi_terima_' + index).removeAttr('disabled');
+                    // $('.modal-success').modal('show');
+                },
+                error: function(request) {
+                    console.log(request.responseText);
                 }
             });
 
