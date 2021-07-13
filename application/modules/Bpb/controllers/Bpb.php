@@ -64,7 +64,7 @@ class Bpb extends CI_Controller
 
         $data['devisi'] = $this->M_bpb->cariDevisi();
 
-        $this->template->load('template', 'v_inputbpb', $data);
+        $this->template->load('template', 'v_inputBpb', $data);
     }
 
     public function cari_dept()
