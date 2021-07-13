@@ -1676,12 +1676,12 @@ class Laporan extends CI_Controller
 	function print_lap_po_lpb_semua()
 	{
 		$devisi = $this->uri->segment(3);
-		$noref = $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . $this->uri->segment(6) . '/' . $this->uri->segment(7) . '/' . $this->uri->segment(8) . '/' . $this->uri->segment(9);
+		// $noref = $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . $this->uri->segment(6) . '/' . $this->uri->segment(7) . '/' . $this->uri->segment(8) . '/' . $this->uri->segment(9);
 
-		$tanggalAwal = $this->uri->segment(12) . '-' . $this->uri->segment(11) . '-' . $this->uri->segment(10);
-		$tanggalAkhir = $this->uri->segment(15) . '-' . $this->uri->segment(14) . '-' . $this->uri->segment(13);
+		$tanggalAwal = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
+		$tanggalAkhir = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
 
-		$query = "SELECT nopo, noreftxt, no_refppo, tglpo, tgl_refppo, ket, kode_supply, nama_supply, user, lokasi, bayar FROM po WHERE noreftxt='$noref' AND tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir'";
+		$query = "SELECT nopo, noreftxt, no_refppo, tglpo, tgl_refppo, ket, kode_supply, nama_supply, user, lokasi, bayar FROM po WHERE tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir'";
 		$data['po'] = $this->db_logistik_pt->query($query)->result();
 
 		$data['lokasi1'] = "Tes";
@@ -1703,6 +1703,16 @@ class Laporan extends CI_Controller
 	}
 	function print_lap_po_lpb_bybrg()
 	{
+
+		$devisi = $this->uri->segment(3);
+		$noref = $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . $this->uri->segment(6) . '/' . $this->uri->segment(7) . '/' . $this->uri->segment(8) . '/' . $this->uri->segment(9);
+
+		$tanggalAwal = $this->uri->segment(12) . '-' . $this->uri->segment(11) . '-' . $this->uri->segment(10);
+		$tanggalAkhir = $this->uri->segment(15) . '-' . $this->uri->segment(14) . '-' . $this->uri->segment(13);
+
+		$query = "SELECT i.kodebar, i.nabar, i.sat, i.noref, p.kode_dev, p.devisi FROM item_po i LEFT JOIN po p ON p.noreftxt=i.noref  WHERE p.kode_dev='$devisi' AND i.noref='$noref' AND i.tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir' AND p.status_lpb='1' ORDER BY i.id DESC";
+		$data['po'] = $this->db_logistik_pt->query($query)->result();
+
 		$data['lokasi1'] = "Tes";
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
@@ -1714,6 +1724,11 @@ class Laporan extends CI_Controller
 		$html = $this->load->view('analisa/vw_lap_po_lpb_print_bybrg', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 
 	function print_lap_po_lpb_bysup()

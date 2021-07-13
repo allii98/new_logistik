@@ -1795,24 +1795,44 @@
                 }
             });
 
-            if (noref_po !== '') {
-                if (rbt_pilihan4 == 'semua_tr') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_semua"); ?>/' + cmb_devisi2 + '/' + noref_po + '/' + txt_periode8 + '/' + txt_periode9);
-                } else if (rbt_pilihan4 == 'by_barang') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bybrg"); ?>');
-                } else if (rbt_pilihan4 == 'by_supplier') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bysup"); ?>');
-                } else if (rbt_pilihan4 == 'po_blm_lpb_po') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_blm_lpb_po"); ?>');
-                } else if (rbt_pilihan4 == 'po_cash_sh') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_sh"); ?>');
-                } else if (rbt_pilihan4 == 'po_cash_blm_lpb') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_blm_lpb"); ?>');
-                } else if (rbt_pilihan4 == 'po_lokal' || rbt_pilihan4 == 'po_blm_lpb_brg') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_gab"); ?>');
+            if (rbt_pilihan4 == 'semua_tr') {
+                window.open('<?= site_url("Laporan/print_lap_po_lpb_semua"); ?>/' + cmb_devisi2 + '/' + txt_periode8 + '/' + txt_periode9);
+            } else if (rbt_pilihan4 == 'by_barang') {
+                if (noref_po !== '') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bybrg"); ?>/' + cmb_devisi2 + '/' + noref_po + '/' + txt_periode8 + '/' + txt_periode9);
+                } else {
+                    swal('Jangan ada field yang kosong!~');
                 }
-            } else {
-                swal('Jangan ada field yang kosong!~');
+            } else if (rbt_pilihan4 == 'by_supplier') {
+                if (noref_po !== '') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bysup"); ?>');
+                } else {
+                    swal('Jangan ada field yang kosong!~');
+                }
+            } else if (rbt_pilihan4 == 'po_blm_lpb_po') {
+                if (noref_po !== '') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_blm_lpb_po"); ?>');
+                } else {
+                    swal('Jangan ada field yang kosong!~');
+                }
+            } else if (rbt_pilihan4 == 'po_cash_sh') {
+                if (noref_po !== '') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_sh"); ?>');
+                } else {
+                    swal('Jangan ada field yang kosong!~');
+                }
+            } else if (rbt_pilihan4 == 'po_cash_blm_lpb') {
+                if (noref_po !== '') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_blm_lpb"); ?>');
+                } else {
+                    swal('Jangan ada field yang kosong!~');
+                }
+            } else if (rbt_pilihan4 == 'po_lokal' || rbt_pilihan4 == 'po_blm_lpb_brg') {
+                if (noref_po !== '') {
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_po_gab"); ?>');
+                } else {
+                    swal('Jangan ada field yang kosong!~');
+                }
             }
 
 

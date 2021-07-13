@@ -51,12 +51,15 @@
     <hr>
     <h3>PT. MULIA SAWIT AGRO LESTARI (ESTATE1)</h3>
     <table class="singleborder" width="100%" rules="rows">
+        <thead>
+            <?php if (empty($po)) { ?>
+                <tr style="background-color: #d6d6c2;">
+                    <td style="width: 10%;">Kode Barang : Tidak ada data</td>
+                    <td colspan="4">Nama Barang : Tidak ada data</td>
+                    <td colspan="2">Sat : -</td>
+                </tr>
+        </thead>
         <tbody>
-            <tr style="background-color: #d6d6c2;">
-                <td style="width: 10%;">Kode Barang : 102505010100015</td>
-                <td colspan="4">Nama Barang : PUPUK MOP</td>
-                <td colspan="2">Sat : KG</td>
-            </tr>
             <tr>
                 <td style="text-align: center;">No. PO</td>
                 <td style="text-align: center;">Tanggal PO</td>
@@ -66,58 +69,11 @@
                 <td style="text-align: center;">QTY LPB</td>
                 <td style="text-align: center;">Saldo</td>
             </tr>
+
             <tr>
-                <td style="text-align: center;">EST/SWJ/JKT/07/20/6100106</td>
-                <td style="text-align: center;">15/07/2020</td>
-                <td style="text-align: center;">98,500.00</td>
-                <td style="text-align: center;"></td>
-                <td style="text-align: center;"></td>
-                <td style="text-align: center;"></td>
-                <td style="text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="text-align: center;" colspan="7">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: center;" colspan="7">SALDO</td>
-            </tr>
-            <tr style="background-color: #d6d6c2;">
-                <td style="width: 10%;">Kode Barang : 102505010100020</td>
-                <td colspan="4">Nama Barang : PUPUK UREA</td>
-                <td colspan="2">Sat : KG</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">No. PO</td>
-                <td style="text-align: center;">Tanggal PO</td>
-                <td style="text-align: center;">QTY PO</td>
-                <td style="text-align: center;">No LPB</td>
-                <td style="text-align: center;">Tgl LPB</td>
-                <td style="text-align: center;">QTY LPB</td>
-                <td style="text-align: center;">Saldo</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">EST/SWJ/JKT/07/20/6100070</td>
-                <td style="text-align: center;">02/07/2020</td>
-                <td style="text-align: center;">100,000.00</td>
-                <td style="text-align: center;"></td>
-                <td style="text-align: center;"></td>
-                <td style="text-align: center;"></td>
-                <td style="text-align: center;"></td>
-            </tr>
-            <tr>
-                <td style="text-align: center;" colspan="7">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td style="text-align: center;" colspan="7">SALDO</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">EST/SWJ/JKT/07/20/6100105</td>
-                <td style="text-align: center;">15/07/2020</td>
-                <td style="text-align: center;">200,000.00</td>
+                <td style="text-align: center;">Tidak ada data</td>
+                <td style="text-align: center;">Tidak ada data</td>
+                <td style="text-align: center;">000,000.00</td>
                 <td style="text-align: center;"></td>
                 <td style="text-align: center;"></td>
                 <td style="text-align: center;"></td>
@@ -132,6 +88,78 @@
                 <td style="text-align: center;" colspan="7">SALDO</td>
             </tr>
         </tbody>
+        <?php } else {
+
+                if (isset($po)) {
+                    foreach ($po as $data) { ?>
+                <thead>
+                    <tr style="background-color: #d6d6c2;">
+                        <td style="width: 10%;">Kode Barang : <?= $data->kodebar ?></td>
+                        <td colspan="4">Nama Barang : <?= $data->nabar ?></td>
+                        <td colspan="2">Sat : <?= $data->sat ?></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center;">No. PO</td>
+                        <td style="text-align: center;">Tanggal PO</td>
+                        <td style="text-align: center;">QTY PO</td>
+                        <td style="text-align: center;">No LPB</td>
+                        <td style="text-align: center;">Tgl LPB</td>
+                        <td style="text-align: center;">QTY LPB</td>
+                        <td style="text-align: center;">Saldo</td>
+                    </tr>
+                    <?php
+                        $noref = $data->noref;
+                        $query = "SELECT refpo, tglpo, qtypo FROM masukitem WHERE refpo='$noref' ORDER BY id DESC";
+                        $isi = $this->db_logistik_pt->query($query)->result();
+                        if (empty($isi)) {
+                    ?>
+                        <tr>
+                            <td style="text-align: center;"></td>
+                            <td style="text-align: center;">02/07/2020</td>
+                            <td style="text-align: center;">100,000.00</td>
+                            <td style="text-align: center;"></td>
+                            <td style="text-align: center;"></td>
+                            <td style="text-align: center;"></td>
+                            <td style="text-align: center;"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;" colspan="7">
+                                <hr>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: center;" colspan="7">SALDO</td>
+                        </tr>
+                        <?php } else {
+                            if (isset($isi)) {
+                                foreach ($isi as $d) {
+                        ?>
+                                <tr>
+                                    <td style="text-align: center;"><?= $d->refpo ?></td>
+                                    <td style="text-align: center;"><?= $d->tglpo ?></td>
+                                    <td style="text-align: center;"><?= $d->qtypo ?></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                    <td style="text-align: center;"></td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;" colspan="7">
+                                        <hr>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="text-align: center;" colspan="7">SALDO</td>
+                                </tr>
+                    <?php }
+                            }
+                        } ?>
+                </tbody>
+    <?php }
+                }
+            } ?>
     </table>
 </body>
 
