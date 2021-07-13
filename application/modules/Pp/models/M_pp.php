@@ -23,7 +23,7 @@ class M_pp extends CI_Model
         # code...
         $this->db_logistik_pt->select('id, DATE(tglpo) as tglpo, nopotxt, noreftxt, kode_supply, nama_supply, totalbayar, bayar, grup, terbayar');
         $this->db_logistik_pt->from($this->table);
-        // $this->db_logistik_pt->where('po');
+        $this->db_logistik_pt->where('status_lpb', 1);
         $this->db_logistik_pt->order_by('id', 'desc');
 
 

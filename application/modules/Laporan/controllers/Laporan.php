@@ -1684,7 +1684,6 @@ class Laporan extends CI_Controller
 		$query = "SELECT nopo, noreftxt, no_refppo, tglpo, tgl_refppo, ket, kode_supply, nama_supply, user, lokasi, bayar FROM po WHERE noreftxt='$noref' AND tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir'";
 		$data['po'] = $this->db_logistik_pt->query($query)->result();
 
-
 		$data['lokasi1'] = "Tes";
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
@@ -1696,6 +1695,11 @@ class Laporan extends CI_Controller
 		$html = $this->load->view('analisa/vw_lap_po_lpb_print_semua', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 	function print_lap_po_lpb_bybrg()
 	{
@@ -1708,6 +1712,21 @@ class Laporan extends CI_Controller
 		]);
 
 		$html = $this->load->view('analisa/vw_lap_po_lpb_print_bybrg', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_po_lpb_bysup()
+	{
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_bysup', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}

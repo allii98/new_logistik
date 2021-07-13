@@ -365,6 +365,9 @@
                 "bVisible": false,
                 "aTargets": [2, 3]
             }, ],
+            "language": {
+                "infoFiltered": ""
+            }
 
         });
 

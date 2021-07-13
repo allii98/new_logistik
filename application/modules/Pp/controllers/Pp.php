@@ -47,8 +47,8 @@ class Pp extends CI_Controller
             $row[] = $no . ".";
             $row[] = $hasil->nopptxt;
             $row[] = $hasil->nopotxt;
-            $row[] = $hasil->tglpp;
-            $row[] = $hasil->tglpo;
+            $row[] =  date('d-m-Y', strtotime($hasil->tglpp));
+            $row[] = date('d-m-Y', strtotime($hasil->tglpo));
             $row[] = $hasil->ref_po;
             $row[] = $hasil->nama_supply;
             $row[] = $hasil->ket;

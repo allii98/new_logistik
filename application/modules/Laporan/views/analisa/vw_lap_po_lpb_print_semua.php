@@ -98,8 +98,9 @@
                         <th></th>
                     </tr>
                     <?php
-                    $nopo = $d->nopo;
-                    $query = "SELECT a.kodebar, a.nabar, a.tgl, a.satuan, a.qty, a.ttgtxt, b.qty as qtypo FROM masukitem a, item_po b WHERE a.nopo ='$nopo' order by a.id DESC ";
+                    $noref = $d->noreftxt;
+                    $query = "SELECT a.kodebar, a.nabar, a.tgl, a.satuan, a.qty, a.ttgtxt FROM masukitem a WHERE a.refpo ='$noref' order by a.id DESC";
+                    // $query = "SELECT a.kodebar, a.nabar, a.tgl, a.satuan, a.qty, a.ttgtxt, b.qty as qtypo FROM masukitem a, item_po b WHERE a.refpo=b.noref AND a.refpo ='$noref' order by a.id DESC";
                     $lpb = $this->db_logistik_pt->query($query)->result();
                     $no = 1;
                     if (isset($lpb)) {
@@ -116,7 +117,7 @@
                                 <td><?= $dt->kodebar ?></td>
                                 <td><?= $dt->nabar ?></td>
                                 <td><?= $dt->satuan ?></td>
-                                <td><?= $dt->qtypo ?></td>
+                                <td><?= $dt->qty ?></td>
                                 <td><?= date_format(date_create($dt->tgl), "d/m/Y"); ?></td>
                                 <td><?= $dt->ttgtxt ?></td>
                                 <td><?= $dt->qty ?></td>
