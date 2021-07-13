@@ -51,7 +51,7 @@ class Bkb extends CI_Controller
 
         $data['pt_mutasi'] = $this->db_logistik_center->get('tb_pt')->result_array();
 
-        $this->template->load('template', 'v_inputbkb', $data);
+        $this->template->load('template', 'v_inputBkb', $data);
     }
 
     // //Start Data Table Server Side
