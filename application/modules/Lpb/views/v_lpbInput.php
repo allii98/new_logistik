@@ -112,6 +112,8 @@ date_default_timezone_set('Asia/Jakarta');
                             </div>
                             <input type="hidden" id="hidden_no_lpb">
                             <input type="hidden" id="hidden_no_ref_lpb">
+                            <input type="" id="hidden_tglppo">;
+                            <input type="" id="hidden_norefppo">;
                         </div>
                         <div class="row" style="margin-left:4px;">
                             <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
@@ -318,6 +320,7 @@ date_default_timezone_set('Asia/Jakarta');
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
+            '<input type="" id="hidden_qtypo_' + row + '" name="hidden_qtypo_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
@@ -452,6 +455,10 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#txt_kd_supplier').val(data_po.kode_supply);
                 $('#txt_supplier').val(data_po.nama_supply);
 
+                //dibawah ini punya PO
+                $('#hidden_tglppo').val(data_po.tglppo);
+                $('#hidden_norefppo').val(data_po.no_refppo);
+
                 $("#modalListPo").modal('hide');
 
                 for (i = 0; i < data_item_po.length; i++) {
@@ -473,6 +480,8 @@ date_default_timezone_set('Asia/Jakarta');
                     $('#txt_satuan_' + i).text(sat);
                     $('#txt_ket_rinci_' + i).text(ket);
                     $('#qty_po_' + i).text(qty);
+                    $('#hidden_qtypo_' + i).val(qty);
+
                     // $('#sisa_qty_' + no).text(sumsisa);
                     getGrupBarang(kodebar, i);
                 }
@@ -584,7 +593,12 @@ date_default_timezone_set('Asia/Jakarta');
             data: {
                 txt_no_po: $('#txt_no_po').val(),
                 txt_ref_po: $('#txt_ref_po').val(),
-                // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+
+                txt_tgl_po: $('#txt_tgl_po').val(),
+                hidden_tglppo: $('#hidden_tglppo').val(),
+                hidden_norefppo: $('#hidden_norefppo').val(),
+                hidden_qtypo: $('#hidden_qtypo_' + n).val(),
+
                 txt_kode_barang: $('#txt_kode_barang_' + n).val(),
                 txt_nama_brg: $('#txt_nama_brg_' + n).text(),
                 txt_tgl_terima: $('#txt_tgl_terima').val(),
