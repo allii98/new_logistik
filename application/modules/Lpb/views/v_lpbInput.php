@@ -112,8 +112,8 @@ date_default_timezone_set('Asia/Jakarta');
                             </div>
                             <input type="hidden" id="hidden_no_lpb">
                             <input type="hidden" id="hidden_no_ref_lpb">
-                            <input type="" id="hidden_tglppo">;
-                            <input type="" id="hidden_norefppo">;
+                            <input type="hidden" id="hidden_tglppo">
+                            <input type="hidden" id="hidden_norefppo">
                         </div>
                         <div class="row" style="margin-left:4px;">
                             <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
@@ -320,7 +320,7 @@ date_default_timezone_set('Asia/Jakarta');
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
-            '<input type="" id="hidden_qtypo_' + row + '" name="hidden_qtypo_' + row + '">' +
+            '<input type="hidden" id="hidden_qtypo_' + row + '" name="hidden_qtypo_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
