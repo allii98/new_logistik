@@ -314,7 +314,7 @@ class Lpb extends CI_Controller
         // }
 
         $kode_devisi = $this->input->post('devisi');
-        $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
+        $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
 
         $data_stokmasuk = [
