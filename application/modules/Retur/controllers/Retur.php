@@ -412,7 +412,9 @@ class Retur extends CI_Controller
             return $this->M_retur->updateStokAwalHarian($kodebar, $data_insert_stok_harian['periode'], $data_insert_stok_harian['txtperiode'], $qty, $harga_item_bkb, $kode_dev);
         } else {
             //insert stok awal harian
-            return $this->M_retur->saveStokAwalHarian($data_insert_stok_harian);
+            // return $this->M_retur->saveStokAwalHarian($data_insert_stok_harian);
+            // untuk retur dia pasti ada barang nya di stok awal
+            return false;
         }
     }
 
@@ -450,7 +452,9 @@ class Retur extends CI_Controller
             return $this->M_retur->updateStokAwalBulananDevisi($kodebar, $data_insert_stok_bulanan['txtperiode'], $qty, $kode_dev);
         } else {
             //insert stok awal bulanan devisi
-            return $this->M_retur->saveStokAwalBulananDevisi($data_insert_stok_bulanan);
+            // untuk retur dia pasti ada barang nya di stok awal
+            // return $this->M_retur->saveStokAwalBulananDevisi($data_insert_stok_bulanan);
+            return false;
         }
     }
 

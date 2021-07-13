@@ -378,6 +378,7 @@ class Lpb extends CI_Controller
             'qtypo' => $this->input->post('hidden_qtypo'),
             'qty' => $this->input->post('txt_qty'),
             'tgl' => $tgl_terima,
+            'tglpo' => $this->input->post('txt_tgl_po'),
             'ttg' => $no_lpb,
             'ttgtxt' => $no_lpb,
             'tglinput' => date("Y-m-d H:i:s"),

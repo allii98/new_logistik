@@ -215,15 +215,17 @@ class M_retur extends CI_Model
 
     public function updateStokAwalBulananDevisi($kodebar, $txtperiode, $qty, $kode_dev)
     {
-        $this->db_logistik_pt->select('QTY_MASUK, saldoakhir_qty');
+        $this->db_logistik_pt->select('QTY_MASUK, saldoakhir_qty, QTY_KELUAR');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
         $this->db_logistik_pt->from('stockawal_bulanan_devisi');
         $stok_awal = $this->db_logistik_pt->get()->row();
 
+        $total_qty_keluar = $stok_awal->QTY_KELUAR - $qty;
         $total_qty = $stok_awal->QTY_MASUK + $qty;
         $total_saldo_qty = $stok_awal->saldoakhir_qty + $qty;
 
         $this->db_logistik_pt->set('QTY_MASUK', $total_qty);
+        $this->db_logistik_pt->set('QTY_KELUAR', $total_qty_keluar);
         $this->db_logistik_pt->set('saldoakhir_qty', $total_saldo_qty);
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
         return $this->db_logistik_pt->update('stockawal_bulanan_devisi');
