@@ -223,7 +223,7 @@ class M_bpb extends CI_Model
             $norefbpb = $this->input->post('hidden_no_ref_bpb');
         }
 
-        $data['devisi'] = $this->db_logistik_pt->get_where('pt_copy', array('kodetxt' => $kode_devisi))->row_array();
+        $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
         if ($bahan == '-') {
