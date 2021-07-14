@@ -73,7 +73,7 @@
                 foreach ($po as $d) { ?>
                     <tr>
                         <td><?= $nomer++ ?></td>
-                        <td>PO <?= $d->nopo ?></td>
+                        <td> <?= $d->noreftxt ?></td>
                         <td><?= date_format(date_create($d->tglpo), "d/m/Y"); ?></td>
                         <td><?= $d->no_refppo ?></td>
                         <td><?= date_format(date_create($d->tgl_refppo), "d/m/Y"); ?></td>

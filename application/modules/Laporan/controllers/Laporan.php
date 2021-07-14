@@ -1681,7 +1681,7 @@ class Laporan extends CI_Controller
 		$tanggalAwal = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
 		$tanggalAkhir = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
 
-		$query = "SELECT nopo, noreftxt, no_refppo, tglpo, tgl_refppo, ket, kode_supply, nama_supply, user, lokasi, bayar FROM po WHERE tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir'";
+		$query = "SELECT nopo, noreftxt, no_refppo, tglpo, tgl_refppo, ket, kode_supply, nama_supply, user, lokasi, bayar FROM po WHERE tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir' AND status_lpb = 1";
 		$data['po'] = $this->db_logistik_pt->query($query)->result();
 
 		$data['lokasi1'] = "Tes";

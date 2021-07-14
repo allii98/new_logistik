@@ -131,7 +131,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="col-5">
                                 <!-- <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required> -->
                                 <select class="form-control" id="devisi">
-                                    <option value="" selected disabled>Pilih</option>
+                                    <option selected disabled>Pilih</option>
                                     <?php
                                     foreach ($devisi as $d) : { ?>
                                             <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
@@ -2418,7 +2418,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var keterangan = $('#keterangan').val();
         var jnSPP = $('#hidden_jenis_spp').val();
         var lokasi = $('#status_lokasi').val();
-        // var lokasi = $('#devisi').val();
+        var devisi = $('#devisi').val();
 
         var jnbudget = $('#cmb_jenis_budget_' + id).val();
         var merk = $('#txt_merk_' + id).val();
@@ -2517,6 +2517,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         } else if (!ketRinci) {
             toast('Keterangan Rinci is required!');
             $('#txt_keterangan_rinci_' + id).css({
+                "background": "#FFCECE"
+            });
+        } else if (!devisi) {
+            toast('Keterangan Rinci is required!');
+            $('#devisi').css({
                 "background": "#FFCECE"
             });
         } else if (jml > 1500000 && lokasi != "HO") {

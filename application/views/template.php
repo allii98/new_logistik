@@ -2599,7 +2599,7 @@
                     });
                 },
                 error: function(request) {
-                    alert(request.responseText);
+                    console.log(request.responseText);
                 }
             });
         }
