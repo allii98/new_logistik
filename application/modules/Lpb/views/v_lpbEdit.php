@@ -7,7 +7,7 @@
                     <font face="Verdana"> LPB <i>(Edit)</i> </font>
                 </h4>
                 <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                    Input Laporan Penerimaan Barang
+                    Edit Laporan Penerimaan Barang
                 </p>
 
                 <!-- <div class="row div_form_1">

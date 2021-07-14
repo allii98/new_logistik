@@ -50,7 +50,9 @@ class Bpb extends CI_Controller
 
         $data_bpb = $this->db_logistik_pt->query($query_bpb)->row();
 
-        $query_bpbitem = "SELECT * FROM bpbitem WHERE nobpb = '$no_bpb'";
+        $norefbpb = $data_bpb->norefbpb;
+
+        $query_bpbitem = "SELECT * FROM bpbitem WHERE norefbpb = '$norefbpb'";
         $data_bpbitem = $this->db_logistik_pt->query($query_bpbitem)->result();
 
         echo json_encode(array('data_bpb' => $data_bpb, 'data_bpbitem' => $data_bpbitem));
@@ -182,7 +184,7 @@ class Bpb extends CI_Controller
                         </a>';
             if ($hasil->approval == '0') {
                 $print = "";
-                $ubah = '<a href="' . site_url('bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang">';
+                $ubah = '<a href="' . site_url('Bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang">';
                 $batal = '<a href="javascript:;" id="a_batal_bpb">
                     <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_bpb" name="btn_batal_bpb" data-toggle="tooltip" data-placement="top" title="Batal bpb" onClick="konfirmasiBatalBPB(' . $id . ',' . $hasil->nobpb . ')">
                     </button>
@@ -356,16 +358,16 @@ class Bpb extends CI_Controller
 
     function cancel_ubah_rinci()
     {
-        $no_bpb = $this->input->post('hidden_no_bpb');
-        $id_bpb = $this->input->post('hidden_id_bpb');
+        // $no_bpb = $this->input->post('hidden_no_bpb');
+        // $id_bpb = $this->input->post('hidden_id_bpb');
         $hidden_id_bpbitem = $this->input->post('hidden_id_bpbitem');
 
-        $query_bpb = "SELECT * FROM bpb WHERE nobpb = '$no_bpb' AND id = '$id_bpb'";
-        $data_bpb = $this->db_logistik_pt->query($query_bpb)->row();
+        // $query_bpb = "SELECT * FROM bpb WHERE nobpb = '$no_bpb' AND id = '$id_bpb'";
+        // $data_bpb = $this->db_logistik_pt->query($query_bpb)->row();
 
-        $query_bpbitem = "SELECT * FROM bpbitem WHERE nobpb = '$no_bpb' AND id = '$hidden_id_bpbitem'";
+        $query_bpbitem = "SELECT * FROM bpbitem WHERE id = '$hidden_id_bpbitem'";
         $data_bpbitem = $this->db_logistik_pt->query($query_bpbitem)->row();
-        echo json_encode(array('data_bpb' => $data_bpb, 'data_bpbitem' => $data_bpbitem));
+        echo json_encode(array('data_bpbitem' => $data_bpbitem));
     }
 
     function ubah_rinci_bpb()
