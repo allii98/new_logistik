@@ -279,12 +279,12 @@ class Bpb extends CI_Controller
     function hapus_rinci()
     {
 
-        $id_bpb = $this->input->post('hidden_id_bpb');
         $id_bpbitem = $this->input->post('hidden_id_bpbitem');
 
         $data_delete = $this->db_logistik_pt->delete('bpbitem', array('id' => $id_bpbitem));
+        $data_delete_approval = $this->db_logistik_pt->delete('approval_bpb', array('id_bpbitem' => $id_bpbitem));
 
-        if ($data_delete === TRUE) {
+        if ($data_delete === TRUE && $data_delete_approval === TRUE) {
             $data = TRUE;
         } else {
             $data = FALSE;
@@ -300,8 +300,9 @@ class Bpb extends CI_Controller
 
         $data_bpb = $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb));
         $data_delete = $this->db_logistik_pt->delete('bpbitem', array('id' => $id_bpbitem));
+        $data_delete_approval = $this->db_logistik_pt->delete('approval_bpb', array('id_bpbitem' => $id_bpbitem));
 
-        if ($data_delete === TRUE && $data_bpb === TRUE) {
+        if ($data_delete === TRUE && $data_bpb === TRUE && $data_delete_approval === TRUE) {
             $data = TRUE;
         } else {
             $data = FALSE;

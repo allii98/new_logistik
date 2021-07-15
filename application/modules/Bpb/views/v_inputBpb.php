@@ -136,129 +136,135 @@
                     </div>
                     <hr class="mt-0 mb-2">
                     <div class="row div_form_2">
-                        <label id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp;&nbsp;&nbsp; No. Ref. BPB : ...</label>
-                        <h4 id="h4_no_bpb" name="h4_no_bpb"></h4>&nbsp;&nbsp;
-                        <h4 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h4>
-                        <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
-                        <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
-                        <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
-                        <div class="table-responsive">
-                            <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
-                                <thead>
-                                    <tr>
-                                        <th width="3%"></th>
-                                        <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM/TBM</th>
-                                        <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Afd/Unit</th>
-                                        <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Blok/Sub</th>
-                                        <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Thn Tanam</th>
-                                        <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
-                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
-                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang/Satuan</th>
-                                        <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok/Booking</th>
-                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty&nbsp;Diminta</th>
-                                        <!-- <th width="8%">Qty Disetujui</th> -->
-                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
-                                        <th width="3%"></th>
-                                    </tr>
-                                </thead>
-                                <tbody id="tbody_rincian" name="tbody_rincian">
-                                    <tr id="tr_1">
-                                        <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                            <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                            <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br />
-                                            <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
-                                        </td>
-                                        <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- TM/TBM -->
-                                                <select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
-                                                    <option value="-">-</option>
-                                                    <!-- <option value=""></option> -->
-                                                    <option value="TM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM</option>
-                                                    <option value="TBM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TBM</option>
-                                                    <option value="LANDCLEARING" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">LANDCLEARING</option>
-                                                    <option value="PEMBIBITAN" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PEMBIBITAN</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- AFD/UNIT -->
-                                                <select class="form-control set_strip_cmb" id="cmb_afd_unit_1" name="cmb_afd_unit_1" onchange="cmb_blok_sub(1)">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- BLOK/SUB -->
-                                                <select class="form-control set_strip_cmb" id="cmb_blok_sub_1" name="cmb_blok_sub_1" onchange="cmb_tahun_tanam(1)">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- Tahun Tanam -->
-                                                <select class="form-control set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                <!-- Bahan -->
-                                                <select class="form-control set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
-                                                    <option value="-">-</option>
-                                                </select>
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
-                                                <!-- Account Beban -->
-                                                <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
-                                                <!-- <label class="control-label" id="lbl_no_acc_1"></label>
-                                                <label class="control-label" id="lbl_nama_acc_1"></label> -->
-                                                <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1" value="0">
-                                                <input type="hidden" id="hidden_nama_acc_1" name="hidden_nama_acc_1" value="0">
-                                            </td>
+                        <div class="col-sm-12">
+                            <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
+                                <h6 id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp;&nbsp;&nbsp; No. Ref. BPB : ...</h6>
+                            </div>
+                            <div class="row" style="margin-left:4px;">
+                                <h6 id="h4_no_bpb" name="h4_no_bpb"></h6>&emsp;&emsp;
+                                <h6 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h6>
+                            </div>
+                            <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
+                            <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
+                            <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
+                            <div class="table-responsive">
+                                <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
+                                    <thead>
+                                        <tr>
+                                            <th width="3%"></th>
+                                            <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM/TBM</th>
+                                            <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Afd/Unit</th>
+                                            <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Blok/Sub</th>
+                                            <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Thn Tanam</th>
+                                            <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
+                                            <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
+                                            <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang/Satuan</th>
+                                            <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok/Booking</th>
+                                            <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty&nbsp;Diminta</th>
+                                            <!-- <th width="8%">Qty Disetujui</th> -->
+                                            <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
+                                            <th width="3%"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody_rincian" name="tbody_rincian">
+                                        <tr id="tr_1">
                                             <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- Barang -->
-                                                <input type="text" class="form-control" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
-                                                <!-- <label id="lbl_kode_barang_1"></label>
+                                                <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
+                                                <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row('1')"></button><br />
+                                                <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
+                                            </td>
+                                            <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <!-- TM/TBM -->
+                                                    <select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
+                                                        <option value="-">-</option>
+                                                        <!-- <option value=""></option> -->
+                                                        <option value="TM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM</option>
+                                                        <option value="TBM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TBM</option>
+                                                        <option value="LANDCLEARING" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">LANDCLEARING</option>
+                                                        <option value="PEMBIBITAN" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PEMBIBITAN</option>
+                                                    </select>
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <!-- AFD/UNIT -->
+                                                    <select class="form-control set_strip_cmb" id="cmb_afd_unit_1" name="cmb_afd_unit_1" onchange="cmb_blok_sub(1)">
+                                                        <option value="-">-</option>
+                                                    </select>
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <!-- BLOK/SUB -->
+                                                    <select class="form-control set_strip_cmb" id="cmb_blok_sub_1" name="cmb_blok_sub_1" onchange="cmb_tahun_tanam(1)">
+                                                        <option value="-">-</option>
+                                                    </select>
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <!-- Tahun Tanam -->
+                                                    <select class="form-control set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)">
+                                                        <option value="-">-</option>
+                                                    </select>
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <!-- Bahan -->
+                                                    <select class="form-control set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
+                                                        <option value="-">-</option>
+                                                    </select>
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
+                                                    <!-- Account Beban -->
+                                                    <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
+                                                    <!-- <label class="control-label" id="lbl_no_acc_1"></label>
+                                                <label class="control-label" id="lbl_nama_acc_1"></label> -->
+                                                    <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1" value="0">
+                                                    <input type="hidden" id="hidden_nama_acc_1" name="hidden_nama_acc_1" value="0">
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
+                                                    <!-- Barang -->
+                                                    <input type="text" class="form-control" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
+                                                    <!-- <label id="lbl_kode_barang_1"></label>
                                                 <label id="lbl_nama_barang_1"></label> -->
 
-                                                <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1" value="0">
-                                                <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1" value="0">
-                                                <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
-                                                <input type="hidden" id="hidden_txtperiode_1" name="hidden_txtperiode_1">
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                    <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1" value="0">
+                                                    <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1" value="0">
+                                                    <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
+                                                    <input type="hidden" id="hidden_txtperiode_1" name="hidden_txtperiode_1">
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
+                                                    <!-- <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                                                     Satuan :<b id="b_satuan_1" name="b_satuan_1"></b>
                                                 </span><br> -->
-                                                <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
-                                                <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                                                    Stok :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
-                                                </span><br>
-                                                <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
-                                                <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                                                    Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b>
-                                                </span>
-                                                <input type="hidden" id="hidden_stok_booking_1" name="hidden_stok_booking_1">
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- Qty Diminta & Stok di Tgl ini & Satuan -->
-                                                <input type="number" class="form-control currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off" onkeyup="validasi_qty_diminta('1')">
-                                            </td>
+                                                    <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
+                                                    <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                        Stok :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
+                                                    </span><br>
+                                                    <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
+                                                    <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                        Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b>
+                                                    </span>
+                                                    <input type="hidden" id="hidden_stok_booking_1" name="hidden_stok_booking_1">
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
+                                                    <!-- Qty Diminta & Stok di Tgl ini & Satuan -->
+                                                    <input type="number" class="form-control currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off" onkeyup="validasi_qty_diminta('1')">
+                                                </td>
 
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <!-- Keterangan -->
-                                                <textarea class="form-control ket" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')"></textarea>
-                                                <label id="lbl_status_simpan_1"></label>
-                                                <input type="hidden" id="hidden_id_bpbitem_1" name="hidden_id_bpbitem_1">
-                                            </td>
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
-                                                <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
-                                            </td>
-                                        </form>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
+                                                    <!-- Keterangan -->
+                                                    <textarea class="form-control ket" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')"></textarea>
+                                                    <label id="lbl_status_simpan_1"></label>
+                                                    <input type="hidden" id="hidden_id_bpbitem_1" name="hidden_id_bpbitem_1">
+                                                </td>
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
+                                                    <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
+                                                    <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                </td>
+                                            </form>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -438,8 +444,8 @@
         var row = $('#hidden_no_row').val();
 
         // $('#lbl_no_acc_' + row).html(no_coa);
-        $('#lbl_nama_acc_' + row).html(nama_account);
-        $('#txt_account_beban_' + row).val(no_coa);
+        // $('#lbl_nama_acc_' + row).html(nama_account);
+        $('#txt_account_beban_' + row).val(nama_account);
 
         $('#hidden_no_acc_' + row).val(no_coa);
         $('#hidden_nama_acc_' + row).val(nama_account);
@@ -541,8 +547,6 @@
         if (rowCount != 1) {
             var form_data = new FormData();
 
-            // form_data.append('hidden_id_po',$('#hidden_id_po_'+no).val());
-            form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
             form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
 
             $.ajax({
@@ -664,9 +668,6 @@
         }
     }
 
-
-
-
     function tambah_row(id) {
         var row = $('#hidden_no_table').val();
         var tr_buka = '<tr id="tr_' + row + '">';
@@ -749,7 +750,7 @@
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
@@ -958,6 +959,9 @@
                     swal('Tidak bisa ditambahkan. Barang sudah ada pada BPB yang sama !');
                     $('#lbl_status_simpan_' + no).empty();
                     $('#lbl_status_simpan_' + no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
+                    $('#btn_ubah_' + no).css('display', 'none');
+                    $('#btn_hapus_' + no).css('display', 'none');
+                    $('#btn_simpan_' + no).css('display', 'block');
                 } else {
                     if (data.status == true) {
                         var kode_barang = data.kodebar;
@@ -1044,9 +1048,9 @@
     function getPreviousData(no) {
         var form_data = new FormData();
 
-        form_data.append('hidden_no_bpb', $('#hidden_no_bpb').val());
-        form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
-        form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
+        // form_data.append('hidden_no_bpb', $('#hidden_no_bpb').val());
+        // form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
+        // form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
 
         $.ajax({
@@ -1063,46 +1067,25 @@
 
             data: form_data,
             success: function(data) {
-                var tgl_bpb = new Date(data.data_bpb.tglbpb);
 
-                $('#hidden_no_bpb').val(data.data_bpb.nobpb);
-                $('#hidden_id_bpb').val(data.data_bpb.id);
+                get_all_cmb(data.data_bpbitem.kodebebantxt, no);
 
+                $('#cmb_afd_unit_' + no).val(data.data_bpbitem.afd);
+                $('#cmb_blok_sub_' + no).val(data.data_bpbitem.blok);
+                $('#cmb_bahan_' + no).val(data.data_bpbitem.kodebebantxt);
+
+                $('#txt_account_beban_' + no).val(data.data_bpbitem.ketsub);
                 $('#hidden_no_acc_' + no).val(data.data_bpbitem.kodesubtxt);
                 $('#hidden_nama_acc_' + no).val(data.data_bpbitem.ketsub);
+
+                $('#hidden_satuan_' + no).val(data.data_bpbitem.satuan);
                 $('#hidden_kode_barang_' + no).val(data.data_bpbitem.kodebar);
                 $('#hidden_nama_barang_' + no).val(data.data_bpbitem.nabar);
                 $('#hidden_grup_barang_' + no).val(data.data_bpbitem.grp);
-                // $('#hidden_stok_tgl_ini_'+no).val(data.data_bpbitem.); //
-                $('#hidden_satuan_' + no).val(data.data_bpbitem.satuan);
-                $('#hidden_id_bpbitem_' + no).val(data.data_bpbitem.id);
+                $('#txt_barang_' + no).val(data.data_bpbitem.nabar);
+                $('#hidden_txtperiode_' + no).val(data.data_bpbitem.periode);
 
-                // $('#txt_diberikan_kpd').val(data.data_bpb.kpd);
-                $('#txt_untuk_keperluan').val(data.data_bpb.keperluan);
-
-                var bag = data.data_bpb.bag;
-                var cmb_bagian = document.getElementById('cmb_bagian');
-                for (var i = 0; i < cmb_bagian.options.length; i++) {
-                    if (cmb_bagian.options[i].text === bag) {
-                        cmb_bagian.selectedIndex = i;
-                    }
-                }
-
-                // $('#cmb_bagian').val(data.data_bpb.bag);
-                // $('#txt_tgl_bpb').val(dateToMDY(tgl_bpb));
-                // $('#txt_tgl_bpb').val(dateToMDY(tgl_bpb));
-                // $('#txt_no_bpb').val(data.data_bpb.nobpb);
-                $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
-
-                // $('#cmb_tm_tbm_'+no).val(data.data_bpbitem.); //
-                $('#cmb_afd_unit_' + no).val(data.data_bpbitem.afd);
-                $('#cmb_blok_sub_' + no).val(data.data_bpbitem.blok);
-                // $('#cmb_tahun_tanam_'+no).val(data.data_bpbitem.); //
-                $('#cmb_bahan_' + no).val(data.data_bpbitem.kodebebantxt);
-                // $('#txt_account_beban_'+no).val(data.data_bpbitem.); //
-                // $('#txt_barang_'+no).val(data.data_bpbitem.); //
                 $('#txt_qty_diminta_' + no).val(data.data_bpbitem.qty);
-                // $('#txt_qty_disetujui_'+no).val(data.data_bpbitem.qty2);
                 $('#txt_ket_rinci_' + no).val(data.data_bpbitem.ket);
 
                 $('#lbl_status_simpan_' + no).empty();
@@ -1116,7 +1099,7 @@
                 $('#btn_ubah_' + no).css('display', 'block');
                 $('#btn_update_' + no).css('display', 'none');
                 $('#btn_cancel_update_' + no).css('display', 'none');
-                $('#btn_hapus_' + no).show();
+                $('#btn_hapus_' + no).css('display', 'block');
 
 
                 $('#hidden_proses_status_' + no).empty();
@@ -1223,37 +1206,22 @@
     function updateData(no) {
         var form_data = new FormData();
 
+        var kodebar = $('#hidden_kode_barang_' + no).val();
         var kode_dev = $('#devisi').val();
 
-        // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
-        form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
-        form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
-        // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
-        form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
-        form_data.append('cmb_alokasi_est', $('#cmb_alokasi_est').val());
-
-        form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
         form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
-        form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
         form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
-
         form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
         form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
         form_data.append('hidden_kode_barang', $('#hidden_kode_barang_' + no).val());
         form_data.append('hidden_nama_barang', $('#hidden_nama_barang_' + no).val());
         form_data.append('hidden_grup_barang', $('#hidden_grup_barang_' + no).val());
-        form_data.append('hidden_stok_tgl_ini', $('#hidden_stok_tgl_ini_' + no).val());
         form_data.append('hidden_satuan', $('#hidden_satuan_' + no).val());
-
         form_data.append('txt_qty_diminta', $('#txt_qty_diminta_' + no).val());
-        // form_data.append('txt_qty_disetujui',$('#txt_qty_disetujui_'+no).val()); 
         form_data.append('txt_ket_rinci', $('#txt_ket_rinci_' + no).val());
 
-        form_data.append('hidden_no_bpb', $('#hidden_no_bpb').val());
-        form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
-        form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
 
         $.ajax({
             type: "POST",
@@ -1269,8 +1237,7 @@
 
             data: form_data,
             success: function(data) {
-                var kode_barang = data.kodebar;
-                sum_stok_booking(kode_barang, no, kode_dev);
+                sum_stok_booking(kodebar, no, kode_dev);
 
                 $('.div_form_1').find('input,textarea').attr('readonly', '');
                 $('.div_form_1').find('select').attr('disabled', '');
@@ -1289,10 +1256,8 @@
 
                 $('#btn_ubah_' + no).css('display', 'block');
                 $('#btn_update_' + no).css('display', 'none');
-                // $('#btn_hapus_' + no).css('display', 'none');
                 $('#btn_cancel_update_' + no).css('display', 'none');
-                $('#btn_hapus_' + no).css('display', 'none');
-                // $('#btn_hapus_' + no).removeAttr('disabled');
+                $('#btn_hapus_' + no).css('display', 'block');
 
                 $('#hidden_proses_status_' + no).empty();
                 $('#hidden_proses_status_' + no).val('');
@@ -1338,30 +1303,30 @@
                     $('#lbl_no_acc_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#lbl_no_acc_' + no).next().is('br#br_' + no)) {
-                        $('#lbl_no_acc_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#lbl_no_acc_' + no).next().is('br#br_' + no)) {
+                    //     $('#lbl_no_acc_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'hidden_nama_acc_' + no) {
                     $('#lbl_nama_acc_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#lbl_nama_acc_' + no).next().is('br#br_' + no)) {
-                        $('#lbl_nama_acc_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#lbl_nama_acc_' + no).next().is('br#br_' + no)) {
+                    //     $('#lbl_nama_acc_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'hidden_kode_barang_' + no) {
                     $('#lbl_kode_barang_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#lbl_kode_barang_' + no).next().is('br#br_' + no)) {
-                        $('#lbl_kode_barang_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#lbl_kode_barang_' + no).next().is('br#br_' + no)) {
+                    //     $('#lbl_kode_barang_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'hidden_nama_barang_' + no) {
                     $('#lbl_nama_barang_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#lbl_nama_barang_' + no).next().is('br#br_' + no)) {
-                        $('#lbl_nama_barang_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#lbl_nama_barang_' + no).next().is('br#br_' + no)) {
+                    //     $('#lbl_nama_barang_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'hidden_stok_tgl_ini_' + no) {
                     $('#b_stok_tgl_ini_' + no).css({
                         "background": "#FFCECE"
@@ -1373,44 +1338,44 @@
                     $('#b_satuan_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#b_satuan_' + no).next().is('br#br_' + no)) {
-                        $('#b_satuan_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#b_satuan_' + no).next().is('br#br_' + no)) {
+                    //     $('#b_satuan_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'cmb_tm_tbm_' + no) {
                     $('#cmb_tm_tbm_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#cmb_tm_tbm_' + no).next().is('br#br_' + no)) {
-                        $('#cmb_tm_tbm_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#cmb_tm_tbm_' + no).next().is('br#br_' + no)) {
+                    //     $('#cmb_tm_tbm_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'cmb_afd_unit_' + no) {
                     $('#cmb_afd_unit_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#cmb_afd_unit_' + no).next().is('br#br_' + no)) {
-                        $('#cmb_afd_unit_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#cmb_afd_unit_' + no).next().is('br#br_' + no)) {
+                    //     $('#cmb_afd_unit_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'cmb_tahun_tanam_' + no) {
                     $('#cmb_tahun_tanam_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#cmb_tahun_tanam_' + no).next().is('br#br_' + no)) {
-                        $('#cmb_tahun_tanam_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#cmb_tahun_tanam_' + no).next().is('br#br_' + no)) {
+                    //     $('#cmb_tahun_tanam_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else if (arr_id == 'cmb_bahan_' + no) {
                     $('#cmb_bahan_' + no).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#cmb_bahan_' + no).next().is('br#br_' + no)) {
-                        $('#cmb_bahan_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#cmb_bahan_' + no).next().is('br#br_' + no)) {
+                    //     $('#cmb_bahan_' + no).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 } else {
                     $('#' + arr_id).css({
                         "background": "#FFCECE"
                     })
-                    if (!$('#' + arr_id).next().is('br#br_' + no)) {
-                        $('#' + arr_id).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
-                    }
+                    // if (!$('#' + arr_id).next().is('br#br_' + no)) {
+                    //     $('#' + arr_id).after('<br id="br_' + no + '" /><small id="pesan_error_' + no + '" style="margin-top:0px;color:red;">Harus diisi</small>');
+                    // }
                 }
             }
         }
@@ -1658,7 +1623,7 @@
 
                 $.each(data, function(index) {
                     // var opsi_cmb_bahan = '<option value="'+data[index].coa_material+'">'+data[index].coa_material+'-'+data[index].ket+'</option>';
-                    var opsi_cmb_bahan = '<option value="' + data[index][0] + '">' + data[index][0] + '-' + data[index][1] + '</option>';
+                    var opsi_cmb_bahan = '<option value="' + data[index][0] + '">' + data[index][1] + '-' + data[index][0] + '</option>';
                     $('#cmb_bahan_' + row).append(opsi_cmb_bahan);
                 });
             },
@@ -1939,5 +1904,52 @@
             swal('Tidak boleh 0!');
             $('#txt_qty_diminta_' + n + '').val('');
         }
+    }
+
+    function get_all_cmb(bahan, n) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/get_all_cmb'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            // contentType : false,
+            // processData : false,
+
+            data: {
+                'bahan': bahan
+            },
+            success: function(data) {
+
+                if (data == null) {
+                    var opsi_tm_tbm_ = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_tm_tbm_' + n).append(opsi_tm_tbm_);
+
+                    var opsi_afd_unit = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_afd_unit_' + n).append(opsi_afd_unit);
+
+                    var opsi_blok_sub = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_blok_sub_' + n).append(opsi_blok_sub);
+
+                    var opsi_cmb_thn_tanam = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
+
+                    var opsi_cmb_bahan = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+                } else {
+
+                    $('#cmb_tm_tbm_' + n).val(data.tmtbm);
+                    $('#cmb_tahun_tanam_' + n).val(data.thn_tanam);
+
+                    // var opsi_cmb_thn_tanam = '<option value="' + data.thn_tanam + '">' + data.thn_tanam + '</option>';
+                    // $('#cmb_tahun_tanam_' + n).empty();
+                    // $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
+                }
+
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
     }
 </script>

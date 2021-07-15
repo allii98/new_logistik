@@ -124,6 +124,7 @@
                         <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
                         <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
                         <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
+                        <input type="hidden" id="hidden_kode_dev" name="hidden_kode_dev">
                     </div>
                     <div class="row" style="margin-left:4px;">
                         <label id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp;&nbsp;&nbsp; No. Ref. BPB : ...</label>
@@ -271,58 +272,6 @@
 </div>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 <script>
-    function saveRinciEnter(e, no) {
-        if (e.keyCode == 13 && !e.shiftKey) {
-            if ($('#hidden_proses_status_' + no).val() == 'insert') {
-                saveRinci(no);
-            } else if ($('#hidden_proses_status_' + no).val() == 'update') {
-                updateRinci(no);
-            }
-        }
-    }
-
-
-    function pilihEST() {
-        $('#modalPilihEstate').modal('hide');
-        var est = $('#cmb_pilih_est').val();
-        // $('#_est').remove();
-        // $('#txt_estate').append('<label class="control-label col-md-12 col-sm-6 col-xs-12" id="_est">Kebun '+est+'</label>');
-        // $('#txt_input_estate').val(est);
-    }
-
-    function pilihDevisi() {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Bpb/cari_devisi'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-            cache: false,
-            data: '',
-            success: function(data) {
-                $.each(data, function(index) {
-                    var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
-                    $('#cmb_pilih_est').append(opsi_cmb_devisi);
-                });
-            },
-            error: function(request) {
-                alert(request.responseText);
-            }
-        });
-    }
-
-    function pilihItem() {
-        console.log("hello world");
-    }
-
-    function hapus_row(id) {
-        var rowCount = $("#tableRinciBPB td").closest("tr").length;
-        if (rowCount != 1) {
-            $('#tr_' + id).remove();
-        } else {
-            swal('Tidak Bisa dihapus, item BPB tinggal 1');
-        }
-    }
-
     $(document).ready(function() {
         var id = <?php echo $this->uri->segment(4) ?>;
         var no_bpb = <?php echo $this->uri->segment(3) ?>;
@@ -347,20 +296,21 @@
                 // var tglbpb = new Date(data.data_bpb.tglinput);
 
                 // $('#txt_diberikan_kpd').val(data.data_bpb.kpd);
-                $('#txt_untuk_keperluan').val(data.data_bpb.keperluan);
-                $('#cmb_bagian :selected').text(data.data_bpb.bag);
-                $('#txt_tgl_bpb').val(data.data_bpb.tglinput);
-                $('#txt_no_bpb').val(data.data_bpb.nobpb);
-                $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
+                // $('#txt_untuk_keperluan').val(data.data_bpb.keperluan);
+                // $('#cmb_bagian :selected').text(data.data_bpb.bag);
+                // $('#txt_tgl_bpb').val(data.data_bpb.tglinput);
+                // $('#txt_no_bpb').val(data.data_bpb.nobpb);
+                // $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
 
-                $('#hidden_no_bpb').val(data.data_bpb.nobpb);
-                $('#hidden_id_bpb').val(data.data_bpb.id);
-                $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
-                $('#bhnbakar').val(data.data_bpb.bhn_bakar);
-                $('#txt_jns_alat').val(data.data_bpb.jn_alat);
-                $('#txt_kd_nmr').val(data.data_bpb.no_kode);
-                $('#txt_hm_km').val(data.data_bpb.hm_km);
-                $('#txt_lokasi_kerja').val(data.data_bpb.lok_kerja);
+                // $('#hidden_no_bpb').val(data.data_bpb.nobpb);
+                // $('#hidden_id_bpb').val(data.data_bpb.id);
+                // $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
+                // $('#bhnbakar').val(data.data_bpb.bhn_bakar);
+                // $('#txt_jns_alat').val(data.data_bpb.jn_alat);
+                // $('#txt_kd_nmr').val(data.data_bpb.no_kode);
+                // $('#txt_hm_km').val(data.data_bpb.hm_km);
+
+                $('#hidden_kode_dev').val(data.data_bpb.kode_dev);
 
                 $('#lbl_bpb_status').empty();
                 $('#h4_no_bpb').html('No. BPB : ' + data.data_bpb.nobpb);
@@ -437,15 +387,14 @@
                         // '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
                         // '<label>Stok di tgl ini : <b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></label>' +
                         '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok :<b id="b_stok_tgl_ini_' + n + '" name="b_stok_tgl_ini_' + n + '"></b></span><br>' +
-                        '<input type="hidden" id="hidden_stok_tgl_ini_' + n + '" name="hidden_stok_tgl_ini_' + n + '">&nbsp;' +
-
                         '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Booking :<b id="b_stok_booking_' + n + '"  name="b_stok_booking_' + n + '"></b></span>' +
+                        '<input type="hidden" id="hidden_stok_tgl_ini_' + n + '" name="hidden_stok_tgl_ini_' + n + '">' +
                         '<input type="hidden" id="hidden_stok_booking_' + n + '" name="hidden_stok_booking_' + n + '">' +
                         '<input type="hidden" id="hidden_satuan_' + n + '" name="hidden_satuan_' + n + '">' +
                         '</td>';
                     var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
                         '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-                        '<input type="text" class="form-control" id="txt_qty_diminta_' + n + '" name="txt_qty_diminta_' + n + '" placeholder="Qty Diminta">' +
+                        '<input type="text" class="form-control" id="txt_qty_diminta_' + n + '" name="txt_qty_diminta_' + n + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + n + ')">' +
                         '</td>';
 
                     var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
@@ -526,7 +475,7 @@
 
 
                     $('#txt_qty_diminta_' + n).addClass('currencyduadigit');
-                    $('.currencyduadigit').number(true, 2);
+                    $('.currencyduadigit').number(true, 0);
 
                     sum_stok(data.data_bpbitem[index].kodebar, data.data_bpbitem[index].kode_dev, data.data_bpbitem[index].periode, n);
 
@@ -538,27 +487,6 @@
                     $('#hidden_no_table').val(n);
                     // var kodbar = data.data_bpbitem[index].kodebar;
                 })
-            },
-            error: function(request) {
-                alert(request.responseText);
-            }
-        });
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Bpb/cari_dept'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-            cache: false,
-            // contentType : false,
-            // processData : false,
-
-            data: '',
-            success: function(data) {
-                $.each(data, function(index) {
-                    var opsi_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
-                    $('#cmb_bagian').append(opsi_cmb_bagian);
-                });
             },
             error: function(request) {
                 alert(request.responseText);
@@ -621,246 +549,11 @@
         });
     }
 
-
-    function check_form_2() {
-        if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
-            $('#btn_simpan_1').removeAttr('disabled', '');
-            $('#btn_tambah_row_1').removeAttr('disabled', '');
-            $('#tableRinciBPB').find('input,textarea,select').removeAttr('disabled');
-        } else {
-            $('#btn_simpan_1').attr('disabled', '');
-            $('#btn_tambah_row_1').attr('disabled', '');
-            $('#tableRinciBPB').find('input,textarea,select').attr('disabled', '');
-
-        }
-
-    }
-
-    // function tambah_row(id) {
-    //     var row = $('#hidden_no_table').val();
-    //     var tr_buka = '<tr id="tr_' + row + '">';
-    //     var td_col_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
-    //         '<input type="hidden" id="hidden_proses_status_' + row + '" name="hidden_proses_status_' + row + '" value="insert">' +
-    //         '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="tambah_row(' + row + ')"></button><br />' +
-    //         '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + row + '" name="btn_hapus_row" onclick="hapus_row(' + row + ')"></button>' +
-    //         '</td>';
-    //     var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
-    //     var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- TM/TBM -->' +
-    //         '<select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" onchange="cmb_afd_unit(' + row + ')">' +
-    //         '<option value="-">-</option>' +
-    //         '<option value="TM">TM</option>' +
-    //         '<option value="TBM">TBM</option>' +
-    //         '<option value="LANDCLEARING">LANDCLEARING</option>' +
-    //         '<option value="PEMBIBITAN">PEMBIBITAN</option>' +
-    //         '</select>' +
-    //         '</td>';
-    //     var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- AFD/UNIT -->' +
-    //         '<select class="form-control set_strip_cmb" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" onchange="cmb_blok_sub(' + row + ')">' +
-    //         '<option value="-">-</option>' +
-    //         '</select>' +
-    //         '</td>';
-    //     var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- BLOK/SUB -->' +
-    //         '<select class="form-control set_strip_cmb" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" onchange="cmb_tahun_tanam(' + row + ')">' +
-    //         '<option value="-">-</option>' +
-    //         '</select>' +
-    //         '</td>';
-    //     var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- Tahun Tanam -->' +
-    //         '<select class="form-control set_strip_cmb" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" onchange="cmb_bahan(' + row + ')">' +
-    //         '<option value="-">-</option>' +
-    //         '</select>' +
-    //         '</td>';
-    //     var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- Bahan -->' +
-    //         '<select class="form-control set_strip_cmb" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '">' +
-    //         '<option value="-">-</option>' +
-    //         '</select>' +
-    //         '</td>';
-    //     var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- Account Beban -->' +
-    //         '<input type="text" class="form-control" id="txt_account_beban_' + row + '" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
-    //         '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
-    //         '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
-    //         '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '">' +
-    //         '<input type="hidden" id="hidden_nama_acc_' + row + '" name="hidden_nama_acc_' + row + '">' +
-    //         '</td>';
-    //     var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- Barang -->' +
-    //         '<input type="text" class="form-control" id="txt_barang_' + row + '" name="txt_barang_' + row + '" onfocus="cari_barang(' + row + ')" placeholder="Barang">' +
-    //         '<label id="lbl_kode_barang_' + row + '"></label>' +
-    //         '<label id="lbl_nama_barang_' + row + '"></label>' +
-    //         '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '">' +
-    //         '<input type="hidden" id="hidden_nama_barang_' + row + '" name="hidden_nama_barang_' + row + '">' +
-    //         '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '">' +
-    //         '</td>';
-    //     var td_col_10 = '<td>' +
-    //         '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
-    //         '<input type="hidden" id="hidden_satuan_' + row + '" name="hidden_satuan_' + row + '">' +
-    //         '<label>Stok di tgl ini : <b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></label>' +
-    //         '<input type="hidden" id="hidden_stok_tgl_ini_' + row + '" name="hidden_stok_tgl_ini_' + row + '">&nbsp;' +
-    //         '<label>Booking : <b id="b_stok_booking_' + row + '" name="b_stok_booking_' + row + '"></b></label>' +
-    //         '<input type="hidden" id="hidden_stok_booking_' + row + '" name="hidden_stok_booking_' + row + '">' +
-    //         '</td>';
-    //     var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-    //         '<input type="text" class="form-control" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta">' +
-
-    //         '</td>';
-
-    //     var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-    //         '<!-- Keterangan -->' +
-    //         '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea>' +
-    //         '<label id="lbl_status_simpan_' + row + '"></label>' +
-    //         '<input type="hidden" id="hidden_id_bpbitem_' + row + '" name="hidden_id_bpbitem_' + row + '">' +
-    //         '</td>';
-    //     var td_col_12 = '<td width="5%">' +
-    //         '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-    //         '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
-    //         '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-    //         '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-    //         '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
-    //         '</td>';
-    //     var form_tutup = '</form>';
-    //     var tr_tutup = '</tr>';
-
-    //     $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
-
-    //     cek_bagian(row);
-
-    //     $('#txt_qty_diminta_' + row).addClass('currencyduadigit');
-    //     $('.currencyduadigit').number(true, 2);
-    //     // $('#txt_account_beban_'+row).attr('disabled','');
-
-    //     $('html, body').animate({
-    //         scrollTop: $("#tr_" + row).offset().top
-    //     }, 2000);
-
-    //     row++;
-    //     $('#hidden_no_table').val(row);
-    // }
-
-
-    function saveRinciClick(no) {
-        // saveRinci(no);
-        if ($('#hidden_proses_status_' + no).val() == 'insert') {
-            saveRinci(no);
-        } else if ($('#hidden_proses_status_' + no).val() == 'update') {
-            updateRinci(no);
-        }
-    }
-
-    function saveRinci(no) {
-        var isValid = true;
-        var sudah_booking = parseInt($('#hidden_stok_booking_' + no).val());
-        var qty_diminta = parseInt($('#txt_qty_diminta_' + no).val());
-        var stok_tgl_ini = parseInt($('#hidden_stok_tgl_ini_' + no).val());
-
-        var v_qty = validasi_qty(sudah_booking, qty_diminta, stok_tgl_ini, no);
-        if (v_qty === true) {
-            $('#cmb_tm_tbm_' + no +
-                ',#cmb_afd_unit_' + no +
-                ',#cmb_blok_sub_' + no +
-                ',#cmb_tahun_tanam_' + no +
-                ',#cmb_bahan_' + no +
-                ',#txt_account_beban_' + no +
-                ',#hidden_no_acc_' + no +
-                ',#hidden_nama_acc_' + no +
-                ',#txt_barang_' + no +
-                ',#hidden_kode_barang_' + no +
-                ',#hidden_nama_barang_' + no +
-                ',#txt_qty_diminta_' + no +
-                ',#hidden_stok_tgl_ini_' + no +
-                ',#hidden_stok_booking_' + no +
-                ',#hidden_satuan_' + no
-                // +',#txt_qty_disetujui_'+no
-                +
-                ',#txt_ket_rinci_' + no).each(function(e) {
-                if ($.trim($(this).val()) == '') {
-                    isValid = false;
-                    validasi($(this).attr("id"), no);
-                } else if ($('#txt_qty_diminta_' + no).val() == '0.00' || $('#txt_qty_diminta_' + no).val() == '0') {
-                    isValid = false;
-                    swal('Qty tidak boleh nol (0)');
-                    $('#txt_qty_diminta_' + no).css({
-                        "background": "#FFCECE"
-                    });
-                } else {
-                    console.log($(this).attr('id'));
-                    if ($(this).attr('id') == 'hidden_no_acc_' + no) {
-                        $('#lbl_no_acc_' + no).css({
-                            "background": ""
-                        });
-                        if ($('#lbl_no_acc_' + no).next().is('br#br_' + no)) {
-                            $('#lbl_no_acc_' + no).next().remove();
-                            $('#lbl_no_acc_' + no).next().remove();
-                        }
-                    } else if ($(this).attr('id') == 'hidden_nama_acc_' + no) {
-                        $('#lbl_nama_acc_' + no).css({
-                            "background": ""
-                        });
-                        if ($('#lbl_nama_acc_' + no).next().is('br#br_' + no)) {
-                            $('#lbl_nama_acc_' + no).next().remove();
-                            $('#lbl_nama_acc_' + no).next().remove();
-                        }
-                    } else if ($(this).attr('id') == 'hidden_kode_barang_' + no) {
-                        $('#lbl_kode_barang_' + no).css({
-                            "background": ""
-                        });
-                        if ($('#lbl_kode_barang_' + no).next().is('br#br_' + no)) {
-                            $('#lbl_kode_barang_' + no).next().remove();
-                            $('#lbl_kode_barang_' + no).next().remove();
-                        }
-                    } else if ($(this).attr('id') == 'hidden_nama_barang_' + no) {
-                        $('#lbl_nama_barang_' + no).css({
-                            "background": ""
-                        });
-                        if ($('#lbl_nama_barang_' + no).next().is('br#br_' + no)) {
-                            $('#lbl_nama_barang_' + no).next().remove();
-                            $('#lbl_nama_barang_' + no).next().remove();
-                        }
-                    } else if ($(this).attr('id') == 'hidden_stok_' + no) {
-                        $('#lbl_stok_' + no).css({
-                            "background": ""
-                        });
-                        if ($('#lbl_stok_' + no).next().is('br#br_' + no)) {
-                            $('#lbl_stok_' + no).next().remove();
-                            $('#lbl_stok_' + no).next().remove();
-                        }
-                    } else if ($(this).attr('id') == 'hidden_satuan_' + no) {
-                        $('#b_satuan_' + no).css({
-                            "background": ""
-                        });
-                        if ($('#b_satuan_' + no).next().is('br#br_' + no)) {
-                            $('#b_satuan_' + no).next().remove();
-                            $('#b_satuan_' + no).next().remove();
-                        }
-                    } else {
-                        $(this).css({
-                            "background": ""
-                        });
-                        if ($(this).next().is('br#br_' + no)) {
-                            $(this).next().remove();
-                            $(this).next().remove();
-                        }
-                    }
-                }
-            });
-            if (isValid === true) {
-                saveData(no);
-            }
-        }
-    }
-
     function cancelUpdate(no) {
-        $('.div_form_1').find('input,textarea').attr('readonly', '');
-        $('.div_form_1').find('select').attr('disabled', '');
+        $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
+        $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
-        $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
-        $('#txt_qty_diminta_1').addClass('form-control bg-light');
+        // $('#txt_qty_diminta_1').addClass('form-control bg-light');
         $('#btn_cancelUpdate_ubah_' + no).css('display', 'block');
         $('#btn_update_' + no).css('display', 'none');
         $('#btn_cancel_update_' + no).css('display', 'none');
@@ -893,45 +586,9 @@
 
             data: form_data,
             success: function(data) {
-                var yeye = data.data_bpbitem;
-                console.log(yeye);
-                // var tgl_bpb = new Date(data.data_bpb.tglbpb);
 
-                // $('#hidden_no_bpb').val(data.data_bpb.nobpb);
-                // $('#hidden_id_bpb').val(data.data_bpb.id);
-
-
-                // $('#txt_diberikan_kpd').val(data.data_bpb.kpd);
-                // $('#txt_untuk_keperluan').val(data.data_bpb.keperluan);
-
-                // var bag = data.data_bpb.bag;
-                // var cmb_bagian = document.getElementById('cmb_bagian');
-                // for (var i = 0; i < cmb_bagian.options.length; i++) {
-                //     if (cmb_bagian.options[i].text === bag) {
-                //         cmb_bagian.selectedIndex = i;
-                //     }
-                // }
-
-                // $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
-                // $('#hidden_stok_tgl_ini_'+no).val(data.data_bpbitem.); //
-                $('#hidden_no_acc_' + no).val(data.data_bpbitem.kodesubtxt);
-                $('#hidden_nama_acc_' + no).val(data.data_bpbitem.ketsub);
-                $('#hidden_kode_barang_' + no).val(data.data_bpbitem.kodebar);
-                $('#hidden_nama_barang_' + no).val(data.data_bpbitem.nabar);
-                $('#hidden_grup_barang_' + no).val(data.data_bpbitem.grp);
-                $('#hidden_satuan_' + no).val(data.data_bpbitem.satuan);
-                $('#hidden_id_bpbitem_' + no).val(data.data_bpbitem.id);
-                $('#cmb_afd_unit_' + no).val(data.data_bpbitem.afd);
-                $('#cmb_blok_sub_' + no).val(data.data_bpbitem.blok);
-                $('#cmb_bahan_' + no).val(data.data_bpbitem.kodebebantxt);
                 $('#txt_qty_diminta_' + no).val(data.data_bpbitem.qty);
                 $('#txt_ket_rinci_' + no).val(data.data_bpbitem.ket);
-                // $('#txt_qty_disetujui_'+no).val(data.data_bpbitem.qty2);
-
-                // $('#cmb_tm_tbm_'+no).val(data.data_bpbitem.); //
-                // $('#cmb_tahun_tanam_'+no).val(data.data_bpbitem.); //
-                // $('#txt_account_beban_'+no).val(data.data_bpbitem.); //
-                // $('#txt_barang_'+no).val(data.data_bpbitem.); //
 
                 $('#lbl_status_simpan_' + no).empty();
                 $.toast({
@@ -1050,34 +707,32 @@
         var form_data = new FormData();
 
         // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
-        form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
-        form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
-        // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
-        form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
-        form_data.append('cmb_alokasi_est', $('#cmb_alokasi_est').val());
+        // form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
+        // form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
+        // // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
+        // form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
+        // form_data.append('cmb_alokasi_est', $('#cmb_alokasi_est').val());
 
-        form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
-        form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
-        form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
-        form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
-        form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
+        // form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
+        // form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
+        // form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
+        // form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
+        // form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
 
-        form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
-        form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
-        form_data.append('hidden_kode_barang', $('#hidden_kode_barang_' + no).val());
-        form_data.append('hidden_nama_barang', $('#hidden_nama_barang_' + no).val());
-        form_data.append('hidden_grup_barang', $('#hidden_grup_barang_' + no).val());
-        form_data.append('hidden_stok_tgl_ini', $('#hidden_stok_tgl_ini_' + no).val());
-        form_data.append('hidden_satuan', $('#hidden_satuan_' + no).val());
+        // form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
+        // form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
+        // form_data.append('hidden_nama_barang', $('#hidden_nama_barang_' + no).val());
+        // form_data.append('hidden_grup_barang', $('#hidden_grup_barang_' + no).val());
+        // form_data.append('hidden_stok_tgl_ini', $('#hidden_stok_tgl_ini_' + no).val());
+        // form_data.append('hidden_satuan', $('#hidden_satuan_' + no).val());
+        var kode_dev = $('#hidden_kode_dev').val();
+        var kodebar = $('#hidden_kode_barang_' + no).val();
 
-        form_data.append('txt_qty_diminta', $('#txt_qty_diminta_' + no).val());
         // form_data.append('txt_qty_disetujui',$('#txt_qty_disetujui_'+no).val()); 
+        form_data.append('txt_qty_diminta', $('#txt_qty_diminta_' + no).val());
         form_data.append('txt_ket_rinci', $('#txt_ket_rinci_' + no).val());
 
-        form_data.append('hidden_no_bpb', $('#hidden_no_bpb').val());
-        form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
-        form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
 
         $.ajax({
             type: "POST",
@@ -1093,6 +748,9 @@
 
             data: form_data,
             success: function(data) {
+
+                sum_stok_booking(kodebar, kode_dev, no);
+
                 $('.div_form_1').find('input,textarea').attr('readonly', '');
                 $('.div_form_1').find('select').attr('disabled', '');
 
@@ -1129,125 +787,6 @@
             }
         });
     }
-
-
-
-    // function saveData(no) {
-    //     var form_data = new FormData();
-
-    //     // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
-    //     form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
-    //     form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
-    //     // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
-    //     form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
-    //     form_data.append('cmb_alokasi_est', $('#cmb_alokasi_est').val());
-
-    //     form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
-    //     form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
-    //     form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
-    //     form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
-    //     form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
-
-    //     form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
-    //     form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
-    //     form_data.append('hidden_kode_barang', $('#hidden_kode_barang_' + no).val());
-    //     form_data.append('hidden_nama_barang', $('#hidden_nama_barang_' + no).val());
-    //     form_data.append('hidden_grup_barang', $('#hidden_grup_barang_' + no).val());
-    //     form_data.append('hidden_stok_tgl_ini', $('#hidden_stok_tgl_ini_' + no).val());
-    //     form_data.append('hidden_satuan', $('#hidden_satuan_' + no).val());
-
-    //     form_data.append('txt_qty_diminta', $('#txt_qty_diminta_' + no).val());
-    //     // form_data.append('txt_qty_disetujui',$('#txt_qty_disetujui_'+no).val()); 
-    //     form_data.append('txt_ket_rinci', $('#txt_ket_rinci_' + no).val());
-
-    //     form_data.append('hidden_no_bpb', $('#hidden_no_bpb').val());
-    //     form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
-    //     form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
-
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "<?php echo site_url('Bpb/simpan_rinci_bpb'); ?>",
-    //         dataType: "JSON",
-    //         beforeSend: function() {
-    //             $('#lbl_status_simpan_' + no).empty();
-    //             $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Simpan</label>');
-    //             if ($.trim($('#hidden_no_bpb').val()) == '') {
-    //                 $('#lbl_bpb_status').empty();
-    //                 $('#lbl_bpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate BPB Number</label>');
-    //             }
-
-    //             $('#btn_ubah_' + no).css('display', 'block');
-    //             $('#btn_hapus_' + no).css('display', 'block');
-    //         },
-    //         cache: false,
-    //         contentType: false,
-    //         processData: false,
-
-    //         data: form_data,
-    //         success: function(data) {
-    //             console.log(data);
-    //             if (data == "kodebar_exist") {
-    //                 swal('Tidak bisa ditambahkan. Barang sudah ada pada BPB yang sama !');
-    //                 $('#lbl_status_simpan_' + no).empty();
-    //                 $('#lbl_status_simpan_' + no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
-    //             } else {
-    //                 if (data.status == true) {
-    //                     $('#a_bpb_baru').show();
-
-    //                     $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-    //                     $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
-
-    //                     // $('#tableRinciBPB tbody #tr_'+no+' td').find('input,textarea').not('#txt_barang_'+no).attr('readonly','');
-    //                     // $('#tableRinciBPB tbody #tr_'+no+' td').find('#txt_barang_'+no).attr('disabled','');
-
-    //                     $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
-    //                     $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
-
-    //                     $('#lbl_status_simpan_' + no).empty();
-    //                     $.toast({
-    //                         position: 'top-right',
-    //                         heading: 'Success',
-    //                         text: 'Berhasil Disimpan!',
-    //                         icon: 'success',
-    //                         loader: false
-    //                     });
-
-    //                     $('#lbl_bpb_status').empty();
-    //                     $('#h4_no_bpb').empty();
-
-    //                     $('#h4_no_bpb').html('No. BPB : ' + data.nobpb);
-    //                     $('#h4_no_ref_bpb').html('No. Ref BPB : ' + data.norefbpb);
-    //                     $('#btn_hapus_row_' + no).css('display', 'none');
-
-    //                     $('#hidden_no_bpb').val(data.nobpb);
-    //                     $('#hidden_no_ref_bpb').val(data.norefbpb);
-
-    //                     if ($.trim($('#hidden_id_bpb').val()) == '') {
-    //                         $('#hidden_id_bpb').val(data.id_bpb);
-    //                     }
-    //                     $('#hidden_id_bpbitem_' + no).val(data.id_bpbitem);
-
-    //                     $('#btn_simpan_' + no).css('display', 'none');
-    //                 } else {
-    //                     alert('Error Save Data');
-    //                     $('#lbl_status_simpan_' + no).empty();
-    //                     $('#lbl_status_simpan_' + no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
-    //                 }
-    //             }
-    //         },
-    //         error: function(request) {
-    //             alert('Error Save Data : ' + request.responseText);
-
-    //             $('#lbl_status_simpan_' + no).empty();
-    //             $('#lbl_status_simpan_' + no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
-
-    //             if ($.trim($('#hidden_no_bpb').val()) == '') {
-    //                 $('#lbl_spp_status').empty();
-    //                 $('#lbl_spp_status').append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Generate !</label>');
-    //             }
-    //         }
-    //     });
-    // }
 
     function ubahRinci(no) {
         // $('.div_form_1').find('input,textarea').not('#txt_tgl_bpb').removeAttr('readonly');
@@ -1825,5 +1364,21 @@
                 alert(request.responseText);
             }
         });
+    }
+
+    function validasi_qty_diminta(n) {
+        var a = $('#hidden_stok_tgl_ini_' + n + '').val();
+        var b = $('#txt_qty_diminta_' + n + '').val();
+
+        var hidden_stok_tgl_ini = Number(a);
+        var txt_qty_diminta = Number(b);
+
+        if (txt_qty_diminta > hidden_stok_tgl_ini) {
+            swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
+            $('#txt_qty_diminta_' + n + '').val('');
+        } else if (txt_qty_diminta == 0) {
+            swal('Tidak boleh 0!');
+            $('#txt_qty_diminta_' + n + '').val('');
+        }
     }
 </script>
