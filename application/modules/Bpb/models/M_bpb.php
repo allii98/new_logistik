@@ -375,7 +375,7 @@ class M_bpb extends CI_Model
             $kodebar    = $this->input->post('hidden_kode_barang');
             $nabar      = $this->input->post('hidden_nama_barang');
 
-            $query = "SELECT * FROM bpbitem WHERE afd = '$afd_unit' AND blok = '$blok_sub' AND nobpb = '$nobpb' AND norefbpb = '$norefbpb' AND (kodebar = '$kodebar' OR nabar = '$nabar')";
+            $query = "SELECT * FROM bpbitem WHERE norefbpb = '$norefbpb' AND kodebar = '$kodebar'";
             $check_brg = $this->db_logistik_pt->query($query);
 
             if ($check_brg->num_rows() > 0) {
@@ -416,6 +416,7 @@ class M_bpb extends CI_Model
     function ubah_rinci_bpb()
     {
         $id_bpbitem = $this->input->post('hidden_id_bpbitem');
+        $norefbpb = $this->input->post('hidden_no_ref_bpb');
         $bahan          = $this->input->post('cmb_bahan');
 
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
@@ -427,22 +428,40 @@ class M_bpb extends CI_Model
             $ketbeban = $get_coa->nama;
         }
 
+        $kodebar = $this->input->post('hidden_kode_barang');
+
         $databpbitem['afd']             = $this->input->post('cmb_afd_unit');
         $databpbitem['blok']           = $this->input->post('cmb_blok_sub');
         $databpbitem['kodebebantxt']  = $bahan;
         $databpbitem['ketbeban']     = $ketbeban;
         $databpbitem['kodesubtxt']  = $this->input->post('hidden_no_acc');
         $databpbitem['ketsub']     = $this->input->post('hidden_nama_acc');
-        $databpbitem['kodebar']   = $this->input->post('hidden_kode_barang');
+        $databpbitem['kodebar']   = $kodebar;
         $databpbitem['nabar']    = $this->input->post('hidden_nama_barang');
         $databpbitem['grp']     = $this->input->post('hidden_grup_barang');
         $databpbitem['satuan'] = $this->input->post('hidden_satuan');
         $databpbitem['qty']   = $this->input->post('txt_qty_diminta');
         $databpbitem['ket']  = $this->input->post('txt_ket_rinci');
 
-        $this->db_logistik_pt->set($databpbitem);
-        $this->db_logistik_pt->where('id', $id_bpbitem);
-        return $this->db_logistik_pt->update('bpbitem');
+        //cek data exist
+        $query = "SELECT kodebar FROM bpbitem WHERE id = '$id_bpbitem'";
+        $check_brg = $this->db_logistik_pt->query($query)->row_array();
+
+        if ($check_brg['kodebar'] != $kodebar) {
+            $cek_item = "SELECT kodebar FROM bpbitem WHERE norefbpb = '$norefbpb' AND kodebar = '$kodebar'";
+            $cek_isi_item = $this->db_logistik_pt->query($cek_item)->num_rows();
+            if ($cek_isi_item >= 1) {
+                return "kodebar_exist";
+            } else {
+                $this->db_logistik_pt->set($databpbitem);
+                $this->db_logistik_pt->where('id', $id_bpbitem);
+                return $this->db_logistik_pt->update('bpbitem');
+            }
+        } else {
+            $this->db_logistik_pt->set($databpbitem);
+            $this->db_logistik_pt->where('id', $id_bpbitem);
+            return $this->db_logistik_pt->update('bpbitem');
+        }
     }
 
     public function updateitem($nobpb, $norefbpb, $kodebar, $dataedit_approval)

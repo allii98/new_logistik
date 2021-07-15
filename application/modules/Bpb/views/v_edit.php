@@ -131,8 +131,6 @@
                         <h6 id="h4_no_bpb" name="h4_no_bpb"></h6>&nbsp;&nbsp;
                         <h6 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h6>
                     </div>
-
-
                     <div class="table-responsive">
                         <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
                             <thead>
@@ -269,6 +267,23 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapus">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                        <h4 class="mt-2">Konfirmasi Hapus</h4>
+                        <input type="" id="hidden_no_delete" name="hidden_no_delete">
+                        <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
+                        <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteData()">Hapus</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 <script>
@@ -292,29 +307,14 @@
                 'no_bpb': no_bpb
             },
             success: function(data) {
-                // console.log(data);
-                // var tglbpb = new Date(data.data_bpb.tglinput);
-
-                // $('#txt_diberikan_kpd').val(data.data_bpb.kpd);
-                // $('#txt_untuk_keperluan').val(data.data_bpb.keperluan);
-                // $('#cmb_bagian :selected').text(data.data_bpb.bag);
-                // $('#txt_tgl_bpb').val(data.data_bpb.tglinput);
-                // $('#txt_no_bpb').val(data.data_bpb.nobpb);
-                // $('#cmb_alokasi_est').val(data.data_bpb.alokasi);
-
-                // $('#hidden_no_bpb').val(data.data_bpb.nobpb);
-                // $('#hidden_id_bpb').val(data.data_bpb.id);
-                // $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
-                // $('#bhnbakar').val(data.data_bpb.bhn_bakar);
-                // $('#txt_jns_alat').val(data.data_bpb.jn_alat);
-                // $('#txt_kd_nmr').val(data.data_bpb.no_kode);
-                // $('#txt_hm_km').val(data.data_bpb.hm_km);
 
                 $('#hidden_kode_dev').val(data.data_bpb.kode_dev);
 
                 $('#lbl_bpb_status').empty();
                 $('#h4_no_bpb').html('No. BPB : ' + data.data_bpb.nobpb);
                 $('#h4_no_ref_bpb').html('No. Ref BPB : ' + data.data_bpb.norefbpb);
+                $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
+                $('#hidden_id_bpb').val(data.data_bpb.id);
 
                 $('#hidden_no_table').val(1);
 
@@ -382,6 +382,7 @@
                         '<input type="hidden" id="hidden_kode_barang_' + n + '" name="hidden_kode_barang_' + n + '" value="0">' +
                         '<input type="hidden" id="hidden_nama_barang_' + n + '" name="hidden_nama_barang_' + n + '" value="0">' +
                         '<input type="hidden" id="hidden_grup_barang_' + n + '" name="hidden_grup_barang_' + n + '" value="0">' +
+                        '<input type="hidden" id="hidden_txtperiode_' + n + '" name="hidden_txtperiode_' + n + '">' +
                         '</td>';
                     var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
                         // '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
@@ -408,79 +409,55 @@
                         '<button class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
                         '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
                         '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
-                        '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
+                        '<button class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
                         '</td>';
                     var form_tutup = '</form>';
                     var tr_tutup = '</tr>';
 
                     $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
 
-                    // $('#tbody_rincian').append(tr_buka+td_col_1+form_buka+td_col_2+td_col_3+td_col_4+td_col_5+form_tutup+tr_tutup);
-
-                    // var opsi_afd = '<option value="' + data.data_bpbitem[index].afd + '">' + data.data_bpbitem[index].afd + '</option>';
-                    // $('#cmb_bahan_' + n).empty();
-                    // $('#cmb_bahan_' + n).append(opsi_afd);
-
-                    // var opsi_blok = '<option value="' + data.data_bpbitem[index].blok + '">' + data.data_bpbitem[index].blok + '</option>';
-                    // $('#cmb_bahan_' + n).empty();
-                    // $('#cmb_bahan_' + n).append(opsi_blok);
-
-                    var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].kodebebantxt + '</option>';
-                    $('#cmb_bahan_' + n).empty();
-                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+                    var opsi_afd = '<option value="' + data.data_bpbitem[index].afd + '">' + data.data_bpbitem[index].afd + '</option>';
+                    $('#cmb_afd_unit_' + n).empty();
+                    $('#cmb_afd_unit_' + n).append(opsi_afd);
 
                     var opsi_cmb_blok_sub = '<option value="' + data.data_bpbitem[index].blok + '">' + data.data_bpbitem[index].blok + '</option>';
                     $('#cmb_blok_sub_' + n).empty();
                     $('#cmb_blok_sub_' + n).append(opsi_cmb_blok_sub);
 
-                    // $('#cmb_bahan_'+n).val(data.data_bpbitem[index].kodebebantxt);
-                    var account = data.data_bpbitem[index].kodesubtxt;
-                    console.log('ini account', account);
-                    if (account == 0) {
-                        $('#txt_account_beban_' + n).val('-');
-                        $('#lbl_no_acc_' + n).html();
-                        $('#lbl_nama_acc_' + n).html();
-                    } else {
-                        $('#txt_account_beban_' + n).val(account);
-                        $('#lbl_no_acc_' + n).html(data.data_bpbitem[index].kodesubtxt);
-                        $('#lbl_nama_acc_' + n).html(data.data_bpbitem[index].ketsub);
-                    }
-                    $('#txt_barang_' + n).val(data.data_bpbitem[index].nabar);
-                    $('#txt_qty_diminta_' + n).val(data.data_bpbitem[index].qty);
-                    // $('#txt_qty_disetujui_'+n).val(data.data_bpbitem[index].qty2);
-                    $('#txt_ket_rinci_' + n).val(data.data_bpbitem[index].ket);
+                    var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].ketbeban + ' - ' + data.data_bpbitem[index].kodebebantxt + '</option>';
+                    $('#cmb_bahan_' + n).empty();
+                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
 
-                    // $('#').val();
+                    // $('#cmb_afd_unit_' + n).val(data.data_bpbitem[index].afd);
+                    // $('#cmb_blok_sub_' + n).val(data.data_bpbitem[index].blok);
+                    // $('#cmb_bahan_' + n).val(data.data_bpbitem[index].kodebebantxt);
 
-
-                    $('#lbl_kode_barang_' + n).html(data.data_bpbitem[index].kodebar);
-                    $('#lbl_nama_barang_' + n).html(data.data_bpbitem[index].nabar);
-
+                    $('#txt_account_beban_' + n).val(data.data_bpbitem[index].ketsub);
                     $('#hidden_no_acc_' + n).val(data.data_bpbitem[index].kodesubtxt);
                     $('#hidden_nama_acc_' + n).val(data.data_bpbitem[index].ketsub);
 
+                    $('#hidden_satuan_' + n).val(data.data_bpbitem[index].satuan);
                     $('#hidden_kode_barang_' + n).val(data.data_bpbitem[index].kodebar);
                     $('#hidden_nama_barang_' + n).val(data.data_bpbitem[index].nabar);
                     $('#hidden_grup_barang_' + n).val(data.data_bpbitem[index].grp);
+                    $('#txt_barang_' + n).val(data.data_bpbitem[index].nabar);
+                    $('#hidden_txtperiode_' + n).val(data.data_bpbitem[index].periode);
 
-                    $('#b_satuan_' + n).html(data.data_bpbitem[index].satuan);
-                    $('#hidden_satuan_' + n).val(data.data_bpbitem[index].satuan);
+                    $('#txt_qty_diminta_' + n).val(data.data_bpbitem[index].qty);
+                    $('#txt_ket_rinci_' + n).val(data.data_bpbitem[index].ket);
 
                     $('#hidden_id_bpbitem_' + n).val(data.data_bpbitem[index].id);
-                    // $('#b_stok_tgl_ini_'+n).html(data.data_bpbitem[index].);
-                    // $('#b_satuan_'+n).html(data.data_bpbitem[index].);
 
                     $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
 
-
                     $('#txt_qty_diminta_' + n).addClass('currencyduadigit');
                     $('.currencyduadigit').number(true, 0);
 
-                    sum_stok(data.data_bpbitem[index].kodebar, data.data_bpbitem[index].kode_dev, data.data_bpbitem[index].periode, n);
+                    sum_stok(data.data_bpbitem[index].kodebar, n, data.data_bpbitem[index].kode_dev);
 
                     get_all_cmb(data.data_bpbitem[index].kodebebantxt, n);
-                    sum_stok_booking(data.data_bpbitem[index].kodebar, data.data_bpbitem[index].kode_dev, n);
+                    sum_stok_booking(data.data_bpbitem[index].kodebar, n, data.data_bpbitem[index].kode_dev);
 
                     n++;
                     i++;
@@ -512,30 +489,24 @@
                 console.log("ini datanya", data);
 
                 if (data == null) {
-                    $('#cmb_tm_tbm_' + n).val('-');
+                    var opsi_tm_tbm_ = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_tm_tbm_' + n).append(opsi_tm_tbm_);
 
                     var opsi_afd_unit = '<option value="' + '-' + '">' + '-' + '</option>';
-                    // $('#cmb_afd_unit_' + n).empty();
-                    $('#cmb_afd_unit_' + n).append('-');
+                    $('#cmb_afd_unit_' + n).append(opsi_afd_unit);
 
-                    // var opsi_blok_sub = '<option value=""></option>';
-                    // $('#cmb_blok_sub_'+n).empty();
-                    // $('#cmb_blok_sub_'+n).append(opsi_blok_sub);
+                    var opsi_blok_sub = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_blok_sub_' + n).append(opsi_blok_sub);
 
                     var opsi_cmb_thn_tanam = '<option value="' + '-' + '">' + '-' + '</option>';
-                    // $('#cmb_tahun_tanam_' + n).empty();
-                    $('#cmb_tahun_tanam_' + n).append('-');
+                    $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
+
+                    var opsi_cmb_bahan = '<option value="' + '-' + '">' + '-' + '</option>';
+                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
                 } else {
 
                     $('#cmb_tm_tbm_' + n).val(data.tmtbm);
-
-                    var opsi_afd_unit = '<option value="' + data.afd + '">' + data.afd + '</option>';
-                    $('#cmb_afd_unit_' + n).empty();
-                    $('#cmb_afd_unit_' + n).append(opsi_afd_unit);
-
-                    // var opsi_blok_sub = '<option value=""></option>';
-                    // $('#cmb_blok_sub_'+n).empty();
-                    // $('#cmb_blok_sub_'+n).append(opsi_blok_sub);
+                    // $('#cmb_tahun_tanam_' + n).val(data.thn_tanam);
 
                     var opsi_cmb_thn_tanam = '<option value="' + data.thn_tanam + '">' + data.thn_tanam + '</option>';
                     $('#cmb_tahun_tanam_' + n).empty();
@@ -567,9 +538,8 @@
     function getPreviousData(no) {
         var form_data = new FormData();
 
-        // form_data.append('hidden_no_bpb', $('#hidden_no_bpb').val());
-        // form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
-        // form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
+        var kode_dev = $('#hidden_kode_dev').val();
+
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
 
         $.ajax({
@@ -587,6 +557,37 @@
             data: form_data,
             success: function(data) {
 
+                get_all_cmb(data.data_bpbitem.kodebebantxt, no);
+                sum_stok(data.data_bpbitem.kodebar, no, kode_dev);
+                sum_stok_booking(data.data_bpbitem.kodebar, no, kode_dev);
+
+                var opsi_afd = '<option value="' + data.data_bpbitem.afd + '">' + data.data_bpbitem.afd + '</option>';
+                $('#cmb_afd_unit_' + no).empty();
+                $('#cmb_afd_unit_' + no).append(opsi_afd);
+
+                var opsi_cmb_blok_sub = '<option value="' + data.data_bpbitem.blok + '">' + data.data_bpbitem.blok + '</option>';
+                $('#cmb_blok_sub_' + no).empty();
+                $('#cmb_blok_sub_' + no).append(opsi_cmb_blok_sub);
+
+                var opsi_cmb_bahan = '<option value="' + data.data_bpbitem.kodebebantxt + '">' + data.data_bpbitem.ketbeban + ' - ' + data.data_bpbitem.kodebebantxt + '</option>';
+                $('#cmb_bahan_' + no).empty();
+                $('#cmb_bahan_' + no).append(opsi_cmb_bahan);
+
+                // $('#cmb_afd_unit_' + no).val(data.data_bpbitem.afd);
+                // $('#cmb_blok_sub_' + no).val(data.data_bpbitem.blok);
+                // $('#cmb_bahan_' + no).val(data.data_bpbitem.kodebebantxt);
+
+                $('#txt_account_beban_' + no).val(data.data_bpbitem.ketsub);
+                $('#hidden_no_acc_' + no).val(data.data_bpbitem.kodesubtxt);
+                $('#hidden_nama_acc_' + no).val(data.data_bpbitem.ketsub);
+
+                $('#hidden_satuan_' + no).val(data.data_bpbitem.satuan);
+                $('#hidden_kode_barang_' + no).val(data.data_bpbitem.kodebar);
+                $('#hidden_nama_barang_' + no).val(data.data_bpbitem.nabar);
+                $('#hidden_grup_barang_' + no).val(data.data_bpbitem.grp);
+                $('#txt_barang_' + no).val(data.data_bpbitem.nabar);
+                $('#hidden_txtperiode_' + no).val(data.data_bpbitem.periode);
+
                 $('#txt_qty_diminta_' + no).val(data.data_bpbitem.qty);
                 $('#txt_ket_rinci_' + no).val(data.data_bpbitem.ket);
 
@@ -600,7 +601,7 @@
                 $('#btn_ubah_' + no).css('display', 'block');
                 $('#btn_update_' + no).css('display', 'none');
                 $('#btn_cancel_update_' + no).css('display', 'none');
-                $('#btn_hapus_' + no).removeAttr('disabled');
+                $('#btn_hapus_' + no).css('display', 'block');
 
                 $('#hidden_proses_status_' + no).empty();
                 $('#hidden_proses_status_' + no).val('');
@@ -706,33 +707,23 @@
     function updateData(no) {
         var form_data = new FormData();
 
-        // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
-        // form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
-        // form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
-        // // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
-        // form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
-        // form_data.append('cmb_alokasi_est', $('#cmb_alokasi_est').val());
-
-        // form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
-        // form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
-        // form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
-        // form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
-        // form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
-
-        // form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
-        // form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
-        // form_data.append('hidden_nama_barang', $('#hidden_nama_barang_' + no).val());
-        // form_data.append('hidden_grup_barang', $('#hidden_grup_barang_' + no).val());
-        // form_data.append('hidden_stok_tgl_ini', $('#hidden_stok_tgl_ini_' + no).val());
-        // form_data.append('hidden_satuan', $('#hidden_satuan_' + no).val());
         var kode_dev = $('#hidden_kode_dev').val();
         var kodebar = $('#hidden_kode_barang_' + no).val();
 
-        // form_data.append('txt_qty_disetujui',$('#txt_qty_disetujui_'+no).val()); 
+        form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
+        form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
+        form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
+        form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
+        form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
+        form_data.append('hidden_kode_barang', $('#hidden_kode_barang_' + no).val());
+        form_data.append('hidden_nama_barang', $('#hidden_nama_barang_' + no).val());
+        form_data.append('hidden_grup_barang', $('#hidden_grup_barang_' + no).val());
+        form_data.append('hidden_satuan', $('#hidden_satuan_' + no).val());
         form_data.append('txt_qty_diminta', $('#txt_qty_diminta_' + no).val());
         form_data.append('txt_ket_rinci', $('#txt_ket_rinci_' + no).val());
 
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+        form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
 
         $.ajax({
             type: "POST",
@@ -749,35 +740,39 @@
             data: form_data,
             success: function(data) {
 
-                sum_stok_booking(kodebar, kode_dev, no);
+                console.log(data);
 
-                $('.div_form_1').find('input,textarea').attr('readonly', '');
-                $('.div_form_1').find('select').attr('disabled', '');
+                if (data == "kodebar_exist") {
+                    swal('Tidak bisa ditambahkan. Barang sudah ada pada BPB yang sama !');
+                    $('#lbl_status_simpan_' + no).empty();
+                    $('#btn_ubah_' + no).css('display', 'none');
+                    $('#btn_hapus_' + no).css('display', 'none');
+                } else {
+                    sum_stok_booking(kodebar, no, kode_dev);
 
-                // $('#tableRinciBPB tbody #tr_'+no+' td').find('input,textarea').not('#txt_barang_'+no).attr('readonly','');
-                // $('#tableRinciBPB tbody #tr_'+no+' td').find('select,#txt_barang_'+no).attr('disabled','');
-                // $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
-                // $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
+                    $('.div_form_1').find('input,textarea').attr('readonly', '');
+                    $('.div_form_1').find('select').attr('disabled', '');
 
-                $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
-                $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
+                    $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
+                    $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
-                $('#lbl_status_simpan_' + no).empty();
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil Diubah!',
-                    icon: 'success',
-                    loader: false
-                });
+                    $('#lbl_status_simpan_' + no).empty();
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Diubah!',
+                        icon: 'success',
+                        loader: false
+                    });
 
-                $('#btn_ubah_' + no).css('display', 'block');
-                $('#btn_update_' + no).css('display', 'none');
-                $('#btn_cancel_update_' + no).css('display', 'none');
-                $('#btn_hapus_' + no).removeAttr('disabled');
+                    $('#btn_ubah_' + no).css('display', 'block');
+                    $('#btn_update_' + no).css('display', 'none');
+                    $('#btn_cancel_update_' + no).css('display', 'none');
+                    $('#btn_hapus_' + no).css('display', 'block');
 
-                $('#hidden_proses_status_' + no).empty();
-                $('#hidden_proses_status_' + no).val('');
+                    $('#hidden_proses_status_' + no).empty();
+                    $('#hidden_proses_status_' + no).val('');
+                }
             },
             error: function(request) {
                 alert('Error Update Data : ' + request.responseText);
@@ -789,11 +784,11 @@
     }
 
     function ubahRinci(no) {
-        // $('.div_form_1').find('input,textarea').not('#txt_tgl_bpb').removeAttr('readonly');
-        // $('.div_form_1').find('select').removeAttr('disabled');
+        $('#tr_' + no).find('input,textarea,select').removeAttr('disabled', '');
+        $('#tr_' + no).find('input,textarea,select').removeClass('bg-light');
 
-        $('#txt_qty_diminta_' + no + ', #txt_ket_rinci_' + no + '').removeAttr('disabled', '');
-        $('#txt_qty_diminta_' + no + ', #txt_ket_rinci_' + no + '').removeClass('bg-light');
+        // $('#txt_qty_diminta_' + no + ', #txt_ket_rinci_' + no + '').removeAttr('disabled', '');
+        // $('#txt_qty_diminta_' + no + ', #txt_ket_rinci_' + no + '').removeClass('bg-light');
 
         $('#lbl_status_simpan_' + no).empty();
         $('#btn_ubah_' + no).css('display', 'none');
@@ -1116,7 +1111,7 @@
 
                 $.each(data, function(index) {
                     // var opsi_cmb_bahan = '<option value="'+data[index].coa_material+'">'+data[index].coa_material+'-'+data[index].ket+'</option>';
-                    var opsi_cmb_bahan = '<option value="' + data[index][0] + '">' + data[index][0] + '-' + data[index][1] + '</option>';
+                    var opsi_cmb_bahan = '<option value="' + data[index][0] + '">' + data[index][1] + '-' + data[index][0] + '</option>';
                     $('#cmb_bahan_' + row).append(opsi_cmb_bahan);
                 });
             },
@@ -1139,9 +1134,8 @@
     function tableAccBeban(row) {
         $(document).ready(function() {
             var cmb_bahan = $('#cmb_bahan_' + row).val();
-            //datatables
-            // var nopo = nopotxt;
-            console.log(cmb_bahan);
+
+            console.log(cmb_bahan + 'bahan ni');
             table = $('#tableAccBeban').DataTable({
                 "destroy": true,
                 "processing": true,
@@ -1152,7 +1146,7 @@
                     "url": "<?php echo site_url('Bpb/list_acc_beban') ?>",
                     "type": "POST",
                     "data": {
-                        cmb_no_ac: cmb_bahan
+                        cmb_bahan: cmb_bahan
                     }
                 },
 
@@ -1172,6 +1166,24 @@
         });
     }
     // End Data Table Server Side
+
+    //jika account beban di klik
+    $('#tableAccBeban tbody').on('click', 'tr', function() {
+        var dataClick = $('#tableAccBeban').DataTable().row(this).data();
+        // console.log(dataClick);
+        var no_coa = dataClick[1];
+        var nama_account = dataClick[2];
+        var row = $('#hidden_no_row').val();
+
+        // $('#lbl_no_acc_' + row).html(no_coa);
+        // $('#lbl_nama_acc_' + row).html(nama_account);
+        $('#txt_account_beban_' + row).val(nama_account);
+
+        $('#hidden_no_acc_' + row).val(no_coa);
+        $('#hidden_nama_acc_' + row).val(nama_account);
+
+        $('#modalAccBeban').modal('hide');
+    });
 
     function cari_barang(no_row) {
         $('#hidden_no_row_barang').val(no_row);
@@ -1256,7 +1268,10 @@
         var nama_barang = dataClick[3];
         var grup_barang = dataClick[4];
         var satuan = dataClick[5];
+        var txtperiode = dataClick[6];
         var row = $('#hidden_no_row_barang').val();
+
+        var kode_dev = $('#hidden_kode_dev').val();
 
         $('#lbl_kode_barang_' + row).html(kode_barang);
         $('#lbl_nama_barang_' + row).html(nama_barang);
@@ -1265,17 +1280,20 @@
         $('#hidden_kode_barang_' + row).val(kode_barang);
         $('#hidden_nama_barang_' + row).val(nama_barang);
         $('#hidden_grup_barang_' + row).val(grup_barang);
+        $('#hidden_txtperiode_' + row).val(txtperiode);
 
         $('#b_satuan_' + row).html(satuan);
         $('#hidden_satuan_' + row).val(satuan);
 
         // $('#modalListBarang').modal('hide');
 
-        sum_stok(kode_barang, row);
-        sum_stok_booking(kode_barang, row);
+        sum_stok(kode_barang, row, kode_dev);
+        sum_stok_booking(kode_barang, row, kode_dev);
     });
 
-    function sum_stok(kodbar, kode_dev, hidden_txtperiode, row) {
+    function sum_stok(kodbar, row, kode_dev) {
+
+        var hidden_txtperiode = $('#hidden_txtperiode_' + row).val();
 
         $.ajax({
             type: "POST",
@@ -1288,10 +1306,12 @@
 
             data: {
                 'kodbar': kodbar,
-                'kode_dev': kode_dev,
                 'hidden_txtperiode': hidden_txtperiode,
+                'kode_dev': kode_dev
             },
             success: function(data) {
+
+                // console.log(data);
                 if (data === false) {
                     var sess_user_gudang = '<?php echo $this->session->userdata('kode_level') ?>';
                     // 36 User Gudang
@@ -1299,33 +1319,30 @@
                     if (sess_user_gudang != 36 && sess_user_gudang != 18) {
                         swal('Stock Awal Belum Ada / Tidak Ada Stock di Gudang, Silahkan Hubungi Petugas Gudang');
                     } else {
-                        swal("Stock Awal belum ada, silahkan input dahulu !", {
-                                buttons: {
-                                    ya: {
-                                        text: "Ya",
-                                        value: "iya",
-                                    },
-                                    cancel: "Tutup",
-                                },
-                            })
-                            .then((value) => {
-                                switch (value) {
-                                    case "iya":
-                                        window.open('<?php echo site_url('stock_awal'); ?>', '_blank');
-                                        break;
-                                    default:
-                                        swal.close();
-                                }
-                            });
+
+                        Swal.fire({
+                            title: 'Stock Awal belum ada!',
+                            text: "silahkan input dahulu",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            confirmButtonText: 'Ya!'
+                        }).then(function() {
+                            // window.location = "redirectURL";
+                            window.open('<?php echo site_url('stok'); ?>', '_blank');
+                        });
                     }
                     // if(frombpb == 'frombpb'){
-                    // 	$('#tr_'+row).css('background-color','#ffcece');
+                    // 	$('#tr_'+row).css('background-color','#ffcece');    
                     // 	$('#txt_ket_rinci_'+row).attr('readonly','');
                     // 	$('#btn_simpan_'+row).attr('disabled','');
                     // }
                 } else {
                     if (data == '0' || data == '0.00') {
                         swal('Tidak ada stok di gudang, silahkan lakukan pengajuan SPP');
+                        $('#txt_barang_' + row).val('');
+                        $('#modalListBarang').modal('hide');
                     } else {
                         $('#b_stok_tgl_ini_' + row).html(data);
                         $('#hidden_stok_tgl_ini_' + row).val(data);
@@ -1344,7 +1361,7 @@
         });
     }
 
-    function sum_stok_booking(kodbar, kode_dev, row) {
+    function sum_stok_booking(kodbar, row, kode_dev) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bpb/sum_stok_booking'); ?>",
@@ -1380,5 +1397,116 @@
             swal('Tidak boleh 0!');
             $('#txt_qty_diminta_' + n + '').val('');
         }
+    }
+
+    function hapusRinci(id) {
+        $('#hidden_no_delete').val(id);
+
+        var rowCount = $("#tableRinciBPB td").closest("tr").length;
+        if (rowCount != 1) {
+            $('#modalKonfirmasiHapus').modal('show');
+        } else {
+            deleteData();
+        }
+    }
+
+    function deleteData() {
+        var no = $('#hidden_no_delete').val();
+        $('#modalKonfirmasiHapus').modal('hide');
+
+        var rowCount = $("#tableRinciBPB td").closest("tr").length;
+
+        if (rowCount != 1) {
+            var form_data = new FormData();
+
+            form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Bpb/hapus_rinci'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+                    $('#lbl_status_simpan_' + no).empty();
+                    $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+
+                data: form_data,
+                success: function(data) {
+                    $('#tr_' + no).remove();
+                    // alert('Data Berhasil dihapus');
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Dihapus!',
+                        icon: 'success',
+                        loader: false
+                    });
+                    $('#lbl_status_simpan_' + no).empty();
+                    // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
+                    // $('.modal-success').modal('show');
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
+        } else {
+            Swal.fire({
+                title: 'Item BPB Tinggal 1',
+                text: "Yakin akan menghapus BPB ini?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Hapus!'
+            }).then((result) => {
+                if (result.value) {
+                    // var no_po = $('#hidden_no_po').val();
+                    deleteBPB(no);
+                }
+            });
+        }
+    }
+
+    function deleteBPB(no) {
+        var form_data = new FormData();
+
+        // form_data.append('hidden_id_po',$('#hidden_id_po_'+no).val());
+        form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
+        form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/hapus_all'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + no).empty();
+                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
+            },
+            cache: false,
+            contentType: false,
+            processData: false,
+
+            data: form_data,
+            success: function(data) {
+                $('#tr_' + no).remove();
+                // alert('Data Berhasil dihapus');
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil Dihapus!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                window.location = "<?= base_url('Bpb') ?>";
+                // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
+                // $('.modal-success').modal('show');
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
     }
 </script>

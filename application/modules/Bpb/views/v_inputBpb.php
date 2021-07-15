@@ -530,11 +530,12 @@
 
     function hapusRinci(id) {
         $('#hidden_no_delete').val(id);
-        if (id == 1) {
-            deleteData();
-        } else {
 
+        var rowCount = $("#tableRinciBPB td").closest("tr").length;
+        if (rowCount != 1) {
             $('#modalKonfirmasiHapus').modal('show');
+        } else {
+            deleteData();
         }
     }
 
@@ -554,7 +555,8 @@
                 url: "<?php echo site_url('Bpb/hapus_rinci'); ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-
+                    $('#lbl_status_simpan_' + no).empty();
+                    $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
                 },
                 cache: false,
                 contentType: false,
@@ -571,6 +573,7 @@
                         icon: 'success',
                         loader: false
                     });
+                    $('#lbl_status_simpan_' + no).empty();
                     // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
                     // $('.modal-success').modal('show');
                 },
@@ -580,7 +583,7 @@
             });
         } else {
             Swal.fire({
-                title: 'Item PO Tinggal 1',
+                title: 'Item BPB Tinggal 1',
                 text: "Yakin akan menghapus BPB ini?",
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
@@ -608,7 +611,8 @@
             url: "<?php echo site_url('Bpb/hapus_all'); ?>",
             dataType: "JSON",
             beforeSend: function() {
-
+                $('#lbl_status_simpan_' + no).empty();
+                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
             },
             cache: false,
             contentType: false,
@@ -1048,9 +1052,8 @@
     function getPreviousData(no) {
         var form_data = new FormData();
 
-        // form_data.append('hidden_no_bpb', $('#hidden_no_bpb').val());
-        // form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
-        // form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
+        var kode_dev = $('#devisi').val();
+
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
 
         $.ajax({
@@ -1069,6 +1072,8 @@
             success: function(data) {
 
                 get_all_cmb(data.data_bpbitem.kodebebantxt, no);
+                sum_stok(data.data_bpbitem.kodebar, no, kode_dev);
+                sum_stok_booking(data.data_bpbitem.kodebar, no, kode_dev);
 
                 $('#cmb_afd_unit_' + no).val(data.data_bpbitem.afd);
                 $('#cmb_blok_sub_' + no).val(data.data_bpbitem.blok);
@@ -1222,6 +1227,7 @@
         form_data.append('txt_ket_rinci', $('#txt_ket_rinci_' + no).val());
 
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+        form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
 
         $.ajax({
             type: "POST",
@@ -1237,30 +1243,38 @@
 
             data: form_data,
             success: function(data) {
-                sum_stok_booking(kodebar, no, kode_dev);
 
-                $('.div_form_1').find('input,textarea').attr('readonly', '');
-                $('.div_form_1').find('select').attr('disabled', '');
+                if (data == "kodebar_exist") {
+                    swal('Tidak bisa ditambahkan. Barang sudah ada pada BPB yang sama !');
+                    $('#lbl_status_simpan_' + no).empty();
+                    $('#btn_ubah_' + no).css('display', 'none');
+                    $('#btn_hapus_' + no).css('display', 'none');
+                } else {
+                    sum_stok_booking(kodebar, no, kode_dev);
 
-                $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
-                $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
+                    $('.div_form_1').find('input,textarea').attr('readonly', '');
+                    $('.div_form_1').find('select').attr('disabled', '');
 
-                $('#lbl_status_simpan_' + no).empty();
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil Diupdate!',
-                    icon: 'success',
-                    loader: false
-                });
+                    $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
+                    $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
-                $('#btn_ubah_' + no).css('display', 'block');
-                $('#btn_update_' + no).css('display', 'none');
-                $('#btn_cancel_update_' + no).css('display', 'none');
-                $('#btn_hapus_' + no).css('display', 'block');
+                    $('#lbl_status_simpan_' + no).empty();
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Diupdate!',
+                        icon: 'success',
+                        loader: false
+                    });
 
-                $('#hidden_proses_status_' + no).empty();
-                $('#hidden_proses_status_' + no).val('');
+                    $('#btn_ubah_' + no).css('display', 'block');
+                    $('#btn_update_' + no).css('display', 'none');
+                    $('#btn_cancel_update_' + no).css('display', 'none');
+                    $('#btn_hapus_' + no).css('display', 'block');
+
+                    $('#hidden_proses_status_' + no).empty();
+                    $('#hidden_proses_status_' + no).val('');
+                }
             },
             error: function(request) {
                 alert('Error Update Data : ' + request.responseText);
@@ -1270,8 +1284,6 @@
             }
         });
     }
-
-
 
     function ubahRinci(no) {
         $('#tr_' + no).find('input,textarea,select').removeAttr('disabled', '');

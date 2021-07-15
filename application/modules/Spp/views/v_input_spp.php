@@ -51,18 +51,18 @@
                                         case 'HO':
                                     ?>
                                             <option value="SPP">SPP - Surat Permohonan Pembelian</option>
-                                            <!-- <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option> -->
+                                            <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
                                             <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
-                                            <!-- <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option> -->
+                                            <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option>
                                         <?php
                                             break;
                                         case 'RO':
                                         case 'SITE':
                                         case 'PKS':
                                         ?>
-                                            <!-- <option value="SPP">SPP - Surat Permohonan Pembelian</option> -->
+                                            <option value="SPP">SPP - Surat Permohonan Pembelian</option>
                                             <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
-                                            <!-- <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option> -->
+                                            <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
                                     <?php
                                             break;
                                         default:
@@ -677,6 +677,9 @@
                     swal('Sudah ada item yang sama pada SPP ini!');
                     $('#lbl_status_simpan_' + n).empty();
                     $('#lbl_spp_status').empty();
+                    $('#btn_cancel_update_' + n).css('display', 'none');
+                    $('#btn_update_' + n).css('display', 'block');
+                    $('#btn_cancel_update_' + n).css('display', 'block');
                 } else {
                     $('#lbl_status_simpan_' + n).empty();
                     $.toast({
