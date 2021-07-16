@@ -173,9 +173,7 @@ class M_po extends CI_Model
     public function updateItem($no_id_item, $dataupdateitem)
     {
         $this->db_logistik_pt->where('id', $no_id_item);
-        $this->db_logistik_pt->update('item_po',  $dataupdateitem);
-
-        return TRUE;
+        return $this->db_logistik_pt->update('item_po',  $dataupdateitem);
     }
     public function updatePPO($id_ppo, $ppo)
     {
@@ -221,10 +219,10 @@ class M_po extends CI_Model
         return $data_item_po;
     }
 
-    public function deletePO($no_po)
+    public function deletePO($norefpo)
     {
-        $this->db_logistik_pt->delete('po', array('nopo' => $no_po));
-        $this->db_logistik_pt->delete('item_po', array('nopo' => $no_po));
+        $this->db_logistik_pt->delete('po', array('noreftxt' => $norefpo));
+        $this->db_logistik_pt->delete('item_po', array('noref' => $norefpo));
         return TRUE;
     }
 

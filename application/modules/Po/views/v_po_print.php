@@ -129,7 +129,7 @@ function terbilang($x, $style = 4)
     No. SPP : <?= $po->no_refppo; ?>
   </p> -->
   <h4 align="center" style="font-weight: normal;margin: 0px;">
-    No. PP : <?= $po->noreftxt; ?>
+    No. PO : <?= $po->noreftxt; ?>
   </h4>
   <table border="1" class="singleborder" width="100%" id="tabel_po">
     <tr>

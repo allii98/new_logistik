@@ -326,22 +326,22 @@ class Po extends CI_Controller
         echo json_encode($data);
     }
 
-    function sum_ppo()
-    {
-        $noppo = $this->input->post('noppo');
-        $kodebar = $this->input->post('kodebar');
+    // function sum_ppo()
+    // {
+    //     $noppo = $this->input->post('noppo');
+    //     $kodebar = $this->input->post('kodebar');
 
-        $queryPPO = "SELECT noppo, kodebar, qty, qty2 FROM item_ppo WHERE noppo = '$noppo' ";
-        $data_qty_ppo = $this->db_logistik_pt->query($queryPPO)->row();
+    //     $queryPPO = "SELECT noppo, kodebar, qty, qty2 FROM item_ppo WHERE noppo = '$noppo' ";
+    //     $data_qty_ppo = $this->db_logistik_pt->query($queryPPO)->row();
 
-        $sisa_qty_ppo  =  number_format($data_qty_ppo->qty - $data_qty_ppo->qty2, 0);
+    //     $sisa_qty_ppo  =  number_format($data_qty_ppo->qty - $data_qty_ppo->qty2, 0);
 
-        // if ($sisa_qty_ppo == 0) {
-        //     $this->M_po->updatePPO2($noppo);
-        // } else {
-        //     $this->M_po->updatePPO3($noppo);
-        // }
-    }
+    //     // if ($sisa_qty_ppo == 0) {
+    //     //     $this->M_po->updatePPO2($noppo);
+    //     // } else {
+    //     //     $this->M_po->updatePPO3($noppo);
+    //     // }
+    // }
 
     function cekdataspp()
     {
@@ -860,34 +860,110 @@ class Po extends CI_Controller
         }
     }
 
+    public function deletePO_data()
+    {
+
+        $id_po_item = $this->input->post('hidden_id_po_item');
+
+        $get_po = $this->db_logistik_pt->get_where('item_po', array('id' => $id_po_item))->row();
+
+        // $id_ppo = $this->input->post('id_item');
+        $refspp = $get_po->refppo;
+        $kodebar = $get_po->kodebar;
+
+        $data_ppo2 =  array(
+            'po' => 0
+        );
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
+
+        //cari id di item_ppo
+        $get_ppo = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $refspp, 'kodebar' => $kodebar))->row();
+        $id_ppo = $get_ppo->id;
+
+        $data_ppo =  array(
+            'qty2' => NULL,
+            'po' => 0
+        );
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+        $norefpo = $this->input->post('norefpo');
+        $data = $this->M_po->deletePO($norefpo);
+
+        echo json_encode($data);
+    }
+
+    public function hapus_rinci_data()
+    {
+
+        $id_po_item = $this->input->post('hidden_id_po_item');
+
+        $get_po = $this->db_logistik_pt->get_where('item_po', array('id' => $id_po_item))->row();
+
+        // $id_ppo = $this->input->post('id_item');
+        $refspp = $get_po->refppo;
+        $kodebar = $get_po->kodebar;
+
+        $data_ppo2 =  array(
+            'po' => 0
+        );
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
+
+        //cari id di item_ppo
+        $get_ppo = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $refspp, 'kodebar' => $kodebar))->row();
+        $id_ppo = $get_ppo->id;
+
+        $data_ppo =  array(
+            'qty2' => NULL,
+            'po' => 0
+        );
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+        $data = $this->db_logistik_pt->delete('item_po', array('id' => $id_po_item));
+        echo json_encode($data);
+    }
+
     public function deletePO()
     {
 
         $id_ppo = $this->input->post('id_item');
         $refspp = $this->input->post('hidden_no_ref_spp');
-        $data_ppo =  array(
+
+        $data_ppo2 =  array(
             'po' => 0
         );
-        $data = $this->M_po->updatePPO2($refspp, $data_ppo);
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
+
+        $data_ppo =  array(
+            'qty2' => NULL,
+            'po' => 0
+        );
         $this->M_po->updatePPO($id_ppo, $data_ppo);
 
-        $no_po = $this->input->post('nopo');
-        $data = $this->M_po->deletePO($no_po);
+        $norefpo = $this->input->post('norefpo');
+        $data = $this->M_po->deletePO($norefpo);
 
         echo json_encode($data);
     }
 
     public function hapus_rinci()
     {
+
         $id_po_item = $this->input->post('hidden_id_po_item');
 
         $id_ppo = $this->input->post('id_item');
         $refspp = $this->input->post('hidden_no_ref_spp');
-        $data_ppo =  array(
+
+        $data_ppo2 =  array(
             'po' => 0
         );
-        $data = $this->M_po->updatePPO2($refspp, $data_ppo);
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
+
+        $data_ppo =  array(
+            'qty2' => NULL,
+            'po' => 0
+        );
         $this->M_po->updatePPO($id_ppo, $data_ppo);
+
         $data = $this->db_logistik_pt->delete('item_po', array('id' => $id_po_item));
         echo json_encode($data);
     }
@@ -898,15 +974,15 @@ class Po extends CI_Controller
         $norefpo = $this->input->post('hidden_no_ref_po');
         $no_po = $this->input->post('hidden_no_po');
 
-        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00") {
+        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00" || $this->input->post('txt_biaya_lain') != "0" || $this->input->post('txt_biaya_lain') != "0.00") {
             $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
             $disc = $this->input->post('txt_disc') / 100;
-            $jumharga = $qty_harga - ($qty_harga * $disc);
+            $jumharga_pre = $qty_harga - ($qty_harga * $disc);
+            $biaya_lain = $this->input->post('txt_biaya_lain');
+            $jumharga = $jumharga_pre + $biaya_lain;
         } else {
             $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
         }
-
-
 
         $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
         $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
@@ -939,17 +1015,17 @@ class Po extends CI_Controller
             'hargasblm' => $this->input->post('txt_harga'),
             'disc' => $this->input->post('txt_disc'),
             'kurs' => $this->input->post('cmb_kurs'),
-            'kode_budget' => "0",
+            // 'kode_budget' => "0",
             'grup' => $this->input->post('cmb_jenis_budget'),
-            'main_acct' => "0",
-            'nama_main' => NULL,
-            'batal' => "0",
-            'cek_pp' => "0",
-            'KODE_BPO' => "0",
+            // 'main_acct' => "0",
+            // 'nama_main' => NULL,
+            // 'batal' => "0",
+            // 'cek_pp' => "0",
+            // 'KODE_BPO' => "0",
             'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
-            'kode_bebanbpo' => Null,
+            // 'kode_bebanbpo' => Null,
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
-            'konversi' => "0"
+            // 'konversi' => "0"
         ];
 
         $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
