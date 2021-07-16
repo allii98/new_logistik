@@ -582,6 +582,18 @@ class M_laporan extends CI_Model
         $this->db_logistik_pt->where('NO_REF', $no_ref_bkb);
         return $this->db_logistik_pt->get()->row_array();
     }
+
+    public function bybarang($devisi, $noref, $tanggalAwal, $tanggalAkhir)
+    {
+        $query = "SELECT i.kodebar, i.nabar, i.sat, i.noref, p.kode_dev, p.devisi FROM item_po i LEFT JOIN po p ON p.noreftxt=i.noref WHERE p.kode_dev='$devisi' AND i.noref='$noref' AND i.tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir' AND p.status_lpb='1' ORDER BY p.id DESC";
+        return $this->db_logistik_pt->query($query)->result();
+    }
+
+    public function bysup($devisi, $noref, $tanggalAwal, $tanggalAkhir)
+    {
+        $query = "SELECT kode_supply, nama_supply, refpo, noref FROM stokmasuk WHERE kode_dev='$devisi' AND refpo='$noref' AND tgl BETWEEN '$tanggalAwal' AND '$tanggalAkhir' ORDER BY id DESC";
+        return $this->db_logistik_pt->query($query)->result();
+    }
 }
 
 /* End of file M_laporan.php */

@@ -65,6 +65,12 @@
                 <th style="font-weight: bold;">Lokasi Pengiriman</th>
                 <th style="font-weight: bold;" colspan="2">Pembayaran</th>
             </tr>
+            <tr>
+                <td colspan="20">
+
+                    <hr>
+                </td>
+            </tr>
         </thead>
         <tbody>
             <?php
@@ -99,7 +105,7 @@
                     </tr>
                     <?php
                     $noref = $d->noreftxt;
-                    $query = "SELECT a.kodebar, a.nabar, a.tgl, a.satuan, a.qty, a.ttgtxt FROM masukitem a WHERE a.refpo ='$noref' order by a.id DESC";
+                    $query = "SELECT a.kodebar, a.nabar, a.tgl, a.satuan,a.qtypo, a.qty, a.ttgtxt FROM masukitem a WHERE a.refpo ='$noref' order by a.id DESC";
                     // $query = "SELECT a.kodebar, a.nabar, a.tgl, a.satuan, a.qty, a.ttgtxt, b.qty as qtypo FROM masukitem a, item_po b WHERE a.refpo=b.noref AND a.refpo ='$noref' order by a.id DESC";
                     $lpb = $this->db_logistik_pt->query($query)->result();
                     $no = 1;
@@ -117,7 +123,7 @@
                                 <td><?= $dt->kodebar ?></td>
                                 <td><?= $dt->nabar ?></td>
                                 <td><?= $dt->satuan ?></td>
-                                <td><?= $dt->qty ?></td>
+                                <td><?= $dt->qtypo ?></td>
                                 <td><?= date_format(date_create($dt->tgl), "d/m/Y"); ?></td>
                                 <td><?= $dt->ttgtxt ?></td>
                                 <td><?= $dt->qty ?></td>
