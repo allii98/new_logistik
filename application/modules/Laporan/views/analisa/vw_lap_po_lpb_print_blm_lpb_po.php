@@ -41,7 +41,7 @@
     <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
     <div style="text-align: center;">
         <h3>MONITORING PO VS LPB</h3>
-        TAHUN : 2020
+        TAHUN : <?= date('Y'); ?>
     </div>
     <br>
     <table border="0" width="100%">
