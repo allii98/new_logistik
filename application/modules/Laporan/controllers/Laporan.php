@@ -1764,6 +1764,80 @@ class Laporan extends CI_Controller
 		// print_r($data);
 		// echo "</pre>";
 	}
+
+	function print_lap_po_lpb_blm_lpb_po()
+	{
+		$devisi = $this->uri->segment(3);
+		// $noref = $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . $this->uri->segment(6) . '/' . $this->uri->segment(7) . '/' . $this->uri->segment(8) . '/' . $this->uri->segment(9);
+
+		$tanggalAwal = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
+		$tanggalAkhir = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
+
+		$ambil = $this->M_laporan->po_blm_lpb($devisi, $tanggalAwal, $tanggalAkhir);
+
+		$data['belum'] = $ambil;
+
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_blm_lpb_po', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
+	function print_lap_po_lpb_po_cash_sh()
+	{
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_po_cash_sh', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_po_lpb_po_cash_blm_lpb()
+	{
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_po_cash_blm_lpb', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
+	function print_lap_po_lpb_po_gab()
+	{
+		$data['lokasi1'] = "Tes";
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => 'A4',
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('analisa/vw_lap_po_lpb_print_po_gab', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
 }
 
 /* End of file Laporan.php */

@@ -76,8 +76,8 @@
                 <tr>
                     <td style="text-align: center;"><?= $list_bkb->skb; ?></td>
                     <td style="text-align: center;"><?= date_format(date_create($list_bkb->tgl), 'd/m/Y'); ?></td>
-                    <td style="text-align: center;"><?= $list_bkb->bag; ?></td>
-                    <td style="text-align: center;"><?= $list_bkb->nabar; ?></td>
+                    <td style="text-align: left;"><?= $list_bkb->bag; ?></td>
+                    <td style="text-align: left;"><?= $list_bkb->nabar; ?></td>
                     <td style="text-align: center;"><?= $list_bkb->satuan; ?></td>
                     <td style="text-align: center;"><?= $list_bkb->qty; ?></td>
                     <td style="text-align: center;"><?= $list_bkb->kodebar; ?></td>
@@ -86,7 +86,7 @@
                     <td style="text-align: center;"><?= $list_bkb->blok; ?></td>
                     <td><?= $list_bkb->ket; ?></td>
                     <td style="text-align: center;"><?= $list_bkb->USER; ?></td>
-                    <td style="text-align: center;"><?= $list_bkb->alokasi; ?></td>
+                    <td style="text-align: center;"><?= $list_bkb->devisi; ?></td>
                 </tr>
             <?php } ?>
         </tbody>

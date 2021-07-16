@@ -54,15 +54,15 @@
         <table border="0" class="center" width="100%">
             <thead>
                 <tr>
-                    <td>No</td>
-                    <td>Nomor PO</td>
-                    <td>Tanggal PO</td>
-                    <td>Kode Barang</td>
-                    <td>Nama Barang</td>
-                    <td>Satuan</td>
-                    <td style="text-align: right;">Qty</td>
-                    <td style="text-align: right;">Harga Satuan</td>
-                    <td style="text-align: right;">Total</td>
+                    <th>No</th>
+                    <th>Nomor PO</th>
+                    <th>Tanggal PO</th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Satuan</th>
+                    <th style="text-align: right;">Qty</th>
+                    <th style="text-align: right;">Harga Satuan</th>
+                    <th style="text-align: right;">Total</th>
                 </tr>
             </thead>
             <tbody>
@@ -84,6 +84,22 @@
                         <td style="text-align: right;">Rp <?= number_format((($list_item_po->harga) * $list_item_po->qty), 2); ?></td>
                     </tr>
                 <?php } ?>
+                <tr>
+                    <th colspan="9">
+                        <hr>
+                    </th>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th style="text-align: right;"></th>
+                    <th style="text-align: right;">Total Seluruh :</th>
+                    <th style="text-align: right;">Rp <?= number_format($total, 2); ?></th>
+                </tr>
 
             </tbody>
         </table>
@@ -91,7 +107,7 @@
         <i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
         <hr>
     </div>
-    <h4>Total Seluruh : Rp <?= number_format($total, 2); ?></h4>
+    <!-- <h4>Total Seluruh : Rp <?= number_format($total, 2); ?></h4> -->
 </body>
 
 </html>

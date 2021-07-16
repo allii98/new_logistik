@@ -418,14 +418,12 @@ class M_laporan extends CI_Model
             $refpo = str_replace("/", ".", $refpo);
             $periode1 = "'" . str_replace('/', '-', $this->input->post('txt_periode12')) . "'";
             $periode2 = "'" . str_replace('/', '-', $this->input->post('txt_periode13')) . "'";
-            // $ket_dept = "'" . $hasil->ket_dept . "'";
-            // $ket_dept = str_replace(' ','.',$ket_dept);
-            // $ket_dept = str_replace('&','-',$ket_dept);
             $row   = array();
             $row[] = $no++;
             $row[] = date_format($tgl, "d-m-Y");
             $row[] = $hasil->refpo;
             $row[] = $hasil->noref;
+            $row[] = $hasil->nama_supply;
             $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printLPBPOClick(' . $noref . ',' . $refpo . ',' . $periode1 . ',' . $periode2 . ')"></button>';
             $data[] = $row;
         }
@@ -592,6 +590,12 @@ class M_laporan extends CI_Model
     public function bysup($devisi, $noref, $tanggalAwal, $tanggalAkhir)
     {
         $query = "SELECT kode_supply, nama_supply, refpo, noref FROM stokmasuk WHERE kode_dev='$devisi' AND refpo='$noref' AND tgl BETWEEN '$tanggalAwal' AND '$tanggalAkhir' ORDER BY id DESC";
+        return $this->db_logistik_pt->query($query)->result();
+    }
+
+    public function po_blm_lpb($devisi, $tanggalAwal, $tanggalAkhir)
+    {
+        $query = "SELECT i.kodebar, i.nabar, i.noref, i.merek, i.qty, i.status_item_lpb, p.tglpo, p.bayar, p.nama_supply, p.tempo_bayar FROM item_po i LEFT JOIN po p ON p.noreftxt=i.noref WHERE p.kode_dev='$devisi' AND i.tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir' AND status_lpb='0' ORDER BY p.id DESC";
         return $this->db_logistik_pt->query($query)->result();
     }
 }

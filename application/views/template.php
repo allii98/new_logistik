@@ -872,6 +872,7 @@
                                             <th style="width: 25% !important;">Tanggal</th>
                                             <th style="width: 25% !important;">No Ref PO</th>
                                             <th style="width: 25% !important;">No Ref LPB</th>
+                                            <th style="width: 25% !important;">Supplier</th>
                                             <th style="width: 10% !important;">Opsi</th>
                                         </tr>
                                     </thead>
@@ -1810,11 +1811,8 @@
                     swal('Jangan ada field yang kosong!~');
                 }
             } else if (rbt_pilihan4 == 'po_blm_lpb_po') {
-                if (noref_po !== '') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_blm_lpb_po"); ?>');
-                } else {
-                    swal('Jangan ada field yang kosong!~');
-                }
+                window.open('<?= site_url("Laporan/print_lap_po_lpb_blm_lpb_po"); ?>/' + cmb_devisi2 + '/' + txt_periode8 + '/' + txt_periode9);
+
             } else if (rbt_pilihan4 == 'po_cash_sh') {
                 if (noref_po !== '') {
                     window.open('<?= site_url("Laporan/print_lap_po_lpb_po_cash_sh"); ?>');
@@ -2862,6 +2860,10 @@
                         },
                         {
                             "width": "20%"
+                        },
+                        {
+                            "width": "20%"
+
                         },
                         {
                             "width": "20%"
