@@ -42,7 +42,7 @@
     <h6 style="z-index: 0; margin-top: 5px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>
     <div style="text-align: center;">
         <h1>MONITORING PO VS LPB</h1>
-        <h3>TAHUN : 2020</h3>
+        <h3>TAHUN : <?= date('Y') ?></h3>
     </div>
     <table border="0" width="100%">
         <tr>
@@ -56,72 +56,148 @@
     <hr>
     <table rules="rows" width="100%">
         <tbody>
-            <tr style="background-color: #d6d6c2;">
-                <td colspan="9">15 60-HOLINDO, CV</td>
-            </tr>
-            <tr>
-                <td></td>
-                <td>Kode Barang</td>
-                <td>Nama Barang</td>
-                <td>Satuan</td>
-                <td>QTY</td>
-                <td>Tgl LPB</td>
-                <td>No. LPB</td>
-                <td>QTY Diterima</td>
-                <td>Selisih</td>
-            </tr>
-            <tr>
-                <td colspan="9">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">02/07/2020 &nbsp; 6100028</td>
-                <td>EST/SWJ/JKT07/20/6100028</td>
-                <td colspan="6">Credit 30 <i>Hari</i></td>
-            </tr>
-            <tr>
-                <td colspan="9">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>102505410000293</td>
-                <td>CABLE PARKING BRAKE MK 599571</td>
-                <td>PCS</td>
-                <td>5.00</td>
-                <td>25/07/2020</td>
-                <td>6210265</td>
-                <td>5.00</td>
-                <td>0.00</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>102505410000742</td>
-                <td>OIL SHEAL RR DIFf MH 034205</td>
-                <td>PCS</td>
-                <td>10.00</td>
-                <td>25/07/2020</td>
-                <td>6210265</td>
-                <td>10.00</td>
-                <td>0.00</td>
-            </tr>
-            <tr>
-                <td colspan="9">
-                    <hr>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">02/07/2020 &nbsp; 6100035</td>
-                <td>EST/SWJ/JKT07/20/6100035</td>
-                <td colspan="6">Credit 30 <i>Hari</i></td>
-            </tr>
-            <tr>
-                <td colspan="9">
-                    <hr>
-                </td>
-            </tr>
+            <?php if (empty($sup)) { ?>
+                <tr>
+                    <td colspan="9">
+                        <table class="singleborder" width="100%">
+                            <thead>
+
+                                <tr style="background-color: #d6d6c2;">
+                                    <th style="width: 30%;">Tidak ada data</th>
+                                    <th colspan="4"></th>
+                                    <th colspan="2"></th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <th></th>
+                    <th>Kode Barang</th>
+                    <th>Nama Barang</th>
+                    <th>Satuan</th>
+                    <th>QTY</th>
+                    <th>Tgl LPB</th>
+                    <th>No. LPB</th>
+                    <th>QTY Diterima</th>
+                    <th>Selisih</th>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                    <td colspan="6">Tidak ada data</i></td>
+                </tr>
+                <tr>
+                    <td colspan="9">
+                        <hr>
+                    </td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                    <td>Tidak ada data</td>
+                </tr>
+
+                <tr>
+                    <td colspan="9">
+                        <hr>
+                    </td>
+                </tr>
+                <?php } else {
+
+                if (isset($sup)) {
+                    foreach ($sup as $data) {
+                        $refpo = $data->refpo;
+                        $po = $this->db_logistik_pt->query("SELECT tglpo, nopo, noreftxt, bayar, tempo_bayar FROM po WHERE noreftxt='$refpo' ORDER BY id DESC")->result();
+                        foreach ($po as $d) {
+                ?>
+                            <tr>
+                                <td colspan="9">
+                                    <table class="singleborder" width="100%">
+                                        <thead>
+
+                                            <tr style="background-color: #d6d6c2;">
+                                                <th style="width: 30%;"><?= $data->kode_supply ?> - <?= $data->nama_supply ?></th>
+                                                <th colspan="4"></th>
+                                                <th colspan="2"></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Kode Barang</th>
+                                <th>Nama Barang</th>
+                                <th>Satuan</th>
+                                <th>QTY</th>
+                                <th>Tgl LPB</th>
+                                <th>No. LPB</th>
+                                <th>QTY Diterima</th>
+                                <th>Selisih</th>
+                            </tr>
+                            <tr>
+                                <td colspan="9">
+                                    <hr>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2"><?= $d->tglpo ?> &nbsp; <?= $d->nopo ?></td>
+                                <td><?= $d->noreftxt ?></td>
+                                <td colspan="6"><?= $d->bayar ?> <?php if ($d->tempo_bayar != 0) {
+                                                                        echo $d->tempo_bayar . " Hari";
+                                                                    } else {
+                                                                    } ?></td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="9">
+                                    <hr>
+                                </td>
+                            </tr>
+                            <?php
+                            $refpo = $d->noreftxt;
+                            $reflpb = $data->noref;
+                            $lpb = $this->db_logistik_pt->query("SELECT kodebar, nabar, satuan, qtypo, qty, tgl, noref FROM masukitem WHERE refpo='$refpo' AND noref='$reflpb' ORDER BY id DESC")->result();
+                            $no = 1;
+                            foreach ($lpb as $dt) {
+                                $selisih = $dt->qtypo - $dt->qty;
+                            ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $dt->kodebar ?></td>
+                                    <td><?= $dt->nabar ?></td>
+                                    <td><?= $dt->satuan ?></td>
+                                    <td><?= $dt->qtypo ?></td>
+                                    <td style="text-align: center;"><?= date_format(date_create($dt->tgl), "d/m/Y"); ?></td>
+                                    <td style="text-align: center;"><?= $dt->noref ?></td>
+                                    <td style="text-align: center;"><?= $dt->qty ?></td>
+                                    <td><?= $selisih . '.00'; ?></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="9">
+                                        <hr>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+
+            <?php }
+                    }
+                }
+            } ?>
         </tbody>
     </table>
 </body>

@@ -163,22 +163,7 @@
                         }
                     } ?>
 
-                    <!-- <tr>
 
-                        <td>1025055790000016</td>
-                        <td>AVO METER KYORITSHU</td>
-                        <td>PCS</td>
-                        <td>2.00</td>
-                        <td>24 July 2020</td>
-                        <td>23 Hari</td>
-                        <td>6100102</td>
-                        <td>SERBA GUNA TEKNIK</td>
-                        <td>2.00</td>
-                        <td>0</td>
-                        <td>Rp 450,000.00</td>
-                        <td>Rp 900,000.00</td>
-                        <td>-</td>
-                    </tr> -->
 
 
                 <?php } ?>

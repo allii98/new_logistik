@@ -1805,7 +1805,7 @@
                 }
             } else if (rbt_pilihan4 == 'by_supplier') {
                 if (noref_po !== '') {
-                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bysup"); ?>');
+                    window.open('<?= site_url("Laporan/print_lap_po_lpb_bysup"); ?>/' + cmb_devisi2 + '/' + noref_po + '/' + txt_periode8 + '/' + txt_periode9);
                 } else {
                     swal('Jangan ada field yang kosong!~');
                 }

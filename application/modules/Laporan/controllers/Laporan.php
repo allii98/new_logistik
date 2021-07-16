@@ -1710,8 +1710,14 @@ class Laporan extends CI_Controller
 		$tanggalAwal = $this->uri->segment(12) . '-' . $this->uri->segment(11) . '-' . $this->uri->segment(10);
 		$tanggalAkhir = $this->uri->segment(15) . '-' . $this->uri->segment(14) . '-' . $this->uri->segment(13);
 
-		$query = "SELECT i.kodebar, i.nabar, i.sat, i.noref, p.kode_dev, p.devisi FROM item_po i LEFT JOIN po p ON p.noreftxt=i.noref  WHERE p.kode_dev='$devisi' AND i.noref='$noref' AND i.tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir' AND p.status_lpb='1' ORDER BY i.id DESC";
-		$data['po'] = $this->db_logistik_pt->query($query)->result();
+		$namadev = $this->db_logistik_pt->query("SELECT devisi FROM po WHERE kode_dev='$devisi'")->row();
+
+		$ambil = $this->M_laporan->bybarang($devisi, $noref, $tanggalAwal, $tanggalAkhir);
+
+		$data['po'] = $ambil;
+		$data['devisi'] = $namadev->devisi;
+
+
 
 		$data['lokasi1'] = "Tes";
 		$mpdf = new \Mpdf\Mpdf([
@@ -1733,7 +1739,16 @@ class Laporan extends CI_Controller
 
 	function print_lap_po_lpb_bysup()
 	{
-		$data['lokasi1'] = "Tes";
+		$devisi = $this->uri->segment(3);
+		$noref = $this->uri->segment(4) . '/' . $this->uri->segment(5) . '/' . $this->uri->segment(6) . '/' . $this->uri->segment(7) . '/' . $this->uri->segment(8) . '/' . $this->uri->segment(9);
+
+		$tanggalAwal = $this->uri->segment(12) . '-' . $this->uri->segment(11) . '-' . $this->uri->segment(10);
+		$tanggalAkhir = $this->uri->segment(15) . '-' . $this->uri->segment(14) . '-' . $this->uri->segment(13);
+
+		$ambil = $this->M_laporan->bysup($devisi, $noref, $tanggalAwal, $tanggalAkhir);
+
+		$data['sup'] = $ambil;
+
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
@@ -1744,6 +1759,10 @@ class Laporan extends CI_Controller
 		$html = $this->load->view('analisa/vw_lap_po_lpb_print_bysup', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 }
 
