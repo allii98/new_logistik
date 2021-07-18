@@ -366,6 +366,7 @@
                     var disc = item_po[i].disc;
 
                     var nama_bebanbpo = item_po[i].nama_bebanbpo;
+                    var jml_bpo = item_po[i].JUMLAHBPO;
                     var ket = item_po[i].ket;
                     var id = item_po[i].id;
                     var merk = item_po[i].merek;
@@ -395,6 +396,7 @@
                     $('#txt_merk_' + i).val(merk);
                     $('#cmb_kurs_' + i).val(kurs);
                     $('#txt_disc_' + i).val(disc);
+                    $('#txt_biaya_lain_' + i).val(jml_bpo);
                     $('#txt_keterangan_biaya_lain_' + i).val(nama_bebanbpo);
                     $('#txt_harga_' + i).val(harga);
                     $('#txt_jumlah_' + i).val(jumharga);
@@ -454,6 +456,9 @@
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
 
+                    $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
+                    $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
+
                     $('#lbl_status_simpan_1' + id).empty();
                     $('#btn_hapus_' + id).show();
                     $.toast({
@@ -495,6 +500,9 @@
                     $('#btn_ubah_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
+
+                    $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
+                    $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
                     $('#lbl_status_simpan_1' + id).empty();
                     $.toast({

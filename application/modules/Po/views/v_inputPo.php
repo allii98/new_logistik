@@ -2087,10 +2087,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#btn_hapus_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
-                    $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                    $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
-                    $('.div_form_2').find('input,textarea,select').attr('disabled', '');
-                    $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
+                    // $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+                    // $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                    // $('.div_form_2').find('input,textarea,select').attr('disabled', '');
+                    // $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
 
                     // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                     // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
@@ -2144,11 +2144,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
 
-                    $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                    $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                    // $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+                    // $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
-                    $('.div_form_2').find('input,textarea,select').attr('disabled', '');
-                    $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
+                    // $('.div_form_2').find('input,textarea,select').attr('disabled', '');
+                    // $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
                     // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                     // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
 
