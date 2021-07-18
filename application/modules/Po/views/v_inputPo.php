@@ -356,7 +356,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     </thead>
                                     <tbody id="tbody_rincian" name="tbody_rincian">
                                         <tr id="tr_1">
-                                            <td width="3%">
+                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                 <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
                                                 <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="tambah_row1" name="btn_tambah_row" onfocus="modalSPP('1')"></button>
                                                 <!-- <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalD('1')"></button> -->
@@ -489,8 +489,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <table id="tableItemPO" class="table table-striped table-bordered table-in">
                                     <thead>
                                         <tr>
-
-
                                             <!-- <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
                                             </th> -->
@@ -724,7 +722,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             check_form_2();
         }, 1000);
 
-
+        //membuat format number pada tabel isian
+        $('#txt_qty_1, #txt_harga_1,#txt_disc_1, #txt_biaya_lain_1 ').number(true, 0);
 
         $('#cmb_pilih_jenis_po').change(function() {
             var jenis_po = this.value;
@@ -825,12 +824,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#qty2_' + n).val(qty2);
                                 $('#hidden_tgl_ref_' + n).val(tglref);
                                 n++;
-
-
-
                             });
                             $('#modalcarispp').modal('hide');
-
                         },
                         error: function(request) {
                             console.log(request.responseText);
@@ -842,8 +837,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             default:
                 break;
         }
-
-
 
         // dataspp site
         $('#dataspp').DataTable({
@@ -993,7 +986,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         var qty = value.qty;
                         var qty2 = value.qty2;
 
-
                         $('#id_ppo' + n).val(idppo);
                         $('#id_item_' + n).val(idppo);
                         $('#hidden_no_ref_spp_' + n).val(opsi);
@@ -1028,7 +1020,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 }
             });
         });
-
 
         $("#select2").select2({
             ajax: {
@@ -1107,7 +1098,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
 
-
         var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<select class="form-control" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
             '<option value="">-- Pilih --</option>' +
@@ -1154,7 +1144,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
+            '<input type="text" class="form-control" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1169,11 +1159,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+            '<input type="text" class="form-control" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+            '<input type="text" class="form-control" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1206,7 +1196,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         if (status2 == '1') {
             $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         }
-        $('#txt_qty_' + row).number(true, 0);
+        $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
+
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
         } else {
@@ -1223,7 +1214,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         console.log("bariske", n);
 
         var tr_buka = '<tr id="tr_' + n + '">';
-        var td_col_1 = '<td width="3%">' +
+        var td_col_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="hidden" id="hidden_proses_status_' + n + '" name="hidden_proses_status_' + n + '" value="insert">' +
             '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" name="btn_tambah_row" id="tambah_row' + n + '" onfocus="modalSPP(' + n + ')"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + n + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row" onclick="hapus_row(' + n + ')"></button>' +
@@ -1307,7 +1298,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
 
-
             '</td>'
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
@@ -1332,7 +1322,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var lokasi = $('#lokasi').val();
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-        $('#txt_qty_' + n).number(true, 2);
+
+        $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
         hitungqty(n);
         jumlah(n);
         return true;
@@ -1426,7 +1417,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#qty_' + n).val(data[1][0].qty);
                     $('#qty2_' + n).val(data[1][0].qty2);
 
-                    $('#hidden_no_ref_spp_' + n).val(data[1][0].noreftxt);
                     $('#hidden_no_ref_spp_' + n).val(data[1][0].noreftxt);
                     $('#hidden_tgl_ref_' + n).val(data[0].tglref);
                     $('#hidden_kd_departemen_' + n).val(data[1][0].kodedept);
@@ -1623,48 +1613,49 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         if (simpanBaru) {
 
             console.log('simpan pertama', id);
-            console.table({
-                id_ppo: $('#id_ppo' + id).val(),
-                hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
-                hidden_departemen: $('#hidden_departemen_' + id).val(),
-                cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
-                txt_kode_supplier: $('#kd_supplier').val(),
-                txt_supplier: $('#txtsupplier').val(),
-                txt_kode_pemesan: $('#txt_kode_pemesan').val(),
-                txt_pemesan: $('#txt_pemesan').val(),
-                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
-                cmb_status_bayar: $('#cmb_status_bayar').val(),
-                txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
-                txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
-                txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
-                cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                txt_keterangan: $('#keterangan').val(),
-                txt_no_penawaran: $('#no_penawaran').val(),
-                cmb_ppn: $('#ppn').val(),
-                txt_total_pembayaran: $('#ttl_pembayaran').val(),
-                txt_ket_pengiriman: $('#ket_pengiriman').val(),
-                txt_uang_muka: $('#txt_uang_muka').val(),
-                txt_no_voucher: $('#txt_no_voucher').val(),
-                devisi: $('#devisi').val(),
-                txt_no_spp: $('#noppo' + id).val(),
-                hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
-                hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
-                hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
-                txt_qty: $('#txt_qty_' + id).val(),
-                txt_harga: $('#txt_harga_' + id).val(),
-                hidden_kodept: $('#hidden_kd_pt_' + id).val(),
-                hidden_namapt: $('#hidden_nama_pt_' + id).val(),
-                txt_merk: $('#txt_merk_' + id).val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
-                txt_disc: $('#txt_disc_' + id).val(),
-                cmb_kurs: $('#cmb_kurs_' + id).val(),
-                txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
-                txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
-                hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
-                hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
-                id_item: $('#id_item_' + id).val(),
-            });
+            // console.table({
+            //     id_ppo: $('#id_ppo' + id).val(),
+            //     hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
+            //     hidden_departemen: $('#hidden_departemen_' + id).val(),
+            //     cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
+            //     txt_kode_supplier: $('#kd_supplier').val(),
+            //     txt_supplier: $('#txtsupplier').val(),
+            //     txt_kode_pemesan: $('#txt_kode_pemesan').val(),
+            //     txt_pemesan: $('#txt_pemesan').val(),
+            //     hidden_no_ref_po: $('#hidden_no_ref_po').val(),
+            //     cmb_status_bayar: $('#cmb_status_bayar').val(),
+            //     txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
+            //     txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
+            //     txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
+            //     cmb_lokasi_pembelian: $('#lks_pembelian').val(),
+            //     txt_keterangan: $('#keterangan').val(),
+            //     txt_no_penawaran: $('#no_penawaran').val(),
+            //     cmb_ppn: $('#ppn').val(),
+            //     txt_total_pembayaran: $('#ttl_pembayaran').val(),
+            //     txt_ket_pengiriman: $('#ket_pengiriman').val(),
+            //     txt_uang_muka: $('#txt_uang_muka').val(),
+            //     txt_no_voucher: $('#txt_no_voucher').val(),
+            //     devisi: $('#devisi').val(),
+            //     txt_no_spp: $('#noppo' + id).val(),
+            //     hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
+            //     hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
+            //     hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
+            //     hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
+            //     txt_qty: $('#txt_qty_' + id).val(),
+            //     txt_harga: $('#txt_harga_' + id).val(),
+            //     hidden_kodept: $('#hidden_kd_pt_' + id).val(),
+            //     hidden_namapt: $('#hidden_nama_pt_' + id).val(),
+            //     txt_merk: $('#txt_merk_' + id).val(),
+            //     txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
+            //     txt_disc: $('#txt_disc_' + id).val(),
+            //     cmb_kurs: $('#cmb_kurs_' + id).val(),
+            //     txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
+            //     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
+            //     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
+            //     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+            //     id_item: $('#id_item_' + id).val(),
+            //     txt_jumlah: $('#txt_jumlah_' + id).val(),
+            // });
             noppo = $('#noppo' + id).val();
 
 
@@ -1723,11 +1714,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     id_item: $('#id_item_' + id).val(),
                     hidden_no_po: $('#hidden_no_po').val(),
                     devisi: $('#devisi').val(),
+                    txt_jumlah: $('#txt_jumlah_' + id).val(),
 
                 },
                 success: function(data) {
-                    console.log(data, 'nah ini');
-                    if (true) {
+                    // console.log(data, 'nah ini');
+                    if (data.site_lebih_dari15 == 1) {
+                        swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
+                        $('#lbl_status_simpan_' + id).empty();
+                        $('#lbl_spp_status').empty();
+                    } else {
                         $('#lbl_status_simpan_' + id).empty();
                         $.toast({
                             heading: 'Success',
@@ -1766,9 +1762,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         totalBayar();
 
                         simpanBaru = false;
-                    } else {
-                        $('#lbl_status_simpan_' + id).empty();
-                        $('#lbl_status_simpan_' + id).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
                     }
                 }
             });
@@ -1777,47 +1770,47 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         else {
             console.log('simpan setelah dengan keadaan po dibuat');
 
-            console.table({
-                id_ppo: $('#id_ppo' + id).val(),
-                hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
-                hidden_departemen: $('#hidden_departemen_' + id).val(),
-                cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
-                txt_kode_supplier: $('#kd_supplier').val(),
-                txt_supplier: $('#txtsupplier').val(),
-                txt_kode_pemesan: $('#txt_kode_pemesan').val(),
-                txt_pemesan: $('#txt_pemesan').val(),
-                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
-                cmb_status_bayar: $('#cmb_status_bayar').val(),
-                txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
-                txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
-                txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
-                cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                txt_keterangan: $('#keterangan').val(),
-                txt_no_penawaran: $('#no_penawaran').val(),
-                cmb_ppn: $('#ppn').val(),
-                txt_total_pembayaran: $('#ttl_pembayaran').val(),
-                txt_ket_pengiriman: $('#ket_pengiriman').val(),
-                txt_uang_muka: $('#txt_uang_muka').val(),
-                txt_no_voucher: $('#txt_no_voucher').val(),
-                txt_no_spp: $('#noppo' + id).val(),
-                hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
-                hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
-                hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
-                txt_qty: $('#txt_qty_' + id).val(),
-                txt_harga: $('#txt_harga_' + id).val(),
-                hidden_kodept: $('#hidden_kd_pt_' + id).val(),
-                hidden_namapt: $('#hidden_nama_pt_' + id).val(),
-                txt_merk: $('#txt_merk_' + id).val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
-                txt_disc: $('#txt_disc_' + id).val(),
-                cmb_kurs: $('#cmb_kurs_' + id).val(),
-                txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
-                txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
-                hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
-                hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
-                id_item: $('#id_item_' + id).val(),
-            });
+            // console.table({
+            //     id_ppo: $('#id_ppo' + id).val(),
+            //     hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
+            //     hidden_departemen: $('#hidden_departemen_' + id).val(),
+            //     cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
+            //     txt_kode_supplier: $('#kd_supplier').val(),
+            //     txt_supplier: $('#txtsupplier').val(),
+            //     txt_kode_pemesan: $('#txt_kode_pemesan').val(),
+            //     txt_pemesan: $('#txt_pemesan').val(),
+            //     hidden_no_ref_po: $('#hidden_no_ref_po').val(),
+            //     cmb_status_bayar: $('#cmb_status_bayar').val(),
+            //     txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
+            //     txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
+            //     txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
+            //     cmb_lokasi_pembelian: $('#lks_pembelian').val(),
+            //     txt_keterangan: $('#keterangan').val(),
+            //     txt_no_penawaran: $('#no_penawaran').val(),
+            //     cmb_ppn: $('#ppn').val(),
+            //     txt_total_pembayaran: $('#ttl_pembayaran').val(),
+            //     txt_ket_pengiriman: $('#ket_pengiriman').val(),
+            //     txt_uang_muka: $('#txt_uang_muka').val(),
+            //     txt_no_voucher: $('#txt_no_voucher').val(),
+            //     txt_no_spp: $('#noppo' + id).val(),
+            //     hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
+            //     hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
+            //     hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
+            //     hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
+            //     txt_qty: $('#txt_qty_' + id).val(),
+            //     txt_harga: $('#txt_harga_' + id).val(),
+            //     hidden_kodept: $('#hidden_kd_pt_' + id).val(),
+            //     hidden_namapt: $('#hidden_nama_pt_' + id).val(),
+            //     txt_merk: $('#txt_merk_' + id).val(),
+            //     txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
+            //     txt_disc: $('#txt_disc_' + id).val(),
+            //     cmb_kurs: $('#cmb_kurs_' + id).val(),
+            //     txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
+            //     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
+            //     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
+            //     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+            //     id_item: $('#id_item_' + id).val(),
+            // });
 
             noppo = $('#noppo' + id).val();
 
@@ -1873,12 +1866,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     id_item: $('#id_item_' + id).val(),
                     hidden_no_po: $('#hidden_no_po').val(),
                     devisi: $('#devisi').val(),
+                    txt_jumlah: $('#txt_jumlah_' + id).val(),
 
                 },
 
                 success: function(data) {
-                    if (true) {
-
+                    if ((data.site_lebih_dari15 == 1)) {
+                        swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
+                        $('#lbl_status_simpan_' + id).empty();
+                        $('#lbl_spp_status').empty();
+                    } else {
                         $('#lbl_status_simpan_' + id).empty();
                         $.toast({
                             heading: 'Success',
@@ -1917,12 +1914,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         totalBayar();
 
                         // simpanBaru = false;
-                    } else {
-                        $('#lbl_status_simpan_' + id).empty();
-                        $('#lbl_status_simpan_' + id).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
                     }
-
-
                 }
             });
 
@@ -1957,54 +1949,54 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 $('#lbl_status_simpan_' + id).empty();
                 $('#lbl_status_simpan_' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
             },
-
             data: {
                 // hidden_id_po_item: $('#hidden_id_po_item_' + id).val(),
-                hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
-                hidden_departemen: $('#hidden_departemen_' + id).val(),
-                cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
-                txt_kode_supplier: $('#kd_supplier').val(),
-                txt_supplier: $('#txtsupplier').val(),
-                txt_kode_pemesan: $('#txt_kode_pemesan').val(),
-                txt_pemesan: $('#txt_pemesan').val(),
-                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
-                cmb_status_bayar: $('#cmb_status_bayar').val(),
-                txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
-                txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
-                txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
-                cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                txt_keterangan: $('#keterangan').val(),
-                txt_no_penawaran: $('#no_penawaran').val(),
-                cmb_ppn: $('#ppn').val(),
-                txt_total_pembayaran: $('#ttl_pembayaran').val(),
-                txt_ket_pengiriman: $('#ket_pengiriman').val(),
-                txt_uang_muka: $('#txt_uang_muka').val(),
-                txt_no_voucher: $('#txt_no_voucher').val(),
-                txt_no_spp: $('#noppo' + id).val(),
-                hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
+                // hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
+                // hidden_departemen: $('#hidden_departemen_' + id).val(),
+                // cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
+                // txt_kode_supplier: $('#kd_supplier').val(),
+                // txt_supplier: $('#txtsupplier').val(),
+                // txt_kode_pemesan: $('#txt_kode_pemesan').val(),
+                // txt_pemesan: $('#txt_pemesan').val(),
+                // cmb_status_bayar: $('#cmb_status_bayar').val(),
+                // txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
+                // txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
+                // txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
+                // cmb_lokasi_pembelian: $('#lks_pembelian').val(),
+                // txt_keterangan: $('#keterangan').val(),
+                // txt_no_penawaran: $('#no_penawaran').val(),
+                // cmb_ppn: $('#ppn').val(),
+                // txt_total_pembayaran: $('#ttl_pembayaran').val(),
+                // txt_ket_pengiriman: $('#ket_pengiriman').val(),
+                // txt_uang_muka: $('#txt_uang_muka').val(),
+                // txt_no_voucher: $('#txt_no_voucher').val(),
+                // hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
+                // hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
+                // hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
+                // hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
+                // hidden_kodept: $('#hidden_kd_pt_' + id).val(),
+                // hidden_namapt: $('#hidden_nama_pt_' + id).val(),
+                // txt_no_spp: $('#noppo' + id).val(),
                 hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
-                hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
+                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
+                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + id).val(),
                 txt_qty: $('#txt_qty_' + id).val(),
                 txt_harga: $('#txt_harga_' + id).val(),
-                hidden_kodept: $('#hidden_kd_pt_' + id).val(),
-                hidden_namapt: $('#hidden_nama_pt_' + id).val(),
                 txt_merk: $('#txt_merk_' + id).val(),
                 txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
                 txt_disc: $('#txt_disc_' + id).val(),
                 cmb_kurs: $('#cmb_kurs_' + id).val(),
                 txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
                 txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
-                hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
-                hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                 id_item: $('#hidden_id_po_item_' + id).val(),
-
+                txt_jumlah: $('#txt_jumlah_' + id).val(),
             },
-
             success: function(data) {
-                console.log(data + 'aftersave');
-                if (true) {
-
+                console.log(data + 'afterupdate');
+                if (data == 'site15') {
+                    swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
+                    $('#lbl_status_simpan_' + id).empty();
+                } else {
                     // $('#lbl_status_simpan_1' + id).empty();
                     // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil diupdate</label>');
 
@@ -2029,10 +2021,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#btn_ubah_' + id).show();
                     $('#btn_hapus_' + id).show();
                     totalBayar();
-
-                } else {
-                    $('#lbl_status_simpan_' + id).empty();
-                    $('#lbl_status_simpan_' + id).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
                 }
             }
         });
@@ -2426,7 +2414,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "background": "#FFCECE"
             });
         } else if (jml > 1500000 && lokasi != "HO") {
-            toast('Tidak boleh lebih dari 1.500.000!');
+            toast('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
             $('#txt_jumlah_' + id).css({
                 "background": "#FFCECE"
             });

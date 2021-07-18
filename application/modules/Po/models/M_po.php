@@ -271,6 +271,30 @@ class M_po extends CI_Model
             return $this->db_logistik_pt->get()->result_array();
         }
     }
+
+    public function cari_po($norefpo, $norefppo, $kodebar, $new_jumharga)
+    {
+        $this->db_logistik_pt->select('jumharga');
+        $this->db_logistik_pt->where(['noref' => $norefpo, 'refppo' => $norefppo, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->from('item_po');
+        $data = $this->db_logistik_pt->get()->row_array();
+
+        $this->db_logistik_pt->select_sum('jumharga');
+        $this->db_logistik_pt->where(['noref' => $norefpo]);
+        $this->db_logistik_pt->from('item_po');
+        $sum_jumharga = $this->db_logistik_pt->get()->row();
+
+        if ($data['jumharga'] > $new_jumharga) {
+            $kurangin_awal = $data['jumharga'] - $new_jumharga;
+            $totjum = $sum_jumharga->jumharga - $kurangin_awal;
+        } elseif ($data['jumharga'] < $new_jumharga) {
+            $kurangin_awal = $new_jumharga - $data['jumharga'];
+            $totjum = $sum_jumharga->jumharga + $kurangin_awal;
+        } else {
+            $totjum = $data['jumharga'];
+        }
+        return $totjum;
+    }
 }
 
 /* End of file M_po.php */
