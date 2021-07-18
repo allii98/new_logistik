@@ -34,6 +34,25 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalKonfirmasiHapus">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <input type="hidden" id="id_pp" name="id_pp">
+                    <input type="hidden" id="nopp" name="nopp">
+                    <input type="hidden" id="ref_pp" name="ref_pp">
+                    <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Hapus</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     $(document).ready(function() {
         listPP();
@@ -41,6 +60,7 @@
     });
 
     function listPP() {
+        $('#tableListPP').DataTable().destroy();
         var dt = $('#tableListPP').DataTable({
             "paging": true,
             "scrollY": true,
@@ -61,7 +81,7 @@
                 "type": "POST",
                 "data": {},
                 "error": function(request) {
-                    alert(request.responseText);
+                    console.log(request.responseText);
                 }
             },
             "columns": [{
@@ -96,6 +116,47 @@
                 "targets": [],
                 "orderable": false,
             }, ],
+
+        });
+        var rel = setInterval(function() {
+            $('#tableListPP').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
+    }
+
+
+    function deletePP(id, nopp) {
+        // console.log(id, nopp);
+        $('#id_pp').val(id);
+        $('#nopp').val(nopp);
+        $('#modalKonfirmasiHapus').modal('show');
+    }
+
+    function hapusPP() {
+        // listPP();
+
+        $('#modalKonfirmasiHapus').modal('hide');
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Pp/deletePP') ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {
+                id_pp: $('#id_pp').val(),
+                nopp: $('#nopp').val()
+            },
+            success: function(data) {
+                console.log(data)
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Dihapus',
+                    text: 'Berhasil Dihapus!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                listPP();
+            }
         });
     }
 </script>

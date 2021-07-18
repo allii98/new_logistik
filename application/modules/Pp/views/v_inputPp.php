@@ -277,7 +277,9 @@
     });
 
     function saveData() {
+        $('#btn_simpan').attr('disabled', '');
         // console.log("OKE");
+
 
         var form_data = new FormData();
 
@@ -323,7 +325,7 @@
                     $.toast({
                         position: 'top-right',
                         heading: 'Success',
-                        text: 'Berhasil Didimpan!',
+                        text: 'Berhasil Disimpan!',
                         icon: 'success',
                         loader: false
                     });

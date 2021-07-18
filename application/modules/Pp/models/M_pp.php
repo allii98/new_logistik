@@ -216,6 +216,7 @@ class M_pp extends CI_Model
         $data_pplogistikdicaba['nopptxt']           = $nopp;
         $data_pplogistikdicaba['nopo']              = $this->input->post('hidden_no_po');
         $data_pplogistikdicaba['nopotxt']           = $this->input->post('hidden_no_po');
+        $data_pplogistikdicaba['ref_pp']            = $refpp;
         $data_pplogistikdicaba['ref_po']            = $this->input->post('txt_no_ref_po');
         $data_pplogistikdicaba['tglpp']             = $tglpp;
         $data_pplogistikdicaba['tglpptxt']          = $tglpptxt;

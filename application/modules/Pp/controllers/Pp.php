@@ -37,11 +37,11 @@ class Pp extends CI_Controller
 
             $row[] = '<a href="' . site_url('pp/edit_pp/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp">
 
-                <a href="javascript:;" id="a_batal_pp">
-                    <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_pp" name="btn_batal_pp" data-toggle="tooltip" data-placement="top" title="Batal PP" onClick="konfirmasiBatalPP(' . $id . ',' . $hasil->nopptxt .  ')">
-                    </button>
-                </a>
-                <a href="' .  site_url('pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po">
+            <a href="' .  site_url('pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po">
+            <a href="javascript:;" id="a_delete_pp">
+                <button class="btn btn-danger fa fa-trash btn-xs" id="btn_delete_pp" name="btn_batal_pp" data-toggle="tooltip" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp .  ')">
+                </button>
+            </a>
                 </a>
                 ';
 
@@ -135,7 +135,7 @@ class Pp extends CI_Controller
             $row[] = number_format($get_harga_po->hargapo);
             $row[] = number_format($get_jumlah_bpo->jumlahbpo);
             $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar);
-            $row[] = number_format(($d->totalbayar) - $get_jumlah_sudah_bayar->kasir_bayar);
+            $row[] = number_format($d->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar);
             $row[] = $get_kurs->kurs;
             $data[] = $row;
         }
@@ -207,7 +207,7 @@ class Pp extends CI_Controller
         $config['cacheable']    = false; //boolean, the default is true
         $config['cachedir']     = './assets/qrcode/cache/'; //string, the default is application/cache/
         $config['errorlog']     = './assets/qrcode/errorlog/'; //string, the default is application/logs/
-        $config['imagedir']     = './assets/qrcode/bkb/'; //direktori penyimpanan qr code
+        $config['imagedir']     = './assets/qrcode/pp/'; //direktori penyimpanan qr code
         $config['quality']      = true; //boolean, the default is true
         $config['size']         = '1024'; //interger, the default is 1024
         $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
@@ -216,7 +216,7 @@ class Pp extends CI_Controller
 
         $image_name = $id . '_' . $no_pp . '.png'; //buat name dari qr code
 
-        $params['data'] = site_url('Bkb/cetak/' . $no_pp . '/' . $id); //data yang akan di jadikan QR CODE
+        $params['data'] = site_url('Pp/cetak/' . $no_pp . '/' . $id); //data yang akan di jadikan QR CODE
         $params['level'] = 'H'; //H=High
         $params['size'] = 10;
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
@@ -240,6 +240,29 @@ class Pp extends CI_Controller
     function update_pp()
     {
         $data = $this->M_pp->update_pp();
+        echo json_encode($data);
+    }
+
+    function deletePP()
+    {
+        $id_pp = $this->input->post('id_pp');
+        $nopp = $this->input->post('nopp');
+
+        // $user = $this->session->userdata('user');
+        // $ip = $this->input->ip_address();
+        // $platform = $this->platform->agent();
+
+
+
+        $pp_logistik = $this->db_caba->delete('pp_logistik', array('nopp' => $nopp));
+        $pp = $this->db_logistik_pt->delete('pp', array('id' => $id_pp, 'nopp' => $nopp));
+
+        $data = [
+            'pp_logistik' => $pp_logistik,
+            'pp' => $pp
+        ];
+        // $data  = array($id_pp, $nopp);
+
         echo json_encode($data);
     }
 }
