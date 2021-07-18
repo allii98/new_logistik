@@ -25,6 +25,7 @@
                             <!-- <label class="control-label">No. PP</label> -->
                             <!-- <label class="control-label col-md-8 col-sm-3 col-xs-12" id="lbl_no_pp"></label> -->
                             <input type="hidden" id="hidden_no_pp" name="hidden_no_pp">
+                            <input type="hidden" id="hidden_refpp" name="hidden_refpp">
                             <!-- </div> -->
 
                             <div class="form-group row mb-1">
@@ -319,8 +320,17 @@
             success: function(data) {
                 if (data.status == true) {
                     $('#a_pp_baru').show();
-                    window.location.href = "<?php echo site_url('Pp'); ?>";
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Didimpan!',
+                        icon: 'success',
+                        loader: false
+                    });
 
+                    setTimeout(function() {
+                        window.location.href = "<?php echo site_url('Pp'); ?>";
+                    }, 1000);
                 }
 
             },

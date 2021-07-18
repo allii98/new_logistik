@@ -32,6 +32,8 @@ class Pp extends CI_Controller
             $no++;
             $row   = array();
             $id = $hasil->id;
+            $refpp = $hasil->ref_pp;
+            $noref = str_replace('/', '.', $refpp);
 
             $row[] = '<a href="' . site_url('pp/edit_pp/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp">
 
@@ -39,18 +41,18 @@ class Pp extends CI_Controller
                     <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_pp" name="btn_batal_pp" data-toggle="tooltip" data-placement="top" title="Batal PP" onClick="konfirmasiBatalPP(' . $id . ',' . $hasil->nopptxt .  ')">
                     </button>
                 </a>
-                <a href="' .  site_url('pp/cetak/' . $hasil->nopptxt . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po">
+                <a href="' .  site_url('pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po">
                 </a>
                 ';
 
 
             $row[] = $no . ".";
-            $row[] = $hasil->nopptxt;
-            $row[] = $hasil->nopotxt;
+            $row[] = $hasil->ref_pp;
+            $row[] = $hasil->ref_po;
             $row[] =  date('d-m-Y', strtotime($hasil->tglpp));
             $row[] = date('d-m-Y', strtotime($hasil->tglpo));
-            $row[] = $hasil->ref_po;
             $row[] = $hasil->nama_supply;
+            $row[] = $hasil->user;
             $row[] = $hasil->ket;
             $data[] = $row;
         }
@@ -155,12 +157,14 @@ class Pp extends CI_Controller
 
     public function cetak()
     {
-        $no_pp = $this->uri->segment('3');
+        $no_ref = $this->uri->segment('3');
+        $no_pp = str_replace('.', '/',  $no_ref);
+
         $id = $this->uri->segment('4');
 
         $this->qrcode($no_pp, $id);
 
-        $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('nopptxt' => $no_pp, 'id' => $id))->row();
+        $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('ref_pp' => $no_pp, 'id' => $id))->row();
 
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',

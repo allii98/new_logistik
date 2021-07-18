@@ -88,16 +88,26 @@ class M_pp extends CI_Model
 
         $sess_lokasi = $this->session->userdata('status_lokasi');
 
+
+
         if ($sess_lokasi == "HO") {
+            $text1 = "PST";
+            $text2 = "BWJ";
             $dig_1 = "1";
             $dig_2 = "1";
         } else if ($sess_lokasi == "SITE") {
+            $text1 = "EST";
+            $text2 = "SWJ";
             $dig_1 = "6";
             $dig_2 = "6";
         } else if ($sess_lokasi == "RO") {
+            $text1 = "ROM";
+            $text2 = "PKY";
             $dig_1 = "2";
             $dig_2 = "2";
         } else if ($sess_lokasi == "PKS") {
+            $text1 = "FAC";
+            $text2 = "SWJ";
             $dig_1 = "3";
             $dig_2 = "3";
         }
@@ -107,12 +117,20 @@ class M_pp extends CI_Model
         $noUrut_pp = (int)($generate_id_pp->max_id_pp);
         $noUrut_pp++;
         $print_pp = sprintf("%04s", $noUrut_pp);
+        $format_m_y = date("m/Y");
 
         if (empty($this->input->post('hidden_no_pp'))) {
             $nopp = $dig_1 . $dig_2 . $print_pp;
         } else {
             $nopp = $this->input->post('hidden_no_pp');
         }
+
+        if (empty($this->input->post('hidden_refpp'))) {
+            $refpp = $text1 . "-PP/" . $text2 . "/" . $format_m_y . "/" . $dig_1 . $dig_2 . $print_pp; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
+        } else {
+            $refpp = $this->input->post('hidden_refpp');
+        }
+
 
         $tglpp = date("Y-m-d H:i:s", strtotime($this->input->post('txt_tgl_pp')));
         $tglpptxt = date("Ymd", strtotime($this->input->post('txt_tgl_pp')));
@@ -147,6 +165,7 @@ class M_pp extends CI_Model
         $data_pp['tglpptxt']        = $tglpptxt;
         $data_pp['tglpo']           = $tglpo;
         $data_pp['tglpotxt']        = $tglpotxt;
+        $data_pp['ref_pp']          = $refpp;
         $data_pp['ref_po']          = $this->input->post('txt_no_ref_po');
         $data_pp['kode_supply']     = $this->input->post('kd_supplier');
         $data_pp['kode_supplytxt']  = $this->input->post('kd_supplier');

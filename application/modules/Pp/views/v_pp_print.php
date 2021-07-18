@@ -53,7 +53,7 @@
         <tr>
             <td width="13%">Nomor PP</td>
             <td width="2%">:</td>
-            <td align="left"><?= $data_pp->nopptxt; ?></td>
+            <td align="left"><?= $data_pp->ref_pp; ?></td>
             <td width="25%">Tanggal : <?= date("d-m-Y"); ?></td>
         </tr>
         <tr class="notopborder">

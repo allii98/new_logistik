@@ -13,12 +13,12 @@
                                 <tr>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">#</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. PP</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. PO</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Ref. PP</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Ref PO</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl. PP</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl. PO</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Ref PO</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Nama Supplier</th>
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">User Input</th>
                                     <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Ket</th>
                                 </tr>
                             </thead>
@@ -71,16 +71,16 @@
                     "width": null
                 },
                 {
-                    "width": null
+                    "width": "20%"
                 },
                 {
-                    "width": null
+                    "width": "20%"
                 },
                 {
-                    "width": null
+                    "width": "10%"
                 },
                 {
-                    "width": null
+                    "width": "10%"
                 },
                 {
                     "width": null

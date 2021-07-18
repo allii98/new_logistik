@@ -6,8 +6,8 @@ class M_dataPP extends CI_Model
 {
 
     var $table = 'pp'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'nopptxt', 'nopotxt', 'tglpp', 'tglpo', 'ref_po', 'kode_supplytxt', 'nama_supply', 'kepada', 'bayar', 'KURS', 'jumlah', 'jumlahpo', 'total_po', 'terbilang', 'ket', 'pt', 'kodept', 'periode', 'user', 'tglisi', 'status_vou', 'no_voutxt', 'tgl_vou', 'kasir_bayar', 'grup', 'batal'); //field yang ada di table supplier  
-    var $column_search = array('nopptxt', 'nopotxt', 'tglpp', 'tglpo', 'ref_po', 'kode_supplytxt', 'nama_supply'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'nopptxt', 'nopotxt', 'ref_pp', 'user', 'tglpp', 'tglpo', 'ref_po', 'kode_supplytxt', 'nama_supply', 'kepada', 'bayar', 'KURS', 'jumlah', 'jumlahpo', 'total_po', 'terbilang', 'ket', 'pt', 'kodept', 'periode', 'user', 'tglisi', 'status_vou', 'no_voutxt', 'tgl_vou', 'kasir_bayar', 'grup', 'batal'); //field yang ada di table supplier  
+    var $column_search = array('nopptxt', 'nopotxt', 'tglpp', 'ref_pp', 'tglpo', 'ref_po', 'kode_supplytxt', 'nama_supply'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
