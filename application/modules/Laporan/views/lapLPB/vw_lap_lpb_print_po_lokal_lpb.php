@@ -69,29 +69,33 @@
             </tr>
         </thead>
         <tbody>
+
+
             <?php
             $total1 = 0;
             $total2 = 0;
-            foreach ($per_po as $list_per_po) {
-                $query1 = "SELECT harga FROM item_po WHERE kodebar = '" . $list_per_po->kodebar . "' AND noref = '" . $list_per_po->refpo . "'";
-                $grp1 = $this->db_logistik_pt->query($query1)->row();
-                $total1 += $grp1->harga;
-                $total2 += ($grp1->harga * $list_per_po->qty);
+            if (isset($per_po)) {
+                foreach ($per_po as $list_per_po) {
+                    $query1 = "SELECT harga FROM item_po WHERE kodebar = '" . $list_per_po->kodebar . "' AND noref = '" . $list_per_po->refpo . "'";
+                    $grp1 = $this->db_logistik_pt->query($query1)->row();
+                    $total1 += $grp1->harga;
+                    $total2 += ($grp1->harga * $list_per_po->qty);
             ?>
-                <tr>
-                    <td><?= date_format(date_create($list_per_po->tgl), 'd/m/Y'); ?></td>
-                    <td><?= $list_per_po->noref; ?></td>
-                    <td><?= $list_per_po->refpo; ?></td>
-                    <td><?= $list_per_po->kodebar; ?></td>
-                    <td><?= $list_per_po->nabar; ?></td>
-                    <td><?= $list_per_po->satuan; ?></td>
-                    <td style="text-align: center;"><?= number_format($list_per_po->qty, 2); ?></td>
-                    <td style="text-align: right;"><?= number_format($grp1->harga, 2); ?></td>
-                    <td style="text-align: right;"><?= number_format(($list_per_po->qty * $grp1->harga), 2) ?></td>
-                    <td><?= $list_per_po->nama_supply; ?></td>
-                    <td><?= $list_per_po->ket; ?></td>
-                </tr>
-            <?php } ?>
+                    <tr>
+                        <td><?= date_format(date_create($list_per_po->tgl), 'd/m/Y'); ?></td>
+                        <td><?= $list_per_po->noref; ?></td>
+                        <td><?= $list_per_po->refpo; ?></td>
+                        <td><?= $list_per_po->kodebar; ?></td>
+                        <td><?= $list_per_po->nabar; ?></td>
+                        <td><?= $list_per_po->satuan; ?></td>
+                        <td style="text-align: center;"><?= number_format($list_per_po->qty, 2); ?></td>
+                        <td style="text-align: right;"><?= number_format($grp1->harga, 2); ?></td>
+                        <td style="text-align: right;"><?= number_format(($list_per_po->qty * $grp1->harga), 2) ?></td>
+                        <td><?= $list_per_po->nama_supply; ?></td>
+                        <td><?= $list_per_po->ket; ?></td>
+                    </tr>
+            <?php }
+            } ?>
 
             <tr>
                 <td colspan="5"></td>
