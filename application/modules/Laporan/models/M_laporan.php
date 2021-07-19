@@ -583,7 +583,7 @@ class M_laporan extends CI_Model
 
     public function bybarang($devisi, $noref, $tanggalAwal, $tanggalAkhir)
     {
-        $query = "SELECT i.kodebar, i.nabar, i.sat, i.noref, p.kode_dev, p.devisi FROM item_po i LEFT JOIN po p ON p.noreftxt=i.noref WHERE p.kode_dev='$devisi' AND i.noref='$noref' AND i.tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir' AND p.status_lpb='1' ORDER BY p.id DESC";
+        $query = "SELECT i.kodebar, i.nabar, i.sat, i.noref, p.kode_dev, p.devisi FROM item_po i LEFT JOIN po p ON p.noreftxt=i.noref WHERE p.kode_dev='$devisi' AND i.noref='$noref' AND i.tglpo BETWEEN '$tanggalAwal' AND '$tanggalAkhir' ORDER BY p.id DESC";
         return $this->db_logistik_pt->query($query)->result();
     }
 

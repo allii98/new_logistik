@@ -321,7 +321,7 @@
                     <ul class="navbar-nav">
                         <li class="dropdown notification-list topbar-dropdown arrow-none">
                             <a class="collapse navbar-collapse nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" style="color: dodgerblue;" aria-haspopup="false" aria-expanded="false">
-                                <img src="http://ubold-laravel.coderthemes.com/assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle mr-2">
+                                <img src="<?= base_url() ?>assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle mr-2">
                                 <font face="Verdana" color="" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font><i class="ml-1 mdi mdi-chevron-down"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right profile-dropdown">
