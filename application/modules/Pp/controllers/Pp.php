@@ -35,9 +35,9 @@ class Pp extends CI_Controller
             $refpp = $hasil->ref_pp;
             $noref = str_replace('/', '.', $refpp);
 
-            $row[] = '<a href="' . site_url('pp/edit_pp/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp">
+            $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp">
 
-            <a href="' .  site_url('pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po">
+            <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po">
             <a href="javascript:;" id="a_delete_pp">
                 <button class="btn btn-danger fa fa-trash btn-xs" id="btn_delete_pp" name="btn_batal_pp" data-toggle="tooltip" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp .  ')">
                 </button>
@@ -82,7 +82,7 @@ class Pp extends CI_Controller
             'title' => 'Input Permohonan Pembayaran',
         ];
 
-        $this->template->load('template', 'v_inputpp', $data);
+        $this->template->load('template', 'v_inputPp', $data);
     }
 
     public function edit_pp()
