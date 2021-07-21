@@ -17,6 +17,7 @@ class Laporan extends CI_Controller
 		$this->load->model('M_lapSpp_disetujui');
 		$this->load->model('M_lapSpp_sppi');
 		$this->load->model('M_lapSpp_sppa');
+		$this->load->model('Retur_m');
 
 		if (!$this->session->userdata('id_user')) {
 			$pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -1105,8 +1106,90 @@ class Laporan extends CI_Controller
 
 	function listLapLPBSlipR()
 	{
-		$data = $this->M_laporan->get_list_lap_lpb_slip_r();
-		echo json_encode($data);
+
+		$cmb_devisi = $this->input->post('cmb_devisi3');
+		// $cmb_devisi = '06';
+
+		$txt_periode = str_replace('/', '-', $this->input->post('txt_periode12'));
+		$txt_periode1 = str_replace('/', '-', $this->input->post('txt_periode13'));
+
+		$tglAwal = date_format(date_create($txt_periode), "Y/m/d");
+		$tglAkhir = date_format(date_create($txt_periode1), "Y/m/d");
+		$this->Retur_m->getdata($cmb_devisi, $tglAwal, $tglAkhir);
+
+		$list = $this->Retur_m->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $field) {
+			$ref = $field->norefretur;
+			$noref = str_replace('/', '.', $ref);
+			$no++;
+			$row = array();
+			$row[] = $no;
+			$row[] = date("Y-m-d", strtotime($field->tgl));
+			$row[] = $field->norefretur;
+			$row[] = $field->bag;
+			$row[] = $field->keterangan;
+			$row[] = '<a href="' . site_url('Laporan/cetakRETUR/' . $noref . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $this->Retur_m->count_all(),
+			"recordsFiltered" => $this->Retur_m->count_filtered(),
+			"data" => $data,
+		);
+		//output dalam format JSON
+		echo json_encode($output);
+	}
+
+
+	function cetakRETUR()
+	{
+		$ref = $this->uri->segment('3');
+		$noretur = str_replace('.', '/', $ref);
+		$id = $this->uri->segment('4');
+
+		// $data['no_lpb'] = $no_lpb;
+		// $data['id'] = $id;
+		$data['retskb'] = $this->db_logistik_pt->get_where('retskb', array('id' => $id, 'norefretur' => $noretur))->row();
+		$data['ret_skbitem'] = $this->db_logistik_pt->get_where('ret_skbitem', array('norefretur' => $noretur, 'norefretur' => $data['retskb']->norefretur))->result();
+
+		$data['urut'] = $this->Retur_m->urut_cetak($data['retskb']->norefretur);
+
+		$norefretur = $data['retskb']->norefretur;
+		$this->qrcode($noretur, $id, $norefretur);
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'setAutoTopMargin' => 'stretch',
+			'orientation' => 'P'
+		]);
+
+
+
+		// $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
+		$mpdf->SetHTMLHeader('
+                            <table width="100%" border="0" align="center">
+                                <tr>
+                                    <td rowspan="5" align="center" style="font-size:14px;font-weight:bold;">' . $data['retskb']->devisi . '</td>
+                                </tr>
+                                <!--tr>
+                                    <td align="center" rowspan="5">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                    </td>
+                                </tr-->
+                            </table>
+                            <hr style="width:100%;margin-top:7px;">
+                            ');
+		// $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+		$html = $this->load->view('lapLPB/v_cetakPrint', $data, true);
+
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
 	}
 
 	function print_lap_lpb_per_po_lpb()

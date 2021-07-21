@@ -482,6 +482,7 @@ class M_laporan extends CI_Model
             $row[] = $no++;
             $row[] = date_format($tgl, "d-m-Y");
             $row[] = $hasil->refpo;
+            $row[] = $hasil->refpo;
             $row[] = $hasil->noref;
             $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printLPBSlipRClick(' . $cmb_devisi3 . ',' . $noref . ',' . $refpo . ')"></button>';
             $data[] = $row;

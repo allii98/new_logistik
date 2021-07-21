@@ -907,9 +907,10 @@
                                     <thead>
                                         <tr>
                                             <th style="width: 5% !important;">No</th>
-                                            <th style="width: 15% !important;">Tgl</th>
-                                            <th style="width: 35% !important;">No PO</th>
-                                            <th style="width: 35% !important;">No LPB</th>
+                                            <th style="width: 15% !important;">Tgl Retur</th>
+                                            <th style="width: 35% !important;">No Retur</th>
+                                            <th style="width: 35% !important;">Bagian</th>
+                                            <th style="width: 35% !important;">Keterangan</th>
                                             <th style="width: 10% !important;">Opsi</th>
                                         </tr>
                                     </thead>
@@ -2930,6 +2931,10 @@
                         },
                         {
                             "width": "20%"
+                        },
+                        {
+                            "width": "20%"
+
                         },
                         {
                             "width": "20%"
