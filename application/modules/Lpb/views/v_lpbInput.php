@@ -586,7 +586,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                 if ($.trim($('#hidden_no_lpb').val()) == '') {
                     $('#lbl_lpb_status').empty();
-                    $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                    $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate LPB Number</label>');
                 }
             },
 
@@ -658,6 +658,9 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#hidden_txtperiode_' + n).val(data.txtperiode);
 
                 $('#a_print_lpb').show();
+
+                //update PO menjadi 1 (sudah LPB) agar PO tersebut tidak bisa di edit
+                updatePoAfterLpb(no_ref_po);
 
             },
             error: function(response) {
@@ -829,5 +832,24 @@ date_default_timezone_set('Asia/Jakarta');
         window.open("<?= base_url('Lpb/cetak/') ?>" + no_lpb + '/' + id, '_blank');
 
         $('.div_form_2').css('pointer-events', 'none');
+    }
+
+    function updatePoAfterLpb(no_ref_po) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Lpb/updatePoAfterLpb'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref_po': no_ref_po
+            },
+            success: function() {
+
+            },
+            error: function(response) {
+                alert(response.responseText);
+            }
+        });
     }
 </script>

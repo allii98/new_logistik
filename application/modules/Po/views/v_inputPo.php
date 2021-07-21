@@ -19,7 +19,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="col-4">
                                 <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
                                 <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
-                                <select class="form-control" id="cmb_pilih_jenis_po">
+                                <select class="form-control" id="cmb_pilih_jenis_po" onchange="jenisPO()">
                                     <option disabled>
                                         <font face="Verdana" size="2.5">-Pilih-</font>
                                     </option>
@@ -364,7 +364,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="getspp1" onfocus="modalSPP('1')" name="spp">
+                                                    <input type="text" class="form-control" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
                                                     <input type="hidden" class="form-control" id="id_item_1" name="id">
                                                     <input type="hidden" class="form-control" id="id_ppo1" name="id_ppo1">
                                                     <input type="hidden" class="form-control" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_">
@@ -406,7 +406,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                 </td>
                                                 <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" value="0" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
+                                                    <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
                                                 </td>
                                                 <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <select class="form-control" id="cmb_kurs_1" name="cmb_kurs_1" required="">
@@ -565,7 +565,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                <h4 class="modal-title" id="myModalLabel">Pilih Item SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -743,8 +743,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         //membuat format number pada tabel isian
         $('#txt_qty_1, #txt_harga_1,#txt_disc_1, #txt_biaya_lain_1 ').number(true, 0);
 
-
-
         var lokasi = $('#lokasi').val();
 
         switch (lokasi) {
@@ -903,16 +901,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             }, ]
         });
 
-        $(document).on('click', '#pilih', function() {
-            var id = $(this).data('id');
-            // console.log(id);
-            var kode = $(this).data('kode');
-            var supplier = $(this).data('supplier');
-            $('#id-supplier').val(id);
-            $('#kd_supplier').val(kode);
-            $('#supplier').val(supplier);
-            $("#modal-supllier").modal('hide');
-        });
+        // $(document).on('click', '#pilih', function() {
+        //     var id = $(this).data('id');
+        //     // console.log(id);
+        //     var kode = $(this).data('kode');
+        //     var supplier = $(this).data('supplier');
+        //     $('#id-supplier').val(id);
+        //     $('#kd_supplier').val(kode);
+        //     $('#supplier').val(supplier);
+        //     $("#modal-supllier").modal('hide');
+        // });
         //end data spp HO
 
         $("#sppSITE").select2({
@@ -1226,7 +1224,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')">' +
+            '<input type="text" class="form-control"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')" placeholder="Pilih item SPP">' +
             '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
             '<input type="hidden" id="id_ppo' + n + '" name="id_ppo' + n + '">' +
@@ -1277,7 +1275,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_harga_' + n + '" name="txt_harga_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
+            '<input type="text" class="form-control" id="txt_harga_' + n + '" name="txt_harga_' + n + '" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1358,7 +1356,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     var n = 1;
     // $('#tableDetailSPP tbody').on('click', 'tr', function () {
     function data_spp_dipilih(id, no_spp, no_ref_spp, kodebar) {
-        var dataClick = $('#spp').DataTable().row(this).data();
+        // var dataClick = $('#spp').DataTable().row(this).data();
         // var no_spp = dataClick[1];
         $.ajax({
             type: "POST",
@@ -1489,15 +1487,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         row++;
     }
 
-    function saveRinciEnter(e, no) {
-        if (e.keyCode == 13 && !e.shiftKey) {
-            if ($('#hidden_proses_status_' + no).val() == 'insert') {
-                saveRinci(no);
-            } else if ($('#hidden_proses_status_' + no).val() == 'update') {
-                updateRinci(no);
-            }
-        }
-    }
+    // function saveRinciEnter(e, no) {
+    //     if (e.keyCode == 13 && !e.shiftKey) {
+    //         if ($('#hidden_proses_status_' + no).val() == 'insert') {
+    //             saveRinci(no);
+    //         } else if ($('#hidden_proses_status_' + no).val() == 'update') {
+    //             updateRinci(no);
+    //         }
+    //     }
+    // }
 
     function check_form_2() {
         if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#dikirim_kebun').val()) != '') {
@@ -1861,7 +1859,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
                         $('#btn_simpan_' + id).hide();
-                        $('#btn_hapus_row_' + id).show();
+                        $('#btn_hapus_row_' + id).hide();
                         $('#btn_ubah_' + id).show();
                         $('#btn_hapus_' + id).show();
                         // console.log(response);
@@ -2278,6 +2276,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
         var ketRinci = $('#txt_keterangan_rinci_' + id).val();
         var jml = $('#txt_jumlah_' + id).val();
+        var getspp = $('#getspp' + id).val();
+
 
         if (!jnpo) {
             toast('Jenis PO is required!');
@@ -2349,6 +2349,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         } else if (!keterangan) {
             toast('Keterangan is required!');
             $('#keterangan').css({
+                "background": "#FFCECE"
+            });
+        } else if (!getspp) {
+            toast('SPP is required!');
+            $('#getspp' + id).css({
                 "background": "#FFCECE"
             });
         } else if (!merk) {

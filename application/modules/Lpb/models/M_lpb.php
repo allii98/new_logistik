@@ -579,6 +579,13 @@ class M_lpb extends CI_Model
     {
         return $this->db_logistik_pt->insert('stockawal_bulanan_devisi', $data);
     }
+
+    public function updatePoAfterLpb($no_ref_po)
+    {
+        $this->db_logistik_pt->set('sudah_lpb', 1);
+        $this->db_logistik_pt->where('noreftxt', $no_ref_po);
+        return $this->db_logistik_pt->update('po');
+    }
 }
 
 /* End of file ModelName.php */

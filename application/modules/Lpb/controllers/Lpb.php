@@ -1031,4 +1031,13 @@ class Lpb extends CI_Controller
 
         echo json_encode($sisa_qty_po);
     }
+
+    public function updatePoAfterLpb()
+    {
+        $no_ref_po = $this->input->post('no_ref_po');
+
+        $output = $this->M_lpb->updatePoAfterLpb($no_ref_po);
+
+        echo json_encode($output);
+    }
 }
