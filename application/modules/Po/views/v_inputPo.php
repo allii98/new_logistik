@@ -274,21 +274,19 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
                                     </h6>
                                     <h6>
-                                        <a href="#" style="display:none;" onclick="cetak()" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
-                                            <i class="fas fa-print"></i>
-                                        </a>
+                                        <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
                                     </h6>
                                 </div>
+                                <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                                <input type="hidden" id="hidden_id_po" name="hidden_id_po">
+                                <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                                <input type="hidden" id="refspp" name="refspp">
+                                <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                             </div>
                             <div class="row" style="margin-left:4px;">
                                 <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
                                 <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                             </div>
-                            <input type="hidden" id="hidden_no_po" name="hidden_no_po">
-                            <input type="hidden" id="hidden_id_po" name="hidden_id_po">
-                            <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
-                            <input type="hidden" id="refspp" name="refspp">
-                            <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                             <div class="table-responsive mt-0">
                                 <table id="tableRinciPO" class="table table-striped table-bordered table-in">
                                     <thead>
@@ -470,21 +468,21 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
                                     </h6>
                                     <h6>
-                                        <a href="#" style="display:none;" onclick="cetak()" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
-                                            <i class="fas fa-print"></i>
-                                        </a>
+                                        <h6>
+                                            <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
+                                        </h6>
                                     </h6>
                                 </div>
+                                <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                                <input type="hidden" id="hidden_id_po" name="hidden_id_po">
+                                <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                                <input type="hidden" id="refspp" name="refspp">
+                                <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                             </div>
                             <div class="row" style="margin-left:4px;">
                                 <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
                                 <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                             </div>
-                            <input type="hidden" id="hidden_no_po" name="hidden_no_po">
-                            <input type="hidden" id="hidden_id_po" name="hidden_id_po">
-                            <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
-                            <input type="hidden" id="refspp" name="refspp">
-                            <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                             <div class="table-responsive mt-0">
                                 <table id="tableItemPO" class="table table-striped table-bordered table-in">
                                     <thead>
@@ -809,6 +807,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#nama_brg_' + n).text(nabar);
                                 $('#hidden_satuan_brg_' + n).val(sat);
                                 $('#txt_qty_' + n).val(qty);
+                                $('#getspp' + n).val(opsi);
+
                                 // if (qty2 != null) {
                                 //     var hasil = qty - qty2;
                                 //     $('#txt_qty_' + n).val(hasil);
@@ -1118,6 +1118,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         '</td>';
         var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
+            '<input type="hidden" class="form-control"  id="getspp' + row + '" rowame="spp' + row + '" >' +
             '<span id="nama_brg_' + row + '"></span><span> | </span><span id="kode_brg_' + row + '" ></span>' +
             '<input type="hidden" id="ppo' + row + '" name="ppo' + row + '">' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
