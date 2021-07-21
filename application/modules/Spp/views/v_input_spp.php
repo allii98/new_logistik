@@ -63,6 +63,7 @@
                                             <option value="SPP">SPP - Surat Permohonan Pembelian</option>
                                             <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
                                             <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
+                                            <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option>
                                     <?php
                                             break;
                                         default:
@@ -476,7 +477,7 @@
 
                 if ($.trim($('#hidden_no_spp').val()) == '') {
                     $('#lbl_spp_status').empty();
-                    $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                    $('#lbl_spp_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate SPP Number</label>');
                 }
             },
 

@@ -263,7 +263,7 @@ date_default_timezone_set('Asia/Jakarta');
     }
 
     function sumqty(kodebar, nopotxt, qty, i) {
-        var nopo = nopotxt;
+        var noreftxt = nopotxt;
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Lpb/sum_qty'); ?>",
@@ -271,7 +271,7 @@ date_default_timezone_set('Asia/Jakarta');
 
             data: {
                 'kodebar': kodebar,
-                'nopo': nopo,
+                'noreftxt': noreftxt,
                 'qty': qty
             },
             success: function(data) {
@@ -455,7 +455,7 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#txt_kd_supplier').val(data_po.kode_supply);
                 $('#txt_supplier').val(data_po.nama_supply);
 
-                //dibawah ini punya PO
+                //dibawah ini punya SPP
                 $('#hidden_tglppo').val(data_po.tglppo);
                 $('#hidden_norefppo').val(data_po.no_refppo);
 
@@ -465,7 +465,7 @@ date_default_timezone_set('Asia/Jakarta');
                     // var no = i + 1;
 
                     tambah_row(i, data_item_po[i].status_item_lpb);
-                    sumqty(data_item_po[i].kodebar, data_po.nopotxt, data_item_po[i].qty, i);
+                    sumqty(data_item_po[i].kodebar, data_po.noreftxt, data_item_po[i].qty, i);
 
                     var kodebar = data_item_po[i].kodebar;
                     var nabar = data_item_po[i].nabar;
@@ -622,46 +622,54 @@ date_default_timezone_set('Asia/Jakarta');
 
                 console.log(data);
 
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_lpb_status').empty();
+                //jika kodebar sama pada noref ini tampilkan alert!
+                if (data.data_exist == 'kodebar_exist') {
+                    swal('Sudah ada item yang sama pada LPB ini!, silahkan lakukan LPB selanjutnya.');
+                    $('#lbl_status_simpan_' + n).empty();
+                    $('#lbl_lpb_status').empty();
+                    $('#btn_simpan_' + n).css('display', 'block');
 
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil Disimpan!',
-                    icon: 'success',
-                    loader: false
-                });
+                } else {
+                    $('#lbl_status_simpan_' + n).empty();
+                    $('#lbl_lpb_status').empty();
 
-                // hitung sisa qty po guys
-                sisaQtyPO(no_ref_po, no_po, kodebar, n);
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Success',
+                        text: 'Berhasil Disimpan!',
+                        icon: 'success',
+                        loader: false
+                    });
 
-                $('#no_lpb').html('No. SPP : ' + data.nolpb);
-                $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+                    // hitung sisa qty po guys
+                    sisaQtyPO(no_ref_po, no_po, kodebar, n);
 
-                $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+                    $('#no_lpb').html('No. SPP : ' + data.nolpb);
+                    $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
 
-                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
-                $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                // $('.headspp').find('#cancelSpp').removeAttr('disabled');
+                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
-                $('#btn_hapus_row_' + n).css('display', 'none');
-                $('#btn_ubah_' + n).css('display', 'block');
-                $('#btn_hapus_' + n).css('display', 'block');
+                    $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
+                    $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
+                    // $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
-                $('#hidden_no_lpb').val(data.nolpb);
-                $('#hidden_no_ref_lpb').val(data.noreflpb);
-                $('#hidden_id_lpb').val(data.id_lpb);
-                $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
+                    $('#btn_hapus_row_' + n).css('display', 'none');
+                    $('#btn_ubah_' + n).css('display', 'block');
+                    $('#btn_hapus_' + n).css('display', 'block');
 
-                $('#hidden_txtperiode_' + n).val(data.txtperiode);
+                    $('#hidden_no_lpb').val(data.nolpb);
+                    $('#hidden_no_ref_lpb').val(data.noreflpb);
+                    $('#hidden_id_lpb').val(data.id_lpb);
+                    $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
 
-                $('#a_print_lpb').show();
+                    $('#hidden_txtperiode_' + n).val(data.txtperiode);
 
-                //update PO menjadi 1 (sudah LPB) agar PO tersebut tidak bisa di edit
-                updatePoAfterLpb(no_ref_po);
+                    $('#a_print_lpb').show();
 
+                    //update PO menjadi 1 (sudah LPB) agar PO tersebut tidak bisa di edit
+                    updatePoAfterLpb(no_ref_po);
+                }
             },
             error: function(response) {
                 alert(response.responseText);

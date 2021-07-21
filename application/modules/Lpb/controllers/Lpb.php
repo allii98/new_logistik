@@ -417,33 +417,65 @@ class Lpb extends CI_Controller
                 $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $no_ref_po, $quantiti, $mutasi);
             }
 
+            $data_exist = NULL;
             $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
+
+            $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi);
+
+            // insert stockawal_bulanan_devisi jika bulan ini barang blm ada maka insert else update
+            $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
+
+            $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
+
+            $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
+            $generate_id = $this->db_logistik_pt->query($query_id)->row();
+            $id_lpb = $generate_id->id_lpb;
+
+            $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
+            $generate_id = $this->db_logistik_pt->query($query_id)->row();
+            $id_item_lpb = $generate_id->id_item_lpb;
         } else {
 
-            if ($cari_kodebar_stock_awal == 0) {
+            //cek ada kodebar yg sama atau tidak pada noref ini
+            $cari_kodebar_masukitem = $this->M_lpb->cari_kodebar_masukitem($kodebar, $no_ref_lpb);
 
-                $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $no_ref_po, $quantiti, $mutasi);
+            if ($cari_kodebar_masukitem >= 1) {
+
+                $data_exist = 'kodebar_exist';
+                $data = NULL;
+                $data2 = NULL;
+                $result_insert_stok_awal_harian = NULL;
+                $result_insert_stok_awal_bulanan = NULL;
+                $result_update_stok_awal = NULL;
+                $id_lpb = NULL;
+                $id_item_lpb = NULL;
+            } else {
+                if ($cari_kodebar_stock_awal == 0) {
+
+                    $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $no_ref_po, $quantiti, $mutasi);
+                }
+
+                $data_exist = NULL;
+                $data = NULL;
+                $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
+
+                $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi);
+
+                // insert stockawal_bulanan_devisi jika bulan ini barang blm ada maka insert else update
+                $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
+
+                $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
+
+                $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
+                $generate_id = $this->db_logistik_pt->query($query_id)->row();
+                $id_lpb = $generate_id->id_lpb;
+
+                $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
+                $generate_id = $this->db_logistik_pt->query($query_id)->row();
+                $id_item_lpb = $generate_id->id_item_lpb;
             }
-
-            $data = NULL;
-            $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
         }
-
-        $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi);
-
-        // insert stockawal_bulanan_devisi jika bulan ini barang blm ada maka insert else update
-        $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
-
-        $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
-
-        $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_lpb = $generate_id->id_lpb;
-
-        $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_item_lpb = $generate_id->id_item_lpb;
 
         $data_return = [
             'insert_stok_awal_bulanan' => $result_insert_stok_awal_bulanan,
@@ -453,9 +485,10 @@ class Lpb extends CI_Controller
             'data2' => $data2,
             'nolpb' => $no_lpb,
             'id_lpb' => $id_lpb,
-            'txtperiode' => $txtperiode,
             'id_item_lpb' => $id_item_lpb,
-            'noreflpb' => $no_ref_lpb
+            'txtperiode' => $txtperiode,
+            'noreflpb' => $no_ref_lpb,
+            'data_exist' => $data_exist
         ];
 
         echo json_encode($data_return);
@@ -670,9 +703,9 @@ class Lpb extends CI_Controller
     public function sum_qty()
     {
         $kodebar = $this->input->post('kodebar');
-        $nopo = $this->input->post('nopo');
+        $noreftxt = $this->input->post('noreftxt');
         $qty = $this->input->post('qty');
-        $result = $this->M_lpb->sumqty($kodebar, $nopo, $qty);
+        $result = $this->M_lpb->sumqty($kodebar, $noreftxt, $qty);
         echo json_encode($result);
     }
 

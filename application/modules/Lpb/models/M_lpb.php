@@ -114,10 +114,10 @@ class M_lpb extends CI_Model
         return $d_return;
     }
 
-    public function sumqty($kodebar, $nopo, $qty)
+    public function sumqty($kodebar, $noreftxt, $qty)
     {
         $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
-        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'nopo' => $nopo]);
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $noreftxt]);
         $this->db_logistik_pt->from('masukitem');
         $sumqty_lpb = $this->db_logistik_pt->get()->row();
 
@@ -585,6 +585,14 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->set('sudah_lpb', 1);
         $this->db_logistik_pt->where('noreftxt', $no_ref_po);
         return $this->db_logistik_pt->update('po');
+    }
+
+    public function cari_kodebar_masukitem($kodebar, $no_ref_lpb)
+    {
+        $this->db_logistik_pt->select('kodebar');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $no_ref_lpb]);
+        $this->db_logistik_pt->from('masukitem');
+        return $this->db_logistik_pt->get()->num_rows();
     }
 }
 

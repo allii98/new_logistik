@@ -395,7 +395,7 @@ class Spp extends CI_Controller
             }
 
             if ($field->status2 == 1) {
-                $aks = '<a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
+                $aks = '<a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
                         <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
                         data-noppotxt="' . $field->noppotxt . '"
                         data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')">
@@ -405,7 +405,7 @@ class Spp extends CI_Controller
                 data-noppo="' . $field->noppo . '"
                 data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                 </button>
-                <a href="' . site_url('spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
+                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
                 <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
                 data-noppotxt="' . $field->noppotxt . '"
                 data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')">

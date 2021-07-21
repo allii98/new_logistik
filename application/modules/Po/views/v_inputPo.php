@@ -390,7 +390,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     </select>
                                                 </td> -->
                                                 <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <span id="nama_brg_1"></span><span>|</span><span id="kode_brg_1"></span>
+                                                    <span id="nama_brg_1"></span><span>&nbsp;|&nbsp;</span><span id="kode_brg_1"></span>
                                                     <input type="hidden" class="form-control" id="hidden_kode_brg_1" name="hidden_kode_brg_1" />
                                                     <input type="hidden" class="form-control" id="hidden_nama_brg_1" name="hidden_nama_brg_1" />
                                                     <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
@@ -426,15 +426,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                                                 </td>
                                                 <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <textarea class="form-control" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1" onkeypress="saveRinciEnter(event)"></textarea><br />
+                                                    <textarea class="form-control" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
 
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <textarea class="form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1" onkeypress="saveRinciEnter(event)"></textarea><br />
+                                                    <textarea class="form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
 
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
+                                                    <input type="text" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
                                                     <label id="lbl_status_simpan_1"></label>
                                                     <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
 
@@ -1170,12 +1170,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="1" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
 
 
             '</td>'
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" rows="1" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
 
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1258,7 +1258,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         '</td>';
         var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
-            '<span id="nama_brg_' + n + '"></span><br><span id="kode_brg_' + n + '" ></span>' +
+            '<span id="nama_brg_' + n + '"></span>&nbsp;|&nbsp;<span id="kode_brg_' + n + '" ></span>' +
 
             '<input type="hidden" class="form-control" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
@@ -1299,15 +1299,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
 
             '</td>'
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
+            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
 
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_jumlah_' + n + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+            '<input type="text" class="form-control bg-light" id="txt_jumlah_' + n + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
             '<label id="lbl_status_simpan_' + n + '"></label>' +
             '<input type="hidden" id="hidden_id_po_item_' + n + '" name="hidden_id_po_item_' + n + '">' +
             '</td>';

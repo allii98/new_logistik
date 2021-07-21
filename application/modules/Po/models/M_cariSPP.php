@@ -21,7 +21,7 @@ class M_cariSPP extends CI_Model
         // $Value = ;
         $this->db_logistik_pt->select('id, noppo, jenis, noreftxt, tglppo, tglref, tglppotxt, namadept');
         $this->db_logistik_pt->from('ppo');
-        $this->db_logistik_pt->where('jenis', 'SPPI');
+        // $this->db_logistik_pt->where('jenis', 'SPPI');
         $this->db_logistik_pt->where('po', 0);
         $this->db_logistik_pt->where('status2', 1);
         $this->db_logistik_pt->order_by('id', 'desc');
