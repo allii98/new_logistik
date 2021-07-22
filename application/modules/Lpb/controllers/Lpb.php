@@ -288,7 +288,9 @@ class Lpb extends CI_Controller
         // $query_get_po = "SELECT id, nopotxt, kode_supply, nama_supply FROM po WHERE nopotxt = '$nopo' AND noreftxt = '$refpo'";
         // $get_po = $this->db_logistik_pt->query($query_get_po)->row();
 
-        $query_get_item_po = "SELECT id, nopotxt, kurs, konversi FROM item_po WHERE nopotxt = '$nopo' AND noref = '$refpo' AND kodebartxt = '$kodebar' AND nabar = '$nabar'";
+        $refppo = $this->input->post('hidden_refppo');
+
+        $query_get_item_po = "SELECT id, nopotxt, kurs, konversi FROM item_po WHERE nopotxt = '$nopo' AND noref = '$refpo' AND kodebartxt = '$kodebar' AND nabar = '$nabar' AND refppo = '$refppo'";
         $get_item_po = $this->db_logistik_pt->query($query_get_item_po)->row();
 
         if (!empty($get_item_po)) {
@@ -389,6 +391,7 @@ class Lpb extends CI_Controller
             'noadjust' => '0',
             'ket' => $this->input->post('txt_ket_rinci'),
             'lokasi' => $this->session->userdata('status_lokasi'),
+            'norefppo' => $this->input->post('hidden_refppo'),
             'refpo' => $no_ref_po,
             'noref' => $no_ref_lpb,
             'BATAL' => '0',
@@ -414,14 +417,14 @@ class Lpb extends CI_Controller
             //insert stock awal
             if ($cari_kodebar_stock_awal == 0) {
 
-                $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $no_ref_po, $quantiti, $mutasi);
+                $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $no_ref_po, $quantiti, $mutasi, $data_masukitem['norefppo']);
             }
 
             $data_exist = NULL;
             $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
 
-            $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi);
+            $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi, $data_masukitem['norefppo']);
 
             // insert stockawal_bulanan_devisi jika bulan ini barang blm ada maka insert else update
             $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
@@ -453,14 +456,14 @@ class Lpb extends CI_Controller
             } else {
                 if ($cari_kodebar_stock_awal == 0) {
 
-                    $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $no_ref_po, $quantiti, $mutasi);
+                    $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $no_ref_po, $quantiti, $mutasi, $data_masukitem['norefppo']);
                 }
 
                 $data_exist = NULL;
                 $data = NULL;
                 $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
 
-                $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi);
+                $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi, $data_masukitem['norefppo']);
 
                 // insert stockawal_bulanan_devisi jika bulan ini barang blm ada maka insert else update
                 $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
@@ -532,13 +535,13 @@ class Lpb extends CI_Controller
         }
     }
 
-    function insert_stokawal($kodebar, $nabar, $satuan, $grp, $no_ref_po, $qty, $mutasi)
+    function insert_stokawal($kodebar, $nabar, $satuan, $grp, $no_ref_po, $qty, $mutasi, $norefppo)
     {
         if ($mutasi == '1') {
             $harga_item_po = $this->M_lpb->cari_harga_mutasi($no_ref_po, $kodebar);
             $saldoakhir_nilai = $harga_item_po * $qty;
         } else {
-            $harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar);
+            $harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar, $norefppo);
             $saldoakhir_nilai = $harga_item_po['harga'] * $qty;
         }
 
@@ -576,14 +579,14 @@ class Lpb extends CI_Controller
         $this->db_logistik_pt->insert('stockawal', $data_input_stock_awal);
     }
 
-    function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $qty, $devisi, $kode_dev, $mutasi)
+    function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $qty, $devisi, $kode_dev, $mutasi, $norefppo)
     {
 
         if ($mutasi == '1') {
             $harga_item_po = $this->M_lpb->cari_harga_mutasi($no_ref_po, $kodebar);
             $saldoakhir_nilai = $harga_item_po * $qty;
         } else {
-            $result_harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar);
+            $result_harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar, $norefppo);
             $harga_item_po = $result_harga_item_po['harga'];
             $saldoakhir_nilai = $harga_item_po * $qty;
         }
@@ -673,21 +676,22 @@ class Lpb extends CI_Controller
         $no_ref_po = $this->input->post('no_ref_po');
         $no_po = $this->input->post('no_po');
         $kodebar = $this->input->post('kodebar');
+        $refppo = $this->input->post('refppo');
 
         //QTY PO nya di ambil
-        $query_qty_po = "SELECT id, nopotxt, noppotxt, refppo, noref, kodebartxt, nabar, qty, sat, ket FROM item_po WHERE nopotxt = '$no_po' AND noref = '$no_ref_po' AND kodebartxt = '$kodebar'";
+        $query_qty_po = "SELECT id, nopotxt, noppotxt, refppo, noref, kodebartxt, nabar, qty, sat, ket FROM item_po WHERE nopotxt = '$no_po' AND noref = '$no_ref_po' AND kodebartxt = '$kodebar' AND refppo = '$refppo'";
         $data_qty_po = $this->db_logistik_pt->query($query_qty_po)->row();
 
         //sum qty LPB nya udah berapa
-        $query_sisa_qty_lpb = "SELECT SUM(qty) as qty_lpb FROM masukitem WHERE BATAL<>1 AND kodebartxt = '$kodebar' AND nopotxt = '$no_po' AND refpo = '$no_ref_po'";
+        $query_sisa_qty_lpb = "SELECT SUM(qty) as qty_lpb FROM masukitem WHERE BATAL<>1 AND kodebartxt = '$kodebar' AND nopotxt = '$no_po' AND refpo = '$no_ref_po' AND norefppo = '$refppo'";
         $data_sisa_qty_lpb = $this->db_logistik_pt->query($query_sisa_qty_lpb)->row();
 
         $sisa_qty_po = $data_qty_po->qty - $data_sisa_qty_lpb->qty_lpb;
 
         if ($sisa_qty_po == 0) {
-            $this->M_lpb->updateStatusItemLpb($no_ref_po, $kodebar);
+            $this->M_lpb->updateStatusItemLpb($no_ref_po, $kodebar, $refppo);
         } else {
-            $this->M_lpb->updateStatusItemLpb2($no_ref_po, $kodebar);
+            $this->M_lpb->updateStatusItemLpb2($no_ref_po, $kodebar, $refppo);
         }
 
         echo json_encode($sisa_qty_po);
@@ -705,7 +709,8 @@ class Lpb extends CI_Controller
         $kodebar = $this->input->post('kodebar');
         $noreftxt = $this->input->post('noreftxt');
         $qty = $this->input->post('qty');
-        $result = $this->M_lpb->sumqty($kodebar, $noreftxt, $qty);
+        $refppo = $this->input->post('refppo');
+        $result = $this->M_lpb->sumqty($kodebar, $noreftxt, $qty, $refppo);
         echo json_encode($result);
     }
 
@@ -715,19 +720,21 @@ class Lpb extends CI_Controller
         echo json_encode($data);
     }
 
-    public function get_data_after_save()
-    {
-        $nopotxt = $this->input->post('nopotxt');
-        $no_lpb = $this->input->post('no_lpb');
-        $result = $this->M_lpb->get_data_after_save($nopotxt, $no_lpb);
-        echo json_encode($result);
-    }
+    // public function get_data_after_save()
+    // {
+    //     $nopotxt = $this->input->post('nopotxt');
+    //     $no_lpb = $this->input->post('no_lpb');
+    //     $result = $this->M_lpb->get_data_after_save($nopotxt, $no_lpb);
+    //     echo json_encode($result);
+    // }
 
     public function updateLpb()
     {
         $check_asset = $this->input->post('chk_asset');
         $txtperiode = $this->input->post('hidden_txtperiode');
         $kode_dev = $this->input->post('kode_dev');
+        $refppo = $this->input->post('refppo');
+
 
         if ($check_asset == "yes") {
             $asset = "1";
@@ -750,7 +757,7 @@ class Lpb extends CI_Controller
         if ($mutasi == '1') {
             $harga_item_po = $this->M_lpb->cari_harga_mutasi($norefpo, $kodebar);
         } else {
-            $result_harga_item_po = $this->M_lpb->cari_harga_po($norefpo, $kodebar);
+            $result_harga_item_po = $this->M_lpb->cari_harga_po($norefpo, $kodebar, $refppo);
             $harga_item_po = $result_harga_item_po['harga'];
         }
 
@@ -798,7 +805,7 @@ class Lpb extends CI_Controller
     public function get_detail_item_lpb()
     {
         $noref = $this->input->post('noref');
-        $mutasi = $this->input->post('mutasi');
+        // $mutasi = $this->input->post('mutasi');
         // $noreftxt = $this->M_detail_lpb->get_noref($noref);
         $this->M_detail_lpb->getWhere($noref);
         $list = $this->M_detail_lpb->get_datatables();
@@ -809,23 +816,23 @@ class Lpb extends CI_Controller
             $row = array();
             $row[] = $no . ".";
 
-            if ($mutasi == '1') {
-                $result_qty_po = $this->M_lpb->getQtyMutasi($d->kodebar, $d->refpo);
-                $qty_po = $result_qty_po['qty2'];
-            } else {
-                $result_qty_po = $this->M_lpb->getQtyPo($d->kodebar, $d->refpo);
-                $qty_po = $result_qty_po['qty'];
-            }
+            // if ($mutasi == '1') {
+            //     $result_qty_po = $this->M_lpb->getQtyMutasi($d->kodebar, $d->refpo);
+            //     $qty_po = $result_qty_po['qty2'];
+            // } else {
+            //     $result_qty_po = $this->M_lpb->getQtyPo($d->kodebar, $d->refpo);
+            //     $qty_po = $result_qty_po['qty'];
+            // }
 
-            $sisa_lpb = $this->M_lpb->get_sisa_lpb($d->kodebar, $d->refpo);
+            $sisa_lpb = $this->M_lpb->get_sisa_lpb($d->kodebar, $d->refpo, $d->norefppo);
 
-            $result_sisa_lpb = $qty_po - $sisa_lpb->qty_lpb;
+            $result_sisa_lpb = $d->qtypo - $sisa_lpb->qty_lpb;
 
             $row[] = $d->kodebar;
             $row[] = $d->nabar;
             $row[] = $d->satuan;
             $row[] = $d->grp;
-            $row[] = $qty_po;
+            $row[] = $d->qtypo;
             $row[] = $d->qty;
             $row[] = $result_sisa_lpb;
             $row[] = $d->ket;
@@ -857,21 +864,22 @@ class Lpb extends CI_Controller
         echo json_encode($data);
     }
 
-    public function cariQtyPo()
-    {
-        $refpo = $this->input->post('refpo');
-        $kodebar = $this->input->post('kodebar');
+    // public function cariQtyPo()
+    // {
+    //     $refpo = $this->input->post('refpo');
+    //     $kodebar = $this->input->post('kodebar');
 
-        $data = $this->M_lpb->cariQtyPo($refpo, $kodebar);
+    //     $data = $this->M_lpb->cariQtyPo($refpo, $kodebar);
 
-        echo json_encode($data);
-    }
+    //     echo json_encode($data);
+    // }
 
     public function sum_qty_edit()
     {
         $kodebar = $this->input->post('kodebar');
         $refpo = $this->input->post('refpo');
-        $result = $this->M_lpb->sumqty_edit($kodebar, $refpo);
+        $norefppo = $this->input->post('norefppo');
+        $result = $this->M_lpb->sumqty_edit($kodebar, $refpo, $norefppo);
         echo json_encode($result);
     }
 

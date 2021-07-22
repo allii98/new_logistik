@@ -6,8 +6,8 @@ class M_detail_lpb extends CI_Model
 {
 
       var $table = 'masukitem'; //nama tabel dari database
-      var $column_order = array(null, 'id', 'kodebar', 'nabar', 'satuan', 'grp', 'ket', 'qty', 'nopo', 'refpo'); //field yang ada di table supplier  
-      var $column_search = array('id', 'kodebar', 'nabar', 'satuan', 'grp', 'ket', 'qty', 'nopo', 'refpo'); //field yang diizin untuk pencarian 
+      var $column_order = array(null, 'id', 'kodebar', 'nabar', 'satuan', 'grp', 'ket', 'qty', 'nopo', 'refpo', 'norefppo'); //field yang ada di table supplier  
+      var $column_search = array('id', 'kodebar', 'nabar', 'satuan', 'grp', 'ket', 'qty', 'nopo', 'refpo', 'norefppo'); //field yang diizin untuk pencarian 
       var $order = array('id' => 'DESC'); // default order 
 
       public function __construct()
