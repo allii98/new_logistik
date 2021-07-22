@@ -75,20 +75,24 @@
                 <tr>
                     <td style="text-align: center;"><?= $no++; ?></td>
                     <td style="text-align: center;"><?= date_format(date_create($list_rr->tgl), "d/m/Y") ?></td>
-                    <td style="width: 15%;"><?= $list_rr->noref; ?></td>
-                    <td style="width: 15%;"><?= $list_rr->nama_supply; ?></td>
+                    <td style="width: 15%;"><?= $list_rr->no_ba; ?></td>
+                    <td style="width: 15%;"><?= $list_rr->devisi; ?></td>
                     <td style="text-align: center;"><?= $list_rr->kodebar; ?></td>
                     <td><?= $list_rr->nabar; ?></td>
                     <td style="text-align: center;"><?= $list_rr->satuan; ?></td>
                     <td style="text-align: center;"><?= $list_rr->qty; ?></td>
                 </tr>
             <?php } ?>
+            <tr>
+                <td colspan="5"></td>
+                <td colspan="2" style="text-align: center;"><b>Total </b> </td>
+                <td style="text-align: center;"><?= $total; ?></td>
+            </tr>
 
         </tbody>
     </table>
     <br>
     <div style="text-align: right; ">
-        <b> Total : <?= $total; ?></b><br><br>
         AirLangga Estate, <?= date("d M Y"); ?>
     </div>
     <br><br>

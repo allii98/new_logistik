@@ -1086,7 +1086,7 @@ class Laporan extends CI_Controller
 		} else if ($lokasi == '07') {
 			$lok = 'ESTATE2';
 		}
-		$query = "SELECT a.*, b.nama_supply FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kdpt = '$lokasi' AND a.refpo LIKE '%RET%'";
+		$query = "SELECT a.tgl,a.norefretur, b.no_ba, b.devisi, a.kodebar, a.nabar, a.satuan, a.qty FROM ret_skbitem a LEFT JOIN retskb b ON a.norefretur=b.norefretur WHERE a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND  b.kode_dev='$lokasi'";
 		$data['r_retur'] = $this->db_logistik_pt->query($query)->result();
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
