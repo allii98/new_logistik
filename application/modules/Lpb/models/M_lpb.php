@@ -102,7 +102,7 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->from('po');
         $data_po = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket, status_item_lpb');
+        $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket, status_item_lpb, refppo');
         $this->db_logistik_pt->where('noref', $noref);
         $this->db_logistik_pt->from('item_po');
         $data_item_po = $this->db_logistik_pt->get()->result_array();
@@ -114,10 +114,10 @@ class M_lpb extends CI_Model
         return $d_return;
     }
 
-    public function sumqty($kodebar, $noreftxt, $qty)
+    public function sumqty($kodebar, $noreftxt, $qty, $refppo)
     {
         $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
-        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $noreftxt]);
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $noreftxt, 'norefppo' => $refppo]);
         $this->db_logistik_pt->from('masukitem');
         $sumqty_lpb = $this->db_logistik_pt->get()->row();
 
@@ -133,28 +133,28 @@ class M_lpb extends CI_Model
         return $this->db_logistik_pt->query($query)->result_array();
     }
 
-    public function get_data_after_save($nopotxt, $no_lpb)
-    {
+    // public function get_data_after_save($nopotxt, $no_lpb)
+    // {
 
-        $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket, nopotxt');
-        $this->db_logistik_pt->where('nopotxt', $nopotxt);
-        $this->db_logistik_pt->from('item_po');
-        $this->db_logistik_pt->order_by('nopotxt', 'ASC');
-        $data_item_po = $this->db_logistik_pt->get()->result_array();
+    //     $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket, nopotxt');
+    //     $this->db_logistik_pt->where('nopotxt', $nopotxt);
+    //     $this->db_logistik_pt->from('item_po');
+    //     $this->db_logistik_pt->order_by('nopotxt', 'ASC');
+    //     $data_item_po = $this->db_logistik_pt->get()->result_array();
 
-        $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket');
-        $this->db_logistik_pt->where('nopotxt', $nopotxt);
-        $this->db_logistik_pt->where('ttg', $no_lpb);
-        $this->db_logistik_pt->order_by('nopotxt', 'ASC');
-        $this->db_logistik_pt->from('masukitem');
-        $data_item_lpb = $this->db_logistik_pt->get()->result_array();
+    //     $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket');
+    //     $this->db_logistik_pt->where('nopotxt', $nopotxt);
+    //     $this->db_logistik_pt->where('ttg', $no_lpb);
+    //     $this->db_logistik_pt->order_by('nopotxt', 'ASC');
+    //     $this->db_logistik_pt->from('masukitem');
+    //     $data_item_lpb = $this->db_logistik_pt->get()->result_array();
 
-        $d_return = [
-            'data_item_po' => $data_item_po,
-            'data_item_lpb' => $data_item_lpb
-        ];
-        return $d_return;
-    }
+    //     $d_return = [
+    //         'data_item_po' => $data_item_po,
+    //         'data_item_lpb' => $data_item_lpb
+    //     ];
+    //     return $d_return;
+    // }
 
     public function updateLpb($data_item_lpb, $id)
     {
@@ -185,7 +185,7 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->where('id', $id_stokmasuk);
         $data_lpb = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket, id, txtperiode');
+        $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qtypo, qty, ket, id, txtperiode, norefppo');
         $this->db_logistik_pt->where('noref', $data_lpb['noref']);
         $this->db_logistik_pt->from('masukitem');
         $data_item_lpb = $this->db_logistik_pt->get()->result_array();
@@ -197,23 +197,23 @@ class M_lpb extends CI_Model
         return $data;
     }
 
-    public function cariQtyPo($refpo, $kodebar)
-    {
-        $this->db_logistik_pt->select('qty');
-        $this->db_logistik_pt->where(['noref' => $refpo, 'kodebar' => $kodebar]);
-        $this->db_logistik_pt->from('item_po');
-        return $this->db_logistik_pt->get()->row_array();
-    }
+    // public function cariQtyPo($refpo, $kodebar)
+    // {
+    //     $this->db_logistik_pt->select('qty');
+    //     $this->db_logistik_pt->where(['noref' => $refpo, 'kodebar' => $kodebar]);
+    //     $this->db_logistik_pt->from('item_po');
+    //     return $this->db_logistik_pt->get()->row_array();
+    // }
 
-    public function sumqty_edit($kodebar, $refpo)
+    public function sumqty_edit($kodebar, $refpo, $norefppo)
     {
         $this->db_logistik_pt->select('qty');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $refpo]);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $refpo, 'refppo' => $norefppo]);
         $this->db_logistik_pt->from('item_po');
         $qty_po = $this->db_logistik_pt->get()->row_array();
 
         $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
-        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $refpo]);
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $refpo, 'norefppo' => $norefppo]);
         $this->db_logistik_pt->from('masukitem');
         $sumqty_lpb = $this->db_logistik_pt->get()->row();
 
@@ -221,26 +221,26 @@ class M_lpb extends CI_Model
         return $result;
     }
 
-    public function getQtyPo($kodebar, $noref)
-    {
-        $this->db_logistik_pt->select('qty');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $noref]);
-        $this->db_logistik_pt->from('item_po');
-        return $this->db_logistik_pt->get()->row_array();
-    }
+    // public function getQtyPo($kodebar, $noref)
+    // {
+    //     $this->db_logistik_pt->select('qty');
+    //     $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $noref]);
+    //     $this->db_logistik_pt->from('item_po');
+    //     return $this->db_logistik_pt->get()->row_array();
+    // }
 
-    public function getQtyMutasi($kodebar, $noref)
-    {
-        $this->db_logistik_center->select('qty2');
-        $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $noref]);
-        $this->db_logistik_center->from('tb_mutasi_item');
-        return $this->db_logistik_center->get()->row_array();
-    }
+    // public function getQtyMutasi($kodebar, $noref)
+    // {
+    //     $this->db_logistik_center->select('qty2');
+    //     $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $noref]);
+    //     $this->db_logistik_center->from('tb_mutasi_item');
+    //     return $this->db_logistik_center->get()->row_array();
+    // }
 
-    public function get_sisa_lpb($kodebar, $refpo)
+    public function get_sisa_lpb($kodebar, $refpo, $norefppo)
     {
         $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
-        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $refpo]);
+        $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $refpo, 'norefppo' => $norefppo]);
         $this->db_logistik_pt->from('masukitem');
         return $this->db_logistik_pt->get()->row();
     }
@@ -256,10 +256,10 @@ class M_lpb extends CI_Model
     //     return $result;
     // }
 
-    public function cari_harga_po($no_ref_po, $kodebar)
+    public function cari_harga_po($no_ref_po, $kodebar, $norefppo)
     {
         $this->db_logistik_pt->select('harga');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $no_ref_po]);
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $no_ref_po, 'refppo' => $norefppo]);
         $this->db_logistik_pt->from('item_po');
         return $this->db_logistik_pt->get()->row_array();
     }
@@ -504,11 +504,11 @@ class M_lpb extends CI_Model
         return $this->db_logistik_pt->update('stockawal_bulanan_devisi');
     }
 
-    public function updateStatusItemLpb($no_ref_po, $kodebar)
+    public function updateStatusItemLpb($no_ref_po, $kodebar, $refppo)
     {
         //update status jadi 1 atau sudah abis qty lpb nya
         $this->db_logistik_pt->set('status_item_lpb', 1);
-        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar, 'refppo' => $refppo]);
         $this->db_logistik_pt->update('item_po');
 
         $this->db_logistik_pt->select('noref');
@@ -528,10 +528,10 @@ class M_lpb extends CI_Model
         }
     }
 
-    public function updateStatusItemLpb2($no_ref_po, $kodebar)
+    public function updateStatusItemLpb2($no_ref_po, $kodebar, $refppo)
     {
         $this->db_logistik_pt->set('status_item_lpb', 0);
-        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->where(['noref' => $no_ref_po, 'kodebar' => $kodebar, 'refppo' => $refppo]);
         $this->db_logistik_pt->update('item_po');
 
         $this->db_logistik_pt->set('status_lpb', 0);

@@ -262,24 +262,25 @@
                 $('#no_ref_lpb').text('No. Ref LPB : ' + data_lpb.noref);
                 $('#kode_dev').val(data_lpb.kode_dev);
 
-
                 // $("#modalListPo").modal('hide');
 
                 for (i = 0; i < data_item_lpb.length; i++) {
                     // var no = i + 1;
 
                     tambah_row(i);
-                    cari_qty_po(data_lpb.refpo, data_item_lpb[i].kodebar, i);
-                    sumqty_edit(data_item_lpb[i].kodebar, data_lpb.refpo, i);
+                    // cari_qty_po(data_lpb.refpo, data_item_lpb[i].kodebar, i);
+                    sumqty_edit(data_item_lpb[i].kodebar, data_lpb.refpo, data_item_lpb[i].norefppo, i);
 
                     var kodebar = data_item_lpb[i].kodebar;
                     var nabar = data_item_lpb[i].nabar;
+                    var qtypo = data_item_lpb[i].qtypo;
                     var qty = data_item_lpb[i].qty;
                     var sat = data_item_lpb[i].satuan;
                     var ket = data_item_lpb[i].ket;
                     var grp = data_item_lpb[i].grp;
                     var id_lpb = data_item_lpb[i].id;
                     var txtperiode = data_item_lpb[i].txtperiode;
+                    var norefppo = data_item_lpb[i].norefppo;
                     // var sumsisa = $(this).data('sumsisa');
 
                     // Set data
@@ -294,10 +295,12 @@
                     $('#txt_satuan_' + i).text(sat);
                     $('#txt_ket_rinci_' + i).text(ket);
                     $('#txt_qty_' + i).val(qty);
+                    $('#qty_po_' + i).text(qtypo);
                     $('#hidden_txt_qty_' + i).val(qty);
                     $('#hidden_grup_' + i).text(grp);
                     $('#hidden_id_item_lpb_' + i).val(id_lpb);
                     $('#hidden_txtperiode_' + i).val(txtperiode);
+                    $('#hidden_refppo_' + i).val(norefppo);
 
                     // $('#sisa_qty_' + no).text(sumsisa);
                     // getGrupBarang(kodebar, i);
@@ -312,24 +315,24 @@
         });
     }
 
-    function cari_qty_po(refpo, kodebar, i) {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Lpb/cariQtyPo'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
+    // function cari_qty_po(refpo, kodebar, i) {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo site_url('Lpb/cariQtyPo'); ?>",
+    //         dataType: "JSON",
+    //         beforeSend: function() {},
 
-            data: {
-                'refpo': refpo,
-                'kodebar': kodebar
-            },
-            success: function(data) {
-                $('#qty_po_' + i).text(data.qty);
-            }
-        });
-    }
+    //         data: {
+    //             'refpo': refpo,
+    //             'kodebar': kodebar
+    //         },
+    //         success: function(data) {
+    //             $('#qty_po_' + i).text(data.qty);
+    //         }
+    //     });
+    // }
 
-    function sumqty_edit(kodebar, refpo, i) {
+    function sumqty_edit(kodebar, refpo, norefppo, i) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Lpb/sum_qty_edit'); ?>",
@@ -337,7 +340,8 @@
 
             data: {
                 'kodebar': kodebar,
-                'refpo': refpo
+                'refpo': refpo,
+                'norefppo': norefppo,
             },
             success: function(data) {
                 $('#sisa_qty_' + i).text(data);
@@ -361,24 +365,24 @@
         });
     }
 
-    function sumqty(kodebar, nopotxt, qty, i) {
-        var nopo = nopotxt;
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Lpb/sum_qty'); ?>",
-            dataType: "JSON",
+    // function sumqty(kodebar, nopotxt, qty, i) {
+    //     var nopo = nopotxt;
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo site_url('Lpb/sum_qty'); ?>",
+    //         dataType: "JSON",
 
-            data: {
-                'kodebar': kodebar,
-                'nopo': nopo,
-                'qty': qty
-            },
-            success: function(data) {
-                // console.log(data + 'sum');
-                $('#sisa_qty_' + i).text(data);
-            }
-        });
-    }
+    //         data: {
+    //             'kodebar': kodebar,
+    //             'nopo': nopo,
+    //             'qty': qty
+    //         },
+    //         success: function(data) {
+    //             // console.log(data + 'sum');
+    //             $('#sisa_qty_' + i).text(data);
+    //         }
+    //     });
+    // }
 
     var n = 0;
 
@@ -422,6 +426,7 @@
             '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
+            '<input type="hidden" id="hidden_refppo_' + row + '" name="hidden_refppo_' + row + '">' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -446,7 +451,7 @@
         // $('#hidden_no_table').val(row);
     }
 
-    function sisaQtyPO(no_ref_po, no_po, kodebar, n) {
+    function sisaQtyPO(no_ref_po, no_po, kodebar, refppo, n) {
         console.log('sisa qty no ' + n);
         $.ajax({
             type: "POST",
@@ -457,10 +462,14 @@
             data: {
                 'no_ref_po': no_ref_po,
                 'no_po': no_po,
-                'kodebar': kodebar
+                'kodebar': kodebar,
+                'refppo': refppo
             },
             success: function(data) {
                 $('#sisa_qty_' + n).text(data);
+            },
+            error: function(response) {
+                alert(response.responseText);
             }
         });
     }
@@ -517,8 +526,9 @@
         var no_ref_po = $('#txt_ref_po').val();
         var no_po = $('#txt_no_po').val();
         var kodebar = $('#txt_kode_barang_' + n).val();
+        var hidden_refppo = $('#hidden_refppo_' + n).val();
 
-        console.log(no_ref_po + ' ' + no_po + '' + kodebar);
+        // console.log(no_ref_po + ' ' + no_po + '' + kodebar);
 
         $.ajax({
             type: "POST",
@@ -546,6 +556,7 @@
                 nopo: no_po,
                 norefpo: no_ref_po,
                 kodebar: kodebar,
+                refppo: hidden_refppo,
                 mutasi: '0'
             },
 
@@ -554,7 +565,7 @@
 
                 $('#lbl_status_simpan_' + n).empty();
 
-                sisaQtyPO(no_ref_po, no_po, kodebar, n);
+                sisaQtyPO(no_ref_po, no_po, kodebar, hidden_refppo, n);
 
                 $.toast({
                     position: 'top-right',
