@@ -90,7 +90,7 @@ class M_data_spp extends CI_Model
         $this->db_logistik_pt->where('id', $id_ppo);
         $ppo = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('kodebar, nabar,qty, STOK, sat, ket, noref, noreftxt, id');
+        $this->db_logistik_pt->select('kodebar, nabar,qty, STOK, sat, ket, noref, noreftxt, id, status2');
         $this->db_logistik_pt->from('item_ppo');
         $this->db_logistik_pt->where('noreftxt', $ppo['noreftxt']);
         $item_ppo = $this->db_logistik_pt->get()->result_array();

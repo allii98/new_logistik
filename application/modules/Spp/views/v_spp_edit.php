@@ -340,7 +340,7 @@
                 for (i = 0; i < item_ppo.length; i++) {
                     // var no = i + 1;
 
-                    tambah_row(i);
+                    tambah_row(i, item_ppo[i].status2);
 
                     var kodebar = item_ppo[i].kodebar;
                     var nabar = item_ppo[i].nabar;
@@ -887,7 +887,7 @@
 
     // var n = 2;
 
-    function tambah_row(n) {
+    function tambah_row(n, status2) {
 
         var tr_buka = '<tr id="tr_' + n + '">';
         var td_col_1 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -936,10 +936,20 @@
                 '</div>' +
                 '</td>';
         }
+        var td_col_6_1 = '<td width="7%" style="padding-top: 2px;">' +
+            '<div class="row">' +
+            '<h5 style="margin-top:0px;"><span class="badge badge-success">Approved</span></h5>' +
+            '</div>' +
+            '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        $('#tbody_rincian').append(tr_buka + form_buka + td_col_1 + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + form_tutup + tr_tutup);
+        if (status2 == 1) {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_1 + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6_1 + form_tutup + tr_tutup);
+        } else {
+            $('#tbody_rincian').append(tr_buka + form_buka + td_col_1 + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + form_tutup + tr_tutup);
+        }
+
         $('#txt_qty_' + n).number(true, 0);
         $('#hidden_no_table_' + n).val(n);
         input_number(n);

@@ -79,34 +79,34 @@
                         <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         No
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         ID
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;;">
                                         Kode&nbsp;Barang
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Nama&nbsp;Barang
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Sat
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Qty
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Stok
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Ket
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Revisi&nbsp;Qty
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.4em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.4em;">
                                         Status&nbsp;SPP
                                     </th>
                                 </tr>
@@ -303,18 +303,26 @@
     }
 
     function approve_barang() {
-        Swal.fire({
-            text: "Apakah anda yakin?",
-            showCancelButton: true,
-            position: 'top',
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya, Setujui'
-        }).then((result) => {
-            if (result.value) {
-                pilihItem();
-            }
-        })
+        var rowcollection = $('#spp_approval').DataTable().rows({
+            selected: true,
+        }).data().toArray();
+
+        if (rowcollection == false) {
+            swal('Silahkan pilih item SPP!');
+        } else {
+            Swal.fire({
+                text: "Apakah anda yakin?",
+                showCancelButton: true,
+                position: 'top',
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Setujui'
+            }).then((result) => {
+                if (result.value) {
+                    pilihItem();
+                }
+            });
+        }
     }
 
     function pilihItem() {

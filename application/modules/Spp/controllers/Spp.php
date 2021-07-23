@@ -572,6 +572,8 @@ class Spp extends CI_Controller
 
             if ($field->status2 == 1) {
                 $stat = '<h5 style="margin-top:0px;"><span class="badge badge-success">Approved</span></h5>';
+            } elseif ($field->status2 == 2) {
+                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
             } else {
                 $stat = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             }
