@@ -113,33 +113,37 @@ class Spp extends CI_Controller
         if ($cmb_alokasi == "HO") {
             $text1 = "PST";
             $text2 = "BWJ";
-            $dig_1 = "1";
+            // $dig_1 = "1";
         } else if ($cmb_alokasi == "SITE") {
             // $text1 = $cmb_estate;
             $text1 = "EST";
             $text2 = "SWJ";
-            $dig_1 = "6";
+            // $dig_1 = "6";
         } else if ($cmb_alokasi == "RO") {
             $text1 = "ROM";
             $text2 = "PKY";
-            $dig_1 = "2";
+            // $dig_1 = "2";
         } else if ($cmb_alokasi == "PKS") {
             $text1 = "FAC";
             $text2 = "SWJ";
-            $dig_1 = "3";
+            // $dig_1 = "3";
         }
+
+        //dig_1 itu kebun
+        $kode_devisi    = $this->input->post('kode_dev');
+        $nmr_depan_dev = preg_replace("/[^1-9]/", "", $kode_devisi);
 
         if ($this->session->userdata('status_lokasi') == "HO") {
             $dig_2 = "1";
         } else if ($this->session->userdata('status_lokasi') == "RO") {
-            $dig_2 = "2";
+            $dig_2 = "4";
         } else if ($this->session->userdata('status_lokasi') == "PKS") {
             $dig_2 = "3";
         } else if ($this->session->userdata('status_lokasi') == "SITE") {
-            $dig_2 = "6";
+            $dig_2 = "2";
         }
 
-        $key = $dig_1 . $dig_2;
+        $key = $nmr_depan_dev . $dig_2;
 
         $query_ppo = "SELECT MAX(SUBSTRING(noppotxt, 3)) as maxspp from ppo WHERE noppotxt LIKE '$key%'";
         $generate_ppo = $this->db_logistik_pt->query($query_ppo)->row();
@@ -148,7 +152,7 @@ class Spp extends CI_Controller
         $print = sprintf("%05s", $noUrut);
 
         if (empty($this->input->post('hidden_no_spp'))) {
-            $nospp = $dig_1 . $dig_2 . $print;
+            $nospp = $nmr_depan_dev . $dig_2 . $print;
         } else {
             $nospp = $this->input->post('hidden_no_spp');
         }
@@ -169,9 +173,7 @@ class Spp extends CI_Controller
         }
         $thn = date("Y", strtotime($this->input->post('txt_tgl_ref')));
 
-        $kode_devisi    = $this->input->post('kode_dev');
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
-
 
         $data_ppo = [
             'kpd' => 'Bagian Purchasing',
