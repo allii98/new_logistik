@@ -1578,7 +1578,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var hargaSetelahDisc = parseInt(harga) - parseInt(hargaDisc);
 
         var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
-        console.log(nilai);
+        // console.log(nilai);
 
         $('#txt_jumlah_' + id).val(nilai);
     }
