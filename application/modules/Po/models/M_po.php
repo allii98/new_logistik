@@ -104,7 +104,7 @@ class M_po extends CI_Model
 
     public function get_detail_ppo($no_spp, $no_ref_spp)
     {
-        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, tglref, tglppo, tgltrm, kodedept, namadept, ket, pt, kodept, lokasi, status, status2, po, jenis FROM ppo WHERE noppo = '$no_spp' AND noreftxt = '$no_ref_spp' ORDER BY id DESC";
+        $query = "SELECT id, noppo, noppotxt, tglppo, noref, noreftxt, tglref, tglppo, tgltrm,devisi, kodedept, namadept, ket, pt, kodept, lokasi, status, status2, po, jenis FROM ppo WHERE noppo = '$no_spp' AND noreftxt = '$no_ref_spp' ORDER BY id DESC";
         $data = $this->db_logistik_pt->query($query);
         return $data;
     }

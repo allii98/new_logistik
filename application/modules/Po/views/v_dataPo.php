@@ -23,6 +23,13 @@
 									Tgl. PO
 								</th>
 								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									No. Ref SPP
+								</th>
+
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
+									Tgl. SPP
+								</th>
+								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
 									Supplier
 								</th>
 								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">

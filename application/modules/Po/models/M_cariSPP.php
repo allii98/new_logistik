@@ -6,8 +6,8 @@ class M_cariSPP extends CI_Model
 {
     // 
     var $table = 'ppo'; //nama tabel dari database
-    var $column_order = array(null, 'id', '	noppo', 'jenis', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang ada di table supplier  
-    var $column_search = array('noppo', 'jenis',  'noreftxt', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'noppo', 'jenis', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang ada di table supplier  
+    var $column_search = array('noreftxt', 'tglppo', 'namadept'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -25,6 +25,7 @@ class M_cariSPP extends CI_Model
         $this->db_logistik_pt->or_where('jenis', 'SPPI');
         $this->db_logistik_pt->where('po', 0);
         $this->db_logistik_pt->where('status2', 1);
+        $this->db_logistik_pt->or_where('status2', 2);
         $this->db_logistik_pt->order_by('id', 'desc');
 
 

@@ -381,8 +381,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <option value="TBM">TBM</option>
                                                     </select>
                                                 </td> -->
-                                                <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <span id="nama_brg_1"></span><span>&nbsp;|&nbsp;</span><span id="kode_brg_1"></span>
+                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <span id="nama_brg_1"></span><br><span id="kode_brg_1"></span>
                                                     <input type="hidden" class="form-control" id="hidden_kode_brg_1" name="hidden_kode_brg_1" />
                                                     <input type="hidden" class="form-control" id="hidden_nama_brg_1" name="hidden_nama_brg_1" />
                                                     <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
@@ -1271,9 +1271,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<option value="TBM">TBM</option>' +
             '</select>'; +
         '</td>';
-        var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_ = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
-            '<span id="nama_brg_' + n + '"></span>&nbsp;|&nbsp;<span id="kode_brg_' + n + '" ></span>' +
+            '<span id="nama_brg_' + n + '"></span><br><span id="kode_brg_' + n + '" ></span>' +
 
             '<input type="hidden" class="form-control" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
@@ -1314,11 +1314,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
+            '<textarea class="form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
 
             '</td>'
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
+            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
 
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1388,6 +1388,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             success: function(data) {
                 // console.log(data);
+                $('#devisi').val(data[0].devisi);
                 // var n = 0;
                 $.each(data[1], function(index) {
                     // if(index != 0){
@@ -1559,7 +1560,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function jumlah(id) {
-        $('#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row).on("keypress keyup blur", function(event) {
+        $('#txt_harga_' + id + ',#txt_disc_' + id + ',#txt_biaya_lain_' + id).on("keypress keyup blur", function(event) {
             //this.value = this.value.replace(/[^0-9\.]/g,'');
             $(this).val($(this).val().replace(/[^0-9\,]/g, ''));
             if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {

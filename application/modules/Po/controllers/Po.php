@@ -137,6 +137,8 @@ class Po extends CI_Controller
             $row[] = $no . ".";
             $row[] = $d->noreftxt;
             $row[] = $d->tglpo;
+            $row[] = $d->no_refppo;
+            $row[] = $d->tgl_refppo;
             $row[] = $d->nama_supply;
             $row[] = $d->ket;
             $row[] = $d->terbayar;
