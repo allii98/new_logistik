@@ -263,6 +263,11 @@
                     "orderable": false,
 
                 }, ],
+                "aoColumnDefs": [{
+                    "bSearchable": false,
+                    "bVisible": false,
+                    "aTargets": [1]
+                }, ]
                 // "dom": 'Bfrtip',
                 // "buttons": [{
                 //         "text": "Select All",
