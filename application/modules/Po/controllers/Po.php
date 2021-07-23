@@ -67,6 +67,7 @@ class Po extends CI_Controller
             $row[] = $no . ".";
             // $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nopo . '</font>';
             $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->noref . '</font>';
+            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->refppo . '</font>';
             // $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->grup . '</font>';
             $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nabar . ' | ' . $d->kodebar . '</font>';
             $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->qty . '</font>';
@@ -217,6 +218,7 @@ class Po extends CI_Controller
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $nopo, 'id' => $id))->row();
 
         $kode_supplier = $data['po']->kode_supply;
+        $qrcode = $data['po']->qr_code;
 
         // $data['supplier'] = $this->db_logistik_pt->get_where('supplier', array('kode'=>$kode_supplier))->row();
 
@@ -267,7 +269,7 @@ class Po extends CI_Controller
                                 <tr>
                                 <td align="left" style="margin-top:0px;">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
                                 </td>
-                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="' . site_url('assets/qrcode/po/' . $data['po']->qr_code) . '"></td>
+                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
                                 </tr>
                                
                             </table>
@@ -546,6 +548,8 @@ class Po extends CI_Controller
         }
         $totalbayar = $totbay + $txt_jumlah;
 
+        $tanggalQR = date('Y-m-d');
+
         //  generate qrcode
         $this->load->library('ciqrcode'); //pemanggilan library QR CODE
 
@@ -559,7 +563,7 @@ class Po extends CI_Controller
         $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
         $this->ciqrcode->initialize($config);
 
-        $image_name = $nopo . '.png'; //buat name dari qr code sesuai dengan nopo
+        $image_name = $nopo . '_' . $tanggalQR . '.png'; //buat name dari qr code sesuai dengan nopo
 
         $params['data'] = $norefpo; //data yang akan di jadikan QR CODE
         $params['level'] = 'H'; //H=High

@@ -31,10 +31,27 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-left:4px;">
+                                <br>
+                                <!-- <div class="row">
                                     <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                                </div>
+                                </div> -->
+
+                                <table border="0" width="80%">
+                                    <td>
+                                        <h6 id="h4_no_spp" name="h4_no_spp"></h6>
+                                    </td>
+                                    <td>
+                                        <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+                                    </td>
+                                    <td>
+                                        <h6 id="h4_no_po" name="h4_no_po">
+                                    </td>
+                                    <td>
+                                        <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                                    </td>
+                                </table>
+                                <br>
                                 <input type="hidden" id="hidden_no_po" name="hidden_no_po" value="<?= $nopo ?>">
                                 <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                                 <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
@@ -116,10 +133,25 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <div class="row" style="margin-left:4px;">
+                                <table border="0" width="80%">
+                                    <td>
+                                        <h6 id="h4_no_spp" name="h4_no_spp"></h6>
+                                    </td>
+                                    <td>
+                                        <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+                                    </td>
+                                    <td>
+                                        <h6 id="h4_no_po" name="h4_no_po">
+                                    </td>
+                                    <td>
+                                        <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                                    </td>
+                                </table>
+                                <br>
+                                <!-- <div class="row" style="margin-left:4px;">
                                     <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                                </div>
+                                </div> -->
                                 <input type="hidden" id="hidden_no_po" name="hidden_no_po" value="<?= $nopo ?>">
                                 <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                                 <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
@@ -333,6 +365,9 @@
 
                 var po = data.po;
                 var item_po = data.item_po;
+
+                $('#h4_no_spp').html('No. SPP : ' + po.noppo);
+                $('#h4_no_ref_spp').html('No. Ref SPP : ' + po.no_refppo);
 
                 $('#h4_no_po').html('No. PO : ' + item_po[0].nopo);
                 $('#h4_no_ref_po').html('No. Ref PO : ' + item_po[0].noref);

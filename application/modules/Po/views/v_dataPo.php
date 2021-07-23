@@ -78,13 +78,16 @@
 											Ref. PO
 										</th>
 										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+											Ref. SPP
+										</th>
+										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
 											Nama & Kode Barang
 										</th>
 										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
 											QTY
 										</th>
 										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-											Tanggal
+											Tanggal PO
 										</th>
 									</tr>
 								</thead>

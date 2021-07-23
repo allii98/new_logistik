@@ -6,7 +6,7 @@ class M_detail extends CI_Model
 {
 
     var $table = 'item_po'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noref', 'nopo', 'tglpo', 'grup', 'nabar', 'kodebar', 'qty'); //field yang ada di table supplier  
+    var $column_order = array(null, 'id', 'noref', 'nopo', 'refppo', 'tglpo', 'grup', 'nabar', 'kodebar', 'qty'); //field yang ada di table supplier  
     var $column_search = array('id', 'noref', 'nopo', 'tglpo', 'grup', 'nabar', 'kodebar'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
@@ -33,12 +33,12 @@ class M_detail extends CI_Model
         $user = $this->session->userdata('user');
         if ($lokasi_sesi == 'HO') {
             # code...
-            $this->db_logistik_pt->select('id, noref , nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
+            $this->db_logistik_pt->select('id, noref, nopo,refppo, tglpo, grup, nabar, kodebar,kodebar,qty');
             $this->db_logistik_pt->from('item_po');
             $this->db_logistik_pt->where('noref', $eee);
             $this->db_logistik_pt->order_by('id', 'desc');
         } else {
-            $this->db_logistik_pt->select('id, noref , nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
+            $this->db_logistik_pt->select('id, noref,refppo, nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
             $this->db_logistik_pt->from('item_po');
             $this->db_logistik_pt->where('user', $user);
             $this->db_logistik_pt->where('noref', $eee);
