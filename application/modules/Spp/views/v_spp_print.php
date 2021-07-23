@@ -62,9 +62,9 @@
         <tr>
             <td align="center">NO.</td>
             <td align="center">KODE</td>
-            <td align="center">NAMA BARANG</td>
+            <td align="center" width="30%">NAMA BARANG</td>
             <td align="center">KUANTITAS</td>
-            <td align="center" width="10%">SISA STOK</td>
+            <td align="center">SISA STOK</td>
             <td align="center">SAT</td>
             <td align="center">KETERANGAN</td>
         </tr>
@@ -72,19 +72,17 @@
         <?php
         $no = 1;
         foreach ($item_ppo as $list_item) {
-            if ($list_item->status2 == '1') {
         ?>
-                <tr id="tr_content">
-                    <td class="noborder" align="center"><?= $no; ?></td>
-                    <td class="noborder"><?= $list_item->kodebartxt; ?></td>
-                    <td class="noborder"><?= $list_item->nabar; ?></td>
-                    <td class="noborder" align="right"><?= $list_item->qty; ?></td>
-                    <td class="noborder" align="right"><?= $list_item->STOK ?></td>
-                    <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder"><?= $list_item->ket; ?></td>
-                </tr>
+            <tr id="tr_content">
+                <td class="noborder" align="center"><?= $no; ?></td>
+                <td class="noborder"><?= $list_item->kodebartxt; ?></td>
+                <td class="noborder"><?= $list_item->nabar; ?></td>
+                <td class="noborder" align="center"><?= $list_item->qty; ?></td>
+                <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                <td class="noborder" align="center"><?= $list_item->sat; ?></td>
+                <td class="noborder"><?= $list_item->ket; ?></td>
+            </tr>
         <?php
-            }
             $no++;
         }
         ?>

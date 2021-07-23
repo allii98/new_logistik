@@ -83,16 +83,16 @@ class M_data_spp extends CI_Model
         return $this->db_logistik_pt->get()->result_array();
     }
 
-    public function cari_spp_edit($noppo)
+    public function cari_spp_edit($id_ppo)
     {
-        $this->db_logistik_pt->select('noref, noreftxt');
+        $this->db_logistik_pt->select('id, noref, noreftxt, kodedept, namadept, periode, kode_dev, tglppo');
         $this->db_logistik_pt->from('ppo');
-        $this->db_logistik_pt->where('noppo', $noppo);
+        $this->db_logistik_pt->where('id', $id_ppo);
         $ppo = $this->db_logistik_pt->get()->row_array();
 
         $this->db_logistik_pt->select('kodebar, nabar,qty, STOK, sat, ket, noref, noreftxt, id');
         $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('noppo', $noppo);
+        $this->db_logistik_pt->where('noreftxt', $ppo['noreftxt']);
         $item_ppo = $this->db_logistik_pt->get()->result_array();
 
         $data = [

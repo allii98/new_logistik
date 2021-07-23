@@ -69,7 +69,7 @@
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                <h4 class="modal-title" id="myModalLabel">Detail SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -81,34 +81,34 @@
                         <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         No
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         ID
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;;">
                                         Kode&nbsp;Barang
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Nama&nbsp;Barang
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Sat
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Qty
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Stok
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Ket
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
                                         Revisi&nbsp;Qty
                                     </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.4em;">
+                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.4em;">
                                         Status&nbsp;SPP
                                     </th>
                                 </tr>
@@ -162,10 +162,10 @@
     $(document).ready(function() {
         $(document).on('click', '#edit_spp', function() {
 
-            var noppo = $(this).data('noppo');
+            var id_ppo = $(this).data('id_ppo');
             // console.log(nabar);
 
-            window.location.href = "Spp/edit_spp/" + noppo;
+            window.location.href = "Spp/edit_spp/" + id_ppo;
 
             // $("#modalListItemLpb").modal('show');
             // tampil_detail_lpb(no_lpb);

@@ -208,7 +208,7 @@
                                                     <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
                                                 </td>
                                                 <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="number" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
+                                                    <input type="text" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
                                                 </td>
                                                 <td width="8%">
                                                     <span id="stok_1"></span>
@@ -312,6 +312,7 @@
 
         check_form_2();
 
+        $('#txt_qty_1').number(true, 0);
 
         $("#txt_qty_1").on("keypress keyup blur", function(event) {
             //this.value = this.value.replace(/[^0-9\.]/g,'');
@@ -322,6 +323,16 @@
         });
 
     });
+
+    function input_number(n) {
+        $("#txt_qty_" + n).on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+    }
 
     function check_form_2() {
         console.log('oke berjalan!');
@@ -453,7 +464,7 @@
             toast('Devisi');
         } else if (!nakobar) {
             toast('Nama & Kode Barang');
-        } else if (!qty) {
+        } else if (!qty || qty == 0) {
             toast('Qty');
         } else {
             saveRinci(n);
@@ -621,7 +632,11 @@
                 $('#stok_' + n).text(item_ppo.STOK);
                 $('#satuan_' + n).text(item_ppo.sat);
                 $('#txt_keterangan_rinci_' + n).val(item_ppo.ket);
+
                 $('#hidden_kode_brg_' + n).val(item_ppo.kodebar);
+                $('#hidden_nama_brg_' + n).val(item_ppo.nabar);
+                $('#hidden_satuan_brg_' + n).val(item_ppo.sat);
+                $('#hidden_stok_' + n).val(item_ppo.STOK);
 
                 $('#lbl_status_simpan_' + n).empty();
                 $.toast({
@@ -645,8 +660,20 @@
         });
     };
 
-    //Update Data
     function updateRinci(n) {
+
+        var qty = $('#txt_qty_' + n).val();
+
+        if (qty == 0) {
+            toast('Qty');
+        } else {
+            updateRinciClick(n);
+        }
+        return false;
+    };
+
+    //Update Data
+    function updateRinciClick(n) {
 
         $.ajax({
             type: "POST",
@@ -827,7 +854,7 @@
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+            '<input type="text" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '</td>';
         var td_col_4 = '<td width="8%">' +
             '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
@@ -852,15 +879,15 @@
         var tr_tutup = '</tr>';
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + form_tutup + tr_tutup);
-        // $('#txt_qty_' + n).number(true, 2);
+        $('#txt_qty_' + n).number(true, 0);
+        $('#hidden_no_table_' + n).val(n);
+        input_number(n);
         /*$('html, body').animate({
             scrollTop: $("#tr_" + n).offset().top
         }, 2000);*/
         // n = parseInt(n) + parseInt(1);
-        $('#hidden_no_table_' + n).val(n);
         // var u = n - 1;
         // $('.div_form_2').find('#btn_tambah_row_' + u).attr('disabled', '');
-        console.log(n)
         n++;
     }
 
