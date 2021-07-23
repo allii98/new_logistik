@@ -126,7 +126,7 @@
                         <div class="col-lg-1 col-12">
                             <div class="form-group">
                                 <label for="example-select">
-                                    <font face="Verdana" size="2.5">Devisi*</font>
+                                    <font face="Verdana" size="2.5">Divisi*</font>
                                 </label>
                                 <select class="form-control" id="devisi" onchange="check_form_2()">
                                     <option value="" selected disabled>Pilih</option>

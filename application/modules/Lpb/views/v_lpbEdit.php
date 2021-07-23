@@ -441,7 +441,8 @@
 
         $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
 
-        // $('#txt_qty_' + row).number(true, 2);
+        $('#txt_qty_' + row).number(true, 0);
+        input_number(row);
 
         // $('html, body').animate({
         //     scrollTop: $("#tr_" + row).offset().top
@@ -449,6 +450,16 @@
 
         // row++;
         // $('#hidden_no_table').val(row);
+    }
+
+    function input_number(n) {
+        $("#txt_qty_" + n).on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
     }
 
     function sisaQtyPO(no_ref_po, no_po, kodebar, refppo, n) {
