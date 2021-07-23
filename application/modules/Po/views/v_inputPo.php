@@ -455,14 +455,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     ?>
                         <div class="x_content div_form_3">
                             <table border="0" width="80%">
-                                <td>
-                                    <h6 id="h4_no_spp" name="h4_no_spp"></h6>
-                                </td>
+
                                 <td>
                                     <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
-                                </td>
-                                <td>
-                                    <h6 id="h4_no_po" name="h4_no_po">
                                 </td>
                                 <td>
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
@@ -497,7 +492,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             <!-- <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
                                             </th> -->
-                                            <th width="500px">
+                                            <th>
                                                 <font face="Verdana" size="2.5">Nama & Kode Barang</font>
                                             </th>
                                             <th>
@@ -525,9 +520,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             <th>
                                                 <font face="Verdana" size="2.5">Keterangan</font>
                                             </th>
-                                            <th>
+                                            <!-- <th>
                                                 <font face="Verdana" size="2.5">Jumlah Rp</font>
-                                            </th>
+                                            </th> -->
                                             <th>
                                                 <font face="Verdana" size="2.5">#</font>
                                             </th>
@@ -771,12 +766,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                 $(document).on('click', '#data_spp', function() {
                     var id = $(this).data('id');
-                    console.log(id);
+                    var noreftxt = $(this).data('noreftxt');
+                    // console.log(noreftxt);
                     $.ajax({
                         type: 'post',
                         url: '<?= site_url('Po/getid'); ?>',
                         data: {
-                            id: id
+                            id: id,
+                            noreftxt: noreftxt,
                         },
                         success: function(response) {
                             $('.div_form_3').show();
@@ -790,8 +787,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             var n = 1;
                             $.each(data, function(index, value) {
 
-                                // console.log(value);
-                                tambah_item(value.status2);
+                                // console.log('ini yg belum di approve', value.statusaprove);
+                                tambah_item(value.statusaprove);
+                                if (value.statusaprove == '0') {
+                                    $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
+                                    $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
+                                }
 
                                 var idppo = value.id;
                                 var opsi = value.noreftxt;
@@ -849,8 +850,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         // dataspp site
         $('#dataspp').DataTable({
+
             "processing": true,
             "serverSide": true,
+
             "order": [],
             "ajax": {
                 "url": "<?php echo site_url('Po/get_carispp') ?>",
@@ -864,6 +867,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "infoFiltered": ""
             }
         });
+
         // end dataspp site
 
         // data spp HO
@@ -979,7 +983,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     var n = 1;
                     $.each(data, function(index, value) {
 
-                        tambah_item(value.status2);
+                        tambah_item(value.statusaprove);
                         // console.log(value);
 
                         var idppo = value.id;
@@ -1099,9 +1103,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         $('#modalcarispp').modal('show');
     }
 
-    function tambah_item(status2) {
+    function tambah_item(statusaprove) {
 
         row++;
+        // console.log("status", statusaprove);
         console.log("bariske", row);
         var rowCount = $('#tableItemPO tr').length;
         console.log('ini jumlah row', rowCount);
@@ -1172,7 +1177,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+            '<input type="text" class="form-control" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="8" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1184,24 +1189,30 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
             '</td>'
-        var td_col_11 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
+        var td_col_11 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="1"></textarea>' +
+            '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
+            '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" size="20" name="txt_jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
 
-            '</td>';
-        var td_col_12 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_jumlah_' + row + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
-            '<label id="lbl_status_simpan_' + row + '"></label>' +
             '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
             '</td>';
-        var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<span style="display:none;" id="habis_' + row + '" class="badge badge-danger">Habis</span>' +
-            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
 
-            '</td>';
+        if (statusaprove == '0') {
+            var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<span  id="habis_' + row + '" class="badge badge-danger">Belum diapprove</span>' +
+                '</td>';
+
+        } else {
+            var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<span style="display:none;" id="habis_' + row + '" class="badge badge-danger">Belum approve</span>' +
+                '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + row + ')"></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+                '<label id="lbl_status_simpan_' + row + '"></label>' +
+                '</td>';
+        }
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
         var lokasi = $('#lokasi').val();
@@ -1211,9 +1222,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-        if (status2 == '1') {
-            $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-        }
+        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
+
         $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
 
         if (row == 1) {
@@ -1582,7 +1592,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // console.log(nilai);
 
         $('#txt_jumlah_' + id).val(nilai);
+        var bilangan = nilai;
+        var number_string = bilangan.toString(),
+            sisa = number_string.length % 3,
+            rupiah = number_string.substr(0, sisa),
+            ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        $('#hasil_jumlah_' + id).html(rupiah);
     }
+
+
 
     function cekdataspp() {
         var refspp = $('#refspp').val();

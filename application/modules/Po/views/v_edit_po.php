@@ -38,15 +38,11 @@
                                 </div> -->
 
                                 <table border="0" width="80%">
-                                    <td>
-                                        <h6 id="h4_no_spp" name="h4_no_spp"></h6>
-                                    </td>
+
                                     <td>
                                         <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
                                     </td>
-                                    <td>
-                                        <h6 id="h4_no_po" name="h4_no_po">
-                                    </td>
+
                                     <td>
                                         <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                     </td>
@@ -133,16 +129,12 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <table border="0" width="80%">
-                                    <td>
-                                        <h6 id="h4_no_spp" name="h4_no_spp"></h6>
-                                    </td>
+                                <table border="0" width="50%">
+
                                     <td>
                                         <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
                                     </td>
-                                    <td>
-                                        <h6 id="h4_no_po" name="h4_no_po">
-                                    </td>
+
                                     <td>
                                         <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                     </td>

@@ -167,7 +167,7 @@ class Po extends CI_Controller
             $row = array();
             $row[] = '<button class="btn btn-success btn-xs" id="data_spp" name="data_spp"
                     data-id="' . $d->id . '"  data-noreftxt="' . $d->noreftxt . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button>';
-            $row[] = $d->tglppo;
+            $row[] =  date_format(date_create($d->tglppo), 'd-m-Y');;
             $row[] = $d->noreftxt;
             $row[] = $d->namadept;
             // $row[] = '<div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div>';
@@ -332,7 +332,8 @@ class Po extends CI_Controller
     public function getid()
     {
         $id = $this->input->post('id');
-        $data = $this->M_po->get_id($id);
+        $noreftxt = $this->input->post('noreftxt');
+        $data = $this->M_po->get_id($id, $noreftxt);
         echo json_encode($data);
     }
     public function getitem()

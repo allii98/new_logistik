@@ -8,7 +8,7 @@ class M_cariSPP extends CI_Model
     var $table = 'ppo'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noppo', 'jenis', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang ada di table supplier  
     var $column_search = array('noreftxt', 'tglppo', 'namadept'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'DESC'); // default order 
+    var $order = array('id' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -18,15 +18,12 @@ class M_cariSPP extends CI_Model
 
     private function _get_datatables_query()
     {
-
-        $this->db_logistik_pt->select('id, noppo, jenis, noreftxt, tglppo, tglref, tglppotxt, namadept');
-        $this->db_logistik_pt->from('ppo');
-        $this->db_logistik_pt->where('jenis', 'SPPA');
-        $this->db_logistik_pt->or_where('jenis', 'SPPI');
+        $role_user = $this->session->userdata('user');
+        $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_pt->where('user', $role_user);
+        $this->db_logistik_pt->where_in('jenis', array('SPPI', 'SPPA'));
         $this->db_logistik_pt->where('po', 0);
-        $this->db_logistik_pt->where('status2', 1);
-        $this->db_logistik_pt->or_where('status2', 2);
-        $this->db_logistik_pt->order_by('id', 'desc');
+        $this->db_logistik_pt->where_in('status2', array(1, 2));
 
 
         $i = 0;
