@@ -337,6 +337,8 @@
                 $('#hidden_tglppo').val(ppo.tglppo);
                 $('#hidden_kode_dev').val(ppo.kode_dev);
 
+                aksi_hidden_status2(ppo.status2);
+
                 for (i = 0; i < item_ppo.length; i++) {
                     // var no = i + 1;
 
@@ -379,7 +381,12 @@
         });
     }
 
+    function aksi_hidden_status2(status2) {
 
+        if (status2 != 0) {
+            $('#cancelSpp').css('display', 'none');
+        }
+    }
 
     $(document).ready(function() {
         $('#cmb_departemen').on('change', function() {

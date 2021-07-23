@@ -96,31 +96,31 @@
         <tr>
             <td colspan="2" align="center" height="50" valign="bottom">(<?= $ppo->user ?>)</td>
             <td colspan="1" align="center" height="50" valign="bottom">
-                <?php if ($ppo->status == 'DALAM PROSES') {
-                } else {
+                <?php if ($ppo->status2 == 1) {
                 ?>
                     <img src="././assets/img/approved2.png" width="15%">
                 <?php
+                } else {
                 }
                 ?>
                 <br><?= 'KTU'; ?><br>
             </td>
             <td colspan="1" align="center" height="50" valign="bottom">
-                <?php if ($ppo->status == 'DALAM PROSES') {
-                } else {
+                <?php if ($ppo->status2 == 1) {
                 ?>
                     <img src="././assets/img/approved2.png" width="15%"><br>
                 <?php
+                } else {
                 }
                 ?>
                 <?= 'GM'; ?><br>
             </td>
             <td colspan="2" align="center" height="50" valign="bottom">
-                <?php if ($ppo->status == 'DALAM PROSES') {
-                } else {
+                <?php if ($ppo->status2 == 1) {
                 ?>
                     <img src="././assets/img/approved2.png" width="15%"><br>
                 <?php
+                } else {
                 }
                 ?>
                 <?= 'Dept Head'; ?><br>

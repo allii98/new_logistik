@@ -85,7 +85,7 @@ class M_data_spp extends CI_Model
 
     public function cari_spp_edit($id_ppo)
     {
-        $this->db_logistik_pt->select('id, noref, noreftxt, kodedept, namadept, periode, kode_dev, tglppo');
+        $this->db_logistik_pt->select('id, noref, noreftxt, kodedept, namadept, periode, kode_dev, tglppo, status2');
         $this->db_logistik_pt->from('ppo');
         $this->db_logistik_pt->where('id', $id_ppo);
         $ppo = $this->db_logistik_pt->get()->row_array();
