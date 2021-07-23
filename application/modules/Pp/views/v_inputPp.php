@@ -243,6 +243,15 @@
 </div>
 <script>
     $(document).ready(function() {
+
+        $("#txt_jumlah").on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
         $('#a_pp_baru').hide();
 
         $('#txt_tgl_pp,#txt_tgl_po,#txt_tgl_voucher').daterangepicker({
@@ -394,30 +403,36 @@
             var nilai_po = dataClick[6];
             var nilai_bpo = dataClick[7];
             var sudah_dibayar = dataClick[8];
+            var jumlah = dataClick[9];
             var kurs = dataClick[10];
 
             // $('#txt_tgl_po').val(tgl_po);
             var tgl = dateToMDY(tgl_po);
+            if (jumlah == 0) {
+                swal('Saldo sudah 0!')
+            } else {
+
+                $('#txt_tgl_po').val(tgl);
+
+                $('#txt_no_ref_po').val(no_ref_po);
+                $('#hidden_no_po').val(no_po);
+                $('#txt_pembayaran').val(bayar);
+                $('#kd_supplier').val(kd_supplier);
+                $('#txt_supplier').val(nama_supplier);
+                $('#txt_dibayar_ke').val(nama_supplier);
+
+                $('#txt_nilai_po').val(nilai_po);
+                var bpo = nilai_bpo.replace(/,/g, "");
+                $('#txt_nilai_bpo2').val(bpo);
+                $('#lbl_kurs').html(kurs);
+                $('#hidden_kurs').val(kurs);
+
+                $('#txt_sudah_dibayar').val(sudah_dibayar);
+
+                $('#modalcariPO').modal('hide');
+                hitungTotalPO();
+            }
             // console.log(d);
-            $('#txt_tgl_po').val(tgl);
-
-            $('#txt_no_ref_po').val(no_ref_po);
-            $('#hidden_no_po').val(no_po);
-            $('#txt_pembayaran').val(bayar);
-            $('#kd_supplier').val(kd_supplier);
-            $('#txt_supplier').val(nama_supplier);
-            $('#txt_dibayar_ke').val(nama_supplier);
-
-            $('#txt_nilai_po').val(nilai_po);
-            var bpo = nilai_bpo.replace(/,/g, "");
-            $('#txt_nilai_bpo2').val(bpo);
-            $('#lbl_kurs').html(kurs);
-            $('#hidden_kurs').val(kurs);
-
-            $('#txt_sudah_dibayar').val(sudah_dibayar);
-
-            $('#modalcariPO').modal('hide');
-            hitungTotalPO();
         });
     }
 

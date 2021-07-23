@@ -141,9 +141,9 @@ class M_po extends CI_Model
         return $d;
     }
 
-    public function get_id()
+    public function get_id($id)
     {
-        $query = "SELECT * FROM ppo p LEFT JOIN item_ppo i ON p.noppo = i.noppo WHERE p.id = '" . $this->input->post('id') . "' AND i.po = '0'";
+        $query = "SELECT * FROM ppo p LEFT JOIN item_ppo i ON p.noreftxt = i.noreftxt WHERE p.id ='$id' AND i.po = '0'";
         $data = $this->db_logistik_pt->query($query)->result_array();
         return $data;
     }

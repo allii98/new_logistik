@@ -327,7 +327,8 @@ class Po extends CI_Controller
 
     public function getid()
     {
-        $data = $this->M_po->get_id();
+        $id = $this->input->post('id');
+        $data = $this->M_po->get_id($id);
         echo json_encode($data);
     }
     public function getitem()
