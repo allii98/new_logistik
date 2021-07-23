@@ -128,8 +128,15 @@ class M_lpb extends CI_Model
     public function get_nopo()
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
+        $lokasi = $this->session->userdata('status_lokasi');
+
         $noref = $this->input->get('noref');
-        $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 ORDER BY id DESC";
+        if ($lokasi == 'SITE') {
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND lokasi = 'SITE' ORDER BY id DESC";
+        } else {
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 ORDER BY id DESC";
+        }
+
         return $this->db_logistik_pt->query($query)->result_array();
     }
 
