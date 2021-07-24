@@ -4,7 +4,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP <i>(Edit)</i></h4>
+                    <div class="row justify-content-between">
+                        <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP <i>(Edit)</i></h4>
+                        <h6 id="lbl_status_delete_spp"></h6>
+                    </div>
                     <div class="row justify-content-between headspp">
                         <p class="sub-header ml-2">
                             <font face="Verdana" size="2.5">Surat Permintaan Pembelian</font>
@@ -815,8 +818,7 @@
     function deleteSpp() {
 
         var n = $('#hidden_no_delete').val();
-        var no_spp = $('#hidden_no_spp').val();
-        console.log(no_spp);
+        var noref_ppo = $('#hidden_no_ref_ppo').val();
 
         $.ajax({
             type: "POST",
@@ -824,12 +826,12 @@
             dataType: "JSON",
 
             beforeSend: function() {
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+                $('#lbl_status_delete_spp').empty();
+                $('#lbl_status_delete_spp').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses batalkan SPP ..</label');
             },
 
             data: {
-                no_spp: no_spp
+                noref_ppo: noref_ppo
             },
 
             success: function(data) {
@@ -887,10 +889,43 @@
                 $('#hidden_satuan_brg_' + n).val('');
 
                 $('#modalKonfirmasiHapus').modal('hide');
+
+                //cek di item ppo, kalo noref yg dicari tidak ada maka hapus noref trsbut dari ppo
+                cari_noref_itemppo(n);
             }
         });
     };
 
+    function cari_noref_itemppo(n) {
+        var noref_spp = $('#hidden_no_ref_ppo').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Spp/cari_noref_itemppo') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_delete_spp').empty();
+                $('#lbl_status_delete_spp').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Mencari noref SPP ..</label');
+            },
+
+            data: {
+                noref_spp: noref_spp
+            },
+
+            success: function(data) {
+
+                //jika data sudah tidak ada di item ppo, hapus data di ppo
+                if (data == 0) {
+                    deleteSpp();
+                } else {
+                    $('#lbl_status_delete_spp').empty();
+                    $('#lbl_status_simpan_' + n).empty();
+                }
+
+            }
+        });
+    }
 
     // var n = 2;
 
@@ -909,7 +944,7 @@
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '</td>';
         var td_col_4 = '<td width="8%">' +
             '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
@@ -920,29 +955,16 @@
             '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
             '<input type="hidden" id="hidden_id_item_ppo_' + n + '" name="hidden_id_item_ppo_' + n + '">' +
             '</td>';
-        if (n == 0) {
-            var td_col_6 = '<td width="7%" style="padding-top: 2px;">' +
-                '<div class="row">' +
-                '<button style="display:none;" class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
-                '<button class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
-                // '<button class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
-                '<label id="lbl_status_simpan_' + n + '"></label>' +
-                '</div>' +
-                '</td>';
-        } else {
-            var td_col_6 = '<td width="7%" style="padding-top: 2px;">' +
-                '<div class="row">' +
-                '<button style="display:none;" class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
-                '<button class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
-                '<button class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
-                '<label id="lbl_status_simpan_' + n + '"></label>' +
-                '</div>' +
-                '</td>';
-        }
+        var td_col_6 = '<td width="7%" style="padding-top: 2px;">' +
+            '<div class="row">' +
+            '<button style="display:none;" class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
+            '<button class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
+            '<button class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
+            '<label id="lbl_status_simpan_' + n + '"></label>' +
+            '</div>' +
+            '</td>';
         var td_col_6_1 = '<td width="7%" style="padding-top: 2px;">' +
             '<div class="row">' +
             '<h5 style="margin-top:0px;"><span class="badge badge-success">Approved</span></h5>' +

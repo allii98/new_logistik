@@ -288,7 +288,6 @@ class Lpb extends CI_Controller
         // $query_get_po = "SELECT id, nopotxt, kode_supply, nama_supply FROM po WHERE nopotxt = '$nopo' AND noreftxt = '$refpo'";
         // $get_po = $this->db_logistik_pt->query($query_get_po)->row();
 
-        //ini refppo dari header, kalo yg bawah dari item nya
         $refppo = $this->input->post('hidden_refppo');
 
         $query_get_item_po = "SELECT id, nopotxt, kurs, konversi FROM item_po WHERE nopotxt = '$nopo' AND noref = '$refpo' AND kodebartxt = '$kodebar' AND nabar = '$nabar' AND refppo = '$refppo'";
@@ -1081,40 +1080,5 @@ class Lpb extends CI_Controller
         $output = $this->M_lpb->updatePoAfterLpb($no_ref_po);
 
         echo json_encode($output);
-    }
-
-    public function deleteItemLpb()
-    {
-        $hidden_id_item_lpb = $this->input->post('hidden_id_item_lpb');
-        $norefpo = $this->input->post('norefpo');
-
-        $data = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
-
-        //update sttaus_lpb di po jadi 0
-        $this->M_lpb->update_status_lpb_po($norefpo);
-
-        echo json_encode($data);
-    }
-
-    public function cek_data_masukitem()
-    {
-        $noreflpb = $this->input->post('noreflpb');
-
-        $output = $this->M_lpb->cek_data_masukitem($noreflpb);
-
-        echo json_encode($output);
-    }
-
-    public function deleteLpb()
-    {
-        $noreflpb = $this->input->post('noreflpb');
-        $norefpo = $this->input->post('norefpo');
-
-        //update sudah_lpb di po jadi 0
-        $this->M_lpb->update_sudah_lpb_po($norefpo);
-
-        $data = $this->db_logistik_pt->delete('stokmasuk', array('noref' => $noreflpb));
-
-        echo json_encode($data);
     }
 }

@@ -4,7 +4,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
+                    <div class="row justify-content-between">
+                        <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
+                        <h6 id="lbl_status_delete_spp"></h6>
+                    </div>
                     <div class="row justify-content-between headspp">
                         <p class="sub-header ml-2">
                             <font face="Verdana" size="2.5">Surat Permintaan Pembelian</font>
@@ -202,15 +205,15 @@
                                                 <!-- <button style="display:none;" class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row" onclick="hapus_row('1')"></button> -->
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                                <td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <input type="text" class="form-control" id="nakobar_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
                                                     <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
                                                     <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
                                                 </td>
-                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
+                                                <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="number" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
                                                 </td>
-                                                <td width="8%">
+                                                <td width="12%">
                                                     <span id="stok_1"></span>
                                                     <span> </span>
                                                     <span id="satuan_1"></span>
@@ -227,7 +230,7 @@
                                                         <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
-                                                        <!-- <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button> -->
+                                                        <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
                                                         <label id="lbl_status_simpan_1"></label>
                                                     </div>
                                                 </td>
@@ -762,7 +765,7 @@
         console.log(n);
 
         var n = $('#hidden_no_delete').val();
-        var no_spp = $('#hidden_no_spp').val();
+        var noref_ppo = $('#hidden_no_ref_ppo').val();
 
         $.ajax({
             type: "POST",
@@ -770,12 +773,12 @@
             dataType: "JSON",
 
             beforeSend: function() {
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+                $('#lbl_status_delete_spp').empty();
+                $('#lbl_status_delete_spp').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses batalkan SPP..</label');
             },
 
             data: {
-                no_spp: no_spp
+                noref_ppo: noref_ppo
             },
 
             success: function(data) {
@@ -832,10 +835,43 @@
                 $('#hidden_satuan_brg_' + n).val('');
 
                 $('#modalKonfirmasiHapus').modal('hide');
+
+                //cek di item ppo, kalo noref yg dicari tidak ada maka hapus noref trsbut dari ppo
+                cari_noref_itemppo(n);
             }
         });
     };
 
+    function cari_noref_itemppo(n) {
+        var noref_spp = $('#hidden_no_ref_ppo').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Spp/cari_noref_itemppo') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_delete_spp').empty();
+                $('#lbl_status_delete_spp').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Mencari noref SPP ..</label');
+            },
+
+            data: {
+                noref_spp: noref_spp
+            },
+
+            success: function(data) {
+
+                //jika data sudah tidak ada di item ppo, hapus data di ppo
+                if (data == 0) {
+                    deleteSpp();
+                } else {
+                    $('#lbl_status_delete_spp').empty();
+                    $('#lbl_status_simpan_' + n).empty();
+                }
+
+            }
+        });
+    }
 
     var n = 2;
 
@@ -848,15 +884,15 @@
             '<button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row_' + n + '" onclick="hapus_row(' + n + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
-        var td_col_2 = '<td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
-        var td_col_3 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+        var td_col_3 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '</td>';
-        var td_col_4 = '<td width="8%">' +
+        var td_col_4 = '<td width="12%">' +
             '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +

@@ -31,6 +31,14 @@
             border-bottom: 0px solid #FFF;
             border-top: 0px solid #FFF;
         }
+
+        .warna_sebagian {
+            background-color: red;
+        }
+
+        .warna_blm_approval {
+            background-color: gray;
+        }
     </style>
     <title>SPP - Surat Permintaan Pembelian</title>
 </head>
@@ -45,7 +53,7 @@
     <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By MIPS</small></p>
     <table class="singleborder" border="1" width="100%" id="tabel_spp">
         <tr>
-            <td colspan="3">Nomor SPP Devisi : SPP - <?= $ppo->noppotxt; ?><br />
+            <td colspan="3">Nomor SPP Divisi : SPP - <?= $ppo->noppotxt; ?><br />
                 Tanggal SPP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= date("d-m-Y", strtotime($ppo->tglppo)); ?><br />
                 Tanggal Terima &nbsp;&nbsp;&nbsp;&nbsp;: <?= $ppo->tgltrm; ?><br />
                 Kode Departemen : <?= $ppo->kodedept . "-" . $ppo->namadept; ?><br />
@@ -72,17 +80,57 @@
         <?php
         $no = 1;
         foreach ($item_ppo as $list_item) {
+            if ($ppo->status2 == 2) {
+                if ($list_item->status2 == 0) {
         ?>
-            <tr id="tr_content">
-                <td class="noborder" align="center"><?= $no; ?></td>
-                <td class="noborder"><?= $list_item->kodebartxt; ?></td>
-                <td class="noborder"><?= $list_item->nabar; ?></td>
-                <td class="noborder" align="center"><?= $list_item->qty; ?></td>
-                <td class="noborder" align="center"><?= $list_item->STOK ?></td>
-                <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                <td class="noborder"><?= $list_item->ket; ?></td>
-            </tr>
+                    <tr id="tr_content" class="warna_sebagian">
+                        <td class="noborder" align="center"><?= $no; ?></td>
+                        <td class="noborder"><?= $list_item->kodebartxt; ?></td>
+                        <td class="noborder"><?= $list_item->nabar; ?></td>
+                        <td class="noborder" align="center"><?= $list_item->qty; ?></td>
+                        <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                        <td class="noborder" align="center"><?= $list_item->sat; ?></td>
+                        <td class="noborder"><?= $list_item->ket; ?></td>
+                    </tr>
+                <?php
+                } else {
+                ?>
+                    <tr id="tr_content">
+                        <td class="noborder" align="center"><?= $no; ?></td>
+                        <td class="noborder"><?= $list_item->kodebartxt; ?></td>
+                        <td class="noborder"><?= $list_item->nabar; ?></td>
+                        <td class="noborder" align="center"><?= $list_item->qty; ?></td>
+                        <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                        <td class="noborder" align="center"><?= $list_item->sat; ?></td>
+                        <td class="noborder"><?= $list_item->ket; ?></td>
+                    </tr>
+                <?php
+                }
+            } elseif ($ppo->status2 == 0) {
+                ?>
+                <tr id="tr_content" class="warna_blm_approval">
+                    <td class="noborder" align="center"><?= $no; ?></td>
+                    <td class="noborder"><?= $list_item->kodebartxt; ?></td>
+                    <td class="noborder"><?= $list_item->nabar; ?></td>
+                    <td class="noborder" align="center"><?= $list_item->qty; ?></td>
+                    <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                    <td class="noborder" align="center"><?= $list_item->sat; ?></td>
+                    <td class="noborder"><?= $list_item->ket; ?></td>
+                </tr>
+            <?php
+            } else {
+            ?>
+                <tr id="tr_content">
+                    <td class="noborder" align="center"><?= $no; ?></td>
+                    <td class="noborder"><?= $list_item->kodebartxt; ?></td>
+                    <td class="noborder"><?= $list_item->nabar; ?></td>
+                    <td class="noborder" align="center"><?= $list_item->qty; ?></td>
+                    <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                    <td class="noborder" align="center"><?= $list_item->sat; ?></td>
+                    <td class="noborder"><?= $list_item->ket; ?></td>
+                </tr>
         <?php
+            }
             $no++;
         }
         ?>
@@ -129,5 +177,7 @@
         </tr>
     </table>
     <small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small> -
-    <small><i>Cetakan ke - <?= $urut['main_acct'] ?></i></small>
+    <small><i>Cetakan ke - <?= $urut['main_acct'] ?></i></small><br>
+    <small>Merah : Sebagian belum diapprove </small>|
+    <small> Abu-abu : Dalam proses</small>
 </body>

@@ -187,10 +187,10 @@ class M_spp extends CI_Model
         return TRUE;
     }
 
-    public function deleteSpp($no_spp)
+    public function deleteSpp($noref_ppo)
     {
-        $this->db_logistik_pt->delete('ppo', array('noppo' => $no_spp));
-        $this->db_logistik_pt->delete('item_ppo', array('noppo' => $no_spp));
+        $this->db_logistik_pt->delete('ppo', array('noreftxt' => $noref_ppo));
+        $this->db_logistik_pt->delete('item_ppo', array('noreftxt' => $noref_ppo));
         return TRUE;
     }
 
@@ -212,6 +212,14 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->from('ppo');
         $this->db_logistik_pt->where('noppo', $noppo);
         return $this->db_logistik_pt->get()->row_array();
+    }
+
+    public function cari_noref_itemppo($noref_spp)
+    {
+        $this->db_logistik_pt->select('noreftxt');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where(['noreftxt' => $noref_spp]);
+        return $this->db_logistik_pt->get()->num_rows();
     }
 }
 

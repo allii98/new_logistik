@@ -24,7 +24,11 @@ class Stok extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $d) {
 
-            $rata2 = $d->saldoakhir_nilai / $d->saldoakhir_qty;
+            if ($d->saldoakhir_nilai == 0 or $d->saldoakhir_qty == 0) {
+                $rata2 = 0;
+            } else {
+                $rata2 = $d->saldoakhir_nilai / $d->saldoakhir_qty;
+            }
             // $akhir_qty = $d->QTY_MASUK - $d->QTY_KELUAR;
             $row = array();
             $id    = $d->id;

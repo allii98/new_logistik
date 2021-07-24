@@ -601,28 +601,6 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->from('masukitem');
         return $this->db_logistik_pt->get()->num_rows();
     }
-
-    public function cek_data_masukitem($noreflpb)
-    {
-        $this->db_logistik_pt->select('noref');
-        $this->db_logistik_pt->where(['noref' => $noreflpb]);
-        $this->db_logistik_pt->from('masukitem');
-        return $this->db_logistik_pt->get()->num_rows();
-    }
-
-    public function update_status_lpb_po($norefpo)
-    {
-        $this->db_logistik_pt->set('status_lpb', 0);
-        $this->db_logistik_pt->where('noreftxt', $norefpo);
-        return $this->db_logistik_pt->update('po');
-    }
-
-    public function update_sudah_lpb_po($no_ref_po)
-    {
-        $this->db_logistik_pt->set('sudah_lpb', 0);
-        $this->db_logistik_pt->where('noreftxt', $no_ref_po);
-        return $this->db_logistik_pt->update('po');
-    }
 }
 
 /* End of file ModelName.php */

@@ -127,9 +127,9 @@ date_default_timezone_set('Asia/Jakarta');
                                     <tr>
                                         <!-- <th width="3%">#</th> -->
                                         <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
-                                        <th width="24%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan / Grup</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan / Grup</th>
                                         <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
-                                        <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
+                                        <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
                                         <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
                                         <th width="3%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Aksi</th>
                                     </tr>
@@ -320,7 +320,7 @@ date_default_timezone_set('Asia/Jakarta');
             '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
+            '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
             '<input type="hidden" id="hidden_qtypo_' + row + '" name="hidden_qtypo_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -335,7 +335,7 @@ date_default_timezone_set('Asia/Jakarta');
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary  mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            // '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
         var td_col_7b = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -350,7 +350,7 @@ date_default_timezone_set('Asia/Jakarta');
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
         }
 
-        // $('#txt_qty_' + row).number(true, 0);
+        $('#txt_qty_' + row).number(true, 0);
         input_number(row);
 
         // $('html, body').animate({
@@ -564,7 +564,7 @@ date_default_timezone_set('Asia/Jakarta');
             toast('Lokasi Gudang');
         } else if (!nopeng) {
             toast('No. pengantar');
-        } else if (!qty || qty == 0) {
+        } else if (!qty) {
             toast('Qty');
         } else {
             saveRinci(n);
@@ -701,8 +701,8 @@ date_default_timezone_set('Asia/Jakarta');
 
     function ubahRinci(n) {
 
-        $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
-        $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
+        $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
+        $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
 
         $('#btn_simpan_' + n).css('display', 'none');
         $('#btn_hapus_' + n).css('display', 'none');
@@ -713,20 +713,8 @@ date_default_timezone_set('Asia/Jakarta');
         $("#status_sukses").remove();
     };
 
-    function updateRinci(n) {
-
-        var qty = $('#txt_qty_' + n).val();
-
-        if (!qty || qty == 0) {
-            toast('Qty');
-        } else {
-            updateRinciClick(n);
-        }
-        return false;
-    };
-
     //Update Data
-    function updateRinciClick(n) {
+    function updateRinci(n) {
         if ($('#chk_asset_' + n).is(':checked')) {
             var chk_asset = 'yes';
         }
@@ -893,180 +881,6 @@ date_default_timezone_set('Asia/Jakarta');
             },
             error: function(response) {
                 alert(response.responseText);
-            }
-        });
-    }
-
-    function hapusRinci(n) {
-        // $('#hidden_no_delete').val(n);
-        Swal.fire({
-            text: "Yakin akan menghapus Data ini?",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya Hapus!'
-        }).then((result) => {
-            if (result.value) {
-                updateRinciToZero(n);
-            }
-        })
-    }
-
-    function updateRinciToZero(n) {
-        if ($('#chk_asset_' + n).is(':checked')) {
-            var chk_asset = 'yes';
-        }
-
-        var no_ref_po = $('#txt_ref_po').val();
-        var no_po = $('#txt_no_po').val();
-        var kodebar = $('#txt_kode_barang_' + n).val();
-        var hidden_refppo = $('#hidden_refppo_' + n).val();
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Lpb/updateLpb') ?>",
-            dataType: "JSON",
-
-            beforeSend: function() {
-
-                $('#btn_update_' + n).css('display', 'none');
-
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
-            },
-
-            data: {
-                // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
-                chk_asset: chk_asset,
-                txt_qty: 0,
-                txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
-                hidden_no_lpb: $('#hidden_no_lpb').val(),
-                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
-                hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                hidden_txtperiode: $('#hidden_txtperiode_' + n).val(),
-                kode_dev: $('#devisi').val(),
-                nopo: no_po,
-                norefpo: no_ref_po,
-                kodebar: kodebar,
-                refppo: hidden_refppo,
-                mutasi: '0'
-            },
-
-            success: function(data) {
-
-                sisaQtyPO(no_ref_po, no_po, kodebar, hidden_refppo, n);
-
-                deleteData(n);
-
-            },
-            error: function(response) {
-                alert(response.responseText);
-            }
-        });
-    };
-
-    function deleteData(n) {
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Lpb/deleteItemLpb') ?>",
-            dataType: "JSON",
-
-            beforeSend: function() {
-                $('#lbl_status_simpan_' + n).empty();
-                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
-            },
-
-            data: {
-                hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                norefpo: $('#txt_ref_po').val()
-            },
-
-            success: function(data) {
-                console.log(data);
-
-                $.toast({
-                    position: 'top-right',
-                    heading: 'Success',
-                    text: 'Berhasil DiHapus!',
-                    icon: 'success',
-                    loader: false
-                });
-
-                $('#chk_asset_' + n).prop('checked', false);
-                $('#txt_qty_' + n).val('');
-                $('#txt_ket_rinci_' + n).val('');
-
-                //cek di masukitem jika data == 0 hapus stokmasuk
-                cek_data_masukitem(n);
-                // if (n == 1) {
-                //     hapusLpb();
-                // }
-
-            }
-        });
-    };
-
-    function cek_data_masukitem(n) {
-        var noreflpb = $('#hidden_no_ref_lpb').val();
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Lpb/cek_data_masukitem') ?>",
-            dataType: "JSON",
-
-            beforeSend: function() {
-                $('#lbl_bkb_status').empty();
-                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Cek data LPB</label>');
-            },
-
-            data: {
-                noreflpb: noreflpb
-            },
-
-            success: function(data) {
-                // jika data masukitem == 0 maka hapus stokmasuk
-                if (data == 0) {
-                    hapusLpb();
-                } else {
-                    $('#lbl_status_simpan_' + n).empty();
-
-                    $('#btn_simpan_' + n).css('display', 'block');
-                    $('#btn_ubah_' + n).css('display', 'none');
-                    $('#btn_hapus_' + n).css('display', 'none');
-
-                    $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
-                    $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
-                }
-            }
-        });
-    }
-
-    //kalo lpb item lpb nya tinggal satu hapus LPB stokmasuknya
-    function hapusLpb() {
-
-        var noreflpb = $('#hidden_no_ref_lpb').val();
-        var no_ref_po = $('#txt_ref_po').val();
-
-        $.ajax({
-            type: "POST",
-            url: "<?php echo base_url('Lpb/deleteLpb') ?>",
-            dataType: "JSON",
-
-            beforeSend: function() {
-                $('#lbl_bkb_status').empty();
-                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Hapus LPB</label>');
-            },
-
-            data: {
-                noreflpb: noreflpb,
-                norefpo: no_ref_po,
-            },
-
-            success: function(data) {
-                console.log(data);
-
-                location.reload();
             }
         });
     }

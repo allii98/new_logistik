@@ -8,7 +8,7 @@ class M_data_spp extends CI_Model
     var $table = 'ppo'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
     var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'desc'); // default order 
+    var $order = array('id' => 'DESC', 'noreftxt' => 'DESC', 'tglref' => 'DESC'); // default order 
 
     public function __construct()
     {

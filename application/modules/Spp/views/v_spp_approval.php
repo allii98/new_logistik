@@ -22,13 +22,13 @@
                                 <th style="padding: 0.4em;">
                                     <font face="Verdana" size="2.5">Approval</font>
                                 </th>
-                                <th style="padding: 0.4em;">
+                                <th width="20%" style="padding: 0.4em;">
                                     <font face="Verdana" size="2.5">No. Ref. SPP</font>
                                 </th>
-                                <th style="padding: 0.4em;">
+                                <th width="9%" style="padding: 0.4em;">
                                     <font face="Verdana" size="2.5">Tgl. Ref</font>
                                 </th>
-                                <th style="padding: 0.4em;">
+                                <th width="9%" style="padding: 0.4em;">
                                     <font face="Verdana" size="2.5">Tgl. Terima</font>
                                 </th>
                                 <th style="padding: 0.4em;">
@@ -79,36 +79,16 @@
                         <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        No
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        ID
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;;">
-                                        Kode&nbsp;Barang
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        Nama&nbsp;Barang
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        Sat
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        Qty
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        Stok
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        Ket
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.6em;">
-                                        Revisi&nbsp;Qty
-                                    </th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; padding: 0.4em;">
-                                        Status&nbsp;SPP
-                                    </th>
+                                    <th>No</th>
+                                    <th>ID</th>
+                                    <th>Kode&nbsp;Barang</th>
+                                    <th>Nama&nbsp;Barang</th>
+                                    <th>Sat</th>
+                                    <th>Qty</th>
+                                    <th>Stok</th>
+                                    <th>Ket</th>
+                                    <th>Revisi&nbsp;Qty</th>
+                                    <th>Status&nbsp;SPP</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -346,6 +326,8 @@
             setujui_barang(id);
             // data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
         });
+        //refresh datatable
+        $('#datasppapproval').DataTable().ajax.reload();
         detail_approval(id_ppo);
     }
 </script>

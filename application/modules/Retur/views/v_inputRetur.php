@@ -618,7 +618,7 @@
         if (rowCount != 1) {
             $('#tr_' + id).remove();
         } else {
-            swal('Tidak Bisa dihapus, item SPP tinggal 1');
+            swal('Tidak Bisa dihapus, item Retur tinggal 1');
         }
         // if(id != 2){
         // n = parseInt(n)- parseInt(1);

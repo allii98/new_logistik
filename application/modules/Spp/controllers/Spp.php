@@ -552,9 +552,9 @@ class Spp extends CI_Controller
 
     public function deleteSpp()
     {
-        $no_spp = $this->input->post('no_spp');
+        $noref_ppo = $this->input->post('noref_ppo');
 
-        $data = $this->M_spp->deleteSpp($no_spp);
+        $data = $this->M_spp->deleteSpp($noref_ppo);
 
         echo json_encode($data);
     }
@@ -580,6 +580,12 @@ class Spp extends CI_Controller
                 $stat = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             }
 
+            if ($field->po == 1) {
+                $stat_po = '<h5 style="margin-top:0px;"><span class="badge badge-success">PO</span></h5>';
+            } else {
+                $stat_po = '';
+            }
+
             if ($field->status2 == 1) {
                 $aks = '<a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
                         <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
@@ -601,12 +607,13 @@ class Spp extends CI_Controller
             $row[] = $no;
             $row[] = $aks;
             $row[] = $field->noreftxt;
-            $row[] = date('Y-m-d', strtotime($field->tglref));
-            $row[] = date('Y-m-d', strtotime($field->tgltrm));
+            $row[] = date('d-m-Y', strtotime($field->tglref));
+            $row[] = date('d-m-Y', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
             $row[] = $stat;
+            $row[] = $stat_po;
             $row[] = $field->user;
 
             $data[] = $row;
@@ -637,6 +644,12 @@ class Spp extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $field) {
             $no++;
+            if ($field->status2 == 2) {
+                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+            } else {
+                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+            }
+
             $row = array();
             $row[] = $no;
             $row[] = '<button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval"
@@ -644,12 +657,12 @@ class Spp extends CI_Controller
                         data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_approval(' . $field->id . ')">Approve
                         </button>';
             $row[] = $field->noreftxt;
-            $row[] = date('Y-m-d', strtotime($field->tglref));
-            $row[] = date('Y-m-d', strtotime($field->tgltrm));
+            $row[] = date('d-m-Y', strtotime($field->tglref));
+            $row[] = date('d-m-Y', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
             $row[] = $field->ket;
-            $row[] = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+            $row[] = $stat;
             $row[] = $field->user;
 
             $data[] = $row;
@@ -765,7 +778,8 @@ class Spp extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $d) {
             if ($d->status2 == "1") {
-                $status = "<span style='color: green'><b>DISETUJUI<br>" . $d->TGL_APPROVE . "</b></span>";
+                $tgl_approve = date('d-m-Y H:i:s', strtotime($d->TGL_APPROVE));
+                $status = "<span style='color: green'><b>DISETUJUI<br>" . $tgl_approve . "</b></span>";
             } else {
                 $status = "DALAM PROSES";
             }
@@ -792,6 +806,15 @@ class Spp extends CI_Controller
             "data" => $data,
         );
         // output to json format
+        echo json_encode($output);
+    }
+
+    public function cari_noref_itemppo()
+    {
+        $noref_spp = $this->input->post('noref_spp');
+
+        $output = $this->M_spp->cari_noref_itemppo($noref_spp);
+
         echo json_encode($output);
     }
 }
