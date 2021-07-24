@@ -37,7 +37,7 @@
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                 </div> -->
 
-                                <table border="0" width="70%">
+                                <table border="0" width="100%">
                                     <td>
 
                                         <h6 id="tgl_spp" name="tgl_spp"></h6>
@@ -51,6 +51,9 @@
 
                                     <td>
                                         <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs btn-success h-50 mr-2" id="tambahSpp" onclick="tambahSpp()" disabled>Tambah SPP</button>
                                     </td>
                                 </table>
                                 <br>
@@ -135,7 +138,7 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <table border="0" width="70%">
+                                <table border="0" width="100%">
                                     <td>
 
                                         <h6 id="tgl_spp" name="tgl_spp"></h6>
@@ -149,6 +152,9 @@
 
                                     <td>
                                         <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs btn-success h-50 mr-2" id="tambahSpp" onclick="tambahSpp()" disabled>Tambah SPP</button>
                                     </td>
                                 </table>
                                 <br>
@@ -258,6 +264,51 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalcarispp">
+    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                        <table id="dataspp" class="table table-striped table-bordered table-in" width="100%">
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        <font face="Verdana" size="2.5">#</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Tanggal</font>
+                                    </th>
+
+                                    <th>
+                                        <font face="Verdana" size="2.5">Ref. SPP</font>
+                                    </th>
+                                    <th>
+                                        <font face="Verdana" size="2.5">Departemen</font>
+                                    </th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" id="hidden_nopo_edit" value="<?= $nopo ?>">
 <input type="hidden" id="id_po">
 
@@ -268,7 +319,67 @@
     $(document).ready(function() {
         var no_nopo_edit = $('#hidden_nopo_edit').val();
         cari_po_edit(no_nopo_edit);
+        cekspp();
+
+        // dataspp site
+        $('#dataspp').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+
+            "order": [],
+            "ajax": {
+                "url": "<?php echo site_url('Po/get_carispp') ?>",
+                "type": "POST"
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+            "language": {
+                "infoFiltered": ""
+            }
+        });
+
+        // end dataspp site
     });
+
+    function tambahSpp() {
+        $('#modalcarispp').modal('show');
+    }
+
+    function cekspp() {
+        var ref = location.pathname.split('/')[4];
+        var noref = ref.replaceAll('.', '/');
+        // console.log(noref);
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/cek_lpb'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                noref: noref
+            },
+            success: function(data) {
+                // console.log(data);
+
+                var status = data.status;
+                // console.log(status);
+                if (status = true) {
+
+                    $('#tambahSpp').removeAttr('disabled');
+                } else {
+                    console.log('sudah lpb')
+                }
+
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
 
     function update(id) {
 

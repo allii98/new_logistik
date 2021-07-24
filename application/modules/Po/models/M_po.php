@@ -295,6 +295,24 @@ class M_po extends CI_Model
         }
         return $totjum;
     }
+
+
+    function cek_lpb($noref)
+    {
+        $query = $this->db_logistik_pt->query("SELECT noreftxt, sudah_lpb FROM po WHERE noreftxt='$noref'")->row();
+
+        if ($query !== 0) {
+            $data = [
+                'status' => true
+            ];
+        } else {
+            $data = [
+                'status' => false
+            ];
+        }
+
+        return $data;
+    }
 }
 
 /* End of file M_po.php */
