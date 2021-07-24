@@ -37,10 +37,16 @@
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                 </div> -->
 
-                                <table border="0" width="80%">
+                                <table border="0" width="70%">
+                                    <td>
 
+                                        <h6 id="tgl_spp" name="tgl_spp"></h6>
+                                    </td>
                                     <td>
                                         <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+                                    </td>
+                                    <td>
+                                        <h6 id="tgl_po" name="tgl_po"></h6>
                                     </td>
 
                                     <td>
@@ -129,10 +135,16 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <table border="0" width="50%">
+                                <table border="0" width="70%">
+                                    <td>
 
+                                        <h6 id="tgl_spp" name="tgl_spp"></h6>
+                                    </td>
                                     <td>
                                         <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+                                    </td>
+                                    <td>
+                                        <h6 id="tgl_po" name="tgl_po"></h6>
                                     </td>
 
                                     <td>
@@ -353,16 +365,20 @@
                 'nopo': nopo
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
 
                 var po = data.po;
                 var item_po = data.item_po;
 
-                $('#h4_no_spp').html('No. SPP : ' + po.noppo);
+                var currentDate = new Date(po.tglppo);
+                var tglspp = currentDate;
+                var convert = currentDate.tglspp;
+
+                $('#tgl_spp').html('Tanggal SPP : ' + po.tglspp);
                 $('#h4_no_ref_spp').html('No. Ref SPP : ' + po.no_refppo);
 
-                $('#h4_no_po').html('No. PO : ' + item_po[0].nopo);
-                $('#h4_no_ref_po').html('No. Ref PO : ' + item_po[0].noref);
+                $('#tgl_po').html('Tanggal PO : ' + po.tgl_po);
+                $('#h4_no_ref_po').html('No. Ref PO : ' + po.noreftxt);
                 $('#id_po').val(po.id);
                 $('#hidden_id_po').val(po.id);
                 $('#hidden_no_ref_po').val(po.noreftxt);
@@ -592,9 +608,9 @@
             '<option value="TBM">TBM</option>' +
             '</select>'; +
         '</td>';
-        var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_ = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
-            '<span id="nama_brg_' + row + '"></span><span> | </span><span id="kode_brg_' + row + '" ></span>' +
+            '<span id="nama_brg_' + row + '"></span><br><span id="kode_brg_' + row + '" ></span>' +
             '<input type="hidden" id="ppo' + row + '" name="ppo' + row + '">' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
             '<input type="hidden" id="id_item_' + row + '" name="id_item_' + row + '">' +
@@ -612,7 +628,7 @@
             '<input type="hidden" class="form-control" id="id_item_po' + row + '" name="id_item_po' + row + '" >' +
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" placeholder="Merk"  required />' +
+            '<textarea class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" ></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
@@ -640,10 +656,10 @@
             '<input type="text" class="form-control" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '<textarea class="form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
             '</td>'
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control" id="txt_jumlah_' + row + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +

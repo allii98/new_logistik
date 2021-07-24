@@ -236,7 +236,7 @@ class M_po extends CI_Model
 
     public function cari_po_edit($nopo)
     {
-        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->select('*, date(tglppo) as tglspp, date(tglpo) as tgl_po');
         $this->db_logistik_pt->from('po');
         $this->db_logistik_pt->where('noreftxt', $nopo);
         $po = $this->db_logistik_pt->get()->row_array();

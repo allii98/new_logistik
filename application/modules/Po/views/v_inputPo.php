@@ -1232,7 +1232,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             $('#btn_hapus_row_1' + row).show();
         }
         hitungqty(row);
-        jumlah(row);
+        // jumlah(row);
     }
 
 
@@ -1577,7 +1577,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 event.preventDefault();
             }
         });
-
 
         // console.log('jumlahke', no_row)
         var qty = $('#txt_qty_' + id).val();
