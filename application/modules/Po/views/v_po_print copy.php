@@ -163,12 +163,8 @@ function terbilang($x, $style = 4)
     <?php
     $no = 1;
     $jumlah_biaya_lain = 0;
-    $jum_totbay = 0;
     $nama_bebanbpo = array();
     foreach ($item_po as $list_item) {
-      $qty_harga = $list_item->qty * $list_item->harga;
-      $disc = $list_item->disc / 100;
-      $jumharga_pre = $qty_harga - ($qty_harga * $disc);
     ?>
       <tr id="tr_content">
         <td class="noborder" rowspan="2" align="center"><?= $no; ?></td>
@@ -181,7 +177,7 @@ function terbilang($x, $style = 4)
         <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>
         <td class="noborder" rowspan="2" align="right">Rp. <?= number_format($list_item->harga, 2, ",", "."); ?></td>
         <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
-        <td class="noborder" rowspan="2" align="right">Rp. <?= number_format($jumharga_pre, 2, ",", "."); ?></td>
+        <td class="noborder" rowspan="2" align="right">Rp. <?= number_format($list_item->jumharga, 2, ",", "."); ?></td>
       </tr>
       <tr>
         <td style="border: none;" colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<?= $list_item->ket; ?></td>
@@ -189,7 +185,6 @@ function terbilang($x, $style = 4)
     <?php
       array_push($nama_bebanbpo, $list_item->nama_bebanbpo);
       $jumlah_biaya_lain += $list_item->JUMLAHBPO;
-      $jum_totbay += $jumharga_pre;
       $no++;
     }
     ?>
@@ -202,7 +197,7 @@ function terbilang($x, $style = 4)
         Uang Muka    : <br /> -->
       </td>
       <td colspan="2">SUB TOTAL</td>
-      <td colspan="2" align="right">Rp <?= $jum_totbay; ?></td>
+      <td colspan="2" align="right">Rp <?= $total_bayar_format; ?></td>
     </tr>
     <tr>
       <td colspan="2">PPN 10%</td>
@@ -230,12 +225,12 @@ function terbilang($x, $style = 4)
         // exit();
         ?>
         <br />
-        Rp <?= number_format($po->totalbayar + $pot_ppn + $po->no_acc, 2, ",", "."); ?>
+        Rp <?= number_format($po->totalbayar + $pot_ppn + $po->no_acc + $jumlah_biaya_lain, 2, ",", "."); ?>
       </td>
     </tr>
     <tr>
       <?php
-      $total = $po->totalbayar + $pot_ppn + $po->no_acc;
+      $total = $po->totalbayar + $pot_ppn + $jumlah_biaya_lain;
       // var_dump("iyayayay".$total);exit();
       ?>
       <td colspan="11"><b>Terbilang : <?= terbilang($total, $style = 3); ?> Rupiah</b></td>

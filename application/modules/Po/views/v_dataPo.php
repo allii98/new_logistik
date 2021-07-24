@@ -68,7 +68,7 @@
 					<div class="col-12">
 						<div class="table-responsive">
 							<input type="hidden" id="hidden_no_row" name="hidden_no_row">
-							<table id="datapo" class="table table-striped table-bordered" width="100%">
+							<table id="datapo" class="table w-100 nowrap dataTable no-footer" role="grid" style="margin-left: 0px; width: 1112.17px;">
 								<thead>
 									<tr>
 										<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
@@ -181,7 +181,26 @@
 			}, ],
 			"language": {
 				"infoFiltered": ""
-			}
+			},
+			"columns": [{
+					"width": "5%"
+				},
+				{
+					"width": "20%"
+				},
+				{
+					"width": "20%"
+				},
+				{
+					"width": "20%"
+				},
+				{
+					"width": "25%"
+				},
+				{
+					"width": "10%"
+				},
+			],
 
 		});
 

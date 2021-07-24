@@ -130,7 +130,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </label>
                             <div class="col-7">
                                 <!-- <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required> -->
-                                <input type="text" class="form-control bg-light" id="devisi" name="devisi" readonly required>
+                                <input type="text" class="form-control bg-light" onclick="tampildevisi()" id="devisi" name="devisi" readonly required>
+                                <input type="hidden" name="" id="hidden_devisi">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -715,6 +716,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     var hapus = true;
     var qty = true;
 
+    function tampildevisi() {
+        var devisi = $('#hidden_devisi').val();
+        swal(devisi);
+    }
+
     function jenisPO() {
         var jenis_po = $('#cmb_pilih_jenis_po').val();
 
@@ -783,6 +789,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             $('#h4_no_spp').html('No. SPP : ' + data[0].noppo);
                             $('#h4_no_ref_spp').html('No. Ref SPP : ' + data[0].noreftxt);
                             $('#devisi').val(data[0].devisi);
+                            $('#hidden_devisi').val(data[0].devisi);
 
                             var n = 1;
                             $.each(data, function(index, value) {
@@ -1399,6 +1406,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             success: function(data) {
                 // console.log(data);
                 $('#devisi').val(data[0].devisi);
+                $('#hidden_devisi').val(data[0].devisi);
                 // var n = 0;
                 $.each(data[1], function(index) {
                     // if(index != 0){
@@ -1581,14 +1589,27 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // console.log('jumlahke', no_row)
         var qty = $('#txt_qty_' + id).val();
         var harga = $('#txt_harga_' + id).val();
-        var disc = $('#txt_disc_' + id).val();
-        var biaya_lain = $('#txt_biaya_lain_' + id).val();
+        var diskon = $('#txt_disc_' + id).val();
+        if (diskon == '') {
+            var disc = 0;
+        } else {
+            var disc = $('#txt_disc_' + id).val();
+        }
+
+        var biayalain = $('#txt_biaya_lain_' + id).val();
+        if (biayalain == '') {
+            var biaya_lain = 0;
+        } else {
+            var biaya_lain = $('#txt_biaya_lain_' + id).val();
+        }
 
         var hargaDisc = (parseInt(harga) * parseInt(disc)) / 100;
         var hargaSetelahDisc = parseInt(harga) - parseInt(hargaDisc);
 
         var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
         // console.log(nilai);
+
+
 
         $('#txt_jumlah_' + id).val(nilai);
         var bilangan = nilai;

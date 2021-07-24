@@ -163,7 +163,6 @@ function terbilang($x, $style = 4)
     <?php
     $no = 1;
     $jumlah_biaya_lain = 0;
-    $jum_totbay = 0;
     $nama_bebanbpo = array();
     foreach ($item_po as $list_item) {
       $qty_harga = $list_item->qty * $list_item->harga;
