@@ -121,6 +121,8 @@
         //datatables
         table = $('#dataspp').DataTable({
 
+            "fixedColumns": true,
+            "fixedHeader": true,
             "scrollY": 400,
             "scrollX": true,
 
