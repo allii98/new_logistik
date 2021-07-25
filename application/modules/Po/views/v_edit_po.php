@@ -235,6 +235,8 @@
                                     </table>
                                 </div>
                             </div>
+
+
                     <?php
                             break;
                         default:
@@ -309,7 +311,9 @@
     </div>
 </div>
 
-<input type="hidden" id="hidden_nopo_edit" value="<?= $nopo ?>">
+<input type="text" id="hidden_nopo_edit" value="<?= $nopo ?>">
+<input type="text" id="hidden_noref_tambah">
+<input type="text" id="isi_edit">
 <input type="hidden" id="id_po">
 
 <script>
@@ -319,6 +323,7 @@
     $(document).ready(function() {
         var no_nopo_edit = $('#hidden_nopo_edit').val();
         cari_po_edit(no_nopo_edit);
+        isi_edit();
         cekspp();
 
         // dataspp site
@@ -342,6 +347,114 @@
         });
 
         // end dataspp site
+    });
+
+    function isi_edit() {
+        var noref = $('#hidden_nopo_edit').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/cek_isi'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                noref: noref
+            },
+            success: function(data) {
+                // console.log(data);
+
+                var status = data.status;
+                // console.log(status);
+                if (status = true) {
+
+                    $('#tambahSpp').removeAttr('disabled');
+                } else {
+                    console.log('sudah lpb')
+                }
+
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+
+    }
+
+    $(document).on('click', '#data_spp', function() {
+        var id = $(this).data('id');
+        var noreftxt = $(this).data('noreftxt');
+        // console.log(noreftxt);
+        $.ajax({
+            type: 'post',
+            url: '<?= site_url('Po/getid'); ?>',
+            data: {
+                id: id,
+                noreftxt: noreftxt,
+            },
+            success: function(response) {
+                $('.div_form_4').show();
+                // $('.div_form_1').find('#sppSITE').attr('disabled', '');
+                // console.log(response);
+                data = JSON.parse(response);
+                $('#hidden_noref_tambah').val(data[0].noreftxt);
+
+                var n = 1;
+                $.each(data, function(index, value) {
+
+                    // console.log('ini yg belum di approve', value.statusaprove);
+                    tambah_item(value.statusaprove);
+                    if (value.statusaprove == '0') {
+                        $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
+                        $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
+                    }
+
+                    var idppo = value.id;
+                    var opsi = value.noreftxt;
+                    var tglref = value.tglref;
+                    var kodedept = value.kodedept;
+                    var namadept = value.namadept;
+                    var tglppo = value.tglppo;
+                    var kodept = value.kodept;
+                    var pt = value.pt;
+                    var noppo = value.noppo;
+                    var kodebar = value.kodebar;
+                    var nabar = value.nabar;
+                    var sat = value.sat;
+                    // var tglref = value.tglref;
+                    var qty = value.qty;
+                    var qty2 = value.qty2;
+
+
+                    $('#id_ppo' + n).val(idppo);
+                    $('#id_item_' + n).val(idppo);
+                    $('#hidden_no_ref_spp_' + n).val(opsi);
+                    $('#refspp').val(opsi);
+                    // $('#hidden_tgl_hidden' + n).val(tglref);
+                    $('#hidden_kd_departemen_' + n).val(kodedept);
+                    $('#hidden_departemen_' + n).val(namadept);
+                    $('#hidden_tgl_spp_' + n).val(tglppo);
+                    $('#hidden_kd_pt_' + n).val(kodept);
+                    $('#hidden_nama_pt_' + n).val(pt);
+                    $('#noppo' + n).val(noppo);
+                    $('#hidden_kode_brg_' + n).val(kodebar);
+                    $('#kode_brg_' + n).text(kodebar);
+                    $('#hidden_nama_brg_' + n).val(nabar);
+                    $('#nama_brg_' + n).text(nabar);
+                    $('#hidden_satuan_brg_' + n).val(sat);
+                    $('#txt_qty_' + n).val(qty);
+                    $('#getspp' + n).val(opsi);
+
+                    $('#qty_' + n).val(qty);
+                    $('#qty2_' + n).val(qty2);
+                    $('#hidden_tgl_ref_' + n).val(tglref);
+                    n++;
+                });
+                $('#modalcarispp').modal('hide');
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
     });
 
     function tambahSpp() {
@@ -480,6 +593,7 @@
 
                 var po = data.po;
                 var item_po = data.item_po;
+                console.log(item_po.length);
 
                 var currentDate = new Date(po.tglppo);
                 var tglspp = currentDate;

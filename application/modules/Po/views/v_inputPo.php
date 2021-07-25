@@ -815,6 +815,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 var sat = value.sat;
                                 // var tglref = value.tglref;
                                 var qty = value.qty;
+                                console.log('ini qty nya', qty)
                                 var qty2 = value.qty2;
 
 
@@ -1162,9 +1163,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             // '<input type="text" class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" placeholder="Merk"  required />' +
             '<textarea class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
             '</td>';
-        var td_col_5 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
-            '<input type="hidden" class="form-control bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+        var td_col_5 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="number" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+            '<input type="hidden" class="form-control bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
             '<input type="hidden" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
             '</td>';
@@ -1566,8 +1567,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 }
             } else {
                 if (qty > qty2) {
-                    // console.log('benar');
-                    swal("Qty melebihi bataaaas!")
+                    console.log('benar');
+                    // swal("Qty melebihi bataaaas!");
                     $('#txt_qty_' + id).val(qty2);
                 } else {
                     console.log("sip dah");
@@ -1578,9 +1579,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function jumlah(id) {
-        $('#txt_harga_' + id + ',#txt_disc_' + id + ',#txt_biaya_lain_' + id).on("keypress keyup blur", function(event) {
+        $('#txt_qty_' + id + ',#txt_harga_' + id + ',#txt_disc_' + id + ',#txt_biaya_lain_' + id).on("keypress keyup blur", function(event) {
             //this.value = this.value.replace(/[^0-9\.]/g,'');
-            $(this).val($(this).val().replace(/[^0-9\,]/g, ''));
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
             if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
                 event.preventDefault();
             }
@@ -1588,6 +1589,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         // console.log('jumlahke', no_row)
         var qty = $('#txt_qty_' + id).val();
+        console.log(qty)
         var harga = $('#txt_harga_' + id).val();
         var diskon = $('#txt_disc_' + id).val();
         if (diskon == '') {

@@ -1320,6 +1320,13 @@ class Po extends CI_Controller
         $data = $this->M_po->cek_lpb($noref);
         echo json_encode($data);
     }
+
+    function cek_isi()
+    {
+        $noref = $this->input->post('noref');
+        $data = $this->M_po->cek_isi($noref);
+        echo json_encode($data);
+    }
 }
 
 /* End of file Po.php */
