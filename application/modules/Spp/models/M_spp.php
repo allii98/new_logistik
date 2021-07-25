@@ -221,6 +221,20 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->where(['noreftxt' => $noref_spp]);
         return $this->db_logistik_pt->get()->num_rows();
     }
+
+    public function cek_status_approve($noref_spp)
+    {
+        $this->db_logistik_pt->select('noreftxt');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where(['noreftxt' => $noref_spp, 'status2' => '0']);
+        $result = $this->db_logistik_pt->get()->num_rows();
+
+        if ($result == 0) {
+            $this->db_logistik_pt->set('status2', '1');
+            $this->db_logistik_pt->where('noreftxt', $noref_spp);
+            return $this->db_logistik_pt->update('ppo');
+        }
+    }
 }
 
 /* End of file M_spp.php */

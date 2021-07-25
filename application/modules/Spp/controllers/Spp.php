@@ -815,6 +815,10 @@ class Spp extends CI_Controller
 
         $output = $this->M_spp->cari_noref_itemppo($noref_spp);
 
+        if ($output >= 1) {
+            $this->M_spp->cek_status_approve($noref_spp);
+        }
+
         echo json_encode($output);
     }
 }
