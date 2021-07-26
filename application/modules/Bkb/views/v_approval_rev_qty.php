@@ -2,7 +2,7 @@
 
     <!-- start row-->
     <div class="row justify-content-center">
-        <div class="col-md col-xl-3">
+        <div class="col-12">
             <div class="widget-rounded-circle card-box">
                 <div class="row justify-content-between">
                     <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Approval Revisi QTY</h4>

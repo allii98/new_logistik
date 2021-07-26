@@ -4,7 +4,7 @@ date_default_timezone_set('Asia/Jakarta');
 <div class="container-fluid">
       <!-- start row-->
       <div class="row justify-content-center">
-            <div class="col-md">
+            <div class="col-12">
                   <div class="widget-rounded-circle card-box mt-2">
                         <div class="row justify-content-between">
                               <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">LPB <b>MUTASI</b></h4>
