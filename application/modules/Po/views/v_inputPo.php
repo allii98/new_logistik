@@ -192,7 +192,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <font face="Verdana" size="2">PPH *</font>
                             </label>
                             <div class="col-4">
-                                <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" autocomplite="off" value="0" required>
+                                <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
                             </div>
                         </div>
                         <div class="form-group row mb-1">
@@ -201,9 +201,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </label>
                             <div class="col-3">
                                 <select class="form-control" id="ppn" name="ppn" required>
-                                    <option value="1">N</option>
-                                    <option value="2">Y</option>
-                                    <option value="3">X</option>
+                                    <option value="0">N</option>
+                                    <option value="10">Y</option>
                                 </select>
                             </div>
                         </div>
@@ -1588,6 +1587,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
 
         // console.log('jumlahke', no_row)
+        var pph = $('#pph').val();
+        var pph = $('#ppn').val();
         var qty = $('#txt_qty_' + id).val();
         console.log(qty)
         var harga = $('#txt_harga_' + id).val();
@@ -1722,6 +1723,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_keterangan: $('#keterangan').val(),
                     txt_no_penawaran: $('#no_penawaran').val(),
                     cmb_ppn: $('#ppn').val(),
+                    cmb_pph: $('#pph').val(),
                     txt_total_pembayaran: $('#ttl_pembayaran').val(),
                     txt_ket_pengiriman: $('#ket_pengiriman').val(),
                     txt_uang_muka: $('#txt_uang_muka').val(),

@@ -222,9 +222,9 @@
                                                 <th>
                                                     <font face="Verdana" size="2.5">Keterangan</font>
                                                 </th>
-                                                <th>
+                                                <!-- <th>
                                                     <font face="Verdana" size="2.5">Jumlah Rp</font>
-                                                </th>
+                                                </th> -->
                                                 <th>
                                                     <font face="Verdana" size="2.5">#</font>
                                                 </th>
@@ -398,11 +398,12 @@
                 data = JSON.parse(response);
                 $('#hidden_noref_tambah').val(data[0].noreftxt);
 
-                var n = 1;
+                var n = $('#isi_edit').val();
+
                 $.each(data, function(index, value) {
 
                     // console.log('ini yg belum di approve', value.statusaprove);
-                    tambah_item(value.statusaprove);
+                    tambah_item_baru(value.statusaprove);
                     if (value.statusaprove == '0') {
                         $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
@@ -456,6 +457,139 @@
             }
         });
     });
+    var row = $('#isi_edit').val();
+
+    function tambah_item_baru(statusaprove) {
+
+        row++;
+        // console.log("status", statusaprove);
+        console.log("bariske", row);
+        var rowCount = $('#tableItemPO tr').length;
+        console.log('ini jumlah row', rowCount);
+
+        var tr_buka = '<tr id="tr_' + row + '">';
+
+        var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
+
+        var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
+            '<option value="">-- Pilih --</option>' +
+            '<option value="TEKNIK">TEKNIK</option>' +
+            '<option value="BIBITAN">BIBITAN</option>' +
+            '<option value="LC & TANAM">LC & TANAM</option>' +
+            '<option value="RAWAT">RAWAT</option>' +
+            '<option value="PANEN">PANEN</option>' +
+            '<option value="TEKNIK">TEKNIK</option>' +
+            '<option value="PABRIK">PABRIK</option>' +
+            '<option value="KANTOR">KANTOR</option>' +
+            '<option value="Kendaraan">Kendaraan</option>' +
+            '<option value="TBM">TBM</option>' +
+            '</select>'; +
+
+        '</td>';
+        var td_col_ = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
+            '<input type="hidden" class="form-control"  id="getspp' + row + '" rowame="spp' + row + '" >' +
+            '<span id="nama_brg_' + row + '"></span><br><span id="kode_brg_' + row + '" ></span>' +
+            '<input type="hidden" id="ppo' + row + '" name="ppo' + row + '">' +
+            '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
+            '<input type="hidden" id="id_item_' + row + '" name="id_item_' + row + '">' +
+            '<input type="hidden" id="hidden_no_ref_spp_' + row + '" name="hidden_no_ref_spp_' + row + '">' +
+            '<input type="hidden" id="hidden_tgl_ref_' + row + '" name="hidden_tgl_ref_' + row + '">' +
+            '<input type="hidden" id="hidden_kd_departemen_' + row + '" name="hidden_kd_departemen_' + row + '">' +
+            '<input type="hidden" id="hidden_departemen_' + row + '" name="hidden_departemen_' + row + '">' +
+            '<input type="hidden" id="hidden_tgl_spp_' + row + '" name="hidden_tgl_spp_' + row + '">' +
+            '<input type="hidden" id="hidden_kd_pt_' + row + '" name="hidden_kd_pt_' + row + '">' +
+            '<input type="hidden" id="hidden_nama_pt_' + row + '" name="hidden_nama_pt_' + row + '">' +
+            '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
+            '<input type="hidden" class="form-control" id="hidden_kode_brg_' + row + '" name="hidden_kode_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="hidden_nama_brg_' + row + '" name="hidden_nama_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '"   />' +
+
+            '</td>';
+        var td_col_4 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            // '<input type="text" class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" placeholder="Merk"  required />' +
+            '<textarea class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
+            '</td>';
+        var td_col_5 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="number" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+            '<input type="hidden" class="form-control bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
+            '<input type="hidden" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
+
+            '</td>';
+        var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
+
+            '</td>';
+        var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control" id="cmb_kurs_' + row + '" name="cmb_kurs_' + row + '" required="">' +
+            '<option value="Rp">Rp IDR</option>' +
+            '<option value="USD">&dollar; USD</option>' +
+            '<option value="SGD">S&dollar; SGD</option>' +
+            '<option value="Euro">&euro; Euro</option>' +
+            '<option value="GBP">&pound; GBP</option>' +
+            '<option value="Yen">&yen; Yen</option>' +
+            '<option value="MYR">RM MYR</option>' +
+            '</select><br />' +
+            '</td>';
+        var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="8" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+
+            '</td>';
+        var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+
+            '</td>';
+        var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea maxlength="250" class="form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
+
+
+            '</td>'
+        var td_col_11 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="1"></textarea>' +
+            '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
+            '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" size="20" name="txt_jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
+
+            '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
+            '</td>';
+
+        if (statusaprove == '0') {
+            var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<span  id="habis_' + row + '" class="badge badge-danger">Belum diapprove</span>' +
+                '</td>';
+
+        } else {
+            var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<span style="display:none;" id="habis_' + row + '" class="badge badge-danger">Belum approve</span>' +
+                '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + row + ')"></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+                '<label id="lbl_status_simpan_' + row + '"></label>' +
+                '</td>';
+        }
+        var form_tutup = '</form>';
+        var tr_tutup = '</tr>';
+        var lokasi = $('#lokasi').val();
+
+
+
+
+
+
+        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
+
+        $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
+
+        if (row == 1) {
+            $('#btn_hapus_row_1').hide();
+        } else {
+            $('#btn_hapus_row_1' + row).show();
+        }
+        hitungqty(row);
+        // jumlah(row);
+    }
 
     function tambahSpp() {
         $('#modalcarispp').modal('show');
@@ -594,7 +728,7 @@
                 var po = data.po;
                 var item_po = data.item_po;
                 console.log(item_po.length);
-
+                $('#isi_edit').val(item_po.length);
                 var currentDate = new Date(po.tglppo);
                 var tglspp = currentDate;
                 var convert = currentDate.tglspp;
@@ -668,6 +802,7 @@
                     $('#txt_keterangan_biaya_lain_' + i).val(nama_bebanbpo);
                     $('#txt_harga_' + i).val(harga);
                     $('#txt_jumlah_' + i).val(jumharga);
+                    $('#hasil_jumlah_' + i).html(jumharga);
                     $('#id_item_po' + i).val(iditem);
                     $('#id_item_' + i).val(iditem);
                     $('#hidden_id_po_item_' + i).val(iditem);
@@ -856,8 +991,8 @@
             '<textarea class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" ></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
-            '<input type="hidden" class="form-control" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" onkeyup="jumlah(' + row + ')" />' +
+            '<input type="number" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+            '<input type="hidden" class="form-control" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" />' +
             '<input type="hidden" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -885,25 +1020,29 @@
             '</td>'
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
+            '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+
+            '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
+
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_jumlah_' + row + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
-            '<label id="lbl_status_simpan_1' + row + '"></label>' +
-            '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
+
             '</td>';
-        var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.2em;">' +
             '<span style="display:none;" id="habis_' + row + '" class="badge badge-danger">Habis</span>' +
             '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
-            '<button class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
+            '<button class="btn btn-xs btn-warning fa fa-edit" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + row + ')"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            '<label id="lbl_status_simpan_1' + row + '"></label>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
         var lokasi = $('#lokasi').val();
 
-        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
@@ -1063,9 +1202,9 @@
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
-            '<input type="hidden" class="form-control" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
-            '<input type="hidden" class="form-control" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="hidden" class="form-control" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" />' +
+            '<input type="hidden" class="form-control" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" />' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1107,7 +1246,7 @@
         var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<span style="display:none;" id="habis_' + n + '" class="badge badge-danger">Habis</span>' +
             '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + n + ')" ></button>' +
-            '<button class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + n + ')" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
+            '<button class="btn btn-xs btn-warning fa fa-edit" onclick="ubah(' + n + ')" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + n + ')"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
@@ -1135,13 +1274,13 @@
             if (qty2n > 0) {
                 var tmbh = qty2 - qty2n;
                 if (qty > tmbh) {
-                    swal('melebihi, inputan ke 2');
+                    console.log('melebihi, inputan ke 2');
                     $('#txt_qty_' + id).val(tmbh);
                 }
             } else {
                 if (qty > qty2) {
                     // console.log('benar');
-                    swal("Qty melebihi bataaaas!")
+                    console.log("Qty melebihi bataaaas!")
                     $('#txt_qty_' + id).val(qty2);
                 } else {
                     console.log("sip dah");
@@ -1153,10 +1292,33 @@
 
     function jumlah(id) {
         // console.log('jumlahke', no_row)
+        $('#txt_qty_' + id + ',#txt_harga_' + id + ',#txt_disc_' + id + ',#txt_biaya_lain_' + id).on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        // console.log('jumlahke', no_row)
+        var pph = $('#pph').val();
+        var pph = $('#ppn').val();
         var qty = $('#txt_qty_' + id).val();
+        console.log(qty)
         var harga = $('#txt_harga_' + id).val();
-        var disc = $('#txt_disc_' + id).val();
-        var biaya_lain = $('#txt_biaya_lain_' + id).val();
+        var diskon = $('#txt_disc_' + id).val();
+        if (diskon == '') {
+            var disc = 0;
+        } else {
+            var disc = $('#txt_disc_' + id).val();
+        }
+
+        var biayalain = $('#txt_biaya_lain_' + id).val();
+        if (biayalain == '') {
+            var biaya_lain = 0;
+        } else {
+            var biaya_lain = $('#txt_biaya_lain_' + id).val();
+        }
 
         var hargaDisc = (parseInt(harga) * parseInt(disc)) / 100;
         var hargaSetelahDisc = parseInt(harga) - parseInt(hargaDisc);
@@ -1164,7 +1326,20 @@
         var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
         // console.log(nilai);
 
+
+
         $('#txt_jumlah_' + id).val(nilai);
+        var bilangan = nilai;
+        var number_string = bilangan.toString(),
+            sisa = number_string.length % 3,
+            rupiah = number_string.substr(0, sisa),
+            ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+        if (ribuan) {
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join('.');
+        }
+        $('#hasil_jumlah_' + id).html(rupiah);
     }
 
     function saveRinciEnter(e, no) {

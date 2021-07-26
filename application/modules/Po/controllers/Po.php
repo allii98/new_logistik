@@ -386,8 +386,13 @@ class Po extends CI_Controller
         $no_po = $this->input->post('no_po');
         $no_ref_po = $this->input->post('no_ref_po');
 
+        $po = $this->db_logistik_pt->query("SELECT ppn, pph FROM po WHERE nopo = '$no_po' AND noreftxt = '$no_ref_po'")->row();
+
         $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
         $data = $this->db_logistik_pt->query($query)->row();
+
+
+
 
         $dataedit['totalbayar'] = $data->totalbayar;
         $this->db_logistik_pt->set($dataedit);
@@ -617,6 +622,7 @@ class Po extends CI_Controller
             'thn' => date('Y'),
             'tglisi' => date('Y-m-d H:i:s'),
             'user' => $this->session->userdata('user'),
+            'pph' =>  $this->input->post('cmb_pph'),
             'ppn' =>  $this->input->post('cmb_ppn'),
             'totalbayar' =>  $this->input->post('txt_total_pembayaran'),
             'ket_kirim' => $this->input->post('txt_ket_pengiriman'),

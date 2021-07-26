@@ -184,7 +184,7 @@ function terbilang($x, $style = 4)
         <td class="noborder" rowspan="2" align="right">Rp. <?= number_format($jumharga_pre, 2, ",", "."); ?></td>
       </tr>
       <tr>
-        <td style="border: none;" colspan="4">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<?= $list_item->ket; ?></td>
+        <td style="border: none;" colspan="4" rowspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<?= $list_item->ket; ?></td>
       </tr>
     <?php
       array_push($nama_bebanbpo, $list_item->nama_bebanbpo);
