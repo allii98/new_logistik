@@ -792,7 +792,7 @@ class Spp extends CI_Controller
             $row[] = $d->sat;
             $row[] = $d->qty;
             $row[] = $d->STOK;
-            $row[] = $d->ket;
+            $row[] = '<p style="word-break: break-word">' . $d->ket . '</p>';
             $row[] = '<button class="btn btn-xs btn-primary" type="button" disabled>Qty</button>';
             $row[] = $status;
 

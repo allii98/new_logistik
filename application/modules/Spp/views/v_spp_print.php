@@ -36,10 +36,6 @@
         .warna_sebagian {
             background-color: gray;
         }
-
-        .warna_blm_approval {
-            background-color: gray;
-        }
     </style>
     <title>SPP - Surat Permintaan Pembelian</title>
 </head>
@@ -91,7 +87,7 @@
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                         <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                        <td class="noborder"><?= $list_item->ket; ?></td>
+                        <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
                     </tr>
                 <?php
                 } else {
@@ -103,7 +99,7 @@
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                         <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                        <td class="noborder"><?= $list_item->ket; ?></td>
+                        <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
                     </tr>
                 <?php
                 }
@@ -116,7 +112,7 @@
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                     <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder"><?= $list_item->ket; ?></td>
+                    <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
                 </tr>
             <?php
             } else {
@@ -128,7 +124,7 @@
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                     <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder"><?= $list_item->ket; ?></td>
+                    <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
                 </tr>
         <?php
             }
