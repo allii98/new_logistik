@@ -228,6 +228,13 @@ class Po extends CI_Controller
         $no_refpo = $data['po']->noreftxt;
         $data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('noref' => $nopo, 'noref' => $no_refpo))->result();
 
+        $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE noref = '$no_refpo'";
+        $data_jum = $this->db_logistik_pt->query($query)->row();
+
+        $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE noref = '$no_refpo'";
+        $data_jum2 = $this->db_logistik_pt->query($query)->row();
+
+        $data['dikurangi_biayalain'] = $data_jum->totalbayar - $data_jum2->biayalain;
         // $mpdf = new \Mpdf\Mpdf([
         // 		    'mode' => 'utf-8',
         // 		    // 'format' => [190, 236],
@@ -385,16 +392,36 @@ class Po extends CI_Controller
     {
         $no_po = $this->input->post('no_po');
         $no_ref_po = $this->input->post('no_ref_po');
+        $ppn = $this->input->post('ppn');
+        $pph = $this->input->post('pph');
 
         $po = $this->db_logistik_pt->query("SELECT ppn, pph FROM po WHERE nopo = '$no_po' AND noreftxt = '$no_ref_po'")->row();
 
         $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
         $data = $this->db_logistik_pt->query($query)->row();
 
+        $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
+        $data2 = $this->db_logistik_pt->query($query)->row();
 
+        $dikurangi_biayalain = $data->totalbayar - $data2->biayalain;
 
+        if ($ppn == 10) {
+            $jml_ppn = $ppn / 100;
+            $total_ppn = $dikurangi_biayalain * $jml_ppn;
+        } else {
+            $total_ppn = 0;
+        }
 
-        $dataedit['totalbayar'] = $data->totalbayar;
+        if ($pph != 0) {
+            $jml_pph = $pph / 100;
+            $total_pph = $dikurangi_biayalain * $jml_pph;
+        } else {
+            $total_pph = 0;
+        }
+
+        $totbay = $data->totalbayar + $total_ppn + $total_pph;
+
+        $dataedit['totalbayar'] = $totbay;
         $this->db_logistik_pt->set($dataedit);
         $this->db_logistik_pt->where('nopotxt', $no_po);
         $this->db_logistik_pt->where('noreftxt', $no_ref_po);
@@ -405,7 +432,13 @@ class Po extends CI_Controller
             $bool_update_po = FALSE;
         }
 
-        echo json_encode($data);
+        $output = [
+            'totbay' => $totbay,
+            'total_ppn' => $total_ppn,
+            'total_pph' => $total_pph,
+        ];
+
+        echo json_encode($output);
     }
 
     public function get_detail_spp()

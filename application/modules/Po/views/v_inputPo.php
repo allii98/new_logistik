@@ -1496,6 +1496,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function totalBayar() {
         var no_po = $('#hidden_no_po').val();
         var no_ref_po = $('#hidden_no_ref_po').val();
+
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/total_bayar'); ?>",
@@ -1504,11 +1505,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             cache: false,
             data: {
                 no_po: $('#hidden_no_po').val(),
-                no_ref_po: $('#hidden_no_ref_po').val()
+                no_ref_po: $('#hidden_no_ref_po').val(),
+                ppn: $('#ppn').val(),
+                pph: $('#pph').val(),
             },
             success: function(data) {
-                // console.log(data);
-                $('#ttl_pembayaran').val(data.totalbayar);
+                console.log(data);
+                $('#ttl_pembayaran').val(data.totbay);
             },
             error: function(request) {
                 alert(request.responseText);
@@ -1588,7 +1591,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         // console.log('jumlahke', no_row)
         var pph = $('#pph').val();
-        var pph = $('#ppn').val();
+        var ppn = $('#ppn').val();
         var qty = $('#txt_qty_' + id).val();
         console.log(qty)
         var harga = $('#txt_harga_' + id).val();
@@ -1606,16 +1609,33 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             var biaya_lain = $('#txt_biaya_lain_' + id).val();
         }
 
+        // mengitung pph dan ppn if true condition
         var hargaDisc = (parseInt(harga) * parseInt(disc)) / 100;
         var hargaSetelahDisc = parseInt(harga) - parseInt(hargaDisc);
 
+        var qty_harga = qty * hargaSetelahDisc;
+        if (pph != 0) {
+            var jml_pph = pph / 100;
+            var total_pph = qty_harga * jml_pph;
+        } else {
+            var total_pph = 0;
+        }
+
+        if (ppn == 10) {
+            var jml_ppn = ppn / 100;
+            var total_ppn = qty_harga * jml_ppn;
+        } else {
+            var total_ppn = 0;
+        }
+
         var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
+
+        var tot_nilai = nilai + total_pph + total_ppn;
         // console.log(nilai);
 
 
-
-        $('#txt_jumlah_' + id).val(nilai);
-        var bilangan = nilai;
+        $('#txt_jumlah_' + id).val(tot_nilai);
+        var bilangan = tot_nilai;
         var number_string = bilangan.toString(),
             sisa = number_string.length % 3,
             rupiah = number_string.substr(0, sisa),

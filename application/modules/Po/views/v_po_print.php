@@ -4,10 +4,16 @@
 $alamat_supplier = (!empty($supplier->alamat)) ? $supplier->alamat : "-";
 $tlp_supplier = (!empty($supplier->tlp)) ? $supplier->tlp : "-";
 $fax_supplier = (!empty($supplier->fax)) ? $supplier->fax : "-";
-$pot_ppn_format = ($po->ppn == "Y") ? number_format($po->totalbayar * 0.1, 2, ",", ".") : "0";
-$pot_ppn = ($po->ppn == "Y") ? ($po->totalbayar * 0.1) : "0";
-//   var_dump($po->totalbayar);exit();
-$total_bayar_format = number_format($po->totalbayar, 2, ",", ".");
+
+$pot_ppn_format = ($po->ppn == "10") ? number_format($dikurangi_biayalain * 0.1, 2, ",", ".") : "0";
+$pot_ppn = ($po->ppn == "10") ? ($dikurangi_biayalain * 0.1) : "0";
+
+$jml_pph = $po->pph / 100;
+$hit_pph_format = ($po->pph != NULL) ? number_format($dikurangi_biayalain * $jml_pph, 2, ",", ".") : "0";
+$hit_pph = ($po->pph != NULL) ? ($dikurangi_biayalain * $jml_pph) : "0";
+// var_dump($hit_pph);
+// exit();
+// $total_bayar_format = number_format($totbay, 2, ",", ".");
 // $total_bayar = $po->totalbayar;
 function kekata($x)
 {
@@ -202,7 +208,7 @@ function terbilang($x, $style = 4)
         Uang Muka    : <br /> -->
       </td>
       <td colspan="2">SUB TOTAL</td>
-      <td colspan="2" align="right">Rp <?= $jum_totbay; ?></td>
+      <td colspan="2" align="right">Rp <?= number_format($jum_totbay, 2, ",", "."); ?></td>
     </tr>
     <tr>
       <td colspan="2">PPN 10%</td>
@@ -210,7 +216,7 @@ function terbilang($x, $style = 4)
     </tr>
     <tr>
       <td colspan="2">PPH</td>
-      <td colspan="2" align="right">Rp <?= number_format($po->no_acc, 2, ",", "."); ?></td>
+      <td colspan="2" align="right">Rp <?= $hit_pph_format; ?></td>
     </tr>
     <tr>
       <td colspan="2">Biaya Lainnya</td>
@@ -230,12 +236,12 @@ function terbilang($x, $style = 4)
         // exit();
         ?>
         <br />
-        Rp <?= number_format($po->totalbayar + $pot_ppn + $po->no_acc, 2, ",", "."); ?>
+        Rp <?= number_format($po->totalbayar, 2, ",", "."); ?>
       </td>
     </tr>
     <tr>
       <?php
-      $total = $po->totalbayar + $pot_ppn + $po->no_acc;
+      $total = $po->totalbayar;
       // var_dump("iyayayay".$total);exit();
       ?>
       <td colspan="11"><b>Terbilang : <?= terbilang($total, $style = 3); ?> Rupiah</b></td>
@@ -256,7 +262,7 @@ function terbilang($x, $style = 4)
         <br />
         <br />
         <?php
-        $total = $po->totalbayar + $pot_ppn + $jumlah_biaya_lain;
+        $total = $po->totalbayar;
         if ($total > 5000000) { ?>
           (Direktur Purchasing)
         <?php } else { ?>
