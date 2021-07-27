@@ -9,9 +9,12 @@ date_default_timezone_set('Asia/Jakarta');
                 <h4 class="header-title">
                     <font face="Verdana"> LPB </font>
                 </h4>
-                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                    Input Laporan Penerimaan Barang
-                </p>
+                <div class="row justify-content-between">
+                    <p class="sub-header ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                        Input Laporan Penerimaan Barang
+                    </p>
+                    <button class="btn btn-xs btn-success h-50 mr-2" id="new_spp" onclick="new_spp()" disabled>Input LPB</button>
+                </div>
 
                 <div class="row div_form_1">
                     <div class="col-md-3">
@@ -114,6 +117,8 @@ date_default_timezone_set('Asia/Jakarta');
                             <input type="hidden" id="hidden_no_ref_lpb">
                             <input type="hidden" id="hidden_tglppo">
                             <input type="hidden" id="hidden_norefppo">
+                            <input type="hidden" id="hidden_kd_dept">
+                            <input type="hidden" id="hidden_ket_dept">
                         </div>
                         <div class="row" style="margin-left:4px;">
                             <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
@@ -243,6 +248,10 @@ date_default_timezone_set('Asia/Jakarta');
 </div>
 
 <script>
+    function new_spp() {
+        location.href = "<?php echo base_url('Lpb/input') ?>";
+    }
+
     function getGrupBarang(kodebar, n) {
         $.ajax({
             type: "POST",
@@ -345,7 +354,7 @@ date_default_timezone_set('Asia/Jakarta');
         var tr_tutup = '</tr>';
 
         if (status_item_lpb == 1) {
-            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7b + form_tutup + tr_tutup);
+            // $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7b + form_tutup + tr_tutup);
         } else {
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
         }
@@ -469,6 +478,8 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#txt_kd_name_supplier').val(namesup);
                 $('#txt_kd_supplier').val(data_po.kode_supply);
                 $('#txt_supplier').val(data_po.nama_supply);
+                $('#hidden_kd_dept').val(data_po.kd_dept);
+                $('#hidden_ket_dept').val(data_po.ket_dept);
 
                 //dibawah ini punya SPP
                 $('#hidden_tglppo').val(data_po.tglppo);
@@ -618,10 +629,6 @@ date_default_timezone_set('Asia/Jakarta');
                 txt_tgl_po: $('#txt_tgl_po').val(),
                 hidden_tglppo: $('#hidden_tglppo').val(),
                 hidden_norefppo: $('#hidden_norefppo').val(),
-                hidden_qtypo: $('#hidden_qtypo_' + n).val(),
-
-                txt_kode_barang: $('#txt_kode_barang_' + n).val(),
-                txt_nama_brg: $('#txt_nama_brg_' + n).text(),
                 txt_tgl_terima: $('#txt_tgl_terima').val(),
                 hidden_no_lpb: $('#hidden_no_lpb').val(),
                 hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
@@ -632,6 +639,12 @@ date_default_timezone_set('Asia/Jakarta');
                 devisi: $('#devisi').val(),
                 txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
                 txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
+                hidden_kd_dept: $('#hidden_kd_dept').val(),
+                hidden_ket_dept: $('#hidden_ket_dept').val(),
+
+                hidden_qtypo: $('#hidden_qtypo_' + n).val(),
+                txt_kode_barang: $('#txt_kode_barang_' + n).val(),
+                txt_nama_brg: $('#txt_nama_brg_' + n).text(),
                 txt_satuan: $('#txt_satuan_' + n).text(),
                 hidden_grup: $('#hidden_grup_' + n).text(),
                 txt_qty: $('#txt_qty_' + n).val(),
@@ -654,6 +667,7 @@ date_default_timezone_set('Asia/Jakarta');
                 } else {
                     $('#lbl_status_simpan_' + n).empty();
                     $('#lbl_lpb_status').empty();
+                    $('#new_spp').removeAttr('disabled');
 
                     $.toast({
                         position: 'top-right',
