@@ -22,7 +22,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     <div class="row div_form_1">
                         <div class="col-4">
                             <form class="form-horizontal">
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="cmb_pilih_jenis_po" class="col-3 col-xl-3 col-form-label">Jenis&nbsp;PO&nbsp;*</label>
                                     <div class="col-8 col-xl-9">
                                         <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
@@ -62,13 +62,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="tgl_po" class="col-3 col-xl-3 col-form-label">Tgl.&nbsp;PO&nbsp;*</label>
                                     <div class="col-8 col-xl-9">
                                         <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="select2" class="col-3 col-xl-3 col-form-label">Supplier&nbsp;*</label>
                                     <div class="col-8 col-xl-9">
                                         <select class="js-data-example-ajax form-control select2" id="select2">
@@ -85,7 +85,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="cmb_status_bayar" class="col-3 col-xl-3 col-form-label">Status Bayar*</label>
                                     <div class="col-8 col-xl-9">
                                         <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
@@ -96,7 +96,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-4">
+                                <div class="row mb-1">
                                     <label for="tmpo_pembayaran" class="col-3 col-form-label">Tempo bayar*</label>
                                     <div class="col-3">
                                         <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" value="0" autocomplite="off"><span>Hari</span>
@@ -112,21 +112,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         <div class="col-4">
                             <form class="form-horizontal">
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="lks_pengiriman" class="col-3 col-xl-3 col-form-label">Lokasi Pengiriman*</label>
                                     <div class="col-8 col-xl-9">
                                         <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
                                     </div>
                                 </div>
-
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="devisi" class="col-3 col-xl-3 col-form-label">Devisi*</label>
                                     <div class="col-8 col-xl-9">
                                         <input type="text" class="form-control bg-light" onclick="tampildevisi()" id="devisi" name="devisi" readonly required>
                                         <input type="hidden" name="" id="hidden_devisi">
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="devisi" class="col-3 col-xl-3 col-form-label">Lokasi Pembelian*</label>
                                     <div class="col-8 col-xl-9">
                                         <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
@@ -142,13 +141,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="devisi" class="col-3 col-xl-3 col-form-label">No. Penawaran*</label>
                                     <div class="col-8 col-xl-9">
                                         <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="devisi" class="col-3 col-xl-3 col-form-label">Pemesan *</label>
                                     <div class="col-8 col-xl-9">
                                         <select class="form-control" id="txt_pemesan" name="txt_pemesan" required>
@@ -164,7 +163,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         <div class="col-4">
                             <form class="form-horizontal">
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="ket_pengiriman" class="col-3 col-xl-3 col-form-label">Ket. Pengirim*</label>
                                     <div class="col-8 col-xl-9">
                                         <textarea maxlength="250" class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
@@ -173,13 +172,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     </div>
                                 </div>
 
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="pph" class="col-3 col-xl-3 col-form-label">PPH *</label>
                                     <div class="col-8 col-xl-9">
                                         <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="devisi" class="col-3 col-xl-3 col-form-label">PPN *</label>
                                     <div class="col-8 col-xl-9">
                                         <select class="form-control" id="ppn" name="ppn" required>
@@ -188,7 +187,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="devisi" class="col-3 col-xl-3 col-form-label">Ket*</label>
                                     <div class="col-8 col-xl-9">
                                         <textarea maxlength="250" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
@@ -198,7 +197,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 switch ($lokasi_sesi) {
                                     case 'HO':
                                 ?>
-                                        <div class="row mb-3">
+                                        <div class="row mb-1">
                                             <label for="dikirim_kebun" class="col-3 col-xl-3 col-form-label">Dikirim Ke Kebun *</label>
                                             <div class="col-8 col-xl-9">
                                                 <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
@@ -220,7 +219,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 }
                                 ?>
 
-                                <div class="row mb-3">
+                                <div class="row mb-1">
                                     <label for="ttl_pembayaran" class="col-3 col-xl-3 col-form-label">Total Bayar</label>
                                     <div class="col-8 col-xl-9">
                                         <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
