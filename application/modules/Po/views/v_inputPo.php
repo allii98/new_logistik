@@ -4,7 +4,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 <div class="container-fluid">
     <!-- start page title -->
     <!-- end page title -->
-    <div class="row justify-content-center mt-1">
+    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
@@ -19,247 +19,221 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-success btn-rounded waves-effect waves-light width-sm" id="a_po_baru">PO Baru</a>
                     </div>
                     <br>
-                    <div class="row mt-0 div_form_1">
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-                                <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;PO&nbsp;*</label>
-                                <div class="col-4">
-                                    <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
-                                    <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
-                                    <select class="form-control" id="cmb_pilih_jenis_po" onchange="jenisPO()">
-                                        <option disabled>
-                                            <font face="Verdana" size="2.5">-Pilih-</font>
-                                        </option>
-                                        <?php
-                                        switch ($lokasi_sesi) {
-                                            case 'PKS':
-                                        ?>
-                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                    <div class="row">
+                        <div class="col-4">
+                            <form class="form-horizontal">
+                                <div class="row mb-3">
+                                    <label for="cmb_pilih_jenis_po" class="col-3 col-xl-3 col-form-label">Jenis&nbsp;PO&nbsp;*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
+                                        <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
+                                        <select class="form-control" id="cmb_pilih_jenis_po" onchange="jenisPO()">
+                                            <option disabled>
+                                                <font face="Verdana" size="2.5">-Pilih-</font>
+                                            </option>
                                             <?php
-                                                break;
-                                            case 'SITE':
+                                            switch ($lokasi_sesi) {
+                                                case 'PKS':
                                             ?>
-                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                                    <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                                <?php
+                                                    break;
+                                                case 'SITE':
+                                                ?>
+                                                    <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                                <?php
+                                                    break;
+                                                case 'RO':
+                                                ?>
+                                                    <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                                <?php
+                                                    break;
+                                                case 'HO':
+                                                ?>
+                                                    <option value="PO">PO</option>
+                                                    <option value="POA">POA - PO Asset</option>
+                                                    <option value="PO-Khusus">POK - PO Khusus</option>
                                             <?php
-                                                break;
-                                            case 'RO':
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
                                             ?>
-                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
-                                            <?php
-                                                break;
-                                            case 'HO':
-                                            ?>
-                                                <option value="PO">PO</option>
-                                                <option value="POA">POA - PO Asset</option>
-                                                <option value="PO-Khusus">POK - PO Khusus</option>
-                                        <?php
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 col-form-label">
-                                    <font face="Verdana" size="2.5">Tgl.&nbsp;PO&nbsp;*</font>
-                                </label>
-                                <div class="col-5">
-                                    <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 col-form-label">
-                                    <font face="Verdana" size="2.5">Supplier&nbsp;*</font>
-                                </label>
-                                <div class="col-8">
-                                    <select class="js-data-example-ajax form-control select2" id="select2">
-
-                                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                            <option disabled>Nama Supplier</option>
-                                        <?php } else { ?>
-                                            <option disabled>Nama Supplier</option>
-                                            <option selected value="0475">TOKO ( KAS )</option>
-                                        <?php } ?>
-                                    </select>
-                                    <!-- <select class="js-data-example-ajax form-control select2" id="select2">
-                                    <option disabled>Nama Supplier</option>
-                                    <option selected value="0475">TOKO ( KAS )</option>
-                                </select> -->
-                                    <input type="hidden" name="kd_supplier" value="TOKO ( KAS )" id="kd_supplier">
-                                    <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 col-form-label">
-                                    <font face="Verdana" size="2.5">Status&nbsp;Bayar*</font>
-                                </label>
-                                <div class="col-3">
-                                    <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
-                                        <option value="Cash">
-                                            <font face="Verdana" size="2.5">Cash</font>
-                                        </option>
-                                        <option value="Kredit">Kredit</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 col-form-label">
-                                    <font face="Verdana" size="2.5">Tempo bayar*</font>
-                                </label>
-                                <div class="col-3">
-                                    <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" value="0" autocomplite="off"><span>
-                                        <font face="Verdana" size="2.5">Hari</font>
-                                    </span>
-                                </div>
-                                <label class="col-2 col-form-label mr-1">
-                                    <font face="Verdana" size="2">Tempo Pengirim*</font>
-                                </label>
-                                <div class="col-sm-3">
-                                    <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" value="0" autocomplite="off" required><span>Hari</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-                                <label class="col-4 mr-1 col-form-label">
-                                    <font face="Verdana" size="2">Lokasi&nbsp;Pengiriman*</font>
-                                </label>
-                                <div class="col-5">
-                                    <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
-                                    <!-- <span class="pesan pesan-nama" style="color: red;">Harus di isi !</span><br /> -->
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 mr-1 col-form-label">
-                                    <font face="Verdana" size="2">Devisi*</font>
-                                </label>
-                                <div class="col-7">
-                                    <!-- <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required> -->
-                                    <input type="text" class="form-control bg-light" onclick="tampildevisi()" id="devisi" name="devisi" readonly required>
-                                    <input type="hidden" name="" id="hidden_devisi">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label  mr-1">
-                                    <font face="Verdana" size="2">Lokasi&nbsp;Pembelian*</font>
-                                </label>
-                                <div class="col-4">
-                                    <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
-                                        <option disabled>-- Pilih --</option>
-                                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                            <option value="HO">HO</option>
-                                            <option value="RO">RO</option>
-                                            <option value="SITE">SITE</option>
-                                        <?php } else { ?>
-                                            <option value="RO">RO</option>
-                                            <option selected="selected" value="SITE">SITE</option>
-                                        <?php } ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label mr-1">
-                                    <font face="Verdana" size="2">No.&nbsp;Penawaran*</font>
-                                </label>
-                                <div class="col-7">
-                                    <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label mr-1">
-                                    <font face="Verdana" size="2">Pemesan *</font>
-                                </label>
-                                <div class="col-5">
-                                    <!-- <input type="text" class="form-control bg-light" id="txt_pemesan" name="txt_pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
-                                <input type="hidden" name="txt_kode_pemesan" id="txt_kode_pemesan" value="<?php echo $this->session->userdata('id_user'); ?>"> -->
-                                    <select class="form-control" id="txt_pemesan" name="txt_pemesan" required>
-                                        <option disabled>-Pilih-</option>
-                                        <option selected value="GM">GM</option>
-                                        <option value="KTU">KTU</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label mr-1">
-                                    <font face="Verdana" size="2">Ket. Pengirim*</font>
-                                </label>
-                                <div class="col-7">
-                                    <textarea maxlength="250" class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
-                                    <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
-                                    <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label mx-0">
-                                    <font face="Verdana" size="2">PPH *</font>
-                                </label>
-                                <div class="col-4">
-                                    <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label" required>
-                                    <font face="Verdana" size="2">PPN *</font>
-                                </label>
-                                <div class="col-3">
-                                    <select class="form-control" id="ppn" name="ppn" required>
-                                        <option value="0">N</option>
-                                        <option value="10">Y</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">
-                                    <font face="Verdana" size="2">Ket*</font>
-                                </label>
-                                <div class="col-7">
-                                    <textarea maxlength="250" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
-                                </div>
-                            </div>
-                            <?php
-                            switch ($lokasi_sesi) {
-                                case 'HO':
-                            ?>
-                                    <div class="form-group row mb-1 my-0">
-                                        <label class="col-4 col-form-label">
-                                            <font face="Verdana" size="2">Dikirim&nbsp;ke&nbsp;Kebun*</font>
-                                        </label>
-                                        <div class="col-3 py-0">
-                                            <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
-                                                <option value="Y" selected="">Y</option>
-                                                <option value="N">N</option>
-                                            </select>
-                                        </div>
+                                        </select>
                                     </div>
-                                <?php
-                                    break;
-                                case 'RO':
-                                case 'SITE':
-                                case 'PKS':
-                                ?>
-                            <?php
-                                    break;
-                                default:
-                                    break;
-                            }
-                            ?>
-                            <div class="form-group row mb-1">
-                                <label class="col-4 col-form-label">
-                                    <font face="Verdana" size="2">Total&nbsp;Bayar</font>
-                                </label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
                                 </div>
-                            </div>
+                                <div class="row mb-3">
+                                    <label for="tgl_po" class="col-3 col-xl-3 col-form-label">Tgl.&nbsp;PO&nbsp;*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="select2" class="col-3 col-xl-3 col-form-label">Supplier&nbsp;*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <select class="js-data-example-ajax form-control select2" id="select2">
 
+                                            <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                                                <option disabled>Nama Supplier</option>
+                                            <?php } else { ?>
+                                                <option disabled>Nama Supplier</option>
+                                                <option selected value="0475">TOKO ( KAS )</option>
+                                            <?php } ?>
+                                        </select>
+
+                                        <input type="hidden" name="kd_supplier" value="TOKO ( KAS )" id="kd_supplier">
+                                        <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="cmb_status_bayar" class="col-3 col-xl-3 col-form-label">Status Bayar*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
+                                            <option value="Cash">
+                                                <font face="Verdana" size="2.5">Cash</font>
+                                            </option>
+                                            <option value="Kredit">Kredit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-4">
+                                    <label for="tmpo_pembayaran" class="col-3 col-form-label">Tempo bayar*</label>
+                                    <div class="col-3">
+                                        <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" value="0" autocomplite="off"><span>Hari</span>
+                                    </div>
+                                    <label for="tmpo_pengiriman" class="col-3 col-form-label">Tempo Pengirim*</label>
+                                    <div class="col-3">
+                                        <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" value="0" autocomplite="off"><span>Hari</span>
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
+
+                        <div class="col-4">
+                            <form class="form-horizontal">
+                                <div class="row mb-3">
+                                    <label for="lks_pengiriman" class="col-3 col-xl-3 col-form-label">Lokasi Pengiriman*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Devisi*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <input type="text" class="form-control bg-light" onclick="tampildevisi()" id="devisi" name="devisi" readonly required>
+                                        <input type="hidden" name="" id="hidden_devisi">
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Lokasi Pembelian*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
+                                            <option disabled>-- Pilih --</option>
+                                            <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                                                <option value="HO">HO</option>
+                                                <option value="RO">RO</option>
+                                                <option value="SITE">SITE</option>
+                                            <?php } else { ?>
+                                                <option value="RO">RO</option>
+                                                <option selected="selected" value="SITE">SITE</option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">No. Penawaran*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Pemesan *</label>
+                                    <div class="col-8 col-xl-9">
+                                        <select class="form-control" id="txt_pemesan" name="txt_pemesan" required>
+                                            <option disabled>-Pilih-</option>
+                                            <option selected value="GM">GM</option>
+                                            <option value="KTU">KTU</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+
+                        <div class="col-4">
+                            <form class="form-horizontal">
+                                <div class="row mb-3">
+                                    <label for="ket_pengiriman" class="col-3 col-xl-3 col-form-label">Ket. Pengirim*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <textarea maxlength="250" class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
+                                        <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
+                                        <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="pph" class="col-3 col-xl-3 col-form-label">PPH *</label>
+                                    <div class="col-8 col-xl-9">
+                                        <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">PPN *</label>
+                                    <div class="col-8 col-xl-9">
+                                        <select class="form-control" id="ppn" name="ppn" required>
+                                            <option value="0">N</option>
+                                            <option value="10">Y</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
+                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Ket*</label>
+                                    <div class="col-8 col-xl-9">
+                                        <textarea maxlength="250" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
+                                    </div>
+                                </div>
+                                <?php
+                                switch ($lokasi_sesi) {
+                                    case 'HO':
+                                ?>
+                                        <div class="row mb-3">
+                                            <label for="dikirim_kebun" class="col-3 col-xl-3 col-form-label">Dikirim Ke Kebun *</label>
+                                            <div class="col-8 col-xl-9">
+                                                <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
+                                                    <option value="Y" selected="">Y</option>
+                                                    <option value="N">N</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    <?php
+                                        break;
+                                    case 'RO':
+                                    case 'SITE':
+                                    case 'PKS':
+                                    ?>
+                                <?php
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                ?>
+
+                                <div class="row mb-3">
+                                    <label for="ttl_pembayaran" class="col-3 col-xl-3 col-form-label">Total Bayar</label>
+                                    <div class="col-8 col-xl-9">
+                                        <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
+                                    </div>
+                                </div>
+
+
+                            </form>
+                        </div>
+
                     </div>
+                    <br>
+
                     <!-- end row-->
                     <hr class="mt-0 mb-2">
                     <?php

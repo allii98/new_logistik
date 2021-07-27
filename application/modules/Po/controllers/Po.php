@@ -479,10 +479,10 @@ class Po extends CI_Controller
                 $lokasispp = 2;
                 break;
             case 'EST': // SITE
-                $lokasispp = 3;
+                $lokasispp = 6;
                 break;
             case 'FAC': // PKS
-                $lokasispp = 6;
+                $lokasispp = 3;
                 break;
             default:
                 break;

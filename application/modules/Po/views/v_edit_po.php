@@ -37,7 +37,7 @@
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                 </div> -->
 
-                                <table border="0" width="65%">
+                                <table border="0" width="75%">
 
                                     <td>
 
@@ -142,7 +142,7 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <table border="0" width="65%">
+                                <table border="0" width="75%">
                                     <td>
 
                                         <h6 id="tgl_spp" name="tgl_spp"></h6>
@@ -1717,7 +1717,7 @@
                             // reload: false
                         });
                         var refspp = data.refspp;
-                        cekdataspp();
+                        cekdataspp(id);
                         // sum_qty(noppo, id);
 
                         $('.div_form_2').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ',#txt_qty_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).addClass('bg-light');
@@ -1750,8 +1750,8 @@
 
     }
 
-    function cekdataspp() {
-        var refspp = $('#hidden_no_ref_spp_').val();
+    function cekdataspp(id) {
+        var refspp = $('#hidden_no_ref_spp_' + id).val();
         console.log(refspp);
         $.ajax({
             type: "POST",
@@ -1769,7 +1769,7 @@
                 // // console.log(item);
                 // console.log(a.jmlhSPP1, b.jmlhSPP2);
                 if (a.jmlhSPP1 == 0) {
-                    updatePPO();
+                    updatePPO(id);
                     // console.log('oke update ppo');
                 } else {
                     console.log('field po belum 0 semua');
@@ -1782,8 +1782,8 @@
         });
     }
 
-    function updatePPO(noref) {
-        var refspp = $('#hidden_no_ref_spp_').val();
+    function updatePPO(id) {
+        var refspp = $('#hidden_no_ref_spp_' + id).val();
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/updatePPO'); ?>",
