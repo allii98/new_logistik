@@ -26,12 +26,10 @@ class M_data extends CI_Model
             $this->db_logistik_pt->select('id, noreftxt,nopo,nopotxt, tglpo, nama_supply,no_refppo,tgl_refppo, ket, terbayar, sudah_lpb');
             $this->db_logistik_pt->from('po');
             // $this->db_logistik_pt->where('po');
-            $this->db_logistik_pt->order_by('id', 'desc');
         } else {
             $this->db_logistik_pt->select('id, noreftxt,nopotxt,nopo, tglpo, nama_supply,no_refppo,tgl_refppo, ket, terbayar, sudah_lpb');
             $this->db_logistik_pt->from('po');
             $this->db_logistik_pt->where('user', $user);
-            $this->db_logistik_pt->order_by('id', 'desc');
             # code...
         }
 
