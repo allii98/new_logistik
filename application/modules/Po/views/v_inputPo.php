@@ -226,7 +226,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <div class="row mb-1">
                                     <label for="ttl_pembayaran" class="col-3 col-xl-3 col-form-label">Total Bayar</label>
                                     <div class="col-8 col-xl-9">
-                                        <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
+                                        <input type="text" class="form-control bg-light" id="total_pembayaran" name="total_pembayaran" placeholder="Total Pembayaran" readonly required>
+
+                                        <input type="hidden" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
                                     </div>
                                 </div>
 
@@ -1510,7 +1512,18 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 pph: $('#pph').val(),
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
+                var bilangan = data.totbay;
+                var number_string = bilangan.toString(),
+                    sisa = number_string.length % 3,
+                    rupiah = number_string.substr(0, sisa),
+                    ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+                if (ribuan) {
+                    separator = sisa ? '.' : '';
+                    rupiah += separator + ribuan.join('.');
+                }
+                $('#total_pembayaran').val(rupiah);
                 $('#ttl_pembayaran').val(data.totbay);
             },
             error: function(request) {
