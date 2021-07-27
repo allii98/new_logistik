@@ -17,18 +17,18 @@ date_default_timezone_set('Asia/Jakarta');
                 </div>
 
                 <div class="row div_form_1">
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <div class="form-group row mb-1">
-                            <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
+                            <label class="col-lg-3 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
                             </label>
-                            <div class="col-md-8">
+                            <div class="col-md-9">
                                 <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
-                            <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
+                            <label class="col-lg-3 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
                             </label>
-                            <div class="col-lg-7 col-11 row">
+                            <div class="col-lg-8 col-11 row ml-0">
                                 <select class="js-data-example-ajax form-control select2" id="select2">
                                 </select>
                                 <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
@@ -84,16 +84,16 @@ date_default_timezone_set('Asia/Jakarta');
                         </div>
                     </div>
 
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;Pengantar<span class="required">*</span>
+                            <label class="col-5 col-form-label" style="margin-top:-10px; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. Pengantar<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
                                 <input id="txt_no_pengantar" name="txt_no_pengantar" class="form-control" required="required" type="text" placeholder="No. Pengantar" autocomplite="off">
                             </div>
                         </div>
                         <div class="form-group row mb-1">
-                            <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</label>
+                            <label class="col-5 col-form-label mt-0" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</label>
                             <div class="col-md-7">
                                 <textarea class="resizable_textarea form-control" id="txt_ket_pengiriman" name="txt_ket_pengiriman" placeholder="Keterangan" rows="1" autocomplite="off"></textarea>
                             </div>
@@ -136,7 +136,7 @@ date_default_timezone_set('Asia/Jakarta');
                                         <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
                                         <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
                                         <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
-                                        <th width="3%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Aksi</th>
+                                        <th width="2%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">#</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_rincian" name="tbody_rincian">
@@ -247,6 +247,13 @@ date_default_timezone_set('Asia/Jakarta');
     </div>
 </div>
 
+<style>
+    .select2-container {
+        white-space: nowrap;
+        font-size: 13px;
+    }
+</style>
+
 <script>
     function new_spp() {
         location.href = "<?php echo base_url('Lpb/input') ?>";
@@ -343,8 +350,8 @@ date_default_timezone_set('Asia/Jakarta');
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary  mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mt-1 mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
         var td_col_7b = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +

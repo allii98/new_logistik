@@ -31,14 +31,6 @@
         body {
             font-size: 10px;
         }
-
-        .pddg {
-            padding: 5px;
-        }
-
-        .cntr {
-            text-align: center;
-        }
     </style>
     <title>Bukti Keluar Barang</title>
 </head>
@@ -48,46 +40,16 @@
         <tr>
             <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
             <td align="center" valign="bottom">
-                <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h4>
+                <h4 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h4>
             </td>
         </tr>
         <tr>
             <td align="center" valign="baseline">
-                <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
+                <h5 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h5>
             </td>
         </tr>
     </table>
-    <!-- // jika bbm -->
-    <!-- <table border="0" width="100%">
-        <tr>
-            <td rowspan="4" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
-            <td rowspan="2" align="center" valign="bottom">
-                <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h2>
-            </td>
-            <td width="13%">jenis alat/kend</td>
-            <td width="2%">:</td>
-            <td width="15%">Inova</td>
-        </tr>
-        <tr>
-            <td>Kode/Nomer</td>
-            <td>:</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td rowspan="2" align="center" valign="baseline">
-                <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
-            </td>
-            <td>HM/KM</td>
-            <td>:</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Lokasi Kerja</td>
-            <td>:</td>
-            <td>Inova</td>
-        </tr>
-    </table> -->
-    <table width="100%" style="margin-top: 5px;">
+    <table width="100%">
         <tr>
             <td>Depart/Divisi : <?= $stockkeluar->bag; ?></td>
             <td align="right">No BPB : <?= $stockkeluar->nobpb; ?></td>
@@ -95,18 +57,18 @@
     </table>
     <table class="singleborder" border="1" width="100%">
         <tr>
-            <td align="center" rowspan="2" class="pddg" width="5%">No</td>
-            <td align="center" rowspan="2" class="pddg" width="18%">No. Kode Barang</td>
-            <td align="center" rowspan="2" class="pddg" width="22%">Nama / Spesifikasi Barang</td>
-            <td align="center" rowspan="2" class="pddg">Sat</td>
-            <td align="center" colspan="2" class="pddg">Jumlah</td>
-            <td align="center" rowspan="2" class="pddg">Kode Beban</td>
-            <td align="center" rowspan="2" class="pddg">Blok</td>
-            <td align="center" rowspan="2" class="pddg" width="12%">Keterangan</td>
+            <td align="center" rowspan="2">No</td>
+            <td align="center" rowspan="2">No. Kode Barang</td>
+            <td align="center" rowspan="2">Nama / Spesifikasi Barang</td>
+            <td align="center" rowspan="2">Sat</td>
+            <td align="center" colspan="2">Jumlah</td>
+            <td align="center" rowspan="2">Kode Beban</td>
+            <td align="center" rowspan="2">Blok</td>
+            <td align="center" rowspan="2">Keterangan</td>
         </tr>
         <tr>
-            <td class="pddg">Diminta</td>
-            <td class="pddg">Dikeluarkan</td>
+            <td>Diminta</td>
+            <td>Dikeluarkan</td>
         </tr>
         <?php
         $no = 1;
@@ -114,12 +76,12 @@
             // var_dump($keluarbrgitem);exit();
         ?>
             <tr>
-                <td class="cntr"><?= $no ?></td>
+                <td><?= $no ?></td>
                 <td><?= $listkeluarbrgitem->kodebartxt; ?></td>
                 <td><?= $listkeluarbrgitem->nabar; ?></td>
                 <td><?= $listkeluarbrgitem->satuan; ?></td>
-                <td class="cntr"><?= $listkeluarbrgitem->qty; ?></td>
-                <td class="cntr"><?= $listkeluarbrgitem->qty2; ?></td>
+                <td><?= $listkeluarbrgitem->qty; ?></td>
+                <td><?= $listkeluarbrgitem->qty2; ?></td>
                 <td><?= $listkeluarbrgitem->kodebebantxt; ?></td>
                 <td><?= $listkeluarbrgitem->blok; ?></td>
                 <td><?= $listkeluarbrgitem->ket; ?></td>
