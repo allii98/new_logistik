@@ -813,7 +813,17 @@
                     $('#txt_keterangan_biaya_lain_' + i).val(nama_bebanbpo);
                     $('#txt_harga_' + i).val(harga);
                     $('#txt_jumlah_' + i).val(jumharga);
-                    $('#hasil_jumlah_' + i).html(jumharga);
+                    var bilangan = jumharga;
+                    var number_string = bilangan.toString(),
+                        sisa = number_string.length % 3,
+                        rupiah = number_string.substr(0, sisa),
+                        ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+                    if (ribuan) {
+                        separator = sisa ? '.' : '';
+                        rupiah += separator + ribuan.join('.');
+                    }
+                    $('#hasil_jumlah_' + i).html(rupiah);
                     $('#id_item_po' + i).val(iditem);
                     $('#id_item_' + i).val(iditem);
                     $('#hidden_id_po_item_' + i).val(iditem);
@@ -1369,7 +1379,7 @@
         var jum = tot_nilai.toFixed(2);
 
         $('#txt_jumlah_' + id).val(jum);
-        var bilangan = tot_nilaitoFixed(2);
+        var bilangan = tot_nilai.toFixed(2);
         var number_string = bilangan.toString(),
             sisa = number_string.length % 3,
             rupiah = number_string.substr(0, sisa),
