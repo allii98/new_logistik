@@ -1366,9 +1366,10 @@
         var tot_nilai = nilai + total_pph + total_ppn;
         // console.log(nilai);
 
+        var jum = tot_nilai.toFixed(2);
 
-        $('#txt_jumlah_' + id).val(tot_nilai);
-        var bilangan = tot_nilai;
+        $('#txt_jumlah_' + id).val(jum);
+        var bilangan = tot_nilaitoFixed(2);
         var number_string = bilangan.toString(),
             sisa = number_string.length % 3,
             rupiah = number_string.substr(0, sisa),
