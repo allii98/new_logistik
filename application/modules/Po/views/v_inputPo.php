@@ -1571,7 +1571,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             }
         });
 
-        // console.log('jumlahke', no_row)
         var pph = $('#pph').val();
         var ppn = $('#ppn').val();
         var qty = $('#txt_qty_' + id).val();
@@ -1610,7 +1609,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             var total_ppn = 0;
         }
 
-        var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
+        var nilai = (parseInt(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
 
         var tot_nilai = nilai + total_pph + total_ppn;
         // console.log(nilai);
