@@ -81,7 +81,7 @@ $dev = substr($stokmasuk->devisi, 28);
             <td><?= $stokmasuk->lokasi_gudang; ?></td>
             <td>Tgl. Pembuatan LPB</td>
             <td>:</td>
-            <td><?= date("d-m-Y H:i:s", strtotime($stokmasuk->tglinput)); ?></td>
+            <td><?= date("d-m-Y", strtotime($stokmasuk->tglinput)); ?></td>
         </tr>
         <tr>
             <td>Alokasi</td>
