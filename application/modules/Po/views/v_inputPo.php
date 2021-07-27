@@ -19,7 +19,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-success btn-rounded waves-effect waves-light width-sm" id="a_po_baru">PO Baru</a>
                     </div>
                     <br>
-                    <div class="row">
+                    <div class="row div_form_1">
                         <div class="col-4">
                             <form class="form-horizontal">
                                 <div class="row mb-3">
