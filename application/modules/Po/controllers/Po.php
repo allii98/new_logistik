@@ -148,9 +148,9 @@ class Po extends CI_Controller
             $row[] = $aksi;
             $row[] = $no . ".";
             $row[] = $d->noreftxt;
-            $row[] = $d->tglpo;
+            $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
             $row[] = $d->no_refppo;
-            $row[] = $d->tgl_refppo;
+            $row[] = date_format(date_create($d->tgl_refppo), 'd-m-Y');
             $row[] = $d->nama_supply;
             $row[] = $d->ket;
             $row[] = $d->terbayar;

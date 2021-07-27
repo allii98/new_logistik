@@ -263,7 +263,7 @@
             </div>
             <div class="modal-body">
                 <div class="col-12">
-                    <input type="text" id="hidden_no_row" name="hidden_no_row">
+                    <input type="hidden" id="no_row" name="no_row">
                     <div class="table-responsive">
                         <table id="dataspp" class="table table-striped table-bordered table-in" width="100%">
                             <thead>
@@ -369,6 +369,7 @@
 
     }
 
+
     $(document).on('click', '#data_spp', function() {
         var id = $(this).data('id');
         var noreftxt = $(this).data('noreftxt');
@@ -386,13 +387,12 @@
                 // console.log(response);
                 data = JSON.parse(response);
                 $('#hidden_noref_tambah').val(data[0].noreftxt);
-
-                var n = $('#isi_edit').val() - 1;
-                console.log('isi nya', n);
+                var n = $('#no_row').val();
 
                 $.each(data, function(index, value) {
 
-                    // console.log('ini yg belum di approve', value.statusaprove);
+
+                    // console.log('nomer row nya', n);
                     tambah_item_baru(n, value.statusaprove);
                     if (value.statusaprove == '0') {
                         $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
@@ -450,10 +450,8 @@
 
 
 
-    function tambah_item_baru(statusaprove) {
-
-        var no = $('#tableItemPO tr').length;
-        no++;
+    function tambah_item_baru(no, statusaprove) {
+        // no++;
         // console.log("status", statusaprove);
         console.log("bariske", no);
         // console.log('ini jumlah row', rowCount);
@@ -570,7 +568,7 @@
 
 
 
-        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_item').append(tr_buka + form_buka + td_col_1 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
 
         $('#txt_qty_' + no + ',#txt_harga_' + no + ',#txt_disc_' + no + ',#txt_biaya_lain_' + no + '').number(true, 0);
 
@@ -584,8 +582,8 @@
     }
 
     function tambahSpp(row) {
-        console.log('ini no rownya', row);
-        $('#hidden_no_row').val(row);
+        var dt = $('#no_row').val(row);
+        // console.log('ini no rownya', dt);
         $('#modalcarispp').modal('show');
     }
 
