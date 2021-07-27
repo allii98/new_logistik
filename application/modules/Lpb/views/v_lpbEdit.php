@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <!-- start row-->
     <div class="row justify-content-center mt-0">
-        <div class="col-md">
+        <div class="col-12">
             <div class="widget-rounded-circle card-box mt-2">
                 <h4 class="header-title">
                     <font face="Verdana"> LPB <i>(Edit)</i> </font>

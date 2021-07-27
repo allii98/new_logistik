@@ -1,39 +1,39 @@
 <div class="container-fluid">
-
     <!-- start row-->
-    <div class="row justify-content-center">
-        <div class="col-md col-xl-3">
-            <div class="widget-rounded-circle card-box">
-                <div class="row justify-content-between">
-                    <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data LPB</h4>
-                    <div class="form-group">
-                        <select class="form-control" id="filter" name="filter">
-                            <option value="">Semua</option>
-                        </select>
+    <div class="row mt-0">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data LPB</h4>
+                        <div class="form-group">
+                            <select class="form-control" id="filter" name="filter">
+                                <option value="">Semua</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-
-                <table id="tableListLPB" class="table table-sm table-striped table-bordered" width="100%">
-                    <thead>
-                        <tr>
-                            <th style="width: 75px;">#</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref LPB</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref PO</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Supplier</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Keterangan</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Terima</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Input</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">User</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+                    <table id="tableListLPB" class="table table-sm table-striped table-bordered" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="width: 75px;">#</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref LPB</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref PO</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Supplier</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Keterangan</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Terima</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Input</th>
+                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">User</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div> <!-- end card-body -->
+            </div> <!-- end card -->
+        </div><!-- end col -->
+    </div><!-- end row -->
+</div> <!-- container -->
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListItemLpb">
     <div class="modal-dialog modal-lg">

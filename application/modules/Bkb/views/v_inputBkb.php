@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row justify-content-center mt-2">
-        <div class="col-md col-xl-3">
+        <div class="col-12">
             <div class="widget-rounded-circle card-box">
                 <div class="row justify-content-between">
                     <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BKB</h4>
