@@ -15,14 +15,46 @@ class M_po extends CI_Model
         $this->load->database();
     }
 
+    public function where_datatables($id)
+    {
+        // global $nopo;
+        $this->id = $id;
+        // return $nopo;
+    }
+
+
     private function _get_datatables_query()
     {
         // $Value = ;
-        $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('po', 0);
-        $this->db_logistik_pt->where('status2', 1);
-        $this->db_logistik_pt->order_by('id', 'desc');
+        $lokasi = $this->id;
+
+        if ($lokasi == "PKS") {
+            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+            $this->db_logistik_pt->from('item_ppo');
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('LOKASI', $lokasi);
+        } elseif ($lokasi == "SITE") {
+            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+            $this->db_logistik_pt->from('item_ppo');
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('LOKASI', $lokasi);
+            # code...
+        } elseif ($lokasi == "RO") {
+            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+            $this->db_logistik_pt->from('item_ppo');
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('LOKASI', $lokasi);
+            # code...
+        } else {
+            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+            $this->db_logistik_pt->from('item_ppo');
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+        }
+
 
 
         $i = 0;

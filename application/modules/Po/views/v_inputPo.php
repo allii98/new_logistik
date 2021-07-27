@@ -323,9 +323,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <th>
                                                     <font face="Verdana" size="2.5">Keterangan</font>
                                                 </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Jumlah Rp</font>
-                                                </th>
+
                                                 <th>
                                                     <font face="Verdana" size="2.5">#</font>
                                                 </th>
@@ -340,7 +338,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_1" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
                                                 </td>
                                                 <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                                    <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="text" class="form-control" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
                                                         <input type="hidden" class="form-control" id="id_item_1" name="id">
                                                         <input type="hidden" class="form-control" id="id_ppo1" name="id_ppo1">
@@ -374,11 +372,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <input type="hidden" class="form-control" id="hidden_nama_brg_1" name="hidden_nama_brg_1" />
                                                         <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
                                                     </td>
-                                                    <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required />
+                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <textarea class="form-control" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="1"></textarea>
                                                     </td>
-                                                    <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
+                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="number" class="form-control bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                     </td>
@@ -405,27 +403,25 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                                                     </td>
                                                     <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
+                                                        <textarea class="form-control" maxlength="250" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
 
                                                     </td>
-                                                    <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
-
-                                                    </td>
-                                                    <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
-                                                        <label id="lbl_status_simpan_1"></label>
+                                                    <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <textarea class="form-control" maxlength="250" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
+                                                        <h6>Jumlah : <span id="hasil_jumlah_1"></span></h6>
+                                                        <input type="hidden" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
                                                         <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
-
                                                     </td>
+
                                                     <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <!-- <div class="ribbon ribbon-primary float-right"><i class="mdi mdi-access-point mr-1"></i> Primary</div> -->
+
                                                         <span style="display:none;" id="habis_1" class="badge badge-danger">Habis</span>
                                                         <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi('1')"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah('1')" id="btn_ubah_1" name="btn_ubah_" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update('1')"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancleUpdate('1')"></button>
                                                         <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                        <label id="lbl_status_simpan_1"></label>
                                                     </td>
 
                                                 </form>
@@ -879,47 +875,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         // end dataspp site
 
-        // data spp HO
-        $('#spp').DataTable().destroy();
-        $('#spp').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order": [],
-            "select": true,
 
-            "ajax": {
-                "url": "<?php echo site_url('Po/get_ajax') ?>",
-                "type": "POST"
-            },
-            "columnDefs ": [{
-                "targets": [0],
-                "orderable": false,
-
-            }, ],
-            "dom": 'Bfrtip',
-            "buttons": [{
-                    "text": "Select All",
-                    "action": function() {
-                        $('#spp').DataTable().rows().select();
-                    }
-                },
-                {
-                    "text": "Unselect All",
-                    "action": function() {
-                        $('#spp').DataTable().rows().deselect();
-                    }
-                }
-            ],
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [10, 15, 20, 25]
-            ],
-            "aoColumnDefs": [{
-                "bSearchable": false,
-                "bVisible": false,
-                "aTargets": [1, 2]
-            }, ]
-        });
 
         // $(document).on('click', '#pilih', function() {
         //     var id = $(this).data('id');
@@ -1080,7 +1036,67 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         });
 
+        $('#cmb_filter_alokasi').change(function() {
+            var data = this.value;
+            sppHO(data);
+
+        })
+
     });
+
+
+    function modalSPP(id) {
+        // $('#getspp').click(function() {
+        var data = "SEMUA";
+        sppHO(data);
+        $("#modal-spp").modal();
+    }
+
+    function sppHO(data) {
+        $('#spp').DataTable().destroy();
+        $('#spp').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "select": true,
+
+            "ajax": {
+                "url": "<?php echo site_url('Po/get_ajax') ?>",
+                "type": "POST",
+                "data": {
+                    data: data
+                }
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+
+            }, ],
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().deselect();
+                    }
+                }
+            ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+            "aoColumnDefs": [{
+                "bSearchable": false,
+                "bVisible": false,
+                "aTargets": [1, 2]
+            }, ]
+        });
+    }
 
     function cetak() {
         var id_po = $('#hidden_id_po').val();
@@ -1201,7 +1217,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var td_col_11 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="1"></textarea>' +
             '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
-            '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" size="20" name="txt_jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
+            '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" size="20" name="txt_jumlah_' + ro
+        w + '"  placeholder="Jumlah"  readonly />' +
 
             '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
             '</td>';
@@ -1300,7 +1317,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_merk_' + n + '" name="txt_merk_' + n + '" placeholder="Merk"  required />' +
+            '<textarea maxlength="250" class="form-control" id="txt_merk_' + n + '" name="txt_merk_' + n + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1336,15 +1353,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<textarea class="form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
 
             '</td>'
-        var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_11 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
+            '<h6>Jumlah : <span id="hasil_jumlah_' + n + '"></span></h6>' +
+            '<input type="hidden" class="form-control bg-light" id="txt_jumlah_' + n + '" onkeyup="jumlah(' + n + ')" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
 
-            '</td>';
-        var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control bg-light" id="txt_jumlah_' + n + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
-            '<label id="lbl_status_simpan_' + n + '"></label>' +
             '<input type="hidden" id="hidden_id_po_item_' + n + '" name="hidden_id_po_item_' + n + '">' +
             '</td>';
+
         var td_col_13 = '<td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<span style="display:none;" id="habis_' + n + '" class="badge badge-danger">Habis</span>' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + n + ')" ></button>' +
@@ -1352,13 +1368,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
-
+            '<label id="lbl_status_simpan_' + n + '"></label>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
         var lokasi = $('#lokasi').val();
 
-        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
 
         $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
         hitungqty(n);
@@ -1560,11 +1576,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     }
 
-    function modalSPP(id) {
-        // $('#getspp').click(function() {
-        $("#modal-spp").modal();
-        // });
-    }
+
+
 
     function hitungqty(id) {
         $('#txt_qty_' + id).keyup(function() {

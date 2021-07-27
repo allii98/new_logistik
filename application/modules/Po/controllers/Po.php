@@ -27,6 +27,8 @@ class Po extends CI_Controller
 
     function get_ajax()
     {
+        $id = $this->input->post('data');
+        $this->M_po->where_datatables($id);
         $list = $this->M_po->get_datatables();
         $data = array();
         $no = $_POST['start'];

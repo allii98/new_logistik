@@ -37,15 +37,9 @@
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                 </div> -->
 
-                                <table border="0" width="75%">
+                                <table border="0" width="50%">
 
-                                    <td>
 
-                                        <h6 id="tgl_spp" name="tgl_spp"></h6>
-                                    </td>
-                                    <td>
-                                        <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
-                                    </td>
                                     <td>
                                         <h6 id="tgl_po" name="tgl_po"></h6>
                                     </td>
@@ -1186,7 +1180,7 @@
         var td_col_1 = '<td width="3%">' +
             '<input type="hidden" id="hidden_proses_status_' + n + '" name="hidden_proses_status_' + n + '" value="insert">' +
             '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" name="btn_tambah_row" id="tambah_row' + n + '" ></button>' +
-            '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + n + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row" onclick="hapus_row(' + n + ')"></button>' +
+            // '<button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_' + n + '" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row" onclick="hapus_row(' + n + ')"></button>' +
             '</td>';
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
@@ -1287,7 +1281,7 @@
         var tr_tutup = '</tr>';
         var lokasi = $('#lokasi').val();
 
-        $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_rincian').append(tr_buka + form_buka + td_col_1 + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
         $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
         hitungqty(n);
         jumlah(n);
