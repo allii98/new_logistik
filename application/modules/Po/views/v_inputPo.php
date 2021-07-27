@@ -5,368 +5,376 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     <!-- start page title -->
     <!-- end page title -->
     <div class="row justify-content-center mt-1">
-        <div class="col-md">
-            <div class="widget-rounded-circle card-box">
-                <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
-                <p class="sub-header my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                    Input Purchase Order
-                </p>
-                <div class="row mt-0 div_form_1">
-                    <div class="col-md-4">
-                        <div class="form-group row mb-1">
-                            <!-- <a href="<?php echo site_url('po/input'); ?>" class="btn btn-sm btn-info" id="a_po_baru"><span class="fa fa-plus"></span> PO Baru</a> -->
-                            <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;PO&nbsp;*</label>
-                            <div class="col-4">
-                                <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
-                                <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
-                                <select class="form-control" id="cmb_pilih_jenis_po" onchange="jenisPO()">
-                                    <option disabled>
-                                        <font face="Verdana" size="2.5">-Pilih-</font>
-                                    </option>
-                                    <?php
-                                    switch ($lokasi_sesi) {
-                                        case 'PKS':
-                                    ?>
-                                            <option selected="selected" value="PO-Lokal">PO-Lokal</option>
-                                        <?php
-                                            break;
-                                        case 'SITE':
-                                        ?>
-                                            <option selected="selected" value="PO-Lokal">PO-Lokal</option>
-                                        <?php
-                                            break;
-                                        case 'RO':
-                                        ?>
-                                            <option selected="selected" value="PO-Lokal">PO-Lokal</option>
-                                        <?php
-                                            break;
-                                        case 'HO':
-                                        ?>
-                                            <option value="PO">PO</option>
-                                            <option value="POA">POA - PO Asset</option>
-                                            <option value="PO-Khusus">POK - PO Khusus</option>
-                                    <?php
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-3 col-form-label">
-                                <font face="Verdana" size="2.5">Tgl.&nbsp;PO&nbsp;*</font>
-                            </label>
-                            <div class="col-5">
-                                <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-3 col-form-label">
-                                <font face="Verdana" size="2.5">Supplier&nbsp;*</font>
-                            </label>
-                            <div class="col-8">
-                                <select class="js-data-example-ajax form-control select2" id="select2">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
+                    </div>
 
-                                    <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                        <option disabled>Nama Supplier</option>
-                                    <?php } else { ?>
-                                        <option disabled>Nama Supplier</option>
-                                        <option selected value="0475">TOKO ( KAS )</option>
-                                    <?php } ?>
-                                </select>
-                                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
+                    <div class="row justify-content-between">
+                        <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                            Input Purchase Order
+                        </p>
+                        <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-success btn-rounded waves-effect waves-light width-sm" id="a_po_baru">PO Baru</a>
+                    </div>
+                    <br>
+                    <div class="row mt-0 div_form_1">
+                        <div class="col-md-4">
+                            <div class="form-group row mb-1">
+                                <label class="col-3 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;PO&nbsp;*</label>
+                                <div class="col-4">
+                                    <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
+                                    <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
+                                    <select class="form-control" id="cmb_pilih_jenis_po" onchange="jenisPO()">
+                                        <option disabled>
+                                            <font face="Verdana" size="2.5">-Pilih-</font>
+                                        </option>
+                                        <?php
+                                        switch ($lokasi_sesi) {
+                                            case 'PKS':
+                                        ?>
+                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                            <?php
+                                                break;
+                                            case 'SITE':
+                                            ?>
+                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                            <?php
+                                                break;
+                                            case 'RO':
+                                            ?>
+                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                            <?php
+                                                break;
+                                            case 'HO':
+                                            ?>
+                                                <option value="PO">PO</option>
+                                                <option value="POA">POA - PO Asset</option>
+                                                <option value="PO-Khusus">POK - PO Khusus</option>
+                                        <?php
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-3 col-form-label">
+                                    <font face="Verdana" size="2.5">Tgl.&nbsp;PO&nbsp;*</font>
+                                </label>
+                                <div class="col-5">
+                                    <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-3 col-form-label">
+                                    <font face="Verdana" size="2.5">Supplier&nbsp;*</font>
+                                </label>
+                                <div class="col-8">
+                                    <select class="js-data-example-ajax form-control select2" id="select2">
+
+                                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                                            <option disabled>Nama Supplier</option>
+                                        <?php } else { ?>
+                                            <option disabled>Nama Supplier</option>
+                                            <option selected value="0475">TOKO ( KAS )</option>
+                                        <?php } ?>
+                                    </select>
+                                    <!-- <select class="js-data-example-ajax form-control select2" id="select2">
                                     <option disabled>Nama Supplier</option>
                                     <option selected value="0475">TOKO ( KAS )</option>
                                 </select> -->
-                                <input type="hidden" name="kd_supplier" value="TOKO ( KAS )" id="kd_supplier">
-                                <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
+                                    <input type="hidden" name="kd_supplier" value="TOKO ( KAS )" id="kd_supplier">
+                                    <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-3 col-form-label">
+                                    <font face="Verdana" size="2.5">Status&nbsp;Bayar*</font>
+                                </label>
+                                <div class="col-3">
+                                    <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
+                                        <option value="Cash">
+                                            <font face="Verdana" size="2.5">Cash</font>
+                                        </option>
+                                        <option value="Kredit">Kredit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-3 col-form-label">
+                                    <font face="Verdana" size="2.5">Tempo bayar*</font>
+                                </label>
+                                <div class="col-3">
+                                    <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" value="0" autocomplite="off"><span>
+                                        <font face="Verdana" size="2.5">Hari</font>
+                                    </span>
+                                </div>
+                                <label class="col-2 col-form-label mr-1">
+                                    <font face="Verdana" size="2">Tempo Pengirim*</font>
+                                </label>
+                                <div class="col-sm-3">
+                                    <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" value="0" autocomplite="off" required><span>Hari</span>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-3 col-form-label">
-                                <font face="Verdana" size="2.5">Status&nbsp;Bayar*</font>
-                            </label>
-                            <div class="col-3">
-                                <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
-                                    <option value="Cash">
-                                        <font face="Verdana" size="2.5">Cash</font>
-                                    </option>
-                                    <option value="Kredit">Kredit</option>
-                                </select>
+                        <div class="col-md-4">
+                            <div class="form-group row mb-1">
+                                <label class="col-4 mr-1 col-form-label">
+                                    <font face="Verdana" size="2">Lokasi&nbsp;Pengiriman*</font>
+                                </label>
+                                <div class="col-5">
+                                    <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
+                                    <!-- <span class="pesan pesan-nama" style="color: red;">Harus di isi !</span><br /> -->
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-3 col-form-label">
-                                <font face="Verdana" size="2.5">Tempo bayar*</font>
-                            </label>
-                            <div class="col-3">
-                                <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" value="0" autocomplite="off"><span>
-                                    <font face="Verdana" size="2.5">Hari</font>
-                                </span>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 mr-1 col-form-label">
+                                    <font face="Verdana" size="2">Devisi*</font>
+                                </label>
+                                <div class="col-7">
+                                    <!-- <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required> -->
+                                    <input type="text" class="form-control bg-light" onclick="tampildevisi()" id="devisi" name="devisi" readonly required>
+                                    <input type="hidden" name="" id="hidden_devisi">
+                                </div>
                             </div>
-                            <label class="col-2 col-form-label mr-1">
-                                <font face="Verdana" size="2">Tempo Pengirim*</font>
-                            </label>
-                            <div class="col-sm-3">
-                                <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" value="0" autocomplite="off" required><span>Hari</span>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label  mr-1">
+                                    <font face="Verdana" size="2">Lokasi&nbsp;Pembelian*</font>
+                                </label>
+                                <div class="col-4">
+                                    <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
+                                        <option disabled>-- Pilih --</option>
+                                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                                            <option value="HO">HO</option>
+                                            <option value="RO">RO</option>
+                                            <option value="SITE">SITE</option>
+                                        <?php } else { ?>
+                                            <option value="RO">RO</option>
+                                            <option selected="selected" value="SITE">SITE</option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="form-group row mb-1">
-                            <label class="col-4 mr-1 col-form-label">
-                                <font face="Verdana" size="2">Lokasi&nbsp;Pengiriman*</font>
-                            </label>
-                            <div class="col-5">
-                                <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
-                                <!-- <span class="pesan pesan-nama" style="color: red;">Harus di isi !</span><br /> -->
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label mr-1">
+                                    <font face="Verdana" size="2">No.&nbsp;Penawaran*</font>
+                                </label>
+                                <div class="col-7">
+                                    <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 mr-1 col-form-label">
-                                <font face="Verdana" size="2">Devisi*</font>
-                            </label>
-                            <div class="col-7">
-                                <!-- <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required> -->
-                                <input type="text" class="form-control bg-light" onclick="tampildevisi()" id="devisi" name="devisi" readonly required>
-                                <input type="hidden" name="" id="hidden_devisi">
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label  mr-1">
-                                <font face="Verdana" size="2">Lokasi&nbsp;Pembelian*</font>
-                            </label>
-                            <div class="col-4">
-                                <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
-                                    <option disabled>-- Pilih --</option>
-                                    <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                        <option value="HO">HO</option>
-                                        <option value="RO">RO</option>
-                                        <option value="SITE">SITE</option>
-                                    <?php } else { ?>
-                                        <option value="RO">RO</option>
-                                        <option selected="selected" value="SITE">SITE</option>
-                                    <?php } ?>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label mr-1">
-                                <font face="Verdana" size="2">No.&nbsp;Penawaran*</font>
-                            </label>
-                            <div class="col-7">
-                                <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label mr-1">
-                                <font face="Verdana" size="2">Pemesan *</font>
-                            </label>
-                            <div class="col-5">
-                                <!-- <input type="text" class="form-control bg-light" id="txt_pemesan" name="txt_pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label mr-1">
+                                    <font face="Verdana" size="2">Pemesan *</font>
+                                </label>
+                                <div class="col-5">
+                                    <!-- <input type="text" class="form-control bg-light" id="txt_pemesan" name="txt_pemesan" value="<?php echo $this->session->userdata('user'); ?>" readonly>
                                 <input type="hidden" name="txt_kode_pemesan" id="txt_kode_pemesan" value="<?php echo $this->session->userdata('id_user'); ?>"> -->
-                                <select class="form-control" id="txt_pemesan" name="txt_pemesan" required>
-                                    <option disabled>-Pilih-</option>
-                                    <option selected value="GM">GM</option>
-                                    <option value="KTU">KTU</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label mr-1">
-                                <font face="Verdana" size="2">Ket. Pengirim*</font>
-                            </label>
-                            <div class="col-7">
-                                <textarea maxlength="250" class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
-                                <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
-                                <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4">
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label mx-0">
-                                <font face="Verdana" size="2">PPH *</font>
-                            </label>
-                            <div class="col-4">
-                                <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label" required>
-                                <font face="Verdana" size="2">PPN *</font>
-                            </label>
-                            <div class="col-3">
-                                <select class="form-control" id="ppn" name="ppn" required>
-                                    <option value="0">N</option>
-                                    <option value="10">Y</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label">
-                                <font face="Verdana" size="2">Ket*</font>
-                            </label>
-                            <div class="col-7">
-                                <textarea maxlength="250" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
-                            </div>
-                        </div>
-                        <?php
-                        switch ($lokasi_sesi) {
-                            case 'HO':
-                        ?>
-                                <div class="form-group row mb-1 my-0">
-                                    <label class="col-4 col-form-label">
-                                        <font face="Verdana" size="2">Dikirim&nbsp;ke&nbsp;Kebun*</font>
-                                    </label>
-                                    <div class="col-3 py-0">
-                                        <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
-                                            <option value="Y" selected="">Y</option>
-                                            <option value="N">N</option>
-                                        </select>
-                                    </div>
+                                    <select class="form-control" id="txt_pemesan" name="txt_pemesan" required>
+                                        <option disabled>-Pilih-</option>
+                                        <option selected value="GM">GM</option>
+                                        <option value="KTU">KTU</option>
+                                    </select>
                                 </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label mr-1">
+                                    <font face="Verdana" size="2">Ket. Pengirim*</font>
+                                </label>
+                                <div class="col-7">
+                                    <textarea maxlength="250" class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
+                                    <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
+                                    <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label mx-0">
+                                    <font face="Verdana" size="2">PPH *</font>
+                                </label>
+                                <div class="col-4">
+                                    <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label" required>
+                                    <font face="Verdana" size="2">PPN *</font>
+                                </label>
+                                <div class="col-3">
+                                    <select class="form-control" id="ppn" name="ppn" required>
+                                        <option value="0">N</option>
+                                        <option value="10">Y</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">
+                                    <font face="Verdana" size="2">Ket*</font>
+                                </label>
+                                <div class="col-7">
+                                    <textarea maxlength="250" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
+                                </div>
+                            </div>
                             <?php
-                                break;
-                            case 'RO':
-                            case 'SITE':
-                            case 'PKS':
+                            switch ($lokasi_sesi) {
+                                case 'HO':
                             ?>
-                        <?php
-                                break;
-                            default:
-                                break;
-                        }
-                        ?>
-                        <div class="form-group row mb-1">
-                            <label class="col-4 col-form-label">
-                                <font face="Verdana" size="2">Total&nbsp;Bayar</font>
-                            </label>
-                            <div class="col-7">
-                                <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <!-- end row-->
-                <hr class="mt-0 mb-2">
-                <?php
-                switch ($sesi_sl) {
-                    case 'HO':
-                ?>
-                        <div class="x_content mb-0 div_form_2">
-
-                            <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
-                                <div class="row ml-1 mr-1 justify-content-between">
-                                    <h6 id="lbl_spp_status" name="lbl_spp_status">
-                                        <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
-                                    </h6>
-                                    <h6>
-                                        <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
-                                    </h6>
+                                    <div class="form-group row mb-1 my-0">
+                                        <label class="col-4 col-form-label">
+                                            <font face="Verdana" size="2">Dikirim&nbsp;ke&nbsp;Kebun*</font>
+                                        </label>
+                                        <div class="col-3 py-0">
+                                            <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
+                                                <option value="Y" selected="">Y</option>
+                                                <option value="N">N</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                <?php
+                                    break;
+                                case 'RO':
+                                case 'SITE':
+                                case 'PKS':
+                                ?>
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+                            <div class="form-group row mb-1">
+                                <label class="col-4 col-form-label">
+                                    <font face="Verdana" size="2">Total&nbsp;Bayar</font>
+                                </label>
+                                <div class="col-7">
+                                    <input type="text" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
                                 </div>
-                                <input type="hidden" id="hidden_no_po" name="hidden_no_po">
-                                <input type="hidden" id="hidden_id_po" name="hidden_id_po">
-                                <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
-                                <input type="hidden" id="refspp" name="refspp">
-                                <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                             </div>
-                            <div class="row" style="margin-left:4px;">
-                                <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
-                                <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                            </div>
-                            <div class="table-responsive mt-0">
-                                <table id="tableRinciPO" class="table table-striped table-bordered table-in">
-                                    <thead>
-                                        <tr>
-                                            <?php
-                                            switch ($sesi_sl) {
-                                                case 'HO':
-                                            ?>
-                                                    <th>#</th>
-                                                    <th width="250px">
-                                                        <font face="Verdana" size="2.5">SPP</font>
-                                                    </th>
-                                                <?php
-                                                    break;
-                                                case 'RO':
-                                                case 'SITE':
-                                                case 'PKS':
-                                                ?>
-                                            <?php
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
-                                            ?>
 
-                                            <!-- <th>
+                        </div>
+                    </div>
+                    <!-- end row-->
+                    <hr class="mt-0 mb-2">
+                    <?php
+                    switch ($sesi_sl) {
+                        case 'HO':
+                    ?>
+                            <div class="x_content mb-0 div_form_2">
+
+                                <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
+                                    <div class="row ml-1 mr-1 justify-content-between">
+                                        <h6 id="lbl_spp_status" name="lbl_spp_status">
+                                            <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
+                                        </h6>
+                                        <h6>
+                                            <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
+                                        </h6>
+                                    </div>
+                                    <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                                    <input type="hidden" id="hidden_id_po" name="hidden_id_po">
+                                    <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                                    <input type="hidden" id="refspp" name="refspp">
+                                    <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
+                                </div>
+                                <div class="row" style="margin-left:4px;">
+                                    <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
+                                    <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                                </div>
+                                <div class="table-responsive mt-0">
+                                    <table id="tableRinciPO" class="table table-striped table-bordered table-in">
+                                        <thead>
+                                            <tr>
+                                                <?php
+                                                switch ($sesi_sl) {
+                                                    case 'HO':
+                                                ?>
+                                                        <th>#</th>
+                                                        <th width="250px">
+                                                            <font face="Verdana" size="2.5">SPP</font>
+                                                        </th>
+                                                    <?php
+                                                        break;
+                                                    case 'RO':
+                                                    case 'SITE':
+                                                    case 'PKS':
+                                                    ?>
+                                                <?php
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
+                                                ?>
+
+                                                <!-- <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
                                             </th> -->
-                                            <th width="500px">
-                                                <font face="Verdana" size="2.5">Nama & Kode Barang</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Merk</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Qty</font>
-                                            </th>
+                                                <th width="500px">
+                                                    <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Merk</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Qty</font>
+                                                </th>
 
-                                            <th>
-                                                <font face="Verdana" size="2.5">Harga</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Kurs</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Disc <span>%</span></font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Biaya Lainnya</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
-                                            </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Harga</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Kurs</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Disc <span>%</span></font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Biaya Lainnya</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
+                                                </th>
 
-                                            <th>
-                                                <font face="Verdana" size="2.5">Keterangan</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Jumlah Rp</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">#</font>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody_rincian" name="tbody_rincian">
-                                        <tr id="tr_1">
-                                            <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
-                                                <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="tambah_row1" name="btn_tambah_row" onfocus="modalSPP('1')"></button>
-                                                <!-- <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalD('1')"></button> -->
-                                                <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_1" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
-                                            </td>
-                                            <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                                <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
-                                                    <input type="hidden" class="form-control" id="id_item_1" name="id">
-                                                    <input type="hidden" class="form-control" id="id_ppo1" name="id_ppo1">
-                                                    <input type="hidden" class="form-control" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_">
-                                                    <input type="hidden" class="form-control" id="hidden_tgl_ref_1" name="hidden_tgl_ref_">
-                                                    <input type="hidden" class="form-control" id="hidden_kd_departemen_1" name="hidden_kd_departemen_">
-                                                    <input type="hidden" class="form-control" id="hidden_departemen_1" name="hidden_departemen_">
-                                                    <input type="hidden" class="form-control" id="hidden_tgl_spp_1" name="hidden_tgl_spp_">
-                                                    <input type="hidden" class="form-control" id="hidden_kd_pt_1" name="hidden_kd_pt_">
-                                                    <input type="hidden" class="form-control" id="hidden_nama_pt_1" name="hidden_nama_pt_">
-                                                    <input type="hidden" class="form-control" id="noppo1" name="noppo1">
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Keterangan</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Jumlah Rp</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">#</font>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_rincian" name="tbody_rincian">
+                                            <tr id="tr_1">
+                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <input type="hidden" id="hidden_proses_status_1" name="hidden_proses_status_1" value="insert">
+                                                    <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="tambah_row1" name="btn_tambah_row" onfocus="modalSPP('1')"></button>
+                                                    <!-- <button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row" name="btn_tambah_row" onclick="pilihModalD('1')"></button> -->
+                                                    <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_1" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
                                                 </td>
-                                                <!-- <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
+                                                    <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
+                                                        <input type="hidden" class="form-control" id="id_item_1" name="id">
+                                                        <input type="hidden" class="form-control" id="id_ppo1" name="id_ppo1">
+                                                        <input type="hidden" class="form-control" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_">
+                                                        <input type="hidden" class="form-control" id="hidden_tgl_ref_1" name="hidden_tgl_ref_">
+                                                        <input type="hidden" class="form-control" id="hidden_kd_departemen_1" name="hidden_kd_departemen_">
+                                                        <input type="hidden" class="form-control" id="hidden_departemen_1" name="hidden_departemen_">
+                                                        <input type="hidden" class="form-control" id="hidden_tgl_spp_1" name="hidden_tgl_spp_">
+                                                        <input type="hidden" class="form-control" id="hidden_kd_pt_1" name="hidden_kd_pt_">
+                                                        <input type="hidden" class="form-control" id="hidden_nama_pt_1" name="hidden_nama_pt_">
+                                                        <input type="hidden" class="form-control" id="noppo1" name="noppo1">
+                                                    </td>
+                                                    <!-- <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <select class="form-control" id="cmb_jenis_budget_1" name="cmb_jenis_budget_1" required>
                                                         <option value="">-- Pilih --</option>
                                                         <option value="TEKNIK">TEKNIK</option>
@@ -381,164 +389,165 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <option value="TBM">TBM</option>
                                                     </select>
                                                 </td> -->
-                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <span id="nama_brg_1"></span><br><span id="kode_brg_1"></span>
-                                                    <input type="hidden" class="form-control" id="hidden_kode_brg_1" name="hidden_kode_brg_1" />
-                                                    <input type="hidden" class="form-control" id="hidden_nama_brg_1" name="hidden_nama_brg_1" />
-                                                    <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
-                                                </td>
-                                                <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required />
-                                                </td>
-                                                <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
-                                                    <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
-                                                    <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
-                                                </td>
-                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
-                                                </td>
-                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <select class="form-control" id="cmb_kurs_1" name="cmb_kurs_1" required="">
-                                                        <option value="Rp">Rp IDR</option>
-                                                        <option value="USD">&dollar; USD</option>
-                                                        <option value="SGD">S&dollar; SGD</option>
-                                                        <option value="Euro">&euro; Euro</option>
-                                                        <option value="GBP">&pound; GBP</option>
-                                                        <option value="Yen">&yen; Yen</option>
-                                                        <option value="MYR">RM MYR</option>
-                                                    </select><br />
-                                                </td>
-                                                <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
+                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <span id="nama_brg_1"></span><br><span id="kode_brg_1"></span>
+                                                        <input type="hidden" class="form-control" id="hidden_kode_brg_1" name="hidden_kode_brg_1" />
+                                                        <input type="hidden" class="form-control" id="hidden_nama_brg_1" name="hidden_nama_brg_1" />
+                                                        <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
+                                                    </td>
+                                                    <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control" id="txt_merk_1" name="txt_merk_1" placeholder="Merk" required />
+                                                    </td>
+                                                    <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
+                                                        <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
+                                                        <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
+                                                    </td>
+                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
+                                                    </td>
+                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <select class="form-control" id="cmb_kurs_1" name="cmb_kurs_1" required="">
+                                                            <option value="Rp">Rp IDR</option>
+                                                            <option value="USD">&dollar; USD</option>
+                                                            <option value="SGD">S&dollar; SGD</option>
+                                                            <option value="Euro">&euro; Euro</option>
+                                                            <option value="GBP">&pound; GBP</option>
+                                                            <option value="Yen">&yen; Yen</option>
+                                                            <option value="MYR">RM MYR</option>
+                                                        </select><br />
+                                                    </td>
+                                                    <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
 
-                                                </td>
-                                                <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="txt_biaya_lain_1" name="txt_biaya_lain_11" size="15" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" />
+                                                    </td>
+                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control" id="txt_biaya_lain_1" name="txt_biaya_lain_11" size="15" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" />
 
-                                                </td>
-                                                <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <textarea class="form-control" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
+                                                    </td>
+                                                    <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <textarea class="form-control" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
 
-                                                </td>
-                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <textarea class="form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
+                                                    </td>
+                                                    <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <textarea class="form-control" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
 
-                                                </td>
-                                                <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
-                                                    <label id="lbl_status_simpan_1"></label>
-                                                    <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
+                                                    </td>
+                                                    <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
+                                                        <label id="lbl_status_simpan_1"></label>
+                                                        <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
 
-                                                </td>
-                                                <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <!-- <div class="ribbon ribbon-primary float-right"><i class="mdi mdi-access-point mr-1"></i> Primary</div> -->
-                                                    <span style="display:none;" id="habis_1" class="badge badge-danger">Habis</span>
-                                                    <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi('1')"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah('1')" id="btn_ubah_1" name="btn_ubah_" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update('1')"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancleUpdate('1')"></button>
-                                                    <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
-                                                </td>
+                                                    </td>
+                                                    <td width="3%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <!-- <div class="ribbon ribbon-primary float-right"><i class="mdi mdi-access-point mr-1"></i> Primary</div> -->
+                                                        <span style="display:none;" id="habis_1" class="badge badge-danger">Habis</span>
+                                                        <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah('1')" id="btn_ubah_1" name="btn_ubah_" type="button" data-toggle="tooltip" data-placement="right" title="Ubah"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancleUpdate('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_1" name="btn_hapus_" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                    </td>
 
-                                            </form>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                                </form>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                    <?php
-                        break;
-                    case 'RO':
-                    case 'SITE':
-                    case 'PKS':
-                    ?>
-                        <div class="x_content div_form_3">
-                            <table border="0" width="80%">
+                        <?php
+                            break;
+                        case 'RO':
+                        case 'SITE':
+                        case 'PKS':
+                        ?>
+                            <div class="x_content div_form_3">
+                                <table border="0" width="80%">
 
-                                <td>
-                                    <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
-                                </td>
-                                <td>
-                                    <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                                </td>
-                            </table>
-                            <br>
-                            <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
-                                <div class="row ml-1 mr-1 justify-content-between">
+                                    <td>
+                                        <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+                                    </td>
+                                    <td>
+                                        <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                                    </td>
+                                </table>
+                                <br>
+                                <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
+                                    <div class="row ml-1 mr-1 justify-content-between">
 
 
-                                    <!-- <h6 id="lbl_spp_status" name="lbl_spp_status">
+                                        <!-- <h6 id="lbl_spp_status" name="lbl_spp_status">
                                         <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
                                     </h6> -->
-                                    <h6>
                                         <h6>
-                                            <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
+                                            <h6>
+                                                <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
+                                            </h6>
                                         </h6>
-                                    </h6>
+                                    </div>
+                                    <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                                    <input type="hidden" id="hidden_id_po" name="hidden_id_po">
+                                    <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                                    <input type="hidden" id="refspp" name="refspp">
+                                    <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                                 </div>
-                                <input type="hidden" id="hidden_no_po" name="hidden_no_po">
-                                <input type="hidden" id="hidden_id_po" name="hidden_id_po">
-                                <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
-                                <input type="hidden" id="refspp" name="refspp">
-                                <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
-                            </div>
-                            <br>
+                                <br>
 
-                            <div class="table-responsive mt-0">
-                                <table id="tableItemPO" class="table table-striped table-bordered table-in">
-                                    <thead>
-                                        <tr>
-                                            <!-- <th>
+                                <div class="table-responsive mt-0">
+                                    <table id="tableItemPO" class="table table-striped table-bordered table-in">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
                                             </th> -->
-                                            <th>
-                                                <font face="Verdana" size="2.5">Nama & Kode Barang</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Merk</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Qty</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Harga</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Kurs</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Disc <span>%</span></font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Biaya Lainnya</font>
-                                            </th>
-                                            <th>
-                                                <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
-                                            </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Merk</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Qty</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Harga</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Kurs</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Disc <span>%</span></font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Biaya Lainnya</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
+                                                </th>
 
-                                            <th>
-                                                <font face="Verdana" size="2.5">Keterangan</font>
-                                            </th>
-                                            <!-- <th>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Keterangan</font>
+                                                </th>
+                                                <!-- <th>
                                                 <font face="Verdana" size="2.5">Jumlah Rp</font>
                                             </th> -->
-                                            <th>
-                                                <font face="Verdana" size="2.5">#</font>
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="tbody_item" name="tbody_item">
-                                    </tbody>
-                                </table>
+                                                <th>
+                                                    <font face="Verdana" size="2.5">#</font>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbody_item" name="tbody_item">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                <?php
-                        break;
-                    default:
-                        break;
-                }
-                ?>
+                    <?php
+                            break;
+                        default:
+                            break;
+                    }
+                    ?>
+                </div>
             </div> <!-- end card-body -->
         </div> <!-- end card -->
     </div><!-- end col -->

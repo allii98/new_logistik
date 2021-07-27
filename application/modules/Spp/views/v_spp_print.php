@@ -36,6 +36,21 @@
         .warna_sebagian {
             background-color: gray;
         }
+
+        textarea {
+            width: 120px;
+            word-wrap: break-word;
+            border: none;
+            background-color: transparent;
+            resize: none;
+            outline: none;
+        }
+
+        .ow {
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            hyphens: auto;
+        }
     </style>
     <title>SPP - Surat Permintaan Pembelian</title>
 </head>
@@ -57,8 +72,8 @@
             </td>
             <td colspan="4">Nomor Referensi &nbsp;: <?= $ppo->noreftxt; ?><br />
                 Tgl. Referensi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= date("d-m-Y", strtotime($ppo->tglref)); ?><br />
-                Keterangan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= $ppo->ket; ?><br />
-                Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <b><?= $ppo->status; ?></b><br />
+                Keterangan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <span style="width:100px; word-wrap:break-word; display:inline-block;">><?= $ppo->ket; ?></style=><br />
+                    Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <b><?= $ppo->status; ?></b><br />
             </td>
         </tr>
         <tr>
@@ -71,7 +86,7 @@
             <td align="center">KUANTITAS</td>
             <td align="center">SISA STOK</td>
             <td align="center">SAT</td>
-            <td align="center" width="30%">KETERANGAN</td>
+            <td align="center" width="35%">KETERANGAN</td>
         </tr>
 
         <?php
@@ -87,7 +102,9 @@
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                         <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                        <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                        <td class="noborder ow">
+                            <span style="width:100px; word-wrap:break-word; display:inline-block;"><?= $list_item->ket; ?></span>
+                        </td>
                     </tr>
                 <?php
                 } else {
@@ -99,7 +116,9 @@
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                         <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                        <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                        <td class="noborder ow">
+                            <span style="width:100px; word-wrap:break-word; display:inline-block;"><?= $list_item->ket; ?></span>
+                        </td>
                     </tr>
                 <?php
                 }
@@ -112,7 +131,9 @@
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                     <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                    <td class="noborder ow">
+                        <span style="width:100px; word-wrap:break-word; display:inline-block;"><?= $list_item->ket; ?></span>
+                    </td>
                 </tr>
             <?php
             } else {
@@ -124,7 +145,9 @@
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                     <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                    <td class="noborder ow">
+                        <span style="width:100px; word-wrap:break-word; display:inline-block;"><?= $list_item->ket; ?></span>
+                    </td>
                 </tr>
         <?php
             }

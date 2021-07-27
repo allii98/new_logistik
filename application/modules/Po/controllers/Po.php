@@ -91,10 +91,21 @@ class Po extends CI_Controller
     {
         $dt = str_replace('.', '/', $id);
 
+        $po = $this->db_logistik_pt->query("SELECT nopo, pph, ppn FROM po WHERE noreftxt='$dt'")->row();
+
         $data = [
+            'no_po' => $po->nopo,
             'nopo' => $dt,
+            'pph' => $po->pph,
+            'ppn' => $po->ppn,
             'sesi_sl' => $this->session->userdata('status_lokasi')
         ];
+
+
+        // echo "<pre>";
+        // print_r($data);
+        // echo "</pre>";
+
 
         $this->template->Load('template', 'v_edit_po', $data);
     }
@@ -488,11 +499,11 @@ class Po extends CI_Controller
                 $kodepo = "PKY";
                 break;
             case 'SITE':
-                $lokasipo = 3;
+                $lokasipo = 2;
                 $kodepo = "SWJ";
                 break;
             case 'PKS':
-                $lokasipo = 6;
+                $lokasipo = 3;
                 $kodepo = "SWJ";
                 break;
             default:
@@ -1365,6 +1376,187 @@ class Po extends CI_Controller
         $noref = $this->input->post('noref');
         $data = $this->M_po->cek_isi($noref);
         echo json_encode($data);
+    }
+
+    function po_edit()
+    {
+        $data['nama_dept'] = $this->M_po->namaDept($this->input->post("hidden_kode_departemen"));
+        $lokasibuatspp = substr($this->input->post('hidden_no_ref'), 0, 3);
+        switch ($lokasibuatspp) {
+            case 'PST': // HO
+                $lokasispp = 1;
+                break;
+            case 'ROM': // RO
+                $lokasispp = 2;
+                break;
+            case 'EST': // SITE
+                $lokasispp = 3;
+                break;
+            case 'FAC': // PKS
+                $lokasispp = 6;
+                break;
+            default:
+                break;
+        }
+
+        $lokasibuatpo = $this->session->userdata('status_lokasi');
+        switch ($lokasibuatpo) {
+            case 'HO':
+                $lokasipo = 1;
+                $kodepo = "BWJ";
+                break;
+            case 'RO':
+                $lokasipo = 2;
+                $kodepo = "PKY";
+                break;
+            case 'SITE':
+                $lokasipo = 3;
+                $kodepo = "SWJ";
+                break;
+            case 'PKS':
+                $lokasipo = 6;
+                $kodepo = "SWJ";
+                break;
+            default:
+                break;
+        }
+
+        $key = $lokasispp . $lokasipo;
+
+        $query_po = "SELECT MAX(SUBSTRING(nopotxt, 3)) as maxpo from po WHERE nopotxt LIKE '$key%'";
+        $generate_po = $this->db_logistik_pt->query($query_po)->row();
+        $noUrut = (int)($generate_po->maxpo);
+        $noUrut++;
+        $print = sprintf("%05s", $noUrut);
+
+
+        $hidden_jenis_spp = $this->input->post('hidden_jenis_spp');
+
+        $no_po = $this->input->post('hidden_no_po');
+        $norefpo = $this->input->post('hidden_no_ref_po');
+
+
+        $query_id_item = "SELECT MAX(id)+1 as no_id_item FROM item_po";
+        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
+        $no_id_item = $generate_id_item->no_id_item;
+        if (empty($no_id_item)) {
+            $no_id_item = 1;
+        }
+
+        $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
+        $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
+
+        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00" || $this->input->post('txt_biaya_lain') != "0" || $this->input->post('txt_biaya_lain') != "0.00") {
+            $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+            $disc = $this->input->post('txt_disc') / 100;
+            $jumharga_pre = $qty_harga - ($qty_harga * $disc);
+            $biaya_lain = $this->input->post('txt_biaya_lain');
+            $jumharga = $jumharga_pre + $biaya_lain;
+        } else {
+            $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+        }
+
+        $pph = $this->input->post('txt_pph');
+        if (empty($pph)) {
+            $pph = "0";
+        }
+        $norefspp = $this->input->post('hidden_no_ref');
+
+        //SUM total bayar karna untuk SITE tidak boleh lebih dari 1,5jt
+        $txt_jumlah = $this->input->post('txt_jumlah');
+        $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE nopo = '$no_po' AND noref = '$norefpo'";
+        $data_totbay = $this->db_logistik_pt->query($query)->row();
+        if (empty($data_totbay)) {
+            $totbay = 0;
+        } else {
+            $totbay = $data_totbay->totalbayar;
+        }
+        $totalbayar = $totbay + $txt_jumlah;
+
+        $datainsertitem = [
+            'id' => $no_id_item,
+            'nopo' => $this->input->post('hidden_no_po'),
+            'nopotxt' => $this->input->post('hidden_no_po'),
+            'noppo' => $this->input->post('txt_no_spp'),
+            'noppotxt' => $this->input->post('txt_no_spp'),
+            'refppo' => $this->input->post('hidden_no_ref'),
+            'tglppo' =>  $tgl_ppo,
+            'tglppotxt' =>  $tgl_ppo_txt,
+            'tglpo' =>  date("Y-m-d"),
+            'tglpotxt' => date("Ymd"),
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'harga' => $this->input->post('txt_harga'),
+            'jumharga' => $jumharga,
+            'kodept' => $this->input->post('hidden_kodept'),
+            'namapt' => $this->input->post('hidden_namapt'),
+            'periode' => date('Y-m-d H:i:s'),
+            'periodetxt' => date('Ym'),
+            'thn' => date('Y'),
+            'merek' => $this->input->post('txt_merk'),
+            'tglisi' => date('Y-m-d H:i:s'),
+            'user' => $this->session->userdata('user'),
+            'ket' => $this->input->post('txt_keterangan_rinci'),
+            'noref' => $this->input->post('hidden_no_ref_po'),
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'hargasblm' => $this->input->post('txt_harga'),
+            'disc' => $this->input->post('txt_disc'),
+            'kurs' => $this->input->post('cmb_kurs'),
+            'kode_budget' => "0",
+            'grup' => $this->input->post('cmb_jenis_budget'),
+            'main_acct' => "0",
+            'nama_main' => NULL,
+            'batal' => "0",
+            'cek_pp' => "0",
+            'KODE_BPO' => "0",
+            'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
+            'kode_bebanbpo' => Null,
+            'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
+            'konversi' => "0"
+        ];
+
+        if ($this->session->userdata('status_lokasi') == "SITE") {
+            if ($totalbayar > 1500000) {
+                $site_lebih_dari15 = 1;
+                $data = NULL;
+            } else {
+                $id_ppo = $this->input->post('id_item');
+                $data_ppo =  array(
+                    'qty2' => $this->input->post('txt_qty'),
+                    'po' => 1
+                );
+                $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+                $site_lebih_dari15 = 0;
+                $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
+            }
+        } else {
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
+                'qty2' => $this->input->post('txt_qty'),
+                'po' => 1
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+            $site_lebih_dari15 = 0;
+            $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
+        }
+
+        $data_return = [
+            'data' => $data,
+            'nopo' => $no_po,
+            'noref' => $norefpo,
+            'refspp' => $norefspp,
+            'id_item' => $no_id_item,
+            'site_lebih_dari15' => $site_lebih_dari15
+        ];
+
+
+        // $data = $this->M_po->savePO($datainsert, $datainsertitem);
+        echo json_encode($data_return);
     }
 }
 
