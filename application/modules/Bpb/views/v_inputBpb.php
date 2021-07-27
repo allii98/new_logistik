@@ -140,9 +140,12 @@
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
                                 <h6 id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp;&nbsp;&nbsp; No. Ref. BPB : ...</h6>
                             </div>
-                            <div class="row" style="margin-left:4px;">
-                                <h6 id="h4_no_bpb" name="h4_no_bpb"></h6>&emsp;&emsp;
+                            <div class="row ml-1 mr-1 justify-content-between">
+                                <h6 id="h4_no_bpb" name="h4_no_bpb"></h6>&emsp;
                                 <h6 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h6>
+                                <h6>
+                                    <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
+                                </h6>
                             </div>
                             <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
                             <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
@@ -405,6 +408,14 @@
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 
 <script>
+    function cetak() {
+        var no_bpb = $('#hidden_no_bpb').val();
+        var id_bpb = $('#hidden_id_bpb').val();
+
+
+        window.open('cetak/' + no_bpb + '/' + id_bpb, '_blank');
+    }
+
     $(document).ready(function() {
 
         check_form();
@@ -971,7 +982,7 @@
                         var kode_barang = data.kodebar;
                         var kode_dev = data.kode_dev;
                         $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
-                        console.log('ini nomernya ges', no);
+                        // console.log('ini nomernya ges', no);
 
                         sum_stok_booking(kode_barang, no, kode_dev);
                         // $('#a_bpb_baru').show();
@@ -991,6 +1002,8 @@
                             icon: 'success',
                             loader: false
                         });
+                        $('#cetak').css('display', 'block');
+
 
                         $('#lbl_bpb_status').empty();
                         $('#h4_no_bpb').empty();

@@ -113,7 +113,8 @@
                     <tr>
                         <!-- <td align="center">(___________________)</td> -->
                         <td align="center">(___________________)</td>
-                        <td align="center"><img src="<?php echo base_url() ?>assets/img/approved2.png" width="15%"><br></td>
+                        <td align="center">(___________________)</td>
+                        <!-- <td align="center"><img src="<?php echo base_url() ?>assets/img/approved2.png" width="15%"><br></td> -->
                         <td align="center">(___________________)</td>
                     </tr>
                     <tr>
