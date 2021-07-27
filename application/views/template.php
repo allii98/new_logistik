@@ -1696,7 +1696,7 @@
     <div class="rightbar-overlay"></div>
 
     <!-- Vendor js -->
-
+    <script src="<?php echo base_url() ?>assets/libs/tippy.js/tippy.all.min.js"></script>
     <!-- third party js -->
     <script src="<?php echo base_url() ?>assets/libs/datatables.net/js/jquery.dataTables.min.js"></script>
     <script src="<?php echo base_url() ?>assets/libs/datatables.net-bs4/js/dataTables.bootstrap4.min.js"></script>

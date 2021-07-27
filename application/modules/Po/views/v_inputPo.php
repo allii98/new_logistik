@@ -121,7 +121,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <div class="row mb-1">
                                     <label for="devisi" class="col-3 col-xl-3 col-form-label">Devisi*</label>
                                     <div class="col-8 col-xl-9">
-                                        <input type="text" class="form-control bg-light" onclick="tampildevisi()" id="devisi" name="devisi" readonly required>
+                                        <!-- <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
+                                           <p id="devisi"></p>
+                                        </button> -->
+
+                                        <input type="text" class="form-control bg-light" id="devisi" name="devisi" readonly required>
                                         <input type="hidden" name="" id="hidden_devisi">
                                     </div>
                                 </div>
@@ -702,6 +706,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         swal(devisi);
     }
 
+    $(function() {
+        var devisi = $('#hidden_devisi').val();
+        $('#devisi').tooltip({
+            title: tittle,
+            html: true
+        });
+    })
+
     function jenisPO() {
         var jenis_po = $('#cmb_pilih_jenis_po').val();
 
@@ -718,6 +730,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     }
 
+    function tittle() {
+        var devisi = $('#hidden_devisi').val();
+
+        return devisi;
+    }
+
     $(document).ready(function() {
         $('.div_form_2').hide();
         $('.div_form_3').hide();
@@ -726,7 +744,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }, 1000);
 
         jenisPO();
-
+        tittle();
 
         // kuncinumber
         $("#pph, #no_penawaran, #tmpo_pengiriman, #tmpo_pembayaran").on("keypress keyup blur", function(event) {
