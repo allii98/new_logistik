@@ -97,7 +97,7 @@ class M_lpb extends CI_Model
 
     public function get_data_po_qr($noref)
     {
-        $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli, tglppo, no_refppo');
+        $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli, tglppo, no_refppo, kd_dept, ket_dept');
         $this->db_logistik_pt->where('noreftxt', $noref);
         $this->db_logistik_pt->from('po');
         $data_po = $this->db_logistik_pt->get()->row_array();

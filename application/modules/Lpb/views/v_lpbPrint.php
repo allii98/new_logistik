@@ -1,8 +1,5 @@
 <?php
-// var_dump($stokmasuk);
-// var_dump($masukitem);
-// var_dump($po);
-// exit();
+$dev = substr($stokmasuk->devisi, 28);
 ?>
 
 <head>
@@ -34,31 +31,40 @@
         body {
             font-size: 10px;
         }
+
+        .pddg {
+            padding: 5px;
+        }
+
+        .cntr {
+            text-align: center;
+        }
     </style>
     <title>Laporan Penerimaan Barang </title>
 </head>
 
 <body>
+    <hr style="width:100%;margin:0px; margin-bottom: 0%;">
     <table border="0" width="100%">
         <tr>
             <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/lpb/<?php echo $id . "_" . $no_lpb; ?>.png"></td>
             <td align="center" valign="bottom">
-                <h4 align="center" style="margin: 0px;padding: 0px;"><b><u>Laporan Penerimaan Barang</u></b></h4>
+                <h2 align="center" style="margin: 0px;padding: 0px;"><b><u>Laporan Penerimaan Barang</u></b></h2>
             </td>
         </tr>
         <tr>
             <td align="center" valign="baseline">
-                <h5 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b>No. LPB : <?= $stokmasuk->noref; ?></b></h5>
+                <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b>No. LPB : <?= $stokmasuk->noref; ?></b></h4>
             </td>
         </tr>
     </table>
     <table border="0" width="100%">
         <tr>
-            <td>Nama Supplier</td>
-            <td>:</td>
-            <td><?= $stokmasuk->nama_supply; ?></td>
+            <td width="20%">Nama Supplier</td>
+            <td width="2%">:</td>
+            <td width="30%"><?= $stokmasuk->nama_supply; ?></td>
             <td>No. Pesanan Pembelian</td>
-            <td>:</td>
+            <td width="2%">:</td>
             <td><?= $stokmasuk->nopotxt; ?></td>
         </tr>
         <tr>
@@ -80,30 +86,30 @@
         <tr>
             <td>Alokasi</td>
             <td>:</td>
-            <td><?= $lokasilpb ?></td>
+            <td><?= $lokasilpb . ' ' . $dev ?></td>
             <td>No. Perkiraan</td>
             <td>:</td>
             <td></td>
         </tr>
-        <!-- <tr>
-      <td>Departemen / Divisi</td>
-      <td>:</td>
-      <td><?= $po->ket_dept; ?></td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr> -->
+        <tr>
+            <td>Departemen</td>
+            <td>:</td>
+            <td><?= $stokmasuk->ket_dept; ?></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
     </table>
 
     <table border="1" width="100%" class="singleborder">
         <thead>
             <tr>
-                <th>No</th>
-                <th>Kode Barang</th>
-                <th>Nama Barang</th>
-                <th>Qty</th>
-                <th>Satuan</th>
-                <th>Keterangan</th>
+                <th width="5%" class="pddg">No</th>
+                <th class="pddg">Kode Barang</th>
+                <th class="pddg">Nama Barang</th>
+                <th width="8%" class="pddg">Qty</th>
+                <th width="10%" class="pddg">Satuan</th>
+                <th width="30%" class="pddg">Keterangan</th>
             </tr>
         </thead>
         <tbody>
@@ -112,12 +118,12 @@
             foreach ($masukitem as $list_masukitem) {
             ?>
                 <tr>
-                    <td><?= $no; ?></td>
-                    <td><?= $list_masukitem->kodebartxt; ?></td>
-                    <td><?= $list_masukitem->nabar; ?></td>
-                    <td><?= $list_masukitem->qty; ?></td>
-                    <td><?= $list_masukitem->satuan; ?></td>
-                    <td><?= $list_masukitem->ket; ?></td>
+                    <td class="pddg cntr"><?= $no; ?></td>
+                    <td class="pddg"><?= $list_masukitem->kodebartxt; ?></td>
+                    <td class="pddg"><?= $list_masukitem->nabar; ?></td>
+                    <td class="pddg cntr"><?= $list_masukitem->qty; ?></td>
+                    <td class="pddg"><?= $list_masukitem->satuan; ?></td>
+                    <td class="pddg"><?= $list_masukitem->ket; ?></td>
                 </tr>
             <?php
                 $no++;

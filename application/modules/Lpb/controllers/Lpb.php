@@ -63,12 +63,12 @@ class Lpb extends CI_Controller
                         </button>
                         <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
+            $row[] = date("d-m-Y", strtotime($field->tgl));
+            $row[] = date("d-m-Y", strtotime($field->tglinput));
             $row[] = $field->noref;
             $row[] = $field->refpo;
             $row[] = $field->nama_supply;
-            $row[] = $field->ket;
-            $row[] = date("Y-m-d", strtotime($field->tgl));
-            $row[] = $field->tglinput;
+            $row[] = '<p style="word-break: break-word">' . $field->ket . ' </p>';
             $row[] = $field->USER;
 
             $data[] = $row;
@@ -155,7 +155,7 @@ class Lpb extends CI_Controller
                 break;
             case 'FAC': // PKS
                 $digit1 = "3";
-                $ref_1 = "FAC";
+                $ref_1 = "FAC-LPB";
                 break;
             case 'EST': // SITE
                 $digit1 = "6";
@@ -174,13 +174,13 @@ class Lpb extends CI_Controller
                         $digit2 = "1";
                         break;
                     case 'RO': // RO
-                        $digit2 = "2";
+                        $digit2 = "4";
                         break;
                     case 'PKS': // PKS
                         $digit2 = "3";
                         break;
                     case 'SITE': // SITE
-                        $digit2 = "6";
+                        $digit2 = "2";
                         break;
                     default:
                         break;
@@ -195,13 +195,13 @@ class Lpb extends CI_Controller
                             $digit2 = "1";
                             break;
                         case 'RO': // RO
-                            $digit2 = "2";
+                            $digit2 = "4";
                             break;
                         case 'PKS': // PKS
                             $digit2 = "3";
                             break;
                         case 'SITE': // SITE
-                            $digit2 = "6";
+                            $digit2 = "2";
                             break;
                         default:
                             break;
@@ -214,7 +214,7 @@ class Lpb extends CI_Controller
 
         switch ($lokasilpb) {
             case 'HO':
-                $ref_2 = "PST";
+                $ref_2 = "BWJ";
                 break;
             case 'SITE':
                 $ref_2 = "SWJ";
@@ -322,6 +322,8 @@ class Lpb extends CI_Controller
 
         $data_stokmasuk = [
             'tgl' => $tgl_terima,
+            'kd_dept' => $this->input->post('hidden_kd_dept'),
+            'ket_dept' => $this->input->post('hidden_ket_dept'),
             'nopo' => $no_po,
             'nopotxt' => $no_po,
             'LOKAL' => $po_lokal,
@@ -953,10 +955,10 @@ class Lpb extends CI_Controller
 
         // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
         $mpdf->SetHTMLHeader('
-                            <table width="100%" border="0" align="center">
+                            <table width="100%" border="0" align="center" style="margin-bottom:-30px;">
                                 <tr>
-                                    <td rowspan="5" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
-                                    <td rowspan="5" align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $data['stokmasuk']->lokasi . ')</td>
+                                    <td rowspan="5" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:10px" src="././assets/img/msal.jpg"></td>
+                                    <td rowspan="5" align="left" style="vertical-align: text-top; padding-top:10px; font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $data['stokmasuk']->lokasi . ')</td>
                                     <td>Putih</td>
                                     <td>:</td>
                                     <td>Finance HO</td>
@@ -986,7 +988,6 @@ class Lpb extends CI_Controller
                                 	<td>Purchasing HO</td>
                                 </tr>
                             </table>
-                            <hr style="width:100%;margin:0px;">
                             ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
