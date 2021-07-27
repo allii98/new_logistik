@@ -179,7 +179,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     </div>
                                 </div>
                                 <div class="row mb-1">
-                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">PPN *</label>
+                                    <label for="ppn" class="col-3 col-xl-3 col-form-label">PPN *</label>
                                     <div class="col-8 col-xl-9">
                                         <select class="form-control" id="ppn" name="ppn" required>
                                             <option value="0">N</option>
@@ -188,7 +188,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     </div>
                                 </div>
                                 <div class="row mb-1">
-                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Ket*</label>
+                                    <label for="keterangan" class="col-3 col-xl-3 col-form-label">Ket*</label>
                                     <div class="col-8 col-xl-9">
                                         <textarea maxlength="250" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
                                     </div>
