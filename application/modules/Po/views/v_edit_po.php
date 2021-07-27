@@ -369,6 +369,21 @@
 
     }
 
+    function hapus_row(id) {
+        // var totalRowCount = $("#tableRinciBarang tr").length;
+        var rowCount = $("#tableRinciPO td").closest("tr").length;
+
+        if (rowCount != 1) {
+            $('#tr_' + id).remove();
+        } else {
+            swal('Tidak Bisa dihapus, item SPP tinggal 1');
+        }
+        // if(id != 2){
+        // n = parseInt(n)- parseInt(1);
+        // $('#tr_'+n).remove();
+        // }
+    }
+
 
     $(document).on('click', '#data_spp', function() {
         var id = $(this).data('id');
@@ -387,7 +402,9 @@
                 // console.log(response);
                 data = JSON.parse(response);
                 $('#hidden_noref_tambah').val(data[0].noreftxt);
-                var n = $('#no_row').val();
+
+
+                var n = $('#tbody_item tr').length;
 
                 $.each(data, function(index, value) {
 
@@ -498,6 +515,8 @@
             '<input type="hidden" class="form-control" id="hidden_kode_brg_' + no + '" name="hidden_kode_brg_' + no + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_nama_brg_' + no + '" name="hidden_nama_brg_' + no + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + no + '" name="hidden_satuan_brg_' + no + '"   />' +
+            '<input type="hidden" id="hidden_no_ref_po_' + no + '" name="hidden_no_ref_po_' + no + '">' +
+            '<input type="hidden" class="form-control" id="id_item_po' + no + '" name="id_item_po' + no + '" >' +
 
             '</td>';
         var td_col_4 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -804,6 +823,8 @@
                     $('#hidden_nama_pt_' + i).val(namapt);
                     $('#noppo' + i).val(noppo);
                     $('#hidden_no_ref_spp_' + i).val(norefppo);
+                    $('#hidden_no_ref_po_' + i).val(po.noreftxt);
+
 
                     $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
                     $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
@@ -831,8 +852,8 @@
                     $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
                 },
                 data: {
-                    id_po: $('#id_po').val(),
-                    id_po_item: $('#id_item_po' + id).val(),
+                    id_po: $('#hidden_no_ref_po_' + id).val(),
+                    id_po_item: $('#hidden_id_po_item_' + id).val(),
                 },
                 success: function(data) {
                     console.log(data);
@@ -877,8 +898,8 @@
                     $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
                 },
                 data: {
-                    id_po: $('#id_po').val(),
-                    id_po_item: $('#id_item_po' + id).val(),
+                    id_po: $('#hidden_no_ref_po_').val(),
+                    id_po_item: $('#hidden_id_po_item_' + id).val(),
                 },
                 success: function(data) {
                     // var po = data.data_po;
@@ -900,6 +921,7 @@
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
                     $('#lbl_status_simpan_1' + id).empty();
+                    $('#btn_hapus_' + id).show();
                     $.toast({
                         position: 'top-right',
                         text: 'Edit Dibatalkan!',
@@ -984,6 +1006,7 @@
             '<input type="hidden" class="form-control" id="hidden_nama_brg_' + row + '" name="hidden_nama_brg_' + row + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '"   />' +
             '<input type="hidden" class="form-control" id="id_item_po' + row + '" name="id_item_po' + row + '" >' +
+            '<input type="hidden" id="hidden_no_ref_po_' + row + '" name="hidden_no_ref_po_' + row + '">' +
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" ></textarea><br />' +
@@ -1193,6 +1216,7 @@
             '<input type="hidden" class="form-control" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
             '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '"   />' +
+            '<input type="text" id="hidden_no_ref_po_' + n + '" name="hidden_no_ref_po_' + n + '">' +
 
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1548,49 +1572,6 @@
             console.log('simpan pertama', id);
 
 
-            console.table({
-                hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
-                hidden_departemen: $('#hidden_departemen_' + id).val(),
-                cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
-                txt_kode_supplier: $('#kd_supplier').val(),
-                txt_supplier: $('#txtsupplier').val(),
-                txt_kode_pemesan: $('#txt_kode_pemesan').val(),
-                txt_pemesan: $('#txt_pemesan').val(),
-                hidden_no_ref_po: $('#hidden_no_ref_po').val(),
-                cmb_status_bayar: $('#cmb_status_bayar').val(),
-                txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
-                txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
-                txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
-                cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                txt_keterangan: $('#keterangan').val(),
-                txt_no_penawaran: $('#no_penawaran').val(),
-                cmb_ppn: $('#ppn').val(),
-                txt_total_pembayaran: $('#ttl_pembayaran').val(),
-                txt_ket_pengiriman: $('#ket_pengiriman').val(),
-                txt_uang_muka: $('#txt_uang_muka').val(),
-                txt_no_voucher: $('#txt_no_voucher').val(),
-                txt_no_spp: $('#noppo' + id).val(),
-                hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
-                hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
-                hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
-                hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
-                txt_qty: $('#txt_qty_' + id).val(),
-                txt_harga: $('#txt_harga_' + id).val(),
-                hidden_kodept: $('#hidden_kd_pt_' + id).val(),
-                hidden_namapt: $('#hidden_nama_pt_' + id).val(),
-                txt_merk: $('#txt_merk_' + id).val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
-                txt_disc: $('#txt_disc_' + id).val(),
-                cmb_kurs: $('#cmb_kurs_' + id).val(),
-                txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
-                txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
-                hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
-                hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
-                id_item: $('#id_item_' + id).val(),
-            });
-
-
-
 
 
             $.ajax({
@@ -1665,14 +1646,10 @@
                         $('#btn_hapus_row_' + id).hide();
                         $('#btn_ubah_' + id).show();
                         $('#btn_hapus_' + id).show();
-                        $('#cetak').show();
-                        $('#h4_no_po').html('No. PO : ' + data.nopo);
-                        $('#hidden_no_po').val(data.nopo);
+                        $('#hidden_no_ref_po_' + id).val(data.noref);
+
                         $('#lbl_spp_status').empty();
-                        $('#h4_no_ref_po').html('No. Ref PO : ' + data.noref);
-                        $('#hidden_no_ref_po').val(data.noref);
-                        $('#hidden_id_po').val(data.id_po);
-                        $('#ref_spp').val(data.refspp);
+
                         var idItem = data.id_item;
                         // console.log(idItem);
                         // console.log(id);
@@ -1755,14 +1732,11 @@
                         $('#btn_hapus_row_' + id).hide();
                         $('#btn_ubah_' + id).show();
                         $('#btn_hapus_' + id).show();
+                        $('#hidden_no_ref_po_' + id).val(data.noref);
                         // console.log(response);
 
-                        $('#h4_no_po').html('No. PO : ' + data.nopo);
-                        $('#hidden_no_po').val(data.nopo);
                         $('#lbl_spp_status').empty();
-                        $('#h4_no_ref_po').html('No. Ref PO : ' + data.noref);
-                        $('#hidden_no_ref_po').val(data.noref);
-                        $('#ref_spp').val(data.refspp);
+
                         // $('#hidden_id_po').val(data.id_po);
                         $('#hidden_id_po_item_' + id).val(data.id_item);
                         totalBayar();
@@ -1777,7 +1751,7 @@
     }
 
     function cekdataspp() {
-        var refspp = $('#refspp').val();
+        var refspp = $('#hidden_no_ref_spp_').val();
         console.log(refspp);
         $.ajax({
             type: "POST",
@@ -1801,6 +1775,26 @@
                     console.log('field po belum 0 semua');
                 }
 
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    }
+
+    function updatePPO(noref) {
+        var refspp = $('#hidden_no_ref_spp_').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/updatePPO'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                refspp: refspp
+            },
+            success: function(data) {
+                console.log('oke field ppo berhasil diupdate', data);
             },
             error: function(request) {
                 console.log(request.responseText);

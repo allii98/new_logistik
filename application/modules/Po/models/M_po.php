@@ -199,7 +199,7 @@ class M_po extends CI_Model
 
         $this->db_logistik_pt->select('*');
         $this->db_logistik_pt->from('po');
-        $this->db_logistik_pt->where('id', $id_po);
+        $this->db_logistik_pt->where('noreftxt', $id_po);
         $data_po =  $this->db_logistik_pt->get()->row_array();
 
         $data_return = [
