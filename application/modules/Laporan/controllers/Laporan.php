@@ -1671,10 +1671,10 @@ class Laporan extends CI_Controller
 			$q_bag = "AND bag = '$bagian'";
 		}
 		if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") {
-			$query = "SELECT DISTINCT(afd) FROM keluarbrgitem WHERE pt LIKE '%$lokasi%' AND periode BETWEEN '$p1' AND '$p2' AND batal = '0'";
+			$query = "SELECT k.blok, k.tgl, k.NO_REF, k.skb, k.kodebar, k.nabar, k.kodebeban, k.ketbeban,k.qty,k.satuan,k.ket, s.bag FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev = '$lokasi' AND k.periode BETWEEN '$p1' AND '$p2' AND s.bag = '$bagian' AND k.batal = '0'";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		} else {
-			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE pt LIKE '%$lok%' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0'";
+			$query = "SELECT k.blok, k.tgl, k.NO_REF, k.skb, k.kodebar, k.nabar, k.kodebeban, k.ketbeban,k.qty,k.satuan,k.ket, s.bag FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev = '$lokasi' AND k.periode BETWEEN '$p1' AND '$p2' AND s.bag = '$bagian' AND k.batal = '0'";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		}
 
@@ -1727,11 +1727,12 @@ class Laporan extends CI_Controller
 		if ($bagian == 'HRD.-.UMUM') $bagian = 'UMUM.-.HRD';
 		$bagian = str_replace('.', ' ', $bagian);
 		$bagian = str_replace('-', '&', $bagian);
+
 		if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") {
-			$query = "SELECT DISTINCT(afd) FROM keluarbrgitem WHERE pt LIKE '%$lok%' AND periode BETWEEN '$p1' AND '$p2' AND batal = '0'";
+			$query = "SELECT DISTINCT(afd) FROM keluarbrgitem WHERE kode_dev='$lokasi' AND periode BETWEEN '$p1' AND '$p2' AND batal = '0'";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		} else {
-			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE pt LIKE '%$lok%' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0'";
+			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE kode_dev = '$lokasi' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0' ";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		}
 		$data['p1'] = $p1;
@@ -1743,6 +1744,7 @@ class Laporan extends CI_Controller
 		$dev = str_replace('_.', ')', $dev);
 		$dev = str_replace('-', ' ', $dev);
 		$data['dev'] = $dev;
+		$data['devisi'] = $lokasi;
 		$data['periode'] = str_replace('.', '/', $tanggal1) . ' - ' . str_replace('.', '/', $tanggal2);
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
@@ -1752,6 +1754,62 @@ class Laporan extends CI_Controller
 		]);
 
 		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_bgn_grp_brg', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
+	function print_lap_bkb_per_kerja()
+	{
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$lok = 'HO';
+		} else if ($lokasi == '02') {
+			$lok = 'RO';
+		} else if ($lokasi == '03') {
+			$lok = 'PKS';
+		} else if ($lokasi == '06') {
+			$lok = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$lok = 'ESTATE2';
+		}
+		$tanggal1 = $this->uri->segment(4);
+		$tanggal2 = $this->uri->segment(5);
+		$p1 = date_format(date_create(str_replace('.', '-', $tanggal1)), 'Y-m-d');
+		$p2 = date_format(date_create(str_replace('.', '-', $tanggal2)), 'Y-m-d');
+		$bagian = $this->uri->segment(6);
+		if ($bagian == 'HRD.-.UMUM') $bagian = 'UMUM.-.HRD';
+		$bagian = str_replace('.', ' ', $bagian);
+		$bagian = str_replace('-', '&', $bagian);
+		if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") {
+			$query = "SELECT DISTINCT(afd) FROM keluarbrgitem WHERE kode_dev='$lokasi' AND periode BETWEEN '$p1' AND '$p2' AND batal = '0'";
+			$data['bt'] = $this->db_logistik_pt->query($query)->result();
+		} else {
+			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE kode_dev='$lokasi' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0'";
+			$data['bt'] = $this->db_logistik_pt->query($query)->result();
+		}
+		$data['p1'] = $p1;
+		$data['p2'] = $p2;
+		$data['pt'] = $lok;
+		$data['bagian'] = $bagian;
+		$dev = $this->uri->segment(7);
+		$dev = str_replace('._', '(', $dev);
+		$dev = str_replace('_.', ')', $dev);
+		$dev = str_replace('-', ' ', $dev);
+		$data['dev'] = $dev;
+		$data['devisi'] = $dev;
+		$data['periode'] = str_replace('.', '/', $tanggal1) . ' - ' . str_replace('.', '/', $tanggal2);
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapBkb/vw_lap_bkb_print_per_kerja', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}

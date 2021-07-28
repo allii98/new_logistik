@@ -46,11 +46,11 @@
     <table border="0" width="100%">
         <thead>
             <tr>
-                <td style="text-align: left;">
-                    <b> PERIODE : <?= $periode; ?> </b><br>
-                    <b>Devisi : <?= $dev; ?></b><br>
-                </td>
-                <td style="text-align: right;"><br><br><i>By System MIPS</i></td>
+                <!-- <td style="text-align: left;">
+                        <b> PERIODE : <?= $periode; ?> </b><br>
+                        <b>Devisi : <?= $dev; ?></b><br>
+                        <b>AFD : <?= $b->afd; ?></b></td>
+                    <td style="text-align: right;"><br><br><i>By System MIPS</i></td> -->
             </tr>
         </thead>
     </table>
@@ -58,12 +58,7 @@
     <table width="100%" class="singleborder" border="1">
         <thead>
             <tr>
-                <?php
-                if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") { ?>
-                    <td style="font-weight: bold; text-align:center; width: 5%">Blok</td>
-                <?php } else { ?>
-                    <td style="font-weight: bold; text-align:center; width: 5%">No</td>
-                <?php } ?>
+                <td style="font-weight: bold; text-align:center; width: 5%">Blok</td>
                 <td style="font-weight: bold; text-align:center; width: 8%">Tgl</td>
                 <td style="font-weight: bold; text-align:center; width: 5%">No BKB</td>
                 <td style="font-weight: bold; text-align:center; width: 12%">Kode Barang</td>
@@ -76,55 +71,21 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (empty($bt)) { ?>
+            <?php
+            foreach ($list_afd as $bn) { ?>
                 <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td style="text-align: center;"><?= $bn->blok; ?></td>
+                    <td style="text-align: center;"><?= date_format(date_create($bn->tgl), 'd/m/Y'); ?></td>
+                    <td style="text-align: center;"><?= $bn->skb; ?></td>
+                    <td style="text-align: center;"><?= $bn->kodebar; ?></td>
+                    <td><?= $bn->nabar; ?></td>
+                    <td style="text-align: center;"><?= $bn->satuan; ?></td>
+                    <td style="text-align: right;"><?= number_format($bn->qty, 2); ?></td>
+                    <td style="text-align: center;"><?= $bn->kodesubtxt; ?></td>
+                    <td><?= $bn->ketsub; ?></td>
+                    <td><?= $bn->ket; ?></td>
                 </tr>
-                <?php } else {
-                $no = 1;
-                if (isset($bt)) {
-                    foreach ($bt as $d) { ?>
-                        <tr>
-                            <?php
-                            if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") { ?>
-                                <td><?= $d->blok ?></td>
-                            <?php } else { ?>
-                                <td><?= $no++; ?></td>
-                            <?php } ?>
-                            <td><?= date_format(date_create($d->tgl), 'd/m/Y'); ?></td>
-                            <td><?= $d->skb ?></td>
-                            <td><?= $d->kodebar ?></td>
-                            <td><?= $d->nabar ?></td>
-                            <td><?= $d->satuan ?></td>
-                            <td><?= $d->qty ?></td>
-                            <td><?= $d->kodebeban ?></td>
-                            <td><?= $d->ketbeban ?></td>
-                            <td><?= $d->ket ?></td>
-                        </tr>
-            <?php }
-                }
-            } ?>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
+            <?php }  ?>
         </tbody>
     </table>
     <br>

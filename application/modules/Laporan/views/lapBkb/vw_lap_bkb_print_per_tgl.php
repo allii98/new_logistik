@@ -85,9 +85,9 @@
                 $bag = str_replace('-', '&', $bag);
 
                 if ($bag == 'Semua') {
-                    $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.tgl BETWEEN '$tgltxt1' AND '$tgltxt2' AND kode_dev ='$lokasi' AND a.batal='0' AND a.tgl LIKE '%$thisDate%'";
+                    $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.tgl BETWEEN '$tgltxt1' AND '$tgltxt2' AND a.kode_dev ='$lokasi' AND a.batal='0' AND a.tgl LIKE '%$thisDate%'";
                 } else {
-                    $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.tgl BETWEEN '$tgltxt1' AND '$tgltxt2' AND kode_dev ='$lokasi' AND a.batal='0' AND b.bag = '$bag' AND a.tgl LIKE '%$thisDate%'";
+                    $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.tgl BETWEEN '$tgltxt1' AND '$tgltxt2' AND a.kode_dev ='$lokasi' AND a.batal='0' AND b.bag = '$bag' AND a.tgl LIKE '%$thisDate%'";
                 }
 
                 $bkb_tgl = $this->db_logistik_pt->query($query)->result();

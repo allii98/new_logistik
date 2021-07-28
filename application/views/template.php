@@ -1873,19 +1873,21 @@
                 cache: false,
                 data: '',
                 success: function(data) {
-                    console.log(data);
+                    $('#cmb_devisi').empty();
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
                     if (stl == 'HO') {
                         var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
                         $('#cmb_devisi').append(opsi_cmb_all);
                     }
+
+
                     $.each(data, function(index) {
                         var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
                         $('#cmb_devisi').append(opsi_cmb_devisi);
                     });
                 },
                 error: function(request) {
-                    alert(request.responseText);
+                    console.log(request.responseText);
                 }
             });
         }
@@ -2282,7 +2284,7 @@
             var rbt_pilihan7 = $("input[name='rbt_pilihan7']:checked").val();
 
             if (rbt_pilihan7 == 'register_bkb') {
-                window.open('<?= site_url("laporan/print_lap_bkb_register_bkb"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_register_bkb"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'slip_bkb') {
                 $('#modalListLapSlipBKB').modal('show');
                 $('#tableListLapSlipBKB').DataTable().destroy();
@@ -2520,7 +2522,8 @@
                 cache: false,
                 data: '',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
+                    $('#devisi1').empty();
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
 
                     $.each(data, function(index) {
@@ -2543,7 +2546,8 @@
                 cache: false,
                 data: '',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
+                    $('#cmb_devisi3').empty();
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
 
                     $.each(data, function(index) {
@@ -2566,7 +2570,8 @@
                 cache: false,
                 data: '',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
+                    $('#cmb_devisi4').empty();
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
 
                     $.each(data, function(index) {
@@ -2589,7 +2594,8 @@
                 cache: false,
                 data: '',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
+                    $('#devisi_lpbpo').empty();
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
 
                     $.each(data, function(index) {
@@ -2612,7 +2618,8 @@
                 cache: false,
                 data: '',
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
+                    $('#devisi_bkb').empty();
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
 
                     $.each(data, function(index) {
