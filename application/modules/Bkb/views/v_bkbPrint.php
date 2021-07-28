@@ -44,49 +44,59 @@
 </head>
 
 <body>
-    <table border="0" width="100%">
-        <tr>
-            <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
-            <td align="center" valign="bottom">
-                <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h4>
-            </td>
-        </tr>
-        <tr>
-            <td align="center" valign="baseline">
-                <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
-            </td>
-        </tr>
-    </table>
-    <!-- // jika bbm -->
-    <!-- <table border="0" width="100%">
-        <tr>
-            <td rowspan="4" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
-            <td rowspan="2" align="center" valign="bottom">
-                <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h2>
-            </td>
-            <td width="13%">jenis alat/kend</td>
-            <td width="2%">:</td>
-            <td width="15%">Inova</td>
-        </tr>
-        <tr>
-            <td>Kode/Nomer</td>
-            <td>:</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td rowspan="2" align="center" valign="baseline">
-                <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
-            </td>
-            <td>HM/KM</td>
-            <td>:</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Lokasi Kerja</td>
-            <td>:</td>
-            <td>Inova</td>
-        </tr>
-    </table> -->
+    <?php
+    if ($stockkeluar->bhn_bakar == 'BBM') {
+    ?>
+        <!-- // jika bbm -->
+        <table border="0" width="100%">
+            <tr>
+                <td rowspan="4" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
+                <td rowspan="2" align="center" valign="bottom">
+                    <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h2>
+                </td>
+                <td width="13%">jenis alat/kend</td>
+                <td width="2%">:</td>
+                <td width="15%"><?= $stockkeluar->jn_alat; ?></td>
+            </tr>
+            <tr>
+                <td>Kode/Nomer</td>
+                <td>:</td>
+                <td><?= $stockkeluar->no_kode; ?> </td>
+            </tr>
+            <tr>
+                <td rowspan="2" align="center" valign="baseline">
+                    <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
+                </td>
+                <td>HM/KM</td>
+                <td>:</td>
+                <td><?= $stockkeluar->hm_km; ?></td>
+            </tr>
+            <tr>
+                <td>Lokasi Kerja</td>
+                <td>:</td>
+                <td><?= $stockkeluar->lok_kerja; ?></td>
+            </tr>
+        </table>
+    <?php
+    } else {
+    ?>
+        <table border="0" width="100%">
+            <tr>
+                <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
+                <td align="center" valign="bottom">
+                    <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h4>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" valign="baseline">
+                    <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
+                </td>
+            </tr>
+        </table>
+    <?php
+    }
+    ?>
+
     <table width="100%" style="margin-top: 5px;">
         <tr>
             <td>Depart/Divisi : <?= $stockkeluar->bag; ?></td>

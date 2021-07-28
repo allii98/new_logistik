@@ -167,12 +167,12 @@ class Bkb extends CI_Controller
             $text1 = "EST";
             $text2 = "SWJ";
             $dig_1 = "6";
-            $dig_2 = "6";
+            $dig_2 = "2";
         } else if ($sess_lokasi == "RO") {
             $text1 = "ROM";
             $text2 = "PKY";
             $dig_1 = "2";
-            $dig_2 = "2";
+            $dig_2 = "4";
         } else if ($sess_lokasi == "PKS") {
             $text1 = "FAC";
             $text2 = "SWJ";
@@ -312,6 +312,11 @@ class Bkb extends CI_Controller
         $datastockkeluar['SUB']             = NULL;
         $datastockkeluar['USER1']           = NULL;
         $datastockkeluar['cetak']           = '0';
+        $datastockkeluar['bhn_bakar']       = $this->input->post('bhnbakar');
+        $datastockkeluar['jn_alat']         = $this->input->post('txt_jns_alat');
+        $datastockkeluar['no_kode']         = $this->input->post('txt_kd_nmr');
+        $datastockkeluar['hm_km']           = $this->input->post('txt_hm_km');
+        $datastockkeluar['lok_kerja']       = $this->input->post('txt_lokasi_kerja');
         $datastockkeluar['posting']         = '0';
 
         // $datakeluarbrgitem['id']            = $id_keluarbrgitem;
