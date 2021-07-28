@@ -5,7 +5,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     <!-- start page title -->
     <!-- end page title -->
     <div class="row">
-        <div class="col-12">
+        <div class="col-xl-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
@@ -468,7 +468,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 </div>
                                 <br>
 
-                                <div class="table-responsive mt-0">
+                                <div class="table-responsive">
                                     <table id="tableItemPO" class="table table-striped table-bordered table-in">
                                         <thead>
                                             <tr>
@@ -503,9 +503,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <th>
                                                     <font face="Verdana" size="2.5">Keterangan</font>
                                                 </th>
-                                                <!-- <th>
-                                                <font face="Verdana" size="2.5">Jumlah Rp</font>
-                                            </th> -->
+                                                <th>
+                                                    <font face="Verdana" size="2.5">Jumlah Rp</font>
+                                                </th>
                                                 <th>
                                                     <font face="Verdana" size="2.5">#</font>
                                                 </th>
@@ -1209,12 +1209,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="text" class="form-control" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
-        var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea maxlength="250" class="form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
             '</td>'
-        var td_col_11 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_11 = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="1"></textarea>' +
-            '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
+            // '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
+            '</td>';
+        var td_col_12 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control" id="jumlah_' + row + '" size="20" name="jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
             '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" size="20" name="txt_jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
             '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
             '</td>';
@@ -1242,7 +1245,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
+        $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
 
         $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
 
@@ -1666,6 +1669,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             separator = sisa ? '.' : '';
             rupiah += separator + ribuan.join('.');
         }
+        $('#jumlah_' + id).val(rupiah);
         $('#hasil_jumlah_' + id).html(rupiah);
     }
 
