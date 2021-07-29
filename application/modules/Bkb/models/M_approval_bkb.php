@@ -89,7 +89,7 @@ class M_approval_bkb extends CI_Model
 
     public function approval_bkb($id_item_bkb)
     {
-        $this->db_logistik_pt->select('*');
+        $this->db_logistik_pt->select('kodebar');
         $this->db_logistik_pt->where('no_id_item_bkb', $id_item_bkb);
         $this->db_logistik_pt->from('approval_bkb');
         $cek = $this->db_logistik_pt->get()->num_rows();
@@ -113,7 +113,37 @@ class M_approval_bkb extends CI_Model
                 'status_kasie_gudang' => '1',
                 'tgl_kasie_gudang' => date("Y-m-d H:i:s")
             ];
-            return $this->db_logistik_pt->insert('approval_bkb', $insert_bkb_approval);
+            $insert = $this->db_logistik_pt->insert('approval_bkb', $insert_bkb_approval);
+
+            // update status approval jadi 1 (approved)
+            $this->db_logistik_pt->set('approval', '1');
+            $this->db_logistik_pt->where(['NO_REF' => $data_item_bkb['NO_REF'], 'kodebar' => $data_item_bkb['kodebar']]);
+            $this->db_logistik_pt->update('keluarbrgitem');
+
+            //menghitung jumlah barang di keluarbrgitem
+            $this->db_logistik_pt->select('kodebar');
+            $this->db_logistik_pt->where(['NO_REF' => $data_item_bkb['NO_REF']]);
+            $this->db_logistik_pt->from('keluarbrgitem');
+            $cek_keluarbrgitem = $this->db_logistik_pt->get()->num_rows();
+
+            //menghitung jumlah barang di approval_bkb
+            $this->db_logistik_pt->select('kodebar');
+            $this->db_logistik_pt->where(['no_ref_bkb' => $data_item_bkb['NO_REF']]);
+            $this->db_logistik_pt->from('approval_bkb');
+            $cek_approval_bkb = $this->db_logistik_pt->get()->num_rows();
+
+            if ($cek_keluarbrgitem == $cek_approval_bkb) {
+                $this->db_logistik_pt->set('approval', '1');
+                $this->db_logistik_pt->where(['NO_REF' => $data_item_bkb['NO_REF']]);
+                $this->db_logistik_pt->update('stockkeluar');
+            }
+
+            $data_return = [
+                'insert' => $insert,
+                'cek_keluarbrgitem' => $cek_keluarbrgitem,
+                'cek_approval_bkb' => $cek_approval_bkb
+            ];
+            return $data_return;
         }
     }
 

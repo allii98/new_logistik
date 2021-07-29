@@ -62,16 +62,27 @@ class Bkb extends CI_Controller
         $no = $_POST['start'];
         foreach ($list as $field) {
             $no++;
+
+            if ($field->approval == 1) {
+                $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
+                data-noref="' . $field->NO_REF . '"
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
+                </button>
+                <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+            } else {
+                $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
+                data-noref="' . $field->NO_REF . '"
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
+                </button>
+                <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
+                data-id="' . $field->id . '"
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                </button>
+                <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+            }
+
             $row = array();
-            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
-                        data-noref="' . $field->NO_REF . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
-                        </button>
-                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
-                        data-id="' . $field->id . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
-                        <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+            $row[] = $aksi;
             $row[] = $no;
             $row[] = $field->NO_REF;
             $row[] = $field->nobpb;
@@ -175,6 +186,10 @@ class Bkb extends CI_Controller
         $noref_bkb = $this->input->post('noref_bkb');
 
         $output = $this->M_bkb->cekDataBkbItem($noref_bkb);
+
+        if ($output >= 1) {
+            $this->M_bkb->cek_status_approve($noref_bkb);
+        }
 
         echo json_encode($output);
     }

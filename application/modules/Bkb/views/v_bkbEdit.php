@@ -239,7 +239,7 @@
                         for (i = 0; i < bkb_item.length; i++) {
                               // var no = i + 1;
 
-                              tambah_row(i);
+                              tambah_row(i, bkb_item[i].approval);
                               tahun_tanam(i, bkb_item[i].kodebebantxt);
 
                               //sum stok all periode / qtymasuk - qtykeluar
@@ -284,7 +284,7 @@
             });
       }
 
-      function tambah_row(row, status_item_bkb, approval_item, req_rev_qty_item) {
+      function tambah_row(row, approval) {
             var tr_buka = '<tr id="tr_' + row + '">';
             var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
             var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -351,22 +351,16 @@
                   '<label id="lbl_status_simpan_' + row + '"></label>' +
                   '</td>';
             var td_col_14 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                  '<i><small>waiting approval</small></i>' +
+                  '<i><small>Approved</small></i>' +
                   '</td>';
             var form_tutup = '</form>';
             var tr_tutup = '</tr>';
 
-            // req_rev_qty_item == 1 yaitu telah di approve
-            // if (req_rev_qty_item == '1') {
-            // $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_14 + form_tutup + tr_tutup);
-            // } else if (req_rev_qty_item == '2' && !status_item_bkb) {
-            $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-            // } else if (!status_item_bkb && approval_item == '1') {
-            //       $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-            // }
-            // else {
-            //     $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
-            // }
+            if (approval == 1) {
+                  $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_14 + form_tutup + tr_tutup);
+            } else {
+                  $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
+            }
 
             // cek_bagian(row);
 

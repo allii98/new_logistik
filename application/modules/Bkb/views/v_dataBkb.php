@@ -285,6 +285,7 @@
             setujui_barang(id);
 
         });
+        $('#tableListBKB').DataTable().ajax.reload();
         detail_bkb(id_stockkeluar);
     }
 </script>

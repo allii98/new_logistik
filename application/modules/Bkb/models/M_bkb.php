@@ -5,8 +5,8 @@ class M_bkb extends CI_Model
 {
     // start server side table
     var $table = 'stockkeluar'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'NO_REF', 'nobpb', 'no_mutasi', 'bag', 'keperluan', 'tgl', 'USER'); //field yang ada di table user
-    var $column_search = array('id', 'NO_REF', 'nobpb', 'no_mutasi', 'bag', 'keperluan', 'tgl', 'USER'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'NO_REF', 'nobpb', 'no_mutasi', 'bag', 'keperluan', 'tgl', 'USER', 'approval'); //field yang ada di table user
+    var $column_search = array('id', 'NO_REF', 'nobpb', 'no_mutasi', 'bag', 'keperluan', 'tgl', 'USER', 'approval'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'desc'); // default order 
 
     public function __construct()
@@ -321,6 +321,20 @@ class M_bkb extends CI_Model
         $this->db_logistik_pt->set('status_bkb', 0);
         $this->db_logistik_pt->where('norefbpb', $norefbpb);
         return $this->db_logistik_pt->update('bpb');
+    }
+
+    public function cek_status_approve($noref_bkb)
+    {
+        $this->db_logistik_pt->select('kodebar');
+        $this->db_logistik_pt->where(['NO_REF' => $noref_bkb, 'approval' => 0]);
+        $this->db_logistik_pt->from('keluarbrgitem');
+        $result = $this->db_logistik_pt->get()->num_rows();
+
+        if ($result == 0) {
+            $this->db_logistik_pt->set('approval', '1');
+            $this->db_logistik_pt->where(['NO_REF' => $noref_bkb]);
+            $this->db_logistik_pt->update('stockkeluar');
+        }
     }
 }
 
