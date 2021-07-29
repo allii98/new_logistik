@@ -43,92 +43,83 @@
         <h3><u>REGISTER KELUAR BARANG (BKB)</u></h3>
     </div>
     <br>
-    <table border="0" width="100%">
-        <thead>
-            <tr>
-                <td style="text-align: left;">
-                    <b> PERIODE : <?= $periode; ?> </b><br>
-                    <b>Devisi : <?= $dev; ?></b><br>
-                </td>
-                <td style="text-align: right;"><br><br><i>By System MIPS</i></td>
-            </tr>
-        </thead>
-    </table>
-    <br>
-    <table width="100%" class="singleborder" border="1">
-        <thead>
-            <tr>
-                <?php
-                if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") { ?>
-                    <td style="font-weight: bold; text-align:center; width: 5%">Blok</td>
-                <?php } else { ?>
-                    <td style="font-weight: bold; text-align:center; width: 5%">No</td>
-                <?php } ?>
-                <td style="font-weight: bold; text-align:center; width: 8%">Tgl</td>
-                <td style="font-weight: bold; text-align:center; width: 5%">No BKB</td>
-                <td style="font-weight: bold; text-align:center; width: 12%">Kode Barang</td>
-                <td style="font-weight: bold; text-align:center; width: 15%">Nama Barang</td>
-                <td style="font-weight: bold; text-align:center; width: 5%">Sat</td>
-                <td style="font-weight: bold; text-align:center; width: 7%">Qty</td>
-                <td style="font-weight: bold; text-align:center; width: 12%">Kode Beban</td>
-                <td style="font-weight: bold; text-align:center; width: 15%">Nama Beban</td>
-                <td style="font-weight: bold; text-align:center; width: 15%">Keterangan</td>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (empty($bt)) { ?>
+
+    <?php
+    foreach ($bt as $b) { ?>
+        <table border="0" width="100%">
+            <thead>
                 <tr>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>-</td>
+                    <td style="text-align: left;"><b> PERIODE : <?= $periode; ?> </b><br>
+                        <b>Devisi : <?= $devisi; ?></b><br>
+                        <?php if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') { ?>
+                            <b>AFD : <?= $b->afd; ?></b>
+                        <?php } else { ?>
+                            <b>Bagian : <?= $bagian; ?></b>
+                        <?php } ?>
+                    </td>
+                    <td style="text-align: right;"><br><br><i>By System MIPS</i></td>
                 </tr>
-                <?php } else {
-                $no = 1;
-                if (isset($bt)) {
-                    foreach ($bt as $d) { ?>
-                        <tr>
-                            <?php
-                            if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") { ?>
-                                <td><?= $d->blok ?></td>
-                            <?php } else { ?>
-                                <td><?= $no++; ?></td>
-                            <?php } ?>
-                            <td><?= date_format(date_create($d->tgl), 'd/m/Y'); ?></td>
-                            <td><?= $d->skb ?></td>
-                            <td><?= $d->kodebar ?></td>
-                            <td><?= $d->nabar ?></td>
-                            <td><?= $d->satuan ?></td>
-                            <td><?= $d->qty ?></td>
-                            <td><?= $d->kodebeban ?></td>
-                            <td><?= $d->ketbeban ?></td>
-                            <td><?= $d->ket ?></td>
-                        </tr>
-            <?php }
+            </thead>
+        </table>
+        <br>
+        <table width="100%" class="singleborder" border="1">
+            <thead>
+                <tr>
+                    <?php if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') { ?>
+                        <td style="font-weight: bold; text-align:center; width: 5%">Blok</td>
+                    <?php } else { ?>
+                        <td style="font-weight: bold; text-align:center; width: 5%">No</td>
+                    <?php } ?>
+                    <td style="font-weight: bold; text-align:center; width: 8%">Tgl</td>
+                    <td style="font-weight: bold; text-align:center; width: 5%">No BKB</td>
+                    <td style="font-weight: bold; text-align:center; width: 12%">Kode Barang</td>
+                    <td style="font-weight: bold; text-align:center; width: 15%">Nama Barang</td>
+                    <td style="font-weight: bold; text-align:center; width: 5%">Sat</td>
+                    <td style="font-weight: bold; text-align:center; width: 7%">Qty</td>
+                    <td style="font-weight: bold; text-align:center; width: 12%">Kode Beban</td>
+                    <td style="font-weight: bold; text-align:center; width: 15%">Nama Beban</td>
+                    <td style="font-weight: bold; text-align:center; width: 15%">Keterangan</td>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') {
+                    $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd'";
+                } else {
+                    $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian'";
                 }
-            } ?>
-            <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-        </tbody>
-    </table>
-    <br>
-    <i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
+                $btn = $this->db_logistik_pt->query($query)->result();
+                if (empty($btn)) { ?>
+                    <tr>
+                        <td style="text-align: center;" colspan="10">Tidak ada data</td>
+                    </tr>
+
+                    <?php } else {
+                    $no = 1;
+                    foreach ($btn as $bn) { ?>
+                        <tr>
+                            <?php if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') { ?>
+                                <td style="text-align: center;"><?= $bn->blok; ?></td>
+                            <?php } else { ?>
+                                <td style="font-weight: bold; text-align:center; width: 5%"><?= $no++; ?></td>
+                            <?php } ?>
+                            <td style="text-align: center;"><?= date_format(date_create($bn->tgl), 'd/m/Y'); ?></td>
+                            <td style="text-align: center;"><?= $bn->skb; ?></td>
+                            <td style="text-align: center;"><?= $bn->kodebar; ?></td>
+                            <td><?= $bn->nabar; ?></td>
+                            <td style="text-align: center;"><?= $bn->satuan; ?></td>
+                            <td style="text-align: center;"><?= number_format($bn->qty, 2); ?></td>
+                            <td style="text-align: center;"><?= $bn->kodesubtxt; ?></td>
+                            <td><?= $bn->ketsub; ?></td>
+                            <td><?= $bn->ket; ?></td>
+                        </tr>
+                <?php }
+                } ?>
+            </tbody>
+        </table>
+        <br>
+    <?php }
+    ?>
 </body>
 
 </html>

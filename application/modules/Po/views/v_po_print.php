@@ -110,12 +110,14 @@ function terbilang($x, $style = 4)
 </head>
 
 <body>
-  <table>
+  <hr>
+  <table border="0">
     <tr>
       <td>Nama</td>
       <td>:</td>
       <td>PT MULIA SAWIT AGRO LESTARI</td>
     </tr>
+    <br>
     <tr>
       <td>No. NPWP</td>
       <td>:</td>
@@ -185,9 +187,9 @@ function terbilang($x, $style = 4)
         <td class="noborder" rowspan="2" align="center">-</td>
         <td class="noborder" rowspan="2" align="center"><?= $list_item->qty; ?></td>
         <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>
-        <td class="noborder" rowspan="2" align="right">Rp. <?= number_format($list_item->harga, 2, ",", "."); ?></td>
+        <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($list_item->harga, 2, ",", "."); ?></td>
         <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
-        <td class="noborder" rowspan="2" align="right">Rp. <?= number_format($jumharga_pre, 2, ",", "."); ?></td>
+        <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumharga_pre, 2, ",", "."); ?></td>
       </tr>
       <tr>
         <td style="border: none;" colspan="4" rowspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<?= $list_item->ket; ?></td>
@@ -208,19 +210,19 @@ function terbilang($x, $style = 4)
         Uang Muka    : <br /> -->
       </td>
       <td colspan="2">SUB TOTAL</td>
-      <td colspan="2" align="right">Rp <?= number_format($jum_totbay, 2, ",", "."); ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
     </tr>
     <tr>
       <td colspan="2">PPN 10%</td>
-      <td colspan="2" align="right">Rp <?= $pot_ppn_format; ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
     </tr>
     <tr>
       <td colspan="2">PPH</td>
-      <td colspan="2" align="right">Rp <?= $hit_pph_format; ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
     </tr>
     <tr>
       <td colspan="2">Biaya Lainnya</td>
-      <td colspan="2" align="right">Rp <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
     </tr>
     <tr>
       <td colspan="2"><?= join(", ", $nama_bebanbpo); ?></td>
@@ -236,7 +238,7 @@ function terbilang($x, $style = 4)
         // exit();
         ?>
         <br />
-        Rp <?= number_format($po->totalbayar, 2, ",", "."); ?>
+        <?= $list_item->kurs; ?>. <?= number_format($po->totalbayar, 2, ",", "."); ?>
       </td>
     </tr>
     <tr>
@@ -244,7 +246,7 @@ function terbilang($x, $style = 4)
       $total = $po->totalbayar;
       // var_dump("iyayayay".$total);exit();
       ?>
-      <td colspan="11"><b>Terbilang : <?= terbilang($total, $style = 3); ?> Rupiah</b></td>
+      <td colspan="11"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
     </tr>
     <tr>
       <td align="center" colspan="4" height="50">

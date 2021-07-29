@@ -282,18 +282,17 @@ class Po extends CI_Controller
         $mpdf->SetHTMLHeader('
                             <table width="100%" border="0">
                                 <tr>
-                                    <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
-                                    <td align="left" style="font-size:14px;font-weight:bold;margin-bottom:0px;">PT MULIA SAWIT AGRO LESTARI</td>
-                                    
-                                </tr>
+                                    <td rowspan="3"  width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
+                                   
+                                    </tr>
                                 <tr>
-                                <td align="left" style="margin-top:0px;">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                                <td align="left" style="font-size:8.5px;"><h3 style="font-size:14px;font-weight:bold;">PT MULIA SAWIT AGRO LESTARI</h3>Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br />Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
                                 </td>
-                                <td width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
+                                <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
                                 </tr>
                                
                             </table>
-                            <hr style="width:100%;margin:0px;">
+                            
                             ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 

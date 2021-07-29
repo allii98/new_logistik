@@ -1064,12 +1064,7 @@
                                         <label for="rbt_per_bgn_grp_brg">Per Bagian Group</label>
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
-                                    <div class="radio radio-info form-check-inline">
-                                        <input type="radio" value="per_kerja" id="rbt_per_kerja" name="rbt_pilihan7">
-                                        <label for="rbt_per_kerja">Per Pekerjaan (Tanaman)</label>
-                                    </div>
-                                </div>
+
                                 <div class="col-sm-4">
                                     <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="mutasi_pt" id="rbt_mutasi_pt" name="rbt_pilihan7">
@@ -1079,12 +1074,18 @@
                             </div>
                             <br>
 
-                            <div class="row">
+                            <div class="row" id="tanaman">
                                 <div class="col-md-4">
                                     <label class="control-label col-md-12 col-sm-3 col-xs-12">Nominal RP </label>
                                 </div>
                                 <div class="col-md-8">
                                     <hr>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="per_kerja" id="rbt_per_kerja" name="rbt_pilihan7">
+                                        <label for="rbt_per_kerja">Per Pekerjaan (Tanaman)</label>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4">
 
@@ -1764,6 +1765,17 @@
 
         function lap_bkb() {
             $('#modalBKB').modal('show');
+            $('#tanaman').find('#rbt_per_kerja,#rbt_per_bgn_grp_brg_n,#rbt_per_kerja1,#rbt_summary_rsh, #rbt_sum_blok_ub,#rbt_sum_blok_pk').attr('disabled', '');
+            $('#bagian_bkb').change(function() {
+                // console.log(this.value);
+                var bagian = this.value;
+                if (bagian === 'TANAMAN' || bagian === 'TANAMAN UMUM') {
+                    $('#tanaman').find('#rbt_per_kerja,#rbt_per_bgn_grp_brg_n,#rbt_per_kerja1,#rbt_summary_rsh, #rbt_sum_blok_ub,#rbt_sum_blok_pk').removeAttr('disabled');
+                } else {
+                    $('#tanaman').find('#rbt_per_kerja,#rbt_per_bgn_grp_brg_n,#rbt_per_kerja1,#rbt_summary_rsh, #rbt_sum_blok_ub,#rbt_sum_blok_pk').attr('disabled', '');
+                }
+            });
+
             // $('#cmb_devisi1').empty();
             devisi_bkb();
             bagianBKB();
