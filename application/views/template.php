@@ -260,10 +260,10 @@
                                     <a href="#" onclick="lap_bkb();" class="dropdown-item"><i class="fe-file-minus mr-1"></i>
                                         <font face="Verdana" size="2.5">Bukti Keluar Barang (BKB)</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-clipboard mr-1"></i>
+                                    <a href="#" onclick="lap_rsh();" class="dropdown-item"><i class="fe-clipboard mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Register Stok Harian</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-check-square mr-1"></i>
+                                    <a href="#" class="dropdown-item"><i class="fe-check-square mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Rincian Stok</font>
                                     </a>
                                 </div>
@@ -1266,6 +1266,68 @@
 
         <!-- end lpb po -->
 
+        <!-- laporan register stok harian -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapRSH">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalLapRSH">Register Stok Harian</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Devisi *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="devisi_rsh" name="devisi_rsh" required="">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Kode Stok *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="kode_stok" name="kode_stok">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2">Grub Barang *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="cmb_group_brg" name="cmb_group_brg" required="">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="rinci_rsh" id="rbt_rinci_rsh" name="rbt_pilihan9" checked>
+                                <label for="rbt_rinci_rsh"> Rinci </label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="summary_rsh" id="rbt_summary_rsh" name="rbt_pilihan9">
+                                <label for="rbt_summary_rsh">Summary </label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="non_saldo" id="rbt_non_saldo" name="rbt_pilihan9">
+                                <label for="rbt_non_saldo">Non Saldo </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkan_rsh()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end lap rsh -->
+
 
 
 
@@ -1794,6 +1856,80 @@
             $('#modalLapLPBPO').modal('show');
             pilihTanggal4();
             pilihDevisi4();
+        }
+
+        function lap_rsh() {
+            $('#modalLapRSH').modal('show');
+            pilihDevisi5();
+            pilihGroupBrg();
+        }
+
+        function pilihDevisi5() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/cari_devisi'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    $('#devisi_rsh').empty();
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+                    if (stl == 'HO') {
+                        var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
+                        $('#devisi_rsh').append(opsi_cmb_all);
+                    }
+
+
+                    $.each(data, function(index) {
+                        var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                        $('#devisi_rsh').append(opsi_cmb_devisi);
+                    });
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        }
+
+        function tampilkan_rsh() {
+            var cmb_devisi5 = $('#devisi_rsh').val();
+            var kode_stok = $('#kode_stok').val();
+            var cmb_group_brg = $('#cmb_group_brg').val();
+            var rbt_pilihan9 = $("input[name='rbt_pilihan9']:checked").val();
+
+            if (rbt_pilihan9 == 'rinci_rsh') {
+                window.open('<?= site_url("Laporan/print_lap_rsh_rinci"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
+            } else if (rbt_pilihan9 == 'summary_rsh') {
+                window.open('<?= site_url("laporan/print_lap_rsh_summary"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
+            } else if (rbt_pilihan9 == 'non_saldo') {
+                window.open('<?= site_url("Laporan/print_lap_rsh_non_saldo"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
+            }
+            console.log(cmb_devisi5, kode_stok, cmb_group_brg, rbt_pilihan9);
+        }
+
+        function pilihGroupBrg() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Laporan/list_group_brg'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: '',
+                success: function(data) {
+                    $('#cmb_group_brg').empty();
+
+                    var opsi_cmb_all = '<option value="Semua" selected>SEMUA</option>';
+                    $('#cmb_group_brg').append(opsi_cmb_all);
+                    $.each(data, function(index) {
+                        var opsi_cmb_group_brg = '<option value="' + data[index].grp + '">' + data[index].grp + '</option>';
+                        $('#cmb_group_brg').append(opsi_cmb_group_brg);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
         }
 
         function tampilkanlpb_po() {
