@@ -671,7 +671,7 @@
 
                     if ($.trim($('#h4_no_ref_bkb').text()) == '') {
                         $('#lbl_bkb_status').empty();
-                        $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate BKB Number</label>');
+                        $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
                     }
                 },
 
@@ -702,14 +702,7 @@
                     cmb_bahan: $('#cmb_bahan_' + n).val(),
                     hidden_no_acc: $('#hidden_no_acc_' + n).val(),
                     hidden_nama_acc: $('#txt_account_beban_' + n).val(),
-                    hidden_kodebebantxt: $('#hidden_kodebebantxt' + n).val(),
-
-                    //BBM
-                    bhnbakar: $('#bhnbakar').val(),
-                    txt_jns_alat: $('#txt_jns_alat').val(),
-                    txt_kd_nmr: $('#txt_kd_nmr').val(),
-                    txt_hm_km: $('#txt_hm_km').val(),
-                    txt_lokasi_kerja: $('#txt_lokasi_kerja').val(),
+                    hidden_kodebebantxt: $('#hidden_kodebebantxt' + n).val()
                 },
 
                 success: function(data) {

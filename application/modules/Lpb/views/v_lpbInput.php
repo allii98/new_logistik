@@ -3,9 +3,9 @@ date_default_timezone_set('Asia/Jakarta');
 ?>
 <div class="container-fluid">
     <!-- start row-->
-    <div class="row justify-content-center">
+    <div class="row justify-content-center mt-0">
         <div class="col-12">
-            <div class="widget-rounded-circle card-box mt-2">
+            <div class="widget-rounded-circle card-box">
                 <h4 class="header-title">
                     <font face="Verdana"> LPB </font>
                 </h4>
@@ -480,7 +480,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                 $('#txt_ref_po').val(data_po.noreftxt);
                 $('#txt_no_po').val(data_po.nopotxt);
-                $('#txt_tgl_po').val(data_po.tglpo);
+                $('#txt_tgl_po').val(formatDate(data_po.tglpo));
                 var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
                 $('#txt_kd_name_supplier').val(namesup);
                 $('#txt_kd_supplier').val(data_po.kode_supply);
@@ -528,6 +528,20 @@ date_default_timezone_set('Asia/Jakarta');
                 alert(response.responseText);
             }
         });
+    }
+
+    function formatDate(date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
     }
 
     $("#select2").select2({
