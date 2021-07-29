@@ -58,7 +58,7 @@
                 <td style="font-weight: bold; width: 10%; text-align: center;">Tgl</td>
                 <td style="font-weight: bold; width: 10%; text-align: center;">No. BKB</td>
                 <td style="font-weight: bold; width: 15%; text-align: center;">Kode Barang</td>
-                <td style="font-weight: bold; width: 35%; text-align: center;">Nama Barang</td>
+                <td style="font-weight: bold; width: 20%; text-align: center;">Nama Barang</td>
                 <td style="font-weight: bold; width: 5%; text-align: center;">Sat</td>
                 <td style="font-weight: bold; width: 10%; text-align: center;">Qty</td>
                 <td style="font-weight: bold; width: 10%; text-align: center;">Mutasi PT</td>

@@ -47,8 +47,8 @@
         <table border="0" width="100%">
             <thead>
                 <tr>
-                    <td style="text-align: left;"><b> PERIODE : <?= $periode; ?></b><br>
-                        <b>Devisi : <?= $devisi; ?></b><br>
+                    <td style="text-align: left;"><b> PERIODE : <?= $periode; ?> </b><br>
+                        <b>Devisi : <?= $dev; ?></b><br>
                         <?php if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') { ?>
                             <b>AFD : -</b>
                         <?php } else { ?>
@@ -64,42 +64,41 @@
             <thead style="text-align: center;">
                 <tr>
                     <td style="font-weight: bold; text-align: center; width: 5%;">Blok</td>
-                    <td style="font-weight: bold; text-align: center; width: 10%;">Tgl</td>
-                    <td style="font-weight: bold; text-align: center; width: 10%;">No BKB</td>
-                    <td style="font-weight: bold; text-align: center; width: 15%;">Kode Barang</td>
-                    <td style="font-weight: bold; text-align: center; width: 15%;">Nama Barang</td>
+                    <td style="font-weight: bold; text-align: center; width: 8%;">Tgl</td>
+                    <td style="font-weight: bold; text-align: center; width: 8%;">No BKB</td>
+                    <td style="font-weight: bold; text-align: center; width: 12%;">Kode Barang</td>
+                    <td style="font-weight: bold; text-align: center; width: 18%;">Nama Barang</td>
                     <td style="font-weight: bold; text-align: center; width: 5%;">Sat</td>
                     <td style="font-weight: bold; text-align: center; width: 10%;">Qty</td>
-                    <td style="font-weight: bold; text-align: center; width: 30%;">Keterangan</td>
+                    <td style="font-weight: bold; text-align: center; width: 10%;">Total Nilai (Rp)</td>
+                    <td style="font-weight: bold; text-align: center; width: 24%;">Keterangan</td>
                 </tr>
             </thead>
             <tbody>
 
                 <tr>
-                    <td style="text-align: center;" colspan="8">Tidak ada data</td>
+                    <td colspan="8" style="text-align: center;">-</td>
                 </tr>
+
                 <tr>
-                    <td style="text-align: center;" colspan="8">Tidak ada data</td>
-
+                    <td style="text-align: center;" colspan="9">Tidak ada data</td>
                 </tr>
-
                 <tr>
                     <td colspan="5" style="text-align: right; padding-right: 100px;"> Total </td>
                     <td></td>
-                    <td style="text-align: right;">0 </td>
+                    <td style="text-align: right;">0</td>
+                    <td style="text-align: right;">0</td>
                     <td></td>
                 </tr>
-
             </tbody>
         </table>
         <br>
-        <?php } else {
-        foreach ($bt as $b) { ?>
+        <?php foreach ($bt as $b) { ?>
             <table border="0" width="100%">
                 <thead>
                     <tr>
-                        <td style="text-align: left;"><b> PERIODE : <?= $periode; ?></b><br>
-                            <b>Devisi : <?= $devisi; ?></b><br>
+                        <td style="text-align: left;"><b> PERIODE : <?= $periode; ?> </b><br>
+                            <b>Devisi : <?= $dev; ?></b><br>
                             <?php if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') { ?>
                                 <b>AFD : <?= $b->afd; ?></b>
                             <?php } else { ?>
@@ -115,13 +114,14 @@
                 <thead style="text-align: center;">
                     <tr>
                         <td style="font-weight: bold; text-align: center; width: 5%;">Blok</td>
-                        <td style="font-weight: bold; text-align: center; width: 10%;">Tgl</td>
-                        <td style="font-weight: bold; text-align: center; width: 10%;">No BKB</td>
-                        <td style="font-weight: bold; text-align: center; width: 15%;">Kode Barang</td>
-                        <td style="font-weight: bold; text-align: center; width: 15%;">Nama Barang</td>
+                        <td style="font-weight: bold; text-align: center; width: 8%;">Tgl</td>
+                        <td style="font-weight: bold; text-align: center; width: 8%;">No BKB</td>
+                        <td style="font-weight: bold; text-align: center; width: 12%;">Kode Barang</td>
+                        <td style="font-weight: bold; text-align: center; width: 18%;">Nama Barang</td>
                         <td style="font-weight: bold; text-align: center; width: 5%;">Sat</td>
                         <td style="font-weight: bold; text-align: center; width: 10%;">Qty</td>
-                        <td style="font-weight: bold; text-align: center; width: 30%;">Keterangan</td>
+                        <td style="font-weight: bold; text-align: center; width: 10%;">Total Nilai (Rp)</td>
+                        <td style="font-weight: bold; text-align: center; width: 24%;">Keterangan</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -143,9 +143,12 @@
                             $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian'";
                         }
                         $bpr = $this->db_logistik_pt->query($query)->result();
+
                         $total = 0;
+                        $total_h = 0;
                         foreach ($bpr as $bp) {
                             $total += $bp->qty;
+                            $total_h += ($bp->qty * $bp->nilai_item);
                         ?>
                             <tr>
                                 <td style="text-align: center;"><?= $bp->blok; ?></td>
@@ -155,6 +158,7 @@
                                 <td style="text-align: left;"><?= $bp->nabar; ?></td>
                                 <td style="text-align: center;"><?= $bp->satuan; ?></td>
                                 <td style="text-align: right;"><?= number_format($bp->qty, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format(($bp->qty * $bp->nilai_item), 2); ?></td>
                                 <td style="text-align: left;"><?= $bp->ket; ?></td>
                             </tr>
                         <?php } ?>
@@ -162,6 +166,7 @@
                             <td colspan="5" style="text-align: right; padding-right: 100px;"> Total </td>
                             <td></td>
                             <td style="text-align: right;"><?= number_format($total, 2); ?> </td>
+                            <td style="text-align: right;"><?= number_format($total_h, 2); ?></td>
                             <td></td>
                         </tr>
                     <?php } ?>

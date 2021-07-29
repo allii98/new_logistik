@@ -47,14 +47,13 @@
         <table border="0" width="100%">
             <thead>
                 <tr>
-                    <td style="text-align: left;"><b> PERIODE : <?= $periode; ?></b><br>
-                        <b>Devisi : <?= $devisi; ?></b><br>
+                    <td style="text-align: left;"><b> PERIODE : <?= $periode; ?> </b><br>
+                        <b>Devisi : <?= $dev; ?></b><br>
                         <?php if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') { ?>
                             <b>AFD : -</b>
                         <?php } else { ?>
                             <b>Bagian : <?= $bagian; ?></b>
                         <?php } ?>
-                    </td>
                     <td style="text-align: right;"><br><br><i>By System MIPS</i></td>
                 </tr>
             </thead>
@@ -64,29 +63,30 @@
             <thead style="text-align: center;">
                 <tr>
                     <td style="font-weight: bold; text-align: center; width: 5%;">Blok</td>
-                    <td style="font-weight: bold; text-align: center; width: 10%;">Tgl</td>
-                    <td style="font-weight: bold; text-align: center; width: 10%;">No BKB</td>
                     <td style="font-weight: bold; text-align: center; width: 15%;">Kode Barang</td>
-                    <td style="font-weight: bold; text-align: center; width: 15%;">Nama Barang</td>
+                    <td style="font-weight: bold; text-align: center; width: 20%;">Nama Barang</td>
                     <td style="font-weight: bold; text-align: center; width: 5%;">Sat</td>
                     <td style="font-weight: bold; text-align: center; width: 10%;">Qty</td>
+                    <td style="font-weight: bold; text-align: center; width: 15%;">Nominal (Rp)</td>
                     <td style="font-weight: bold; text-align: center; width: 30%;">Keterangan</td>
                 </tr>
             </thead>
             <tbody>
 
                 <tr>
-                    <td style="text-align: center;" colspan="8">Tidak ada data</td>
-                </tr>
-                <tr>
-                    <td style="text-align: center;" colspan="8">Tidak ada data</td>
-
-                </tr>
-
-                <tr>
-                    <td colspan="5" style="text-align: right; padding-right: 100px;"> Total </td>
+                    <td colspan="5"><b>- &nbsp; -</b></td>
                     <td></td>
-                    <td style="text-align: right;">0 </td>
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center;" colspan="7">Tidak ada data</td>
+                </tr>
+
+                <tr>
+                    <td colspan="4" style="text-align: center;"><b>Total</b></td>
+                    <td style="text-align: right;"><b>0</b></td>
+                    <td style="text-align: right;"><b>0</b></td>
                     <td></td>
                 </tr>
 
@@ -98,14 +98,13 @@
             <table border="0" width="100%">
                 <thead>
                     <tr>
-                        <td style="text-align: left;"><b> PERIODE : <?= $periode; ?></b><br>
-                            <b>Devisi : <?= $devisi; ?></b><br>
+                        <td style="text-align: left;"><b> PERIODE : <?= $periode; ?> </b><br>
+                            <b>Devisi : <?= $dev; ?></b><br>
                             <?php if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') { ?>
                                 <b>AFD : <?= $b->afd; ?></b>
                             <?php } else { ?>
                                 <b>Bagian : <?= $bagian; ?></b>
                             <?php } ?>
-                        </td>
                         <td style="text-align: right;"><br><br><i>By System MIPS</i></td>
                     </tr>
                 </thead>
@@ -115,53 +114,55 @@
                 <thead style="text-align: center;">
                     <tr>
                         <td style="font-weight: bold; text-align: center; width: 5%;">Blok</td>
-                        <td style="font-weight: bold; text-align: center; width: 10%;">Tgl</td>
-                        <td style="font-weight: bold; text-align: center; width: 10%;">No BKB</td>
                         <td style="font-weight: bold; text-align: center; width: 15%;">Kode Barang</td>
-                        <td style="font-weight: bold; text-align: center; width: 15%;">Nama Barang</td>
+                        <td style="font-weight: bold; text-align: center; width: 20%;">Nama Barang</td>
                         <td style="font-weight: bold; text-align: center; width: 5%;">Sat</td>
                         <td style="font-weight: bold; text-align: center; width: 10%;">Qty</td>
+                        <td style="font-weight: bold; text-align: center; width: 15%;">Nominal (Rp)</td>
                         <td style="font-weight: bold; text-align: center; width: 30%;">Keterangan</td>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') {
-                        $query = "SELECT DISTINCT a.kodesub, a.ketsub, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd' ORDER BY a.ketsub ASC";
+                        $query = "SELECT DISTINCT a.kodesub, a.ketsub, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd' ORDER BY a.kodebar ASC";
                     } else {
-                        $query = "SELECT DISTINCT a.kodesub, a.ketsub, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' ORDER BY a.ketsub ASC";
+                        $query = "SELECT DISTINCT a.kodesub, a.ketsub, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' ORDER BY a.kodebar ASC";
                     }
                     $bpk = $this->db_logistik_pt->query($query)->result();
                     foreach ($bpk as $bk) { ?>
                         <tr>
-                            <td colspan="8"><b><?= $bk->kodesub; ?> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <?= $bk->ketsub; ?></b></td>
+                            <td colspan="5"><b><?= $bk->kodesub; ?> &nbsp; <?= $bk->ketsub; ?></b></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                         <?php
                         if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') {
-                            $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd'";
+                            $query1 = "SELECT a.blok, a.kodebar, a.nabar, a.satuan, a.ket, a.qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd' ORDER BY a.kodebar ASC";
                         } else {
-                            $query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian'";
+                            $query1 = "SELECT a.blok, a.kodebar, a.nabar, a.satuan, a.ket, a.qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' ORDER BY a.kodebar ASC";
                         }
-                        $bpr = $this->db_logistik_pt->query($query)->result();
+                        $hasil_pk = $this->db_logistik_pt->query($query1)->result();
                         $total = 0;
-                        foreach ($bpr as $bp) {
-                            $total += $bp->qty;
+                        $total_h = 0;
+                        foreach ($hasil_pk as $pk) {
+                            $total += $pk->qty;
+                            $total_h += ($pk->qty * $pk->nilai_item);
                         ?>
                             <tr>
-                                <td style="text-align: center;"><?= $bp->blok; ?></td>
-                                <td style="text-align: center;"><?= date_format(date_create($bp->tgl), 'd/m/Y'); ?></td>
-                                <td style="text-align: center;"><?= $bp->skb; ?></td>
-                                <td style="text-align: center;"><?= $bp->kodebar; ?></td>
-                                <td style="text-align: left;"><?= $bp->nabar; ?></td>
-                                <td style="text-align: center;"><?= $bp->satuan; ?></td>
-                                <td style="text-align: right;"><?= number_format($bp->qty, 2); ?></td>
-                                <td style="text-align: left;"><?= $bp->ket; ?></td>
+                                <td style="text-align: center;"><?= $pk->blok; ?></td>
+                                <td style="text-align: center;"><?= $pk->kodebar; ?></td>
+                                <td style="text-align: left;"><?= $pk->nabar; ?></td>
+                                <td style="text-align: center;"><?= $pk->satuan; ?></td>
+                                <td style="text-align: right;"><?= number_format($pk->qty, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format(($pk->qty * $pk->nilai_item)); ?></td>
+                                <td style="text-align: left;"><?= $pk->ket; ?></td>
                             </tr>
                         <?php } ?>
                         <tr>
-                            <td colspan="5" style="text-align: right; padding-right: 100px;"> Total </td>
-                            <td></td>
-                            <td style="text-align: right;"><?= number_format($total, 2); ?> </td>
+                            <td colspan="4" style="text-align: center;"><b>Total</b></td>
+                            <td style="text-align: right;"><b><?= number_format($total, 2); ?></b></td>
+                            <td style="text-align: right;"><b><?= number_format($total_h, 2); ?></b></td>
                             <td></td>
                         </tr>
                     <?php } ?>
