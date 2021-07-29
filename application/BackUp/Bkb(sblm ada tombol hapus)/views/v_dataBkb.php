@@ -173,17 +173,6 @@
     //     });
     // });
 
-    $(document).ready(function() {
-        $(document).on('click', '#edit_bkb', function() {
-
-            var id_stockkeluar = $(this).data('id');
-            // console.log(nabar);
-
-            window.location.href = "Bkb/edit_bkb/" + id_stockkeluar;
-
-        });
-    });
-
     function detail_bkb(id_stockkeluar) {
 
         $("#modal-detail-bkb").modal('show');

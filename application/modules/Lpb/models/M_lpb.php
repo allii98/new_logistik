@@ -187,7 +187,7 @@ class M_lpb extends CI_Model
 
     public function cari_lpb_edit($id_stokmasuk)
     {
-        $this->db_logistik_pt->select('nopo, refpo, nama_supply, kode_supply, tgl, lokasi_gudang, no_pengtr, noref, ttgtxt, ket, kode_dev');
+        $this->db_logistik_pt->select('id, nopo, refpo, nama_supply, kode_supply, tgl, lokasi_gudang, no_pengtr, noref, ttgtxt, ket, kode_dev');
         $this->db_logistik_pt->from('stokmasuk');
         $this->db_logistik_pt->where('id', $id_stokmasuk);
         $data_lpb = $this->db_logistik_pt->get()->row_array();

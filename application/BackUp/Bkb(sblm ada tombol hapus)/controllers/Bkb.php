@@ -67,10 +67,6 @@ class Bkb extends CI_Controller
                         data-noref="' . $field->NO_REF . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
                         </button>
-                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
-                        data-id="' . $field->id . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
                         <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = $field->NO_REF;
@@ -100,93 +96,6 @@ class Bkb extends CI_Controller
     //     $data = $this->M_bkb->get_bpb();
     //     echo json_encode($data);
     // }
-
-    public function edit_bkb()
-    {
-        $data = [
-            'title' => 'Edit BKB'
-        ];
-
-        $id_stockkeluar = $this->uri->segment('3');
-
-        $data['data_stockkeluar'] = $this->db_logistik_pt->get_where('stockkeluar', ['id' => $id_stockkeluar])->row_array();
-
-        $data['noref_bkb_edit'] = $data['data_stockkeluar']['NO_REF'];
-
-        $this->template->load('template', 'v_bkbEdit', $data);
-    }
-
-    public function get_data_bkb_edit()
-    {
-        $noref_bkb = $this->input->post('noref_bkb');
-
-        $stockkeluar = $this->db_logistik_pt->get_where('stockkeluar', ['NO_REF' => $noref_bkb])->row_array();
-
-        $keluarbrgitem = $this->db_logistik_pt->get_where('keluarbrgitem', ['NO_REF' => $noref_bkb])->result_array();
-
-        $data = [
-            'stockkeluar' => $stockkeluar,
-            'keluarbrgitem' => $keluarbrgitem,
-        ];
-
-        echo json_encode($data);
-    }
-
-    public function KembalikanNilaiStock()
-    {
-        $id_keluarbrgitem = $this->input->post('id_keluarbrgitem');
-
-        //get keperluan data update
-        $get_data_keluarbrgitem = $this->M_bkb->get_data_keluarbrgitem($id_keluarbrgitem);
-
-        // mengembalikan stock awal bulanan
-        $update_stockawal_bulanan_devisi_edit = $this->M_bkb->update_stockawal_bulanan_devisi_edit($get_data_keluarbrgitem);
-
-        // mengembalikan stock awal
-        $update_stockawal_edit = $this->M_bkb->update_stockawal_edit($get_data_keluarbrgitem);
-
-        $data_return = [
-            'update_stockawal_bulanan_devisi_edit' => $update_stockawal_bulanan_devisi_edit,
-            'update_stockawal_edit' => $update_stockawal_edit,
-        ];
-
-        echo json_encode($data_return);
-    }
-
-    public function hapusItemBkb()
-    {
-        $id_keluarbrgitem = $this->input->post('id_keluarbrgitem');
-        $kodebar = $this->input->post('kodebar');
-        $norefbpb = $this->input->post('norefbpb');
-
-        //ubah status_item_bkb di bpbitem
-        $this->M_bkb->update_status_item_bkb($kodebar, $norefbpb);
-
-        //ubah status_bkb di bpb
-        $this->M_bkb->update_status_bkb($norefbpb);
-
-        $data = $this->db_logistik_pt->delete('keluarbrgitem', array('id' => $id_keluarbrgitem));
-
-        echo json_encode($data);
-    }
-
-    public function cekDataBkbItem()
-    {
-        $noref_bkb = $this->input->post('noref_bkb');
-
-        $output = $this->M_bkb->cekDataBkbItem($noref_bkb);
-
-        echo json_encode($output);
-    }
-
-    public function hapusBkb()
-    {
-        $noref_bkb = $this->input->post('noref_bkb');
-
-        $data = $this->db_logistik_pt->delete('stockkeluar', array('NO_REF' => $noref_bkb));
-
-        echo json_encode($data);
-    }
 
     // //Start Data Table Server Side
     public function get_data_bpb()
@@ -258,12 +167,12 @@ class Bkb extends CI_Controller
             $text1 = "EST";
             $text2 = "SWJ";
             $dig_1 = "6";
-            $dig_2 = "2";
+            $dig_2 = "6";
         } else if ($sess_lokasi == "RO") {
             $text1 = "ROM";
             $text2 = "PKY";
             $dig_1 = "2";
-            $dig_2 = "4";
+            $dig_2 = "2";
         } else if ($sess_lokasi == "PKS") {
             $text1 = "FAC";
             $text2 = "SWJ";
@@ -403,11 +312,6 @@ class Bkb extends CI_Controller
         $datastockkeluar['SUB']             = NULL;
         $datastockkeluar['USER1']           = NULL;
         $datastockkeluar['cetak']           = '0';
-        $datastockkeluar['bhn_bakar']       = $this->input->post('bhnbakar');
-        $datastockkeluar['jn_alat']         = $this->input->post('txt_jns_alat');
-        $datastockkeluar['no_kode']         = $this->input->post('txt_kd_nmr');
-        $datastockkeluar['hm_km']           = $this->input->post('txt_hm_km');
-        $datastockkeluar['lok_kerja']       = $this->input->post('txt_lokasi_kerja');
         $datastockkeluar['posting']         = '0';
 
         // $datakeluarbrgitem['id']            = $id_keluarbrgitem;
