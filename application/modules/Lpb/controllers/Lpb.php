@@ -958,7 +958,10 @@ class Lpb extends CI_Controller
                             <table width="100%" border="0" align="center" style="margin-bottom:-30px;">
                                 <tr>
                                     <td rowspan="5" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:10px" src="././assets/img/msal.jpg"></td>
-                                    <td rowspan="5" align="left" style="vertical-align: text-top; padding-top:10px; font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $data['stokmasuk']->lokasi . ')</td>
+                                    <td rowspan="5" align="left" style="vertical-align: text-top; padding-top:10px">
+                                        <b style="font-size:14px">PT Mulia Sawit Agro Lestari (' . $data['stokmasuk']->lokasi . ')</b> <br>
+                                        <p style="font-size:8px">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru, JakartaSelatan, DKI Jakarta Raya-12140</p>
+                                    </td>
                                     <td>Putih</td>
                                     <td>:</td>
                                     <td>Finance HO</td>
