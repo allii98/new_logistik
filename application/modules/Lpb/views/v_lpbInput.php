@@ -237,6 +237,12 @@ date_default_timezone_set('Asia/Jakarta');
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Scan QRcode</h4>
+                <label class="btn btn-info active btn-xs ml-1">
+                    <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Front Camera
+                </label>
+                <label class="btn btn-secondary btn-xs">
+                    <input type="radio" name="putar_camera" value="2" autocomplete="off"> Back Camera
+                </label>
                 <button type="button" id="modalCameraClose" onclick="modalCameraClose()" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -447,6 +453,21 @@ date_default_timezone_set('Asia/Jakarta');
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
             scanner.start(cameras[0]);
+            $('[name="putar_camera"]').on('change', function() {
+                if ($(this).val() == 1) {
+                    if (cameras[0] != "") {
+                        scanner.start(cameras[0]);
+                    } else {
+                        alert('No Front camera found!');
+                    }
+                } else if ($(this).val() == 2) {
+                    if (cameras[1] != "") {
+                        scanner.start(cameras[1]);
+                    } else {
+                        alert('No Back camera found!');
+                    }
+                }
+            });
         } else {
             console.error('No cameras found.');
         }
