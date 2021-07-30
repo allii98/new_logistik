@@ -2236,11 +2236,6 @@ class Laporan extends CI_Controller
 			}
 		}
 
-		// if ($kode_stok == '') {
-		// 	$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kode_dev = '$lokasi' $q_bag AND a.tgl BETWEEN '$p1' AND '$p2'";
-		// } else {
-		// 	$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kode_dev = '$lokasi' $q_bag AND a.tgl BETWEEN '$p1' AND '$p2'";
-		// }
 		$data['kode_stock'] = $this->db_logistik_pt->query($query)->result();
 		$data['lokasi'] = $lokasi;
 		$data['posisi'] = $posisi;
@@ -2257,6 +2252,170 @@ class Laporan extends CI_Controller
 		]);
 
 		$html = $this->load->view('lapRSH/vw_lap_bkb_print_rsh_rinci', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
+	function print_lap_rsh_summary()
+	{
+		ini_set('pcre.backtrack_limit', '50000000');
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$posisi = 'HO';
+		} else if ($lokasi == '02') {
+			$posisi = 'RO';
+		} else if ($lokasi == '03') {
+			$posisi = 'PKS';
+		} else if ($lokasi == '06') {
+			$posisi = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$posisi = 'ESTATE2';
+		}
+		$bagian = $this->uri->segment(4);
+		if ($bagian == 'Semua') {
+			$q_bag = "";
+		} else {
+			$q_bag = "AND a.grp = '$bagian'";
+		}
+		$kode_stok = $this->uri->segment(5);
+		$txtperiode = $this->session->userdata('ym_periode');
+		$periode = $this->session->userdata('Ymd_periode');
+		$d_periode = date("j", strtotime($this->session->userdata('Ymd_periode')));
+		if ($d_periode >= 26) {
+			$p1 = date_format(date_create($periode), 'Y-m-') . '26';
+			$periode = date('Y-m-d', strtotime($periode . " +1 month"));
+			$p2 = date_format(date_create($periode), 'Y-m-') . '25';
+		} else {
+			$periode = date('Y-m-d', strtotime($periode));
+			$p1 = date('Y-m-d', strtotime($periode . " -1 month"));
+			$p1 = date_format(date_create($p1), 'Y-m-') . '26';
+			$p2 = date_format(date_create($periode), 'Y-m-') . '25';
+		}
+		$periode = date_format(date_create($periode), 'M Y');
+		// if ($kode_stok == '') {
+		// 	$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kdpt = '$lokasi' $q_bag AND a.tgl BETWEEN '$p1' AND '$p2'";
+		// } else {
+		// 	$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kdpt = '$lokasi' $q_bag AND a.tgl BETWEEN '$p1' AND '$p2'";
+		// }
+
+
+		if ($bagian == 'Semua') {
+			if ($kode_stok == '') {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kode_dev = '$lokasi' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			} else {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kode_dev = '$lokasi' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			}
+		} else {
+			if ($kode_stok == '') {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kode_dev = '$lokasi' AND a.grp='$bagian' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			} else {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kode_dev = '$lokasi' AND a.grp='$bagian' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			}
+		}
+
+
+		$data['kode_stock'] = $this->db_logistik_pt->query($query)->result();
+		$data['lokasi'] = $lokasi;
+		$data['posisi'] = $posisi;
+		$data['periode'] = $periode;
+		$data['txtperiode'] = $txtperiode;
+		$data['bagian'] = $bagian;
+		$data['p1'] = $p1;
+		$data['p2'] = $p2;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapRSH/vw_lap_bkb_print_rsh_summary', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
+	}
+
+	function print_lap_rsh_non_saldo()
+	{
+		ini_set('pcre.backtrack_limit', '50000000');
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$posisi = 'HO';
+		} else if ($lokasi == '02') {
+			$posisi = 'RO';
+		} else if ($lokasi == '03') {
+			$posisi = 'PKS';
+		} else if ($lokasi == '06') {
+			$posisi = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$posisi = 'ESTATE2';
+		}
+		$bagian = $this->uri->segment(4);
+		if ($bagian == 'Semua') {
+			$q_bag = "";
+		} else {
+			$q_bag = "AND a.grp = '$bagian'";
+		}
+		$kode_stok = $this->uri->segment(5);
+		$txtperiode = $this->session->userdata('ym_periode');
+		$periode = $this->session->userdata('Ymd_periode');
+		$d_periode = date("j", strtotime($this->session->userdata('Ymd_periode')));
+		if ($d_periode >= 26) {
+			$p1 = date_format(date_create($periode), 'Y-m-') . '26';
+			$periode = date('Y-m-d', strtotime($periode . " +1 month"));
+			$p2 = date_format(date_create($periode), 'Y-m-') . '25';
+		} else {
+			$periode = date('Y-m-d', strtotime($periode));
+			$p1 = date('Y-m-d', strtotime($periode . " -1 month"));
+			$p1 = date_format(date_create($p1), 'Y-m-') . '26';
+			$p2 = date_format(date_create($periode), 'Y-m-') . '25';
+		}
+		$periode = date_format(date_create($periode), 'M Y');
+		// if ($kode_stok == '') {
+		// 	$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kdpt = '$lokasi' $q_bag AND a.tgl BETWEEN '$p1' AND '$p2'";
+		// } else {
+		// 	$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kdpt = '$lokasi' $q_bag AND a.tgl BETWEEN '$p1' AND '$p2'";
+		// }
+
+
+		if ($bagian == 'Semua') {
+			if ($kode_stok == '') {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kode_dev = '$lokasi' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			} else {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kode_dev = '$lokasi' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			}
+		} else {
+			if ($kode_stok == '') {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kode_dev = '$lokasi' AND a.grp='$bagian' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			} else {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kode_dev = '$lokasi' AND a.grp='$bagian' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			}
+		}
+		$data['kode_stock'] = $this->db_logistik_pt->query($query)->result();
+		$data['lokasi'] = $lokasi;
+		$data['posisi'] = $posisi;
+		$data['periode'] = $periode;
+		$data['txtperiode'] = $txtperiode;
+		$data['bagian'] = $bagian;
+		$data['p1'] = $p1;
+		$data['p2'] = $p2;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '15',
+			'orientation' => 'P'
+		]);
+
+		$html = $this->load->view('lapRSH/vw_lap_bkb_print_rsh_non_saldo', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 

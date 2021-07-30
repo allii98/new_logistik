@@ -1309,8 +1309,8 @@
                                 <label for="rbt_rinci_rsh"> Rinci </label>
                             </div>
                             <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="summary_rsh" id="rbt_summary_rsh" name="rbt_pilihan9">
-                                <label for="rbt_summary_rsh">Summary </label>
+                                <input type="radio" value="summary_rsh" id="summary_rsh" name="rbt_pilihan9">
+                                <label for="summary_rsh">Summary </label>
                             </div>
                             <div class="radio radio-info form-check-inline">
                                 <input type="radio" value="non_saldo" id="rbt_non_saldo" name="rbt_pilihan9">
@@ -1901,7 +1901,7 @@
             if (rbt_pilihan9 == 'rinci_rsh') {
                 window.open('<?= site_url("Laporan/print_lap_rsh_rinci"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
             } else if (rbt_pilihan9 == 'summary_rsh') {
-                window.open('<?= site_url("laporan/print_lap_rsh_summary"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
+                window.open('<?= site_url("Laporan/print_lap_rsh_summary"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
             } else if (rbt_pilihan9 == 'non_saldo') {
                 window.open('<?= site_url("Laporan/print_lap_rsh_non_saldo"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
             }
