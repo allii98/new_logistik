@@ -263,7 +263,7 @@
                                     <a href="#" onclick="lap_rsh();" class="dropdown-item"><i class="fe-clipboard mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Register Stok Harian</font>
                                     </a>
-                                    <a href="#" class="dropdown-item"><i class="fe-check-square mr-1"></i>
+                                    <a href="#" onclick="lap_rs();" class="dropdown-item"><i class="fe-check-square mr-1"></i>
                                         <font face="Verdana" size="2.5">Laporan Rincian Stok</font>
                                     </a>
                                 </div>
@@ -446,7 +446,7 @@
                             <label class="col-3 col-form-label">
                                 <font face="Verdana" size="2">Periode *</font>
                             </label>
-                            <div class="row">
+                            <div class="row">&nbsp;&nbsp;&nbsp;
                                 <div class="col-5">
                                     <input type="text" class="form-control" id="tglAwalSPP" name="tglAwalSPP">
 
@@ -1328,6 +1328,94 @@
 
         <!-- end lap rsh -->
 
+        <!-- laporan register stok  -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapRS">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modalLapRS">Laporan Rinci Stok</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">PT *</font>
+                            </label>
+                            <div class="col-12">
+                                <select class="form-control" id="cmb_pt" name="cmb_pt" required="">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-3 col-form-label">
+                                <font face="Verdana" size="2">Kode Stok *</font>
+                            </label>
+                            <div class="row">&nbsp;&nbsp;&nbsp;
+                                <div class="col-5">
+                                    <select class="js-data-example-ajax form-control select2" id="kd_stock_1" name="kd_stock_1" required="">
+                                        <option selected value="Semua">Semua</option>
+                                    </select>
+                                    <input type="hidden" class="form-control" value="Semua" id="cmb_kd_stock_1" name="cmb_kd_stock_1">
+                                </div>
+                                <div class="col-1">
+                                    <label class="control-label"></label>
+                                </div>
+                                <div class="col-5">
+                                    <select class="js-data-example-ajax form-control select2" id="kd_stock_2" name="kd_stock_2" required="">
+                                        <option selected value="Semua">Semua</option>
+                                    </select>
+                                    <input type="hidden" class="form-control" value="Semua" id="cmb_kd_stock_2" name="cmb_kd_stock_2">
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2">Periode *</font>
+                            </label>
+                            <div class="col-12">
+                                <input type="text" class="form-control" id="periode_rs" name="periode_rs">
+                            </div>
+                        </div>
+
+                        <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="Rinci" id="rbt_rinci" name="rbt_pilihan10" checked>
+                                <label for="rbt_rinci"> Rinci </label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="Summary" id="rbt_summary" name="rbt_pilihan10">
+                                <label for="rbt_summary">Summary </label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="Nilai Rupiah" id="rbt_nilai_rupiah" name="rbt_pilihan10">
+                                <label for="rbt_nilai_rupiah">Nilai Rupiah </label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="Rupiah Minus" id="rbt_rupiah_minus" name="rbt_pilihan10">
+                                <label for="rbt_rupiah_minus"> Rupiah Minus </label>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group">&nbsp;&nbsp;&nbsp;
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="Rupiah Rata - Rata Harian" id="rbt_rupiah_rata_rata_harian" name="rbt_pilihan10">
+                                <label for="rbt_rupiah_rata_rata_harian">Rupiah Rata - Rata Harian </label>
+                            </div>
+                        </div> -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="printStock()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end lap rsh -->
+
 
 
 
@@ -1862,6 +1950,133 @@
             $('#modalLapRSH').modal('show');
             pilihDevisi5();
             pilihGroupBrg();
+        }
+
+        function lap_rs() {
+            $('#modalLapRS').modal('show');
+            getPT();
+            getKodebar();
+            $('#periode_rs').daterangepicker({
+                singleDatePicker: !0,
+                singleClasses: "picker_1"
+                // singleDatePicker: true,
+                // showDropdowns: true,
+                // minYear: 1901,
+                // maxYear: parseInt(moment().format('YYYY'),10)
+            }, function(start, end, label) {
+                // start.format('YYYY-MM-DD')
+            });
+        }
+
+        function printStock() {
+            var pt = $('#cmb_pt').val();
+            var kd_stock_1 = $('#cmb_kd_stock_1').val();
+            var kd_stock_2 = $('#cmb_kd_stock_2').val();
+            var periode = $('#periode_rs').val();
+            var replace_periode = periode.replace(/\//g, "_"); // YYYY/MM/DD menjadi YYYY_MM_DD
+            var pilihan = $("input[name='rbt_pilihan10']:checked").val();
+            var replace_pilihan = pilihan.replace(/ /g, "_"); // replace spasi menjadi _ (underscore)
+            var namapt = $('#cmb_pt :selected').text();
+            // var encode_namapt = encodeURI(namapt);
+            // var encode_namapt = encodeURIComponent(namapt);
+            var encode_namapt = escape(namapt);
+            // PT.MULIA%20SAWIT%20AGRO%20LESTARI%20%28SITE%29
+            // var encode_namapt = namapt.replace(/ /g,"_"); // replace spasi menjadi _ (underscore)
+            // encode_namapt = encode_namapt.replace(/ ( /g,"%28");
+            console.log(encode_namapt);
+
+            window.open('<?php echo site_url("Lap/print_stock") ?>/' + pt + '/' + kd_stock_1 + '/' + kd_stock_2 + '/' + replace_periode + '/' + replace_pilihan + '/' + encode_namapt);
+
+        }
+
+        function getKodebar() {
+            $("#kd_stock_1").select2({
+                ajax: {
+                    url: "<?php echo site_url('Lap/get_kodebar') ?>",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            kodebartxt: params.term, // search term
+                        };
+                    },
+                    processResults: function(data) {
+                        var results = [];
+                        $.each(data, function(index, item) {
+                            results.push({
+                                id: item.kodebartxt,
+                                text: item.kodebartxt + '-' + item.nabar
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+
+            }).on('select2:select', function(evt) {
+
+                var kode = $(".select2 option:selected").text();
+                var data = $(".select2 option:selected").val();
+                $('#cmb_kd_stock_1').val(kode);
+                // $('#cmb_kd_stock_2').val(kode);
+
+            });
+            $("#kd_stock_2").select2({
+                ajax: {
+                    url: "<?php echo site_url('Lap/get_kodebar') ?>",
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            kodebartxt: params.term, // search term
+                        };
+                    },
+                    processResults: function(data) {
+                        var results = [];
+                        $.each(data, function(index, item) {
+                            results.push({
+                                id: item.kodebartxt,
+                                text: item.kodebartxt + '-' + item.nabar
+                            });
+                        });
+                        return {
+                            results: results
+                        };
+                    }
+                }
+
+            }).on('select2:select', function(evt) {
+
+                var kode = $(".select2 option:selected").text();
+                var data = $(".select2 option:selected").val();
+                // $('#cmb_kd_stock_1').val(kode);
+                $('#cmb_kd_stock_2').val(kode);
+
+            });
+        }
+
+        function getPT() {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Lap/get_pt'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                // contentType : false,
+                // processData : false,
+
+                data: '',
+                success: function(data) {
+                    $.each(data, function(index) {
+                        var opsi_pt = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                        $('#cmb_pt').append(opsi_pt);
+                    });
+                },
+                error: function(request) {
+                    alert(request.responseText);
+                }
+            });
         }
 
         function pilihDevisi5() {

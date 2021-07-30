@@ -2,7 +2,7 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Laporan extends CI_Controller
+class Laporan_ali extends CI_Controller
 {
 	public function __construct()
 	{
@@ -25,6 +25,21 @@ class Laporan extends CI_Controller
 			redirect('Login');
 		}
 	}
+
+	///laporan rinci stok
+	function get_kodebar()
+	{
+		// $query = "SELECT kodebartxt, nabar FROM kodebar";
+		// $data = $this->db_logistik->query($query)->result();
+		$query = "SELECT DISTINCT kodebartxt, nabar FROM stockawal ORDER BY kodebartxt ASC";
+		$data = $this->db_logistik_pt->query($query)->result();
+		echo json_encode($data);
+	}
+
+
+	//end laporan rinci stok
+
+
 
 	function list_lapbarang()
 	{
@@ -2187,27 +2202,26 @@ class Laporan extends CI_Controller
 	function print_lap_rsh_rinci()
 	{
 		ini_set('pcre.backtrack_limit', '50000000');
-		// if ($lokasi == '01') {
-		// 	$posisi = 'HO';
-		// } else if ($lokasi == '02') {
-		// 	$posisi = 'RO';
-		// } else if ($lokasi == '03') {
-		// 	$posisi = 'PKS';
-		// } else if ($lokasi == '06') {
-		// 	$posisi = 'ESTATE1';
-		// } else if ($lokasi == '07') {
-		// 	$posisi = 'ESTATE2';
-		// }
-		// $bagian = str_replace('%20', ' ', $bag);
-		// if ($bagian == 'Semua') {
-		// 	$q_bag = "";
-		// } else {
-		// 	$q_bag = "AND a.grp = '$bagian'";
-		// }
-		$grup = urldecode($this->uri->segment(4));
-		$devisi = $this->uri->segment(3);
+		$lokasi = $this->uri->segment(3);
+		if ($lokasi == '01') {
+			$posisi = 'HO';
+		} else if ($lokasi == '02') {
+			$posisi = 'RO';
+		} else if ($lokasi == '03') {
+			$posisi = 'PKS';
+		} else if ($lokasi == '06') {
+			$posisi = 'ESTATE1';
+		} else if ($lokasi == '07') {
+			$posisi = 'ESTATE2';
+		}
+		$bag = $this->uri->segment(4);
+		$bagian = str_replace('%20', ' ', $bag);
+		if ($bagian == 'Semua') {
+			$q_bag = "";
+		} else {
+			$q_bag = "AND a.grp = '$bagian'";
+		}
 		$kode_stok = $this->uri->segment(5);
-
 		$txtperiode = $this->session->userdata('ym_periode');
 		$periode = $this->session->userdata('Ymd_periode');
 		$d_periode = date("j", strtotime($this->session->userdata('Ymd_periode')));
@@ -2223,42 +2237,28 @@ class Laporan extends CI_Controller
 		}
 		$periode = date_format(date_create($periode), 'M Y');
 
-		if ($devisi == 'Semua') {
-
-			$this->db_logistik_pt->select('kodebar, nabar, pt');
-			$this->db_logistik_pt->from('stockawal');
-			// jika kode barang di isi
-			if ($kode_stok != '') {
-				$this->db_logistik_pt->where('kodebar', $kode_stok);
+		if ($bagian == 'Semua') {
+			if ($kode_stok == '') {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kode_dev = '$lokasi' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			} else {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kode_dev = '$lokasi' AND a.tgl BETWEEN '$p1' AND '$p2'";
 			}
-			// jika grp brg dipilih
-			if ($grup != 'Semua') {
-				$this->db_logistik_pt->like('grp', $grup);
-			}
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
-			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		} else {
-			$this->db_logistik_pt->select('kodebar, nabar, devisi');
-			$this->db_logistik_pt->from('stockawal_bulanan_devisi');
-			// jika kode barang di isi
-			if ($kode_stok != '') {
-				$this->db_logistik_pt->where('kodebar', $kode_stok);
+			if ($kode_stok == '') {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND a.kode_dev = '$lokasi' AND a.grp='$bagian' AND a.tgl BETWEEN '$p1' AND '$p2'";
+			} else {
+				$query = "SELECT DISTINCT b.kodebar, b.nabar FROM masukitem a, keluarbrgitem b WHERE a.kodebar = b.kodebar AND b.batal = '0' AND b.kodebar='$kode_stok' AND a.kode_dev = '$lokasi' AND a.grp='$bagian' AND a.tgl BETWEEN '$p1' AND '$p2'";
 			}
-			// jika grp brg dipilih
-			if ($grup != 'Semua') {
-				$this->db_logistik_pt->like('grp', $grup);
-			}
-			$this->db_logistik_pt->where('kode_dev', $devisi);
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
-			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		}
 
-		$data['kode_dev'] = $devisi;
+		$data['kode_stock'] = $this->db_logistik_pt->query($query)->result();
+		$data['lokasi'] = $lokasi;
+		$data['posisi'] = $posisi;
 		$data['periode'] = $periode;
 		$data['txtperiode'] = $txtperiode;
+		$data['bagian'] = $bagian;
 		$data['p1'] = $p1;
 		$data['p2'] = $p2;
-
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
