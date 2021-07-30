@@ -91,7 +91,7 @@
                         <td style="text-align: center;"><?= $list_bkb->blok; ?></td>
                         <td><?= $list_bkb->ket; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->USER; ?></td>
-                        <td style="text-align: center;"><?= $list_bkb->devisi; ?></td>
+                        <td><?= $list_bkb->devisi; ?></td>
                     </tr>
             <?php }
             } ?>
