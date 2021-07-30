@@ -76,7 +76,7 @@
                     <td colspan="13" style="text-align: center;">Tidak ada data</td>
 
                 </tr>
-                <?php
+                <?php } else {
                 foreach ($bkb as $list_bkb) { ?>
                     <tr>
                         <td style="text-align: center;"><?= $list_bkb->skb; ?></td>
@@ -89,7 +89,7 @@
                         <td style="text-align: center;"><?= $list_bkb->kodesub; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->afd; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->blok; ?></td>
-                        <td style="text-align: center;"><?= $list_bkb->ket; ?></td>
+                        <td><?= $list_bkb->ket; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->USER; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->devisi; ?></td>
                     </tr>
