@@ -37,18 +37,7 @@
 </head>
 
 <body>
-    <?php
-    if ($kode_dev == 'Semua') {
-        echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->pt . '</h2>';
-    } else {
-        if (empty($kode_stock[0]->devisi)) {
-            echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
-        } else {
-            echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->devisi . '</h2>';
-        }
-    }
-    ?>
-
+    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI (<?= $posisi; ?>)</h2>
     <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
     <div style="text-align: center;">
         <h3>Register Pemakaian Stock Material Gudang</h3>
@@ -94,14 +83,9 @@
                 <?php
                 $no = 1;
                 $s_a =  $saldo->saldoawal_qty;
-                $kode_dev2 = (int)$kode_dev;
-
-                if ($kode_dev == 'Semua') {
-                    $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb ORDER BY tgl ASC, num ASC ";
-                } else {
-                    $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb WHERE kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, num ASC ";
-                }
-
+                $lokasi2 = (int)$lokasi;
+                // $q_stok = "SELECT tgl, CONCAT('LPB ',ttg) nomor, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND kdpt = '$lokasi' AND batal = '0' UNION SELECT tgl, CONCAT('BKB ',skb) nomor, skb AS num, ket, qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ORDER BY tgl ASC, num ASC";
+                $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kodept AS kode, skb AS num, ket, qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kdpt AS kode, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb WHERE kode IN('$lokasi','$lokasi2') ORDER BY tgl ASC, num ASC ";
                 $q_stok = $this->db_logistik_pt->query($q_stok)->result();
                 $sub_tgl = '';
                 $sub_tgl1 = '';
