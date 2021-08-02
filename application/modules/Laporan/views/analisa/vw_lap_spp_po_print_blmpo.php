@@ -74,40 +74,50 @@
                 <th width="15%">Qty PO</th>
                 <th width="15%">Saldo SPP</th>
             </tr>
-            <?php
-            $nomer = 1;
-            if (isset($ppo)) {
-                foreach ($ppo as $d) {
-            ?>
-                    <tr style="background-color: #d6d6c2;">
-                        <td><?= $nomer++ ?></td>
-                        <td><?= date_format(date_create($d->tglppo), "d/m/Y"); ?></td>
-                        <td colspan="2"><?= $d->noreftxt ?></td>
-                        <td colspan="4"></td>
-                    </tr>
-                    <br>
-                    <?php
-                    $noref = $d->noppo;
-                    $query = "SELECT * FROM item_ppo WHERE noppo ='$noref'";
-                    $item_ppo = $this->db_logistik_pt->query($query)->result();
-                    $no = 1;
-                    if (isset($item_ppo)) {
-                        foreach ($item_ppo as $dt) {
+            <?php if (empty($ppo)) { ?>
+                <tr style="background-color: #d6d6c2;">
+                    <td style="text-align: center;" colspan="8">Tidak ada data</td>
+                </tr>
+                <br>
 
-                    ?>
-                            <tr>
-                                <td><?= $no++ ?></td>
-                                <td><?= $dt->kodebar ?></td>
-                                <td><?= $dt->nabar ?></td>
-                                <td><?= $dt->ket ?></td>
-                                <td><?= $dt->sat ?></td>
-                                <td><?= $dt->qty ?></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                    <?php }
-                    } ?>
+                <tr>
+                    <td style="text-align: center;" colspan="8">Tidak ada data</td>
+                </tr>
+                <?php } else {
+                $nomer = 1;
+                if (isset($ppo)) {
+                    foreach ($ppo as $d) {
+                ?>
+                        <tr style="background-color: #d6d6c2;">
+                            <td><?= $nomer++ ?></td>
+                            <td><?= date_format(date_create($d->tglppo), "d/m/Y"); ?></td>
+                            <td colspan="2"><?= $d->noreftxt ?></td>
+                            <td colspan="4"></td>
+                        </tr>
+                        <br>
+                        <?php
+                        $noref = $d->noppo;
+                        $query = "SELECT * FROM item_ppo WHERE noppo ='$noref'";
+                        $item_ppo = $this->db_logistik_pt->query($query)->result();
+                        $no = 1;
+                        if (isset($item_ppo)) {
+                            foreach ($item_ppo as $dt) {
+
+                        ?>
+                                <tr>
+                                    <td><?= $no++ ?></td>
+                                    <td><?= $dt->kodebar ?></td>
+                                    <td><?= $dt->nabar ?></td>
+                                    <td><?= $dt->ket ?></td>
+                                    <td><?= $dt->sat ?></td>
+                                    <td><?= $dt->qty ?></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                        <?php }
+                        } ?>
             <?php }
+                }
             } ?>
 
             <tr>
