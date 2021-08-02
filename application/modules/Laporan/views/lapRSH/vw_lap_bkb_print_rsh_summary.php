@@ -37,7 +37,17 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI</h2>
+    <?php
+    if ($kode_dev == 'Semua') {
+        echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->pt . '</h2>';
+    } else {
+        if (empty($kode_stock[0]->devisi)) {
+            echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
+        } else {
+            echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->devisi . '</h2>';
+        }
+    }
+    ?>
     <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
     <div style="text-align: center;">
         <h3>Register Summary Harian Material Gudang</h3>
@@ -45,7 +55,12 @@
     <br>
     <?php
     foreach ($kode_stock as $ks) {
-        $saldo = "SELECT saldoakhir_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode' ORDER BY periode DESC LIMIT 1";
+        $kode_dev2 = (int)$kode_dev;
+        if ($kode_dev == 'Semua') {
+            $saldo = "SELECT saldoawal_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' ORDER BY periode DESC LIMIT 1";
+        } else {
+            $saldo = "SELECT saldoawal_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY periode DESC LIMIT 1";
+        }
         $saldo = $this->db_logistik_pt->query($saldo)->row();
     ?>
         <table border="0" width="100%">
@@ -56,7 +71,7 @@
                 </tr>
                 <tr>
                     <td style="text-align: left;"><b> <?= $ks->kodebar; ?> &nbsp; <?= $ks->nabar; ?></b></td>
-                    <td style="text-align: right;"><b>Saldo Sebelum Periode : <?php if ($saldo != NULL) echo number_format($saldo->saldoakhir_qty, 2) . ' ' . $saldo->satuan;
+                    <td style="text-align: right;"><b>Saldo Sebelum Periode : <?php if ($saldo != NULL) echo number_format($saldo->saldoawal_qty, 2) . ' ' . $saldo->satuan;
                                                                                 else ''; ?></b></td>
                 </tr>
             </thead>
@@ -76,11 +91,15 @@
             <tbody>
                 <?php
                 $no = 1;
-                $s_a = $saldo->saldoakhir_qty;
-                $lokasi = (int)$lokasi;
-                $q_sum = "SELECT * FROM (SELECT tgl AS tgl_b, COUNT(tgl) AS jml_tgl_b, SUM(qty) AS jml_qty_b FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB LEFT JOIN (SELECT tgl AS tgl_l, COUNT(tgl) AS jml_tgl_l, SUM(qty) AS jml_qty_l FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_l = BKB.tgl_b";
+                $s_a = $saldo->saldoawal_qty;
+
+                if ($kode_dev == 'Semua') {
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_b, COUNT(tgl) AS jml_tgl_b, SUM(qty) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_l, COUNT(tgl) AS jml_tgl_l, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_l = BKB.tgl_b";
+                } else {
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_b, COUNT(tgl) AS jml_tgl_b, SUM(qty) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_l, COUNT(tgl) AS jml_tgl_l, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl_l = BKB.tgl_b";
+                }
                 $q_sum = $this->db_logistik_pt->query($q_sum)->result();
-                $s_a = $saldo->saldoakhir_qty;
+                $s_a = $saldo->saldoawal_qty;
                 $gt_lpb = 0;
                 $gt_bkb = 0;
                 foreach ($q_sum as $qs) {

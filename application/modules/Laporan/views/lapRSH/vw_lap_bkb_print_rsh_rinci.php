@@ -56,8 +56,13 @@
     <br>
     <?php
     foreach ($kode_stock as $ks) {
-        $saldo = "SELECT saldoawal_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' ORDER BY periode DESC LIMIT 1";
-        $saldo = $this->db_logistik_pt->query($saldo)->row();
+        $kode_dev2 = (int)$kode_dev;
+        if ($kode_dev == 'Semua') {
+            $q_saldo = "SELECT saldoawal_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' ORDER BY periode DESC LIMIT 1";
+        } else {
+            $q_saldo = "SELECT saldoawal_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY periode DESC LIMIT 1";
+        }
+        $saldo = $this->db_logistik_pt->query($q_saldo)->row();
     ?>
 
         <table border="0" width="100%">
@@ -94,7 +99,6 @@
                 <?php
                 $no = 1;
                 $s_a =  $saldo->saldoawal_qty;
-                $kode_dev2 = (int)$kode_dev;
 
                 if ($kode_dev == 'Semua') {
                     $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb ORDER BY tgl ASC, num ASC ";
