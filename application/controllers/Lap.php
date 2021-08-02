@@ -165,6 +165,36 @@ class Lap extends CI_Controller
         // print_r($data);
         // echo "</pre>";
     }
+
+    function print_lap_data_tr_semua()
+    {
+        $tglawal = $this->uri->segment(3) . '-' . $this->uri->segment(4) . '-' . $this->uri->segment(5);
+        $tglakhir = $this->uri->segment(6) . '-' . $this->uri->segment(7) . '-' . $this->uri->segment(8);
+
+        $tgl1 = date_format(date_create($tglawal), 'Y-m-d');
+        $tgl2 = date_format(date_create($tglakhir), 'Y-m-d');
+
+        $isi = $this->db_logistik_pt->query("SELECT a.tglppo, a.noreftxt, b.tglpo, b.noreftxt as refpo, c.tgl, c.noref, datediff(a.tglppo,c.tgl) AS spp_lpb, datediff(a.tglppo,b.tglpo) AS spp_po, datediff(b.tglpo,c.tgl) AS po_lpb FROM ppo a,po b, stokmasuk c WHERE a.noreftxt=b.no_refppo AND a.noreftxt=c.norefppo AND a.tglppo BETWEEN '$tgl1' AND '$tgl2' ORDER BY a.tglppo DESC")->result();
+
+        $data['durasi'] = $isi;
+        $data['lokasi1'] = "Tes";
+        $data['periode'] = $tglawal . '-' . $tglakhir;
+        $mpdf = new \Mpdf\Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'margin_top' => '15',
+            'orientation' => 'p'
+        ]);
+
+        $html = $this->load->view('analisa/vw_lap_data_tr_print_semua', $data, true);
+        $mpdf->WriteHTML($html);
+        $mpdf->Output();
+
+
+        // echo "<pre>";
+        // print_r($data);
+        // echo "</pre>";
+    }
 }
 
 /* End of file Lap.php */

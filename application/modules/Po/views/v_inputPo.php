@@ -16,9 +16,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                             Input Purchase Order
                         </p>
-                        <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-success btn-rounded waves-effect waves-light width-sm" id="a_po_baru">PO Baru</a>
+                        <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success h-50 mr-2" id="a_po_baru">PO Baru</a>
                     </div>
-                    <br>
                     <div class="row div_form_1">
                         <div class="col-4">
                             <form class="form-horizontal">
@@ -437,7 +436,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         case 'PKS':
                         ?>
                             <div class="x_content div_form_3">
-                                <table border="0" width="80%">
+                                <table border="0" width="70%">
 
                                     <td>
                                         <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
@@ -446,7 +445,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                     </td>
                                 </table>
-                                <br>
                                 <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
                                     <div class="row ml-1 mr-1 justify-content-between">
 
