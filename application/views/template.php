@@ -249,7 +249,7 @@
                                             <a href="#" onclick="lap_lpb_po()" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">LPB vs PO</font>
                                             </a>
-                                            <a href="#" class="dropdown-item">
+                                            <a href="#" onclick="lap_durasi()" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Durasi Transaksi</font>
                                             </a>
                                         </div>
@@ -1266,6 +1266,62 @@
 
         <!-- end lpb po -->
 
+        <!-- laporan durasi transaksi -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modaldurasi">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modaldurasi">Histori Transaksi (SPP-PO-PP-LPB)</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2">Tanggal PP *</font>
+                            </label>
+                            <div class="col-12">
+                                <div class="col-12">
+                                    <input type="text" class="form-control" id="tgl_durasi" name="tgl_durasi">
+                                    <input type="hidden" class="form-control" id="tglawaldurasi" name="tglawaldurasi">
+                                    <input type="hidden" class="form-control" id="tglakhirdurasi" name="tglakhirdurasi">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-4">
+
+                                    <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="semua_data_trans" id="rbt_semua_data_trans" name="rbt_pilihan5" checked>
+                                        <label for="rbt_semua_data_trans">Semua Data </label>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+
+                                    <div class="radio radio-info form-check">
+                                        <input type="radio" value="graphic_trans" id="rbt_graphic_trans" name="rbt_pilihan5">
+                                        <label for="rbt_graphic_trans">Graphic </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="tampilkan_durasi()">Tampilkan</button>
+                        <button type="button" class="btn btn-default" id="btn_cancel" class="close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- end durasi transaksi -->
+
         <!-- laporan register stok harian -->
         <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modalLapRSH">
             <div class="modal-dialog modal-md">
@@ -1950,6 +2006,26 @@
             $('#modalLapRSH').modal('show');
             pilihDevisi5();
             pilihGroupBrg();
+        }
+
+        function lap_durasi() {
+            $('#modaldurasi').modal('show');
+            tanggal_durasi();
+
+        }
+
+        function tampilkan_durasi() {
+            var txt_periode10 = $('#tglawaldurasi').val();
+            var txt_periode11 = $('#tglakhirdurasi').val();
+            var rbt_pilihan5 = $("input[name='rbt_pilihan5']:checked").val();
+
+            if (rbt_pilihan5 == 'semua_data_trans') {
+                window.open('<?= site_url("Lap/print_lap_data_tr_semua"); ?>/'+txt_periode10+'/'+txt_periode11);
+            } else if (rbt_pilihan5 == 'graphic_trans') {
+                window.open('<?= site_url("laporan/print_lap_data_tr_graphic"); ?>');
+            }
+
+            console.log(txt_periode10, txt_periode11, rbt_pilihan5);
         }
 
         function lap_rs() {
@@ -3593,6 +3669,27 @@
             }, function(start, end, label) {
                 $('#tglawalLPBPO').val(start.format('DD/MM/YYYY'));
                 $('#tglakhirLPBPO').val(end.format('DD/MM/YYYY'));
+
+                // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            });
+        }
+
+        function tanggal_durasi() {
+            var d = new Date();
+            var today = (26) + '/' + d.getMonth() + '/' + d.getFullYear();
+            var today1 = (25) + '/' + (d.getMonth() + 1) + '/' + d.getFullYear();
+            $('#tglawaldurasi').val(today);
+            $('#tglakhirdurasi').val(today1);
+            $('#tgl_durasi').val(today + ' - ' +
+                today1);
+
+            $('#tgl_durasi').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+            }, function(start, end, label) {
+                $('#tglawaldurasi').val(start.format('DD/MM/YYYY'));
+                $('#tglakhirdurasi').val(end.format('DD/MM/YYYY'));
 
                 // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
             });
