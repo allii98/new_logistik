@@ -9,7 +9,7 @@
     }*/
         #tabel_spp tr td {
             /*font-size: 12px;*/
-            border: 1px solid #dddddd;
+            border: 1px solid;
             padding: 5px;
         }
 

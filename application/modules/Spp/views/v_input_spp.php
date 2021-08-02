@@ -6,10 +6,11 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
-                        <h6 id="lbl_status_delete_spp"></h6>
+                        <button class="btn btn-xs btn-success h-50 mr-2" id="new_spp" onclick="new_spp()" disabled>Input SPP</button>
                     </div>
+                    <h6 id="lbl_status_delete_spp"></h6>
                     <div class="row justify-content-between headspp">
-                        <p class="sub-header ml-2">
+                        <p class="sub-header ml-2" style="margin-top: -12px;">
                             <font face="Verdana" size="2.5">Surat Permintaan Pembelian</font>
                         </p>
                         <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelSpp" onclick="hapusSpp()" disabled>Batalkan SPP</button>
@@ -302,6 +303,10 @@
 </div>
 
 <script>
+    function new_spp() {
+        location.href = "<?php echo base_url('Spp/sppBaru') ?>";
+    }
+
     $(document).ready(function() {
 
         $('#a_print_spp').hide();
@@ -560,6 +565,7 @@
                     $('#btn_hapus_row_' + n).css('display', 'none');
                     $('#btn_ubah_' + n).css('display', 'block');
                     $('#btn_hapus_' + n).css('display', 'block');
+                    $('#new_spp').removeAttr('disabled');
 
                     $('#hidden_id_ppo').val(data.id_ppo);
                     $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
@@ -957,8 +963,8 @@
         // // Spp/cetak/nopo/id
         // window.open("cetak/" + nopo + "/" + id, '_blank');
 
-        $('#cancelSpp').hide();
+        // $('#cancelSpp').hide();
 
-        $('.div_form_2').css('pointer-events', 'none');
+        // $('.div_form_2').css('pointer-events', 'none');
     }
 </script>

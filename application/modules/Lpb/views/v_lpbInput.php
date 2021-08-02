@@ -29,7 +29,7 @@ date_default_timezone_set('Asia/Jakarta');
                             <label class="col-lg-3 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
                             </label>
                             <div class="col-lg-8 col-11 row ml-0">
-                                <select class="js-data-example-ajax form-control select2" id="select2">
+                                <select class="js-data-example-ajax form-control select2_lpb" id="select2_lpb">
                                 </select>
                                 <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
                                 <input id="txt_no_po" name="txt_no_po" class="form-control bg-light" type="hidden" placeholder="No.Ref PO" autocomplete="off" readonly>
@@ -420,7 +420,7 @@ date_default_timezone_set('Asia/Jakarta');
     function modalCameraClose() {
         scanner.stop();
         $('#multiple').css('display', 'none');
-        $('#select2').next(".select2-container").show();
+        $('#select2_lpb').next(".select2-container").show();
     }
 
     $(document).ready(function() {
@@ -428,14 +428,14 @@ date_default_timezone_set('Asia/Jakarta');
         $('#showCamera').modal('show');
         $('#preview').show();
         $('#multiple').css('display', 'block');
-        $('#select2').next(".select2-container").hide();
+        $('#select2_lpb').next(".select2-container").hide();
     });
 
     function showCamera() {
         $('#showCamera').modal('show');
         $('#preview').show();
         $('#multiple').css('display', 'block');
-        $('#select2').next(".select2-container").hide();
+        $('#select2_lpb').next(".select2-container").hide();
         scanner.start();
     }
 
@@ -565,7 +565,7 @@ date_default_timezone_set('Asia/Jakarta');
         return [year, month, day].join('-');
     }
 
-    $("#select2").select2({
+    $("#select2_lpb").select2({
         ajax: {
             url: "<?php echo site_url('Lpb/select2_get_po') ?>",
             dataType: 'json',
@@ -595,7 +595,7 @@ date_default_timezone_set('Asia/Jakarta');
         // var kode = $(".select2 option:selected").text(a);
         // var data = $(".select2 option:selected").val(b);
         // $('#kd_supplier').val(kode);
-        var data = $(".select2 option:selected").text();
+        var data = $(".select2_lpb option:selected").text();
         $('#txt_ref_po').val(data);
         // $('#multiple').val(data);
         // $('#hidden_no_ref_spp_').val(data);
@@ -725,8 +725,8 @@ date_default_timezone_set('Asia/Jakarta');
                     $('#no_lpb').html('No. SPP : ' + data.nolpb);
                     $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
 
-                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                    $('.div_form_1').find('#select2, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+                    $('.div_form_1').find('#select2_lpb, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                    $('.div_form_1').find('#select2_lpb, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
                     $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
                     $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
@@ -890,8 +890,8 @@ date_default_timezone_set('Asia/Jakarta');
                     loader: false
                 });
 
-                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
-                $('.div_form_1').find('#select2, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
+                $('.div_form_1').find('#select2_lpb, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
+                $('.div_form_1').find('#select2_lpb, #openreader-multi, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
 
                 $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
                 $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
@@ -931,7 +931,7 @@ date_default_timezone_set('Asia/Jakarta');
 
         window.open("<?= base_url('Lpb/cetak/') ?>" + no_lpb + '/' + id, '_blank');
 
-        $('.div_form_2').css('pointer-events', 'none');
+        // $('.div_form_2').css('pointer-events', 'none');
     }
 
     function updatePoAfterLpb(no_ref_po) {

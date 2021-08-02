@@ -37,7 +37,17 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI</h2>
+    <?php
+    if ($kode_dev == 'Semua') {
+        echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->pt . '</h2>';
+    } else {
+        if (empty($kode_stock[0]->devisi)) {
+            echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
+        } else {
+            echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->devisi . '</h2>';
+        }
+    }
+    ?>
     <div style="text-align: center;">
         <h3>Register Harian Stock Material Gudang (Non Saldo)</h3>
     </div>
@@ -45,7 +55,7 @@
     <table border="0" width="100%">
         <thead>
             <tr>
-                <td style="text-align: left;"><b> PERIODE : July 2020 </b></td>
+                <td style="text-align: left;"><b> PERIODE : <?= $periode; ?> </b></td>
                 <td style="text-align: right;"><i>By System MIPS</i></td>
             </tr>
         </thead>

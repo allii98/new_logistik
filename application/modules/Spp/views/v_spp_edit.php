@@ -1089,8 +1089,8 @@
         // // Spp/cetak/nopo/id
         // window.open("cetak/" + nopo + "/" + id, '_blank');
 
-        $('#cancelSpp').hide();
+        // $('#cancelSpp').hide();
 
-        $('.div_form_2').css('pointer-events', 'none');
+        // $('.div_form_2').css('pointer-events', 'none');
     }
 </script>

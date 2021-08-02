@@ -236,7 +236,7 @@
 
         window.open("<?= base_url('Lpb/cetak/') ?>" + no_lpb + '/' + id, '_blank');
 
-        $('.div_form_2').css('pointer-events', 'none');
+        // $('.div_form_2').css('pointer-events', 'none');
     }
 
     $(document).ready(function() {
