@@ -185,19 +185,19 @@ class Bpb extends CI_Controller
             if ($hasil->approval == '0') {
                 $print = "";
                 $ubah = '<a href="' . site_url('Bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang">';
-                $batal = '<a href="javascript:;" id="a_batal_bpb">
-                    <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_bpb" name="btn_batal_bpb" data-toggle="tooltip" data-placement="top" title="Batal bpb" onClick="konfirmasiBatalBPB(' . $id . ',' . $hasil->nobpb . ')">
-                    </button>
-                </a>';
+                // $batal = '<a href="javascript:;" id="a_batal_bpb">
+                //     <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_bpb" name="btn_batal_bpb" data-toggle="tooltip" data-placement="top" title="Batal bpb" onClick="konfirmasiBatalBPB(' . $id . ',' . $hasil->nobpb . ')">
+                //     </button>
+                // </a>';
             } else {
                 $print = '<a href="' . site_url('Bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb">
                 </a>';
                 $ubah = "";
-                $batal = "";
+                // $batal = "";
             }
 
 
-            $row[] = $ubah . $batal . $print;
+            $row[] = $ubah . $print;
             $no++;
 
             $row[] =  $no . ".";
