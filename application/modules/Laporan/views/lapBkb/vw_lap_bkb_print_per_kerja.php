@@ -145,7 +145,7 @@
                         $bpr = $this->db_logistik_pt->query($query)->result();
                         $total = 0;
                         foreach ($bpr as $bp) {
-                            $total += $bp->qty;
+                            $total += $bp->qty2;
                         ?>
                             <tr>
                                 <td style="text-align: center;"><?= $bp->blok; ?></td>
@@ -154,7 +154,7 @@
                                 <td style="text-align: center;"><?= $bp->kodebar; ?></td>
                                 <td style="text-align: left;"><?= $bp->nabar; ?></td>
                                 <td style="text-align: center;"><?= $bp->satuan; ?></td>
-                                <td style="text-align: right;"><?= number_format($bp->qty, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format($bp->qty2, 2); ?></td>
                                 <td style="text-align: left;"><?= $bp->ket; ?></td>
                             </tr>
                         <?php } ?>

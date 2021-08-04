@@ -80,7 +80,7 @@
                     <td style="text-align: center;"><?= $bn->kodebar; ?></td>
                     <td><?= $bn->nabar; ?></td>
                     <td style="text-align: center;"><?= $bn->satuan; ?></td>
-                    <td style="text-align: right;"><?= number_format($bn->qty, 2); ?></td>
+                    <td style="text-align: right;"><?= number_format($bn->qty2, 2); ?></td>
                     <td style="text-align: center;"><?= $bn->kodesubtxt; ?></td>
                     <td><?= $bn->ketsub; ?></td>
                     <td><?= $bn->ket; ?></td>

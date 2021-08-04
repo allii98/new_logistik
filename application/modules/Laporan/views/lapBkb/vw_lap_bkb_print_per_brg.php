@@ -123,7 +123,7 @@
                             <td style="text-align: center;"><?= date_format(date_create($list_per_brg->tgl), "d/m/Y"); ?></td>
                             <td style="text-align: center;"><?= $list_per_brg->skb; ?></td>
                             <td style="text-align: center;"><?= $list_per_brg->bag; ?></td>
-                            <td style="text-align: right;"><?= number_format($list_per_brg->qty, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format($list_per_brg->qty2, 2); ?></td>
                             <td style="text-align: center;"><?= $list_per_brg->kodept; ?></td>
                             <td style="text-align: center;"><?= $list_per_brg->afd; ?></td>
                             <td style="text-align: center;"><?= $list_per_brg->blok; ?></td>

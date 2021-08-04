@@ -163,7 +163,7 @@
                                     <td style="text-align: center;"><?= date_format(date_create($bp->tgl), 'd/m/Y'); ?></td>
                                     <td style="text-align: center;"><?= $bp->skb; ?></td>
                                     <td style="text-align: center;"><?= $bp->satuan; ?></td>
-                                    <td style="text-align: right;"><?= number_format($bp->qty, 2); ?></td>
+                                    <td style="text-align: right;"><?= number_format($bp->qty2, 2); ?></td>
                                     <td style="text-align: center;"><?= $bp->kodesub; ?></td>
                                     <td style="text-align: left;"><?= $bp->ketsub; ?></td>
                                     <td style="text-align: left;"><?= $bp->ket; ?></td>

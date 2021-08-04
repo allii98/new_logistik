@@ -143,9 +143,9 @@
                         $total_h = 0;
                         foreach ($bpr as $bp) {
                             if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') {
-                                $query2 = "SELECT a.blok, a.satuan, a.kodesub, a.ket, a.ketsub, a.kodebar, SUM(IF(a.blok = '$bp->blok', a.qty, 0)) AS t_qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodebar = '$bk->kodebar' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd'";
+                                $query2 = "SELECT a.blok, a.satuan, a.kodesub, a.ket, a.ketsub, a.kodebar, SUM(IF(a.blok = '$bp->blok', a.qty2, 0)) AS t_qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodebar = '$bk->kodebar' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd'";
                             } else {
-                                $query2 = "SELECT a.blok, a.satuan, a.kodesub, a.ket, a.ketsub, a.kodebar, SUM(IF(a.blok = '$bp->blok', a.qty, 0)) AS t_qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodebar = '$bk->kodebar' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian'";
+                                $query2 = "SELECT a.blok, a.satuan, a.kodesub, a.ket, a.ketsub, a.kodebar, SUM(IF(a.blok = '$bp->blok', a.qty2, 0)) AS t_qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodebar = '$bk->kodebar' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian'";
                             }
                             $bsh = $this->db_logistik_pt->query($query2)->result();
                             foreach ($bsh as $bh) {

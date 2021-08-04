@@ -138,24 +138,24 @@
                         </tr>
                         <?php
                         if ($bagian == 'TANAMAN' || $bagian == 'TANAMAN UMUM') {
-                            $query1 = "SELECT a.blok, a.kodebar, a.nabar, a.satuan, a.ket, a.qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd' ORDER BY a.kodebar ASC";
+                            $query1 = "SELECT a.blok, a.kodebar, a.nabar, a.satuan, a.ket, a.qty, a.qty2, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' AND a.afd ='$b->afd' ORDER BY a.kodebar ASC";
                         } else {
-                            $query1 = "SELECT a.blok, a.kodebar, a.nabar, a.satuan, a.ket, a.qty, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' ORDER BY a.kodebar ASC";
+                            $query1 = "SELECT a.blok, a.kodebar, a.nabar, a.satuan, a.ket, a.qty,a.qty2, b.bag, a.nilai_item FROM keluarbrgitem a, stockkeluar b WHERE a.kodesub = '$bk->kodesub' AND a.NO_REF = b.NO_REF AND a.kode_dev = '$lokasi' AND a.periode BETWEEN '$p1' AND '$p2' AND a.batal = '0' AND b.bag = '$bagian' ORDER BY a.kodebar ASC";
                         }
                         $hasil_pk = $this->db_logistik_pt->query($query1)->result();
                         $total = 0;
                         $total_h = 0;
                         foreach ($hasil_pk as $pk) {
-                            $total += $pk->qty;
-                            $total_h += ($pk->qty * $pk->nilai_item);
+                            $total += $pk->qty2;
+                            $total_h += ($pk->qty2 * $pk->nilai_item);
                         ?>
                             <tr>
                                 <td style="text-align: center;"><?= $pk->blok; ?></td>
                                 <td style="text-align: center;"><?= $pk->kodebar; ?></td>
                                 <td style="text-align: left;"><?= $pk->nabar; ?></td>
                                 <td style="text-align: center;"><?= $pk->satuan; ?></td>
-                                <td style="text-align: right;"><?= number_format($pk->qty, 2); ?></td>
-                                <td style="text-align: right;"><?= number_format(($pk->qty * $pk->nilai_item)); ?></td>
+                                <td style="text-align: right;"><?= number_format($pk->qty2, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format(($pk->qty2 * $pk->nilai_item)); ?></td>
                                 <td style="text-align: left;"><?= $pk->ket; ?></td>
                             </tr>
                         <?php } ?>

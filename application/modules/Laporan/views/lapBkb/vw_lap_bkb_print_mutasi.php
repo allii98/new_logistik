@@ -79,7 +79,7 @@
                         <td style="text-align: center;"><?= $bm->kodebar; ?></td>
                         <td style="text-align: left;"><?= $bm->nabar; ?></td>
                         <td style="text-align: center;"><?= $bm->satuan; ?></td>
-                        <td style="text-align: right;"><?= number_format($bm->qty, 2); ?></td>
+                        <td style="text-align: right;"><?= number_format($bm->qty2, 2); ?></td>
                         <td style="text-align: center;"><?= $bm->pt_mutasi; ?></td>
                     </tr>
             <?php }

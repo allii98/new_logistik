@@ -133,7 +133,7 @@
                             <td><?= $bt->kodebar; ?></td>
                             <td><?= $bt->nabar; ?></td>
                             <td><?= $bt->satuan; ?></td>
-                            <td style="text-align: right;"><?= number_format($bt->qty, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format($bt->qty2, 2); ?></td>
                             <td style="text-align: center;"><?= $bt->afd; ?></td>
                             <td style="text-align: center;"><?= $bt->blok; ?></td>
                             <td style="text-align: center;"><?= $bt->bag; ?></td>

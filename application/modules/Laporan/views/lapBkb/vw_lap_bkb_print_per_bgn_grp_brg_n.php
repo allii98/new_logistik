@@ -98,8 +98,8 @@
                     $t_qty = 0;
                     $t_hrg = 0;
                     foreach ($bpr as $bp) {
-                        $t_qty += $bp->qty;
-                        $t_hrg += ($bp->nilai_item * $bp->qty);
+                        $t_qty += $bp->qty2;
+                        $t_hrg += ($bp->nilai_item * $bp->qty2);
                     ?>
                         <tr>
                             <td style="text-align: center;"><?= $bp->blok; ?></td>
@@ -107,7 +107,7 @@
                             <td style="text-align: center;"><?= $bp->skb; ?></td>
                             <td style="text-align: center;"><?= $bp->satuan; ?></td>
                             <td style="text-align: right;"><?= number_format($bp->qty, 2); ?></td>
-                            <td style="text-align: right;"><?= number_format(($bp->nilai_item * $bp->qty), 2); ?></td>
+                            <td style="text-align: right;"><?= number_format(($bp->nilai_item * $bp->qty2), 2); ?></td>
                             <td style="text-align: center;"><?= $bp->kodesub; ?></td>
                             <td style="text-align: left;"><?= $bp->ketsub; ?></td>
                             <td style="text-align: left;"><?= $bp->ket; ?></td>

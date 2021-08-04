@@ -84,7 +84,7 @@
                         <td style="text-align: left;"><?= $list_bkb->bag; ?></td>
                         <td style="text-align: left;"><?= $list_bkb->nabar; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->satuan; ?></td>
-                        <td style="text-align: center;"><?= $list_bkb->qty; ?></td>
+                        <td style="text-align: center;"><?= $list_bkb->qty2; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->kodebar; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->kodesub; ?></td>
                         <td style="text-align: center;"><?= $list_bkb->afd; ?></td>
