@@ -95,7 +95,7 @@
                     }
                     $where_nya = "WHERE tgl = '$rs->tgl' AND batal='0' $where_kodebar $where_grup";
 
-                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
                 } else {
                     //for where kodebar
                     if ($kodebar != '') {
@@ -111,7 +111,7 @@
                     }
                     $where_nya = "WHERE tgl = '$rs->tgl' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') $where_kodebar $where_grup";
 
-                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
                 }
                 $jum_lpb = 0;
                 $jum_bkb = 0;

@@ -94,9 +94,9 @@
                 $s_a = $saldo->saldoawal_qty;
 
                 if ($kode_dev == 'Semua') {
-                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl = BKB.tgl UNION SELECT * FROM (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB LEFT JOIN (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl = BKB.tgl";
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb UNION SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB LEFT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb";
                 } else {
-                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl = BKB.tgl UNION SELECT * FROM (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB lEFT JOIN (SELECT tgl AS tgl, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl = BKB.tgl ";
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb UNION SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB lEFT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb";
                 }
                 $q_sum = $this->db_logistik_pt->query($q_sum)->result();
                 $s_a = $saldo->saldoawal_qty;
@@ -106,15 +106,32 @@
                     $s_a = $s_a + $qs->jml_qty_l - $qs->jml_qty_b;
                     $gt_lpb += $qs->jml_qty_l;
                     $gt_bkb += $qs->jml_qty_b;
+
+                    if ($qs->tgl_lpb == NULL) {
                 ?>
-                    <tr>
-                        <td style="text-align: center;"><?= $no++; ?></td>
-                        <td style="text-align: center;"><?= date_format(date_create($qs->tgl), 'd/m/Y'); ?></td>
-                        <td style="text-align: right;"><?= number_format($qs->jml_qty_l, 2); ?></td>
-                        <td style="text-align: right;"><?= number_format($qs->jml_qty_b, 2); ?></td>
-                        <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
-                        <td></td>
-                    </tr>
+                        <tr>
+                            <td style="text-align: center;"><?= $no++; ?></td>
+                            <td style="text-align: center;"><?= date_format(date_create($qs->tgl_bkb), 'd/m/Y'); ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->jml_qty_l, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->jml_qty_b, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
+                            <td></td>
+                        </tr>
+                    <?php
+                    } else {
+                    ?>
+                        <tr>
+                            <td style="text-align: center;"><?= $no++; ?></td>
+                            <td style="text-align: center;"><?= date_format(date_create($qs->tgl_lpb), 'd/m/Y'); ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->jml_qty_l, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->jml_qty_b, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
+                            <td></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+
                 <?php } ?>
                 <tr>
                     <td style="text-align: center;" colspan="2"><b>GRAND TOTAL</b></td>

@@ -101,9 +101,9 @@
                 $s_a =  $saldo->saldoawal_qty;
 
                 if ($kode_dev == 'Semua') {
-                    $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb ORDER BY tgl ASC, num ASC ";
+                    $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty2 AS qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb ORDER BY tgl ASC, num ASC ";
                 } else {
-                    $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb WHERE kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, num ASC ";
+                    $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty2 AS qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb WHERE kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, num ASC ";
                 }
 
                 $q_stok = $this->db_logistik_pt->query($q_stok)->result();
