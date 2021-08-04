@@ -126,9 +126,9 @@
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td style="background-color: grey;"><b>SUB TOTAL</b></td>
-                            <td style="background-color: grey; text-align: right"><b><?= number_format($sub_tot_lpb, 2); ?></b></td>
-                            <td style="background-color: grey; text-align: right"><b><?= number_format($sub_tot_bkb, 2); ?></b></td>
+                            <td style="background-color: lightgray;"><b>SUB TOTAL</b></td>
+                            <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_lpb, 2); ?></b></td>
+                            <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_bkb, 2); ?></b></td>
                             <td></td>
                         </tr>
                     <?php
@@ -166,9 +166,9 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td style="background-color: grey;"><b>SUB TOTAL</b></td>
-                    <td style="background-color: grey; text-align: right"><b><?= number_format($sub_tot_lpb, 2); ?></b></td>
-                    <td style="background-color: grey; text-align: right"><b><?= number_format($sub_tot_bkb, 2); ?></b></td>
+                    <td style="background-color: lightgray;"><b>SUB TOTAL</b></td>
+                    <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_lpb, 2); ?></b></td>
+                    <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_bkb, 2); ?></b></td>
                     <td></td>
                 </tr>
                 <tr>

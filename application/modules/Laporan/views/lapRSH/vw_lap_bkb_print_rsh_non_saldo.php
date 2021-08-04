@@ -64,127 +64,98 @@
     <table class="singleborder" border="1" width="100%">
         <thead style="text-align: center;">
             <tr>
-                <td>No</td>
-                <td>Tgl</td>
-                <td>Kode Barang</td>
-                <td>Nama Barang</td>
+                <td width="3%">No</td>
+                <td width="10%">Tgl</td>
+                <td width="17%">Kode Barang</td>
+                <td width="50%">Nama Barang</td>
                 <td>Qty Masuk</td>
                 <td>Qty Keluar</td>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td style="text-align: center;">36</td>
-                <td>01/07/2020</td>
-                <td>102505730000083</td>
-                <td>LAMPU 8 WATT</td>
-                <td>0.00</td>
-                <td>8.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">37</td>
-                <td>01/07/2020</td>
-                <td>102505760000004</td>
-                <td>SEAL TAPE</td>
-                <td>0.00</td>
-                <td>3.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">38</td>
-                <td>01/07/2020</td>
-                <td>102505910000001</td>
-                <td>BALLPOINT</td>
-                <td>0.00</td>
-                <td>5.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">39</td>
-                <td>01/07/2020</td>
-                <td>102505910000020</td>
-                <td>STAPLES KECIL</td>
-                <td>0.00</td>
-                <td>2.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">40</td>
-                <td>01/07/2020</td>
-                <td>102505910000133</td>
-                <td>KERTAS HVS A4</td>
-                <td>0.00</td>
-                <td>5.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">41</td>
-                <td>01/07/2020</td>
-                <td>102505910000134</td>
-                <td>KERTAS HVS F4</td>
-                <td>0.00</td>
-                <td>4.00</td>
-            </tr>
-            <tr style="background-color: grey;">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="text-align: center;"><b>Jumlah :</b></td>
-                <td><b>0.00</b></td>
-                <td><b>27.00</b></td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">36</td>
-                <td>01/07/2020</td>
-                <td>102505730000083</td>
-                <td>LAMPU 8 WATT</td>
-                <td>0.00</td>
-                <td>8.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">37</td>
-                <td>01/07/2020</td>
-                <td>102505760000004</td>
-                <td>SEAL TAPE</td>
-                <td>0.00</td>
-                <td>3.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">38</td>
-                <td>01/07/2020</td>
-                <td>102505910000001</td>
-                <td>BALLPOINT</td>
-                <td>0.00</td>
-                <td>5.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">39</td>
-                <td>01/07/2020</td>
-                <td>102505910000020</td>
-                <td>STAPLES KECIL</td>
-                <td>0.00</td>
-                <td>2.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">40</td>
-                <td>01/07/2020</td>
-                <td>102505910000133</td>
-                <td>KERTAS HVS A4</td>
-                <td>0.00</td>
-                <td>5.00</td>
-            </tr>
-            <tr>
-                <td style="text-align: center;">41</td>
-                <td>01/07/2020</td>
-                <td>102505910000134</td>
-                <td>KERTAS HVS F4</td>
-                <td>0.00</td>
-                <td>4.00</td>
-            </tr>
-            <tr style="background-color: grey;">
-                <td></td>
-                <td></td>
-                <td></td>
-                <td style="text-align: center;"><b>Jumlah :</b></td>
-                <td><b>0.00</b></td>
-                <td><b>27.00</b></td>
-            </tr>
+            <?php
+            //distinct tnggal
+            $sql = "SELECT DISTINCT tgl FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' UNION SELECT DISTINCT tgl from keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2'";
+            $result_sql = $this->db_logistik_pt->query($sql)->result();
+            foreach ($result_sql as $rs) {
+                $kode_dev2 = (int)$kode_dev;
+
+                if ($kode_dev == 'Semua') {
+                    //for where kodebar
+                    if ($kodebar != '') {
+                        $where_kodebar = "AND kodebar = '$kodebar'";
+                    } else {
+                        $where_kodebar = "";
+                    }
+                    //for where grup
+                    if ($grup != 'Semua') {
+                        $where_grup = "AND grp LIKE '%$grup%'";
+                    } else {
+                        $where_grup = "";
+                    }
+                    $where_nya = "WHERE tgl = '$rs->tgl' AND batal='0' $where_kodebar $where_grup";
+
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
+                } else {
+                    //for where kodebar
+                    if ($kodebar != '') {
+                        $where_kodebar = "AND kodebar = '$kodebar'";
+                    } else {
+                        $where_kodebar = "";
+                    }
+                    //for where grup
+                    if ($grup != 'Semua') {
+                        $where_grup = "AND grp LIKE '%$grup%'";
+                    } else {
+                        $where_grup = "";
+                    }
+                    $where_nya = "WHERE tgl = '$rs->tgl' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') $where_kodebar $where_grup";
+
+                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
+                }
+                $jum_lpb = 0;
+                $jum_bkb = 0;
+                $no = 1;
+                $q_sum = $this->db_logistik_pt->query($q_sum)->result();
+                foreach ($q_sum as $qs) {
+                    $jum_lpb += $qs->qty_lpb;
+                    $jum_bkb += $qs->qty_bkb;
+                    if ($qs->kodebar_bkb == NULL) {
+            ?>
+                        <tr>
+                            <td style="text-align: center;"><?= $no++; ?></td>
+                            <td><?= date_format(date_create($rs->tgl), 'd/m/Y'); ?></td>
+                            <td><?= $qs->kodebar_lpb ?></td>
+                            <td><?= $qs->nabar_lpb ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->qty_lpb, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->qty_bkb, 2); ?></td>
+                        </tr>
+                    <?php
+                    } else {
+                    ?>
+                        <tr>
+                            <td style="text-align: center;"><?= $no++; ?></td>
+                            <td><?= date_format(date_create($rs->tgl), 'd/m/Y'); ?></td>
+                            <td><?= $qs->kodebar_bkb ?></td>
+                            <td><?= $qs->nabar_bkb ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->qty_lpb, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->qty_bkb, 2); ?></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+
+                <?php }
+                if ($no == 1) {
+                } else {
+                ?>
+                    <tr style="background-color: lightgray;">
+                        <td style="text-align: center;" colspan="4"><b>JUMLAH</b></td>
+                        <td style="text-align: right;"><b><?= number_format($jum_lpb, 2); ?></b></td>
+                        <td style="text-align: right;"><b><?= number_format($jum_bkb, 2); ?></b></td>
+                    </tr>
+                <?php } ?>
+            <?php } ?>
         </tbody>
     </table>
     <br>

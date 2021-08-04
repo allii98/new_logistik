@@ -2440,6 +2440,8 @@ class Laporan extends CI_Controller
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		}
 
+		$data['kodebar'] = $kode_stok;
+		$data['grup'] = $grup;
 		$data['kode_dev'] = $devisi;
 		$data['periode'] = $periode;
 		$data['txtperiode'] = $txtperiode;
