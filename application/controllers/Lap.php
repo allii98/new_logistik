@@ -73,7 +73,7 @@ class Lap extends CI_Controller
         $kd_stock_1 = $this->uri->segment(4);
         $kd_stock_2 = $this->uri->segment(5);
         $pilihan = $this->uri->segment(7);
-        $namapt = urldecode($this->uri->segment(8));
+        $namapt = $this->db_logistik_pt->query("SELECT kodetxt,PT FROM pt WHERE kodetxt='$pt'")->row();
 
         $str_periode = $this->uri->segment(6);
         $periode = str_replace("_", "/", $str_periode);
@@ -89,7 +89,7 @@ class Lap extends CI_Controller
         $data['kd_stock_1'] = $kd_stock_1;
         $data['kd_stock_2'] = $kd_stock_2;
         $data['pt'] = $pt;
-        $data['namapt'] = $namapt;
+        $data['namapt'] = $namapt->PT;
         $data['alamatpt'] = $get_alamat_pt->lokasi;
         $data['ym_periode'] = $ym_periode;
         $data['periode_str'] = $periode;

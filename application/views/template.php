@@ -2020,7 +2020,7 @@
             var rbt_pilihan5 = $("input[name='rbt_pilihan5']:checked").val();
 
             if (rbt_pilihan5 == 'semua_data_trans') {
-                window.open('<?= site_url("Lap/print_lap_data_tr_semua"); ?>/'+txt_periode10+'/'+txt_periode11);
+                window.open('<?= site_url("Lap/print_lap_data_tr_semua"); ?>/' + txt_periode10 + '/' + txt_periode11);
             } else if (rbt_pilihan5 == 'graphic_trans') {
                 window.open('<?= site_url("laporan/print_lap_data_tr_graphic"); ?>');
             }
@@ -2052,16 +2052,16 @@
             var replace_periode = periode.replace(/\//g, "_"); // YYYY/MM/DD menjadi YYYY_MM_DD
             var pilihan = $("input[name='rbt_pilihan10']:checked").val();
             var replace_pilihan = pilihan.replace(/ /g, "_"); // replace spasi menjadi _ (underscore)
-            var namapt = $('#cmb_pt :selected').text();
+            // var namapt = $('#cmb_pt :selected').text();
             // var encode_namapt = encodeURI(namapt);
             // var encode_namapt = encodeURIComponent(namapt);
-            var encode_namapt = escape(namapt);
+            // var encode_namapt = escape(namapt);
             // PT.MULIA%20SAWIT%20AGRO%20LESTARI%20%28SITE%29
             // var encode_namapt = namapt.replace(/ /g,"_"); // replace spasi menjadi _ (underscore)
             // encode_namapt = encode_namapt.replace(/ ( /g,"%28");
-            console.log(encode_namapt);
+            // console.log(encode_namapt);
 
-            window.open('<?php echo site_url("Lap/print_stock") ?>/' + pt + '/' + kd_stock_1 + '/' + kd_stock_2 + '/' + replace_periode + '/' + replace_pilihan + '/' + encode_namapt);
+            window.open('<?php echo site_url("Lap/print_stock") ?>/' + pt + '/' + kd_stock_1 + '/' + kd_stock_2 + '/' + replace_periode + '/' + replace_pilihan);
 
         }
 
@@ -2144,6 +2144,7 @@
 
                 data: '',
                 success: function(data) {
+                    $('#cmb_pt').empty();
                     $.each(data, function(index) {
                         var opsi_pt = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
                         $('#cmb_pt').append(opsi_pt);
