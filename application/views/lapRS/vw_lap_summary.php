@@ -51,7 +51,7 @@
         <tr>
             <td colspan="2">
                 <?php
-                if (count($grp_stockawal) == "0") {
+                if (empty($grp_stockawal)) {
                 ?>
                     <table border="1" width="100%" align="center">
                         <thead>
