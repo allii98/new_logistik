@@ -3483,11 +3483,11 @@
                     clearInterval(rel);
                 }, 100);
             } else if (rbt_pilihan7 == 'per_brg_bkb') {
-                window.open('<?= site_url("laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_per_brg"); ?>/' + cmb_devisi4 + '/' + txt_periode14 + '/' + txt_periode15 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'per_tgl_bkb') {
                 var tgl1 = txt_periode14.replaceAll('/', '.');
                 var tgl2 = txt_periode15.replaceAll('/', '.');
-                window.open('<?= site_url("laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_per_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'per_bgn_rinci_tgl') {
                 var dev = $('#cmb_devisi4 option:selected').text();
                 dev = dev.replaceAll(' ', '-', dev);
@@ -3498,7 +3498,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_bgn_rinci_tgl"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'per_bgn_grp_brg') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -3510,7 +3510,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_bgn_grp_brg"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'per_kerja') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -3522,12 +3522,12 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_kerja"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_kerja"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'mutasi_pt') {
                 var tgl1 = txt_periode14.replaceAll('/', '.')
                 var tgl2 = txt_periode15.replaceAll('/', '.')
-                window.open('<?= site_url("laporan/print_lap_bkb_mutasi"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
+                window.open('<?= site_url("Laporan/print_lap_bkb_mutasi"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1);
             } else if (rbt_pilihan7 == 'per_bgn_grp_brg_n') {
                 var dev = $('#cmb_devisi4 option:selected').text();
                 dev = dev.replaceAll(' ', '-', dev);
@@ -3538,7 +3538,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_bgn_grp_brg_n"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_bgn_grp_brg_n"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'per_kerja1') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -3550,7 +3550,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_per_kerja1"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_per_kerja1"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'summary_rsh') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -3562,7 +3562,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_summary_rsh"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_summary_rsh"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'sum_blok_ub') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -3574,7 +3574,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_sum_blok_ub"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_sum_blok_ub"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             } else if (rbt_pilihan7 == 'sum_blok_pk') {
                 var dev = $('#cmb_devisi4 option:selected').text();
@@ -3586,7 +3586,7 @@
                 } else {
                     var tgl1 = txt_periode14.replaceAll('/', '.');
                     var tgl2 = txt_periode15.replaceAll('/', '.');
-                    window.open('<?= site_url("laporan/print_lap_bkb_sum_blok_pk"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
+                    window.open('<?= site_url("Laporan/print_lap_bkb_sum_blok_pk"); ?>/' + cmb_devisi4 + '/' + tgl1 + '/' + tgl2 + '/' + cmb_bagian1 + '/' + dev);
                 }
             }
 

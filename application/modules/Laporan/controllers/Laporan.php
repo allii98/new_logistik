@@ -830,7 +830,7 @@ class Laporan extends CI_Controller
 		$lokasi = $this->uri->segment(3);
 		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
 		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
-		$query = "SELECT a.ttg, b.tglinput, a.nopo, a.nama_supply, b.nabar, b.satuan, b.qty, b.kodebar, b.ket FROM stokmasuk a INNER JOIN masukitem b USING (ttg) WHERE b.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND kdpt = '$lokasi'";
+		$query = "SELECT a.ttg, b.tglinput, a.nopo, a.nama_supply, a.devisi, b.nabar, b.satuan, b.qty, b.kodebar, b.ket FROM stokmasuk a INNER JOIN masukitem b USING (ttg) WHERE b.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kode_dev = '$lokasi'";
 		$data['item_lpb'] = $this->db_logistik_pt->query($query)->result();
 		$tanggal1 = date_format(date_create($tanggal1), 'd/m/Y');
 		$tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
@@ -975,7 +975,7 @@ class Laporan extends CI_Controller
 		$lokasi = $this->uri->segment(3);
 		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
 		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
-		$query = "SELECT DISTINCT kodebar, nabar, satuan FROM masukitem WHERE tgl BETWEEN '" . $tanggal1 . "' AND '" . $tanggal2 . "' AND kdpt = '" . $lokasi . "' AND batal = '0'";
+		$query = "SELECT DISTINCT kodebar, nabar, satuan, devisi FROM masukitem WHERE tgl BETWEEN '" . $tanggal1 . "' AND '" . $tanggal2 . "' AND kode_dev = '" . $lokasi . "' AND batal = '0'";
 		$data['brg'] = $this->db_logistik_pt->query($query)->result();
 		if ($lokasi == '01') {
 			$lok = 'HO';
@@ -1010,7 +1010,7 @@ class Laporan extends CI_Controller
 		$lokasi = $this->uri->segment(3);
 		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
 		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
-		$query = "SELECT DISTINCT tgl FROM masukitem WHERE tgl BETWEEN '" . $tanggal1 . "' AND '" . $tanggal2 . "' AND kdpt = '" . $lokasi . "' AND batal = '0'";
+		$query = "SELECT DISTINCT tgl, devisi FROM masukitem WHERE tgl BETWEEN '" . $tanggal1 . "' AND '" . $tanggal2 . "' AND kode_dev = '" . $lokasi . "' AND batal = '0'";
 		$data['tgl'] = $this->db_logistik_pt->query($query)->result();
 		if ($lokasi == '01') {
 			$lok = 'HO';
@@ -1053,7 +1053,7 @@ class Laporan extends CI_Controller
 		$refpo = str_replace('.', '/', $this->uri->segment(4));
 		// $dept = str_replace('.', ' ', $this->uri->segment(5));
 		// $dept = str_replace('-', '&', $this->uri->segment(5));
-		$query = "SELECT a.*, b.* FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.noref = '$noref' AND a.refpo = '$refpo'";
+		$query = "SELECT a.*, b.*, a.devisi FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.noref = '$noref' AND a.refpo = '$refpo'";
 		$data['lpb'] = $this->db_logistik_pt->query($query)->row();
 		$query1 = "SELECT * FROM masukitem WHERE noref = '$noref' AND refpo = '$refpo'";
 		$data['lpb_item'] = $this->db_logistik_pt->query($query1)->result();
@@ -1512,7 +1512,7 @@ class Laporan extends CI_Controller
                             ');
 		// $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
-		$html = $this->load->view('lapBKb/v_print', $data, true);
+		$html = $this->load->view('lapBkb/v_print', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}
@@ -1583,7 +1583,7 @@ class Laporan extends CI_Controller
 			'orientation' => 'L'
 		]);
 
-		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_brg', $data, true);
+		$html = $this->load->view('lapBkb/vw_lap_bkb_print_per_brg', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 
@@ -1635,7 +1635,7 @@ class Laporan extends CI_Controller
 			'orientation' => 'L'
 		]);
 
-		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_tgl', $data, true);
+		$html = $this->load->view('lapBkb/vw_lap_bkb_print_per_tgl', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}
@@ -1699,7 +1699,7 @@ class Laporan extends CI_Controller
 			'orientation' => 'L'
 		]);
 
-		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_bgn_rinci_tgl', $data, true);
+		$html = $this->load->view('lapBkb/vw_lap_bkb_print_per_bgn_rinci_tgl', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 
@@ -1763,7 +1763,7 @@ class Laporan extends CI_Controller
 			'orientation' => 'L'
 		]);
 
-		$html = $this->load->view('lapBKb/vw_lap_bkb_print_per_bgn_grp_brg', $data, true);
+		$html = $this->load->view('lapBkb/vw_lap_bkb_print_per_bgn_grp_brg', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 

@@ -37,7 +37,13 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI (<?= $lokasi; ?>)</h2>
+    <?php
+    if (empty($tgl[0]->devisi)) {
+        echo '<h2>Data tidak ditemukan pada Divisi tersebut!</h2>';
+    } else {
+        echo '<h2 style="margin-bottom: 0;">' . $tgl[0]->devisi . '</h2>';
+    }
+    ?>
     <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
     <div style="text-align: center;">
         <h3><u>REGISTER MASUK BARANG (LPB)</u></h3>
@@ -74,7 +80,7 @@
                 <?php
                 $total = 0;
                 $tgl1 = "'" . $list_tgl->tgl . "'";
-                $query = "SELECT * FROM masukitem WHERE tgl = $tgl1 AND kdpt = '$lokasi1' AND batal = '0'";
+                $query = "SELECT * FROM masukitem WHERE tgl = $tgl1 AND kode_dev = '$lokasi1' AND batal = '0'";
                 $per_tgl = $this->db_logistik_pt->query($query)->result();
                 foreach ($per_tgl as $list_per_tgl) {
                     $query1 = "SELECT namagrp10 FROM kodebar WHERE kodebar = '" . $list_per_tgl->kodebar . "'";

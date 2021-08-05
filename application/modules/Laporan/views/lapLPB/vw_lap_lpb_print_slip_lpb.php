@@ -1,3 +1,6 @@
+<?php
+$dev = substr($lpb->devisi, 28);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -87,7 +90,7 @@
         <tr>
             <td>Alokasi</td>
             <td>:</td>
-            <td><?= $lpb->lokasi; ?></td>
+            <td><?= $lpb->lokasi . ' ' . $dev ?></td>
             <td>No Perkiraan</td>
             <td>:</td>
             <td></td>

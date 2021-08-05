@@ -336,7 +336,7 @@ class M_laporan extends CI_Model
         $txt_periode13 = date_format($txt_periode13, "Y-m-d");
         if (!empty($_POST['search']['value'])) {
             $keyword = $_POST['search']['value'];
-            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode ='$cmb_devisi3' AND a.BATAL = '0' AND ( 
+            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode_dev ='$cmb_devisi3' AND a.BATAL = '0' AND ( 
                         a.tgl LIKE '%$keyword%'
                         OR a.refpo LIKE '%$keyword%'
                         OR a.noref LIKE '%$keyword%'
@@ -346,7 +346,7 @@ class M_laporan extends CI_Model
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         } else {
-            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode ='$cmb_devisi3' AND a.BATAL = '0'";
+            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode_dev ='$cmb_devisi3' AND a.BATAL = '0'";
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         }
