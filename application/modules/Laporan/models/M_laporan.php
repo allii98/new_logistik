@@ -525,7 +525,7 @@ class M_laporan extends CI_Model
         $txt_periode15 = date_format($txt_periode15, "Y-m-d");
         if (!empty($_POST['search']['value'])) {
             $keyword = $_POST['search']['value'];
-            $query = "SELECT * FROM stockkeluar WHERE kode = '$cmb_devisi4' AND tgl BETWEEN '$txt_periode14' AND '$txt_periode15' $q_bag  AND ( 
+            $query = "SELECT * FROM stockkeluar WHERE kode_dev = '$cmb_devisi4' AND tgl BETWEEN '$txt_periode14' AND '$txt_periode15' $q_bag  AND ( 
                         tgl LIKE '%$keyword%'
                         OR bag LIKE '%$keyword%'
                         OR skb LIKE '%$keyword%'
@@ -535,7 +535,7 @@ class M_laporan extends CI_Model
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         } else {
-            $query = "SELECT * FROM stockkeluar WHERE kode = '$cmb_devisi4' AND tgl BETWEEN '$txt_periode14' AND '$txt_periode15' $q_bag ";
+            $query = "SELECT * FROM stockkeluar WHERE kode_dev = '$cmb_devisi4' AND tgl BETWEEN '$txt_periode14' AND '$txt_periode15' $q_bag ";
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         }
