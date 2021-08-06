@@ -126,6 +126,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                                         <input type="text" class="form-control bg-light" id="devisi" name="devisi" readonly required>
                                         <input type="hidden" name="" id="hidden_devisi">
+                                        <input type="hidden" name="" id="hidden_kode_devisi">
                                     </div>
                                 </div>
                                 <div class="row mb-1">
@@ -784,6 +785,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             $('#h4_no_spp').html('No. SPP : ' + data[0].noppo);
                             $('#h4_no_ref_spp').html('No. Ref SPP : ' + data[0].noreftxt);
                             $('#devisi').val(data[0].devisi);
+                            $('#hidden_kode_devisi').val(data[0].kode_dev);
                             $('#hidden_devisi').val(data[0].devisi);
 
                             var n = 1;
@@ -1790,7 +1792,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                     id_item: $('#id_item_' + id).val(),
                     hidden_no_po: $('#hidden_no_po').val(),
-                    devisi: $('#devisi').val(),
+                    hidden_devisi: $('#hidden_devisi').val(),
+                    hidden_kode_devisi: $('#hidden_kode_devisi').val(),
                     txt_jumlah: $('#txt_jumlah_' + id).val(),
 
                 },
@@ -1942,7 +1945,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                     id_item: $('#id_item_' + id).val(),
                     hidden_no_po: $('#hidden_no_po').val(),
-                    devisi: $('#devisi').val(),
+                    hidden_devisi: $('#hidden_devisi').val(),
+                    hidden_kode_devisi: $('#hidden_kode_devisi').val(),
                     txt_jumlah: $('#txt_jumlah_' + id).val(),
 
                 },
