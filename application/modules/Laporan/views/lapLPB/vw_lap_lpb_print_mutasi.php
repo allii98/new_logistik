@@ -37,7 +37,13 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI</h2>
+    <?php
+    if (empty($mutasi[0]->devisi)) {
+        echo '<h2>Data tidak ditemukan pada Divisi tersebut!</h2>';
+    } else {
+        echo '<h2 style="margin-bottom: 0;">' . $mutasi[0]->devisi . '</h2>';
+    }
+    ?>
     <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
     <div style="text-align: center;">
         <h3><u>REGISTER LAPORAN PENERIMAAN BARANG MUTASI (LPB)</u></h3>

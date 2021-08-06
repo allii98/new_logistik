@@ -37,7 +37,13 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI (<?= $st_msk->lokasi; ?>)</h2>
+    <?php
+    if (empty($st_msk->devisi)) {
+        echo '<h2>Data tidak ditemukan pada Divisi tersebut!</h2>';
+    } else {
+        echo '<h2 style="margin-bottom: 0;">' . $st_msk->devisi . '</h2>';
+    }
+    ?>
     <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
     <div style="text-align: center;">
         <h3><u>REGISTER MASUK BARANG (LPB)</u></h3>

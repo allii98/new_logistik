@@ -870,7 +870,7 @@ class Laporan extends CI_Controller
 		}
 		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
 		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
-		$query = "SELECT a.*, b.nama_supply FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kdpt = '$lokasi' AND a.ASSET = '1'";
+		$query = "SELECT a.*, b.nama_supply, b.devisi FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND b.kode_dev = '$lokasi' AND a.ASSET = '1'";
 		$data['per_pol'] = $this->db_logistik_pt->query($query)->result();
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
@@ -908,7 +908,7 @@ class Laporan extends CI_Controller
 		} else if ($lokasi == '07') {
 			$lok = 'ESTATE2';
 		}
-		$query = "SELECT a.*, b.nama_supply FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kdpt = '$lokasi' AND b.mutasi = '1'";
+		$query = "SELECT a.*, b.nama_supply, b.devisi FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND b.kode_dev = '$lokasi' AND b.mutasi = '1'";
 		$data['mutasi'] = $this->db_logistik_pt->query($query)->result();
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
@@ -1254,7 +1254,7 @@ class Laporan extends CI_Controller
 		$lokasi = $this->uri->segment(3);
 		$tanggal1 = $this->uri->segment(6) . '-' . $this->uri->segment(5) . '-' . $this->uri->segment(4);
 		$tanggal2 = $this->uri->segment(9) . '-' . $this->uri->segment(8) . '-' . $this->uri->segment(7);
-		$query = "SELECT a.*, b.nama_supply FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND a.kdpt = '$lokasi' AND a.refpo LIKE '%PO-Lokal%'";
+		$query = "SELECT a.*, b.nama_supply, b.devisi FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND b.kode_dev = '$lokasi' AND a.refpo LIKE '%PO-Lokal%'";
 		$data['per_po'] = $this->db_logistik_pt->query($query)->result();
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
@@ -1411,9 +1411,9 @@ class Laporan extends CI_Controller
 		$bagian = str_replace('-', '&', $bagian);
 		$bagian = str_replace('.', ' ', $bagian);
 		if ($bagian == 'Semua') {
-			$query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev='$lokasi' ORDER BY a.periode ASC";
+			$query = "SELECT a.*, b.bag, b.devisi FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev='$lokasi' ORDER BY a.periode ASC";
 		} else {
-			$query = "SELECT a.*, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev='$lokasi' AND b.bag = '$bagian' ORDER BY a.periode ASC";
+			$query = "SELECT a.*, b.bag, b.devisi FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev='$lokasi' AND b.bag = '$bagian' ORDER BY a.periode ASC";
 		}
 
 		$data['bkb'] = $this->db_logistik_pt->query($query)->result();
@@ -1567,9 +1567,9 @@ class Laporan extends CI_Controller
 		$bagian = str_replace('.', ' ', $bagian);
 
 		if ($bagian == 'Semua') {
-			$query = "SELECT DISTINCT a.kodebar, a.nabar, a.satuan, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND  a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev = '$lokasi'";
+			$query = "SELECT DISTINCT a.kodebar, a.nabar, a.satuan, b.bag, b.devisi FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND  a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev = '$lokasi'";
 		} else {
-			$query = "SELECT DISTINCT a.kodebar, a.nabar, a.satuan, b.bag FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND  a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev = '$lokasi' AND b.bag ='" . $bagian . "'";
+			$query = "SELECT DISTINCT a.kodebar, a.nabar, a.satuan, b.bag, b.devisi FROM keluarbrgitem a, stockkeluar b WHERE a.NO_REF = b.NO_REF AND  a.periode BETWEEN '$tanggal1' AND '$tanggal2' AND a.batal = '0' AND a.kode_dev = '$lokasi' AND b.bag ='" . $bagian . "'";
 		}
 
 		$data['bkb_brg'] = $this->db_logistik_pt->query($query)->result();
@@ -1621,7 +1621,7 @@ class Laporan extends CI_Controller
 		}
 
 
-		$query = "SELECT DISTINCT tgl FROM keluarbrgitem WHERE tgl BETWEEN '$tgl14' AND '$tgl15' AND kode_dev ='$lokasi' AND batal = '0'";
+		$query = "SELECT DISTINCT tgl, devisi FROM keluarbrgitem WHERE tgl BETWEEN '$tgl14' AND '$tgl15' AND kode_dev ='$lokasi' AND batal = '0'";
 
 		$data['p_tgl'] = $this->db_logistik_pt->query($query)->result();
 		$data['lokasi'] = $lokasi;
@@ -1671,10 +1671,10 @@ class Laporan extends CI_Controller
 			$q_bag = "AND bag = '$bagian'";
 		}
 		if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") {
-			$query = "SELECT DISTINCT(k.afd) as afd FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev='$lokasi' AND k.periode BETWEEN '$p1' AND '$p2' AND s.bag='$bagian' AND k.batal = '0'";
+			$query = "SELECT DISTINCT(k.afd) as afd, s.devisi FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev='$lokasi' AND k.periode BETWEEN '$p1' AND '$p2' AND s.bag='$bagian' AND k.batal = '0'";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		} else {
-			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE kode_dev='$lokasi' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0'";
+			$query = "SELECT DISTINCT(bag), devisi FROM stockkeluar WHERE kode_dev='$lokasi' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0'";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		}
 		$isi = $this->db_logistik_pt->query("SELECT PT FROM tb_devisi WHERE kodetxt='$lokasi'")->row();
@@ -1736,10 +1736,10 @@ class Laporan extends CI_Controller
 		$bagian = str_replace('-', '&', $bagian);
 
 		if ($bagian == "TANAMAN" || $bagian == "TANAMAN UMUM") {
-			$query = "SELECT DISTINCT(k.afd) as afd FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev='$lokasi' AND k.periode BETWEEN '$p1' AND '$p2' AND s.bag='$bagian' AND k.batal = '0'";
+			$query = "SELECT DISTINCT(k.afd) as afd, s.devisi FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev='$lokasi' AND k.periode BETWEEN '$p1' AND '$p2' AND s.bag='$bagian' AND k.batal = '0'";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		} else {
-			$query = "SELECT DISTINCT(bag) FROM stockkeluar WHERE kode_dev = '$lokasi' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0' ";
+			$query = "SELECT DISTINCT(bag), devisi FROM stockkeluar WHERE kode_dev = '$lokasi' AND periode1 BETWEEN '$p1' AND '$p2' AND bag = '$bagian' AND batal = '0' ";
 			$data['bt'] = $this->db_logistik_pt->query($query)->result();
 		}
 		$isi = $this->db_logistik_pt->query("SELECT PT FROM tb_devisi WHERE kodetxt='$lokasi'")->row();
@@ -1862,7 +1862,7 @@ class Laporan extends CI_Controller
 		// 	$q_dev = "AND b.bag = '$bagian'";
 		// }
 		// $query = "SELECT * FROM keluarbrgitem  WHERE ketsub LIKE 'PT%' AND pt LIKE '%$lok%' AND periode BETWEEN '$tgl1' AND '$tgl2'";
-		$query = "SELECT k.tgl, k.NO_REF, k.skb, k.kodebar, k.nabar, k.satuan, k.qty, s.pt_mutasi FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev='$lokasi' AND k.periode BETWEEN '$tgl1' AND '$tgl2' AND s.mutasi='1'";
+		$query = "SELECT k.tgl, k.NO_REF, k.skb, k.kodebar, k.nabar, k.satuan, k.qty, s.devisi, s.pt_mutasi FROM keluarbrgitem k LEFT JOIN stockkeluar s ON k.NO_REF=s.NO_REF WHERE k.kode_dev='$lokasi' AND k.periode BETWEEN '$tgl1' AND '$tgl2' AND s.mutasi='1'";
 
 		$data['bmut'] = $this->db_logistik_pt->query($query)->result();
 		$data['lokasi1'] = $lokasi;

@@ -37,7 +37,13 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI</h2>
+    <?php
+    if (empty($bmut[0]->devisi)) {
+        echo '<h2>Data tidak ditemukan pada Divisi tersebut!</h2>';
+    } else {
+        echo '<h2 style="margin-bottom: 0;">' . $bmut[0]->devisi . '</h2>';
+    }
+    ?>
     <div style="text-align: center;">
         <h3><u>REGISTER KELUAR BARANG (BKB) MUTASI</u></h3>
     </div>
