@@ -531,48 +531,61 @@
             },
 
             success: function(data) {
-                console.log(data);
+                console.log(data + 'after save');
 
-                if (data.item_exist == "1") {
-                    swal('Sudah ada item yang sama pada SPP ini!');
+                if (data == 'conn_failed') {
+                    swal('KONEKSI TERPUTUS! ');
                     $('#lbl_status_simpan_' + n).empty();
                     $('#lbl_spp_status').empty();
                     $('#btn_simpan_' + n).css('display', 'block');
                 } else {
-                    $('#lbl_status_simpan_' + n).empty();
-                    $.toast({
-                        position: 'top-right',
-                        heading: 'Success',
-                        text: 'Berhasil Disimpan!',
-                        icon: 'success',
-                        loader: false
-                    });
+                    if (data.item_exist == "1") {
+                        swal('Sudah ada item yang sama pada SPP ini!');
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_spp_status').empty();
+                        $('#btn_simpan_' + n).css('display', 'block');
+                    } else {
+                        $('#lbl_status_simpan_' + n).empty();
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Disimpan!',
+                            icon: 'success',
+                            loader: false
+                        });
 
-                    $('#lbl_spp_status').empty();
-                    $('#h4_no_spp').html('No. SPP : ' + data.nospp);
-                    $('#hidden_no_spp').val(data.nospp);
+                        $('#lbl_spp_status').empty();
+                        $('#h4_no_spp').html('No. SPP : ' + data.nospp);
+                        $('#hidden_no_spp').val(data.nospp);
 
-                    $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
-                    $('#hidden_no_ref_ppo').val(data.noref);
+                        $('#h4_no_ref_spp').html('No. Ref. SPP : ' + data.noref);
+                        $('#hidden_no_ref_ppo').val(data.noref);
 
-                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan, #devisi').addClass('bg-light');
-                    $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan, #devisi').attr('disabled', '');
+                        $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan, #devisi').addClass('bg-light');
+                        $('.div_form_1').find('#txt_tgl_spp, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan, #devisi').attr('disabled', '');
 
-                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
-                    $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
-                    $('.headspp').find('#cancelSpp').removeAttr('disabled');
+                        $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).addClass('bg-light');
+                        $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+                        $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
-                    $('#btn_hapus_row_' + n).css('display', 'none');
-                    $('#btn_ubah_' + n).css('display', 'block');
-                    $('#btn_hapus_' + n).css('display', 'block');
-                    $('#new_spp').removeAttr('disabled');
+                        $('#btn_hapus_row_' + n).css('display', 'none');
+                        $('#btn_ubah_' + n).css('display', 'block');
+                        $('#btn_hapus_' + n).css('display', 'block');
+                        $('#new_spp').removeAttr('disabled');
 
-                    $('#hidden_id_ppo').val(data.id_ppo);
-                    $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
+                        $('#hidden_id_ppo').val(data.id_ppo);
+                        $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
 
-                    $('#a_print_spp').show();
+                        $('#a_print_spp').show();
 
+                    }
                 }
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_spp_status').empty();
+                $('#btn_simpan_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! ');
             }
         });
     }

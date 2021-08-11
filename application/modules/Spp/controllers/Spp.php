@@ -250,44 +250,53 @@ class Spp extends CI_Controller
             'nama_main' => "",
         ];
 
+        //cek koneksi
+        $con = $this->db_logistik_pt;
 
-        if (empty($this->input->post('hidden_no_spp'))) {
-            $data = $this->M_spp->saveSpp($data_ppo);
-            $data2 = $this->M_spp->saveSpp2($data_item_ppo);
-            $item_exist = 0;
+        $connected = $con->initialize();
+        if (!$connected) {
+            // ga ada koneksi
+            $data_return = 'conn_failed';
         } else {
-
-            $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $data_item_ppo['noreftxt']);
-
-            if ($cek_isi_item >= 1) {
-                $item_exist = 1;
-                $data = NULL;
-                $data2 = NULL;
-            } else {
+            if (empty($this->input->post('hidden_no_spp'))) {
+                $data = $this->M_spp->saveSpp($data_ppo);
                 $data2 = $this->M_spp->saveSpp2($data_item_ppo);
                 $item_exist = 0;
-                $data = NULL;
+            } else {
+
+                $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $data_item_ppo['noreftxt']);
+
+                if ($cek_isi_item >= 1) {
+                    $item_exist = 1;
+                    $data = NULL;
+                    $data2 = NULL;
+                } else {
+                    $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+                    $item_exist = 0;
+                    $data = NULL;
+                }
             }
+
+            // cari id terakhir
+            $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
+            $generate_id = $this->db_logistik_pt->query($query_id)->row();
+            $id_ppo = $generate_id->id_ppo;
+
+            $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
+            $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
+            $id_item_ppo = $generate_id_item->id_item_ppo;
+
+            $data_return = [
+                'data' => $data,
+                'data2' => $data2,
+                'nospp' => $nospp,
+                'noref' => $noref,
+                'id_ppo' => $id_ppo,
+                'id_item_ppo' => $id_item_ppo,
+                'item_exist' => $item_exist
+            ];
         }
 
-        // cari id terakhir
-        $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_ppo = $generate_id->id_ppo;
-
-        $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
-        $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
-        $id_item_ppo = $generate_id_item->id_item_ppo;
-
-        $data_return = [
-            'data' => $data,
-            'data2' => $data2,
-            'nospp' => $nospp,
-            'noref' => $noref,
-            'id_ppo' => $id_ppo,
-            'id_item_ppo' => $id_item_ppo,
-            'item_exist' => $item_exist
-        ];
         echo json_encode($data_return);
     }
 
