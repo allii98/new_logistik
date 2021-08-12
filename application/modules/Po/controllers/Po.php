@@ -1067,6 +1067,32 @@ class Po extends CI_Controller
         echo json_encode($data);
     }
 
+    public function batalPO()
+    {
+
+        $id_ppo = $this->input->post('refspp');
+        $refspp = $this->input->post('refspp');
+
+
+        $data_ppo2 =  array(
+            'po' => 0
+        );
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
+
+        $data_ppo =  array(
+            'qty2' => NULL,
+            'po' => 0
+        );
+        $this->M_po->updatePPO4($id_ppo, $data_ppo);
+
+
+
+        $norefpo = $this->input->post('noref_po');
+        $data = $this->M_po->deletePO($norefpo);
+
+        echo json_encode($data);
+    }
+
     public function hapus_rinci()
     {
 

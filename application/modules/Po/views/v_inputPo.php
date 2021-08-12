@@ -18,7 +18,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
                     </div>
-
+                    <h6 id="lbl_status_delete_po"></h6>
                     <div class="row justify-content-between">
                         <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                             Input Purchase Order
@@ -545,7 +545,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     <h4 class="mt-2">Konfirmasi Hapus</h4>
                     <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
-                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteSpp()">Hapus</button>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="batal_aksi()">Hapus</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </div>
@@ -717,6 +717,32 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function batal() {
         $('#modalKonfirmasibatalPO').modal('show');
+    }
+
+    function batal_aksi() {
+        var noref_po = $('#hidden_no_ref_po').val();
+        var refspp = $('#refspp').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Po/batalPO') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_delete_po').empty();
+                $('#lbl_status_delete_po').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses batalkan PO..</label');
+            },
+
+            data: {
+                noref_po: noref_po,
+                refspp: refspp,
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                location.reload();
+            }
+        });
     }
 
     function tampildevisi() {

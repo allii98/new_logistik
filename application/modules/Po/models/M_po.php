@@ -214,6 +214,13 @@ class M_po extends CI_Model
 
         return TRUE;
     }
+    public function updatePPO4($id_ppo, $ppo)
+    {
+        $this->db_logistik_pt->where('noreftxt', $id_ppo);
+        $this->db_logistik_pt->update('item_ppo',  $ppo);
+
+        return TRUE;
+    }
     public function editPPO($no_id, $ppo)
     {
         $this->db_logistik_pt->where('id', $no_id);
