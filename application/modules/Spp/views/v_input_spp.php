@@ -23,26 +23,26 @@
                     <div class="row div_form_1">
                         <div class="col-lg-6 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Tgl SPP*</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Tgl SPP*</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <input type="date" class="form-control form-control-sm" id="txt_tgl_spp" value="<?= date('Y-m-d'); ?>">
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Tgl terima*</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Tgl terima*</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <input type="date" class="form-control form-control-sm" id="txt_tgl_terima">
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Tgl Referensi*</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Tgl Referensi*</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <input type="date" id="txt_tgl_ref" class="form-control form-control-sm bg-light" value="<?= date('Y-m-d'); ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Jenis SPP*</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Jenis SPP*</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <select class="form-control form-control-sm" id="cmb_jenis_permohonan">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
@@ -76,8 +76,8 @@
 
                         <div class="col-lg-6 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Alokasi*</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Alokasi*</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <select class="form-control form-control-sm" id="cmb_alokasi">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
@@ -105,8 +105,8 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Department*</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Department*</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <select class="form-control form-control-sm" id="cmb_departemen">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
@@ -121,8 +121,8 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Divisi*</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Divisi*</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <select class="form-control form-control-sm" id="devisi" onchange="check_form_2()">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
@@ -135,8 +135,8 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Keterangan</label>
-                                <div class="col-lg-8 col-12">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Keterangan</label>
+                                <div class="col-lg-8 col-xl-8 col-12">
                                     <textarea class="form-control form-control-sm" rows="2" id="txt_keterangan"></textarea>
                                 </div>
                             </div>
