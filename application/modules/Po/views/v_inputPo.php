@@ -147,7 +147,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         <div class="col-lg-6 col-12">
                             <div class="form-group row mb-0">
-                                <label for="txt_pemesan" class="col-2 col-xl-3 col-form-label">Pemesan *</label>
+                                <label for="txt_pemesan" class="col-3 col-xl-3 col-form-label">Pemesan *</label>
                                 <div class="col-8 col-xl-9">
                                     <select class="form-control form-control-sm" id="txt_pemesan" name="txt_pemesan" required>
                                         <option disabled>-Pilih-</option>
@@ -157,7 +157,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label for="devisi" class="col-2 col-xl-3 col-form-label">Devisi*</label>
+                                <label for="devisi" class="col-3 col-xl-3 col-form-label">Devisi*</label>
                                 <div class="col-8 col-xl-9">
                                     <input type="text" class="form-control form-control-sm bg-light" id="devisi" name="devisi" readonly required>
                                     <input type="hidden" name="" id="hidden_devisi">
@@ -165,7 +165,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
-                                <label for="ket_pengiriman" class="col-2 col-xl-3 col-form-label">Ket. Pengirim*</label>
+                                <label for="ket_pengiriman" class="col-3 col-xl-3 col-form-label">Ket. Pengirim*</label>
                                 <div class="col-8 col-xl-9">
                                     <textarea maxlength="250" class="form-control form-control-sm" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
                                     <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
@@ -174,13 +174,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </div>
 
                             <div class="form-group row mb-0">
-                                <label for="pph" class="col-2 col-xl-3 col-form-label">PPH *</label>
+                                <label for="pph" class="col-3 col-xl-3 col-form-label">PPH *</label>
                                 <div class="col-8 col-xl-9">
                                     <input type="number" class="form-control form-control-sm" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label for="ppn" class="col-2 col-xl-3 col-form-label">PPN *</label>
+                                <label for="ppn" class="col-3 col-xl-3 col-form-label">PPN *</label>
                                 <div class="col-8 col-xl-9">
                                     <select class="form-control form-control-sm" id="ppn" name="ppn" required>
                                         <option value="0">N</option>
@@ -189,7 +189,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 </div>
                             </div>
                             <div class="form-group row mb-1">
-                                <label for="keterangan" class="col-2 col-xl-3 col-form-label">Ket*</label>
+                                <label for="keterangan" class="col-3 col-xl-3 col-form-label">Ket*</label>
                                 <div class="col-8 col-xl-9">
                                     <textarea maxlength="250" class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
                                 </div>
@@ -199,7 +199,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 case 'HO':
                             ?>
                                     <div class="form-group row mb-0">
-                                        <label for="dikirim_kebun" class="col-2 col-xl-3 col-form-label">Dikirim Ke Kebun *</label>
+                                        <label for="dikirim_kebun" class="col-3 col-xl-3 col-form-label">Dikirim Ke Kebun *</label>
                                         <div class="col-8 col-xl-9">
                                             <select class="form-control form-control-sm" id="dikirim_kebun" name="dikirim_kebun" required>
                                                 <option value="Y" selected="">Y</option>
@@ -221,7 +221,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             ?>
 
                             <div class="form-group row mb-0">
-                                <label for="ttl_pembayaran" class="col-2 col-xl-3 col-form-label">Total Bayar</label>
+                                <label for="ttl_pembayaran" class="col-3 col-xl-3 col-form-label">Total Bayar</label>
                                 <div class="col-8 col-xl-9">
                                     <input type="text" class="form-control form-control-sm" id="total_pembayaran" name="total_pembayaran" placeholder="Total Pembayaran" readonly required>
 
