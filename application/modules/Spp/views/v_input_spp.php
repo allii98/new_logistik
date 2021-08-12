@@ -147,7 +147,7 @@
 
                     <hr class="mt-1 mb-2">
                     <!-- end row-->
-                    <div class="row div_form_2">
+                    <div class="row div_form_2 mt-2">
                         <div class="col-sm-12">
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
                                 <div class="row ml-1 mr-1">
@@ -161,7 +161,7 @@
                             <input type="hidden" id="hidden_id_ppo">
                             <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
                             <input type="hidden" id="hidden_no_ref_ppo" name="hidden_no_ref_ppo">
-                            <div class="row" style="margin-left:4px;">
+                            <div class="row mt-2" style="margin-left:4px;">
                                 <h6 id="h4_no_spp" name="h4_no_spp"></h6>&emsp;&emsp;
                                 <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
                             </div>
