@@ -20,10 +20,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                             <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</a>
                             <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-danger" id="a_po_baru">Batal PO</a>
-                            <button type="button" class="btn btn-xs btn-info waves-effect waves-light" id="cetak" onclick="cetak()" disabled>
-                                <span class="btn-label"><i class="mdi mdi-printer"></i></span>Cetak
-                            </button>
-                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="a_po_baru">Kembali</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
                     </div>
                     <div class="row div_form_1">
