@@ -12,7 +12,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
                         <div class="button-list">
 
-                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success" id="a_po_baru" disabled>PO Baru</a>
+                            <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru" disabled>PO Baru</button>
                             <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
@@ -709,6 +709,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function goBack() {
         window.history.back();
+    }
+
+    function new_po() {
+        location.href = "<?php echo base_url('Po/input') ?>";
     }
 
     function batal() {
