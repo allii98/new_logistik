@@ -9,7 +9,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
+                        <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
                         <div class="button-list">
 
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru" disabled>PO Baru</button>
@@ -19,8 +19,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         </div>
                     </div>
                     <h6 id="lbl_status_delete_po"></h6>
-                    <div class="row justify-content-between">
-                        <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                    <div class="row">
+                        <p class="sub-header ml-2" style="margin-top: -12px;">
                             Input Purchase Order
                         </p>
 
@@ -224,7 +224,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <input type="hidden" name="" id="hidden_kode_devisi">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
+                            <div class="form-group row mb-0">
                                 <label for="ket_pengiriman" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Ket.&nbsp;Pengirim</font>
                                 </label>
