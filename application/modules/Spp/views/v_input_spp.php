@@ -15,145 +15,133 @@
                         </p>
                         <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelSpp" onclick="hapusSpp()" disabled>Batalkan SPP</button>
                     </div>
+
                     <div class="row div_form_1">
-                        <div class="col-lg-2 col-12">
-                            <div class="form-group">
-                                <div class="form-group">
-                                    <label for="example-select">
-                                        <font face="Verdana" size="2.5">Tgl SPP*</font>
-                                    </label>
-                                    <input type="date" class="form-control" id="txt_tgl_spp" value="<?= date('Y-m-d'); ?>">
+                        <div class="col-lg-6 col-12">
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Tgl SPP*</label>
+                                <div class="col-lg-8 col-12">
+                                    <input type="date" class="form-control form-control-sm" id="txt_tgl_spp" value="<?= date('Y-m-d'); ?>">
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-2 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Tgl terima*</font>
-                                </label>
-                                <input type="date" class="form-control" id="txt_tgl_terima">
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Tgl terima*</label>
+                                <div class="col-lg-8 col-12">
+                                    <input type="date" class="form-control form-control-sm" id="txt_tgl_terima">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-2 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Tgl Referensi*</font>
-                                </label>
-                                <input type="date" id="txt_tgl_ref" class="form-control bg-light" value="<?= date('Y-m-d'); ?>" readonly>
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Tgl Referensi*</label>
+                                <div class="col-lg-8 col-12">
+                                    <input type="date" id="txt_tgl_ref" class="form-control form-control-sm bg-light" value="<?= date('Y-m-d'); ?>" readonly>
+                                </div>
                             </div>
-                        </div>
-
-                        <div class="col-lg-1 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Jenis&nbsp;SPP*</font>
-                                </label>
-                                <select class="form-control" id="cmb_jenis_permohonan">
-                                    <option value="" selected disabled>Pilih</option>
-                                    <?php
-                                    switch ($sesi_sl) {
-                                        case 'HO':
-                                    ?>
-                                            <option value="SPP">SPP - Surat Permohonan Pembelian</option>
-                                            <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
-                                            <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
-                                            <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option>
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Jenis SPP*</label>
+                                <div class="col-lg-8 col-12">
+                                    <select class="form-control form-control-sm" id="cmb_jenis_permohonan">
+                                        <option value="" selected disabled>Pilih</option>
                                         <?php
-                                            break;
-                                        case 'RO':
-                                        case 'SITE':
-                                        case 'PKS':
+                                        switch ($sesi_sl) {
+                                            case 'HO':
                                         ?>
-                                            <option value="SPP">SPP - Surat Permohonan Pembelian</option>
-                                            <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
-                                            <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
-                                            <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option>
-                                    <?php
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ?>
-                                </select>
+                                                <option value="SPP">SPP - Surat Permohonan Pembelian</option>
+                                                <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
+                                                <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
+                                                <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option>
+                                            <?php
+                                                break;
+                                            case 'RO':
+                                            case 'SITE':
+                                            case 'PKS':
+                                            ?>
+                                                <option value="SPP">SPP - Surat Permohonan Pembelian</option>
+                                                <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
+                                                <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
+                                                <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option>
+                                        <?php
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                         </div> <!-- end col -->
-                        <div class="col-lg-1 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Alokasi*</font>
-                                </label>
-                                <select class="form-control" id="cmb_alokasi">
-                                    <option value="" selected disabled>Pilih</option>
-                                    <?php
-                                    switch ($sesi_sl) {
-                                        case 'HO':
-                                    ?>
-                                            <option value="HO">HO</option>
-                                            <option value="RO">RO</option>
-                                            <option value="SITE">SITE</option>
-                                            <option value="SITE">PKS</option>
+
+                        <div class="col-lg-6 col-12">
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Alokasi*</label>
+                                <div class="col-lg-8 col-12">
+                                    <select class="form-control form-control-sm" id="cmb_alokasi">
+                                        <option value="" selected disabled>Pilih</option>
                                         <?php
-                                            break;
-                                        case 'RO':
-                                        case 'SITE':
-                                        case 'PKS':
+                                        switch ($sesi_sl) {
+                                            case 'HO':
                                         ?>
-                                            <option value="SITE">SITE</option>
-                                    <?php
-                                            break;
-                                        default:
-                                            break;
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                        </div>
-                        <input id="txt_tanggal" name="txt_tanggal" class="form-control" required="required" value="<?= date('d/m/Y'); ?>" type="hidden" placeholder="Tanggal" readonly>
-                        <div class="col-lg-1 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Department*</font>
-                                </label>
-                                <select class="form-control" id="cmb_departemen">
-                                    <option value="" selected disabled>Pilih</option>
-                                    <?php
-                                    foreach ($dept as $d) : {
-                                    ?>
-                                            <option value="<?= $d['kode']; ?>"><?= $d['kode'] . ' - ' . $d['nama']; ?></option>
-                                    <?php
+                                                <option value="HO">HO</option>
+                                                <option value="RO">RO</option>
+                                                <option value="SITE">SITE</option>
+                                                <option value="SITE">PKS</option>
+                                            <?php
+                                                break;
+                                            case 'RO':
+                                            case 'SITE':
+                                            case 'PKS':
+                                            ?>
+                                                <option value="SITE">SITE</option>
+                                        <?php
+                                                break;
+                                            default:
+                                                break;
                                         }
-                                    endforeach;
-                                    ?>
-                                </select>
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-1 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Divisi*</font>
-                                </label>
-                                <select class="form-control" id="devisi" onchange="check_form_2()">
-                                    <option value="" selected disabled>Pilih</option>
-                                    <?php
-                                    foreach ($devisi as $d) : { ?>
-                                            <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
-                                    <?php }
-                                    endforeach;
-                                    ?>
-                                </select>
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Department*</label>
+                                <div class="col-lg-8 col-12">
+                                    <select class="form-control form-control-sm" id="cmb_departemen">
+                                        <option value="" selected disabled>Pilih</option>
+                                        <?php
+                                        foreach ($dept as $d) : {
+                                        ?>
+                                                <option value="<?= $d['kode']; ?>"><?= $d['kode'] . ' - ' . $d['nama']; ?></option>
+                                        <?php
+                                            }
+                                        endforeach;
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-2 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Keterangan</font>
-                                </label>
-                                <textarea class="form-control" rows="1" id="txt_keterangan"></textarea>
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Divisi*</label>
+                                <div class="col-lg-8 col-12">
+                                    <select class="form-control form-control-sm" id="devisi" onchange="check_form_2()">
+                                        <option value="" selected disabled>Pilih</option>
+                                        <?php
+                                        foreach ($devisi as $d) : { ?>
+                                                <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
+                                        <?php }
+                                        endforeach;
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
-                        <input type="hidden" id="hidden_id_ppo">
-                    </div>
-                    <hr class="mt-0 mb-2">
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-12 col-form-label" style="margin-top: -5px;">Keterangan</label>
+                                <div class="col-lg-8 col-12">
+                                    <textarea class="form-control form-control-sm" rows="2" id="txt_keterangan"></textarea>
+                                </div>
+                            </div>
+
+                        </div> <!-- end col -->
+
+                    </div> <!-- end row -->
+
+                    <hr class="mt-1 mb-2">
                     <!-- end row-->
                     <div class="row div_form_2">
                         <div class="col-sm-12">
@@ -167,6 +155,9 @@
                                     </h6>
                                 </div>
                             </div>
+                            <input id="txt_tanggal" name="txt_tanggal" value="<?= date('d/m/Y'); ?>" type="hidden">
+
+                            <input type="hidden" id="hidden_id_ppo">
                             <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
                             <input type="hidden" id="hidden_no_ref_ppo" name="hidden_no_ref_ppo">
                             <div class="row" style="margin-left:4px;">
