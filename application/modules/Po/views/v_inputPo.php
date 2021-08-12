@@ -12,8 +12,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
                         <div class="button-list">
 
-                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</a>
-                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
+                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success" id="a_po_baru" disabled>PO Baru</a>
+                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -1844,6 +1844,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#btn_ubah_' + id).show();
                         $('#btn_hapus_' + id).show();
                         $('#cetak').removeAttr('disabled', '');
+                        $('#a_po_baru').removeAttr('disabled', '');
+                        $('#batal_po').removeAttr('disabled', '');
                         $('#h4_no_po').html('No. PO : ' + data.nopo);
                         $('#hidden_no_po').val(data.nopo);
                         $('#lbl_spp_status').empty();
