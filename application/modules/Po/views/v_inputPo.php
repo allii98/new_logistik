@@ -31,7 +31,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="cmb_pilih_jenis_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Jenis&nbsp;PO&nbsp;*</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
                                     <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
                                     <select class="form-control form-control-sm" id="cmb_pilih_jenis_po" onchange="jenisPO()">
@@ -86,7 +86,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="tgl_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Tgl.&nbsp;PO&nbsp;*</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <input type="date" class="form-control form-control-sm" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
                                 </div>
                             </div>
@@ -94,7 +94,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="select2" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Supplier&nbsp;*</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm" id="select2">
 
                                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
@@ -113,7 +113,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="cmb_status_bayar" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Status&nbsp;Bayar*</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm" id="cmb_status_bayar" name="cmb_status_bayar">
                                         <option value="Cash">
                                             <font face="Verdana" size="1.5">Cash</font>
@@ -151,7 +151,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="lks_pengiriman" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Lokasi&nbsp;Pengiriman*</font>
                                 </label>
-                                <div class="col-8 col-xl-9">
+                                <div class="col-8 col-xl-12">
                                     <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <font face="Verdana" size="1.5">Lokasi&nbsp;Pembelian*</font>
                                 </label>
 
-                                <div class="col-8 col-xl-9">
+                                <div class="col-8 col-xl-12">
                                     <select class="form-control form-control-sm" id="lks_pembelian" name="lks_pembelian" required>
                                         <option disabled>
                                             <font face="Verdana" size="1.5">--Pilih--</font>
@@ -192,7 +192,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="no_penawaran" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">No.&nbsp;Penawaran*</font>
                                 </label>
-                                <div class="col-8 col-xl-9">
+                                <div class="col-8 col-xl-12">
                                     <input type="number" class="form-control form-control-sm" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
                                 </div>
                             </div>
@@ -200,7 +200,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="txt_pemesan" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Pemesan*</font>
                                 </label>
-                                <div class="col-8 col-xl-9">
+                                <div class="col-8 col-xl-12">
                                     <select class="form-control form-control-sm" id="txt_pemesan" name="txt_pemesan" required>
                                         <option disabled>
                                             <font face="Verdana" size="1.5">-Pilih-</font>
@@ -218,7 +218,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="devisi" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Devisi*</font>
                                 </label>
-                                <div class="col-8 col-xl-9">
+                                <div class="col-8 col-xl-12">
                                     <input type="text" class="form-control form-control-sm bg-light" id="devisi" name="devisi" readonly required>
                                     <input type="hidden" name="" id="hidden_devisi">
                                     <input type="hidden" name="" id="hidden_kode_devisi">
@@ -228,7 +228,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="ket_pengiriman" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Ket.&nbsp;Pengirim</font>
                                 </label>
-                                <div class="col-8 col-xl-9">
+                                <div class="col-8 col-xl-12">
                                     <textarea maxlength="250" class="form-control form-control-sm" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
                                     <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
                                     <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
@@ -244,7 +244,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="pph" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">PPH*</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <input type="number" class="form-control form-control-sm" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
                                 </div>
                             </div>
@@ -252,7 +252,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="ppn" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">PPN*</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm" id="ppn" name="ppn" required>
                                         <option value="0">N</option>
                                         <option value="10">Y</option>
@@ -263,7 +263,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="keterangan" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Ket*</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <textarea maxlength="250" class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
                                 </div>
                             </div>
@@ -275,7 +275,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <label for="dikirim_kebun" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                             <font face="Verdana" size="1.5">Dikirim&nbsp;Ke&nbsp;Kebun*</font>
                                         </label>
-                                        <div class="col-9 col-xl-9">
+                                        <div class="col-9 col-xl-12">
                                             <select class="form-control form-control-sm" id="dikirim_kebun" name="dikirim_kebun" required>
                                                 <option value="Y" selected="">Y</option>
                                                 <option value="N">N</option>
@@ -299,7 +299,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <label for="ttl_pembayaran" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
                                     <font face="Verdana" size="1.5">Total&nbsp;Bayar</font>
                                 </label>
-                                <div class="col-9 col-xl-9">
+                                <div class="col-9 col-xl-12">
                                     <input type="text" class="form-control form-control-sm" id="total_pembayaran" name="total_pembayaran" placeholder="Total Pembayaran" readonly required>
 
                                     <input type="hidden" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
