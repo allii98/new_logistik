@@ -4,8 +4,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 <div class="container-fluid">
     <!-- start page title -->
     <!-- end page title -->
-    <div class="row">
-        <div class="col-xl-12">
+    <div class="row mt-0">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
@@ -16,224 +16,219 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                             Input Purchase Order
                         </p>
-                        <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success h-50 mr-2" id="a_po_baru">PO Baru</a>
+                        <div class="button-list">
+
+                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</a>
+                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-danger" id="a_po_baru">Batal PO</a>
+                            <button type="button" class="btn btn-xs btn-info waves-effect waves-light" id="cetak" onclick="cetak()" disabled>
+                                <span class="btn-label"><i class="mdi mdi-printer"></i></span>Cetak
+                            </button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="a_po_baru">Kembali</button>
+                        </div>
                     </div>
                     <div class="row div_form_1">
-                        <div class="col-4">
-                            <form class="form-horizontal">
-                                <div class="row mb-1">
-                                    <label for="cmb_pilih_jenis_po" class="col-3 col-xl-3 col-form-label">Jenis&nbsp;PO&nbsp;*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
-                                        <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
-                                        <select class="form-control" id="cmb_pilih_jenis_po" onchange="jenisPO()">
-                                            <option disabled>
-                                                <font face="Verdana" size="2.5">-Pilih-</font>
-                                            </option>
+                        <div class="col-lg-6 col-12">
+                            <div class="form-group row mb-0">
+                                <label for="cmb_pilih_jenis_po" class="col-3 col-xl-3 col-form-label">Jenis&nbsp;PO&nbsp;*</label>
+                                <div class="col-8 col-xl-9">
+                                    <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
+                                    <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
+                                    <select class="form-control form-control-sm" id="cmb_pilih_jenis_po" onchange="jenisPO()">
+                                        <option disabled>
+                                            <font face="Verdana" size="1.5">-Pilih-</font>
+                                        </option>
+                                        <?php
+                                        switch ($lokasi_sesi) {
+                                            case 'PKS':
+                                        ?>
+                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
                                             <?php
-                                            switch ($lokasi_sesi) {
-                                                case 'PKS':
+                                                break;
+                                            case 'SITE':
                                             ?>
-                                                    <option selected="selected" value="PO-Lokal">PO-Lokal</option>
-                                                <?php
-                                                    break;
-                                                case 'SITE':
-                                                ?>
-                                                    <option selected="selected" value="PO-Lokal">PO-Lokal</option>
-                                                <?php
-                                                    break;
-                                                case 'RO':
-                                                ?>
-                                                    <option selected="selected" value="PO-Lokal">PO-Lokal</option>
-                                                <?php
-                                                    break;
-                                                case 'HO':
-                                                ?>
-                                                    <option value="PO">PO</option>
-                                                    <option value="POA">POA - PO Asset</option>
-                                                    <option value="PO-Khusus">POK - PO Khusus</option>
+                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
                                             <?php
-                                                    break;
-                                                default:
-                                                    break;
-                                            }
+                                                break;
+                                            case 'RO':
                                             ?>
-                                        </select>
-                                    </div>
+                                                <option selected="selected" value="PO-Lokal">PO-Lokal</option>
+                                            <?php
+                                                break;
+                                            case 'HO':
+                                            ?>
+                                                <option value="PO">PO</option>
+                                                <option value="POA">POA - PO Asset</option>
+                                                <option value="PO-Khusus">POK - PO Khusus</option>
+                                        <?php
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        ?>
+                                    </select>
                                 </div>
-                                <div class="row mb-1">
-                                    <label for="tgl_po" class="col-3 col-xl-3 col-form-label">Tgl.&nbsp;PO&nbsp;*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <input type="date" class="form-control bg-light" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <label for="select2" class="col-3 col-xl-3 col-form-label">Supplier&nbsp;*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <select class="js-data-example-ajax form-control select2" id="select2">
+                            </div>
 
-                                            <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                                <option disabled>Nama Supplier</option>
-                                            <?php } else { ?>
-                                                <option disabled>Nama Supplier</option>
-                                                <option selected value="0475">TOKO ( KAS )</option>
-                                            <?php } ?>
-                                        </select>
+                            <div class="form-group row mb-0">
+                                <label for="tgl_po" class="col-3 col-xl-3 col-form-label">Tgl.&nbsp;PO&nbsp;*</label>
+                                <div class="col-8 col-xl-9">
+                                    <input type="date" class="form-control form-control-sm" id="tgl_po" name="tgl_po" value="<?= date('Y-m-d') ?>" placeholder="tgl PO" autocomplite="off" required>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label for="select2" class="col-3 col-xl-3 col-form-label">Supplier&nbsp;*</label>
+                                <div class="col-8 col-xl-9">
+                                    <select class="form-control form-control-sm" id="select2">
 
-                                        <input type="hidden" name="kd_supplier" value="TOKO ( KAS )" id="kd_supplier">
-                                        <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <label for="cmb_status_bayar" class="col-3 col-xl-3 col-form-label">Status Bayar*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <select class="form-control" id="cmb_status_bayar" name="cmb_status_bayar">
-                                            <option value="Cash">
-                                                <font face="Verdana" size="2.5">Cash</font>
-                                            </option>
-                                            <option value="Kredit">Kredit</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <label for="tmpo_pembayaran" class="col-3 col-form-label">Tempo bayar*</label>
-                                    <div class="col-3">
-                                        <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control" placeholder="0" value="0" autocomplite="off"><span>Hari</span>
-                                    </div>
-                                    <label for="tmpo_pengiriman" class="col-3 col-form-label">Tempo Pengirim*</label>
-                                    <div class="col-3">
-                                        <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control" placeholder="0" value="0" autocomplite="off"><span>Hari</span>
-                                    </div>
-                                </div>
+                                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                                            <option disabled>Nama Supplier</option>
+                                        <?php } else { ?>
+                                            <option disabled>Nama Supplier</option>
+                                            <option selected value="0475">TOKO ( KAS )</option>
+                                        <?php } ?>
+                                    </select>
 
-                            </form>
+                                    <input type="hidden" name="kd_supplier" value="TOKO ( KAS )" id="kd_supplier">
+                                    <input type="hidden" name="txtsupplier" value="0475" id="txtsupplier">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="cmb_status_bayar" class="col-3 col-xl-3 col-form-label">Status Bayar*</label>
+                                <div class="col-8 col-xl-9">
+                                    <select class="form-control form-control-sm" id="cmb_status_bayar" name="cmb_status_bayar">
+                                        <option value="Cash">
+                                            <font face="Verdana" size="2.5">Cash</font>
+                                        </option>
+                                        <option value="Kredit">Kredit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="tmpo_pembayaran" class="col-3 col-form-label">Tempo bayar*</label>
+                                <div class="col-2">
+                                    <input type="number" id="tmpo_pembayaran" name="tmpo_pembayaran" class="form-control form-control-sm" placeholder="0" value="0" autocomplite="off"><span>Hari</span>
+                                </div>
+                                <label for="tmpo_pengiriman" class="col-3 col-form-label">Tempo Pengirim*</label>
+                                <div class="col-2">
+                                    <input type="number" id="tmpo_pengiriman" name="tmpo_pengiriman" class="form-control form-control-sm" placeholder="0" value="0" autocomplite="off"><span>Hari</span>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="lks_pengiriman" class="col-3 col-xl-3 col-form-label">Lokasi Pengiriman*</label>
+                                <div class="col-8 col-xl-9">
+                                    <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-0">
+                                <label for="lks_pembelian" class="col-3 col-xl-3 col-form-label">Lokasi Pembelian*</label>
+                                <div class="col-8 col-xl-9">
+                                    <select class="form-control form-control-sm" id="lks_pembelian" name="lks_pembelian" required>
+                                        <option disabled>-- Pilih --</option>
+                                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                                            <option value="HO">HO</option>
+                                            <option value="RO">RO</option>
+                                            <option value="SITE">SITE</option>
+                                        <?php } else { ?>
+                                            <option value="RO">RO</option>
+                                            <option selected="selected" value="SITE">SITE</option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-0">
+                                <label for="no_penawaran" class="col-3 col-xl-3 col-form-label">No. Penawaran*</label>
+                                <div class="col-8 col-xl-9">
+                                    <input type="number" class="form-control form-control-sm" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class="col-4">
-                            <form class="form-horizontal">
-                                <div class="row mb-1">
-                                    <label for="lks_pengiriman" class="col-3 col-xl-3 col-form-label">Lokasi Pengiriman*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <input class="form-control" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
-                                    </div>
+                        <div class="col-lg-6 col-12">
+                            <div class="form-group row mb-0">
+                                <label for="txt_pemesan" class="col-2 col-xl-3 col-form-label">Pemesan *</label>
+                                <div class="col-8 col-xl-9">
+                                    <select class="form-control form-control-sm" id="txt_pemesan" name="txt_pemesan" required>
+                                        <option disabled>-Pilih-</option>
+                                        <option selected value="GM">GM</option>
+                                        <option value="KTU">KTU</option>
+                                    </select>
                                 </div>
-                                <div class="row mb-1">
-                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Devisi*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <!-- <button type="button" class="btn btn-light" data-toggle="tooltip" data-placement="top" title="Tooltip on top">
-                                           <p id="devisi"></p>
-                                        </button> -->
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="devisi" class="col-2 col-xl-3 col-form-label">Devisi*</label>
+                                <div class="col-8 col-xl-9">
+                                    <input type="text" class="form-control form-control-sm bg-light" id="devisi" name="devisi" readonly required>
+                                    <input type="hidden" name="" id="hidden_devisi">
+                                    <input type="hidden" name="" id="hidden_kode_devisi">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label for="ket_pengiriman" class="col-2 col-xl-3 col-form-label">Ket. Pengirim*</label>
+                                <div class="col-8 col-xl-9">
+                                    <textarea maxlength="250" class="form-control form-control-sm" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
+                                    <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
+                                    <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
+                                </div>
+                            </div>
 
-                                        <input type="text" class="form-control bg-light" id="devisi" name="devisi" readonly required>
-                                        <input type="hidden" name="" id="hidden_devisi">
-                                        <input type="hidden" name="" id="hidden_kode_devisi">
-                                    </div>
+                            <div class="form-group row mb-0">
+                                <label for="pph" class="col-2 col-xl-3 col-form-label">PPH *</label>
+                                <div class="col-8 col-xl-9">
+                                    <input type="number" class="form-control form-control-sm" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
                                 </div>
-                                <div class="row mb-1">
-                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Lokasi Pembelian*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <select class="form-control" id="lks_pembelian" name="lks_pembelian" required>
-                                            <option disabled>-- Pilih --</option>
-                                            <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                                <option value="HO">HO</option>
-                                                <option value="RO">RO</option>
-                                                <option value="SITE">SITE</option>
-                                            <?php } else { ?>
-                                                <option value="RO">RO</option>
-                                                <option selected="selected" value="SITE">SITE</option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label for="ppn" class="col-2 col-xl-3 col-form-label">PPN *</label>
+                                <div class="col-8 col-xl-9">
+                                    <select class="form-control form-control-sm" id="ppn" name="ppn" required>
+                                        <option value="0">N</option>
+                                        <option value="10">Y</option>
+                                    </select>
                                 </div>
-                                <div class="row mb-1">
-                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">No. Penawaran*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <input type="number" class="form-control" id="no_penawaran" name="no_penawaran" placeholder="No Penawaran" autocomplite="off" value="0" required>
-                                    </div>
+                            </div>
+                            <div class="form-group row mb-1">
+                                <label for="keterangan" class="col-2 col-xl-3 col-form-label">Ket*</label>
+                                <div class="col-8 col-xl-9">
+                                    <textarea maxlength="250" class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
                                 </div>
-                                <div class="row mb-1">
-                                    <label for="devisi" class="col-3 col-xl-3 col-form-label">Pemesan *</label>
-                                    <div class="col-8 col-xl-9">
-                                        <select class="form-control" id="txt_pemesan" name="txt_pemesan" required>
-                                            <option disabled>-Pilih-</option>
-                                            <option selected value="GM">GM</option>
-                                            <option value="KTU">KTU</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </form>
-                        </div>
-
-                        <div class="col-4">
-                            <form class="form-horizontal">
-                                <div class="row mb-1">
-                                    <label for="ket_pengiriman" class="col-3 col-xl-3 col-form-label">Ket. Pengirim*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <textarea maxlength="250" class="form-control" id="ket_pengiriman" name="ket_pengiriman" placeholder="Keterangan Pengiriman" autocomplite="off">-</textarea>
-                                        <input type="hidden" id="txt_uang_muka" name="txt_uang_muka" value="0.00">
-                                        <input type="hidden" id="txt_no_voucher" name="txt_no_voucher" value="0">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-1">
-                                    <label for="pph" class="col-3 col-xl-3 col-form-label">PPH *</label>
-                                    <div class="col-8 col-xl-9">
-                                        <input type="number" class="form-control" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <label for="ppn" class="col-3 col-xl-3 col-form-label">PPN *</label>
-                                    <div class="col-8 col-xl-9">
-                                        <select class="form-control" id="ppn" name="ppn" required>
-                                            <option value="0">N</option>
-                                            <option value="10">Y</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mb-1">
-                                    <label for="keterangan" class="col-3 col-xl-3 col-form-label">Ket*</label>
-                                    <div class="col-8 col-xl-9">
-                                        <textarea maxlength="250" class="form-control" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
-                                    </div>
-                                </div>
-                                <?php
-                                switch ($lokasi_sesi) {
-                                    case 'HO':
-                                ?>
-                                        <div class="row mb-1">
-                                            <label for="dikirim_kebun" class="col-3 col-xl-3 col-form-label">Dikirim Ke Kebun *</label>
-                                            <div class="col-8 col-xl-9">
-                                                <select class="form-control" id="dikirim_kebun" name="dikirim_kebun" required>
-                                                    <option value="Y" selected="">Y</option>
-                                                    <option value="N">N</option>
-                                                </select>
-                                            </div>
+                            </div>
+                            <?php
+                            switch ($lokasi_sesi) {
+                                case 'HO':
+                            ?>
+                                    <div class="form-group row mb-0">
+                                        <label for="dikirim_kebun" class="col-2 col-xl-3 col-form-label">Dikirim Ke Kebun *</label>
+                                        <div class="col-8 col-xl-9">
+                                            <select class="form-control form-control-sm" id="dikirim_kebun" name="dikirim_kebun" required>
+                                                <option value="Y" selected="">Y</option>
+                                                <option value="N">N</option>
+                                            </select>
                                         </div>
-                                    <?php
-                                        break;
-                                    case 'RO':
-                                    case 'SITE':
-                                    case 'PKS':
-                                    ?>
-                                <?php
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                ?>
-
-                                <div class="row mb-1">
-                                    <label for="ttl_pembayaran" class="col-3 col-xl-3 col-form-label">Total Bayar</label>
-                                    <div class="col-8 col-xl-9">
-                                        <input type="text" class="form-control bg-light" id="total_pembayaran" name="total_pembayaran" placeholder="Total Pembayaran" readonly required>
-
-                                        <input type="hidden" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
                                     </div>
+                                <?php
+                                    break;
+                                case 'RO':
+                                case 'SITE':
+                                case 'PKS':
+                                ?>
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+
+                            <div class="form-group row mb-0">
+                                <label for="ttl_pembayaran" class="col-2 col-xl-3 col-form-label">Total Bayar</label>
+                                <div class="col-8 col-xl-9">
+                                    <input type="text" class="form-control form-control-sm" id="total_pembayaran" name="total_pembayaran" placeholder="Total Pembayaran" readonly required>
+
+                                    <input type="hidden" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
                                 </div>
-
-
-                            </form>
+                            </div>
                         </div>
 
                     </div>
@@ -252,9 +247,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <h6 id="lbl_spp_status" name="lbl_spp_status">
                                             <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
                                         </h6>
-                                        <h6>
+                                        <!-- <h6>
                                             <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
-                                        </h6>
+                                        </h6> -->
                                     </div>
                                     <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                                     <input type="hidden" id="hidden_id_po" name="hidden_id_po">
@@ -339,17 +334,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 </td>
                                                 <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                     <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
-                                                        <input type="hidden" class="form-control" id="id_item_1" name="id">
-                                                        <input type="hidden" class="form-control" id="id_ppo1" name="id_ppo1">
-                                                        <input type="hidden" class="form-control" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_">
-                                                        <input type="hidden" class="form-control" id="hidden_tgl_ref_1" name="hidden_tgl_ref_">
-                                                        <input type="hidden" class="form-control" id="hidden_kd_departemen_1" name="hidden_kd_departemen_">
-                                                        <input type="hidden" class="form-control" id="hidden_departemen_1" name="hidden_departemen_">
-                                                        <input type="hidden" class="form-control" id="hidden_tgl_spp_1" name="hidden_tgl_spp_">
-                                                        <input type="hidden" class="form-control" id="hidden_kd_pt_1" name="hidden_kd_pt_">
-                                                        <input type="hidden" class="form-control" id="hidden_nama_pt_1" name="hidden_nama_pt_">
-                                                        <input type="hidden" class="form-control" id="noppo1" name="noppo1">
+                                                        <input type="text" class="form-control form-control-sm" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
+                                                        <input type="hidden" class="form-control form-control-sm" id="id_item_1" name="id">
+                                                        <input type="hidden" class="form-control form-control-sm" id="id_ppo1" name="id_ppo1">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_tgl_ref_1" name="hidden_tgl_ref_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_kd_departemen_1" name="hidden_kd_departemen_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_departemen_1" name="hidden_departemen_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_tgl_spp_1" name="hidden_tgl_spp_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_kd_pt_1" name="hidden_kd_pt_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_nama_pt_1" name="hidden_nama_pt_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="noppo1" name="noppo1">
                                                     </td>
                                                     <!-- <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <select class="form-control" id="cmb_jenis_budget_1" name="cmb_jenis_budget_1" required>
@@ -373,18 +368,18 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="1"></textarea>
+                                                        <textarea class="form-control form-control-sm" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="1"></textarea>
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="number" class="form-control bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
+                                                        <input type="number" class="form-control form-control-sm bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
+                                                        <input type="text" class="form-control form-control-sm" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <select class="form-control" id="cmb_kurs_1" name="cmb_kurs_1" required="">
+                                                        <select class="form-control form-control-sm" id="cmb_kurs_1" name="cmb_kurs_1" required="">
                                                             <option value="Rp">Rp IDR</option>
                                                             <option value="USD">&dollar; USD</option>
                                                             <option value="SGD">S&dollar; SGD</option>
@@ -395,19 +390,19 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         </select><br />
                                                     </td>
                                                     <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
+                                                        <input type="text" class="form-control form-control-sm" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
 
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control" id="txt_biaya_lain_1" name="txt_biaya_lain_11" size="15" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" />
+                                                        <input type="text" class="form-control form-control-sm" id="txt_biaya_lain_1" name="txt_biaya_lain_11" size="15" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" />
 
                                                     </td>
                                                     <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control" maxlength="250" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
+                                                        <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
 
                                                     </td>
                                                     <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control" maxlength="250" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
+                                                        <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
                                                         <h6>Jumlah : <span id="hasil_jumlah_1"></span></h6>
                                                         <input type="hidden" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
                                                         <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
@@ -447,18 +442,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     </td>
                                 </table>
                                 <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
-                                    <div class="row ml-1 mr-1 justify-content-between">
+                                    <!-- <div class="row ml-1 mr-1 justify-content-between">
 
 
-                                        <!-- <h6 id="lbl_spp_status" name="lbl_spp_status">
-                                        <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
-                                    </h6> -->
+                                        
                                         <h6>
                                             <h6>
                                                 <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
                                             </h6>
                                         </h6>
-                                    </div>
+                                    </div> -->
                                     <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                                     <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                                     <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
@@ -697,6 +690,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     var cancleUpdatePO = true;
     var hapus = true;
     var qty = true;
+
+    function goBack() {
+        window.history.back();
+    }
 
     function tampildevisi() {
         var devisi = $('#hidden_devisi').val();
@@ -1141,7 +1138,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
 
         var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
+            '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
             '<option value="">-- Pilih --</option>' +
             '<option value="TEKNIK">TEKNIK</option>' +
             '<option value="BIBITAN">BIBITAN</option>' +
@@ -1157,8 +1154,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         '</td>';
         var td_col_ = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
-            '<input type="hidden" class="form-control"  id="getspp' + row + '" rowame="spp' + row + '" >' +
+            // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
+            '<input type="hidden" class="form-control form-control-sm"  id="getspp' + row + '" rowame="spp' + row + '" >' +
             '<span id="nama_brg_' + row + '"></span><br><span id="kode_brg_' + row + '" ></span>' +
             '<input type="hidden" id="ppo' + row + '" name="ppo' + row + '">' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
@@ -1171,27 +1168,27 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="hidden" id="hidden_kd_pt_' + row + '" name="hidden_kd_pt_' + row + '">' +
             '<input type="hidden" id="hidden_nama_pt_' + row + '" name="hidden_nama_pt_' + row + '">' +
             '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
-            '<input type="hidden" class="form-control" id="hidden_kode_brg_' + row + '" name="hidden_kode_brg_' + row + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_nama_brg_' + row + '" name="hidden_nama_brg_' + row + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_kode_brg_' + row + '" name="hidden_kode_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_nama_brg_' + row + '" name="hidden_nama_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '"   />' +
 
             '</td>';
         var td_col_4 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" placeholder="Merk"  required />' +
-            '<textarea class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
+            '<textarea class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
-            '<input type="hidden" class="form-control bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
-            '<input type="hidden" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
+            '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+            '<input type="hidden" class="form-control form-control-sm bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_kurs_' + row + '" name="cmb_kurs_' + row + '" required="">' +
+            '<select class="form-control form-control-sm" id="cmb_kurs_' + row + '" name="cmb_kurs_' + row + '" required="">' +
             '<option value="Rp">Rp IDR</option>' +
             '<option value="USD">&dollar; USD</option>' +
             '<option value="SGD">S&dollar; SGD</option>' +
@@ -1202,23 +1199,23 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="8" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="8" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
             '</td>'
         var td_col_11 = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="1"></textarea>' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="1"></textarea>' +
             // '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
             '</td>';
         var td_col_12 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="jumlah_' + row + '" size="20" name="jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
-            '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" size="20" name="txt_jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
+            '<input type="text" class="form-control form-control-sm" id="jumlah_' + row + '" size="20" name="jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
+            '<input type="hidden" class="form-control form-control-sm" id="txt_jumlah_' + row + '" size="20" name="txt_jumlah_' + row + '"  placeholder="Jumlah"  readonly />' +
             '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
             '</td>';
         if (statusaprove == '0') {
@@ -1273,7 +1270,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')" placeholder="Pilih item SPP">' +
+            '<input type="text" class="form-control form-control-sm"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')" placeholder="Pilih item SPP">' +
             '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
             '<input type="hidden" id="id_ppo' + n + '" name="id_ppo' + n + '">' +
@@ -1290,7 +1287,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
         var td_col_3 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_jenis_budget_' + n + '" name="cmb_jenis_budget_' + n + '" required>' +
+            '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + n + '" name="cmb_jenis_budget_' + n + '" required>' +
             '<option value="">-- Pilih --</option>' +
             '<option value="TEKNIK">TEKNIK</option>' +
             '<option value="BIBITAN">BIBITAN</option>' +
@@ -1305,30 +1302,30 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</select>'; +
         '</td>';
         var td_col_ = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
+            // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
             '<span id="nama_brg_' + n + '"></span><br><span id="kode_brg_' + n + '" ></span>' +
 
-            '<input type="hidden" class="form-control" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '"   />' +
 
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_merk_' + n + '" name="txt_merk_' + n + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_merk_' + n + '" name="txt_merk_' + n + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control bg-light" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" readonly>' +
-            '<input type="hidden" class="form-control" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
-            '<input type="hidden" class="form-control" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="text" class="form-control form-control-sm bg-light" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" readonly>' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_harga_' + n + '" name="txt_harga_' + n + '" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_kurs_' + n + '" name="cmb_kurs_' + n + '" required="">' +
+            '<select class="form-control form-control-sm" id="cmb_kurs_' + n + '" name="cmb_kurs_' + n + '" required="">' +
             '<option value="Rp">Rp IDR</option>' +
             '<option value="USD">&dollar; USD</option>' +
             '<option value="SGD">S&dollar; SGD</option>' +
@@ -1339,21 +1336,21 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
+            '<textarea class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
 
             '</td>'
         var td_col_11 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
             '<h6>Jumlah : <span id="hasil_jumlah_' + n + '"></span></h6>' +
-            '<input type="hidden" class="form-control bg-light" id="txt_jumlah_' + n + '" onkeyup="jumlah(' + n + ')" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+            '<input type="hidden" class="form-control form-control-sm bg-light" id="txt_jumlah_' + n + '" onkeyup="jumlah(' + n + ')" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
 
             '<input type="hidden" id="hidden_id_po_item_' + n + '" name="hidden_id_po_item_' + n + '">' +
             '</td>';
@@ -1806,12 +1803,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     } else {
                         $('#lbl_status_simpan_' + id).empty();
                         $.toast({
-                            heading: 'Success',
-                            text: 'Berhasil disimpan',
                             position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Disimpan!',
                             icon: 'success',
-                            showHideTransition: 'plain'
-                            // reload: false
+                            loader: false
                         });
                         var refspp = data.refspp;
                         cekdataspp();
@@ -1827,7 +1823,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#btn_hapus_row_' + id).hide();
                         $('#btn_ubah_' + id).show();
                         $('#btn_hapus_' + id).show();
-                        $('#cetak').show();
+                        $('#cetak').removeAttr('disabled', '');
                         $('#h4_no_po').html('No. PO : ' + data.nopo);
                         $('#hidden_no_po').val(data.nopo);
                         $('#lbl_spp_status').empty();
@@ -1959,12 +1955,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     } else {
                         $('#lbl_status_simpan_' + id).empty();
                         $.toast({
-                            heading: 'Success',
-                            text: 'Berhasil disimpan',
                             position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Disimpan!',
                             icon: 'success',
-                            showHideTransition: 'plain'
-                            // reload: false
+                            loader: false
                         });
                         var refspp = data.refspp;
                         cekdataspp();
@@ -2085,11 +2080,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
                     $('#lbl_status_simpan_' + id).empty();
                     $.toast({
-                        heading: 'Success',
-                        text: 'Berhasil diupdate',
                         position: 'top-right',
-                        stack: true,
-                        icon: 'success'
+                        heading: 'Success',
+                        text: 'Berhasil diupdate!',
+                        icon: 'success',
+                        loader: false
                     });
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
@@ -2169,6 +2164,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#lbl_status_simpan_' + id).empty();
                     $.toast({
                         position: 'top-right',
+                        heading: 'Success',
                         text: 'Edit Dibatalkan!',
                         icon: 'success',
                         loader: false
@@ -2227,12 +2223,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#lbl_status_simpan_' + id).empty();
                     $.toast({
                         position: 'top-right',
+                        heading: 'Success',
                         text: 'Edit Dibatalkan!',
                         icon: 'success',
                         loader: false
                     });
-                    // $('#lbl_status_simpan_1' + id).empty();
-                    // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
                     jumlah(id);
                     totalBayar();
                     cancleUpdatePO = false;
@@ -2245,10 +2240,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function hapusRinci(id) {
         $('#hidden_no_delete').val(id);
         $('#modalKonfirmasiHapus').modal('show');
-        // if (id == 1) {
-        //     deleteData();
-        // } else {
-        // }
     }
 
     function deletePO(no) {
@@ -2313,18 +2304,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         if (rowCount != 1) {
 
-            // Swal.fire({
-            //     title: 'Apakah anda yakin?',
-            //     text: "PO akan dihapus",
-            //     showCancelButton: true,
-            //     confirmButtonColor: '#3085d6',
-            //     cancelButtonColor: '#d33',
-            //     confirmButtonText: 'Ya Hapus!'
-            // }).then((result) => {
-            //     if (result.value) {
-
-            //     }
-            // });
             $.ajax({
                 type: "POST",
                 url: "<?php echo site_url('Po/hapus_rinci'); ?>",
