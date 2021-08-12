@@ -7,8 +7,8 @@
                     <div class="row justify-content-between headspp">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
                         <div class="button-list">
-                            <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()" disabled>Input SPP</button>
-                            <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()" disabled>Batalkan SPP</button>
+                            <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()" disabled>SPP Baru</button>
+                            <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()" disabled>Batal SPP</button>
                             <button class="btn btn-primary btn-xs" id="a_print_spp" onclick="cetak_spp()">Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
