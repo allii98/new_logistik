@@ -4,16 +4,20 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between headspp">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
-                        <button class="btn btn-xs btn-success h-50 mr-2" id="new_spp" onclick="new_spp()" disabled>Input SPP</button>
+                        <div class="button-list">
+                            <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()" disabled>Input SPP</button>
+                            <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()" disabled>Batalkan SPP</button>
+                            <button class="btn btn-primary btn-xs" id="a_print_spp" onclick="cetak_spp()">Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
                     </div>
                     <h6 id="lbl_status_delete_spp"></h6>
-                    <div class="row justify-content-between headspp">
+                    <div class="row">
                         <p class="sub-header ml-2" style="margin-top: -12px;">
                             <font face="Verdana" size="2.5">Surat Permintaan Pembelian</font>
                         </p>
-                        <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelSpp" onclick="hapusSpp()" disabled>Batalkan SPP</button>
                     </div>
 
                     <div class="row div_form_1">
@@ -143,15 +147,12 @@
 
                     <hr class="mt-1 mb-2">
                     <!-- end row-->
-                    <div class="row div_form_2">
+                    <div class="row div_form_2 mt-2">
                         <div class="col-sm-12">
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                                <div class="row ml-1 mr-1 justify-content-between">
+                                <div class="row ml-1 mr-1">
                                     <h6 id="lbl_spp_status" name="lbl_spp_status">
                                         <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
-                                    </h6>
-                                    <h6>
-                                        <button class="btn btn-danger btn-xs fa fa-print" id="a_print_spp" onclick="cetak_spp()"></button>
                                     </h6>
                                 </div>
                             </div>
@@ -160,7 +161,7 @@
                             <input type="hidden" id="hidden_id_ppo">
                             <input type="hidden" id="hidden_no_spp" name="hidden_no_spp">
                             <input type="hidden" id="hidden_no_ref_ppo" name="hidden_no_ref_ppo">
-                            <div class="row" style="margin-left:4px;">
+                            <div class="row mt-2" style="margin-left:4px;">
                                 <h6 id="h4_no_spp" name="h4_no_spp"></h6>&emsp;&emsp;
                                 <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
                             </div>
@@ -185,7 +186,7 @@
                                                 <font face="Verdana" size="2.5">Merk/Type/Jenis</font>
                                             </th>
                                             <th>
-                                                <font face="Verdana" size="2.5">Aksi</font>
+                                                <font face="Verdana" size="2.5">#</font>
                                             </th>
                                         </tr>
                                     </thead>
@@ -198,14 +199,14 @@
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control" id="nakobar_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
+                                                    <input type="text" class="form-control form-control-sm" id="nakobar_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
                                                     <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
                                                     <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
                                                 </td>
                                                 <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="number" class="form-control" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
+                                                    <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
                                                 </td>
-                                                <td width="12%">
+                                                <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <span id="stok_1"></span>
                                                     <span> </span>
                                                     <span id="satuan_1"></span>
@@ -213,16 +214,16 @@
                                                     <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="form-control" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>
+                                                    <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="form-control form-control-sm" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>
                                                     <input type="hidden" id="hidden_id_item_ppo_1">
                                                 </td>
-                                                <td width="7%" style="padding-top: 2px;">
+                                                <td width="2%" style="padding-top: 2px;">
                                                     <div class="row">
-                                                        <button class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
-                                                        <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
-                                                        <button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
-                                                        <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
-                                                        <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                        <button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_1" name="btn_ubah_1" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
+                                                        <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
                                                         <label id="lbl_status_simpan_1"></label>
                                                     </div>
                                                 </td>
@@ -294,13 +295,17 @@
 </div>
 
 <script>
+    function goBack() {
+        window.history.back();
+    }
+
     function new_spp() {
         location.href = "<?php echo base_url('Spp/sppBaru') ?>";
     }
 
     $(document).ready(function() {
 
-        $('#a_print_spp').hide();
+        $('#a_print_spp').attr('disabled', '');
 
         $('#cmb_departemen').on('change', function() {
             var data = this.value;
@@ -567,7 +572,7 @@
                         $('#hidden_id_ppo').val(data.id_ppo);
                         $('#hidden_id_item_ppo_' + n).val(data.id_item_ppo);
 
-                        $('#a_print_spp').show();
+                        $('#a_print_spp').removeAttr('disabled');
 
                     }
                 }
@@ -895,29 +900,29 @@
             '</td>';
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
+            '<input type="text" class="form-control form-control-sm" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '</td>';
-        var td_col_4 = '<td width="12%">' +
+        var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
+            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control form-control-sm" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
             '<input type="hidden" id="hidden_id_item_ppo_' + n + '" name="hidden_id_item_ppo_' + n + '">' +
             '</td>';
-        var td_col_6 = '<td width="7%" style="padding-top: 2px;">' +
+        var td_col_6 = '<td width="2%" style="padding-top: 2px;">' +
             '<div class="row">' +
-            '<button class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
+            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
             '<label id="lbl_status_simpan_' + n + '"></label>' +
             '</div>' +
             '</td>';
