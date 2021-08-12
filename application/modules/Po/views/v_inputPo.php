@@ -10,19 +10,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
+                        <div class="button-list">
+
+                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</a>
+                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
+                            <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
                     </div>
 
                     <div class="row justify-content-between">
                         <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                             Input Purchase Order
                         </p>
-                        <div class="button-list">
 
-                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</a>
-                            <a href="<?php echo site_url('Po/input'); ?>" class="btn btn-xs btn-danger" id="a_po_baru">Batal PO</a>
-                            <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
-                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
-                        </div>
                     </div>
                     <div class="row div_form_1">
                         <div class="col-lg-6 col-12">
@@ -535,6 +536,23 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasibatalPO">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                    <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteSpp()">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
@@ -691,6 +709,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function goBack() {
         window.history.back();
+    }
+
+    function batal() {
+        $('#modalKonfirmasibatalPO').modal('show');
     }
 
     function tampildevisi() {
@@ -2233,6 +2255,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             });
         }
 
+    }
+
+    function hapusRinci(id) {
+        $('#hidden_no_delete').val(id);
+        $('#modalKonfirmasiHapus').modal('show');
     }
 
     function hapusRinci(id) {
