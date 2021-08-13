@@ -98,7 +98,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <select class="form-control form-control-sm" id="select2">
 
                                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                            <option disabled>Nama Supplier</option>
+                                            <option selected disabled>Nama Supplier</option>
                                         <?php } else { ?>
                                             <option disabled>Nama Supplier</option>
                                             <option selected value="0475">TOKO ( KAS )</option>
@@ -273,7 +273,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             ?>
                                     <div class="form-group row mb-0">
                                         <label for="dikirim_kebun" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">
-                                            <font face="Verdana" size="1.5">Dikirim&nbsp;Ke&nbsp;Kebun*</font>
+                                            <font face="Verdana" size="1.5">Kirim&nbsp;Kebun?</font>
                                         </label>
                                         <div class="col-9 col-xl-12">
                                             <select class="form-control form-control-sm" id="dikirim_kebun" name="dikirim_kebun" required>
@@ -321,7 +321,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
                                     <div class="row ml-1 mr-1 justify-content-between">
                                         <h6 id="lbl_spp_status" name="lbl_spp_status">
-                                            <font face="Verdana" size="2.5">No. PO : ... No. Ref PO : ...</font>
+                                            <font face="Verdana" size="1.5">No. PO : ... No. Ref PO : ...</font>
                                         </h6>
                                         <!-- <h6>
                                             <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
@@ -346,8 +346,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     case 'HO':
                                                 ?>
                                                         <th>#</th>
-                                                        <th width="250px">
-                                                            <font face="Verdana" size="2.5">SPP</font>
+                                                        <th>
+                                                            <font face="Verdana" size="1.5">SPP</font>
                                                         </th>
                                                     <?php
                                                         break;
@@ -363,40 +363,40 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 ?>
 
                                                 <!-- <th>
-                                                <font face="Verdana" size="2.5">Jenis Budget</font>
+                                                <font face="Verdana" size="1.5">Jenis Budget</font>
                                             </th> -->
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                                    <font face="Verdana" size="1.5">Nama&nbsp;&<br>Kode&nbsp;Barang</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Merk</font>
+                                                    <font face="Verdana" size="1.5">Merk</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Qty</font>
-                                                </th>
-
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Harga</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Kurs</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Disc <span>%</span></font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Biaya Lainnya</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
+                                                    <font face="Verdana" size="1.5">Qty</font>
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Keterangan</font>
+                                                    <font face="Verdana" size="1.5">Harga</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Kurs</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Disc<span>%</span></font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Biaya&nbsp;Lainnya</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Ket.&nbsp;Biaya</font>
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="2.5">#</font>
+                                                    <font face="Verdana" size="1.5">Keterangan</font>
+                                                </th>
+
+                                                <th>
+                                                    <font face="Verdana" size="1.5">#</font>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -437,24 +437,25 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <option value="TBM">TBM</option>
                                                     </select>
                                                 </td> -->
-                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <span id="nama_brg_1"></span><br><span id="kode_brg_1"></span>
+                                                    <td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <font face="Verdana" size="1.5"> <span id="nama_brg_1"></span><br><span id="kode_brg_1"></span></font>
+
                                                         <input type="hidden" class="form-control" id="hidden_kode_brg_1" name="hidden_kode_brg_1" />
                                                         <input type="hidden" class="form-control" id="hidden_nama_brg_1" name="hidden_nama_brg_1" />
                                                         <input type="hidden" class="form-control" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1" />
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control form-control-sm" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="1"></textarea>
+                                                        <textarea class="form-control form-control-sm" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="3"></textarea>
                                                     </td>
-                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="number" class="form-control form-control-sm bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                     </td>
-                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="text" class="form-control form-control-sm" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
                                                     </td>
-                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <select class="form-control form-control-sm" id="cmb_kurs_1" name="cmb_kurs_1" required="">
                                                             <option value="Rp">Rp IDR</option>
                                                             <option value="USD">&dollar; USD</option>
@@ -465,20 +466,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                             <option value="MYR">RM MYR</option>
                                                         </select><br />
                                                     </td>
-                                                    <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="text" class="form-control form-control-sm" id="txt_disc_1" name="txt_disc_1" size="10" value="0" onkeyup="jumlah('1')" placeholder="Disc" />
 
                                                     </td>
+                                                    <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="text" class="form-control form-control-sm" id="txt_biaya_lain_1" name="txt_biaya_lain_11" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" />
+
+                                                    </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control form-control-sm" id="txt_biaya_lain_1" name="txt_biaya_lain_11" size="15" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" />
+                                                        <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />
 
                                                     </td>
-                                                    <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />
-
-                                                    </td>
-                                                    <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="1"></textarea><br />
+                                                    <td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="2"></textarea>
                                                         <h6>Jumlah : <span id="hasil_jumlah_1"></span></h6>
                                                         <input type="hidden" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
                                                         <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
@@ -1274,22 +1275,22 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
 
-        var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
-            '<option value="">-- Pilih --</option>' +
-            '<option value="TEKNIK">TEKNIK</option>' +
-            '<option value="BIBITAN">BIBITAN</option>' +
-            '<option value="LC & TANAM">LC & TANAM</option>' +
-            '<option value="RAWAT">RAWAT</option>' +
-            '<option value="PANEN">PANEN</option>' +
-            '<option value="TEKNIK">TEKNIK</option>' +
-            '<option value="PABRIK">PABRIK</option>' +
-            '<option value="KANTOR">KANTOR</option>' +
-            '<option value="Kendaraan">Kendaraan</option>' +
-            '<option value="TBM">TBM</option>' +
-            '</select>'; +
+        // var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        //     '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
+        //     '<option value="">-- Pilih --</option>' +
+        //     '<option value="TEKNIK">TEKNIK</option>' +
+        //     '<option value="BIBITAN">BIBITAN</option>' +
+        //     '<option value="LC & TANAM">LC & TANAM</option>' +
+        //     '<option value="RAWAT">RAWAT</option>' +
+        //     '<option value="PANEN">PANEN</option>' +
+        //     '<option value="TEKNIK">TEKNIK</option>' +
+        //     '<option value="PABRIK">PABRIK</option>' +
+        //     '<option value="KANTOR">KANTOR</option>' +
+        //     '<option value="Kendaraan">Kendaraan</option>' +
+        //     '<option value="TBM">TBM</option>' +
+        //     '</select>'; +
 
-        '</td>';
+        // '</td>';
         var td_col_ = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
             '<input type="hidden" class="form-control form-control-sm"  id="getspp' + row + '" rowame="spp' + row + '" >' +
@@ -1421,23 +1422,22 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
 
-
-        var td_col_3 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + n + '" name="cmb_jenis_budget_' + n + '" required>' +
-            '<option value="">-- Pilih --</option>' +
-            '<option value="TEKNIK">TEKNIK</option>' +
-            '<option value="BIBITAN">BIBITAN</option>' +
-            '<option value="LC & TANAM">LC & TANAM</option>' +
-            '<option value="RAWAT">RAWAT</option>' +
-            '<option value="PANEN">PANEN</option>' +
-            '<option value="TEKNIK">TEKNIK</option>' +
-            '<option value="PABRIK">PABRIK</option>' +
-            '<option value="KANTOR">KANTOR</option>' +
-            '<option value="Kendaraan">Kendaraan</option>' +
-            '<option value="TBM">TBM</option>' +
-            '</select>'; +
-        '</td>';
-        var td_col_ = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        // var td_col_3 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        //     '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + n + '" name="cmb_jenis_budget_' + n + '" required>' +
+        //     '<option value="">-- Pilih --</option>' +
+        //     '<option value="TEKNIK">TEKNIK</option>' +
+        //     '<option value="BIBITAN">BIBITAN</option>' +
+        //     '<option value="LC & TANAM">LC & TANAM</option>' +
+        //     '<option value="RAWAT">RAWAT</option>' +
+        //     '<option value="PANEN">PANEN</option>' +
+        //     '<option value="TEKNIK">TEKNIK</option>' +
+        //     '<option value="PABRIK">PABRIK</option>' +
+        //     '<option value="KANTOR">KANTOR</option>' +
+        //     '<option value="Kendaraan">Kendaraan</option>' +
+        //     '<option value="TBM">TBM</option>' +
+        //     '</select>'; +
+        // '</td>';
+        var td_col_ = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
             '<span id="nama_brg_' + n + '"></span><br><span id="kode_brg_' + n + '" ></span>' +
 
@@ -1447,7 +1447,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_merk_' + n + '" name="txt_merk_' + n + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_merk_' + n + '" name="txt_merk_' + n + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1456,11 +1456,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
 
             '</td>';
-        var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_6 = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
             '</td>';
-        var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_7 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<select class="form-control form-control-sm" id="cmb_kurs_' + n + '" name="cmb_kurs_' + n + '" required="">' +
             '<option value="Rp">Rp IDR</option>' +
             '<option value="USD">&dollar; USD</option>' +
@@ -1475,16 +1475,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="text" class="form-control form-control-sm" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
 
             '</td>';
-        var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
+        var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
-        var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
+        var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br/>' +
 
             '</td>'
-        var td_col_11 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="1"></textarea><br />' +
+        var td_col_11 = '<td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" rows="2"></textarea>' +
             '<h6>Jumlah : <span id="hasil_jumlah_' + n + '"></span></h6>' +
             '<input type="hidden" class="form-control form-control-sm bg-light" id="txt_jumlah_' + n + '" onkeyup="jumlah(' + n + ')" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
 

@@ -38,7 +38,7 @@ class Po extends CI_Controller
             $row[] = $no . ".";
             $row[] = $d->id;
             $row[] = $d->noppo;
-            $row[] = $d->tglppo;
+            $row[] = date_format(date_create($d->tglppo), 'd-m-Y');
             $row[] = $d->noreftxt;
             $row[] = $d->namadept;
             $row[] = $d->kodebar;
