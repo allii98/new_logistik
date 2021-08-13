@@ -32,7 +32,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <font face="Verdana" size="1.5">Jenis&nbsp;PO&nbsp;*</font>
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
+                                    <input type="hidden" id="Fn " name="hidden_jenis_spp">
                                     <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
                                     <select class="form-control form-control-sm" id="cmb_pilih_jenis_po" onchange="jenisPO()">
                                         <option disabled>
@@ -452,7 +452,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                     </td>
-                                                    <td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="text" class="form-control form-control-sm" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
                                                     </td>
                                                     <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
@@ -1456,7 +1456,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
 
             '</td>';
-        var td_col_6 = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
             '</td>';

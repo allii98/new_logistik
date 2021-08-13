@@ -547,7 +547,10 @@ class Po extends CI_Controller
             $norefpo = $this->input->post('hidden_no_ref_po');
         } else {
             // Est/swj/PO-Lokal/11/18/00034 atau Fac/swj/jkt/12/18/6100005 atau Est-POA/swj/jkt/12/18/6100004 atau Est2/swj/jkt/01/16/7100029
-            if ($hidden_jenis_spp == "SPPA") {
+            if ($hidden_jenis_spp == "SPP") {
+                # code...
+                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+            } else if ($hidden_jenis_spp == "SPPA") {
                 $norefpo = $lokasibuatspp . "/" . $kodepo . "/POA/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
             } else if ($hidden_jenis_spp == "SPPI") {
                 $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-LOKAL/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
