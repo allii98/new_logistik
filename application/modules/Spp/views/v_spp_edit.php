@@ -490,6 +490,9 @@
                 success: function(data) {
                     $('#stok_' + n).text(data);
                     $('#hidden_stok_' + n).val(data);
+                },
+                error: function(response) {
+                    alert('KONEKSI TERPUTUS! Gagal Menampilkan Barang!');
                 }
             });
             return false;
