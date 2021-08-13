@@ -156,7 +156,7 @@
             <!-- end row-->
             <hr style="margin-top: -15px;">
             <div class="row div_form_2">
-                <div class="col-sm-12">
+                <div class="col-12">
                     <div class="sub-header" style="margin-top: -15px; margin-bottom: -20px;">
                         <div class="row ml-1 mr-1" style="margin-top: -25px;">
                             <h6 id="lbl_spp_status" name="lbl_spp_status">

@@ -152,7 +152,7 @@
                     <hr class="mt-1 mb-2">
                     <!-- end row-->
                     <div class="row div_form_2 mt-2">
-                        <div class="col-sm-12">
+                        <div class="col-12">
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
                                 <div class="row ml-1 mr-1">
                                     <h6 id="lbl_spp_status" name="lbl_spp_status">
