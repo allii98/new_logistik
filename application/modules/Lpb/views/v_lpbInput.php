@@ -258,6 +258,10 @@ date_default_timezone_set('Asia/Jakarta');
 </style>
 
 <script>
+    function goBack() {
+        window.history.back();
+    }
+
     function new_lpb() {
         location.href = "<?php echo base_url('Lpb/input') ?>";
     }

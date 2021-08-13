@@ -3,9 +3,17 @@
     <div class="row justify-content-center mt-0">
         <div class="col-12">
             <div class="widget-rounded-circle card-box">
-                <h4 class="header-title">
-                    <font face="Verdana"> LPB <i>(Edit)</i> </font>
-                </h4>
+                <div class="row justify-content-between">
+                    <h4 class="header-title ml-2">
+                        <font face="Verdana"> LPB <i>(Edit)</i> </font>
+                    </h4>
+                    <div class="button-list">
+                        <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()">LPB Baru</button>
+                        <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()">Batal LPB</button>
+                        <button class="btn btn-primary btn-xs" id="a_print_lpb" onclick="cetak_lpb()">Cetak</button>
+                        <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                    </div>
+                </div>
                 <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
                     Edit Laporan Penerimaan Barang
                 </p>
@@ -112,13 +120,10 @@
                         <input type="hidden" id="txt_ref_po" name="txt_ref_po">
                         <input type="hidden" id="hidden_id_lpb">
                     </div>
-                    <div class="row justify-content-between mr-2" style="margin-left:4px;">
+                    <div class="row mr-2" style="margin-left:4px;">
                         <h6>
                             <span id="no_lpb"></span>&emsp;&emsp;
                             <span id="no_ref_lpb"></span>
-                        </h6>
-                        <h6>
-                            <button class="btn btn-danger btn-xs fa fa-print" style="float: right;" id="a_print_spp" onclick="cetak_lpb()"></button>
                         </h6>
                     </div>
                     <div class="table-responsive">
@@ -131,7 +136,7 @@
                                     <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
                                     <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
                                     <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
-                                    <th width="3%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Aksi</th>
+                                    <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">#</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
@@ -229,6 +234,14 @@
 <input type="hidden" id="id_stokmasuk" value="<?= $id_stokmasuk ?>">
 
 <script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function new_lpb() {
+        location.href = "<?php echo base_url('Lpb/input') ?>";
+    }
+
     function cetak_lpb() {
 
         var no_lpb = $('#hidden_no_lpb').val();
@@ -419,7 +432,7 @@
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
         var td_col_2 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
-            '<input type="text" class="form-control col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
+            '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
             '<label class="ml-1 mt-1">' +
             '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
             '<span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>' +
@@ -438,22 +451,24 @@
             '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
+            '<input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
             '<input type="hidden" id="hidden_txt_qty_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
+            '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '<input type="hidden" id="hidden_refppo_' + row + '" name="hidden_refppo_' + row + '">' +
             '</td>';
-        var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_7 = '<td style="padding-top: 2px;">' +
             // '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary mt-1 mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-            '<button class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            '<div class="row">' +
+            '<button class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-primary ml-1 mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+            '<button class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
+            '</div>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
