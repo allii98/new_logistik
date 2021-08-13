@@ -3,9 +3,19 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO <i>(Edit)</i></h4>
-                    <div class="row justify-content-between headspp">
-                        <p class="sub-header ml-2">
+                    <div class="row justify-content-between">
+                        <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO <i>(Edit)</i></h4>
+                        <div class="button-list">
+
+                            <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
+                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
+                            <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
+                    </div>
+                    <h6 id="lbl_status_delete_po"></h6>
+                    <div class="row">
+                        <p class="sub-header ml-2" style="margin-top: -12px;">
                             <font face="Verdana" size="2.5">Purchase Order</font>
                         </p>
                     </div>
@@ -19,19 +29,6 @@
                     ?>
                             <div class="x_content mb-0 div_form_2">
 
-                                <div class="row justify-content-center">
-                                    <div class="col-6">
-
-                                    </div>
-                                    <div class="col-6">
-                                        <div style="text-align: right;">
-                                            <a href="#" style="display:none;" onclick="cetak()" type="button" id="cetak" class="btn btn-danger btn-xs waves-effect waves-light" title="Cetak">
-                                                <i class="fas fa-print">&nbsp;Print</i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <br>
                                 <!-- <div class="row">
                                     <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
@@ -60,14 +57,14 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">#</font>
+                                                    <font face="Verdana" size="1.5">#</font>
                                                 </th>
                                                 <?php
                                                 switch ($sesi_sl) {
                                                     case 'HO':
                                                 ?>
                                                         <th width="250px">
-                                                            <font face="Verdana" size="2.5">SPP</font>
+                                                            <font face="Verdana" size="1.5">SPP</font>
                                                         </th>
                                                     <?php
                                                         break;
@@ -83,43 +80,43 @@
                                                 ?>
 
                                                 <!-- <th>
-                                                    <font face="Verdana" size="2.5">Jenis Budget</font>
+                                                    <font face="Verdana" size="1.5">Jenis Budget</font>
                                                 </th> -->
 
-                                                <th width="500px">
-                                                    <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Nama&nbsp;&&nbsp;Kode&nbsp;Barang</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Merk</font>
+                                                    <font face="Verdana" size="1.5">Merk</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Qty</font>
-                                                </th>
-
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Harga</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Kurs</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Disc <span>%</span></font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Biaya Lainnya</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
+                                                    <font face="Verdana" size="1.5">Qty</font>
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Keterangan</font>
+                                                    <font face="Verdana" size="1.5">Harga</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Jumlah Rp</font>
+                                                    <font face="Verdana" size="1.5">Kurs</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">#</font>
+                                                    <font face="Verdana" size="1.5">Disc <span>%</span></font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Biaya Lainnya</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Ket.&nbsp;Biaya</font>
+                                                </th>
+
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Keterangan</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Jumlah&nbsp;Rp</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">#</font>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -136,25 +133,28 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <table border="0" width="100%">
-                                    <td>
+                                <table border="0" width="80%">
+                                    <td width="7%">
+                                        <font face="Verdana" size="1.5">
+                                            <h6 id="tgl_spp" name="tgl_spp"></h6>
+                                        </font>
+                                    </td>
+                                    <td width="10%">
+                                        <font face="Verdana" size="1.5">
+                                            <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+                                        </font>
+                                    </td>
+                                    <td width="7%">
+                                        <font face="Verdana" size="1.5">
+                                            <h6 id="tgl_po" name="tgl_po">
+                                            </h6>
+                                        </font>
+                                    </td>
+                                    <td width="15%">
+                                        <font face="Verdana" size="1.5">
+                                            <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+                                        </font>
 
-                                        <h6 id="tgl_spp" name="tgl_spp"></h6>
-                                    </td>
-                                    <td>
-                                        <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
-                                    </td>
-                                    <td>
-                                        <h6 id="tgl_po" name="tgl_po"></h6>
-                                    </td>
-
-                                    <td>
-                                        <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                                    </td>
-                                    <td>
-                                        <h6>
-                                            <button onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
-                                        </h6>
                                     </td>
 
                                 </table>
@@ -175,44 +175,44 @@
 
 
                                                 <!-- <th>
-                                                    <font face="Verdana" size="2.5">Jenis Budget</font>
+                                                    <font face="Verdana" size="1.5">Jenis Budget</font>
                                                 </th> -->
                                                 <th>
-                                                    <font face="Verdana" size="2.5">#</font>
-                                                </th>
-                                                <th width="500px">
-                                                    <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                                    <font face="Verdana" size="1.5">#</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Merk</font>
+                                                    <font face="Verdana" size="1.5">Nama&nbsp;&&nbsp;Kode&nbsp;Barang</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Qty</font>
+                                                    <font face="Verdana" size="1.5">Merk</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Harga</font>
+                                                    <font face="Verdana" size="1.5">Qty</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Kurs</font>
+                                                    <font face="Verdana" size="1.5">Harga</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Disc <span>%</span></font>
+                                                    <font face="Verdana" size="1.5">Kurs</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Biaya Lainnya</font>
+                                                    <font face="Verdana" size="1.5">Disc<span>%</span></font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Ket.&nbsp;Biaya</font>
+                                                    <font face="Verdana" size="1.5">Biaya&nbsp;Lainnya</font>
+                                                </th>
+                                                <th>
+                                                    <font face="Verdana" size="1.5">Ket.&nbsp;Biaya</font>
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Keterangan</font>
+                                                    <font face="Verdana" size="1.5">Keterangan</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">Jumlah Rp</font>
+                                                    <font face="Verdana" size="1.5">Jumlah&nbsp;Rp</font>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="2.5">#</font>
+                                                    <font face="Verdana" size="1.5">#</font>
                                                 </th>
                                             </tr>
                                         </thead>
@@ -297,6 +297,23 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasibatalPO">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                    <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="batal_aksi()">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" id="hidden_nopo_edit" value="<?= $nopo ?>">
 <input type="hidden" id="hidden_noref_tambah">
 <input type="hidden" id="isi_edit">
@@ -337,6 +354,14 @@
         // end dataspp site
     });
 
+    function goBack() {
+        window.history.back();
+    }
+
+    function new_po() {
+        location.href = "<?php echo base_url('Po/input') ?>";
+    }
+
     function cetak() {
         var id_po = $('#id_po').val();
         var nopo = $('#hidden_no_po').val();
@@ -346,6 +371,36 @@
 
         // window.open('Po/cetak/' + noref_rpc + '/' + id_po, '_blank');
         window.open('<?= base_url() ?>Po/cetak/' + noref_rpc + '/' + id_po, '_blank');
+    }
+
+    function batal() {
+        $('#modalKonfirmasibatalPO').modal('show');
+    }
+
+    function batal_aksi() {
+        var noref_po = $('#hidden_no_ref_po').val();
+        var refspp = $('#refspp').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Po/batalPO') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_delete_po').empty();
+                $('#lbl_status_delete_po').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses batalkan PO..</label');
+            },
+
+            data: {
+                noref_po: noref_po,
+                refspp: refspp,
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                location.reload();
+            }
+        });
     }
 
     function isi_edit() {
@@ -492,8 +547,8 @@
             '<button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + no + '" name="btn_hapus_row_' + no + '" onclick="hapus_row(' + no + ')"></button>' +
             '</td>';
 
-        var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_jenis_budget_' + no + '" name="cmb_jenis_budget_' + no + '" required>' +
+        var td_col_3 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + no + '" name="cmb_jenis_budget_' + no + '" required>' +
             '<option value="">-- Pilih --</option>' +
             '<option value="TEKNIK">TEKNIK</option>' +
             '<option value="BIBITAN">BIBITAN</option>' +
@@ -508,9 +563,9 @@
             '</select>'; +
 
         '</td>';
-        var td_col_ = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="hidden" class="form-control"  id="getspp' + no + '" rowame="spp' + no + '" >' +
-            '<span id="nama_brg_' + no + '"></span><br><span id="kode_brg_' + no + '" ></span>' +
+        var td_col_ = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="hidden" class="form-control form-control-sm"  id="getspp' + no + '" rowame="spp' + no + '" >' +
+            '<font face="Verdana" size="1.5"><span id="nama_brg_' + no + '"></font><font face="Verdana" size="1.5"></span><br><span id="kode_brg_' + no + '" ></span></font>' +
             '<input type="hidden" id="ppo' + no + '" name="ppo' + no + '">' +
             '<input type="hidden" id="id_ppo' + no + '" name="id_ppo' + no + '">' +
             '<input type="hidden" id="id_item_' + no + '" name="id_item_' + no + '">' +
@@ -522,29 +577,29 @@
             '<input type="hidden" id="hidden_kd_pt_' + no + '" name="hidden_kd_pt_' + no + '">' +
             '<input type="hidden" id="hidden_nama_pt_' + no + '" name="hidden_nama_pt_' + no + '">' +
             '<input type="hidden" id="noppo' + no + '" name="noppo' + no + '">' +
-            '<input type="hidden" class="form-control" id="hidden_kode_brg_' + no + '" name="hidden_kode_brg_' + no + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_nama_brg_' + no + '" name="hidden_nama_brg_' + no + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + no + '" name="hidden_satuan_brg_' + no + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_kode_brg_' + no + '" name="hidden_kode_brg_' + no + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_nama_brg_' + no + '" name="hidden_nama_brg_' + no + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_satuan_brg_' + no + '" name="hidden_satuan_brg_' + no + '"   />' +
             '<input type="hidden" id="hidden_no_ref_po_' + no + '" name="hidden_no_ref_po_' + no + '">' +
-            '<input type="hidden" class="form-control" id="id_item_po' + no + '" name="id_item_po' + no + '" >' +
+            '<input type="hidden" class="form-control form-control-sm" id="id_item_po' + no + '" name="id_item_po' + no + '" >' +
 
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            // '<input type="text" class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" placeholder="Merk"  required />' +
-            '<textarea class="form-control" id="txt_merk_' + no + '" name="txt_merk_' + no + '" size="26" placeholder="Merk" rows="1"></textarea><br />' +
+            // '<input type="text" class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" placeholder="Merk"  required />' +
+            '<textarea class="form-control form-control-sm" id="txt_merk_' + no + '" name="txt_merk_' + no + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control bg-light" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" readonly>' +
-            '<input type="hidden" class="form-control bg-light" id="qty_' + no + '" name="qty' + no + '" placeholder="Qty" size="8"  readonly>' +
-            '<input type="hidden" class="form-control" id="qty2_' + no + '" name="qty2' + no + '" placeholder="Qty" size="8"/>' +
+            '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" readonly>' +
+            '<input type="hidden" class="form-control form-control-sm bg-light" id="qty_' + no + '" name="qty' + no + '" placeholder="Qty" size="8"  readonly>' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty2_' + no + '" name="qty2' + no + '" placeholder="Qty" size="8"/>' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_harga_' + no + '" name="txt_harga_' + no + '" onkeyup="jumlah(' + no + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + no + '" name="txt_harga_' + no + '" onkeyup="jumlah(' + no + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_kurs_' + no + '" name="cmb_kurs_' + no + '" required="">' +
+            '<select class="form-control form-control-sm" id="cmb_kurs_' + no + '" name="cmb_kurs_' + no + '" required="">' +
             '<option value="Rp">Rp IDR</option>' +
             '<option value="USD">&dollar; USD</option>' +
             '<option value="SGD">S&dollar; SGD</option>' +
@@ -554,30 +609,30 @@
             '<option value="MYR">RM MYR</option>' +
             '</select><br />' +
             '</td>';
-        var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_disc_' + no + '" name="txt_disc_' + no + '" size="8" value="0" onkeyup="jumlah(' + no + ')" placeholder="Disc"/>' +
+        var td_col_8 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + no + '" name="txt_disc_' + no + '" size="8" value="0" onkeyup="jumlah(' + no + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_biaya_lain_' + no + '" name="txt_biaya_lain_' + no + '" size="15" value="0" onkeyup="jumlah(' + no + ')" placeholder="Biaya Lain"/>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + no + '" name="txt_biaya_lain_' + no + '" size="15" value="0" onkeyup="jumlah(' + no + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_keterangan_biaya_lain_' + no + '" name="txt_keterangan_biaya_lain_' + no + '" size="26" placeholder="Keterangan Biaya" rows="1"></textarea><br />' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + no + '" name="txt_keterangan_biaya_lain_' + no + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
 
 
             '</td>'
         var td_col_11 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + no + '" name="txt_keterangan_rinci_' + no + '" size="20" placeholder="Keterangan" rows="1"></textarea>' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_rinci_' + no + '" name="txt_keterangan_rinci_' + no + '" size="20" placeholder="Keterangan" rows="3"></textarea>' +
             // '<h6>Jumlah : <span id="hasil_jumlah_' + no + '"></span></h6>' +
-            // '<input type="hidden" class="form-control" id="txt_jumlah_' + no + '" size="20" name="txt_jumlah_' + no + '"  placeholder="Jumlah"  readonly />' +
+            // '<input type="hidden" class="form-control form-control-sm" id="txt_jumlah_' + no + '" size="20" name="txt_jumlah_' + no + '"  placeholder="Jumlah"  readonly />' +
 
             // '<input type="hidden" id="hidden_id_po_item_' + no + '" name="hidden_id_po_item_' + no + '">' +
             '</td>';
-        var td_col_12 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_12 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
-            '<input type="text" class="form-control" id="jumlah_' + no + '" name="jumlah_" size="15" placeholder="Jumlah"  readonly />' +
-            '<input type="hidden" class="form-control" id="txt_jumlah_' + no + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+            '<input type="text" class="form-control form-control-sm" id="jumlah_' + no + '" name="jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+            '<input type="hidden" class="form-control form-control-sm" id="txt_jumlah_' + no + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
 
             '<input type="hidden" id="hidden_id_po_item_' + no + '" name="hidden_id_po_item_' + no + '">' +
             '</td>';
@@ -1002,8 +1057,8 @@
             '<input type="hidden" id="hidden_no_table_' + row + '" name="hidden_no_table_' + row + '">' +
             '<button class="btn btn-xs btn-info fa fa-plus" data-toggle="tooltip" data-placement="left" title="Tambah" id="btn_tambah_row_' + row + '" name="btn_tambah_row_' + row + '" onclick="tambahSpp(' + row + ')"></button>' +
             '</td>';
-        var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
+        var td_col_3 = '<td width="8" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
             '<option value="">-- Pilih --</option>' +
             '<option value="TEKNIK">TEKNIK</option>' +
             '<option value="BIBITAN">BIBITAN</option>' +
@@ -1017,9 +1072,9 @@
             '<option value="TBM">TBM</option>' +
             '</select>'; +
         '</td>';
-        var td_col_ = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
-            '<span id="nama_brg_' + row + '"></span><br><span id="kode_brg_' + row + '" ></span>' +
+        var td_col_ = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
+            '<font face="Verdana" size="1.5"><span id="nama_brg_' + row + '"></font><font face="Verdana" size="1.5"></span><br><span id="kode_brg_' + row + '" ></span></font>' +
             '<input type="hidden" id="ppo' + row + '" name="ppo' + row + '">' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +
             '<input type="hidden" id="id_item_' + row + '" name="id_item_' + row + '">' +
@@ -1031,25 +1086,25 @@
             '<input type="hidden" id="hidden_kd_pt_' + row + '" name="hidden_kd_pt_' + row + '">' +
             '<input type="hidden" id="hidden_nama_pt_' + row + '" name="hidden_nama_pt_' + row + '">' +
             '<input type="hidden" id="noppo' + row + '" name="noppo' + row + '">' +
-            '<input type="hidden" class="form-control" id="hidden_kode_brg_' + row + '" name="hidden_kode_brg_' + row + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_nama_brg_' + row + '" name="hidden_nama_brg_' + row + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '"   />' +
-            '<input type="hidden" class="form-control" id="id_item_po' + row + '" name="id_item_po' + row + '" >' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_kode_brg_' + row + '" name="hidden_kode_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_nama_brg_' + row + '" name="hidden_nama_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="id_item_po' + row + '" name="id_item_po' + row + '" >' +
             '<input type="hidden" id="hidden_no_ref_po_' + row + '" name="hidden_no_ref_po_' + row + '">' +
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="form-control" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" ></textarea><br />' +
+            '<textarea class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
-            '<input type="hidden" class="form-control" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" />' +
-            '<input type="hidden" class="form-control" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
+            '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" />' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_kurs_' + row + '" name="cmb_kurs_' + row + '" required="">' +
+            '<select class="form-control form-control-sm" id="cmb_kurs_' + row + '" name="cmb_kurs_' + row + '" required="">' +
             '<option value="Rp">Rp IDR</option>' +
             '<option value="USD">&dollar; USD</option>' +
             '<option value="SGD">S&dollar; SGD</option>' +
@@ -1059,23 +1114,23 @@
             '<option value="MYR">RM MYR</option>' +
             '</select><br />' +
             '</td>';
-        var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+        var td_col_8 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
             '</td>';
         var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="form-control" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '<textarea class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')" rows="3"></textarea><br />' +
             '</td>'
         var td_col_11 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
+            '<textarea maxlength="250" rows="3" class="form-control form-control-sm" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea><br />' +
 
             '</td>';
-        var td_col_12 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_12 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
-            '<input type="text" class="form-control" id="jumlah_' + row + '" name="jumlah_" size="15" placeholder="Jumlah"  readonly />' +
-            '<input type="hidden" class="form-control" id="txt_jumlah_' + row + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+            '<input type="text" class="form-control form-control-sm" id="jumlah_' + row + '" name="jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+            '<input type="hidden" class="form-control form-control-sm" id="txt_jumlah_' + row + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
 
             '<input type="hidden" id="hidden_id_po_item_' + row + '" name="hidden_id_po_item_' + row + '">' +
             '</td>';
@@ -1210,8 +1265,8 @@
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="getspp' + n + '" name="spp' + n + '" >' +
-            '<input type="hidden" class="form-control" id="id_item_po' + n + '" name="id_item_po' + n + '" >' +
+            '<input type="text" class="form-control form-control-sm" id="getspp' + n + '" name="spp' + n + '" >' +
+            '<input type="hidden" class="form-control form-control-sm" id="id_item_po' + n + '" name="id_item_po' + n + '" >' +
             '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
             '<input type="hidden" id="hidden_no_ref_spp_' + n + '" name="hidden_no_ref_spp_' + n + '">' +
@@ -1224,7 +1279,7 @@
             '<input type="hidden" id="noppo' + n + '" name="noppo' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_jenis_budget_' + n + '" name="cmb_jenis_budget_' + n + '" required>' +
+            '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + n + '" name="cmb_jenis_budget_' + n + '" required>' +
             '<option value="">-- Pilih --</option>' +
             '<option value="TEKNIK">TEKNIK</option>' +
             '<option value="BIBITAN">BIBITAN</option>' +
@@ -1239,31 +1294,31 @@
             '</select>'; +
         '</td>';
         var td_col_ = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            // '<input type="text" class="form-control" id="brg' + row + '" name="brg' + row + '">' +
+            // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
             '<span id="nama_brg_' + n + '"></span><span> | </span><span id="kode_brg_' + n + '" ></span>' +
 
-            '<input type="hidden" class="form-control" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
-            '<input type="hidden" class="form-control" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '"   />' +
+            '<input type="hidden" class="form-control form-control-sm" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '"   />' +
             '<input type="text" id="hidden_no_ref_po_' + n + '" name="hidden_no_ref_po_' + n + '">' +
 
             '</td>';
         var td_col_4 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_merk_' + n + '" name="txt_merk_' + n + '" placeholder="Merk"  required />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_merk_' + n + '" name="txt_merk_' + n + '" placeholder="Merk"  required />' +
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
-            '<input type="hidden" class="form-control" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" />' +
-            '<input type="hidden" class="form-control" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" />' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" />' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_harga_' + n + '" name="txt_harga_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<select class="form-control" id="cmb_kurs_' + n + '" name="cmb_kurs_' + n + '" required="">' +
+            '<select class="form-control form-control-sm" id="cmb_kurs_' + n + '" name="cmb_kurs_' + n + '" required="">' +
             '<option value="Rp">Rp IDR</option>' +
             '<option value="USD">&dollar; USD</option>' +
             '<option value="SGD">S&dollar; SGD</option>' +
@@ -1273,24 +1328,24 @@
             '<option value="MYR">RM MYR</option>' +
             '</select><br />' +
             '</td>';
-        var td_col_8 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
+        var td_col_8 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
+            '<textarea class="resizable_textarea form-control form-control-sm" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
 
             '</td>'
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
+            '<textarea class="resizable_textarea form-control form-control-sm" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
 
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="txt_jumlah_' + n + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_jumlah_' + n + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
             '<label id="lbl_status_simpan_1' + n + '"></label>' +
             '<input type="hidden" id="hidden_id_po_item_' + n + '" name="hidden_id_po_item_' + n + '">' +
             '</td>';

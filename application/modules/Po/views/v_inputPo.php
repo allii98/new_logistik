@@ -365,7 +365,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <!-- <th>
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
                                             </th> -->
-                                                <th width="500px">
+                                                <th>
                                                     <font face="Verdana" size="2.5">Nama & Kode Barang</font>
                                                 </th>
                                                 <th>
@@ -824,6 +824,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 console.log(data);
 
                 location.reload();
+            },
+            error: function(request) {
+                $('#lbl_status_delete_po').empty();
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -973,7 +977,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             $('#modalcarispp').modal('hide');
                         },
                         error: function(request) {
-                            console.log(request.responseText);
+                            alert("KONEKSI TERPUTUS!");
                         }
                     });
                 });
@@ -1127,7 +1131,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                 },
                 error: function(request) {
-                    console.log(request.responseText);
+                    alert("KONEKSI TERPUTUS!");
                 }
             });
         });
@@ -1622,7 +1626,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -1669,7 +1673,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 $('#ttl_pembayaran').val(data.totbay);
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -1973,6 +1977,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         simpanBaru = false;
                     }
+                },
+                error: function(request) {
+                    $('#lbl_status_simpan_' + id).empty();
+                    alert("KONEKSI TERPUTUS! GAGAL SIMPAN DATA PO");
                 }
             });
         }
@@ -2125,6 +2133,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         // simpanBaru = false;
                     }
+                },
+                error: function(request) {
+                    $('#lbl_status_simpan_' + id).empty();
+                    alert("KONEKSI TERPUTUS! GAGAL SIMPAN DATA PO");
                 }
             });
 
@@ -2232,7 +2244,18 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#btn_hapus_' + id).show();
                     totalBayar();
                 }
+            },
+            error: function(request) {
+                $('#lbl_status_simpan_' + id).empty();
+                $('#btn_simpan_' + id).hide();
+                $('#btn_hapus_row' + id).hide();
+                $('#btn_update_' + id).hide();
+                $('#btn_cancel_update_' + id).hide();
+                $('#btn_ubah_' + id).show();
+                $('#btn_hapus_' + id).show();
+                alert("KONEKSI TERPUTUS! GAGAL UPDATE DATA PO");
             }
+
         });
     }
 
@@ -2309,6 +2332,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     jumlah(id);
                     totalBayar();
                     cancleUpdatePO = false;
+                },
+                error: function(request) {
+                    $('#lbl_status_simpan_' + id).empty();
+                    $('#btn_ubah_' + id).show();
+                    $('#btn_hapus_' + id).show();
+                    $('#btn_update_' + id).hide();
+                    $('#btn_cancel_update_' + id).hide();
+                    alert("KONEKSI TERPUTUS! GAGAL CANCEL UPDATE DATA PO");
                 }
             });
         } else {
@@ -2365,6 +2396,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     jumlah(id);
                     totalBayar();
                     cancleUpdatePO = false;
+                },
+                error: function(request) {
+                    $('#lbl_status_simpan_' + id).empty();
+                    $('#btn_ubah_' + id).show();
+                    $('#btn_hapus_' + id).show();
+                    $('#btn_update_' + id).hide();
+                    $('#btn_cancel_update_' + id).hide();
+                    alert("KONEKSI TERPUTUS! GAGAL CANCEL UPDATE DATA PO");
                 }
             });
         }
@@ -2406,6 +2445,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             success: function(data) {
                 // console.log(data);
                 location.reload();
+            },
+            error: function(request) {
+                $('#lbl_status_simpan_' + no).empty();
+                alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
             }
         });
     }
@@ -2467,7 +2510,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     // $('.modal-success').modal('show');
                 },
                 error: function(request) {
-                    console.log(request.responseText);
+                    $('#lbl_status_simpan_' + no).empty();
+                    alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
+
                 }
             });
 
