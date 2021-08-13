@@ -32,7 +32,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <font face="Verdana" size="1.5">Jenis&nbsp;PO&nbsp;*</font>
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <input type="hidden" id="Fn " name="hidden_jenis_spp">
+                                    <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
                                     <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
                                     <select class="form-control form-control-sm" id="cmb_pilih_jenis_po" onchange="jenisPO()">
                                         <option disabled>
