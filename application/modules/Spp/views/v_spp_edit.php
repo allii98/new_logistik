@@ -6,13 +6,18 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP <i>(Edit)</i></h4>
-                        <h6 id="lbl_status_delete_spp"></h6>
+                        <div class="button-list">
+                            <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()">SPP Baru</button>
+                            <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()">Batal SPP</button>
+                            <button class="btn btn-primary btn-xs" id="a_print_spp" onclick="cetak_spp()">Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
                     </div>
                     <div class="row justify-content-between headspp">
                         <p class="sub-header ml-2">
                             <font face="Verdana" size="2.5">Surat Permintaan Pembelian</font>
                         </p>
-                        <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelSpp" onclick="hapusSpp()">Batalkan SPP</button>
+                        <h6 id="lbl_status_delete_spp"></h6>
                     </div>
 
                     <!-- <div class="row div_form_1">
@@ -152,13 +157,10 @@
             <hr style="margin-top: -15px;">
             <div class="row div_form_2">
                 <div class="col-sm-12">
-                    <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                        <div class="row ml-1 mr-1 justify-content-between" style="margin-top: -25px;">
+                    <div class="sub-header" style="margin-top: -15px; margin-bottom: -20px;">
+                        <div class="row ml-1 mr-1" style="margin-top: -25px;">
                             <h6 id="lbl_spp_status" name="lbl_spp_status">
                                 <!-- <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font> -->
-                            </h6>
-                            <h6>
-                                <button class="btn btn-danger btn-xs fa fa-print" id="a_print_spp" onclick="cetak_spp()"></button>
                             </h6>
                         </div>
                     </div>
@@ -177,7 +179,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="tableRinciBarang" class="table table-striped table-bordered table-in">
+                        <table id="tableRinciBarang" class="table table-bordered table-in">
                             <thead>
                                 <tr>
                                     <th>
@@ -308,6 +310,14 @@
 
 
 <script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function new_spp() {
+        location.href = "<?php echo base_url('Spp/sppBaru') ?>";
+    }
+
     $(document).ready(function() {
         var id_ppo_edit = $('#id_ppo_edit').val();
         cari_spp_edit(id_ppo_edit);
@@ -379,7 +389,7 @@
                 }
             },
             error: function(response) {
-                console.log(response.responseText);
+                alert('KONEKSI TERPUTUS! Data Tidak Ditemukan!');
             }
         });
     }
@@ -616,6 +626,12 @@
                     $('#a_print_spp').show();
 
                 }
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_spp_status').empty();
+                $('#btn_simpan_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! gagal Save Data!');
             }
         });
     }
@@ -702,6 +718,12 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#btn_update_' + n).css('display', 'block');
+                $('#btn_cancel_update_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! Gagal Membatalkan Update!');
             }
         });
     };
@@ -795,6 +817,12 @@
                     $('#btn_hapus_' + n).css('display', 'block');
                     $('#btn_cancel_update_' + n).css('display', 'none');
                 }
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#btn_update_' + n).css('display', 'block');
+                $('#btn_cancel_update_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! Gagal Update Data!');
             }
         });
         return false;
@@ -839,6 +867,11 @@
 
                 location.href = "<?php echo base_url('Spp') ?>";
 
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_delete_spp').empty();
+                alert('KONEKSI TERPUTUS! Gagal Membatalkan SPP!');
             }
         });
     }
@@ -892,6 +925,12 @@
 
                 //cek di item ppo, kalo noref yg dicari tidak ada maka hapus noref trsbut dari ppo
                 cari_noref_itemppo(n);
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! Gagal Delete Item data!');
             }
         });
     };
@@ -923,6 +962,11 @@
                     $('#lbl_status_simpan_' + n).empty();
                 }
 
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_delete_spp').empty();
+                alert('KONEKSI TERPUTUS! Gagal Mencari Noref SPP!');
             }
         });
     }
@@ -938,21 +982,21 @@
             // '<button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row_' + n + '" onclick="hapus_row(' + n + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
-        var td_col_2 = '<td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
+        var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control form-control-sm" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
-        var td_col_3 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+        var td_col_3 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '</td>';
-        var td_col_4 = '<td width="8%">' +
+        var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
+            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control form-control-sm" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
             '<input type="hidden" id="hidden_id_item_ppo_' + n + '" name="hidden_id_item_ppo_' + n + '">' +
             '</td>';
         var td_col_6 = '<td width="7%" style="padding-top: 2px;">' +
@@ -1004,21 +1048,21 @@
             '<button class="btn btn-xs btn-danger fa fa-minus" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_' + n + '" name="btn_hapus_row_' + n + '" onclick="hapus_row(' + n + ')"></button>' +
             '</td>';
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
-        var td_col_2 = '<td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
+        var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control form-control-sm" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
-        var td_col_3 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+        var td_col_3 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '</td>';
-        var td_col_4 = '<td width="8%">' +
+        var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
+            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control form-control-sm" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
             '<input type="hidden" id="hidden_id_item_ppo_' + n + '" name="hidden_id_item_ppo_' + n + '">' +
             '</td>';
 

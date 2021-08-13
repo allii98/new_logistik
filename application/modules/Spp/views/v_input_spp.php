@@ -107,7 +107,7 @@
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label text-siz" style="margin-top: -5px; font-size: 13px;">Departemen*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px; font-size: 13px;">Departemen*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
                                     <select class="form-control form-control-sm" id="cmb_departemen">
                                         <option value="" selected disabled>Pilih</option>
@@ -440,6 +440,9 @@
                 success: function(data) {
                     $('#stok_' + n).text(data);
                     $('#hidden_stok_' + n).val(data);
+                },
+                error: function(response) {
+                    alert('KONEKSI TERPUTUS! Gagal Menampilkan Barang!');
                 }
             });
             return false;
@@ -585,7 +588,7 @@
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_spp_status').empty();
                 $('#btn_simpan_' + n).css('display', 'block');
-                alert('KONEKSI TERPUTUS! ');
+                alert('KONEKSI TERPUTUS! gagal Save Data!');
             }
         });
     }
@@ -678,6 +681,12 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
 
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#btn_update_' + n).css('display', 'block');
+                $('#btn_cancel_update_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! Gagal Membatalkan Update!');
             }
         });
     };
@@ -760,6 +769,12 @@
                     $('#btn_hapus_' + n).css('display', 'block');
                     $('#btn_cancel_update_' + n).css('display', 'none');
                 }
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#btn_update_' + n).css('display', 'block');
+                $('#btn_cancel_update_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! Gagal Update Data!');
             }
         });
         return false;
@@ -804,6 +819,11 @@
                 console.log(data);
 
                 location.reload();
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_delete_spp').empty();
+                alert('KONEKSI TERPUTUS! Gagal Membatalkan SPP!');
             }
         });
     }
@@ -857,6 +877,12 @@
 
                 //cek di item ppo, kalo noref yg dicari tidak ada maka hapus noref trsbut dari ppo
                 cari_noref_itemppo(n);
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#btn_ubah_' + n).css('display', 'block');
+                $('#btn_hapus_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! Gagal Delete Item data!');
             }
         });
     };
@@ -888,6 +914,11 @@
                     $('#lbl_status_simpan_' + n).empty();
                 }
 
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_delete_spp').empty();
+                alert('KONEKSI TERPUTUS! Gagal Mencari Noref SPP!');
             }
         });
     }
