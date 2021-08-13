@@ -123,7 +123,7 @@ date_default_timezone_set('Asia/Jakarta');
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="tableRinciLPB" width="100%">
+                                <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
                                     <thead>
                                         <tr>
                                             <!-- <th width="3%">#</th> -->
