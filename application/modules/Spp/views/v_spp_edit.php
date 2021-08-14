@@ -445,7 +445,6 @@
     // End Data Table Server Side
 
     // pilih item dari data table server side
-
     $(document).ready(function() {
         $(document).on('click', '#data_barang', function() {
 
