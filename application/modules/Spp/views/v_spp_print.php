@@ -57,7 +57,7 @@
             </td>
             <td colspan="4">Nomor Referensi &nbsp;: <?= $ppo->noreftxt; ?><br />
                 Tgl. Referensi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= date("d-m-Y", strtotime($ppo->tglref)); ?><br />
-                Keterangan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= $ppo->ket; ?><br />
+                Keterangan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= htmlspecialchars($ppo->ket); ?><br />
                 Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <b><?= $ppo->status; ?></b><br />
             </td>
         </tr>
@@ -65,13 +65,13 @@
             <td align="center" colspan="7">Sesuai dengan nomor SPP diatas, terlampir perincian sebagai berikut : </td>
         </tr>
         <tr>
-            <td align="center">NO.</td>
-            <td align="center">KODE BARANG</td>
-            <td align="center" width="30%">NAMA BARANG</td>
-            <td align="center">KUANTITAS</td>
-            <td align="center">SISA STOK</td>
-            <td align="center">SAT</td>
-            <td align="center" width="30%">KETERANGAN</td>
+            <td align="center" width="4%">NO</td>
+            <td align="center" width="15%">KODE BARANG</td>
+            <td align="center" width="25%">NAMA BARANG</td>
+            <td align="center" width="15%">KUANTITAS</td>
+            <td align="center" width="9%">SISA STOK</td>
+            <td align="center" width="6%">SAT</td>
+            <td align="center" width="25%">KETERANGAN</td>
         </tr>
 
         <?php
@@ -87,7 +87,7 @@
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                         <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                        <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                        <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                     </tr>
                 <?php
                 } else {
@@ -99,7 +99,7 @@
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                         <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                        <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                        <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                     </tr>
                 <?php
                 }
@@ -112,7 +112,7 @@
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                     <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                    <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                 </tr>
             <?php
             } else {
@@ -124,7 +124,7 @@
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
                     <td class="noborder" align="center"><?= $list_item->STOK ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder" style="word-break: break-word"><?= $list_item->ket; ?></td>
+                    <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                 </tr>
         <?php
             }

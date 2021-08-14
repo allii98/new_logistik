@@ -5,49 +5,49 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data SPP</h4>
-                        <div class="form-group">
+                        <h4 class="header-title ml-2 mb-3">Data SPP</h4>
+                        <!-- <div class="form-group">
                             <select class="form-control" id="filter" name="filter">
                                 <option value="">Semua</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="table-responsive">
                         <table id="dataspp" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="padding: 0.4em;">
+                                    <th style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">No</font>
                                     </th>
-                                    <th style="padding: 0.4em; width: 90px;">
+                                    <th style="padding: 0.4em; width: 90px; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">#</font>
                                     </th>
-                                    <th width="20%" style="padding: 0.4em;">
+                                    <th width="20%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">No. Ref. SPP</font>
                                     </th>
-                                    <th width="9%" style="padding: 0.4em;">
-                                        <font face="Verdana" size="2.5">Tgl. Ref</font>
+                                    <th width="11%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Tgl Ref</font>
                                     </th>
-                                    <th width="9%" style="padding: 0.4em;">
-                                        <font face="Verdana" size="2.5">Tgl. Terima</font>
+                                    <th width="11%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Tgl Terima</font>
                                     </th>
-                                    <th style="padding: 0.4em;">
+                                    <th width="11%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Departemen</font>
                                     </th>
-                                    <th style="padding: 0.4em;">
+                                    <th width="8%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Lokasi</font>
                                     </th>
-                                    <th style="padding: 0.4em;">
+                                    <th width="14%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Keterangan</font>
                                     </th>
-                                    <th style="padding: 0.4em;">
+                                    <th width="8%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Status SPP</font>
                                     </th>
-                                    <th style="padding: 0.4em;">
+                                    <th width="7%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Status PO</font>
                                     </th>
-                                    <th style="padding: 0.4em;">
+                                    <th width="8%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Input Oleh</font>
                                     </th>
                                 </tr>
@@ -123,7 +123,7 @@
 
             "fixedColumns": true,
             "fixedHeader": true,
-            "scrollY": 400,
+            // "scrollY": 400,
             "scrollX": true,
 
             "processing": true,

@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <div class="row justify-content-between headspp">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
-                        <div class="button-list">
+                        <div class="button-list mr-2">
                             <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()" disabled>SPP Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()" disabled>Batal SPP</button>
                             <button class="btn btn-primary btn-xs" id="a_print_spp" onclick="cetak_spp()">Cetak</button>
@@ -210,7 +210,7 @@
                                                 <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
                                                 </td>
-                                                <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                <td width="12%" style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                                     <span id="stok_1"></span>
                                                     <span> </span>
                                                     <span id="satuan_1"></span>
@@ -942,7 +942,7 @@
         var td_col_3 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
             '</td>';
-        var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
