@@ -638,7 +638,6 @@
         });
     }
 
-
     function ubahRinci(n) {
 
         // var n = $('#hidden_no_row').val();
