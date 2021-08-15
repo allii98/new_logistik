@@ -98,7 +98,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     Supplier&nbsp;*
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <select class="form-control form-control-sm" id="select2">
+                                    <select class="form-control form-control-sm supply" id="select2">
 
                                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
                                             <option selected disabled>Nama Supplier</option>
@@ -1180,12 +1180,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             }
 
         }).on('select2:select', function(evt) {
-            var a = "0475";
-            var b = "TOKO ( KAS )";
-            var kode = $(".select2 option:selected").text();
-            var data = $(".select2 option:selected").val();
+            var kode = $(".supply option:selected").text();
+            var data = $(".supply option:selected").val();
             $('#kd_supplier').val(kode);
             $('#txtsupplier').val(data);
+            // console.table({
+            //     kode: kode,
+            //     supplier: data,
+            // })
 
         });
 
