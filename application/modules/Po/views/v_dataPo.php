@@ -6,37 +6,39 @@
 			<div class="">
 				<!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<table id="tableListPO" class="table dt-responsive nowrap w-100 dataTable table-sm table-bordered table-striped" width="100%">
+					<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped" width="100%">
 						<thead>
 							<tr>
-								<th style="width: 75px;">
-									#
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">#</font>
 								</th>
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									No.
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">No</font>
 								</th>
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									No. Ref
-								</th>
-
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									Tgl. PO
-								</th>
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									No. Ref SPP
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">No.&nbsp;Ref</font>
 								</th>
 
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									Tgl. SPP
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">Tgl.&nbsp;PO</font>
 								</th>
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									Supplier
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">No.&nbsp;Ref&nbsp;SPP</font>
 								</th>
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									Ket
+
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">Tgl.&nbsp;SPP</font>
+
 								</th>
-								<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.6em;">
-									Terbayar
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">Supplier</font>
+
+								</th>
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">Ket</font>
+								</th>
+								<th style="padding: 0.4em;">
+									<font face="Verdana" size="2.5">Terbayar</font>
 								</th>
 
 							</tr>
