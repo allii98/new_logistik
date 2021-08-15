@@ -92,7 +92,7 @@
                                     <th>Qty</th>
                                     <th>Stok</th>
                                     <th>Ket</th>
-                                    <th>Revisi&nbsp;Qty</th>
+                                    <!-- <th>Revisi&nbsp;Qty</th> -->
                                     <th>Status&nbsp;SPP</th>
                                 </tr>
                             </thead>

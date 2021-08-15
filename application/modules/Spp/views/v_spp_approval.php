@@ -89,7 +89,7 @@
                                     <th>Qty</th>
                                     <th>Stok</th>
                                     <th>Ket</th>
-                                    <th>Revisi&nbsp;Qty</th>
+                                    <!-- <th>Revisi&nbsp;Qty</th> -->
                                     <th>Status&nbsp;SPP</th>
                                 </tr>
                             </thead>
@@ -97,7 +97,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th style="text-align: center;" colspan="10"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
+                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
                                 </tr>
                             </tfoot>
                         </table>
