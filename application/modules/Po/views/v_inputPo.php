@@ -10,7 +10,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
-                        <div class="button-list">
+                        <div class="button-list mr-2">
 
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru" disabled>PO Baru</button>
                             <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal PO</button>
@@ -147,6 +147,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <font face="Verdana" size="1.5">Hari</font>
                                     </span>
                                 </div>
+
                             </div>
 
 
@@ -226,7 +227,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="devisi" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    Devisi*
+                                    Divisi*
                                     <!-- <font face="Verdana" size="1.5">Devisi*</font> -->
                                 </label>
                                 <div class="col-8 col-xl-12">

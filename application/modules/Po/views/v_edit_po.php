@@ -47,7 +47,6 @@
                                     </td>
 
                                 </table>
-                                <br>
                                 <input type="hidden" id="hidden_no_po" name="hidden_no_po" value="<?= $no_po ?>">
                                 <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                                 <input type="hidden" id="refspp" name="refspp">
@@ -159,7 +158,6 @@
                                     </td>
 
                                 </table>
-                                <br>
                                 <!-- <div class="row" style="margin-left:4px;">
                                     <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>

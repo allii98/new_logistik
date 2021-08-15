@@ -183,7 +183,7 @@ function terbilang($x, $style = 4)
         <td class="noborder2" align="center"><?= $list_item->noppotxt; ?></td>
         <td class="noborder2" align="center"><?= $list_item->kodebartxt; ?></td>
         <td class="noborder2" align="center"><?= $list_item->nabar; ?></td>
-        <td class="noborder2" align="center"><?= $list_item->merek; ?></td>
+        <td class="noborder2" align="center"><?= htmlspecialchars($list_item->merek); ?></td>
         <td class="noborder" rowspan="2" align="center">-</td>
         <td class="noborder" rowspan="2" align="center"><?= $list_item->qty; ?></td>
         <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>
@@ -192,7 +192,7 @@ function terbilang($x, $style = 4)
         <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumharga_pre, 2, ",", "."); ?></td>
       </tr>
       <tr>
-        <td style="border: none;" colspan="4" rowspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<?= $list_item->ket; ?></td>
+        <td style="border: none;" colspan="4" rowspan="1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;*<?= htmlspecialchars($list_item->ket); ?></td>
       </tr>
     <?php
       array_push($nama_bebanbpo, $list_item->nama_bebanbpo);
@@ -204,7 +204,7 @@ function terbilang($x, $style = 4)
     <tr>
       <td colspan="7" rowspan="6" valign="top">
         <b>Keterangan : </b><br />
-        <?= $po->ket; ?>
+        <?= htmlspecialchars($po->ket); ?>
         <!-- Nama Pemilik : <br />
         No. Rekening : <br />
         Uang Muka    : <br /> -->

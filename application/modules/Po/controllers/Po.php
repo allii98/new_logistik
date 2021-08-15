@@ -43,7 +43,7 @@ class Po extends CI_Controller
             $row[] = $d->namadept;
             $row[] = $d->kodebar;
             $row[] = $d->nabar;
-            $row[] = $d->ket;
+            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($d->ket) . ' </p>';
 
             $data[] = $row;
         }
@@ -152,7 +152,7 @@ class Po extends CI_Controller
             $row[] = $d->no_refppo;
             $row[] = date_format(date_create($d->tgl_refppo), 'd-m-Y');
             $row[] = $d->nama_supply;
-            $row[] = $d->ket;
+            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($d->ket) . ' </p>';
             $row[] = $d->terbayar;
 
             $data[] = $row;
