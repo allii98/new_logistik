@@ -17,11 +17,11 @@
                         <table id="dataspp" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">No</font>
-                                    </th>
                                     <th style="padding: 0.4em; width: 90px; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">#</font>
+                                    </th>
+                                    <th width="5%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">No</font>
                                     </th>
                                     <th width="20%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">No. Ref. SPP</font>
@@ -41,13 +41,13 @@
                                     <th width="14%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Keterangan</font>
                                     </th>
-                                    <th width="8%" style="padding: 0.4em; padding-left: 1em;">
+                                    <th width="6%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Status SPP</font>
                                     </th>
                                     <th width="7%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Status PO</font>
                                     </th>
-                                    <th width="8%" style="padding: 0.4em; padding-left: 1em;">
+                                    <th width="7%" style="padding: 0.4em; padding-left: 1em;">
                                         <font face="Verdana" size="2.5">Input Oleh</font>
                                     </th>
                                 </tr>

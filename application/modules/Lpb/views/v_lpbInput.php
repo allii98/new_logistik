@@ -11,7 +11,7 @@ date_default_timezone_set('Asia/Jakarta');
                         <h4 class="header-title ml-2">
                             <font face="Verdana"> LPB </font>
                         </h4>
-                        <div class="button-list">
+                        <div class="button-list mr-2">
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
                             <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()" disabled>LPB Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()" disabled>Batal LPB</button>
@@ -28,34 +28,34 @@ date_default_timezone_set('Asia/Jakarta');
                     <div class="row div_form_1">
                         <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Tgl Terima*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Tgl Terima*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
-                                    <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control form-control-sm" type="date" value="<?= date('Y-m-d') ?>">
+                                    <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control form-control-sm" type="date" value="<?= date('Y-m-d') ?>" style="font-size: 12px;">
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Tgl PO</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Tgl PO</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
-                                    <input id="txt_tgl_po" name="txt_tgl_po" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off">
+                                    <input id="txt_tgl_po" name="txt_tgl_po" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Tgl. PO" readonly autocomplite="off" style="font-size: 12px;">
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-xl-3 col-12 col-form-label">Ref PO*</label>
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="font-size: 12px;">Ref PO*</label>
                                 <div class="col-lg-9 col-xl-9 col-12 row ml-0">
-                                    <select class="js-data-example-ajax form-control select2_lpb" id="select2_lpb">
+                                    <select class="js-data-example-ajax form-control select2_lpb" id="select2_lpb" style="font-size: 12px;">
                                     </select>
-                                    <input style="display:none;" id="multiple" class="form-control form-control-sm bg-light" type="text" readonly>
-                                    <input id="txt_no_po" name="txt_no_po" class="form-control form-control-sm bg-light" type="hidden" placeholder="No.Ref PO" autocomplete="off" readonly>
+                                    <input style="display:none;" id="multiple" class="form-control form-control-sm bg-light" type="text" readonly style="font-size: 12px;">
+                                    <input id="txt_no_po" name="txt_no_po" class="form-control form-control-sm bg-light" type="hidden" placeholder="No.Ref PO" autocomplete="off" readonly style="font-size: 12px;">
                                     <input type="hidden" id="txt_ref_po">
                                     <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 13px">Supplier</label>
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: 0px; font-size: 12px;">Supplier</label>
                                 <div class="col-lg-9 col-xl-9 col-12">
-                                    <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly>
+                                    <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly style="margin-top:3px; font-size: 12px;">
                                     <input type="hidden" id="txt_kd_supplier">
                                     <input type="hidden" id="txt_supplier">
                                 </div>
@@ -63,24 +63,24 @@ date_default_timezone_set('Asia/Jakarta');
                         </div>
                         <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-5 col-xl-5 col-12 col-form-label" style="margin-top: -5px;">No. Pengantar*</label>
+                                <label class="col-lg-5 col-xl-5 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">No. Pengantar*</label>
                                 <div class="col-lg-7 col-xl-7 col-12">
-                                    <input id="txt_no_pengantar" name="txt_no_pengantar" class="form-control form-control-sm" required="required" type="text" placeholder="No. Pengantar" autocomplite="off">
+                                    <input id="txt_no_pengantar" name="txt_no_pengantar" class="form-control form-control-sm" required="required" type="text" placeholder="No. Pengantar" autocomplite="off" style="font-size: 12px;">
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-5 col-xl-5 col-12 col-form-label" style="margin-top: -5px;">Lokasi Gudang*</label>
+                                <label class="col-lg-5 col-xl-5 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Lokasi Gudang*</label>
                                 <div class="col-lg-7 col-lg-7 col-12">
-                                    <input id="txt_lokasi_gudang" name="txt_lokasi_gudang" class="form-control form-control-sm" required="required" type="text" placeholder="Lokasi Gudang" autocomplite="off">
+                                    <input id="txt_lokasi_gudang" name="txt_lokasi_gudang" class="form-control form-control-sm" required="required" type="text" placeholder="Lokasi Gudang" autocomplite="off" style="font-size: 12px;">
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;">Divisi*</label>
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Divisi*</label>
                                 <div class="col-lg-9 col-xl-9 col-12">
-                                    <select class="form-control form-control-sm" id="devisi">
+                                    <select class="form-control form-control-sm" id="devisi" style="font-size: 12px;">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
                                         foreach ($devisi as $d) : { ?>
@@ -92,9 +92,9 @@ date_default_timezone_set('Asia/Jakarta');
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-xl-3 col-12 col-form-label mt-0" style="margin-top: -5px;">Ket</label>
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label mt-0" style="margin-top: -2px; font-size: 12px;">Ket</label>
                                 <div class="col-lg-9 col-xl-9 col-12">
-                                    <textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_pengiriman" name="txt_ket_pengiriman" placeholder="Keterangan" rows="2" autocomplite="off"></textarea>
+                                    <textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_pengiriman" name="txt_ket_pengiriman" placeholder="Keterangan" rows="2" autocomplite="off" style="font-size: 12px;"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -103,10 +103,10 @@ date_default_timezone_set('Asia/Jakarta');
                     <hr class="mt-1 mb-2">
                     <div class="row div_form_2">
                         <div class="col-12">
-                            <div class="sub-header" style="margin-top: -15px; margin-bottom: -30px;">
-                                <div class="row ml-1 mr-1">
+                            <div class="sub-header" style="margin-top: -10px; margin-bottom: -30px;">
+                                <div class="row ml-1">
                                     <h6 id="lbl_lpb_status" name="lbl_lpb_status">
-                                        <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
+                                        No. LPB : ... &nbsp; No. Ref LPB : ...
                                     </h6>
                                 </div>
                                 <input type="hidden" id="hidden_no_lpb">
@@ -127,12 +127,24 @@ date_default_timezone_set('Asia/Jakarta');
                                     <thead>
                                         <tr>
                                             <!-- <th width="3%">#</th> -->
-                                            <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
-                                            <th width="24%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan / Grup</th>
-                                            <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
-                                            <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
-                                            <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
-                                            <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">#</th>
+                                            <th width="21%">
+                                                <font face="Verdana" size="1.5">Kode Barang</font>
+                                            </th>
+                                            <th width="24%">
+                                                <font face="Verdana" size="1.5">Nama Barang / Satuan / Grup</font>
+                                            </th>
+                                            <th width="9%">
+                                                <font face="Verdana" size="1.5">Saldo Qty</font>
+                                            </th>
+                                            <th width="9%">
+                                                <font face="Verdana" size="1.5">Qty</font>
+                                            </th>
+                                            <th width="20%">
+                                                <font face="Verdana" size="1.5">Ket</font>
+                                            </th>
+                                            <th width="6%">
+                                                <font face="Verdana" size="1.5">#</font>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_rincian" name="tbody_rincian">
@@ -324,30 +336,30 @@ date_default_timezone_set('Asia/Jakarta');
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
         var td_col_2 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
-            '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
+            '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly style="font-size: 12px;">' +
             '<label class="ml-1 mt-1">' +
             '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
-            '<span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>' +
+            '<span class="text-muted" face="Verdana" size="1.5"> Asset ?</span>' +
             '</label>' +
             '</div>' +
             '</td>';
         var td_col_3 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
-            '<span face="Verdana" class="ml-2" id="txt_nama_brg_' + row + '" size="1.8">Nama Barang</span>&emsp;/' +
-            '<span face="Verdana" class="ml-2" id="txt_satuan_' + row + '" size="1.8">Satuan</span>&emsp;/' +
-            '<span face="Verdana" class="ml-2" id="hidden_grup_' + row + '" size="1.8">Grup</span>' +
+            '<span style="font-size: 12px;" class="ml-2" id="txt_nama_brg_' + row + '">Nama Barang</span>&emsp;/' +
+            '<span style="font-size: 12px;" class="ml-2" id="txt_satuan_' + row + '">Satuan</span>&emsp;/' +
+            '<span style="font-size: 12px;" class="ml-2" id="hidden_grup_' + row + '">Grup</span>' +
             '</div>' +
             '</td>';
-        var td_col_4 = '<td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty&nbsp;po&emsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span><br>' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
+        var td_col_4 = '<td style="padding-right: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
+            '<span class="small text-muted" style="font-size: 12px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-size: 12px;"></span><br>' +
+            '<span class="small text-muted" style="font-size: 12px;">Sisa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-size: 12px;"></span>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
+            '<input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')" style="font-size: 12px;">' +
             '<input type="hidden" id="hidden_qtypo_' + row + '" name="hidden_qtypo_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
+            '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="2" style="font-size: 12px;"></textarea>' +
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '<input type="hidden" id="hidden_refppo_' + row + '" name="hidden_refppo_' + row + '">' +

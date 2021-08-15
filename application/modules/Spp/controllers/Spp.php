@@ -596,25 +596,25 @@ class Spp extends CI_Controller
             }
 
             if ($field->status2 == 1) {
-                $aks = '<a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
-                        <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
+                $aks = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
                         data-noppotxt="' . $field->noppotxt . '"
                         data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')">
-                        </button>';
+                        </button>
+                        <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             } else {
                 $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
                 data-id_ppo="' . $field->id . '"
                 data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                 </button>
-                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>
                 <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
                 data-noppotxt="' . $field->noppotxt . '"
                 data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')">
-                </button>';
+                </button>
+                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             }
             $row = array();
-            $row[] = $no;
             $row[] = $aks;
+            $row[] = $no;
             $row[] = $field->noreftxt;
             $row[] = date('d-m-Y', strtotime($field->tglref));
             $row[] = date('d-m-Y', strtotime($field->tgltrm));
@@ -660,11 +660,11 @@ class Spp extends CI_Controller
             }
 
             $row = array();
-            $row[] = $no;
             $row[] = '<button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval"
-                        data-noppotxt="' . $field->noppotxt . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_approval(' . $field->id . ')">Approve
-                        </button>';
+            data-noppotxt="' . $field->noppotxt . '"
+            data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_approval(' . $field->id . ')">Approve
+            </button>';
+            $row[] = $no;
             $row[] = $field->noreftxt;
             $row[] = date('d-m-Y', strtotime($field->tglref));
             $row[] = date('d-m-Y', strtotime($field->tgltrm));

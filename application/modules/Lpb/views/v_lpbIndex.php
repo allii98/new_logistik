@@ -5,25 +5,43 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data LPB</h4>
-                        <div class="form-group">
+                        <h4 class="header-title ml-2 mb-3">Data LPB</h4>
+                        <!-- <div class="form-group">
                             <select class="form-control" id="filter" name="filter">
                                 <option value="">Semua</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
-                    <table id="tableListLPB" class="table table-sm table-striped table-bordered" width="100%">
+                    <table id="tableListLPB" class="table dataTable no-footer table-striped table-bordered w-100">
                         <thead>
                             <tr>
-                                <th style="width: 75px;">#</th>
-                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
-                                <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Terima</th>
-                                <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Input</th>
-                                <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref LPB</th>
-                                <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref PO</th>
-                                <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Supplier</th>
-                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Keterangan</th>
-                                <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">User</th>
+                                <th style="padding: 0.4em; width: 85px; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">#</font>
+                                </th>
+                                <th width="5%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">No</font>
+                                </th>
+                                <th width="10%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">Tgl Terima</font>
+                                </th>
+                                <th width="10%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">Tgl Input</font>
+                                </th>
+                                <th width="19%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">No. Ref LPB</font>
+                                </th>
+                                <th width="26%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">No. Ref PO</font>
+                                </th>
+                                <th width="10%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">Supplier</font>
+                                </th>
+                                <th width="14%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">Keterangan</font>
+                                </th>
+                                <th width="7%" style="padding: 0.4em; padding-left: 1em;">
+                                    <font face="Verdana" size="2.5">Input Oleh</font>
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,7 +100,7 @@
         //datatables
         table = $('#tableListLPB').DataTable({
 
-            "scrollY": 400,
+            // "scrollY": 400,
             "scrollX": true,
 
             "processing": true,

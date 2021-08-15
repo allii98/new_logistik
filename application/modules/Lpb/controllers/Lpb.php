@@ -53,15 +53,15 @@ class Lpb extends CI_Controller
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
-                        data-noref="' . $field->noref . '" data-mutasi="' . $field->mutasi . '"
-                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                        </button>
-                        <button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
+            $row[] = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
                         data-id="' . $field->id . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
-                        <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                        <button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
+                        data-noref="' . $field->noref . '" data-mutasi="' . $field->mutasi . '"
+                        data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                        </button>
+                        <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = date("d-m-Y", strtotime($field->tgl));
             $row[] = date("d-m-Y", strtotime($field->tglinput));

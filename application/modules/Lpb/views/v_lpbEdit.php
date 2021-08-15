@@ -7,7 +7,7 @@
                     <h4 class="header-title ml-2">
                         <font face="Verdana"> LPB <i>(Edit)</i> </font>
                     </h4>
-                    <div class="button-list">
+                    <div class="button-list mr-2">
                         <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()">LPB Baru</button>
                         <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()">Batal LPB</button>
                         <button class="btn btn-primary btn-xs" id="a_print_lpb" onclick="cetak_lpb()">Cetak</button>
@@ -130,13 +130,24 @@
                         <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
                             <thead>
                                 <tr>
-                                    <!-- <th width="3%">#</th> -->
-                                    <th width="21%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Barang</th>
-                                    <th width="24%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Barang / Satuan / Grup</th>
-                                    <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Saldo Qty</th>
-                                    <th width="9%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty</th>
-                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ket</th>
-                                    <th width="6%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">#</th>
+                                    <th width="21%">
+                                        <font face="Verdana" size="1.5">Kode Barang</font>
+                                    </th>
+                                    <th width="24%">
+                                        <font face="Verdana" size="1.5">Nama Barang / Satuan / Grup</font>
+                                    </th>
+                                    <th width="9%">
+                                        <font face="Verdana" size="1.5">Saldo Qty</font>
+                                    </th>
+                                    <th width="9%">
+                                        <font face="Verdana" size="1.5">Qty</font>
+                                    </th>
+                                    <th width="20%">
+                                        <font face="Verdana" size="1.5">Ket</font>
+                                    </th>
+                                    <th width="6%">
+                                        <font face="Verdana" size="1.5">#</font>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
@@ -432,30 +443,30 @@
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
         var td_col_2 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
-            '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
+            '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" style="font-size: 12px;" readonly>' +
             '<label class="ml-1 mt-1">' +
             '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
-            '<span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>' +
+            '<span style="font-size: 12px;" class="text-muted" face="Verdana" size="1.5"> Asset ?</span>' +
             '</label>' +
             '</div>' +
             '</td>';
         var td_col_3 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<div class="row">' +
-            '<span face="Verdana" class="ml-2" id="txt_nama_brg_' + row + '" size="1.8">Nama Barang</span>&emsp;/' +
-            '<span face="Verdana" class="ml-2" id="txt_satuan_' + row + '" size="1.8">Satuan</span>&emsp;/' +
-            '<span face="Verdana" class="ml-2" id="hidden_grup_' + row + '" size="1.8">Grup</span>' +
+            '<span style="font-size: 12px;" class="ml-2" id="txt_nama_brg_' + row + '">Nama Barang</span>&emsp;/' +
+            '<span style="font-size: 12px;" class="ml-2" id="txt_satuan_' + row + '">Satuan</span>&emsp;/' +
+            '<span style="font-size: 12px;" class="ml-2" id="hidden_grup_' + row + '">Grup</span>' +
             '</div>' +
             '</td>';
         var td_col_4 = '<td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">qty&nbsp;po&emsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span><br>' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
+            '<span class="small text-muted" style="font-size: 12px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-size: 12px;"></span><br>' +
+            '<span class="small text-muted" style="font-size: 12px;">Sisa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-size: 12px;"></span>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
+            '<input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')" style="font-size: 12px;">' +
             '<input type="hidden" id="hidden_txt_qty_' + row + '">' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
+            '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="2" style="font-size: 12px;"></textarea>' +
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '<input type="hidden" id="hidden_refppo_' + row + '" name="hidden_refppo_' + row + '">' +
