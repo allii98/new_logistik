@@ -171,7 +171,7 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table id="tableRinciBarang" class="table table-bordered table-in">
+                                <table id="tableRinciBarang" class="table table-striped table-bordered table-in">
                                     <thead>
                                         <tr>
                                             <th>
