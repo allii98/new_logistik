@@ -68,7 +68,7 @@ class Lpb extends CI_Controller
             $row[] = $field->noref;
             $row[] = $field->refpo;
             $row[] = $field->nama_supply;
-            $row[] = '<p style="word-break: break-word">' . $field->ket . ' </p>';
+            $row[] = '<p style="word-break: break-word">' .  htmlspecialchars($field->ket) . ' </p>';
             $row[] = $field->USER;
 
             $data[] = $row;
