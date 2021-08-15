@@ -1,56 +1,58 @@
 <div class="container-fluid">
 
-    <div class="row mt-2">
+    <div class="row mt-0">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title">Approval SPP</h4>
-                        <div class="form-group">
+                        <h4 class="header-title ml-2 mb-3">Approval SPP</h4>
+                        <!-- <div class="form-group mr-2">
                             <select class="form-control" id="filter" name="filter">
                                 <option value="">Semua</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
 
-                    <table id="datasppapproval" class="table w-100 dataTable no-footer  table-sm table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">No</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Approval</font>
-                                </th>
-                                <th width="20%" style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">No. Ref. SPP</font>
-                                </th>
-                                <th width="9%" style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Tgl. Ref</font>
-                                </th>
-                                <th width="9%" style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Tgl. Terima</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Departemen</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Lokasi</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Keterangan</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Status</font>
-                                </th>
-                                <th style="padding: 0.4em;">
-                                    <font face="Verdana" size="2.5">Input Oleh</font>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table id="datasppapproval" class="table w-100 dataTable no-footer table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">No</font>
+                                    </th>
+                                    <th width="9%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Approval</font>
+                                    </th>
+                                    <th width="20%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">No. Ref. SPP</font>
+                                    </th>
+                                    <th width="10%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Tgl Ref</font>
+                                    </th>
+                                    <th width="10%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Tgl Terima</font>
+                                    </th>
+                                    <th width="11%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Departemen</font>
+                                    </th>
+                                    <th width="8%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Lokasi</font>
+                                    </th>
+                                    <th width="18%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Keterangan</font>
+                                    </th>
+                                    <th width="7%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Status SPP</font>
+                                    </th>
+                                    <th width="7%" style="padding: 0.4em; padding-left: 1em;">
+                                        <font face="Verdana" size="2.5">Input Oleh</font>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                     <br />
                     <br />
 
@@ -87,7 +89,7 @@
                                     <th>Qty</th>
                                     <th>Stok</th>
                                     <th>Ket</th>
-                                    <th>Revisi&nbsp;Qty</th>
+                                    <!-- <th>Revisi&nbsp;Qty</th> -->
                                     <th>Status&nbsp;SPP</th>
                                 </tr>
                             </thead>
@@ -95,7 +97,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th style="text-align: center;" colspan="10"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
+                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
                                 </tr>
                             </tfoot>
                         </table>
@@ -116,7 +118,9 @@
         //datatables
         table = $('#datasppapproval').DataTable({
 
-            "scrollY": 400,
+            "fixedColumns": true,
+            "fixedHeader": true,
+            // "scrollY": 400,
             "scrollX": true,
 
             "processing": true,

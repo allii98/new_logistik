@@ -6,7 +6,7 @@
                 <div class="card-body">
                     <div class="row justify-content-between headspp">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
-                        <div class="button-list">
+                        <div class="button-list mr-2">
                             <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()" disabled>SPP Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()" disabled>Batal SPP</button>
                             <button class="btn btn-primary btn-xs" id="a_print_spp" onclick="cetak_spp()">Cetak</button>
@@ -23,13 +23,13 @@
                     <div class="row div_form_1">
                         <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Tgl SPP*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Tgl SPP*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
-                                    <input type="date" class="form-control form-control-sm" id="txt_tgl_spp" value="<?= date('Y-m-d'); ?>">
+                                    <input type="date" class="form-control form-control-sm" id="txt_tgl_spp" value="<?= date('Y-m-d'); ?>" style="font-size: 12px;">
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Tgl terima*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Tgl terima*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
                                     <input type="date" class="form-control form-control-sm" id="txt_tgl_terima">
                                 </div>
@@ -37,15 +37,15 @@
                         </div>
                         <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Tgl Ref*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Tgl Ref*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
-                                    <input type="date" id="txt_tgl_ref" class="form-control form-control-sm bg-light" value="<?= date('Y-m-d'); ?>" readonly>
+                                    <input type="date" id="txt_tgl_ref" class="form-control form-control-sm bg-light" value="<?= date('Y-m-d'); ?>" readonly style="font-size: 12px;">
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Jenis SPP*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Jenis SPP*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
-                                    <select class="form-control form-control-sm" id="cmb_jenis_permohonan">
+                                    <select class="form-control form-control-sm" id="cmb_jenis_permohonan" style="font-size: 12px;">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
                                         switch ($sesi_sl) {
@@ -78,9 +78,23 @@
 
                         <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Alokasi*</label>
-                                <div class="col-lg-8 col-xl-8 col-12">
-                                    <select class="form-control form-control-sm" id="cmb_alokasi">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Divisi*</label>
+                                <div class="col-lg-9 col-xl-9 col-12">
+                                    <select class="form-control form-control-sm" id="devisi" onchange="check_form_2()" style="font-size: 12px;">
+                                        <option value="" selected disabled>Pilih</option>
+                                        <?php
+                                        foreach ($devisi as $d) : { ?>
+                                                <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
+                                        <?php }
+                                        endforeach;
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row mb-0">
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Alokasi*</label>
+                                <div class="col-lg-9 col-xl-9 col-12">
+                                    <select class="form-control form-control-sm" id="cmb_alokasi" style="font-size: 12px;">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
                                         switch ($sesi_sl) {
@@ -106,10 +120,12 @@
                                     </select>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px; font-size: 13px;">Departemen*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px; font-size: 12px;">Departemen*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
-                                    <select class="form-control form-control-sm" id="cmb_departemen">
+                                    <select class="form-control form-control-sm" id="cmb_departemen" style="font-size: 12px;">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
                                         foreach ($dept as $d) : {
@@ -122,26 +138,10 @@
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-3 col-xl-3 col-12">
                             <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Divisi*</label>
+                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Keterangan</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
-                                    <select class="form-control form-control-sm" id="devisi" onchange="check_form_2()">
-                                        <option value="" selected disabled>Pilih</option>
-                                        <?php
-                                        foreach ($devisi as $d) : { ?>
-                                                <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
-                                        <?php }
-                                        endforeach;
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-0">
-                                <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px;">Keterangan</label>
-                                <div class="col-lg-8 col-xl-8 col-12">
-                                    <textarea class="form-control form-control-sm" rows="2" id="txt_keterangan"></textarea>
+                                    <textarea class="form-control form-control-sm" rows="2" id="txt_keterangan" placeholder="Keterangan" style="font-size: 12px;"></textarea>
                                 </div>
                             </div>
 
@@ -151,12 +151,12 @@
 
                     <hr class="mt-1 mb-2">
                     <!-- end row-->
-                    <div class="row div_form_2 mt-2">
+                    <div class="row div_form_2">
                         <div class="col-12">
-                            <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                                <div class="row ml-1 mr-1">
+                            <div class="sub-header" style="margin-top: -10px; margin-bottom: -30px;">
+                                <div class="row ml-1">
                                     <h6 id="lbl_spp_status" name="lbl_spp_status">
-                                        <font face="Verdana" size="2.5">No. SPP : ... &nbsp; No. Ref SPP : ...</font>
+                                        No. SPP : ... &nbsp; No. Ref SPP : ...
                                     </h6>
                                 </div>
                             </div>
@@ -171,26 +171,26 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table id="tableRinciBarang" class="table table-bordered table-in">
+                                <table id="tableRinciBarang" class="table table-striped table-bordered table-in">
                                     <thead>
                                         <tr>
                                             <th>
-                                                <font face="Verdana" size="2.5">#</font>
+                                                <font face="Verdana" size="1.5">#</font>
                                             </th>
                                             <th>
-                                                <font face="Verdana" size="2.5">Nama & Kode Barang</font>
+                                                <font face="Verdana" size="1.5">Nama & Kode Barang</font>
                                             </th>
                                             <th>
-                                                <font face="Verdana" size="2.5">Qty</font>
+                                                <font face="Verdana" size="1.5">Qty</font>
                                             </th>
                                             <th>
-                                                <font face="Verdana" size="2.5">Stok/Sat</font>
+                                                <font face="Verdana" size="1.5">Stok/Sat</font>
                                             </th>
                                             <th>
-                                                <font face="Verdana" size="2.5">Merk/Type/Jenis</font>
+                                                <font face="Verdana" size="1.5">Merk/Type/Jenis</font>
                                             </th>
                                             <th>
-                                                <font face="Verdana" size="2.5">#</font>
+                                                <font face="Verdana" size="1.5">#</font>
                                             </th>
                                         </tr>
                                     </thead>
@@ -203,22 +203,22 @@
                                             </td>
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="text" class="form-control form-control-sm" id="nakobar_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')"><br />
+                                                    <input type="text" class="form-control form-control-sm" id="nakobar_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')" style="font-size: 12px;">
                                                     <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
                                                     <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
                                                 </td>
                                                 <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" size="26" required /><br />
+                                                    <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" style="font-size: 12px;" required>
                                                 </td>
-                                                <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <span id="stok_1"></span>
+                                                <td width="12%" style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <span id="stok_1" style="font-size: 12px;"></span>
                                                     <span> </span>
-                                                    <span id="satuan_1"></span>
+                                                    <span id="satuan_1" style="font-size: 12px;"></span>
                                                     <input type="hidden" id="hidden_stok_1" name="hidden_stok_1">
                                                     <input type="hidden" id="hidden_satuan_brg_1" name="hidden_satuan_brg_1">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                    <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="form-control form-control-sm" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>
+                                                    <textarea id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" class="form-control form-control-sm" rows="2" placeholder="Merk/Type/Jenis, jika ada" style="font-size: 12px;"></textarea>
                                                     <input type="hidden" id="hidden_id_item_ppo_1">
                                                 </td>
                                                 <td width="7%" style="padding-top: 2px;">
@@ -935,20 +935,20 @@
             '</td>';
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')"><br />' +
+            '<input type="text" class="form-control form-control-sm" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')" style="font-size: 12px;">' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="26" required><br />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" required style="font-size: 12px;">' +
             '</td>';
-        var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<span id="stok_' + n + '"></span><span> </span><span id="satuan_' + n + '"> </span>' +
+        var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<span style="font-size: 12px;" id="stok_' + n + '"></span><span> </span><span style="font-size: 12px;" id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control form-control-sm" rows="1" placeholder="Merk/Type/Jenis, jika ada"></textarea>' +
+            '<textarea id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" class="resizable_textarea form-control form-control-sm" rows="2" placeholder="Merk/Type/Jenis, jika ada" style="font-size: 12px;"></textarea>' +
             '<input type="hidden" id="hidden_id_item_ppo_' + n + '" name="hidden_id_item_ppo_' + n + '">' +
             '</td>';
         var td_col_6 = '<td width="7%" style="padding-top: 2px;">' +
