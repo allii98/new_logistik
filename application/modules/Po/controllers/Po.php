@@ -276,22 +276,47 @@ class Po extends CI_Controller
             $mpdf->showWatermarkText = true;
         }
 
+        $lokasi = $data['po']->lokasi;
+        switch ($lokasi) {
+            case 'HO':
+                $mpdf->SetHTMLHeader('
+                <table width="100%" border="0">
+                    <tr>
+                        <td rowspan="3"  width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
+                       
+                        </tr>
+                    <tr>
+                    <td align="left" style="font-size:8.5px;"><h3 style="font-size:14px;font-weight:bold;">PT MULIA SAWIT AGRO LESTARI</h3>Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br />Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+                    </td>
+                    <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
+                    </tr>
+                   
+                </table>
+                
+                ');
+                break;
+            case 'SITE':
+                $mpdf->SetHTMLHeader('
+                <table width="100%" border="0">
+                    <tr>
+                        <td rowspan="3"  width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
+                       
+                        </tr>
+                    <tr>
+                    <td align="left" style="font-size:8.5px; vertical-align: top;"><h3 style="font-size:14px;  font-weight:bold;">PT MULIA SAWIT AGRO LESTARI</h3>
+                    </td>
+                    <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
+                    </tr>
+                   
+                </table>
+                
+                ');
+                break;
+            default:
+                break;
+        }
         // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
-        $mpdf->SetHTMLHeader('
-                            <table width="100%" border="0">
-                                <tr>
-                                    <td rowspan="3"  width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"></td>
-                                   
-                                    </tr>
-                                <tr>
-                                <td align="left" style="font-size:8.5px;"><h3 style="font-size:14px;font-weight:bold;">PT MULIA SAWIT AGRO LESTARI</h3>Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br />Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
-                                </td>
-                                <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
-                                </tr>
-                               
-                            </table>
-                            
-                            ');
+
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
         $html = $this->load->view('v_po_print', $data, true);

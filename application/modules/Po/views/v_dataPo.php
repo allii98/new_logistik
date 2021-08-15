@@ -2,7 +2,7 @@
 <div class="row justify-content-center">
 	<div class="col-md">
 		<div class="widget-rounded-circle card-box">
-			<h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data PO</h4>
+			<h4 class="header-title ml-2 mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data PO</h4>
 			<div class="">
 				<!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
 				<div class="col-md-12 col-sm-12 col-xs-12">

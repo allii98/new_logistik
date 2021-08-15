@@ -138,7 +138,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         <font face="Verdana" size="1.5">Hari</font>
                                     </span>
                                 </div>
-                                <label for="tmpo_pengiriman" class="col-lg-3 col-xl-3 col-form-label" style="margin-top: -5px; font-size: 11px;">
+                                <label for="tmpo_pengiriman" class="col-lg-3 col-xl-3 col-form-label" style="margin-top: -3px; font-size: 11px;">
                                     Tempo&nbsp;Pengirim
                                     <!-- <font face="Verdana" size="1.5">Tempo<br>Pengirim*</font> -->
                                 </label>

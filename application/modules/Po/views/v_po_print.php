@@ -126,7 +126,22 @@ function terbilang($x, $style = 4)
     <tr>
       <td valign="top">Alamat NPWP</td>
       <td valign="top">:</td>
-      <td align="justify"><?= $pt->alamatnpwp; ?></td>
+      <td align="justify">
+        <?php
+        $lok = $po->lokasi;
+        switch ($lok) {
+          case 'HO': // HO
+            echo $pt->alamatnpwp;
+            break;
+          case 'SITE': // RO
+            echo "-";
+            break;
+
+          default:
+            break;
+        } ?>
+      </td>
+
     </tr>
   </table>
   <hr>
