@@ -51,11 +51,13 @@ $dev = substr($stokmasuk->devisi, 28);
             <td align="center" valign="bottom">
                 <h2 align="center" style="margin: 0px;padding: 0px;"><b><u>Laporan Penerimaan Barang</u></b></h2>
             </td>
+            <td></td>
         </tr>
         <tr>
             <td align="center" valign="baseline">
                 <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b>No. LPB : <?= $stokmasuk->noref; ?></b></h4>
             </td>
+            <td width="8%"></td>
         </tr>
     </table>
     <table border="0" width="100%">
@@ -70,7 +72,7 @@ $dev = substr($stokmasuk->devisi, 28);
         <tr>
             <td>Surat Pengantar No.</td>
             <td>:</td>
-            <td><?= $stokmasuk->no_pengtr; ?></td>
+            <td><?= htmlspecialchars($stokmasuk->no_pengtr); ?></td>
             <td>Tanggal Penerimaan</td>
             <td>:</td>
             <td><?= date("d-m-Y", strtotime($stokmasuk->tgl)); ?></td>
@@ -78,7 +80,7 @@ $dev = substr($stokmasuk->devisi, 28);
         <tr>
             <td>Lokasi Gudang</td>
             <td>:</td>
-            <td><?= $stokmasuk->lokasi_gudang; ?></td>
+            <td><?= htmlspecialchars($stokmasuk->lokasi_gudang); ?></td>
             <td>Tgl. Pembuatan LPB</td>
             <td>:</td>
             <td><?= date("d-m-Y", strtotime($stokmasuk->tglinput)); ?></td>
@@ -95,9 +97,9 @@ $dev = substr($stokmasuk->devisi, 28);
             <td>Departemen</td>
             <td>:</td>
             <td><?= $stokmasuk->ket_dept; ?></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>Keterangan</td>
+            <td>:</td>
+            <td><?= htmlspecialchars($stokmasuk->ket); ?></td>
         </tr>
     </table>
 
@@ -123,7 +125,7 @@ $dev = substr($stokmasuk->devisi, 28);
                     <td class="pddg"><?= $list_masukitem->nabar; ?></td>
                     <td class="pddg cntr"><?= $list_masukitem->qty; ?></td>
                     <td class="pddg"><?= $list_masukitem->satuan; ?></td>
-                    <td class="pddg"><?= $list_masukitem->ket; ?></td>
+                    <td class="pddg"><?= htmlspecialchars($list_masukitem->ket); ?></td>
                 </tr>
             <?php
                 $no++;
