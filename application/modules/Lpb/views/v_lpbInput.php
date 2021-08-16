@@ -262,6 +262,23 @@ date_default_timezone_set('Asia/Jakarta');
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusLpb">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                    <p class="mt-3">Apakah Anda yakin ingin menghapus LPB ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekLpb()">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <style>
     .select2-container {
         white-space: nowrap;
@@ -270,6 +287,36 @@ date_default_timezone_set('Asia/Jakarta');
 </style>
 
 <script>
+    function cekLpb() {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Lpb/cekDataLpb'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                noreflpb: $('#hidden_no_ref_lpb').val(),
+            },
+            success: function(data) {
+
+                for (var i = 0; i < data; i++) {
+                    //delete item 1 per satu
+                    console.log(i);
+                    updateRinciToZero(i);
+                }
+            },
+            error: function(response) {
+                alert(response.responseText);
+            }
+        });
+    }
+
+    function cancelLpb(n) {
+
+        $('#modalKonfirmasiHapusLpb').modal('show');
+    }
+
     function goBack() {
         window.history.back();
     }
@@ -324,7 +371,7 @@ date_default_timezone_set('Asia/Jakarta');
 
     function tambah_row(row, status_item_lpb) {
         // var row = ++num_last;
-        console.log(row);
+        console.log('table ke ' + row);
         // var row = $('#hidden_no_table').val();
         var tr_buka = '<tr id="tr_' + row + '">';
         // var td_col_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
