@@ -1126,4 +1126,12 @@ class Lpb extends CI_Controller
 
         echo json_encode($data);
     }
+
+    public function cekDataLpb()
+    {
+        $noreflpb = $this->input->post('noreflpb');
+        $data =  $this->db_logistik_pt->get_where('masukitem', array('noref' => $noreflpb))->num_rows();
+
+        echo json_encode($data);
+    }
 }
