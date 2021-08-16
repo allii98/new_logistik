@@ -544,11 +544,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             </h6>
                                         </h6>
                                     </div> -->
-                                    <input type="text" id="hidden_no_po" name="hidden_no_po">
-                                    <input type="text" id="hidden_id_po" name="hidden_id_po">
-                                    <input type="text" id="hidden_no_ref_po" name="hidden_no_ref_po">
-                                    <input type="text" id="refspp" name="refspp">
-                                    <input type="text" id="idspp" name="idspp">
+                                    <input type="hidden" id="hidden_no_po" name="hidden_no_po">
+                                    <input type="hidden" id="hidden_id_po" name="hidden_id_po">
+                                    <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
+                                    <input type="hidden" id="refspp" name="refspp">
+                                    <input type="hidden" id="idspp" name="idspp">
                                     <input type="hidden" value="<?= $sesi_sl; ?>" id="lokasi" name="lokasi">
                                 </div>
                                 <br>
