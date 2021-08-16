@@ -12,7 +12,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
                         <div class="button-list mr-2">
 
-                            <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru" disabled>PO Baru</button>
+                            <!-- <button onclick="ganti_spp()" class="btn btn-xs btn-warning" id="ganti_spp">Ganti SPP</button> -->
+                            <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
                             <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
@@ -172,25 +173,19 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                                 <div class="col-8 col-xl-12">
                                     <select class="form-control form-control-sm" id="lks_pembelian" name="lks_pembelian" required>
-                                        <option disabled>
-                                            <font face="Verdana" size="1.5">--Pilih--</font>
+                                        <option disabled>-Pilih-
                                         </option>
                                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                            <option value="HO">
-                                                <font face="Verdana" size="1.5">HO</font>
+                                            <option value="HO">HO
                                             </option>
-                                            <option value="RO">
-                                                <font face="Verdana" size="1.5">RO</font>
+                                            <option value="RO">RO
                                             </option>
-                                            <option value="SITE">
-                                                <font face="Verdana" size="1.5">SITE</font>
+                                            <option value="SITE">SITE
                                             </option>
                                         <?php } else { ?>
-                                            <option value="RO">
-                                                <font face="Verdana" size="1.5">RO</font>
+                                            <option value="RO">RO
                                             </option>
-                                            <option selected="selected" value="SITE">
-                                                <font face="Verdana" size="1.5">SITE</font>
+                                            <option selected="selected" value="SITE">SITE
                                             </option>
                                         <?php } ?>
                                     </select>
@@ -213,14 +208,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 </label>
                                 <div class="col-8 col-xl-12">
                                     <select class="form-control form-control-sm" id="txt_pemesan" name="txt_pemesan" required>
-                                        <option disabled>
-                                            <font face="Verdana" size="1.5">-Pilih-</font>
+                                        <option disabled>Pilih</option>
+                                        <option selected value="GM">GM
                                         </option>
-                                        <option selected value="GM">
-                                            <font face="Verdana" size="1.5">GM</font>
-                                        </option>
-                                        <option value="KTU">
-                                            <font face="Verdana" size="1.5">KTU</font>
+                                        <option value="KTU">KTU
                                         </option>
                                     </select>
                                 </div>
@@ -817,6 +808,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         location.href = "<?php echo base_url('Po/input') ?>";
     }
 
+    // function ganti_spp() {
+    //     $('.div_form_3').remove();
+    //     $('#tableItemPO').remove();
+    //     $('#modalcarispp').modal('show');
+    //     // $('#tr_' + id).remove();
+    // }
+
     function batal() {
         $('#modalKonfirmasibatalPO').modal('show');
     }
@@ -965,7 +963,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 var sat = value.sat;
                                 // var tglref = value.tglref;
                                 var qty = value.qty;
-                                console.log('ini qty nya', qty)
+                                // console.log('ini qty nya', qty)
                                 var qty2 = value.qty2;
 
 
@@ -1195,7 +1193,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             var data = this.value;
             sppHO(data);
 
-        })
+        });
 
     });
 
@@ -1980,7 +1978,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#btn_ubah_' + id).show();
                         $('#btn_hapus_' + id).show();
                         $('#cetak').removeAttr('disabled', '');
-                        $('#a_po_baru').removeAttr('disabled', '');
+                        // $('#a_po_baru').removeAttr('disabled', '');
                         $('#batal_po').removeAttr('disabled', '');
                         $('#h4_no_po').html('No. PO : ' + data.nopo);
                         $('#hidden_no_po').val(data.nopo);
