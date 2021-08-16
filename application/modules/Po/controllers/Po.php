@@ -373,7 +373,7 @@ class Po extends CI_Controller
 
     public function getid()
     {
-        $id = $this->input->post('id');
+        $id = $this->input->post('idspp');
         $noreftxt = $this->input->post('noreftxt');
         $data = $this->M_po->get_id($id, $noreftxt);
         echo json_encode($data);
@@ -1098,6 +1098,7 @@ class Po extends CI_Controller
 
         $id_ppo = $this->input->post('refspp');
         $refspp = $this->input->post('refspp');
+        // $idspp = $this->input->post('idspp');
 
 
         $data_ppo2 =  array(
