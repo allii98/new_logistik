@@ -307,7 +307,7 @@ date_default_timezone_set('Asia/Jakarta');
                 }
             },
             error: function(response) {
-                alert(response.responseText);
+                alert('KONEKSI TERPUTUS! Gagal Menghapus LPB');
             }
         });
     }
@@ -339,7 +339,7 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#hidden_grup_' + n).text(data.grp);
             },
             error: function(response) {
-                alert(response.responseText);
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -362,7 +362,7 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#sisa_qty_' + i).text(data);
             },
             error: function(response) {
-                alert(response.responseText);
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -608,7 +608,7 @@ date_default_timezone_set('Asia/Jakarta');
                 }
             },
             error: function(response) {
-                alert(response.responseText);
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -812,7 +812,10 @@ date_default_timezone_set('Asia/Jakarta');
                 }
             },
             error: function(response) {
-                alert(response.responseText);
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_lpb_status').empty();
+                $('#btn_simpan_' + n).css('display', 'block');
+                alert('KONEKSI TERPUTUS! Gagal Save Data!');
             }
         });
     }
@@ -907,7 +910,9 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#btn_cancel_update_' + n).css('display', 'none');
             },
             error: function(response) {
-                alert(response.responseText);
+                $('#btn_update_' + n).css('display', 'block');
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Update Data!');
             }
         });
     };
@@ -966,7 +971,9 @@ date_default_timezone_set('Asia/Jakarta');
 
             },
             error: function(response) {
-                alert(response.responseText);
+                $('#btn_cancel_update_' + n).css('display', 'block');
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Membatalkan Update!');
             }
         });
     }
@@ -1010,7 +1017,7 @@ date_default_timezone_set('Asia/Jakarta');
 
             },
             error: function(response) {
-                alert(response.responseText);
+                alert('KONEKSI TERPUTUS! Gagal Update PO setelah LPB!');
             }
         });
     }
@@ -1047,8 +1054,6 @@ date_default_timezone_set('Asia/Jakarta');
 
             beforeSend: function() {
 
-                $('#btn_update_' + n).css('display', 'none');
-
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
             },
@@ -1078,7 +1083,8 @@ date_default_timezone_set('Asia/Jakarta');
 
             },
             error: function(response) {
-                alert(response.responseText);
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Update Data!');
             }
         });
     };
@@ -1120,7 +1126,10 @@ date_default_timezone_set('Asia/Jakarta');
                 // if (n == 1) {
                 //     hapusLpb();
                 // }
-
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Delete Data!');
             }
         });
     };
@@ -1156,6 +1165,10 @@ date_default_timezone_set('Asia/Jakarta');
                     $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
                     $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
                 }
+            },
+            error: function(response) {
+                $('#lbl_bkb_status').empty();
+                alert('KONEKSI TERPUTUS! Gagal Cek Data Masuk Item!');
             }
         });
     }
@@ -1185,6 +1198,10 @@ date_default_timezone_set('Asia/Jakarta');
                 console.log(data);
 
                 location.reload();
+            },
+            error: function(response) {
+                $('#lbl_bkb_status').empty();
+                alert('KONEKSI TERPUTUS! Gagal Hapus LPB!');
             }
         });
     }
