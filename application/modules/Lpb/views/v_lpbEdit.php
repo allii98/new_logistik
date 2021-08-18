@@ -242,9 +242,55 @@
         </div>
     </div>
 </div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusLpb">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                    <p class="mt-3">Apakah Anda yakin ingin menghapus LPB ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekLpb()">Hapus</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <input type="hidden" id="id_stokmasuk" value="<?= $id_stokmasuk ?>">
 
 <script>
+    function cekLpb() {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Lpb/cekDataLpb'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                noreflpb: $('#hidden_no_ref_lpb').val(),
+            },
+            success: function(data) {
+
+                for (var i = 0; i < data; i++) {
+                    //delete item 1 per satu
+                    console.log(i);
+                    updateRinciToZero(i);
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Gagal Menghapus LPB');
+            }
+        });
+    }
+
+    function cancelLpb(n) {
+
+        $('#modalKonfirmasiHapusLpb').modal('show');
+    }
+
     function goBack() {
         window.history.back();
     }
@@ -353,7 +399,7 @@
                 }
             },
             error: function(response) {
-                console.log(response.responseText);
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -388,6 +434,9 @@
             },
             success: function(data) {
                 $('#sisa_qty_' + i).text(data);
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -404,6 +453,9 @@
             },
             success: function(data) {
                 $('#hidden_grup_' + n).text(data.grp);
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -525,7 +577,7 @@
                 $('#sisa_qty_' + n).text(data);
             },
             error: function(response) {
-                alert(response.responseText);
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -637,6 +689,11 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
                 $('#btn_cancel_update_' + n).css('display', 'none');
+            },
+            error: function(response) {
+                $('#btn_update_' + n).css('display', 'block');
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Update Data!');
             }
         });
     };
@@ -692,7 +749,11 @@
                 $('#btn_update_' + n).css('display', 'none');
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
-
+            },
+            error: function(response) {
+                $('#btn_cancel_update_' + n).css('display', 'block');
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Membatalkan Update!');
             }
         });
     }
@@ -775,7 +836,8 @@
 
             },
             error: function(response) {
-                alert(response.responseText);
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Update Data!');
             }
         });
     };
@@ -818,7 +880,10 @@
                 // if (n == 1) {
                 //     hapusLpb();
                 // }
-
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                alert('KONEKSI TERPUTUS! Gagal Delete Data!');
             }
         });
     };
@@ -854,6 +919,10 @@
                     $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
                     $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
                 }
+            },
+            error: function(response) {
+                $('#lbl_bkb_status').empty();
+                alert('KONEKSI TERPUTUS! Gagal Cek Data Masuk Item!');
             }
         });
     }
@@ -883,6 +952,10 @@
                 console.log(data);
 
                 location.href = "<?php echo base_url('Lpb') ?>";
+            },
+            error: function(response) {
+                $('#lbl_bkb_status').empty();
+                alert('KONEKSI TERPUTUS! Gagal Hapus LPB!');
             }
         });
     }
