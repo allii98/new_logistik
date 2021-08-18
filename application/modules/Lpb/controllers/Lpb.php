@@ -838,7 +838,7 @@ class Lpb extends CI_Controller
             $row[] = $d->qtypo;
             $row[] = $d->qty;
             $row[] = $result_sisa_lpb;
-            $row[] = $d->ket;
+            $row[] = htmlspecialchars($d->ket);
 
             $data[] = $row;
         }
