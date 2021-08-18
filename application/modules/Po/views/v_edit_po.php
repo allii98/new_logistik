@@ -133,23 +133,23 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <table border="0" width="80%">
-                                    <td width="7%">
+                                <table border="0" width="50%">
+                                    <!-- <td width="7%">
                                         <font face="Verdana" size="1.5">
                                             <h6 id="tgl_spp" name="tgl_spp"></h6>
                                         </font>
-                                    </td>
-                                    <td width="10%">
+                                    </td> -->
+                                    <td width="15%">
                                         <font face="Verdana" size="1.5">
                                             <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
                                         </font>
                                     </td>
-                                    <td width="7%">
+                                    <!-- <td width="7%">
                                         <font face="Verdana" size="1.5">
                                             <h6 id="tgl_po" name="tgl_po">
                                             </h6>
                                         </font>
-                                    </td>
+                                    </td> -->
                                     <td width="15%">
                                         <font face="Verdana" size="1.5">
                                             <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
