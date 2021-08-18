@@ -103,12 +103,7 @@ date_default_timezone_set('Asia/Jakarta');
                     <hr class="mt-1 mb-2">
                     <div class="row div_form_2">
                         <div class="col-12">
-                            <div class="sub-header" style="margin-top: -10px; margin-bottom: -30px;">
-                                <div class="row ml-1">
-                                    <h6 id="lbl_lpb_status" name="lbl_lpb_status">
-                                        No. LPB : ... &nbsp; No. Ref LPB : ...
-                                    </h6>
-                                </div>
+                            <div class="sub-header" style="margin-top: -10px; margin-bottom: -25px;">
                                 <input type="hidden" id="hidden_no_lpb">
                                 <input type="hidden" id="hidden_no_ref_lpb">
                                 <input type="hidden" id="hidden_tglppo">
@@ -116,7 +111,11 @@ date_default_timezone_set('Asia/Jakarta');
                                 <input type="hidden" id="hidden_kd_dept">
                                 <input type="hidden" id="hidden_ket_dept">
                             </div>
-                            <div class="row mt-2" style="margin-left:4px;">
+                            <div class="row mt-2 ml-0">
+                                <h6><span id="no_ref_po"></span></h6>
+                                <h6 id="lbl_lpb_status" name="lbl_lpb_status">
+                                    No. LPB : ... &nbsp; No. Ref LPB : ...
+                                </h6>
                                 <h6><span id="no_lpb"></span></h6>&emsp;&emsp;
                                 <h6><span id="no_ref_lpb"></span></h6>
                                 <label id="lbl_status_simpan" class="align-right"></label>
@@ -561,6 +560,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                 console.log(data_po);
 
+                $('#no_ref_po').html('No. Ref. PO : ' + data_po.noreftxt + '&emsp;&emsp;&emsp;&emsp;');
                 $('#txt_ref_po').val(data_po.noreftxt);
                 $('#txt_no_po').val(data_po.nopotxt);
                 $('#txt_tgl_po').val(formatDate(data_po.tglpo));
@@ -784,8 +784,8 @@ date_default_timezone_set('Asia/Jakarta');
                     // hitung sisa qty po guys
                     sisaQtyPO(no_ref_po, no_po, kodebar, hidden_refppo, n);
 
-                    $('#no_lpb').html('No. SPP : ' + data.nolpb);
-                    $('#no_ref_lpb').html('No. Ref. SPP : ' + data.noreflpb);
+                    $('#no_lpb').html('No. LPB : ' + data.nolpb);
+                    $('#no_ref_lpb').html('No. Ref. LPB : ' + data.noreflpb);
 
                     $('.div_form_1').find('#select2_lpb, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').addClass('bg-light');
                     $('.div_form_1').find('#select2_lpb, #camera, #multiple, #devisi, #txt_tgl_terima, #txt_no_pengantar, #txt_lokasi_gudang, #txt_no_po, #txt_ket_pengiriman').attr('disabled', '');
