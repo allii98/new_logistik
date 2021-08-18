@@ -122,6 +122,7 @@
                     </div>
                     <div class="row mr-2" style="margin-left:4px;">
                         <h6>
+                            <span id="no_ref_po"></span>&emsp;&emsp;
                             <span id="no_lpb"></span>&emsp;&emsp;
                             <span id="no_ref_lpb"></span>
                         </h6>
@@ -335,6 +336,7 @@
                 $('#multiple').val(data_lpb.nopo);
                 $('#txt_no_po').val(data_lpb.nopo);
                 $('#txt_ref_po').val(data_lpb.refpo);
+                $('#no_ref_po').html('No. Ref. PO : ' + data_lpb.refpo);
                 var namesup = data_lpb.kode_supply + ' / ' + data_lpb.nama_supply;
                 $('#txt_kd_name_supplier').val(namesup);
                 $('#txt_kd_supplier').val(data_lpb.kode_supply);
