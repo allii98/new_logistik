@@ -133,7 +133,7 @@
                         case 'PKS':
                         ?>
                             <div class="x_content mb-0 div_form_3">
-                                <table border="0" width="50%">
+                                <table border="0" width="55%">
                                     <!-- <td width="7%">
                                         <font face="Verdana" size="1.5">
                                             <h6 id="tgl_spp" name="tgl_spp"></h6>
@@ -400,7 +400,7 @@
             <div class="modal-body p-4">
                 <div class="text-center">
                     <i class="dripicons-warning h1 text-warning"></i>
-                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <h4 class="mt-2">Konfirmasi Batal</h4>
                     <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
                     <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="batal_aksi()">Hapus</button>
@@ -501,7 +501,7 @@
             success: function(data) {
                 console.log(data);
 
-                location.reload();
+                window.location = "<?= base_url('Po') ?>";
             },
             error: function(request) {
                 $('#lbl_status_delete_po').empty();
@@ -743,6 +743,7 @@
     $(document).on('click', '#data_spp', function() {
         var id = $(this).data('id');
         var noreftxt = $(this).data('noreftxt');
+        var refspp = $('#refspp').val(noreftxt);
         // console.log(noreftxt);
         $.ajax({
             type: 'post',
@@ -773,6 +774,7 @@
 
                     var idppo = value.id;
                     var opsi = value.noreftxt;
+                    console.log(opsi);
                     var tglref = value.tglref;
                     var kodedept = value.kodedept;
                     var namadept = value.namadept;
@@ -791,7 +793,7 @@
                     $('#id_ppo' + n).val(idppo);
                     $('#id_item_' + n).val(idppo);
                     $('#hidden_no_ref_spp_' + n).val(opsi);
-                    $('#refspp').val(opsi);
+                    // $('#refspp').val(opsi);
                     // $('#hidden_tgl_hidden' + n).val(tglref);
                     $('#hidden_kd_departemen_' + n).val(kodedept);
                     $('#hidden_departemen_' + n).val(namadept);
@@ -1128,6 +1130,8 @@
 
                 $('#tgl_spp').html('Tanggal SPP : ' + po.tglspp);
                 $('#h4_no_ref_spp').html('No. Ref SPP : ' + po.no_refppo);
+                $('#refspp').val(po.no_refppo);
+
 
                 $('#tgl_po').html('Tanggal PO : ' + po.tgl_po);
                 $('#h4_no_ref_po').html('No. Ref PO : ' + po.noreftxt);

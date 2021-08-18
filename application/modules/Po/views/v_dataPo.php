@@ -9,24 +9,24 @@
 					<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped" width="100%">
 						<thead>
 							<tr>
-								<th style="padding: 0.4em;">
+								<th style="padding: 0.2em; width: 90px; padding-left: 1em;">
 									<font face="Verdana" size="2.5">#</font>
 								</th>
-								<th style="padding: 0.4em;">
+								<th width="3%" style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">No</font>
 								</th>
-								<th style="padding: 0.4em;">
+								<th width="25%" style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">No.&nbsp;Ref</font>
 								</th>
 
-								<th style="padding: 0.4em;">
+								<th width="10%" style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">Tgl.&nbsp;PO</font>
 								</th>
-								<th style="padding: 0.4em;">
+								<th width="20%" style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">No.&nbsp;Ref&nbsp;SPP</font>
 								</th>
 
-								<th style="padding: 0.4em;">
+								<th width="9%" style="padding: 0.4em;">
 									<font face="Verdana" size="2.5">Tgl.&nbsp;SPP</font>
 
 								</th>
