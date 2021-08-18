@@ -1012,7 +1012,7 @@
             '</td>';
         var td_col_6_1 = '<td width="7%" style="padding-top: 2px;">' +
             '<div class="row">' +
-            '<h5 style="margin-top:0px;"><span class="badge badge-success">Approved</span></h5>' +
+            '<h5 style="margin-top:0px;"><span class="badge badge-success ml-1">Approved</span></h5>' +
             '</div>' +
             '</td>';
         var form_tutup = '</form>';
