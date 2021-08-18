@@ -368,6 +368,15 @@ class M_po extends CI_Model
 
         return $data;
     }
+
+
+    function cari_noref_itempo($noref_po)
+    {
+        $this->db_logistik_pt->select('noref');
+        $this->db_logistik_pt->from('item_po');
+        $this->db_logistik_pt->where(['noref' => $noref_po]);
+        return $this->db_logistik_pt->get()->num_rows();
+    }
 }
 
 /* End of file M_po.php */

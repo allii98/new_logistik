@@ -2432,15 +2432,21 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     }
 
-    function hapusRinci(id) {
-        $('#hidden_no_delete').val(id);
-        $('#modalKonfirmasiHapus').modal('show');
+    function hapusRinci(no) {
+        $('#hidden_no_delete').val(no);
+        Swal.fire({
+            text: "Yakin akan menghapus Data ini?",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya Hapus!'
+        }).then((result) => {
+            if (result.value) {
+                deleteData(no);
+            }
+        });
     }
 
-    function hapusRinci(id) {
-        $('#hidden_no_delete').val(id);
-        $('#modalKonfirmasiHapus').modal('show');
-    }
 
     function deletePO(no) {
         var nopo = $('#hidden_no_po').val();
@@ -2475,87 +2481,64 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
     }
 
-    function deleteData() {
-        // console.log("Okeee");
-        var no = $('#hidden_no_delete').val();
-        // var id_item = $('#hidden_id_po_item_' + no).val();
-        var id_po = $('#hidden_id_po').val();
-        var id_ppo = $('#id_item_' + no).val();
-        // var no_po = $('#hidden_no_po').val();
+    function deleteData(no) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/hapus_rinci'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + no).empty();
+                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+            },
 
-        // console.log(id_item);
-        // console.log(id_ppo);
-        $('#modalKonfirmasiHapus').modal('hide');
-
-
-        var lokasi = $('#lokasi').val();
-
-        switch (lokasi) {
-            case 'HO':
-
-                var rowCount = $("#tableRinciPO td").closest("tr").length;
-                break;
-            case 'RO':
-            case 'SITE':
-            case 'PKS':
-
-                var rowCount = $("#tableItemPO td").closest("tr").length;
-
-                break;
-            default:
-                break;
-        }
-
-        if (rowCount != 1) {
-
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('Po/hapus_rinci'); ?>",
-                dataType: "JSON",
-                beforeSend: function() {
-                    $('#lbl_status_simpan_' + no).empty();
-                    $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
-                },
-
-                data: {
-                    hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
-                    id_item: $('#id_item_' + no).val(),
-                    hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
-                    // hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
-                    // hidden_kode_brg: $('#hidden_kode_brg_1' + no).val()
-                },
-                success: function(data) {
-                    $('#tr_' + no).remove();
-                    swal('Data Berhasil dihapus');
-                    totalBayar();
-                    // $('#btn_konfirmasi_terima_' + index).removeAttr('disabled');
-                    // $('.modal-success').modal('show');
-                },
-                error: function(request) {
-                    $('#lbl_status_simpan_' + no).empty();
-                    alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
-
-                }
-            });
-
-        } else {
-            // swal('Tidak Bisa dihapus, item PO tinggal 1');
-            Swal.fire({
-                title: 'Item PO Tinggal 1',
-                text: "Yakin akan menghapus PO ini?",
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Ya Hapus!'
-            }).then((result) => {
-                if (result.value) {
-                    // var no_po = $('#hidden_no_po').val();
-                    deletePO(no);
-                }
-            });
-
-        }
+            data: {
+                hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                id_item: $('#id_item_' + no).val(),
+                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val()
+            },
+            success: function(data) {
+                $('#tr_' + no).remove();
+                swal('Data Berhasil dihapus');
+                totalBayar();
+                cekdatapo(no);
+            },
+            error: function(request) {
+                $('#lbl_status_simpan_' + no).empty();
+                alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
+            }
+        });
     }
+
+    function cekdatapo(no) {
+        var noref_po = $('#hidden_no_ref_po').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/cek_po'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + no).empty();
+                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+            },
+
+            data: {
+                noref_po: noref_po
+            },
+            success: function(data) {
+                if (data == 0) {
+                    deletePO(no);
+                } else {
+                    $('#lbl_status_delete_po').empty();
+                    $('#lbl_status_simpan_' + no).empty();
+                }
+            },
+            error: function(request) {
+                $('#lbl_status_simpan_' + no).empty();
+                alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
+            }
+        });
+    }
+
+
 
     function validasi(id) {
         var jnpo = $('#cmb_pilih_jenis_po').val();

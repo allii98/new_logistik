@@ -1008,6 +1008,13 @@ class Po extends CI_Controller
         }
     }
 
+    function cek_po()
+    {
+        $noref_po = $this->input->post('noref_po');
+        $output = $this->M_po->cari_noref_itempo($noref_po);
+        echo json_encode($output);
+    }
+
     public function deletePO_data()
     {
 
