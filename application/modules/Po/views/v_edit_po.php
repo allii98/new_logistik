@@ -5,7 +5,7 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO <i>(Edit)</i></h4>
-                        <div class="button-list">
+                        <div class="button-list mr-2">
 
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
                             <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
