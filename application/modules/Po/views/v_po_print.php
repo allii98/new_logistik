@@ -184,16 +184,16 @@ function terbilang($x, $style = 4)
   <table border="1" class="singleborder" width="100%">
     <thead>
       <tr>
-        <td align="center" width="5px">No</td>
-        <td align="center" width="30px">Kode Barang</td>
-        <td align="center" width="50px">Nama Barang</td>
-        <td align="center">Merk</td>
-        <td align="center" width="18px">No. Part</td>
-        <td align="center">Qty</td>
-        <td align="center">SAT</td>
-        <td align="center">Harga Satuan</td>
-        <td align="center">Disc %</td>
-        <td align="center" colspan="2">Total Harga</td>
+        <td align="center" width="3%">No</td>
+        <td align="center" width="15%">Kode&nbsp;Barang</td>
+        <td align="center" width="15%">Nama&nbsp;Barang</td>
+        <td align="center" width="17%">Merk</td>
+        <td align="center" width="8%">No.&nbsp;Part</td>
+        <td align="center" width="5%">Qty</td>
+        <td align="center" width="5%">SAT</td>
+        <td align="center" width="10%">Harga&nbsp;Satuan</td>
+        <td align="center" width="5%">Disc&nbsp;%</td>
+        <td align="center" colspan="2">Total&nbsp;Harga</td>
 
       </tr>
     </thead>
