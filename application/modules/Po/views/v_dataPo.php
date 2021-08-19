@@ -6,50 +6,51 @@
 			<div class="">
 				<!-- <div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div> -->
 				<div class="col-md-12 col-sm-12 col-xs-12">
-					<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped" width="100%">
-						<thead>
-							<tr>
-								<th style="padding: 0.2em; width: 90px; padding-left: 1em;">
-									<font face="Verdana" size="2.5">#</font>
-								</th>
-								<th width="3%" style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">No</font>
-								</th>
-								<th width="25%" style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">No.&nbsp;Ref</font>
-								</th>
+					<div class="table-responsive">
 
-								<th width="10%" style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Tgl.&nbsp;PO</font>
-								</th>
-								<th width="20%" style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">No.&nbsp;Ref&nbsp;SPP</font>
-								</th>
+						<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped" width="100%">
+							<thead>
+								<tr>
+									<th style="padding: 0.2em; width: 90px; padding-left: 1em;">
+										<font face="Verdana" size="2.5">#</font>
+									</th>
+									<th width="3%" style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">No</font>
+									</th>
+									<th width="25%" style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">No.&nbsp;Ref</font>
+									</th>
 
-								<th width="9%" style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Tgl.&nbsp;SPP</font>
+									<th width="10%" style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">Tgl.&nbsp;PO</font>
+									</th>
+									<th width="20%" style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">No.&nbsp;Ref&nbsp;SPP</font>
+									</th>
 
-								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Supplier</font>
+									<th width="15%" style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">Tgl.&nbsp;SPP</font>
 
-								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Ket</font>
-								</th>
-								<th style="padding: 0.4em;">
-									<font face="Verdana" size="2.5">Terbayar</font>
-								</th>
+									</th>
+									<th style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">Supplier</font>
 
-							</tr>
-						</thead>
+									</th>
+									<th style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">Ket</font>
+									</th>
+									<th style="padding: 0.4em;">
+										<font face="Verdana" size="2.5">Terbayar</font>
+									</th>
 
-						<tbody>
+								</tr>
+							</thead>
 
-						</tbody>
-					</table>
-					<br />
-					<br />
+							<tbody>
+
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 
