@@ -166,14 +166,14 @@ function terbilang($x, $style = 4)
 
   <table border="1" class="singleborder" width="100%">
     <tr>
-      <td style="padding:5px;" colspan="5">
+      <td width="50%" style="padding:5px;">
         Kepada YTH,<br />
         <?= $supplier->supplier; ?><br />
         <?= $alamat_supplier; ?><br />
         Tlp. <?= $tlp_supplier; ?><br />
         Fax. <?= $fax_supplier; ?><br />
       </td>
-      <td style="padding: 5px;" colspan="6">
+      <td width="50%" style="padding:5px;">
         <br />
         Syarat Pembayaran : <br />
         Jadwal Pengiriman : <?= $po->ket_kirim; ?> <br />
