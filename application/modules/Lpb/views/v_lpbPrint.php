@@ -64,10 +64,10 @@ $dev = substr($stokmasuk->devisi, 28);
         <tr>
             <td width="20%">Nama Supplier</td>
             <td width="2%">:</td>
-            <td width="30%"><?= $stokmasuk->nama_supply; ?></td>
+            <td width="25%"><?= $stokmasuk->nama_supply; ?></td>
             <td>No. Pesanan Pembelian</td>
             <td width="2%">:</td>
-            <td><?= $stokmasuk->nopotxt; ?></td>
+            <td><?= $stokmasuk->refpo; ?></td>
         </tr>
         <tr>
             <td>Surat Pengantar No.</td>

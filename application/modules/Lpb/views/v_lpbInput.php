@@ -53,7 +53,7 @@ date_default_timezone_set('Asia/Jakarta');
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
-                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: 0px; font-size: 12px;">Supplier</label>
+                                <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -1px; font-size: 12px;">Supplier</label>
                                 <div class="col-lg-9 col-xl-9 col-12">
                                     <input id="txt_kd_name_supplier" name="txt_kd_name_supplier" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Kode/Nama Supplier" readonly style="margin-top:3px; font-size: 12px;">
                                     <input type="hidden" id="txt_kd_supplier">
@@ -281,7 +281,7 @@ date_default_timezone_set('Asia/Jakarta');
 <style>
     .select2-container {
         white-space: nowrap;
-        font-size: 12px;
+        font-size: 10px;
     }
 </style>
 
