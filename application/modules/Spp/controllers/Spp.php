@@ -214,6 +214,7 @@ class Spp extends CI_Controller
         $data_item_ppo = [
             'noppo' => $nospp,
             'noppotxt' => $nospp,
+            'jenis' => $this->input->post('cmb_jenis_permohonan'),
             'tglppo' => $this->input->post('txt_tgl_spp'),
             'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
             'kodedept' => $this->input->post('cmb_departemen'),

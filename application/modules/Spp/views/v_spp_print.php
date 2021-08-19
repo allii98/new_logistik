@@ -139,7 +139,7 @@
             <td colspan="1" align="center">Dibuat Oleh,</td>
         </tr>
         <tr>
-            <td colspan="2" align="center" height="70" valign="bottom">(<?= $ppo->user ?>)</td>
+            <td colspan="2" align="center" height="70" valign="bottom"></td>
             <td colspan="1" align="center" height="70" valign="bottom">
                 <?php if ($ppo->status2 == 1) {
                 ?>
