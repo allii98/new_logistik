@@ -657,7 +657,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <div class="col-4 float-right">
                         <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
                             <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
@@ -691,41 +691,23 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             ?>
                         </select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-12">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                        <table id="spp" class="table table-striped table-bordered table-in" width="100%">
+                        <table id="tblspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <font face="Verdana" size="2.5">No.</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">ID</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">No. SPP</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Tgl. SPP</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Ref. SPP</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Departemen</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Kode Barang</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Item Barang</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Ket</font>
-                                    </th>
+                                    <th width="3%" style="font-size: 11px; padding:10px">No.</th>
+                                    <th>ID</th>
+                                    <th>No.&nbsp;SPP</th>
+                                    <th width="3%" style="font-size: 11px; padding:10px">Tgl.&nbsp;SPP</th>
+                                    <th width="30%" style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
+                                    <th width="10%" style="font-size: 11px; padding:10px">Departemen</th>
+                                    <th width="10%" style="font-size: 11px; padding:10px">Kode&nbsp;Barang</th>
+                                    <th width="8%" style="font-size: 11px; padding:10px">Item&nbsp;Barang</th>
+                                    <th width="10%" style="font-size: 11px; padding:10px">Ket</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -793,6 +775,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 </div>
+
+<style>
+    table#tblspp td {
+        padding: 10px;
+        font-size: 11px;
+    }
+</style>
 
 <script>
     var row = 0;
@@ -1215,8 +1204,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function sppHO() {
-        $('#spp').DataTable().destroy();
-        $('#spp').DataTable({
+        $('#tblspp').DataTable().destroy();
+        $('#tblspp').DataTable({
             "processing": true,
             "serverSide": true,
             "order": [],
@@ -1236,13 +1225,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             "buttons": [{
                     "text": "Select All",
                     "action": function() {
-                        $('#spp').DataTable().rows().select();
+                        $('#tblspp').DataTable().rows().select();
                     }
                 },
                 {
                     "text": "Unselect All",
                     "action": function() {
-                        $('#spp').DataTable().rows().deselect();
+                        $('#tblspp').DataTable().rows().deselect();
                     }
                 }
             ],
@@ -1254,7 +1243,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "bSearchable": false,
                 "bVisible": false,
                 "aTargets": [1, 2]
-            }, ]
+            }, ],
+            "language": {
+                "infoFiltered": ""
+            }
         });
     }
 
@@ -1538,7 +1530,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function pilihItem() {
-        var rowcollection = $('#spp').DataTable().rows({
+        var rowcollection = $('#tblspp').DataTable().rows({
             selected: true,
 
         }).data().toArray();

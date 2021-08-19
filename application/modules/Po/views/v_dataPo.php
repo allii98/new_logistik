@@ -11,38 +11,15 @@
 						<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped">
 							<thead>
 								<tr>
-									<th style="padding: 0.2em; width: 90px; padding-left: 1em;">
-										<font face="Verdana" size="2.5">#</font>
-									</th>
-									<th width="3%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">No</font>
-									</th>
-									<th width="25%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">No.&nbsp;Ref</font>
-									</th>
-
-									<th width="10%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">Tgl.&nbsp;PO</font>
-									</th>
-									<th width="20%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">No.&nbsp;Ref&nbsp;SPP</font>
-									</th>
-
-									<th width="15%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">Tgl.&nbsp;SPP</font>
-
-									</th>
-									<th width="10%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">Supplier</font>
-
-									</th>
-									<th width="20%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">Ket</font>
-									</th>
-									<th width="10%" style="padding: 0.4em;">
-										<font face="Verdana" size="2.5">Terbayar</font>
-									</th>
-
+									<th width="8%" style="font-size: 12px; padding:10px">#</th>
+									<th width="3%" style="font-size: 12px; padding:10px">No</th>
+									<th width="20%" style="font-size: 12px; padding:10px">No. Ref PO</th>
+									<th width="8%" style="font-size: 12px; padding:10px">Tgl. PO</th>
+									<th width="17%" style="font-size: 12px; padding:10px">No. Ref SPP</th>
+									<th width="8%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
+									<th width="8%" style="font-size: 12px; padding:10px">Supplier</th>
+									<th width="17%" style="font-size: 12px; padding:10px">Ket</th>
+									<th width="8%" style="font-size: 12px; padding:10px">Terbayar</th>
 								</tr>
 							</thead>
 
@@ -62,46 +39,28 @@
 	<div class="modal-dialog modal-lg modal-dialog-scrollable">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel">Detail PO</h4>
+				<h4 style="font-size: 15px;" class="modal-title" id="detailpo">Detail PO</h4>
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
 				</button>
 			</div>
 			<div class="modal-body">
-
-
 				<div class="col-12">
 					<div class="table-responsive">
 						<input type="hidden" id="hidden_no_row" name="hidden_no_row">
-						<table id="datapo" class="table w-100 nowrap dataTable no-footer" role="grid" style="margin-left: 0px; width: 1112.17px;">
+						<table id="datapo" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
 							<thead>
 								<tr>
-									<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-										No
-									</th>
-									<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-										Ref. PO
-									</th>
-									<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-										Ref. SPP
-									</th>
-									<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-										Nama & Kode Barang
-									</th>
-									<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-										QTY
-									</th>
-									<th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">
-										Tanggal PO
-									</th>
+									<th width="3%" style="font-size: 11px; padding:10px">No</th>
+									<th width="30%" style="font-size: 11px; padding:10px">Ref.&nbsp;PO</th>
+									<th width="20%" style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
+									<th width="5%" style="font-size: 11px; padding:10px">Nama&nbsp;&Kode&nbsp;Barang</th>
+									<th width="5%" style="font-size: 11px; padding:10px">QTY</th>
+									<th width="3%" style="font-size: 11px; padding:10px">Tanggal PO</th>
 								</tr>
 							</thead>
 							<tbody>
 							</tbody>
-							<!-- <tfoot>
-							<tr>
-								<th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
-							</tr>
-						</tfoot> -->
+
 						</table>
 					</div>
 				</div>
@@ -112,6 +71,18 @@
 		</div>
 	</div>
 </div>
+
+<style>
+	table#tableListPO td {
+		padding: 10px;
+		font-size: 12px;
+	}
+
+	table#datapo td {
+		padding: 10px;
+		font-size: 10px;
+	}
+</style>
 
 
 
@@ -185,25 +156,7 @@
 			"language": {
 				"infoFiltered": ""
 			},
-			"columns": [{
-					"width": "5%"
-				},
-				{
-					"width": "20%"
-				},
-				{
-					"width": "20%"
-				},
-				{
-					"width": "20%"
-				},
-				{
-					"width": "25%"
-				},
-				{
-					"width": "10%"
-				},
-			],
+
 
 		});
 

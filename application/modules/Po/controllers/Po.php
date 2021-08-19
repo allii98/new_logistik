@@ -68,11 +68,11 @@ class Po extends CI_Controller
             $row = array();
             $row[] = $no . ".";
             // $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nopo . '</font>';
-            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->noref . '</font>';
-            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->refppo . '</font>';
-            // $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->grup . '</font>';
-            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->nabar . ' | ' . $d->kodebar . '</font>';
-            $row[] = '<font style="padding: 0.6em;" face="Verdana" size="2">' . $d->qty . '</font>';
+            $row[] =  $d->noref;
+            $row[] =  $d->refppo;
+            // $row[] =  $d->grup ;
+            $row[] =  '<p style="word-break: break-word;">' . $d->nabar . '<br>' . $d->kodebar . '</p>';
+            $row[] =  $d->qty;
             // $row[] = $d->tglpo;
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
             // $row[] = $d->ket;
@@ -137,9 +137,9 @@ class Po extends CI_Controller
                 ';
             } else {
                 $aksi = '
-                <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-xs btn-warning fa fa-edit title="Edit"></button>
+                <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit"></button>
                 <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail"></button> 
-                <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-primary btn-xs fa fa-print" title="Cetak">
+                <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print" style="margin-top: 2px;" title="Cetak">
                 </a>
                 ';
             }
