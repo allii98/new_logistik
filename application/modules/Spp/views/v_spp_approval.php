@@ -17,16 +17,16 @@
                         <table id="datasppapproval" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th width="8%" style="font-size: 12px; padding:10px">Approval</th>
+                                    <th width="7%" style="font-size: 12px; padding:10px">Approval</th>
                                     <th width="4%" style="font-size: 12px; padding:10px">No</th>
                                     <th width="18%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
                                     <th width="10%" style="font-size: 12px; padding:10px">Tgl Ref</th>
-                                    <th width="10%" style="font-size: 12px; padding:10px">Tgl Terima</th>
-                                    <th width="10%" style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th width="9%" style="font-size: 12px; padding:10px">Tgl Terima</th>
+                                    <th width="9%" style="font-size: 12px; padding:10px">Departemen</th>
                                     <th width="7%" style="font-size: 12px; padding:10px">Lokasi</th>
                                     <th width="19%" style="font-size: 12px; padding:10px">Keterangan</th>
                                     <th width="8%" style="font-size: 12px; padding:10px">Status SPP</th>
-                                    <th width="6%" style="font-size: 12px; padding:10px">Input Oleh</th>
+                                    <th width="9%" style="font-size: 12px; padding:10px">Input Oleh</th>
                                 </tr>
                             </thead>
                             <tbody>
