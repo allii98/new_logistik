@@ -599,19 +599,19 @@ class Spp extends CI_Controller
             if ($field->status2 == 1) {
                 $aks = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
                         data-noppotxt="' . $field->noppotxt . '"
-                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')">
+                        data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')" style="padding-right:8px;">
                         </button>
                         <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             } else {
                 $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
                 data-id_ppo="' . $field->id . '"
-                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false" style="padding-right:8px;">
                 </button>
                 <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
                 data-noppotxt="' . $field->noppotxt . '"
-                data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')">
+                data-toggle="tooltip" data-placement="top" title="Pilih" onClick="detail_data_spp(' . $field->id . ')" style="padding-right:8px;">
                 </button>
-                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
+                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp" style="margin-top: 2px;"></a>';
             }
             $row = array();
             $row[] = $aks;

@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP <i>(Edit)</i></h4>
+                        <h4 class="header-title ml-2">SPP <i>(Edit)</i></h4>
                         <div class="button-list mr-2">
                             <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()">SPP Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()">Batal SPP</button>
@@ -15,7 +15,7 @@
                     </div>
                     <div class="row justify-content-between headspp">
                         <p class="sub-header ml-2">
-                            <font face="Verdana" size="2.5">Surat Permintaan Pembelian</font>
+                            Surat Permintaan Pembelian
                         </p>
                         <h6 id="lbl_status_delete_spp"></h6>
                     </div>
@@ -182,24 +182,12 @@
                         <table id="tableRinciBarang" class="table table-striped table-bordered table-in">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <font face="Verdana" size="1.5">#</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="1.5">Nama & Kode Barang</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="1.5">Qty</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="1.5">Stok/Sat</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="1.5">Merk/Type/Jenis</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="1.5">Aksi</font>
-                                    </th>
+                                    <th>#</th>
+                                    <th>Nama & Kode Barang</th>
+                                    <th>Qty</th>
+                                    <th>Stok/Sat</th>
+                                    <th>Merk/Type/Jenis</th>
+                                    <th>#</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
@@ -307,8 +295,23 @@
 </div>
 
 <input type="hidden" id="id_ppo_edit" value="<?= $id_ppo_edit ?>">
+<style>
+    table#tableRinciBarang th {
+        padding: 10px;
+        font-size: 12px;
+        padding-left: 17px;
+    }
 
+    table#dabar td {
+        padding: 10px;
+        font-size: 12px;
+    }
 
+    table#dabar th {
+        padding: 10px;
+        font-size: 12px;
+    }
+</style>
 <script>
     function goBack() {
         window.history.back();
@@ -992,7 +995,7 @@
             '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" required style="font-size: 12px;">' +
             '</td>';
         var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<span style="font-size: 12px;" id="stok_' + n + '"></span><span> </span><span style="font-size: 12px;" id="satuan_' + n + '"> </span>' +
+            '<span style="font-size: 12px;  padding-left: 3px;" id="stok_' + n + '"></span><span> </span><span style="font-size: 12px;" id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';

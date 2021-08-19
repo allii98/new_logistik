@@ -17,36 +17,16 @@
                         <table id="datasppapproval" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th width="8%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Approval</font>
-                                    </th>
-                                    <th width="5%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">No</font>
-                                    </th>
-                                    <th width="20%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">No. Ref. SPP</font>
-                                    </th>
-                                    <th width="10%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Tgl Ref</font>
-                                    </th>
-                                    <th width="10%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Tgl Terima</font>
-                                    </th>
-                                    <th width="10%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Departemen</font>
-                                    </th>
-                                    <th width="7%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Lokasi</font>
-                                    </th>
-                                    <th width="18%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Keterangan</font>
-                                    </th>
-                                    <th width="6%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Status SPP</font>
-                                    </th>
-                                    <th width="6%" style="padding: 0.4em; padding-left: 1em;">
-                                        <font face="Verdana" size="2.5">Input Oleh</font>
-                                    </th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Approval</th>
+                                    <th width="4%" style="font-size: 12px; padding:10px">No</th>
+                                    <th width="18%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
+                                    <th width="10%" style="font-size: 12px; padding:10px">Tgl Ref</th>
+                                    <th width="10%" style="font-size: 12px; padding:10px">Tgl Terima</th>
+                                    <th width="10%" style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th width="7%" style="font-size: 12px; padding:10px">Lokasi</th>
+                                    <th width="19%" style="font-size: 12px; padding:10px">Keterangan</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Status SPP</th>
+                                    <th width="6%" style="font-size: 12px; padding:10px">Input Oleh</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -110,7 +90,22 @@
         </div>
     </div>
 </div>
+<style>
+    table#datasppapproval td {
+        padding: 10px;
+        font-size: 12px;
+    }
 
+    table#spp_approval td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    table#spp_approval th {
+        padding: 10px;
+        font-size: 12px;
+    }
+</style>
 <script>
     var table;
     $(document).ready(function() {
