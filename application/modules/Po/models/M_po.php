@@ -26,34 +26,37 @@ class M_po extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $lokasi = $this->id;
+        $lokasi = $this->session->userdata('status_lokasi');
+        $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where('po', 0);
+        $this->db_logistik_pt->where('status2', 1);
+        $this->db_logistik_pt->where('LOKASI', $lokasi);
+        // $lokasi = $this->id;
 
-        if ($lokasi == "PKS") {
-            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-            $this->db_logistik_pt->from('item_ppo');
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-            $this->db_logistik_pt->where('LOKASI', $lokasi);
-        } elseif ($lokasi == "SITE") {
-            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-            $this->db_logistik_pt->from('item_ppo');
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-            $this->db_logistik_pt->where('LOKASI', $lokasi);
-            # code...
-        } elseif ($lokasi == "RO") {
-            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-            $this->db_logistik_pt->from('item_ppo');
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-            $this->db_logistik_pt->where('LOKASI', $lokasi);
-            # code...
-        } else {
-            $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-            $this->db_logistik_pt->from('item_ppo');
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-        }
+        // if ($lokasi == "PKS") {
+        //     $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+        //     $this->db_logistik_pt->from('item_ppo');
+        //     $this->db_logistik_pt->where('po', 0);
+        //     $this->db_logistik_pt->where('status2', 1);
+        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
+        // } elseif ($lokasi == "SITE") {
+        //     $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+        //     $this->db_logistik_pt->from('item_ppo');
+        //     $this->db_logistik_pt->where('po', 0);
+        //     $this->db_logistik_pt->where('status2', 1);
+        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
+        //     # code...
+        // } elseif ($lokasi == "RO") {
+        //     $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
+        //     $this->db_logistik_pt->from('item_ppo');
+        //     $this->db_logistik_pt->where('po', 0);
+        //     $this->db_logistik_pt->where('status2', 1);
+        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
+        //     # code...
+        // } else {
+
+        // }
 
 
 
@@ -175,7 +178,7 @@ class M_po extends CI_Model
 
     public function get_id($idspp, $noreftxt)
     {
-        $query = "SELECT p.*,p.id as id_spp,i.*,i.status2 as statusaprove FROM ppo p LEFT JOIN item_ppo i ON p.noreftxt = i.noreftxt WHERE i.noreftxt='$noreftxt' AND i.po = '0'";
+        $query = "SELECT p.*,p.id as id_spp,i.*,i.status2 as statusaprove, i.ket as ket_item_spp FROM ppo p LEFT JOIN item_ppo i ON p.noreftxt = i.noreftxt WHERE i.noreftxt='$noreftxt' AND i.po = '0'";
         $data = $this->db_logistik_pt->query($query)->result_array();
         return $data;
     }

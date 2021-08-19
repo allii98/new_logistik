@@ -312,6 +312,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <input type="text" class="form-control form-control-sm" id="total_pembayaran" name="total_pembayaran" placeholder="Total Pembayaran" readonly required>
 
                                     <input type="hidden" class="form-control bg-light" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
+                                    <p id="infoppn" style="display:none;">*Sudah termasuk PPN 10%</p>
                                 </div>
                             </div>
                         </div>
@@ -695,7 +696,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 <div class="col-12">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                        <table id="spp" class="table table-striped table-bordered table-in" width="60px">
+                        <table id="spp" class="table table-striped table-bordered table-in" width="100%">
                             <thead>
                                 <tr>
                                     <th>
@@ -940,6 +941,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             $('#devisi').val(data[0].devisi);
                             $('#hidden_kode_devisi').val(data[0].kode_dev);
                             $('#hidden_devisi').val(data[0].devisi);
+                            $('#jenis_spp').val(data[0].devisi);
 
                             var n = 1;
                             $.each(data, function(index, value) {
@@ -968,6 +970,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 var qty = value.qty;
                                 // console.log('ini qty nya', qty)
                                 var qty2 = value.qty2;
+                                var ket_item_spp = value.ket_item_spp;
 
 
                                 $('#id_ppo' + n).val(idppo);
@@ -989,6 +992,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#hidden_satuan_brg_' + n).val(sat);
                                 $('#txt_qty_' + n).val(qty);
                                 $('#getspp' + n).val(opsi);
+                                $('#txt_keterangan_rinci_' + n).val(ket_item_spp);
 
                                 $('#qty_' + n).val(qty);
                                 $('#qty2_' + n).val(qty2);
@@ -1205,11 +1209,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function modalSPP(id) {
         // $('#getspp').click(function() {
         var data = "SEMUA";
-        sppHO(data);
+        // sppHO(data);
+        sppHO();
         $("#modal-spp").modal();
     }
 
-    function sppHO(data) {
+    function sppHO() {
         $('#spp').DataTable().destroy();
         $('#spp').DataTable({
             "processing": true,
@@ -1220,9 +1225,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             "ajax": {
                 "url": "<?php echo site_url('Po/get_ajax') ?>",
                 "type": "POST",
-                "data": {
-                    data: data
-                }
+
             },
             "columnDefs ": [{
                 "targets": [0],
@@ -1592,6 +1595,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#hidden_kode_brg_' + n).val(data[1][0].kodebartxt);
                     $('#kode_brg_' + n).text(data[1][0].kodebartxt);
                     $('#hidden_nama_brg_' + n).val(data[1][0].nabar);
+                    $('#txt_keterangan_rinci_' + n).val(data[1][0].ket);
                     $('#nama_brg_' + n).text(data[1][0].nabar);
                     $('#hidden_satuan_brg_' + n).val(data[1][0].sat);
                     var qty = data[1][0].qty;
@@ -1693,6 +1697,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 }
                 $('#total_pembayaran').val(rupiah);
                 $('#ttl_pembayaran').val(data.totbay);
+                if (data.notif = true) {
+                    $('#infoppn').css('display', 'block');
+                } else {
+                    $('#infoppn').css('display', 'none');
+
+                }
+
             },
             error: function(request) {
                 alert("KONEKSI TERPUTUS!");
@@ -1793,15 +1804,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var qty_harga = qty * hargaSetelahDisc;
         if (pph != 0) {
-            var jml_pph = pph / 100;
-            var total_pph = qty_harga * jml_pph;
+            // var jml_pph = pph / 100;
+            // var total_pph = qty_harga * jml_pph;
+            var total_pph = 0;
         } else {
             var total_pph = 0;
         }
 
         if (ppn == 10) {
-            var jml_ppn = ppn / 100;
-            var total_ppn = qty_harga * jml_ppn;
+            // var jml_ppn = ppn / 100;
+            // var total_ppn = qty_harga * jml_ppn;
+            var total_ppn = 0;
         } else {
             var total_ppn = 0;
         }

@@ -20,18 +20,19 @@ class M_data extends CI_Model
     {
         // $Value = ;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
-        $user = $this->session->userdata('user');
-        if ($lokasi_sesi == 'HO') {
-            # code...
-            $this->db_logistik_pt->select('id, noreftxt,nopo,nopotxt, tglpo, nama_supply,no_refppo,tgl_refppo, ket, terbayar, sudah_lpb');
-            $this->db_logistik_pt->from('po');
-            // $this->db_logistik_pt->where('po');
-        } else {
-            $this->db_logistik_pt->select('id, noreftxt,nopotxt,nopo, tglpo, nama_supply,no_refppo,tgl_refppo, ket, terbayar, sudah_lpb');
-            $this->db_logistik_pt->from('po');
-            $this->db_logistik_pt->where('user', $user);
-            # code...
-        }
+        $this->db_logistik_pt->from('po');
+        $this->db_logistik_pt->where('lokasi', $lokasi_sesi);
+
+        // if ($lokasi_sesi == 'HO') {
+        //     # code...
+        //     $this->db_logistik_pt->select('id, noreftxt,nopo,nopotxt, tglpo, nama_supply,no_refppo,tgl_refppo, ket, terbayar, sudah_lpb');
+        //     $this->db_logistik_pt->from('po');
+        //     $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
+        // } else {
+        //     $this->db_logistik_pt->select('id, noreftxt,nopotxt,nopo, tglpo, nama_supply,no_refppo,tgl_refppo, ket, terbayar, sudah_lpb');
+        //     $this->db_logistik_pt->from('po');
+        //     # code...
+        // }
 
         // $d = "SELECT p.id, p.no_refppo , p.nopo, p.tglpo, p.nama_supply, i.nabar, i.nopo, p.ket, p.terbayar FROM po p LEFT JOIN item_po i ON p.nopo = i.nopo ORDER BY p.id DESC";
         // $this->db_logistik_pt->query($d);

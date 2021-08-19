@@ -27,8 +27,8 @@ class Po extends CI_Controller
 
     function get_ajax()
     {
-        $id = $this->input->post('data');
-        $this->M_po->where_datatables($id);
+        // $id = $this->input->post('data');
+        // $this->M_po->where_datatables($id);
         $list = $this->M_po->get_datatables();
         $data = array();
         $no = $_POST['start'];
@@ -237,6 +237,7 @@ class Po extends CI_Controller
         $data['supplier'] = $this->db_logistik_pt->query($query_supplier)->row();
 
         $no_refpo = $data['po']->noreftxt;
+        // $no_refspp = $data['po']->no_refppo;
         $data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('noref' => $nopo, 'noref' => $no_refpo))->result();
 
         $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE noref = '$no_refpo'";
@@ -441,9 +442,11 @@ class Po extends CI_Controller
         $dikurangi_biayalain = $data->totalbayar - $data2->biayalain;
 
         if ($ppn == 10) {
+            $notif = true;
             $jml_ppn = $ppn / 100;
             $total_ppn = $dikurangi_biayalain * $jml_ppn;
         } else {
+            $notif = false;
             $total_ppn = 0;
         }
 
@@ -468,6 +471,7 @@ class Po extends CI_Controller
         }
 
         $output = [
+            'notif' => $notif,
             'totbay' => $totbay,
             'total_ppn' => $total_ppn,
             'total_pph' => $total_pph,
@@ -661,6 +665,7 @@ class Po extends CI_Controller
             'kode_dev' => $this->input->post('hidden_kode_devisi'),
             'devisi' => $this->input->post('hidden_devisi'),
             'grup' => $this->input->post('cmb_jenis_budget'),
+            'jenis_spp' =>  $this->input->post('hidden_jenis_spp'),
             'kode_budet' => "0",
             'kd_subbudget' => "0",
             'ket_subbudget' => NULL,
