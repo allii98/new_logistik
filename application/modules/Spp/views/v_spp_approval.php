@@ -49,41 +49,39 @@
     <div class="modal-dialog modal-lg modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title ml-2" id="myModalLabel">Pilih SPP</h4>
+                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:28px;">
+            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:16px;">
                 <span id="detail_noref_spp" style="font-size: 12px;"></span>
             </div>
             <div class="modal-body">
-                <div class="col-12" style="margin-top: -15px;">
-                    <div class="table-responsive">
-                        <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
-                        <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
-                            <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>ID</th>
-                                    <th>Kode&nbsp;Barang</th>
-                                    <th>Nama&nbsp;Barang</th>
-                                    <th>Sat</th>
-                                    <th>Qty</th>
-                                    <th>Stok</th>
-                                    <th>Ket</th>
-                                    <!-- <th>Revisi&nbsp;Qty</th> -->
-                                    <th>Status&nbsp;SPP</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
-                                </tr>
-                            </tfoot>
-                        </table>
-                    </div>
+                <div class="table-responsive" style="margin-top: -15px;">
+                    <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
+                    <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>ID</th>
+                                <th>Kode&nbsp;Barang</th>
+                                <th>Nama&nbsp;Barang</th>
+                                <th>Sat</th>
+                                <th>Qty</th>
+                                <th>Stok</th>
+                                <th>Ket</th>
+                                <!-- <th>Revisi&nbsp;Qty</th> -->
+                                <th>Status&nbsp;SPP</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
