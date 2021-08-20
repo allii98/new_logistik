@@ -173,7 +173,7 @@
                     <input type="hidden" id="hidden_periode" name="hidden_periode">
                     <input type="hidden" id="hidden_tglppo" name="hidden_tglppo">
 
-                    <div class="row" style="margin-left:4px;">
+                    <div class="row" style="margin-left:0px;">
                         <h6 id="no_spp" name="no_spp"></h6>&emsp;&emsp;
                         <h6 id="no_ref_spp" name="no_ref_spp"></h6>
                     </div>
@@ -995,7 +995,7 @@
             '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" required style="font-size: 12px;">' +
             '</td>';
         var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<span style="font-size: 12px;  padding-left: 3px;" id="stok_' + n + '"></span><span> </span><span style="font-size: 12px;" id="satuan_' + n + '"> </span>' +
+            '<span style="font-size: 12px; padding-left: 3px;" id="stok_' + n + '"></span><span> </span><span style="font-size: 12px;" id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
@@ -1061,7 +1061,7 @@
             '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" required style="font-size: 12px;">' +
             '</td>';
         var td_col_4 = '<td width="12%" style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<span style="font-size: 12px;" id="stok_' + n + '"></span><span> </span><span style="font-size: 12px;" id="satuan_' + n + '"> </span>' +
+            '<span style="font-size: 12px; padding-left: 3px;" id="stok_' + n + '"></span><span> </span><span style="font-size: 12px;" id="satuan_' + n + '"> </span>' +
             '<input type="hidden" id="hidden_satuan_brg_' + n + '" name="hidden_satuan_brg_' + n + '">' +
             '<input type="hidden" id="hidden_stok_' + n + '" name="hidden_stok_' + n + '">' +
             '</td>';
