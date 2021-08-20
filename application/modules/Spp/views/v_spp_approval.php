@@ -53,9 +53,11 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
+            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:28px;">
+                <span id="detail_noref_spp" style="font-size: 12px;"></span>
+            </div>
             <div class="modal-body">
-
-                <div class="col-12">
+                <div class="col-12" style="margin-top: -15px;">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
                         <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
@@ -227,13 +229,16 @@
         });
     }
 
-    function detail_approval(id_ppo) {
+    $(document).ready(function() {
+        $(document).on('click', '#detail_spp_approval', function() {
 
-        $("#modal-spp-approval").modal('show');
+            $("#modal-spp-approval").modal('show');
 
-        $('#hidden_id_ppo').val(id_ppo);
+            var id_ppo = $(this).data('id_ppo');
+            var noref_spp = $(this).data('noref_spp');
 
-        $(document).ready(function() {
+            $('#hidden_id_ppo').val(id_ppo);
+            $('#detail_noref_spp').html('<b>No. Ref. SPP : </b>' + noref_spp);
 
             $('#spp_approval').DataTable().destroy();
             $('#spp_approval').DataTable({
@@ -279,7 +284,7 @@
                 }, ]
             });
         });
-    }
+    });
 
     function approve_barang() {
         var rowcollection = $('#spp_approval').DataTable().rows({
@@ -327,6 +332,52 @@
         });
         //refresh datatable
         $('#datasppapproval').DataTable().ajax.reload();
-        detail_approval(id_ppo);
+        callBack_detail_approval(id_ppo);
+    }
+
+    function callBack_detail_approval(id_ppo) {
+        $('#spp_approval').DataTable().destroy();
+        $('#spp_approval').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "select": true,
+
+            "ajax": {
+                "url": "<?php echo site_url('Spp/get_detail_approval') ?>",
+                "type": "POST",
+                "data": {
+                    id_ppo: id_ppo
+                }
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+
+            }, ],
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#spp_approval').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#spp_approval').DataTable().rows().deselect();
+                    }
+                }
+            ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+            "aoColumnDefs": [{
+                "bSearchable": false,
+                "bVisible": false,
+                "aTargets": [1]
+            }, ]
+        });
     }
 </script>

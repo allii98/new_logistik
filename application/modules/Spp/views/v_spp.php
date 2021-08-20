@@ -54,9 +54,11 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
+            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:28px;">
+                <span id="detail_noref_spp" style="font-size: 12px;"></span>
+            </div>
             <div class="modal-body">
-
-                <div class="col-12">
+                <div class="col-12" style="margin-top: -15px;">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
                         <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
@@ -214,13 +216,16 @@
         });
     }
 
-    function detail_data_spp(id_ppo) {
+    $(document).ready(function() {
+        $(document).on('click', '#detail_spp_approval', function() {
 
-        $("#modal-data-spp").modal('show');
+            $("#modal-data-spp").modal('show');
 
-        $('#hidden_id_ppo').val(id_ppo);
+            var id_ppo = $(this).data('id_ppo');
+            var noref_spp = $(this).data('noref_spp');
 
-        $(document).ready(function() {
+            $('#hidden_id_ppo').val(id_ppo);
+            $('#detail_noref_spp').html('<b>No. Ref. SPP : </b>' + noref_spp);
 
             $('#spp_approval').DataTable().destroy();
             $('#spp_approval').DataTable({
@@ -271,7 +276,7 @@
                 // }, ]
             });
         });
-    }
+    });
 
     // function approve_barang() {
     //     Swal.fire({
