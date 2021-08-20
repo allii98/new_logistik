@@ -247,14 +247,14 @@
             <div class="modal-body">
                 <div class="table-responsive">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                    <table id="dabar" class="table table-bordered w-100">
+                    <table id="dabar" class="table table-bordered" width="100%">
                         <thead>
                             <tr>
-                                <th width="5%">#</th>
-                                <th width="5%">No</th>
-                                <th width="25%">Kode Barang</th>
-                                <th width="35%">Nama Barang</th>
-                                <th width="35%">Grup</th>
+                                <th class="hastag_th">#</th>
+                                <th class="no_th">No</th>
+                                <th class="kodebar_th">Kode Barang</th>
+                                <th class="nabar_th">Nama Barang</th>
+                                <th class="grup_th">Grup</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -286,6 +286,26 @@
     </div>
 </div>
 <style>
+    .hastag_th {
+        width: 10% !important;
+    }
+
+    .no_th {
+        width: 5% !important;
+    }
+
+    .kodebar_th {
+        width: 25% !important;
+    }
+
+    .nabar_th {
+        width: 30% !important;
+    }
+
+    .grup_th {
+        width: 30% !important;
+    }
+
     table#dabar td {
         padding: 10px;
         font-size: 12px;

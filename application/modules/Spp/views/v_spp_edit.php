@@ -258,11 +258,11 @@
                     <table id="dabar" class="table table-bordered" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 3% !important;">#</th>
-                                <th style="width: 5% !important;">No</th>
-                                <th style="width: 10% !important;">Kode Barang</th>
-                                <th style="width: 20% !important;">Nama Barang</th>
-                                <th style="width: 20% !important;">Grup</th>
+                                <th class="hastag_th">#</th>
+                                <th class="no_th">No</th>
+                                <th class="kodebar_th">Kode Barang</th>
+                                <th class="nabar_th">Nama Barang</th>
+                                <th class="grup_th">Grup</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -296,6 +296,26 @@
 
 <input type="hidden" id="id_ppo_edit" value="<?= $id_ppo_edit ?>">
 <style>
+    .hastag_th {
+        width: 10% !important;
+    }
+
+    .no_th {
+        width: 5% !important;
+    }
+
+    .kodebar_th {
+        width: 25% !important;
+    }
+
+    .nabar_th {
+        width: 30% !important;
+    }
+
+    .grup_th {
+        width: 30% !important;
+    }
+
     table#tableRinciBarang th {
         padding: 10px;
         font-size: 12px;
