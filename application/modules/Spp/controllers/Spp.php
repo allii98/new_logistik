@@ -145,7 +145,8 @@ class Spp extends CI_Controller
 
         $key = $nmr_depan_dev . $dig_2;
 
-        $query_ppo = "SELECT MAX(SUBSTRING(noppotxt, 3)) as maxspp from ppo WHERE noppotxt LIKE '$key%'";
+        $hitung_key = strlen($key);
+        $query_ppo = "SELECT MAX(SUBSTRING(noppotxt, $hitung_key+1)) as maxspp from ppo WHERE noppotxt LIKE '$key%'";
         $generate_ppo = $this->db_logistik_pt->query($query_ppo)->row();
         $noUrut = (int)($generate_ppo->maxspp);
         $noUrut++;

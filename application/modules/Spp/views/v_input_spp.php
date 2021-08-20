@@ -558,7 +558,7 @@
             },
 
             success: function(data) {
-                console.log(data + 'after save');
+                console.log(data);
 
                 if (data == 'conn_failed') {
                     swal('KONEKSI TERPUTUS! ');
