@@ -15,33 +15,15 @@
                     <table id="tableListLPB" class="table dataTable no-footer table-striped table-bordered w-100">
                         <thead>
                             <tr>
-                                <th style="padding: 0.4em; width: 85px; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">#</font>
-                                </th>
-                                <th width="5%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">No</font>
-                                </th>
-                                <th width="10%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">Tgl Terima</font>
-                                </th>
-                                <th width="10%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">Tgl Input</font>
-                                </th>
-                                <th width="19%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">No. Ref LPB</font>
-                                </th>
-                                <th width="26%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">No. Ref PO</font>
-                                </th>
-                                <th width="10%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">Supplier</font>
-                                </th>
-                                <th width="14%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">Keterangan</font>
-                                </th>
-                                <th width="7%" style="padding: 0.4em; padding-left: 1em;">
-                                    <font face="Verdana" size="2.5">Input Oleh</font>
-                                </th>
+                                <th width="8%" style="font-size: 12px; padding:10px">#</th>
+                                <th width="3%" style="font-size: 12px; padding:10px">No</th>
+                                <th width="9%" style="font-size: 12px; padding:10px">Tgl Terima</th>
+                                <th width="9%" style="font-size: 12px; padding:10px">Tgl Input</th>
+                                <th width="18%" style="font-size: 12px; padding:10px">No. Ref LPB</th>
+                                <th width="22%" style="font-size: 12px; padding:10px">No. Ref PO</th>
+                                <th width="9%" style="font-size: 12px; padding:10px">Supplier</th>
+                                <th width="17%" style="font-size: 12px; padding:10px">Keterangan</th>
+                                <th width="5%" style="font-size: 12px; padding:10px">Input Oleh</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,8 +43,11 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
+            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:17px;">
+                <span id="detail_noref_lpb" style="font-size: 12px;"></span>
+            </div>
             <div class="modal-body">
-                <div class="form-horizontal">
+                <div class="form-horizontal" style="margin-top: -15px;">
                     <div class="form-group">
                         <div class="table-responsive">
                             <table id="tableDetailItemLpb" class="table table-striped table-bordered" style="width: 100%;">
@@ -92,7 +77,22 @@
         </div>
     </div>
 </div>
+<style>
+    table#tableDetailItemLpb th {
+        padding: 10px;
+        font-size: 12px;
+    }
 
+    table#tableDetailItemLpb td {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    table#tableListLPB td {
+        padding: 10px;
+        font-size: 12px;
+    }
+</style>
 <script>
     var table;
     $(document).ready(function() {
@@ -128,6 +128,7 @@
             // console.log(noref + 'ninoref');
 
             $("#modalListItemLpb").modal('show');
+            $('#detail_noref_lpb').html('<b>No. Ref. LPB : </b>' + noref);
             tampil_detail_lpb(noref, mutasi);
         });
     });

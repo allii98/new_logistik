@@ -154,7 +154,7 @@
                     <div class="row div_form_2">
                         <div class="col-12">
                             <div class="sub-header" style="margin-top: -10px; margin-bottom: -30px;">
-                                <div class="row ml-1">
+                                <div class="row ml-0">
                                     <h6 id="lbl_spp_status" name="lbl_spp_status">
                                         No. SPP : ... &nbsp; No. Ref SPP : ...
                                     </h6>

@@ -54,7 +54,7 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:16px;">
+            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:17px;">
                 <span id="detail_noref_spp" style="font-size: 12px;"></span>
             </div>
             <div class="modal-body">

@@ -8,9 +8,7 @@ date_default_timezone_set('Asia/Jakarta');
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between headspp">
-                        <h4 class="header-title ml-2">
-                            <font face="Verdana"> LPB </font>
-                        </h4>
+                        <h4 class="header-title ml-2">LPB</h4>
                         <div class="button-list mr-2">
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
                             <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()" disabled>LPB Baru</button>
@@ -20,7 +18,7 @@ date_default_timezone_set('Asia/Jakarta');
                         </div>
                     </div>
                     <div class="row">
-                        <p class="sub-header ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                        <p class="sub-header ml-2">
                             Input Laporan Penerimaan Barang
                         </p>
                     </div>
@@ -103,7 +101,7 @@ date_default_timezone_set('Asia/Jakarta');
                     <hr class="mt-1 mb-2">
                     <div class="row div_form_2">
                         <div class="col-12">
-                            <div class="sub-header" style="margin-top: -10px; margin-bottom: -25px;">
+                            <div class="sub-header" style="margin-top: -10px; margin-bottom: -22px;">
                                 <input type="hidden" id="hidden_no_lpb">
                                 <input type="hidden" id="hidden_no_ref_lpb">
                                 <input type="hidden" id="hidden_tglppo">
@@ -111,7 +109,7 @@ date_default_timezone_set('Asia/Jakarta');
                                 <input type="hidden" id="hidden_kd_dept">
                                 <input type="hidden" id="hidden_ket_dept">
                             </div>
-                            <div class="row mt-2 ml-0">
+                            <div class="row mt-2 ml-0" style="margin-bottom: 4px;">
                                 <h6><span id="no_ref_po"></span></h6>
                                 <h6 id="lbl_lpb_status" name="lbl_lpb_status">
                                     No. LPB : ... &nbsp; No. Ref LPB : ...
@@ -122,28 +120,16 @@ date_default_timezone_set('Asia/Jakarta');
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
+                                <table id="tableRinciLPB" class="table table-striped table-bordered" width="100%">
                                     <thead>
                                         <tr>
                                             <!-- <th width="3%">#</th> -->
-                                            <th width="21%">
-                                                <font face="Verdana" size="1.5">Kode Barang</font>
-                                            </th>
-                                            <th width="24%">
-                                                <font face="Verdana" size="1.5">Nama Barang / Satuan / Grup</font>
-                                            </th>
-                                            <th width="9%">
-                                                <font face="Verdana" size="1.5">Saldo Qty</font>
-                                            </th>
-                                            <th width="9%">
-                                                <font face="Verdana" size="1.5">Qty</font>
-                                            </th>
-                                            <th width="20%">
-                                                <font face="Verdana" size="1.5">Ket</font>
-                                            </th>
-                                            <th width="6%">
-                                                <font face="Verdana" size="1.5">#</font>
-                                            </th>
+                                            <th width="21%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Kode Barang</th>
+                                            <th width="24%" style="font-size: 12px; padding: 10px; padding-left: 15px;">Nama Barang / Satuan / Grup</th>
+                                            <th width="9%" style="font-size: 12px; padding: 10px; padding-left: 15px;">Saldo Qty</th>
+                                            <th width="9%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Qty</th>
+                                            <th width="20%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Ket</th>
+                                            <th width="6%" style="font-size: 12px; padding: 10px; padding-left: 17px;">#</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_rincian" name="tbody_rincian">
@@ -281,7 +267,7 @@ date_default_timezone_set('Asia/Jakarta');
 <style>
     .select2-container {
         white-space: nowrap;
-        font-size: 10px;
+        font-size: 9px;
     }
 </style>
 
@@ -385,7 +371,7 @@ date_default_timezone_set('Asia/Jakarta');
             '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly style="font-size: 12px;">' +
             '<label class="ml-1 mt-1">' +
             '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
-            '<span class="text-muted" face="Verdana" size="1.5"> Asset ?</span>' +
+            '<span style="font-size: 12px;" class="text-muted"> Asset ?</span>' +
             '</label>' +
             '</div>' +
             '</td>';

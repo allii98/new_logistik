@@ -4,9 +4,7 @@
         <div class="col-12">
             <div class="widget-rounded-circle card-box">
                 <div class="row justify-content-between">
-                    <h4 class="header-title ml-2">
-                        <font face="Verdana"> LPB <i>(Edit)</i> </font>
-                    </h4>
+                    <h4 class="header-title ml-2">LPB <i>(Edit)</i></h4>
                     <div class="button-list mr-2">
                         <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()">LPB Baru</button>
                         <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()">Batal LPB</button>
@@ -120,35 +118,23 @@
                         <input type="hidden" id="txt_ref_po" name="txt_ref_po">
                         <input type="hidden" id="hidden_id_lpb">
                     </div>
-                    <div class="row mr-2" style="margin-left:4px;">
+                    <div class="row mr-2 ml-0" style="margin-left:4px;">
                         <h6>
-                            <span id="no_ref_po"></span>&emsp;&emsp;
+                            <span id="no_ref_po"></span>&emsp;&emsp;&emsp;&emsp;
                             <span id="no_lpb"></span>&emsp;&emsp;
                             <span id="no_ref_lpb"></span>
                         </h6>
                     </div>
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
+                        <table id="tableRinciLPB" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th width="21%">
-                                        <font face="Verdana" size="1.5">Kode Barang</font>
-                                    </th>
-                                    <th width="24%">
-                                        <font face="Verdana" size="1.5">Nama Barang / Satuan / Grup</font>
-                                    </th>
-                                    <th width="9%">
-                                        <font face="Verdana" size="1.5">Saldo Qty</font>
-                                    </th>
-                                    <th width="9%">
-                                        <font face="Verdana" size="1.5">Qty</font>
-                                    </th>
-                                    <th width="20%">
-                                        <font face="Verdana" size="1.5">Ket</font>
-                                    </th>
-                                    <th width="6%">
-                                        <font face="Verdana" size="1.5">#</font>
-                                    </th>
+                                    <th width="21%">Kode Barang</th>
+                                    <th width="24%" style="padding-left: 14px;">Nama Barang / Satuan / Grup</th>
+                                    <th width="9%" style="padding-left: 14px;">Saldo Qty</th>
+                                    <th width="9%">Qty</th>
+                                    <th width="20%">Ket</th>
+                                    <th width="6%">#</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody_rincian" name="tbody_rincian">
@@ -163,7 +149,7 @@
 
 </div> <!-- container -->
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListPo">
+<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListPo">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -201,9 +187,9 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalListItemPo">
+<!-- <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalListItemPo">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -242,7 +228,8 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
+
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusLpb">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -260,7 +247,13 @@
     </div>
 </div>
 <input type="hidden" id="id_stokmasuk" value="<?= $id_stokmasuk ?>">
-
+<style>
+    table#tableRinciLPB th {
+        padding: 10px;
+        font-size: 12px;
+        padding-left: 17px;
+    }
+</style>
 <script>
     function cekLpb() {
 
@@ -500,7 +493,7 @@
             '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" style="font-size: 12px;" readonly>' +
             '<label class="ml-1 mt-1">' +
             '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
-            '<span style="font-size: 12px;" class="text-muted" face="Verdana" size="1.5"> Asset ?</span>' +
+            '<span style="font-size: 12px;" class="text-muted"> Asset ?</span>' +
             '</label>' +
             '</div>' +
             '</td>';
@@ -511,7 +504,7 @@
             '<span style="font-size: 12px;" class="ml-2" id="hidden_grup_' + row + '">Grup</span>' +
             '</div>' +
             '</td>';
-        var td_col_4 = '<td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
+        var td_col_4 = '<td style="padding-right: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
             '<span class="small text-muted" style="font-size: 12px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-size: 12px;"></span><br>' +
             '<span class="small text-muted" style="font-size: 12px;">Sisa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-size: 12px;"></span>' +
             '</td>';
