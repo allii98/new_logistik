@@ -175,6 +175,24 @@
                         echo "<h3 class='text-white'>PT. MITRA AGRO PERSADA ABADI</h3>";
                         echo "</marquee>";
                         echo "</div>";
+                    } elseif ($pt_login == 'PEAK') {
+                        echo "<div class='external-event bg-warning text-right p-0 mt-0' data-class=bg-info'>";
+                        echo "<marquee>";
+                        echo "<h3 class='text-white'>PT. PERSADA ERA AGRO KENCANA</h3>";
+                        echo "</marquee>";
+                        echo "</div>";
+                    } elseif ($pt_login == 'PSAM') {
+                        echo "<div class='external-event bg-info text-right p-0 mt-0' data-class=bg-info'>";
+                        echo "<marquee>";
+                        echo "<h3 class='text-white'>PT. PERSADA SEJAHTERA AGRO MAKMUR</h3>";
+                        echo "</marquee>";
+                        echo "</div>";
+                    } elseif ($pt_login == 'KPP') {
+                        echo "<div class='external-event bg-danger text-right p-0 mt-0' data-class=bg-info'>";
+                        echo "<marquee>";
+                        echo "<h3 class='text-white'>PT. KERENG PANGI PERDANA</h3>";
+                        echo "</marquee>";
+                        echo "</div>";
                     }
                     ?>
                     <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small><br>

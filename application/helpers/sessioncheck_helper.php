@@ -38,6 +38,8 @@ function check_db_pt()
 		$db_pt = 'psam';
 	} elseif ($session_db_pt == 'peak') {
 		$db_pt = 'peak';
+	} elseif ($session_db_pt == 'kpp') {
+		$db_pt = 'kpp';
 	}
 	return $db_pt;
 }

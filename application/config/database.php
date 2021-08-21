@@ -173,6 +173,84 @@ $db['db_logistik_mapa'] = array(
 	'save_queries' => TRUE
 );
 
+$db['db_logistik_psam'] = array(
+	'dsn'	=> '',
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => '',
+	// 'hostname' => '192.168.1.231',
+	'hostname' => '192.168.3.233',
+	'username' => 'genza',
+	'password' => 'genza123!@',
+	'database' => 'new_logistikpsam_2021',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+$db['db_logistik_peak'] = array(
+	'dsn'	=> '',
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => '',
+	// 'hostname' => '192.168.1.231',
+	'hostname' => '192.168.3.233',
+	'username' => 'genza',
+	'password' => 'genza123!@',
+	'database' => 'new_logistikpeak_2021',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
+$db['db_logistik_kpp'] = array(
+	'dsn'	=> '',
+	// 'hostname' => 'localhost',
+	// 'username' => 'root',
+	// 'password' => '',
+	// 'hostname' => '192.168.1.231',
+	'hostname' => '192.168.3.233',
+	'username' => 'genza',
+	'password' => 'genza123!@',
+	'database' => 'new_logistikkpp_2021',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+
 $db['db_logistik'] = array(
 	'dsn'	=> '',
 	// 'hostname' => 'localhost',

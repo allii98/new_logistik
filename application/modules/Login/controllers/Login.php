@@ -15,6 +15,9 @@ class Login extends CI_Controller
         $this->db_logistik_center = $this->load->database('db_logistik_center', true);
         $this->db_logistik_msal = $this->load->database('db_logistik_msal', true);
         $this->db_logistik_mapa = $this->load->database('db_logistik_mapa', true);
+        $this->db_logistik_peak = $this->load->database('db_logistik_peak', true);
+        $this->db_logistik_psam = $this->load->database('db_logistik_psam', true);
+        $this->db_logistik_kpp = $this->load->database('db_logistik_kpp', true);
     }
 
     public function index()
@@ -47,6 +50,12 @@ class Login extends CI_Controller
                 $pt_login = 'db_logistik_msal';
             } else if ($data['get_tb_pt_central']['alias'] == 'MAPA') {
                 $pt_login = 'db_logistik_mapa';
+            } else if ($data['get_tb_pt_central']['alias'] == 'PEAK') {
+                $pt_login = 'db_logistik_peak';
+            } else if ($data['get_tb_pt_central']['alias'] == 'PSAM') {
+                $pt_login = 'db_logistik_psam';
+            } else if ($data['get_tb_pt_central']['alias'] == 'KPP') {
+                $pt_login = 'db_logistik_kpp';
             }
 
             $get_username = $this->$pt_login->get_where('user', array('username' => $username));
