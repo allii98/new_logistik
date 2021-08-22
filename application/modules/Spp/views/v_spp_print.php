@@ -85,7 +85,7 @@
                         <td class="noborder warna_sebagian"><?= $list_item->kodebartxt; ?></td>
                         <td class="noborder"><?= $list_item->nabar; ?></td>
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
-                        <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                        <td class="noborder" align="center"><?= $list_item->STOK; ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
                         <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                     </tr>
@@ -97,7 +97,7 @@
                         <td class="noborder"><?= $list_item->kodebartxt; ?></td>
                         <td class="noborder"><?= $list_item->nabar; ?></td>
                         <td class="noborder" align="center"><?= $list_item->qty; ?></td>
-                        <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                        <td class="noborder" align="center"><?= $list_item->STOK; ?></td>
                         <td class="noborder" align="center"><?= $list_item->sat; ?></td>
                         <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                     </tr>
@@ -110,7 +110,7 @@
                     <td class="noborder"><?= $list_item->kodebartxt; ?></td>
                     <td class="noborder"><?= $list_item->nabar; ?></td>
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
-                    <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                    <td class="noborder" align="center"><?= $list_item->STOK; ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
                     <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                 </tr>
@@ -122,7 +122,7 @@
                     <td class="noborder"><?= $list_item->kodebartxt; ?></td>
                     <td class="noborder"><?= $list_item->nabar; ?></td>
                     <td class="noborder" align="center"><?= $list_item->qty; ?></td>
-                    <td class="noborder" align="center"><?= $list_item->STOK ?></td>
+                    <td class="noborder" align="center"><?= $list_item->STOK; ?></td>
                     <td class="noborder" align="center"><?= $list_item->sat; ?></td>
                     <td class="noborder" style="word-break: break-word"><?= htmlspecialchars($list_item->ket); ?></td>
                 </tr>

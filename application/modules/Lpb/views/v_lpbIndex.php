@@ -36,7 +36,7 @@
 </div> <!-- container -->
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListItemLpb">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog modal-xl_lpb">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Detail LPB</h4>
@@ -54,14 +54,14 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Kode Barang</th>
-                                        <th>Nama&nbsp;Barang</th>
-                                        <th>Satuan</th>
-                                        <th>Grup</th>
-                                        <th>Qty&nbsp;PO</th>
-                                        <th>Qty&nbsp;LPB</th>
-                                        <th>Sisa&nbsp;LPB</th>
-                                        <th>Ket</th>
+                                        <th class="konagrup">Kode Barang</th>
+                                        <th class="nabar_style">Nama&nbsp;Barang</th>
+                                        <th class="sapll">Satuan</th>
+                                        <th class="konagrup">Grup</th>
+                                        <th class="sapll">Qty&nbsp;PO</th>
+                                        <th class="sapll">Qty&nbsp;LPB</th>
+                                        <th class="sapll">Sisa&nbsp;LPB</th>
+                                        <th class="ket_style">Ket</th>
                                     </tr>
                                 </thead>
                                 <tbody id="data_detail_item_lpb">
@@ -78,6 +78,29 @@
     </div>
 </div>
 <style>
+    .nabar_style {
+        width: 18% !important;
+    }
+
+    .sapll {
+        width: 8% !important;
+    }
+
+    .konagrup {
+        width: 15% !important;
+    }
+
+    .ket_style {
+        width: 20% !important;
+    }
+
+    @media (min-width: 768px) {
+        .modal-xl_lpb {
+            width: 90%;
+            max-width: 1200px;
+        }
+    }
+
     table#tableDetailItemLpb th {
         padding: 10px;
         font-size: 12px;
