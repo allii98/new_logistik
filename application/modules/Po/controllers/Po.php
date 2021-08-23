@@ -279,7 +279,7 @@ class Po extends CI_Controller
                 $mpdf->SetHTMLHeader('
                 <table width="100%" border="0">
                     <tr>
-                        <td rowspan="3"  width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/' . $logo_pt . '"></td>
+                        <td rowspan="3"  width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/' . $logo_pt . '"></td>
                     <tr>
                     <td align="left" style="font-size:8.5px;"><h3 style="font-size:14px;font-weight:bold;"> ' . $namapt . ' </h3>
                     ' . $alamat_ho . '
