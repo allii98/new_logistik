@@ -247,13 +247,6 @@ class Po extends CI_Controller
         $data_jum2 = $this->db_logistik_pt->query($query)->row();
 
         $data['dikurangi_biayalain'] = $data_jum->totalbayar - $data_jum2->biayalain;
-        // $mpdf = new \Mpdf\Mpdf([
-        // 		    'mode' => 'utf-8',
-        // 		    // 'format' => [190, 236],
-        // 		    'format' => [190, 236], 
-        // 		    'setAutoTopMargin' => 'stretch',
-        // 		    'orientation' => 'P'
-        // 		]);
 
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
@@ -288,7 +281,7 @@ class Po extends CI_Controller
                     <tr>
                         <td rowspan="3"  width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/img/' . $logo_pt . '"></td>
                     <tr>
-                    <td align="left" style="font-size:8.5px;"><h3 style="font-size:14px;font-weight:bold;"> "' . $namapt . '" </h3>
+                    <td align="left" style="font-size:8.5px;"><h3 style="font-size:14px;font-weight:bold;"> ' . $namapt . ' </h3>
                     ' . $alamat_ho . '
                     </td>
                     <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
@@ -299,6 +292,8 @@ class Po extends CI_Controller
                 ');
                 break;
             case 'SITE':
+            case 'RO':
+            case 'PKS':
                 $mpdf->SetHTMLHeader('
                 <table width="100%" border="0">
                     <tr>

@@ -127,7 +127,7 @@ function terbilang($x, $style = 4)
         <tr>
           <td>Nama</td>
           <td>:</td>
-          <td>PT MULIA SAWIT AGRO LESTARI</td>
+          <td><?= $po->namapt ?></td>
         </tr>
         <br>
         <tr>
@@ -204,7 +204,7 @@ function terbilang($x, $style = 4)
   <table border="1" class="singleborder" width="100%">
     <thead>
       <tr>
-        <td align="center" width="2%">No</td>
+        <td align="center" width="1%">No</td>
         <td align="center" width="15%">Kode&nbsp;Barang</td>
         <td align="center" width="15%">Nama&nbsp;Barang</td>
         <td align="center" width="17%">Merk</td>
