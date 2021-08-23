@@ -303,14 +303,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 case 'HO':
                             ?>
                                     <div class="form-group row" style="margin-bottom: 2px;">
-                                        <label for="dikirim_kebun" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        <label for="cmb_dikirim_ke_kebun" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                             Kirim&nbsp;Kebun?
                                             <!-- <font face="Verdana" size="1.5">Kirim&nbsp;Kebun?</font> -->
                                         </label>
                                         <div class="col-9 col-xl-12">
-                                            <select class="form-control form-control-sm" id="dikirim_kebun" name="dikirim_kebun" required>
-                                                <option value="Y" selected="">Y</option>
-                                                <option value="N">N</option>
+                                            <select class="form-control form-control-sm" id="cmb_dikirim_ke_kebun" name="cmb_dikirim_ke_kebun" required>
+                                                <option value="Y">Y</option>
+                                                <option value="N" selected>N</option>
                                             </select>
                                         </div>
                                     </div>
@@ -482,7 +482,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <textarea class="form-control form-control-sm" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="3"></textarea>
                                                     </td>
                                                     <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="number" class="form-control form-control-sm bg-light" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" readonly>
+                                                        <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')">
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
                                                     </td>
@@ -896,6 +896,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         return devisi;
     }
 
+    function cekJenis(jenis) {
+        console.log('ini jenisnya', jenis);
+    }
+
     $(document).ready(function() {
         $('.div_form_2').hide();
         $('.div_form_3').hide();
@@ -932,6 +936,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 $(document).on('click', '#data_spp', function() {
                     var id = $(this).data('id');
                     var noreftxt = $(this).data('noreftxt');
+                    var jenis = $(this).data('jenis');
                     // console.log(noreftxt);
                     $.ajax({
                         type: 'post',
@@ -939,6 +944,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         data: {
                             id: id,
                             noreftxt: noreftxt,
+                            jenis: jenis
                         },
                         success: function(response) {
                             $('.div_form_3').show();
@@ -951,6 +957,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             $('#hidden_kode_devisi').val(data[0].kode_dev);
                             $('#hidden_devisi').val(data[0].devisi);
                             $('#jenis_spp').val(data[0].devisi);
+
+                            cekJenis(jenis);
 
                             var n = 1;
                             $.each(data, function(index, value) {
@@ -1380,7 +1388,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<textarea class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
             '<input type="hidden" class="form-control form-control-sm bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
@@ -1456,7 +1464,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         hitungqty(row);
         // jumlah(row);
     }
-
 
     // var n = 2;
     function tambah_row(n) {
@@ -1769,7 +1776,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     // }
 
     function check_form_2() {
-        if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#dikirim_kebun').val()) != '') {
+        if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#cmb_dikirim_ke_kebun').val()) != '') {
             $('.div_form_2').show();
             // $('.div_form_3').find('input,textarea,select,button').removeAttr('disabled', '');
             // $('.div_form_3').find('input,textarea,select,button').prop('disabled', false);
@@ -2003,6 +2010,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_no_po: $('#hidden_no_po').val(),
                     hidden_devisi: $('#hidden_devisi').val(),
                     hidden_kode_devisi: $('#hidden_kode_devisi').val(),
+                    cmb_dikirim_ke_kebun: $('#cmb_dikirim_ke_kebun').val(),
                     txt_jumlah: $('#txt_jumlah_' + id).val(),
 
                 },

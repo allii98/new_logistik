@@ -172,15 +172,15 @@ function terbilang($x, $style = 4)
   ?>
   <hr>
   <h3 align="right" style="margin-bottom: 0px;margin-top: 0px; font-weight: normal;"><small>Jakarta, <?= date('d-m-Y') ?></small></h3>
-  <h2 align="center" style="margin: 0px;">PESANAN PEMBELIAN</h2>
+  <h2 align="center" style="margin: 0px;margin-top: -10px;">PESANAN PEMBELIAN</h2>
   <!-- <p align="center" style="margin-top: 0px;font-size: 12px;">
     No. PP : <?= $po->noreftxt; ?> <br />
     No. SPP : <?= $po->no_refppo; ?>
   </p> -->
-  <h3 style="font-weight: normal;margin: 0px; font-size: 8; text-align: center;">
+  <h3 style="font-weight: normal;margin-top: -8px; margin-bottom:0px; font-size: 8; text-align: center;">
     No.&nbsp;PO&nbsp;:&nbsp;<?= $po->noreftxt; ?>
   </h3>
-  <h3 align="right" style="font-weight: normal;margin-top: -20px; font-size: 8;">
+  <h3 align="right" style="font-weight: normal; margin-top: -20px; margin-bottom:-1px; font-size: 8;">
     No.&nbsp;SPP&nbsp;:&nbsp;<?= $po->no_refppo; ?>
   </h3>
 
@@ -204,15 +204,15 @@ function terbilang($x, $style = 4)
   <table border="1" class="singleborder" width="100%">
     <thead>
       <tr>
-        <td align="center" width="1%">No</td>
-        <td align="center" width="15%">Kode&nbsp;Barang</td>
-        <td align="center" width="15%">Nama&nbsp;Barang</td>
+        <td align="center" width="2%">No</td>
+        <td align="center" width="15%">Kode Barang</td>
+        <td align="center" width="15%">Nama Barang</td>
         <td align="center" width="17%">Merk</td>
-        <td align="center" width="7%">No.&nbsp;Part</td>
+        <td align="center" width="7%">No. Part</td>
         <td align="center" width="5%">Qty</td>
         <td align="center" width="3%">SAT</td>
         <td align="center" width="13%">Harga&nbsp;Satuan</td>
-        <td align="center" width="5%">Disc&nbsp;%</td>
+        <td align="center" width="5%">Disc %</td>
         <td align="center" width="18%" colspan="2">Total&nbsp;Harga</td>
 
       </tr>
@@ -231,9 +231,9 @@ function terbilang($x, $style = 4)
       ?>
         <tr id="tr_content">
           <td class="noborder" rowspan="2" align="center"><?= $no; ?></td>
-          <td class="noborder2" align="center"><?= $list_item->kodebartxt; ?></td>
-          <td class="noborder2" align="center"><?= $list_item->nabar; ?></td>
-          <td class="noborder2" align="center"><?= htmlspecialchars($list_item->merek); ?></td>
+          <td class="noborder2" align="left"><?= $list_item->kodebartxt; ?></td>
+          <td class="noborder2" align="left"><?= $list_item->nabar; ?></td>
+          <td class="noborder2" align="left"><?= htmlspecialchars($list_item->merek); ?></td>
           <td class="noborder" rowspan="2" align="center">-</td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->qty; ?></td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>

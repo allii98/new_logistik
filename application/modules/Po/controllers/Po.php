@@ -177,7 +177,7 @@ class Po extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<button class="btn btn-success btn-xs" id="data_spp" name="data_spp"
-                    data-id="' . $d->id . '"  data-noreftxt="' . $d->noreftxt . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button>';
+                    data-id="' . $d->id . '" data-jenis="' . $d->jenis . '"  data-noreftxt="' . $d->noreftxt . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button>';
             $row[] =  date_format(date_create($d->tglppo), 'd-m-Y');
             $row[] = $d->noreftxt;
             $row[] = $d->namadept;
@@ -372,6 +372,7 @@ class Po extends CI_Controller
     {
         $id = $this->input->post('idspp');
         $noreftxt = $this->input->post('noreftxt');
+        $jenis = $this->input->post('jenis');
         $data = $this->M_po->get_id($id, $noreftxt);
         echo json_encode($data);
     }

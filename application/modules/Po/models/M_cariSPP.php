@@ -21,7 +21,7 @@ class M_cariSPP extends CI_Model
         $role_user = $this->session->userdata('status_lokasi');
         $this->db_logistik_pt->from($this->table);
         $this->db_logistik_pt->where('lokasi', $role_user);
-        $this->db_logistik_pt->where_in('jenis', array('SPPI', 'SPPA'));
+        $this->db_logistik_pt->where_in('jenis', array('SPPI', 'SPPA', 'SPPK'));
         $this->db_logistik_pt->where('po', 0);
         $this->db_logistik_pt->where_in('status2', array(1, 2));
 
