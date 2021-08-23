@@ -43,6 +43,9 @@
 				<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
 				</button>
 			</div>
+			<div class="sub-header mb-2" style="margin-top: -20px; margin-left:16px;">
+				<span id="detail_noref_po" style="font-size: 12px;"></span>
+			</div>
 			<div class="modal-body">
 				<div class="col-12">
 					<div class="table-responsive">
@@ -51,11 +54,11 @@
 							<thead>
 								<tr>
 									<th width="3%" style="font-size: 11px; padding:10px">No</th>
-									<th width="30%" style="font-size: 11px; padding:10px">Ref.&nbsp;PO</th>
-									<th width="20%" style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
-									<th width="5%" style="font-size: 11px; padding:10px">Nama&nbsp;&Kode&nbsp;Barang</th>
+									<!-- <th width="28%" style="font-size: 11px; padding:10px">Ref.&nbsp;PO</th> -->
+									<th width="15%" style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
+									<th width="10%" style="font-size: 11px; padding:10px">Nama&nbsp;&Kode&nbsp;Barang</th>
 									<th width="5%" style="font-size: 11px; padding:10px">QTY</th>
-									<th width="3%" style="font-size: 11px; padding:10px">Tanggal PO</th>
+									<th width="10%" style="font-size: 11px; padding:10px">Tanggal PO</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -135,6 +138,7 @@
 
 	function detailPO(id) {
 		$('#detailpo').modal('show');
+		$('#detail_noref_po').html('<b>No. Ref. PO : </b>' + id);
 		$('#datapo').DataTable({
 			"destroy": true,
 			"processing": true,

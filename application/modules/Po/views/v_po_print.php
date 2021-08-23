@@ -116,40 +116,60 @@ function terbilang($x, $style = 4)
 </head>
 
 <body>
-  <hr>
-  <table border="0">
-    <tr>
-      <td>Nama</td>
-      <td>:</td>
-      <td>PT MULIA SAWIT AGRO LESTARI</td>
-    </tr>
-    <br>
-    <tr>
-      <td>No. NPWP</td>
-      <td>:</td>
-      <td><?= $pt->npwp; ?></td>
-    </tr>
-    <tr>
-      <td valign="top">Alamat NPWP</td>
-      <td valign="top">:</td>
-      <td align="justify">
-        <?php
-        $lok = $po->lokasi;
-        switch ($lok) {
-          case 'HO': // HO
-            echo $pt->alamatnpwp;
-            break;
-          case 'SITE': // RO
-            echo "-";
-            break;
+  <?php
+  $lokasi_sesi = $this->session->userdata('status_lokasi');
+  switch ($lokasi_sesi) {
+    case 'HO':
+  ?>
 
-          default:
-            break;
-        } ?>
-      </td>
+      <hr>
+      <table border="0">
+        <tr>
+          <td>Nama</td>
+          <td>:</td>
+          <td>PT MULIA SAWIT AGRO LESTARI</td>
+        </tr>
+        <br>
+        <tr>
+          <td>No. NPWP</td>
+          <td>:</td>
+          <td><?= $pt->npwp; ?></td>
+        </tr>
+        <tr>
+          <td valign="top">Alamat NPWP</td>
+          <td valign="top">:</td>
+          <td align="justify">
+            <?php
+            $lok = $po->lokasi;
+            switch ($lok) {
+              case 'HO': // HO
+                echo $pt->alamatnpwp;
+                break;
+              case 'SITE': // RO
+                echo "-";
+                break;
 
-    </tr>
-  </table>
+              default:
+                break;
+            } ?>
+          </td>
+
+        </tr>
+      </table>
+
+
+    <?php
+      break;
+    case 'RO':
+    case 'SITE':
+    case 'PKS':
+    ?>
+  <?php
+      break;
+    default:
+      break;
+  }
+  ?>
   <hr>
   <h3 align="right" style="margin-bottom: 0px;margin-top: 0px; font-weight: normal;"><small>Jakarta, <?= date('d-m-Y') ?></small></h3>
   <h2 align="center" style="margin: 0px;">PESANAN PEMBELIAN</h2>
@@ -184,16 +204,16 @@ function terbilang($x, $style = 4)
   <table border="1" class="singleborder" width="100%">
     <thead>
       <tr>
-        <td align="center" width="3%">No</td>
+        <td align="center" width="2%">No</td>
         <td align="center" width="15%">Kode&nbsp;Barang</td>
         <td align="center" width="15%">Nama&nbsp;Barang</td>
         <td align="center" width="17%">Merk</td>
-        <td align="center" width="8%">No.&nbsp;Part</td>
+        <td align="center" width="7%">No.&nbsp;Part</td>
         <td align="center" width="5%">Qty</td>
-        <td align="center" width="5%">SAT</td>
-        <td align="center" width="10%">Harga&nbsp;Satuan</td>
+        <td align="center" width="3%">SAT</td>
+        <td align="center" width="13%">Harga&nbsp;Satuan</td>
         <td align="center" width="5%">Disc&nbsp;%</td>
-        <td align="center" colspan="2">Total&nbsp;Harga</td>
+        <td align="center" width="18%" colspan="2">Total&nbsp;Harga</td>
 
       </tr>
     </thead>
@@ -217,13 +237,13 @@ function terbilang($x, $style = 4)
           <td class="noborder" rowspan="2" align="center">-</td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->qty; ?></td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>
-          <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($list_item->harga, 2, ",", "."); ?></td>
+          <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
-          <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumharga_pre, 2, ",", "."); ?></td>
+          <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($jumharga_pre, 2, ",", "."); ?></td>
 
         </tr>
         <tr>
-          <td style="border: none;" colspan="4" rowspan="1">*<?= htmlspecialchars($list_item->ket); ?></td>
+          <td style="border: none;" colspan="3" rowspan="1">*<?= htmlspecialchars($list_item->ket); ?></td>
         </tr>
       <?php
         array_push($nama_bebanbpo, $list_item->nama_bebanbpo);
@@ -280,38 +300,86 @@ function terbilang($x, $style = 4)
         ?>
         <td colspan="11"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
       </tr>
-      <tr>
-        <td align="center" colspan="4" height="50">
-          Menyetujui,<br />
-          <br />
-          <br />
-          <br />
-          <br />
-          (Supplier)
-        </td>
-        <td align="center" colspan="3" height="50">
-          Dibuat oleh,<br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <?php
-          $total = $po->totalbayar;
-          if ($total > 5000000) { ?>
-            (Direktur Purchasing)
-          <?php } else { ?>
-            (Purchasing)
-          <?php } ?>
-        </td>
-        <td align="center" colspan="4" height="50">
-          Menyetujui,<br />
-          <br />
-          <br />
-          <br />
-          <br />
-          (Direktur Pembelian)
-        </td>
-      </tr>
+      <?php
+      $lokasi_sesi = $this->session->userdata('status_lokasi');
+      switch ($lokasi_sesi) {
+        case 'PKS':
+        case 'SITE':
+        case 'RO':
+      ?>
+
+          <tr>
+            <td align="center" colspan="3" width="30%" height="50">
+              Menyetujui,<br />
+              <br />
+              <br />
+              <br />
+              <br />
+              (Supplier)
+            </td>
+            <td align="center" colspan="3" width="30%" height="50">
+              Dibuat oleh,<br />
+              <br />
+              <br />
+              <br />
+              <br />
+              (KTU)
+            </td>
+            <td align="center" colspan="5" width="40%" height="50">
+              Menyetujui,<br />
+              <br />
+              <br />
+              <br />
+              <br />
+              (G. Manager)
+            </td>
+          </tr>
+
+        <?php
+          break;
+        case 'HO':
+        ?>
+
+          <tr>
+            <td align="center" colspan="3" width="30%" height="50">
+              Menyetujui,<br />
+              <br />
+              <br />
+              <br />
+              <br />
+              (Supplier)
+            </td>
+            <td align="center" colspan="3" width="30%" height="50">
+              Dibuat oleh,<br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <?php
+              $total = $po->totalbayar;
+              if ($total > 5000000) { ?>
+                (Direktur Purchasing)
+              <?php } else { ?>
+                (Purchasing)
+              <?php } ?>
+            </td>
+            <td align="center" colspan="5" width="40%" height="50">
+              Menyetujui,<br />
+              <br />
+              <br />
+              <br />
+              <br />
+              (Direktur Pembelian)
+            </td>
+          </tr>
+
+      <?php
+          break;
+        default:
+          break;
+      }
+      ?>
+
     </tbody>
   </table>
   <p style="padding: 0px;margin: 0px;"><small><b>Catatan : Mohon dicek kembali pesanan pembelian ini, apabila setuju tolong diteken dan dicap perusahaan/toko lalu difax kembali ke 021-7231819</b></small></p>

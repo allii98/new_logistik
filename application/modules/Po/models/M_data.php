@@ -19,9 +19,9 @@ class M_data extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $lokasi_sesi = $this->session->userdata('status_lokasi');
+        $lokasi_sesi = $this->session->userdata('user');
         $this->db_logistik_pt->from('po');
-        $this->db_logistik_pt->where('lokasi', $lokasi_sesi);
+        $this->db_logistik_pt->where('user', $lokasi_sesi);
 
         // if ($lokasi_sesi == 'HO') {
         //     # code...

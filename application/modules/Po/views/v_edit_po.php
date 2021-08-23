@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between">
-                        <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO <i>(Edit)</i></h4>
+                        <h4 class="header-title ml-2">PO <i>(Edit)</i></h4>
                         <div class="button-list mr-2">
 
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
@@ -23,7 +23,7 @@
                     <hr style="margin-top: -15px;" class="mb-0">
                     <input type="hidden" id="hidden_nopo">
                     <input type="hidden" id="status_lokasi" value="<?= $this->session->userdata('status_lokasi') ?>">
-                    <input type="hidden" id="ttl_pembayaran" name="ttl_pembayaran" placeholder="Total Pembayaran" readonly required>
+                    <input type="hidden" id="ttl_pembayaran" name="ttl_pembayaran">
                     <?php
                     switch ($sesi_sl) {
                         case 'HO':
@@ -267,19 +267,10 @@
                             <thead>
                                 <tr>
 
-                                    <th>
-                                        <font face="Verdana" size="2.5">#</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Tanggal</font>
-                                    </th>
-
-                                    <th>
-                                        <font face="Verdana" size="2.5">Ref. SPP</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.5">Departemen</font>
-                                    </th>
+                                    <th>#</th>
+                                    <th>Tanggal</th>
+                                    <th>Ref.&nbsp;SPP</th>
+                                    <th>Departemen</th>
 
                                 </tr>
                             </thead>
@@ -305,7 +296,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <div class="col-4 float-right">
                         <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
                             <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
@@ -339,7 +330,7 @@
                             ?>
                         </select>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="col-12">
                     <div class="table-responsive">
@@ -347,33 +338,15 @@
                         <table id="spp" class="table table-striped table-bordered table-in" width="100%">
                             <thead>
                                 <tr>
-                                    <th>
-                                        <font face="Verdana" size="2.0">No.</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">ID</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">No.&nbsp;SPP</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">Tgl.&nbsp;SPP</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">Ref.&nbsp;SPP</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">Departemen</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">Kode&nbsp;Barang</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">Item&nbsp;Barang</font>
-                                    </th>
-                                    <th>
-                                        <font face="Verdana" size="2.0">Ket</font>
-                                    </th>
+                                    <th>No.</th>
+                                    <th>ID</th>
+                                    <th>No.&nbsp;SPP</th>
+                                    <th>Tgl.&nbsp;SPP</th>
+                                    <th>Ref.&nbsp;SPP</th>
+                                    <th>Departemen</th>
+                                    <th>Kode&nbsp;Barang</th>
+                                    <th>Item&nbsp;Barang</th>
+                                    <th>Ket</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -417,6 +390,14 @@
 <input type="hidden" id="id_po">
 <input type="hidden" id="pph" onkeyup="jumlah()" value="<?= $pph ?>">
 <input type="hidden" id="ppn" onkeyup="jumlah()" value="<?= $ppn ?>">
+<input type="hidden" id="status_lokasi" value="<?= $this->session->userdata('status_lokasi') ?>">
+
+<style>
+    table#spp td {
+        padding: 10px;
+        font-size: 11px;
+    }
+</style>
 
 <script>
     var cancleUpdatePO = true;
@@ -552,7 +533,36 @@
                 "bSearchable": false,
                 "bVisible": false,
                 "aTargets": [1, 2]
-            }, ]
+            }, ],
+
+            "columns": [{
+                    "width": "3%"
+                },
+                {
+                    "width": "2%"
+                },
+                {
+                    "width": "2%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "30%"
+                },
+                {
+                    "width": "18%"
+                },
+                {
+                    "width": "8%"
+                },
+                {
+                    "width": "5%"
+                },
+                {
+                    "width": "20%"
+                },
+            ],
         });
     }
 
@@ -939,7 +949,7 @@
                 '<span style="display:none;" id="habis_' + no + '" class="badge badge-danger">Belum approve</span>' +
                 '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + no + '" name="btn_simpan_' + no + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + no + ')" ></button>' +
                 '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit mb-1" onclick="ubah(' + no + ')" id="btn_ubah_' + no + '" name="btn_ubah_' + no + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
-                '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + no + '" name="btn_update_' + no + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + no + ')"></button>' +
+                '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + no + '" name="btn_update_' + no + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="validasiUpdate(' + no + ')"></button>' +
                 '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + no + '" name="btn_cancel_update_' + no + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + no + ')"></button>' +
                 '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + no + '" name="btn_hapus_' + no + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + no + ')"></button>' +
                 '<label id="lbl_status_simpan_' + no + '"></label>' +
@@ -1012,6 +1022,64 @@
         });
     }
 
+
+    function validasiUpdate(id) {
+        var lokasi = $('#status_lokasi').val();
+        var biayalain = $('#txt_biaya_lain_' + id).val();
+        var merk = $('#txt_merk_' + id).val();
+        var hrg = $('#txt_harga_' + id).val();
+        var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
+        var ketRinci = $('#txt_keterangan_rinci_' + id).val();
+        var jml = $('#txt_jumlah_' + id).val();
+
+
+        if (!merk) {
+            toast('Merk is required!');
+            $('#txt_merk_' + id).css({
+                "background": "#FFCECE"
+            });
+        } else if (!hrg) {
+            toast('Harga is required!');
+            $('#txt_harga_' + id).css({
+                "background": "#FFCECE"
+            });
+        } else if (!ketRinci) {
+            toast('Keterangan Rinci is required!');
+            $('#txt_keterangan_rinci_' + id).css({
+                "background": "#FFCECE"
+            });
+        }
+        if (jml > 1500000 && lokasi != "HO") {
+            toast('Tidak boleh PO lebih dari Rp. 1.500.000!');
+            $('#txt_jumlah_' + id).css({
+                "background": "#FFCECE"
+            });
+        } else if (biayalain > 0 && !ketBiaya) {
+
+
+            toast('Keterangan Biaya is required!');
+            $('#txt_keterangan_biaya_lain_' + id).css({
+                "background": "#FFCECE"
+            });
+
+        } else {
+            update(id);
+        }
+
+        return false;
+
+    }
+
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' ',
+            icon: 'error',
+            loader: false
+        });
+    }
+
     function update(id) {
 
         $.ajax({
@@ -1019,8 +1087,8 @@
             url: "<?php echo base_url('Po/updateItem') ?>",
             dataType: "JSON",
             beforeSend: function() {
-                $('#lbl_status_simpan_1' + id).empty();
-                $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Update</label>');
+                $('#lbl_status_simpan_' + id).empty();
+                $('#lbl_status_simpan_' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
             },
             data: {
                 // id_ppo: $('#id_item_' + id).val(),
@@ -1066,11 +1134,11 @@
                 txt_jumlah: $('#txt_jumlah_' + id).val(),
             },
             success: function(data) {
-                if (data == 'site15') {
+                if (data == 'site') {
                     swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                 } else {
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                     $.toast({
                         position: 'top-right',
                         heading: 'Success',
@@ -1094,7 +1162,7 @@
                 }
             },
             error: function(request) {
-                $('#lbl_status_simpan_1' + id).empty();
+                $('#lbl_status_simpan_' + id).empty();
                 $('#btn_simpan_' + id).hide();
                 $('#btn_hapus_row' + id).hide();
                 $('#btn_update_' + id).hide();
@@ -1246,8 +1314,8 @@
                 url: "<?php echo base_url('Po/cancel_ubah_rinci') ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-                    $('#lbl_status_simpan_1' + id).empty();
-                    $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
+                    $('#lbl_status_simpan_' + id).empty();
+                    $('#lbl_status_simpan_' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
                 },
                 data: {
                     id_po: $('#hidden_no_ref_po_' + id).val(),
@@ -1269,7 +1337,7 @@
                     $('#btn_ubah_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                     $('#btn_hapus_' + id).show();
 
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
@@ -1288,11 +1356,11 @@
                     cancleUpdatePO = false;
                 },
                 error: function(request) {
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                     $('#btn_ubah_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                     $('#btn_hapus_' + id).show();
                     alert("KONEKSI TERPUTUS! GAGAL CANCEL UPDATE");
                 }
@@ -1303,8 +1371,8 @@
                 url: "<?php echo base_url('Po/cancel_ubah_rinci') ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-                    $('#lbl_status_simpan_1' + id).empty();
-                    $('#lbl_status_simpan_1' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
+                    $('#lbl_status_simpan_' + id).empty();
+                    $('#lbl_status_simpan_' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
                 },
                 data: {
                     id_po: $('#hidden_no_ref_po_').val(),
@@ -1329,7 +1397,7 @@
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                     $('#btn_hapus_' + id).show();
                     $.toast({
                         position: 'top-right',
@@ -1343,11 +1411,11 @@
                     cancleUpdatePO = false;
                 },
                 error: function(request) {
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                     $('#btn_ubah_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
-                    $('#lbl_status_simpan_1' + id).empty();
+                    $('#lbl_status_simpan_' + id).empty();
                     $('#btn_hapus_' + id).show();
                     alert("KONEKSI TERPUTUS! GAGAL CANCEL UPDATE");
                 }
@@ -1473,10 +1541,10 @@
             '<span style="display:none;" id="habis_' + row + '" class="badge badge-danger">Habis</span>' +
             '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + row + ')" ></button>' +
             '<button class="btn btn-xs btn-warning fa fa-edit" onclick="ubah(' + row + ')" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="validasiUpdate(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + row + ')"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
-            '<label id="lbl_status_simpan_1' + row + '"></label>' +
+            '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
@@ -1678,7 +1746,7 @@
             '<textarea rows="2" class="resizable_textarea form-control form-control-sm" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + n + ')"></textarea>' +
             '<h6>Jumlah : <span id="hasil_jumlah_' + n + '"></span></h6>' +
             '<input type="hidden" class="form-control form-control-sm" id="txt_jumlah_' + n + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
-            // '<label id="lbl_status_simpan_1' + n + '"></label>' +
+            // '<label id="lbl_status_simpan_' + n + '"></label>' +
             '<input type="hidden" id="hidden_id_po_item_' + n + '" name="hidden_id_po_item_' + n + '">' +
 
             '</td>';
@@ -1689,9 +1757,10 @@
             '<span style="display:none;" id="habis_' + n + '" class="badge badge-danger">Habis</span>' +
             '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + n + ')" ></button>' +
             '<button class="btn btn-xs btn-warning fa fa-edit" onclick="ubah(' + n + ')" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="validasiUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + n + ')"></button>' +
             '<button class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
+            '<label id="lbl_status_simpan_' + n + '"></label>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
@@ -1795,7 +1864,7 @@
             '<textarea rows="2" class="resizable_textarea form-control form-control-sm" id="txt_keterangan_rinci_' + n + '" name="txt_keterangan_rinci_' + n + '" size="26" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + n + ')"></textarea>' +
             '<h6>Jumlah : <span id="hasil_jumlah_' + n + '"></span></h6>' +
             '<input type="hidden" class="form-control form-control-sm" id="txt_jumlah_' + n + '" name="txt_jumlah_" size="15" placeholder="Jumlah"  readonly />' +
-            // '<label id="lbl_status_simpan_1' + n + '"></label>' +
+            // '<label id="lbl_status_simpan_' + n + '"></label>' +
             '<input type="hidden" id="hidden_id_po_item_' + n + '" name="hidden_id_po_item_' + n + '">' +
 
             '</td>';
@@ -1806,9 +1875,10 @@
             '<span style="display:none;" id="habis_' + n + '" class="badge badge-danger">Habis</span>' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + n + '" name="btn_simpan_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="validasi(' + n + ')" ></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" onclick="ubah(' + n + ')" id="btn_ubah_' + n + '" name="btn_ubah_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" ></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + n + ')"></button>' +
+            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + n + '" name="btn_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="validasiUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + n + '" name="btn_cancel_update_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update"  onclick="cancleUpdate(' + n + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + n + '" name="btn_hapus_' + n + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + n + ')"></button>' +
+            '<label id="lbl_status_simpan_' + n + '"></label>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
@@ -1959,8 +2029,8 @@
             url: "<?php echo base_url('Po/deletePO_data') ?>",
             dataType: "JSON",
             beforeSend: function() {
-                $('#lbl_status_simpan_1' + no).empty();
-                $('#lbl_status_simpan_1' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus PO</label>');
+                $('#lbl_status_simpan_' + no).empty();
+                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
             },
             data: {
                 hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
@@ -2006,8 +2076,8 @@
                 url: "<?php echo site_url('Po/hapus_rinci_data'); ?>",
                 dataType: "JSON",
                 beforeSend: function() {
-                    $('#lbl_status_simpan_1' + no).empty();
-                    $('#lbl_status_simpan_1' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+                    $('#lbl_status_simpan_' + no).empty();
+                    $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
                 },
 
                 data: {
@@ -2018,7 +2088,7 @@
                     $('#tr_' + no).remove();
                     swal('Data Berhasil dihapus');
                     totalBayar();
-                    $('#lbl_status_simpan_1' + no).empty();
+                    $('#lbl_status_simpan_' + no).empty();
                 },
                 error: function(request) {
                     alert("KONEKSI TERPUTUS!");

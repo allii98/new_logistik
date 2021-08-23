@@ -114,6 +114,10 @@ class Login extends CI_Controller
                     'status_lokasi' => $user->status_lokasi, //HO, RO, SITE, PKS
                     'kode_pt_login' => $kode_pt_login,
                     'app_pt' => $data['get_tb_pt_central']['alias'], //MSAL, MAPA, PSAM, PEAK
+                    'nama_pt' => $data['get_tb_pt_central']['nama_pt'], //MSAL, MAPA, PSAM, PEAK
+                    'logo_pt' => $data['get_tb_pt_central']['logo'], //MSAL, MAPA, PSAM, PEAK
+                    'alamat_ho' => $data['get_tb_pt_central']['deskripsi_ho'], //MSAL, MAPA, PSAM, PEAK
+                    'alamat_site' => $data['get_tb_pt_central']['deskripsi_site'], //MSAL, MAPA, PSAM, PEAK
                     'kode_pt' => $kode_pt,
                     'pt' => $nama_pt,
                     'level' => $user->level,
