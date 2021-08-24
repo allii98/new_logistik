@@ -52,7 +52,7 @@
                                             case 'HO':
                                         ?>
                                                 <option value="SPP">SPP - Surat Permohonan Pembelian</option>
-                                                <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option>
+                                                <!-- <option value="SPPI">SPPI - Surat Permohonan Pembelian Internal</option> -->
                                                 <option value="SPPA">SPPA - Surat Permohonan Pembelian Asset</option>
                                                 <option value="SPPK">SPPK - Surat Permohonan Pembelian Khusus</option>
                                             <?php

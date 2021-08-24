@@ -79,14 +79,33 @@ class M_home extends CI_Model
     public function count_spp()
     {
         $role_user = $this->session->userdata('user');
+        $lokasi = $this->session->userdata('status_lokasi');
 
         $this->db_logistik_pt->select('noreftxt');
-        $this->db_logistik_pt->where(['status2' => '0', 'user' => $role_user]);
+        $this->db_logistik_pt->where('status2', '0');
+        if ($lokasi == 'HO') {
+            $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        } elseif ($lokasi == 'SITE') {
+            $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+        } elseif ($lokasi == 'PKS') {
+            $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+        } elseif ($lokasi == 'RO') {
+            $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+        }
         $this->db_logistik_pt->from('ppo');
         $count_spp = $this->db_logistik_pt->count_all_results();
 
         $this->db_logistik_pt->select('noreftxt');
-        $this->db_logistik_pt->where(['status2' => '1', 'user' => $role_user]);
+        $this->db_logistik_pt->where('status2', '1');
+        if ($lokasi == 'HO') {
+            $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        } elseif ($lokasi == 'SITE') {
+            $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+        } elseif ($lokasi == 'PKS') {
+            $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+        } elseif ($lokasi == 'RO') {
+            $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+        }
         $this->db_logistik_pt->from('ppo');
         $count_spp_approved = $this->db_logistik_pt->count_all_results();
 
@@ -97,7 +116,16 @@ class M_home extends CI_Model
 
         $this->db_logistik_pt->select('noreftxt');
         $this->db_logistik_pt->from('stokmasuk');
-        $this->db_logistik_pt->where(['user' => $role_user]);
+        if ($lokasi != 'HO') {
+            if ($lokasi == 'SITE') {
+                $this->db_logistik_pt->like('noref', 'EST', 'both');
+            } elseif ($lokasi == 'PKS') {
+                $this->db_logistik_pt->like('noref', 'FAC', 'both');
+            } elseif ($lokasi == 'RO') {
+                $this->db_logistik_pt->like('noref', 'ROM', 'both');
+            }
+        }
+
         $count_lpb = $this->db_logistik_pt->count_all_results();
 
         $this->db_logistik_pt->select('norefbpb');
