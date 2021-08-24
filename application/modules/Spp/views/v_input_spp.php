@@ -245,7 +245,7 @@
 </div> <!-- container -->
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListBarang">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-full-width modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">List Barang</h4>
@@ -295,7 +295,7 @@
 </div>
 <style>
     .hastag_th {
-        width: 10% !important;
+        width: 5% !important;
     }
 
     .no_th {
@@ -303,15 +303,15 @@
     }
 
     .kodebar_th {
-        width: 25% !important;
+        width: 20% !important;
     }
 
     .nabar_th {
-        width: 30% !important;
+        width: 35% !important;
     }
 
     .grup_th {
-        width: 30% !important;
+        width: 35% !important;
     }
 
     table#dabar td {

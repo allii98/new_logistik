@@ -46,7 +46,7 @@
 </div> <!-- container -->
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp-approval">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-full-width modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
@@ -62,10 +62,10 @@
                     <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                         <thead>
                             <tr>
-                                <th>No</th>
+                                <th class="no_th">No</th>
                                 <th>ID</th>
-                                <th>Kode&nbsp;Barang</th>
-                                <th>Nama&nbsp;Barang</th>
+                                <th class="kodebar_th">Kode&nbsp;Barang</th>
+                                <th class="nabar_th">Nama&nbsp;Barang</th>
                                 <th>Sat</th>
                                 <th>Qty</th>
                                 <th>Stok</th>
@@ -91,6 +91,18 @@
     </div>
 </div>
 <style>
+    .no_th {
+        width: 5% !important;
+    }
+
+    .kodebar_th {
+        width: 15% !important;
+    }
+
+    .nabar_th {
+        width: 30% !important;
+    }
+
     table#datasppapproval td {
         padding: 10px;
         font-size: 12px;
