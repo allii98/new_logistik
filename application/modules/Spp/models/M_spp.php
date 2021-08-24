@@ -77,16 +77,16 @@ class M_spp extends CI_Model
     {
         $lokasi = $this->session->userdata('status_lokasi');
 
-        if ($lokasi == 'SITE') {
+        if ($lokasi == 'HO') {
             $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->where('lokasi', 'SITE');
             $this->db_logistik_pt->from('tb_devisi');
-            $this->db_logistik_pt->order_by('lokasi', 'ASC');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
             return $this->db_logistik_pt->get()->result_array();
         } else {
             $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->where('lokasi', $lokasi);
             $this->db_logistik_pt->from('tb_devisi');
-            $this->db_logistik_pt->order_by('lokasi', 'ASC');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
             return $this->db_logistik_pt->get()->result_array();
         }
     }

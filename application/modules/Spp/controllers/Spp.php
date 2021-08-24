@@ -135,11 +135,7 @@ class Spp extends CI_Controller
 
         if ($this->session->userdata('status_lokasi') == "HO") {
             $dig_2 = "1";
-        } else if ($this->session->userdata('status_lokasi') == "RO") {
-            $dig_2 = "4";
-        } else if ($this->session->userdata('status_lokasi') == "PKS") {
-            $dig_2 = "3";
-        } else if ($this->session->userdata('status_lokasi') == "SITE") {
+        } else {
             $dig_2 = "2";
         }
 

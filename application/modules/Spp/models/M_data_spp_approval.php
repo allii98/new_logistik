@@ -18,10 +18,20 @@ class M_data_spp_approval extends CI_Model
 
     private function _get_datatables_query()
     {
-        $role_user = $this->session->userdata('user');
+        $lokasi = $this->session->userdata('status_lokasi');
 
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where(['status2 !=' => 1, 'user' => $role_user]);
+        if ($lokasi != 'HO') {
+            if ($lokasi == 'SITE') {
+                $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+            } elseif ($lokasi == 'PKS') {
+                $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+            } elseif ($lokasi == 'RO') {
+                $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+            }
+        }
+        $this->db_logistik_pt->where(['status2 !=' => 1]);
+
         // $this->db_logistik_pt->select('id, noppotxt, noreftxt, tglref,tglppo,tgltrm,namadept,lokasi,ket,user');
         // $this->db_logistik_pt->order_by('id', 'desc');
 

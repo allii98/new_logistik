@@ -1,198 +1,207 @@
 <div class="container-fluid">
-    <div class="row justify-content-center mt-2">
-        <div class="col-12">
-            <div class="widget-rounded-circle card-box">
-                <div class="row justify-content-between">
-                    <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BKB</h4>
-                    <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4>
-                </div>
-                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                    Bukti Keluar Barang
-                </p>
-                <div class="row div_form_1 mt-0">
-                    <div class="col-lg-2 col-12">
-                        <div class="form-group">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">Tgl BKB*</font>
-                                </label>
-                                <input id="tgl_bkb_txt" name="tgl_bkb_txt" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off" class="form-control" required="required">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-12">
-                        <div class="form-group">
-                            <label for="example-select">
-                                <font face="Verdana" size="2.5">No BPB*</font>
-                            </label>
-                            <div class="row">
-                                <div class="row col-lg-10 col-md-10 col-11 ml-0">
-                                    <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
-                                    </select> -->
-                                    <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()" placeholder="pilih no BPB">
-                                    <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
-                                    <input type="hidden" id="txt_no_bpb">
-                                </div>
-                                <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-12">
-                        <div class="form-group">
-                            <label for="example-select">
-                                <font face="Verdana" size="2.5">Bagian*</font>
-                            </label>
-                            <input id="bagian" name="bagian" class="form-control bg-light" required="required" type="text" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-12">
-                        <div class="form-group">
-                            <label for="example-select">
-                                <font face="Verdana" size="2.5">Alokasi Estate*</font>
-                            </label>
-                            <input id="alokasi_est" name="alokasi_est" class="form-control bg-light" required="required" type="text" disabled>
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-12">
-                        <div class="form-group">
-                            <label for="example-select">
-                                <font face="Verdana" size="2.5">Diberikan Kepada*</font>
-                            </label>
-                            <input id="diberikan_kpd" name="diberikan_kpd" class="form-control" required="required" type="text">
-                        </div>
-                    </div>
-                    <div class="col-lg-2 col-12">
-                        <div class="form-group">
-                            <label for="example-select">
-                                <font face="Verdana" size="2.5">Untuk Keperluan</font>
-                            </label>
-                            <textarea class="form-control" rows="1" id="utk_keperluan"></textarea>
-                        </div>
-                    </div>
-                    <input type="hidden" id="hidden_id_ppo">
-                </div>
 
-                <fieldset style="display: none;" class="border mb-1 p-1" id="fieldset_bbm">
-                    <div class="row div_form_bbm mt-0">
+    <div class="row mt-0">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between">
+                        <h4 class="header-title ml-2">BKB</h4>
+                        <div class="button-list mr-2">
+                            <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
+                            <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()" disabled>BKB Baru</button>
+                            <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()" disabled>Batal BKB</button>
+                            <button class="btn btn-xs btn-primary" id="a_print_lpb" onclick="cetak_lpb()" disabled>Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
+                    </div>
+                    <p class="sub-header">
+                        Bukti Keluar Barang
+                    </p>
+                    <div class="row div_form_1 mt-0">
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <div class="form-group">
                                     <label for="example-select">
-                                        <font face="Verdana" size="2.5">Bahan Bakar</font>
+                                        <font face="Verdana" size="2.5">Tgl BKB*</font>
                                     </label>
-                                    <input id="bhnbakar" name="bhnbakar" type="text" class="form-control form-control-sm bg-light" placeholder="" disabled>
+                                    <input id="tgl_bkb_txt" name="tgl_bkb_txt" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off" class="form-control" required="required">
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-12">
+                        <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">
-                                    <font face="Verdana" size="2.5">Jenis Alat/Kend</font>
+                                    <font face="Verdana" size="2.5">No BPB*</font>
                                 </label>
-                                <input id="txt_jns_alat" name="txt_jns_alat" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-12">
-                            <div class="form-group">
-                                <label for="example-select">
-                                    <font face="Verdana" size="2.5">kode/Nomer</font>
-                                </label>
-                                <input id="txt_kd_nmr" name="txt_kd_nmr" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                                <div class="row">
+                                    <div class="row col-lg-10 col-md-10 col-11 ml-0">
+                                        <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
+                                    </select> -->
+                                        <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()" placeholder="pilih no BPB">
+                                        <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
+                                        <input type="hidden" id="txt_no_bpb">
+                                    </div>
+                                    <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">
-                                    <font face="Verdana" size="2.5">HM/KM</font>
+                                    <font face="Verdana" size="2.5">Bagian*</font>
                                 </label>
-                                <input id="txt_hm_km" name="txt_hm_km" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                                <input id="bagian" name="bagian" class="form-control bg-light" required="required" type="text" disabled>
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select">
-                                    <font face="Verdana" size="2.5">Lokasi Kerja</font>
+                                    <font face="Verdana" size="2.5">Alokasi Estate*</font>
                                 </label>
-                                <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                                <input id="alokasi_est" name="alokasi_est" class="form-control bg-light" required="required" type="text" disabled>
                             </div>
                         </div>
+                        <div class="col-lg-2 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Diberikan Kepada*</font>
+                                </label>
+                                <input id="diberikan_kpd" name="diberikan_kpd" class="form-control" required="required" type="text">
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-12">
+                            <div class="form-group">
+                                <label for="example-select">
+                                    <font face="Verdana" size="2.5">Untuk Keperluan</font>
+                                </label>
+                                <textarea class="form-control" rows="1" id="utk_keperluan"></textarea>
+                            </div>
+                        </div>
+                        <input type="hidden" id="hidden_id_ppo">
                     </div>
-                </fieldset>
-                <fieldset class="border mb-1 p-1">
-                    <div class="row">
-                        <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
-                            <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
-                            <label class="custom-control-label" for="cexbox_mutasi">Mutasi?</label>
-                            <input type="hidden" id="hidden_cekbox_mutasi" value="">
+
+                    <fieldset style="display: none;" class="border mb-1 p-1" id="fieldset_bbm">
+                        <div class="row div_form_bbm mt-0">
+                            <div class="col-lg-2 col-12">
+                                <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="example-select">
+                                            <font face="Verdana" size="2.5">Bahan Bakar</font>
+                                        </label>
+                                        <input id="bhnbakar" name="bhnbakar" type="text" class="form-control form-control-sm bg-light" placeholder="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-12">
+                                <div class="form-group">
+                                    <label for="example-select">
+                                        <font face="Verdana" size="2.5">Jenis Alat/Kend</font>
+                                    </label>
+                                    <input id="txt_jns_alat" name="txt_jns_alat" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-12">
+                                <div class="form-group">
+                                    <label for="example-select">
+                                        <font face="Verdana" size="2.5">kode/Nomer</font>
+                                    </label>
+                                    <input id="txt_kd_nmr" name="txt_kd_nmr" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-12">
+                                <div class="form-group">
+                                    <label for="example-select">
+                                        <font face="Verdana" size="2.5">HM/KM</font>
+                                    </label>
+                                    <input id="txt_hm_km" name="txt_hm_km" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
+                            </div>
+                            <div class="col-lg-2 col-12">
+                                <div class="form-group">
+                                    <label for="example-select">
+                                        <font face="Verdana" size="2.5">Lokasi Kerja</font>
+                                    </label>
+                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" type="text" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" value="" placeholder="" autocomplite="off" disabled>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-3">
-                            <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled>
-                                <option value="" selected disabled>Pilih PT Tujuan</option>
-                                <?php
-                                foreach ($pt_mutasi as $d) : {
-                                ?>
-                                        <option value="<?= $d['kode_pt']; ?>"><?= $d['kode_pt'] . ' - ' . $d['nama_pt']; ?></option>
-                                <?php
-                                    }
-                                endforeach;
-                                ?>
-                            </select>
+                    </fieldset>
+                    <fieldset class="border mb-1 p-1">
+                        <div class="row">
+                            <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
+                                <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
+                                <label class="custom-control-label" for="cexbox_mutasi">Mutasi?</label>
+                                <input type="hidden" id="hidden_cekbox_mutasi" value="">
+                            </div>
+                            <div class="col-3">
+                                <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled>
+                                    <option value="" selected disabled>Pilih PT Tujuan</option>
+                                    <?php
+                                    foreach ($pt_mutasi as $d) : {
+                                    ?>
+                                            <option value="<?= $d['kode_pt']; ?>"><?= $d['kode_pt'] . ' - ' . $d['nama_pt']; ?></option>
+                                    <?php
+                                        }
+                                    endforeach;
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <select class="form-control form-control-sm" id="devisi_mutasi" disabled>
+                                </select>
+                            </div>
+                            <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4>
                         </div>
-                        <div class="col-3">
-                            <select class="form-control form-control-sm" id="devisi_mutasi" disabled>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset>
-                <input type="hidden" id="hidden_id_bkb">
-                <hr class="mt-0 mb-0">
-                <div class="x_content div_form_2 mb-0">
-                    <div class="row justify-content-between">
-                        <div class="row ml-2">
-                            <h6 id="lbl_bkb_status" name="lbl_bkb_status">
-                                <font face="Verdana" size="2.5">No. BKB : ... &nbsp; No. Ref. BKB : ...</font>
+                    </fieldset>
+                    <input type="hidden" id="hidden_id_bkb">
+                    <hr class="mt-0 mb-0">
+                    <div class="x_content div_form_2 mb-0">
+                        <div class="row justify-content-between">
+                            <div class="row ml-2">
+                                <h6 id="lbl_bkb_status" name="lbl_bkb_status">
+                                    <font face="Verdana" size="2.5">No. BKB : ... &nbsp; No. Ref. BKB : ...</font>
+                                </h6>
+                                <input type="hidden" id="hidden_no_bkb">
+                                <input type="hidden" id="hidden_no_ref_bkb">
+                                <input type="hidden" id="hidden_kode_dev">
+                                <input type="hidden" id="hidden_devisi">
+                                <div class="row" style="margin-left:4px;">
+                                    <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
+                                    <h6><span id="h4_no_ref_bkb"></span></h6>
+                                </div>
+                            </div>
+                            <h6 class="mr-2">
+                                <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_bkb()"></button>
                             </h6>
-                            <input type="hidden" id="hidden_no_bkb">
-                            <input type="hidden" id="hidden_no_ref_bkb">
-                            <input type="hidden" id="hidden_kode_dev">
-                            <input type="hidden" id="hidden_devisi">
-                            <div class="row" style="margin-left:4px;">
-                                <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
-                                <h6><span id="h4_no_ref_bkb"></span></h6>
-                            </div>
                         </div>
-                        <h6 class="mr-2">
-                            <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_bkb()"></button>
-                        </h6>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
-                            <thead>
-                                <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">TM/TBM</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Afd/Unit</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Blok/Sub</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Thn&nbsp;Tanam</th>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">TM/TBM</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Afd/Unit</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Blok/Sub</th>
+                                        <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Thn&nbsp;Tanam</th>
 
-                                    <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Bahan</th>
-                                    <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Account Beban</th>
-                                    <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Barang</th>
-                                    <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Sat/Stok</th>
-                                    <!-- <th width="8%">Qty Diminta</th> -->
-                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty Diminta</th>
-                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty Disetujui</th>
+                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Bahan</th>
+                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Account Beban</th>
+                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Barang</th>
+                                        <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Sat/Stok</th>
+                                        <!-- <th width="8%">Qty Diminta</th> -->
+                                        <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty Diminta</th>
+                                        <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty Disetujui</th>
 
-                                    <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Keterangan</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_rincian" name="tbody_rincian">
-                            </tbody>
-                        </table>
+                                        <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Keterangan</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_rincian" name="tbody_rincian">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
                 </div>
-
-
             </div> <!-- end widget-rounded-circle-->
         </div>
     </div>

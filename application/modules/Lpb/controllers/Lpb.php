@@ -958,13 +958,15 @@ class Lpb extends CI_Controller
         } else {
             $alamat_lok = '';
         }
+
+        $logo_pt = $this->session->userdata('logo_pt');
         // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
         $mpdf->SetHTMLHeader('
             <table width="100%" border="0" align="center" style="margin-bottom:-30px;">
                 <tr>
-                    <td rowspan="5" width="12%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/img/msal.jpg"></td>
+                    <td rowspan="5" width="12%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/logo/' . $logo_pt . '"></td>
                     <td rowspan="5" align="left" style="vertical-align: text-top; padding-top:10px">
-                        <b style="font-size:14px">PT Mulia Sawit Agro Lestari (' . $data['stokmasuk']->lokasi . ')</b> <br>
+                        <b style="font-size:14px">' . $data['stokmasuk']->pt . '</b> <br>
                         ' . $alamat_lok . '
                     </td>
                     <td>Putih</td>

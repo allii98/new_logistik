@@ -102,15 +102,23 @@
                                         ?>
                                                 <option value="HO">HO</option>
                                                 <option value="RO">RO</option>
-                                                <option value="SITE">SITE</option>
-                                                <option value="SITE">PKS</option>
+                                                <option value="SITE">KEBUN</option>
+                                                <option value="PKS">PKS</option>
                                             <?php
                                                 break;
                                             case 'RO':
+                                            ?>
+                                                <option value="RO">RO</option>
+                                            <?php
+                                                break;
                                             case 'SITE':
+                                            ?>
+                                                <option value="SITE">KEBUN</option>
+                                            <?php
+                                                break;
                                             case 'PKS':
                                             ?>
-                                                <option value="SITE">SITE</option>
+                                                <option value="PKS">PKS</option>
                                         <?php
                                                 break;
                                             default:

@@ -132,7 +132,9 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
-
+            "language": {
+                "infoFiltered": ""
+            },
         });
 
     });
@@ -248,7 +250,10 @@
                     "bSearchable": false,
                     "bVisible": false,
                     "aTargets": [1]
-                }, ]
+                }, ],
+                "language": {
+                    "infoFiltered": ""
+                },
                 // "dom": 'Bfrtip',
                 // "buttons": [{
                 //         "text": "Select All",
