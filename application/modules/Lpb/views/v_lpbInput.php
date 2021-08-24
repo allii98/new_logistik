@@ -145,7 +145,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 </div> <!-- container -->
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListPo">
+<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListPo">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -183,9 +183,9 @@ date_default_timezone_set('Asia/Jakarta');
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
-<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalListItemPo">
+<!-- <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalListItemPo">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -224,7 +224,7 @@ date_default_timezone_set('Asia/Jakarta');
             </div>
         </div>
     </div>
-</div>
+</div> -->
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="showCamera">
     <div class="modal-dialog modal-md">

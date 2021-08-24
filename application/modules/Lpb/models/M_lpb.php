@@ -18,9 +18,18 @@ class M_lpb extends CI_Model
 
     private function _get_datatables_query()
     {
-        $role_user = $this->session->userdata('user');
+        $lokasi = $this->session->userdata('status_lokasi');
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('user', $role_user);
+        if ($lokasi != 'HO') {
+            if ($lokasi == 'SITE') {
+                $this->db_logistik_pt->like('noref', 'EST', 'both');
+            } elseif ($lokasi == 'PKS') {
+                $this->db_logistik_pt->like('noref', 'FAC', 'both');
+            } elseif ($lokasi == 'RO') {
+                $this->db_logistik_pt->like('noref', 'ROM', 'both');
+            }
+        }
+        // $this->db_logistik_pt->where('user', $role_user);
         // $this->db_logistik_pt->select('id', 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli');
         // $this->db_logistik_pt->from('po');
         // $this->db_logistik_pt->order_by('id', 'desc');
@@ -81,16 +90,16 @@ class M_lpb extends CI_Model
     {
         $lokasi = $this->session->userdata('status_lokasi');
 
-        if ($lokasi == 'SITE') {
+        if ($lokasi == 'HO') {
             $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->where('lokasi', 'SITE');
             $this->db_logistik_pt->from('tb_devisi');
-            $this->db_logistik_pt->order_by('lokasi', 'ASC');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
             return $this->db_logistik_pt->get()->result_array();
         } else {
             $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->where('lokasi', $lokasi);
             $this->db_logistik_pt->from('tb_devisi');
-            $this->db_logistik_pt->order_by('lokasi', 'ASC');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
             return $this->db_logistik_pt->get()->result_array();
         }
     }
@@ -131,8 +140,8 @@ class M_lpb extends CI_Model
         $lokasi = $this->session->userdata('status_lokasi');
 
         $noref = $this->input->get('noref');
-        if ($lokasi == 'SITE') {
-            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND lokasi = 'SITE' ORDER BY id DESC";
+        if ($lokasi != 'HO') {
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND lokasi = '$lokasi' ORDER BY id DESC";
         } else {
             $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 ORDER BY id DESC";
         }

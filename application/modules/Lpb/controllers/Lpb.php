@@ -143,96 +143,106 @@ class Lpb extends CI_Controller
         //     $refpo = $this->input->post('hidden_no_ref_bkb');
         // }
 
+        // $polokal = substr($refpo, 8, 8); // PO-Lokal
+        // switch ($polokal) {
+        //     case "PO-Lokal":
+        //         $lokasilpb = $this->session->userdata('status_lokasi'); //HO, RO, SITE, PKS
+        //         switch ($lokasilpb) {
+        //             case 'HO': // HO
+        //                 $digit2 = "1";
+        //                 break;
+        //             case 'RO': // RO
+        //                 $digit2 = "4";
+        //                 break;
+        //             case 'PKS': // PKS
+        //                 $digit2 = "3";
+        //                 break;
+        //             case 'SITE': // SITE
+        //                 $digit2 = "2";
+        //                 break;
+        //             default:
+        //                 break;
+        //         }
+        //         break;
+        //     default:
+        //         if (substr($refpo, 4, 3) == "POA") {
+        //             $digit2 = "1";
+        //         } else {
+        //             switch ($lokasilpb) {
+        //                 case 'HO': // HO
+        //                     $digit2 = "1";
+        //                     break;
+        //                 case 'RO': // RO
+        //                     $digit2 = "2";
+        //                     break;
+        //                 case 'PKS': // PKS
+        //                     $digit2 = "2";
+        //                     break;
+        //                 case 'SITE': // SITE
+        //                     $digit2 = "2";
+        //                     break;
+        //                 default:
+        //                     break;
+        //             }
+        //         }
+        //         break;
+        // }
+
+        // switch ($lokasilpb) {
+        //     case 'HO':
+        //         $ref_2 = "BWJ";
+        //         break;
+        //     case 'SITE':
+        //         $ref_2 = "SWJ";
+        //         break;
+        //     case 'PKS':
+        //         $ref_2 = "SWJ";
+        //         break;
+        //     case 'RO':
+        //         $ref_2 = "PKY";
+        //         break;
+        //     default:
+        //         break;
+        // }
+
         $lokasibuatpo = substr($refpo, 0, 3);
         switch ($lokasibuatpo) {
             case 'PST': // HO
-                $digit1 = "1";
                 $ref_1 = "LPB";
-                break;
-            case 'ROM': // RO
-                $digit1 = "2";
-                $ref_1 = "ROM-LPB";
-                break;
-            case 'FAC': // PKS
-                $digit1 = "3";
-                $ref_1 = "FAC-LPB";
-                break;
-            case 'EST': // SITE
-                $digit1 = "6";
-                $ref_1 = "EST-LPB";
-                break;
-            default:
-                break;
-        }
-
-        $polokal = substr($refpo, 8, 8); // PO-Lokal
-        switch ($polokal) {
-            case "PO-Lokal":
-                $lokasilpb = $this->session->userdata('status_lokasi'); //HO, RO, SITE, PKS
-                switch ($lokasilpb) {
-                    case 'HO': // HO
-                        $digit2 = "1";
-                        break;
-                    case 'RO': // RO
-                        $digit2 = "4";
-                        break;
-                    case 'PKS': // PKS
-                        $digit2 = "3";
-                        break;
-                    case 'SITE': // SITE
-                        $digit2 = "2";
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            default:
-                if (substr($refpo, 4, 3) == "POA") {
-                    $digit2 = "1";
-                } else {
-                    switch ($lokasilpb) {
-                        case 'HO': // HO
-                            $digit2 = "1";
-                            break;
-                        case 'RO': // RO
-                            $digit2 = "4";
-                            break;
-                        case 'PKS': // PKS
-                            $digit2 = "3";
-                            break;
-                        case 'SITE': // SITE
-                            $digit2 = "2";
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                break;
-        }
-
-        $digit1_2 = $digit1 . $digit2;
-
-        switch ($lokasilpb) {
-            case 'HO':
                 $ref_2 = "BWJ";
                 break;
-            case 'SITE':
-                $ref_2 = "SWJ";
-                break;
-            case 'PKS':
-                $ref_2 = "SWJ";
-                break;
-            case 'RO':
+            case 'ROM': // RO
+                $ref_1 = "ROM-LPB";
                 $ref_2 = "PKY";
+                break;
+            case 'FAC': // PKS
+                $ref_1 = "FAC-LPB";
+                $ref_2 = "SWJ";
+                break;
+            case 'EST': // SITE
+                $ref_1 = "EST-LPB";
+                $ref_2 = "SWJ";
                 break;
             default:
                 break;
         }
+
+        if ($this->session->userdata('status_lokasi') == "HO") {
+            $digit2 = "1";
+        } else {
+            $digit2 = "2";
+        }
+
+        $kode_devisi    = $this->input->post('devisi');
+        $digit1 = preg_replace("/[^1-9]/", "", $kode_devisi);
+
+        $digit1_2 = $digit1 . $digit2;
 
         $kodebar = $this->input->post('txt_kode_barang');
         $nabar = $this->input->post('txt_nama_brg');
 
-        $query_masuk_item = "SELECT MAX(SUBSTRING(ttgtxt, 3)) as maxttg from masukitem WHERE ttg LIKE '$digit1_2%'";
+        $hitung_digit1_2 = strlen($digit1_2);
+        $query_masuk_item = "SELECT MAX(SUBSTRING(ttgtxt, $hitung_digit1_2+1)) as maxttg from masukitem WHERE ttg LIKE '$digit1_2%'";
         $generate_masuk_item = $this->db_logistik_pt->query($query_masuk_item)->row();
         $noUrut_masuk_item = (int)($generate_masuk_item->maxttg);
         $noUrut_masuk_item++;
