@@ -18,12 +18,27 @@ class M_cariSPP extends CI_Model
 
     private function _get_datatables_query()
     {
-        $role_user = $this->session->userdata('status_lokasi');
+        $lokasi = $this->session->userdata('status_lokasi');
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('lokasi', $role_user);
-        $this->db_logistik_pt->where_in('jenis', array('SPPI', 'SPPA', 'SPPK'));
-        $this->db_logistik_pt->where('po', 0);
-        $this->db_logistik_pt->where_in('status2', array(1, 2));
+        if ($lokasi == 'SITE') {
+            $this->db_logistik_pt->where_in('jenis', array('SPPI', 'SPPA', 'SPPK'));
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where_in('status2', array(1, 2));
+            $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+            # code...
+        } elseif ($lokasi == 'RO') {
+            $this->db_logistik_pt->where_in('jenis', array('SPPI', 'SPPA', 'SPPK'));
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where_in('status2', array(1, 2));
+            $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+            # code...
+        } elseif ($lokasi == 'PKS') {
+            $this->db_logistik_pt->where_in('jenis', array('SPPI', 'SPPA', 'SPPK'));
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where_in('status2', array(1, 2));
+            $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+            # code...
+        }
 
 
         $i = 0;

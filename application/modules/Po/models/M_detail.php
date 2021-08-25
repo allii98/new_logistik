@@ -30,17 +30,14 @@ class M_detail extends CI_Model
         $eee = $this->id;
         // $Value = ;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
-        $user = $this->session->userdata('user');
+        // $user = $this->session->userdata('user');
         if ($lokasi_sesi == 'HO') {
             # code...
-            $this->db_logistik_pt->select('id, noref, nopo,refppo, tglpo, grup, nabar, kodebar,kodebar,qty');
             $this->db_logistik_pt->from('item_po');
             $this->db_logistik_pt->where('noref', $eee);
             $this->db_logistik_pt->order_by('id', 'desc');
         } else {
-            $this->db_logistik_pt->select('id, noref,refppo, nopo, tglpo, grup, nabar, kodebar,kodebar,qty');
             $this->db_logistik_pt->from('item_po');
-            $this->db_logistik_pt->where('user', $user);
             $this->db_logistik_pt->where('noref', $eee);
             $this->db_logistik_pt->order_by('id', 'desc');
             # code...

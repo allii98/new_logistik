@@ -27,7 +27,6 @@ class M_po extends CI_Model
     {
         // $Value = ;
         $lokasi = $this->session->userdata('status_lokasi');
-        $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
         $this->db_logistik_pt->from('item_ppo');
         $this->db_logistik_pt->where('po', 0);
         $this->db_logistik_pt->where('status2', 1);
@@ -131,11 +130,11 @@ class M_po extends CI_Model
         $this->db_logistik_pt->update('ppo', $data_ppo);
         return TRUE;
     }
-    public function updatePPO3($noppo)
+    public function updatePPO3($refspp, $kodebar, $data_itemppo)
     {
-        $this->db_logistik_pt->set('po', 0);
-        $this->db_logistik_pt->where(['noref' => $noppo]);
-        $this->db_logistik_pt->update('ppo');
+        $this->db_logistik_pt->where(['noreftxt' => $refspp, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->update('item_ppo', $data_itemppo);
+        return TRUE;
     }
 
     public function get_detail_ppo($no_spp, $no_ref_spp)

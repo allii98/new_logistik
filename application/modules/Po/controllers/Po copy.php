@@ -390,36 +390,20 @@ class Po extends CI_Controller
         $queryPPO = "SELECT noreftxt, kodebar, qty, qty2 FROM item_ppo WHERE noreftxt = '$refspp' AND kodebar = '$kodebar' ";
         $data_qty_ppo = $this->db_logistik_pt->query($queryPPO)->row();
 
-        $qty1 = $data_qty_ppo->qty;
-        $qty2 = $data_qty_ppo->qty2;
+        $sisa_qty_ppo  =  number_format($data_qty_ppo->qty - $data_qty_ppo->qty2, 0);
 
         $data_ppo =  array(
             'po' => 1
         );
-
         $data_itemppo =  array(
             'po' => 1
         );
-        $data_ppo2 =  array(
-            'po' => 0
-        );
-        $data_itemppo2 =  array(
-            'po' => 0
-        );
 
-        if ($qty1 != $qty2) {
-            $data1 = $this->M_po->updatePPO2($refspp, $data_ppo2);
-            $data2 = $this->M_po->updatePPO3($refspp, $kodebar, $data_itemppo2);
+        if ($sisa_qty_ppo == 0) {
+            $this->M_po->updatePPO2($refspp, $data_ppo);
         } else {
-            $data1 = $this->M_po->updatePPO2($refspp, $data_ppo);
-            $data2 = $this->M_po->updatePPO3($refspp, $kodebar, $data_itemppo);
+            $this->M_po->updatePPO3($refspp, $kodebar, $data_itemppo);
         }
-        $data = [
-            'hasil1' => $data1,
-            'hasil2' => $data2
-        ];
-
-        echo json_encode($data);
     }
 
     function cekdataspp()
@@ -778,20 +762,16 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
-        if ($this->session->userdata('status_lokasi') == "SITE" && $this->session->userdata('status_lokasi') == "RO" && $this->session->userdata('status_lokasi') == "PKS") {
+        if ($this->session->userdata('status_lokasi') == "SITE") {
             if ($totalbayar > 1500000) {
                 $site_lebih_dari15 = 1;
                 $data1 = NULL;
                 $data2 = NULL;
             } else {
                 $id_ppo = $this->input->post('id_item');
-                $cek = $this->db_logistik_pt->query("SELECT qty, qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
-                $qty2 = $this->input->post('txt_qty');
-                $jumlah = $qty2 + $cek->qty2;
-
                 $data_ppo =  array(
-                    'qty2' => $jumlah,
-                    // 'po' => 1
+                    'qty2' => $this->input->post('txt_qty'),
+                    'po' => 1
                 );
                 $this->M_po->updatePPO($id_ppo, $data_ppo);
 
@@ -801,15 +781,10 @@ class Po extends CI_Controller
             }
         } else {
             $id_ppo = $this->input->post('id_item');
-            $cek = $this->db_logistik_pt->query("SELECT qty, qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
-            $qty = $this->input->post('txt_qty');
-            $jumlah = $qty + $cek->qty2;
-
             $data_ppo =  array(
-                'qty2' => $jumlah,
-                // 'po' => 1
+                'qty2' => $this->input->post('txt_qty'),
+                'po' => 1
             );
-
             $this->M_po->updatePPO($id_ppo, $data_ppo);
 
             $site_lebih_dari15 = 0;
@@ -978,33 +953,22 @@ class Po extends CI_Controller
                 $site_lebih_dari15 = 1;
                 $data = NULL;
             } else {
-
                 $id_ppo = $this->input->post('id_item');
-                $cek = $this->db_logistik_pt->query("SELECT qty, qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
-                $qty2 = $this->input->post('txt_qty');
-                $jumlah = $qty2 + $cek->qty2;
-
                 $data_ppo =  array(
-                    'qty2' => $jumlah,
+                    'qty2' => $this->input->post('txt_qty'),
+                    'po' => 1
                 );
-
                 $this->M_po->updatePPO($id_ppo, $data_ppo);
-
 
                 $site_lebih_dari15 = 0;
                 $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
             }
         } else {
             $id_ppo = $this->input->post('id_item');
-            $cek = $this->db_logistik_pt->query("SELECT qty, qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
-            $qty2 = $this->input->post('txt_qty');
-            $jumlah = $qty2 + $cek->qty2;
-
             $data_ppo =  array(
-                'qty2' => $jumlah,
-                // 'po' => 1
+                'qty2' => $this->input->post('txt_qty'),
+                'po' => 1
             );
-
             $this->M_po->updatePPO($id_ppo, $data_ppo);
 
             $site_lebih_dari15 = 0;

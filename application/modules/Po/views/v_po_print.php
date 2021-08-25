@@ -208,10 +208,10 @@ function terbilang($x, $style = 4)
         <td align="center" width="15%">Kode Barang</td>
         <td align="center" width="15%">Nama Barang</td>
         <td align="center" width="17%">Merk</td>
-        <td align="center" width="7%">No. Part</td>
+        <td align="center" width="5%">No. Part</td>
         <td align="center" width="5%">Qty</td>
         <td align="center" width="3%">SAT</td>
-        <td align="center" width="13%">Harga&nbsp;Satuan</td>
+        <td align="center" width="14%">Harga&nbsp;Satuan</td>
         <td align="center" width="5%">Disc %</td>
         <td align="center" width="18%" colspan="2">Total&nbsp;Harga</td>
 
@@ -240,7 +240,6 @@ function terbilang($x, $style = 4)
           <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
           <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($jumharga_pre, 2, ",", "."); ?></td>
-
         </tr>
         <tr>
           <td style="border: none;" colspan="3" rowspan="1">*<?= htmlspecialchars($list_item->ket); ?></td>

@@ -55,7 +55,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 break;
                                             case 'SITE':
                                             ?>
-                                                <option selected="selected" value="PO-Lokal">
+                                                <option value="PO-Lokal">
                                                     <font face="Verdana" size="1.5">PO-Lokal</font>
                                                 </option>
                                                 <option value="POA">
@@ -482,9 +482,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <textarea class="form-control form-control-sm" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="3"></textarea>
                                                     </td>
                                                     <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')">
-                                                        <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
-                                                        <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')" />
+                                                        <input type="text" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')">
+                                                        <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" />
+                                                        <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" />
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="text" class="form-control form-control-sm" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
@@ -673,7 +673,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-full-width">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Pilih Item SPP</h4>
@@ -723,15 +723,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <table id="tblspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th style="font-size: 11px; padding:10px">No.</th>
-                                    <th style="font-size: 11px; padding:10px">ID</th>
-                                    <th style="font-size: 11px; padding:10px">No.&nbsp;SPP</th>
-                                    <th style="font-size: 11px; padding:10px">Tgl.&nbsp;SPP</th>
-                                    <th style="font-size: 11px; padding:10px">No&nbsp;Ref.&nbsp;SPP</th>
-                                    <th style="font-size: 11px; padding:10px">Departemen</th>
-                                    <th style="font-size: 11px; padding:10px">Kode&nbsp;Barang</th>
-                                    <th style="font-size: 11px; padding:10px">Item&nbsp;Barang</th>
-                                    <th style="font-size: 11px; padding:10px">Keterangan</th>
+                                    <th style="font-size: 12px; padding:10px">No.</th>
+                                    <th style="font-size: 12px; padding:10px">ID</th>
+                                    <th style="font-size: 12px; padding:10px">No.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">Tgl.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">No&nbsp;Ref.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -794,7 +794,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 <style>
     table#tblspp td {
         padding: 10px;
-        font-size: 11px;
+        font-size: 12px;
     }
 
     table#dataspp td {
@@ -897,10 +897,32 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function cekJenis(jenis) {
-        console.log('ini jenisnya', jenis);
+        // console.log('ini jenisnya', jenis);
+
+        if (jenis == "SPP") {
+            var po = "PO";
+        } else if (jenis == "SPPI") {
+            var po = "PO-Lokal";
+        } else if (jenis == "SPPA") {
+            var po = "POA - PO Asset";
+        } else if (jenis == "SPPK") {
+            var po = "POK - PO Khusus";
+        }
+
+        var options = document.getElementById("cmb_pilih_jenis_po").options;
+        console.log(options)
+        for (var i = 0; i < options.length; i++) {
+            if (options[i].text == po) {
+                options[i].selected = true;
+                break;
+            }
+        }
     }
 
     $(document).ready(function() {
+
+
+
         $('.div_form_2').hide();
         $('.div_form_3').hide();
         setInterval(function() {
@@ -989,6 +1011,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 var qty2 = value.qty2;
                                 var ket_item_spp = value.ket_item_spp;
 
+                                var qtysum = qty - qty2;
+
 
                                 $('#id_ppo' + n).val(idppo);
                                 $('#id_item_' + n).val(idppo);
@@ -1007,10 +1031,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#hidden_nama_brg_' + n).val(nabar);
                                 $('#nama_brg_' + n).text(nabar);
                                 $('#hidden_satuan_brg_' + n).val(sat);
-                                $('#txt_qty_' + n).val(qty);
+                                $('#txt_qty_' + n).val(qtysum);
                                 $('#getspp' + n).val(opsi);
                                 $('#txt_keterangan_rinci_' + n).val(ket_item_spp);
-
                                 $('#qty_' + n).val(qty);
                                 $('#qty2_' + n).val(qty2);
                                 $('#hidden_tgl_ref_' + n).val(tglref);
@@ -1285,19 +1308,19 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     "width": "10%"
                 },
                 {
-                    "width": "30%"
+                    "width": "25%"
                 },
                 {
-                    "width": "18%"
+                    "width": "15%"
                 },
                 {
                     "width": "8%"
                 },
                 {
-                    "width": "5%"
+                    "width": "20%"
                 },
                 {
-                    "width": "20%"
+                    "width": "25%"
                 },
             ],
             "language": {
@@ -1316,13 +1339,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         window.open('cetak/' + noref_rpc + '/' + id_po, '_blank');
     }
 
-    function isSelected(selectedNoppo) {
+    function isSelected(selectedNoppo, no_ref_spp) {
         var noppos = $('[id*=id_item_]');
-        // console.log(noppos);
+        var norefspp = $('[id*=hidden_no_ref_spp_]');
+        // console.log('ini no ref spp', noppos);
         var isSelected = false;
         var a = noppos.each(function() {
             var noppo = $(this).val();
-            console.log(noppo)
+            console.log('ini noppo', noppo)
             if (noppo == selectedNoppo) {
                 console.log("isSelected sama", noppo, selectedNoppo)
                 isSelected = true;
@@ -1387,8 +1411,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var td_col_4 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
-        var td_col_5 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
+        var td_col_5 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
             '<input type="hidden" class="form-control form-control-sm bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
@@ -1597,7 +1621,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             var no_ref_spp = rowcollection[index][4];
             var kodebar = rowcollection[index][6];
             // isSelected(id);
-            if (isSelected(id)) {
+            if (isSelected(id, no_ref_spp)) {
                 alert('data sudah di pilih');
                 return false;
             }
@@ -1628,6 +1652,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 // console.log(data);
                 $('#devisi').val(data[0].devisi);
                 $('#hidden_devisi').val(data[0].devisi);
+                var jenis = data[0].jenis;
+                // console.log('ini jenisnya', jenis)
+                // cekJenis(jenis);
                 // var n = 0;
                 $.each(data[1], function(index) {
                     // if(index != 0){
@@ -1801,13 +1828,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             if (qty2n > 0) {
                 var tmbh = qty2 - qty2n;
                 if (qty > tmbh) {
-                    swal('melebihi, inputan ke 2');
+                    swal('Melebihi, inputan ke 2');
                     $('#txt_qty_' + id).val(tmbh);
                 }
             } else {
                 if (qty > qty2) {
-                    console.log('benar');
-                    // swal("Qty melebihi bataaaas!");
+                    // console.log('benar');
+                    swal("Melebihi QTY SPP!");
                     $('#txt_qty_' + id).val(qty2);
                 } else {
                     console.log("sip dah");
@@ -1910,8 +1937,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 // // console.log(item);
                 // console.log(a.jmlhSPP1, b.jmlhSPP2);
                 if (a.jmlhSPP1 == 0) {
-                    updatePPO();
-                    // console.log('oke update ppo');
+                    // updatePPO();
+                    console.log('oke update ppo');
                 } else {
                     console.log('field po belum 0 semua');
                 }
@@ -2012,10 +2039,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_kode_devisi: $('#hidden_kode_devisi').val(),
                     cmb_dikirim_ke_kebun: $('#cmb_dikirim_ke_kebun').val(),
                     txt_jumlah: $('#txt_jumlah_' + id).val(),
+                    qty2: $('#qty2_' + id).val(),
 
                 },
                 success: function(data) {
                     // console.log(data, 'nah ini');
+                    var refspp = data.refspp;
+                    var kodebar = $('#hidden_kode_brg_' + id).val();
+                    console.log('ini kodebar nya', kodebar);
+                    sum_qty(refspp, kodebar);
                     if (data.site_lebih_dari15 == 1) {
                         swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                         $('#lbl_status_simpan_' + id).empty();
@@ -2029,9 +2061,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             icon: 'success',
                             loader: false
                         });
-                        var refspp = data.refspp;
+
                         cekdataspp();
-                        // sum_qty(noppo, id);
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
@@ -2170,10 +2201,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_devisi: $('#hidden_devisi').val(),
                     hidden_kode_devisi: $('#hidden_kode_devisi').val(),
                     txt_jumlah: $('#txt_jumlah_' + id).val(),
+                    qty2: $('#qty2_' + id).val(),
 
                 },
 
                 success: function(data) {
+                    var refspp = data.refspp;
+                    var kodebar = $('#hidden_kode_brg_' + id).val();
+                    console.log('ini kodebar nya', kodebar);
+                    sum_qty(refspp, kodebar);
                     if ((data.site_lebih_dari15 == 1)) {
                         swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                         $('#lbl_status_simpan_' + id).empty();
@@ -2187,9 +2223,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             icon: 'success',
                             loader: false
                         });
-                        var refspp = data.refspp;
+
                         cekdataspp();
-                        // sum_qty(noppo, id);
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
@@ -2228,21 +2263,22 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     }
 
-    // function sum_qty(noppo, id) {
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "<?php echo site_url('Po/sum_ppo'); ?>",
-    //         dataType: "JSON",
-    //         beforeSend: function() {},
+    function sum_qty(refspp, kodebar) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/sum_ppo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
 
-    //         data: {
-    //             'noppo': noppo,
-    //         },
-    //         success: function(data) {
-    //             console.log(data);
-    //         }
-    //     });
-    // }
+            data: {
+                refspp: refspp,
+                kodebar: kodebar,
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        });
+    }
 
     function update(id) {
 
