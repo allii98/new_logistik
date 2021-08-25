@@ -138,10 +138,17 @@ class M_lpb extends CI_Model
     {
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $lokasi = $this->session->userdata('status_lokasi');
+        if ($lokasi == 'SITE') {
+            $awal_noref = 'EST';
+        } elseif ($lokasi == 'PKS') {
+            $awal_noref = 'FAC';
+        } elseif ($lokasi == 'RO') {
+            $awal_noref = 'ROM';
+        }
 
         $noref = $this->input->get('noref');
         if ($lokasi != 'HO') {
-            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND lokasi = '$lokasi' ORDER BY id DESC";
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' ORDER BY id DESC";
         } else {
             $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 ORDER BY id DESC";
         }

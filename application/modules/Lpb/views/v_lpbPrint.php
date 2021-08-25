@@ -1,5 +1,15 @@
 <?php
-$dev = substr($stokmasuk->devisi, 28);
+if ($this->session->userdata('app_pt') == 'MSAL') {
+    $dev = substr($stokmasuk->devisi, 28); // MSAL
+} elseif ($this->session->userdata('app_pt') == 'PSAM') {
+    $dev = substr($stokmasuk->devisi, 33); // PSAM
+} elseif ($this->session->userdata('app_pt') == 'PEAK') {
+    $dev = substr($stokmasuk->devisi, 28); // PEAK
+} elseif ($this->session->userdata('app_pt') == 'MAPA') {
+    $dev = substr($stokmasuk->devisi, 29); // MAPA
+} elseif ($this->session->userdata('app_pt') == 'KPP') {
+    $dev = substr($stokmasuk->devisi, 25); // KPP
+}
 ?>
 
 <head>
