@@ -516,7 +516,6 @@ class Po extends CI_Controller
 
     public function save()
     {
-
         $data['nama_dept'] = $this->M_po->namaDept($this->input->post("hidden_kode_departemen"));
         $lokasibuatspp = substr($this->input->post('hidden_no_ref'), 0, 3);
         switch ($lokasibuatspp) {
@@ -1127,6 +1126,7 @@ class Po extends CI_Controller
 
         $id_ppo = $this->input->post('id_item');
         $refspp = $this->input->post('hidden_no_ref_spp');
+        $kodebar = $this->input->post('kodebar');
 
         $data_ppo2 =  array(
             'po' => 0
@@ -1145,17 +1145,26 @@ class Po extends CI_Controller
         echo json_encode($data);
     }
 
+    function cekDataPo()
+    {
+        $refspp = $this->input->post('refspp');
+        $data =  $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $refspp))->num_rows();
+
+        echo json_encode($data);
+    }
+
     public function batalPO()
     {
 
         $id_ppo = $this->input->post('refspp');
         $refspp = $this->input->post('refspp');
+        $kodebar = $this->input->post('kodebar');
         // $idspp = $this->input->post('idspp');
-
 
         $data_ppo2 =  array(
             'po' => 0
         );
+
         $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
 
         $data_ppo =  array(
@@ -1164,21 +1173,26 @@ class Po extends CI_Controller
         );
         $this->M_po->updatePPO4($id_ppo, $data_ppo);
 
-
-
+        $id_po = $this->input->post('id_po');
         $norefpo = $this->input->post('noref_po');
-        $data = $this->M_po->deletePO($norefpo);
+        $data = $this->M_po->batalPO($id_po, $norefpo);
 
         echo json_encode($data);
     }
+
+
 
     public function hapus_rinci()
     {
 
         $id_po_item = $this->input->post('hidden_id_po_item');
-
         $id_ppo = $this->input->post('id_item');
         $refspp = $this->input->post('hidden_no_ref_spp');
+        $qty = $this->input->post('qty');
+
+        $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
+        $qty2 = $cek->qty2;
+        $isi = $qty2 - $qty;
 
         $data_ppo2 =  array(
             'po' => 0
@@ -1186,7 +1200,7 @@ class Po extends CI_Controller
         $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
 
         $data_ppo =  array(
-            'qty2' => NULL,
+            'qty2' => $isi,
             'po' => 0
         );
         $this->M_po->updatePPO($id_ppo, $data_ppo);
@@ -1230,7 +1244,7 @@ class Po extends CI_Controller
             // 'kodebartxt' => $this->input->post('hidden_kode_brg'),
             // 'nabar' => $this->input->post('hidden_nama_brg'),
             // 'sat' => $this->input->post('hidden_satuan_brg'),
-            // 'qty' => $this->input->post('txt_qty'),
+            'qty' => $this->input->post('txt_qty'),
             // 'kodept' => $this->input->post('hidden_kodept'),
             // 'namapt' => $this->input->post('hidden_namapt'),
             // 'user' => $this->session->userdata('user'),
@@ -1271,10 +1285,18 @@ class Po extends CI_Controller
 
         //cari PO where kodebar norefpo norefppo
         $cari_po = $this->M_po->cari_po($norefpo, $norefppo, $kodebar, $txt_jumlah);
+        $id_ppo = $this->input->post('id_item');
+        $qty2 = $this->input->post('txt_qty');
 
-        if ($this->session->userdata('status_lokasi') == "SITE") {
+        $data_ppo =  array(
+            'qty2' => $qty2,
+            // 'po' => 1
+        );
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+        if ($this->session->userdata('status_lokasi') == "SITE" && $this->session->userdata('status_lokasi') == "RO" && $this->session->userdata('status_lokasi') == "PKS") {
             if ($cari_po > 1500000) {
-                $updateitem = 'site15';
+                $updateitem = 'site';
             } else {
                 $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
             }

@@ -268,6 +268,13 @@ class M_po extends CI_Model
         return TRUE;
     }
 
+    public function batalPO($id_po, $norefpo)
+    {
+        $this->db_logistik_pt->delete('po', array('id' => $id_po, 'noreftxt' => $norefpo));
+        $this->db_logistik_pt->delete('item_po', array('noref' => $norefpo));
+        return TRUE;
+    }
+
     public function cari_item_po($kodebar, $qty, $ket)
     {
         $this->db_logistik_pt->select('*');

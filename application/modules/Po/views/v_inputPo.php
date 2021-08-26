@@ -664,7 +664,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     <h4 class="mt-2">Konfirmasi Hapus</h4>
                     <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
-                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="batal_aksi()">Hapus</button>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekPO()">Hapus</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
                 </div>
             </div>
@@ -833,7 +833,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function batal_aksi() {
         var noref_po = $('#hidden_no_ref_po').val();
         var refspp = $('#refspp').val();
-        // var idspp = $('#idspp').val();
+        var id_po = $('#hidden_id_po').val();
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('Po/batalPO') ?>",
@@ -847,7 +847,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             data: {
                 noref_po: noref_po,
                 refspp: refspp,
-                // idspp: idspp,
+                id_po: id_po,
             },
 
             success: function(data) {
@@ -910,7 +910,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
 
         var options = document.getElementById("cmb_pilih_jenis_po").options;
-        console.log(options)
+        // console.log(options);
         for (var i = 0; i < options.length; i++) {
             if (options[i].text == po) {
                 options[i].selected = true;
@@ -1828,7 +1828,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             if (qty2n > 0) {
                 var tmbh = qty2 - qty2n;
                 if (qty > tmbh) {
-                    swal('Melebihi, inputan ke 2');
+                    swal('Melebihi, inputan sebelumnya');
                     $('#txt_qty_' + id).val(tmbh);
                 }
             } else {
@@ -1978,7 +1978,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             noppo = $('#noppo' + id).val();
 
-
             $.ajax({
                 type: "POST",
                 url: "<?php echo base_url('Po/save') ?>",
@@ -2046,7 +2045,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     // console.log(data, 'nah ini');
                     var refspp = data.refspp;
                     var kodebar = $('#hidden_kode_brg_' + id).val();
-                    console.log('ini kodebar nya', kodebar);
+                    // console.log('ini kodebar nya', kodebar);
                     sum_qty(refspp, kodebar);
                     if (data.site_lebih_dari15 == 1) {
                         swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
@@ -2335,7 +2334,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             success: function(data) {
                 console.log(data + 'afterupdate');
-                if (data == 'site15') {
+                var refspp = $('#hidden_no_ref_spp_' + id).val();
+                var kodebar = $('#hidden_kode_brg_' + id).val();
+                sum_qty(refspp, kodebar);
+                if (data == 'site') {
                     swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                     $('#lbl_status_simpan_' + id).empty();
                 } else {
@@ -2382,10 +2384,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function ubah(id) {
         // $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
         // $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
-        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeClass('bg-light');
-        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeAttr('disabled', '');
-        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeClass('bg-light');
-        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).removeAttr('disabled', '');
+        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
+        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
+        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
+        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
 
         $('#btn_ubah_' + id).hide();
         $('#btn_hapus_' + id).hide();
@@ -2410,6 +2412,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     id_po_item: $('#hidden_id_po_item_' + id).val(),
                 },
                 success: function(data) {
+                    var refspp = $('#hidden_no_ref_spp_' + id).val();
+                    var kodebar = $('#hidden_kode_brg_' + id).val();
+                    sum_qty(refspp, kodebar);
                     // console.log(data);
                     // var po = data.data_po;
                     var item = data.data_item_po;
@@ -2478,6 +2483,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 success: function(data) {
                     // console.log(data);
                     // var po = data.data_po;
+                    var refspp = $('#hidden_no_ref_spp_' + id).val();
+                    var kodebar = $('#hidden_kode_brg_' + id).val();
+                    sum_qty(refspp, kodebar);
                     var item = data.data_item_po;
 
                     $('#cmb_jenis_budget_' + id).val(item.grup);
@@ -2530,6 +2538,58 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     }
 
+    function cekPO() {
+        var refspp = $('#refspp').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/cekDataPo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                refspp: refspp,
+            },
+            success: function(data) {
+
+                for (var i = 1; i <= data; i++) {
+
+                    batalkanPO(i);
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Gagal Menghapus PO');
+            }
+        });
+    }
+
+    function batalkanPO(no) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/hapus_rinci'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + no).empty();
+                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+            },
+
+            data: {
+                hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                id_item: $('#id_item_' + no).val(),
+                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                qty: $('#txt_qty_' + no).val(),
+            },
+            success: function(data) {
+                $('#tr_' + no).remove();
+                totalBayar();
+                cekdatapo(no);
+            },
+            error: function(request) {
+                $('#lbl_status_simpan_' + no).empty();
+                // alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
+            }
+        });
+    }
+
     function hapusRinci(no) {
         $('#hidden_no_delete').val(no);
         Swal.fire({
@@ -2574,7 +2634,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             error: function(request) {
                 $('#lbl_status_simpan_' + no).empty();
-                alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
+                // alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
             }
         });
     }
@@ -2592,7 +2652,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             data: {
                 hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
                 id_item: $('#id_item_' + no).val(),
-                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val()
+                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                qty: $('#txt_qty_' + no).val(),
             },
             success: function(data) {
                 $('#tr_' + no).remove();
@@ -2622,6 +2683,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 noref_po: noref_po
             },
             success: function(data) {
+                console.log(data)
                 if (data == 0) {
                     deletePO(no);
                 } else {
@@ -2632,6 +2694,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             error: function(request) {
                 $('#lbl_status_simpan_' + no).empty();
                 alert("KONEKSI TERPUTUS! GAGAL DELETE DATA PO");
+                // alert(request.text);
             }
         });
     }
