@@ -69,7 +69,7 @@
                                 <th>Sat</th>
                                 <th>Qty</th>
                                 <th>Stok</th>
-                                <th>Ket</th>
+                                <th class="ket_th">Ket</th>
                                 <!-- <th>Revisi&nbsp;Qty</th> -->
                                 <th>Status&nbsp;SPP</th>
                             </tr>
@@ -92,7 +92,7 @@
 </div>
 <style>
     .no_th {
-        width: 5% !important;
+        width: 3% !important;
     }
 
     .kodebar_th {
@@ -101,6 +101,10 @@
 
     .nabar_th {
         width: 30% !important;
+    }
+
+    .ket_th {
+        width: 25% !important;
     }
 
     table#datasppapproval td {

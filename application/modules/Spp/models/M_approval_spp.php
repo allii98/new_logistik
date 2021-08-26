@@ -8,7 +8,7 @@ class M_approval_spp extends CI_Model
     var $table = 'item_ppo'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noreftxt', 'kodebar', 'nabar', 'sat', 'qty', 'STOK', 'ket'); //field yang ada di table supplier  
     var $column_search = array('id', 'noreftxt', 'kodebar', 'nabar', 'sat', 'qty', 'STOK', 'ket'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'DESC'); // default order 
+    var $order = array('id' => 'ASC'); // default order 
 
     public function __construct()
     {
