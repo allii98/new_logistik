@@ -7,7 +7,7 @@ class M_data extends CI_Model
 
     var $table = 'po'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noreftxt', 'nopo', 'no_refppo', 'tgl_refppo', 'nopotxt', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb'); //field yang ada di table supplier  
-    var $column_search = array('noreftxt', 'nopotxt', 'nopo', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb'); //field yang diizin untuk pencarian 
+    var $column_search = array('noreftxt', 'nopotxt', 'no_refppo', 'nopo', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
