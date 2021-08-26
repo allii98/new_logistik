@@ -9,11 +9,14 @@ class User extends CI_Controller
         parent::__construct();
         $this->load->model('User_m');
         $this->load->library('bcrypt');
-        $this->load->model('Admin_m');
-        if (!$this->session->userdata('userlog')) {
+
+        $db_pt = check_db_pt();
+        $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
+
+        if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
             $this->session->set_flashdata('pesan', $pemberitahuan);
-            redirect('Admin');
+            redirect('Login');
         }
     }
     public function index()
@@ -28,39 +31,40 @@ class User extends CI_Controller
     public function tambah()
     {
         # code...
+        $level_user = $this->User_m->level_user();
+
         $data = [
-            'tittle'          => 'Tambah Data User'
+            'tittle' => 'Tambah Data User',
+            'level' => $level_user
         ];
         $this->template->load('template', 'v_tambahUser', $data);
     }
 
-    public function tambah_post()
+    public function tambahUser()
     {
         # code...
-
-        $nama = $this->input->post('nama');
-        $username = $this->input->post('usr');
-        $pass = $this->input->post('pw');
-        $hash = $this->bcrypt->hash_password($pass);
-
+        $password = $this->input->post('password');
+        $hash_pass = $this->bcrypt->hash_password($password);
+        $kode_level = $this->input->post('level');
+        $data['data_level'] = $this->User_m->get_level($kode_level);
 
         $data = array(
-            'user_nama' => $nama,
-            'username' => $username,
-            'user_pass' => $hash
-
+            'nama' => $this->input->post('nama'),
+            'username' => $this->input->post('username'),
+            'status_lokasi' => $this->input->post('lokasi'),
+            'kode_level' => $kode_level,
+            'level' => $data['data_level']['level'],
+            'password' => $hash_pass
         );
-        $this->User_m->add_user($data);
-        $this->session->set_flashdata("pesan", "<div class=\"alert alert-success alert-dismissible show fade\">
-                    <div class=\"alert-body\">
-                    <button class=\"close\" data-dismiss=\"alert\">
-                        <span>×</span>
-                    </button>
-                    Data Admin Berhasil Disimpan
-                    </div>
-                </div>");
 
-        redirect(base_url('User'));
+        $cari_username = $this->db_logistik_pt->get_where('user', array('username' => $data['username']))->num_rows();
+
+        if ($cari_username == 1) {
+            $data_return = 'username_exist';
+        } else {
+            $data_return = $this->User_m->tambahUser($data);
+        }
+        echo json_encode($data_return);
     }
 
     public function edit($id = null)
