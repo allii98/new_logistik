@@ -115,7 +115,8 @@ class Po extends CI_Controller
     public function cari_po_edit()
     {
         $nopo = $this->input->post('nopo');
-        $result = $this->M_po->cari_po_edit($nopo);
+        $refspp = $this->input->post('refspp');
+        $result = $this->M_po->cari_po_edit($nopo, $refspp);
 
         echo json_encode($result);
     }
@@ -774,7 +775,8 @@ class Po extends CI_Controller
             'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
             'kode_bebanbpo' => Null,
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
-            'konversi' => "0"
+            'konversi' => "0",
+            'id_item_spp' => $this->input->post('id_item')
         ];
 
         if ($this->session->userdata('status_lokasi') == "SITE" && $this->session->userdata('status_lokasi') == "RO" && $this->session->userdata('status_lokasi') == "PKS") {
@@ -969,7 +971,8 @@ class Po extends CI_Controller
             'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
             'kode_bebanbpo' => Null,
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
-            'konversi' => "0"
+            'konversi' => "0",
+            'id_item_spp' => $this->input->post('id_item')
         ];
 
         if ($this->session->userdata('status_lokasi') == "SITE") {

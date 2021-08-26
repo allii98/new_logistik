@@ -330,7 +330,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="ttl_pembayaran" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;font-size: 12px;">
                                     Total&nbsp;Bayar
-                                    <!-- <font face="Verdana" size="1.5">Total&nbsp;Bayar</font> -->
                                 </label>
                                 <div class="col-9 col-xl-12">
                                     <input type="text" class="form-control form-control-sm" id="total_pembayaran" name="total_pembayaran" placeholder="Total Pembayaran" readonly required>
@@ -447,7 +446,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <input type="text" class="form-control form-control-sm" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
                                                         <input type="hidden" class="form-control form-control-sm" id="id_item_1" name="id">
                                                         <input type="hidden" class="form-control form-control-sm" id="id_ppo1" name="id_ppo1">
-                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_no_ref_spp_1" name="hidden_no_ref_spp_">
+                                                        <input type="hidden" class="form-control form-control-sm" id="hidden_no_ref_spp_1" name="ref">
                                                         <input type="hidden" class="form-control form-control-sm" id="hidden_tgl_ref_1" name="hidden_tgl_ref_">
                                                         <input type="hidden" class="form-control form-control-sm" id="hidden_kd_departemen_1" name="hidden_kd_departemen_">
                                                         <input type="hidden" class="form-control form-control-sm" id="hidden_departemen_1" name="hidden_departemen_">
@@ -482,7 +481,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <textarea class="form-control form-control-sm" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="3"></textarea>
                                                     </td>
                                                     <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1')">
+                                                        <input type="text" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1'); hitungqty('1');">
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" />
                                                     </td>
@@ -661,7 +660,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             <div class="modal-body p-4">
                 <div class="text-center">
                     <i class="dripicons-warning h1 text-warning"></i>
-                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <h4 class="mt-2">Konfirmasi Batak</h4>
                     <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
                     <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekPO()">Hapus</button>
@@ -1339,14 +1338,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         window.open('cetak/' + noref_rpc + '/' + id_po, '_blank');
     }
 
-    function isSelected(selectedNoppo, no_ref_spp) {
+    function isSelected(selectedNoppo) {
         var noppos = $('[id*=id_item_]');
-        var norefspp = $('[id*=hidden_no_ref_spp_]');
-        // console.log('ini no ref spp', noppos);
+        // console.log(noppos);
+
         var isSelected = false;
         var a = noppos.each(function() {
             var noppo = $(this).val();
-            console.log('ini noppo', noppo)
             if (noppo == selectedNoppo) {
                 console.log("isSelected sama", noppo, selectedNoppo)
                 isSelected = true;
@@ -1355,6 +1353,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
         return isSelected;
     }
+
+
 
     function cariSPP() {
         $('#modalcarispp').modal('show');
@@ -1502,12 +1502,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
-        var td_col_2 = '<td width="25%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_2 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control form-control-sm"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')" placeholder="Pilih item SPP">' +
-            '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
+            '<input type="hidden" id="id_item_' + n + '" name="id' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
             '<input type="hidden" id="id_ppo' + n + '" name="id_ppo' + n + '">' +
-            '<input type="hidden" id="hidden_no_ref_spp_' + n + '" name="hidden_no_ref_spp_' + n + '">' +
+            '<input type="hidden" id="hidden_no_ref_spp_' + n + '" name="ref' + n + '">' +
             '<input type="hidden" id="hidden_tgl_ref_' + n + '" name="hidden_tgl_ref_' + n + '">' +
             '<input type="hidden" id="hidden_kd_departemen_' + n + '" name="hidden_kd_departemen_' + n + '">' +
             '<input type="hidden" id="hidden_departemen_' + n + '" name="hidden_departemen_' + n + '">' +
@@ -1548,7 +1548,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm bg-light" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" readonly>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" >' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
 
@@ -1609,6 +1609,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         return true;
     }
 
+    var n = 1;
+
     function pilihItem() {
         var rowcollection = $('#tblspp').DataTable().rows({
             selected: true,
@@ -1620,9 +1622,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             var no_spp = rowcollection[index][2];
             var no_ref_spp = rowcollection[index][4];
             var kodebar = rowcollection[index][6];
-            // isSelected(id);
-            if (isSelected(id, no_ref_spp)) {
-                alert('data sudah di pilih');
+
+
+            if (isSelected(id)) {
+                swal('Data sudah di pilih!');
                 return false;
             }
             // console.log(id, no_spp, no_ref_spp, kodebar);
@@ -1631,11 +1634,26 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     }
 
-    var n = 1;
-    // $('#tableDetailSPP tbody').on('click', 'tr', function () {
+    function isSelectednoRef(no_ref_spp) {
+        // var norefspp = $('#ref');
+
+        var norefspp = $('[id*=hidden_no_ref_spp_]');
+        // console.log(norefspp);
+
+        var isSelectednoRef = false;
+        var a = norefspp.each(function() {
+            var noppo = $(this).val();
+            if (noppo == no_ref_spp) {
+                console.log("isSelectednoRef sama", noppo, no_ref_spp)
+                isSelectednoRef = true;
+                return false;
+            }
+        });
+        return isSelectednoRef;
+    }
+
+
     function data_spp_dipilih(id, no_spp, no_ref_spp, kodebar) {
-        // var dataClick = $('#spp').DataTable().row(this).data();
-        // var no_spp = dataClick[1];
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/get_detail_spp'); ?>",
@@ -1652,8 +1670,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 // console.log(data);
                 $('#devisi').val(data[0].devisi);
                 $('#hidden_devisi').val(data[0].devisi);
+                $('#refspp').val(data[0].noreftxt);
                 var jenis = data[0].jenis;
-                // console.log('ini jenisnya', jenis)
                 cekJenis(jenis);
                 // var n = 0;
                 $.each(data[1], function(index) {
@@ -1661,7 +1679,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     if (n != 1) {
                         tambah_row(n);
                     }
-                    console.log(data);
+                    // console.log(data);
 
 
                     $('#id_ppo' + n).val(data[0].id);
@@ -2227,8 +2245,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                         $('.div_form_1').find('input,textarea,select').attr('disabled', '');
                         $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
-                        $('.div_form_2').find('input,textarea,select').attr('disabled', '');
-                        $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
+                        // $('.div_form_2').find('input,textarea,select').attr('disabled', '');
+                        // $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
 
                         $('#tr_' + id).find('input,textarea,select').prop('disabled', true);
                         $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
