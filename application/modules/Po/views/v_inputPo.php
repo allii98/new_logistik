@@ -898,7 +898,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function cekJenis(jenis) {
         // console.log('ini jenisnya', jenis);
-
+        $('#hidden_jenis_spp').val(jenis);
         if (jenis == "SPP") {
             var po = "PO";
         } else if (jenis == "SPPI") {
@@ -1654,7 +1654,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 $('#hidden_devisi').val(data[0].devisi);
                 var jenis = data[0].jenis;
                 // console.log('ini jenisnya', jenis)
-                // cekJenis(jenis);
+                cekJenis(jenis);
                 // var n = 0;
                 $.each(data[1], function(index) {
                     // if(index != 0){
