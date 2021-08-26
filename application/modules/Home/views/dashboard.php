@@ -23,7 +23,7 @@
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
-                            <a href="<?= base_url('Spp/approval'); ?>" class="btn btn-white btn-rounded waves-effect">
+                            <a href="<?= base_url('Spp/sppApproval'); ?>" class="btn btn-white btn-rounded waves-effect">
                                 <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp'] ?></span></h3>
                                 <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
                             </a>

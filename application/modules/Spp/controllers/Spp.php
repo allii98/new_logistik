@@ -618,7 +618,7 @@ class Spp extends CI_Controller
             $row[] = date('d-m-Y', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
-            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($field->ket) . ' </p>';
+            $row[] = '<p style="word-break: break-word; margin-bottom: 0px;">' . htmlspecialchars($field->ket) . ' </p>';
             $row[] = $stat;
             $row[] = $stat_po;
             $row[] = $field->user;
@@ -668,7 +668,7 @@ class Spp extends CI_Controller
             $row[] = date('d-m-Y', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
-            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($field->ket) . '</p>';
+            $row[] = '<p style="word-break: break-word; margin-bottom: 0px;">' . htmlspecialchars($field->ket) . '</p>';
             $row[] = $stat;
             $row[] = $field->user;
 
@@ -799,7 +799,7 @@ class Spp extends CI_Controller
             $row[] = $d->sat;
             $row[] = $d->qty;
             $row[] = $d->STOK;
-            $row[] = '<p style="word-break: break-word; width: 150px;">' . htmlspecialchars($d->ket) . '</p>';
+            $row[] = '<p style="word-break: break-word; width: 150px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . '</p>';
             // $row[] = '<button class="btn btn-xs btn-primary" type="button" disabled>Qty</button>';
             $row[] = $status;
 

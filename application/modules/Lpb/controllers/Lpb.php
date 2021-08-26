@@ -68,7 +68,7 @@ class Lpb extends CI_Controller
             $row[] = $field->noref;
             $row[] = $field->refpo;
             $row[] = $field->nama_supply;
-            $row[] = '<p style="word-break: break-word">' .  htmlspecialchars($field->ket) . ' </p>';
+            $row[] = '<p style="word-break: break-word; margin-bottom: 0px;">' .  htmlspecialchars($field->ket) . ' </p>';
             $row[] = $field->USER;
 
             $data[] = $row;
@@ -848,7 +848,8 @@ class Lpb extends CI_Controller
             $row[] = $d->qtypo;
             $row[] = $d->qty;
             $row[] = $result_sisa_lpb;
-            $row[] = htmlspecialchars($d->ket);
+            $row[] = '<p style="word-break: break-word; margin-bottom: 0px;">' .  htmlspecialchars($d->ket) . ' </p>';
+
 
             $data[] = $row;
         }
