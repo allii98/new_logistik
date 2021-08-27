@@ -204,12 +204,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             </option>
                                             <option value="RO">RO
                                             </option>
-                                            <option value="SITE">SITE
+                                            <option value="SITE">KEBUN
                                             </option>
                                         <?php } else { ?>
                                             <option value="RO">RO
                                             </option>
-                                            <option selected="selected" value="SITE">SITE
+                                            <option selected="selected" value="SITE">KEBUN
                                             </option>
                                         <?php } ?>
                                     </select>
@@ -228,15 +228,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="txt_pemesan" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                     Pemesan*
-                                    <!-- <font face="Verdana" size="1.5">Pemesan*</font> -->
                                 </label>
                                 <div class="col-8 col-xl-12">
+                                    <input type="hidden" name="nama_pemesan" id="nama_pemesan">
                                     <select class="form-control form-control-sm" id="txt_pemesan" name="txt_pemesan" required>
-                                        <option disabled>Pilih</option>
-                                        <option selected value="GM">GM
-                                        </option>
-                                        <option value="KTU">KTU
-                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -810,6 +805,30 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     var hapus = true;
     var qty = true;
 
+    function pilihPemesan() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/pemesan'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: '',
+            success: function(data) {
+                var opsi_cmb_all = '<option selected disabled>Pilih</option>';
+                $('#txt_pemesan').append(opsi_cmb_all);
+                $.each(data, function(index) {
+                    var opsi_txt_pemesan = '<option value="' + data[index].kode + '">' + data[index].pemesan + '</option>';
+                    $('#txt_pemesan').append(opsi_txt_pemesan);
+                });
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+
+
     function goBack() {
         window.history.back();
     }
@@ -930,6 +949,28 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         jenisPO();
         tittle();
+        pilihPemesan();
+
+        $('#txt_pemesan').change(function() {
+            var kode = this.value;
+            // console.log(isipemesan)
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Po/cekPemesan'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+
+                data: {
+                    kode: kode,
+                },
+                success: function(data) {
+                    $('#nama_pemesan').val(data.pemesan);
+                },
+                error: function(response) {
+                    console.log('KONEKSI TERPUTUS!');
+                }
+            });
+        });
 
         // kuncinumber
         $("#pph, #no_penawaran, #tmpo_pengiriman, #tmpo_pembayaran").on("keypress keyup blur", function(event) {
@@ -1955,8 +1996,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 // // console.log(item);
                 // console.log(a.jmlhSPP1, b.jmlhSPP2);
                 if (a.jmlhSPP1 == 0) {
-                    // updatePPO();
-                    console.log('oke update ppo');
+                    updatePPO();
+                    // console.log('oke update ppo');
                 } else {
                     console.log('field po belum 0 semua');
                 }
@@ -2017,8 +2058,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_jenis_spp: $('#hidden_jenis_spp').val(),
                     txt_kode_supplier: $('#kd_supplier').val(),
                     txt_supplier: $('#txtsupplier').val(),
-                    txt_kode_pemesan: $('#txt_kode_pemesan').val(),
-                    txt_pemesan: $('#txt_pemesan').val(),
+                    txt_kode_pemesan: $('#txt_pemesan').val(),
+                    txt_pemesan: $('#nama_pemesan').val(),
                     hidden_no_ref_po: $('#hidden_no_ref_po').val(),
                     cmb_status_bayar: $('#cmb_status_bayar').val(),
                     txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
@@ -2181,8 +2222,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
                     txt_kode_supplier: $('#kd_supplier').val(),
                     txt_supplier: $('#txtsupplier').val(),
-                    txt_kode_pemesan: $('#txt_kode_pemesan').val(),
-                    txt_pemesan: $('#txt_pemesan').val(),
+                    txt_kode_pemesan: $('#txt_pemesan').val(),
+                    txt_pemesan: $('#nama_pemesan').val(),
                     hidden_no_ref_po: $('#hidden_no_ref_po').val(),
                     cmb_status_bayar: $('#cmb_status_bayar').val(),
                     txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
@@ -2729,7 +2770,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var lks_pengiriman = $('#lks_pengiriman').val();
         var lks_pembelian = $('#lks_pembelian').val();
         var no_penawaran = $('#no_penawaran').val();
-        var ket_pengiriman = $('#ket_pengiriman').val();
+        var pemesan = $('#txt_pemesan').val();
         var pph = $('#pph').val();
         var ppn = $('#ppn').val();
         var keterangan = $('#keterangan').val();
@@ -2752,6 +2793,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "background": "#FFCECE"
             });
 
+        } else if (!pemesan) {
+            toast('Pemesan PO is required!');
+            $('#txt_pemesan').css({
+                "background": "#FFCECE"
+            });
         } else if (!devisi) {
             toast('Devisi PO is required!');
             $('#devisi').css({

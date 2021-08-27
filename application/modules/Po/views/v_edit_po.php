@@ -453,27 +453,12 @@
                 refspp: refspp,
             },
             success: function(data) {
-                var lokasi = $('#lokasi').val();
 
-                switch (lokasi) {
-                    case 'HO':
-                        for (var i = 0; i <= data; i++) {
+                for (var i = 0; i <= data; i++) {
 
-                            batalkanPO(i);
-                        }
-                        break;
-                    case 'RO':
-                    case 'SITE':
-                    case 'PKS':
-                        for (var i = 1; i <= data; i++) {
-
-                            batalkanPO(i);
-                        }
-
-                        break;
-                    default:
-                        break;
+                    batalkanPO(i);
                 }
+
 
             },
             error: function(response) {

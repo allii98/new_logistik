@@ -342,6 +342,20 @@ class Po extends CI_Controller
         $this->template->load('template', 'v_inputPo', $data);
     }
 
+    public function pemesan()
+    {
+        $data = $this->db_logistik_pt->query("SELECT kode, pemesan FROM pemesan ORDER BY id DESC")->result();
+        echo json_encode($data);
+    }
+
+    public function cekPemesan()
+    {
+        $kode = $this->input->post('kode');
+        $data = $this->db_logistik_pt->query("SELECT kode, pemesan FROM pemesan WHERE kode='$kode'")->row();
+        echo json_encode($data);
+        # code...
+    }
+
     public function inputv1()
     {
         $data = [
@@ -412,7 +426,6 @@ class Po extends CI_Controller
             $data1 = $this->M_po->updatePPO2($refspp, $data_ppo2);
             $data2 = $this->M_po->updatePPO3($refspp, $kodebar, $data_itemppo2);
         } else {
-            $data1 = $this->M_po->updatePPO2($refspp, $data_ppo);
             $data2 = $this->M_po->updatePPO3($refspp, $kodebar, $data_itemppo);
         }
         $data = [
