@@ -1326,8 +1326,13 @@ class Po extends CI_Controller
                     $jumlah = $qtyitempo;
                 }
 
+                // sum qtyPO berdasarkan barang dan noref_PPO di tb item_po
+                $get_item_po = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE id = '$no_id_item'")->row();
+                $sum_qty_po = $get_item_po->hasilqty;
+                $total = $jumlah + $sum_qty_po;
+
                 $data_ppo =  array(
-                    'qty2' => $jumlah,
+                    'qty2' => $total,
                 );
 
                 $this->M_po->updatePPO($id_ppo, $data_ppo);
@@ -1351,8 +1356,12 @@ class Po extends CI_Controller
                 $jumlah = $qtyitempo;
             }
 
+            $get_item_po = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE id = '$no_id_item'")->row();
+            $sum_qty_po = $get_item_po->hasilqty;
+            $total = $jumlah + $sum_qty_po;
+
             $data_ppo =  array(
-                'qty2' => $jumlah,
+                'qty2' => $total,
             );
 
             $this->M_po->updatePPO($id_ppo, $data_ppo);
