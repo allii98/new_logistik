@@ -390,6 +390,13 @@ class M_po extends CI_Model
         $this->db_logistik_pt->where(['noref' => $noref_po]);
         return $this->db_logistik_pt->get()->num_rows();
     }
+
+    function update_qty2_item_ppo($hasil_qty, $norefppo, $kodebar)
+    {
+        $this->db_logistik_pt->where(['noreftxt' => $norefppo, 'kodebar' => $kodebar]);
+        $this->db_logistik_pt->set('qty2', $hasil_qty);
+        $this->db_logistik_pt->update('item_ppo');
+    }
 }
 
 /* End of file M_po.php */

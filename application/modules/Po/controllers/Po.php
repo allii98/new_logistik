@@ -1301,90 +1301,31 @@ class Po extends CI_Controller
         //cari PO where kodebar norefpo norefppo
         $cari_po = $this->M_po->cari_po($norefpo, $norefppo, $kodebar, $txt_jumlah);
 
-
-
-
-
         if ($this->session->userdata('status_lokasi') == "SITE" && $this->session->userdata('status_lokasi') == "RO" && $this->session->userdata('status_lokasi') == "PKS") {
             if ($cari_po > 1500000) {
                 $updateitem = 'site';
             } else {
                 $id_ppo = $this->input->post('id_item_spp');
-                $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
-                $qtyinputan = $this->input->post('txt_qty');
-                $qtyitempo = $cek->qty2;
 
-                if ($qtyitempo > $qtyinputan) {
-                    # code...
-                    $qtyhasil = $qtyitempo - $qtyinputan;
-                    $jumlah = $qtyitempo - $qtyhasil;
-                } else if ($qtyitempo < $qtyinputan) {
-                    # code...
-                    $qtyhasil = $qtyinputan - $qtyitempo;
-                    $jumlah = $qtyitempo + $qtyhasil;
-                } else {
-                    $jumlah = $qtyitempo;
-                }
-
-                // sum qtyPO berdasarkan barang dan noref_PPO di tb item_po 
-                $get_item_po_sql = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE refppo = '$norefppo' AND kodebar='$kodebar'");
-                $get_item_po_nums = $get_item_po_sql->num_rows();
-                $get_item_po_row = $get_item_po_sql->row();
-
-                if ($get_item_po_nums == 1) {
-                    $total = $jumlah;
-                } else {
-                    $sum_qty_po = $get_item_po_row->hasilqty;
-                    $total = $jumlah + $sum_qty_po;
-                }
-
-                $data_ppo =  array(
-                    'qty2' => $total,
-                );
-
-                $this->M_po->updatePPO($id_ppo, $data_ppo);
                 $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
             }
         } else {
             $id_ppo = $this->input->post('id_item_spp');
-            $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
-            $qtyinputan = $this->input->post('txt_qty');
-            $qtyitempo = $cek->qty2;
 
-            if ($qtyitempo > $qtyinputan) {
-                # code...
-                $qtyhasil = $qtyitempo - $qtyinputan;
-                $jumlah = $qtyitempo - $qtyhasil;
-            } else if ($qtyitempo < $qtyinputan) {
-                # code...
-                $qtyhasil = $qtyinputan - $qtyitempo;
-                $jumlah = $qtyitempo + $qtyhasil;
-            } else {
-                $jumlah = $qtyitempo;
-            }
-
-            $get_item_po_sql = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE refppo = '$norefppo' AND kodebar='$kodebar'");
-            $get_item_po_nums = $get_item_po_sql->num_rows();
-            $get_item_po_row = $get_item_po_sql->row();
-
-            if ($get_item_po_nums == 1) {
-                $total = $jumlah;
-            } else {
-                $sum_qty_po = $get_item_po_row->hasilqty;
-                $total = $jumlah + $sum_qty_po;
-            }
-
-            $data_ppo =  array(
-                'qty2' => $total,
-            );
-
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
             $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
         }
 
-
+        $this->update_qty2_item_ppo($norefppo, $kodebar);
 
         echo json_encode($updateitem);
+    }
+
+    private function update_qty2_item_ppo($norefppo, $kodebar)
+    {
+        $get_item_po_sql = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE refppo = '$norefppo' AND kodebar='$kodebar'");
+        $get_item_po_row = $get_item_po_sql->row();
+
+        return $this->M_po->update_qty2_item_ppo($get_item_po_row->hasilqty, $norefppo, $kodebar);
     }
 
     // public function update()
