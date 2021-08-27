@@ -1326,10 +1326,17 @@ class Po extends CI_Controller
                     $jumlah = $qtyitempo;
                 }
 
-                // sum qtyPO berdasarkan barang dan noref_PPO di tb item_po
-                $get_item_po = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE id = '$no_id_item'")->row();
-                $sum_qty_po = $get_item_po->hasilqty;
-                $total = $jumlah + $sum_qty_po;
+                // sum qtyPO berdasarkan barang dan noref_PPO di tb item_po 
+                $get_item_po_sql = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE refppo = '$norefppo' AND kodebar='$kodebar'");
+                $get_item_po_nums = $get_item_po_sql->num_rows();
+                $get_item_po_row = $get_item_po_sql->row();
+
+                if ($get_item_po_nums == 1) {
+                    $total = $jumlah;
+                } else {
+                    $sum_qty_po = $get_item_po_row->hasilqty;
+                    $total = $jumlah + $sum_qty_po;
+                }
 
                 $data_ppo =  array(
                     'qty2' => $total,
@@ -1356,9 +1363,16 @@ class Po extends CI_Controller
                 $jumlah = $qtyitempo;
             }
 
-            $get_item_po = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE id = '$no_id_item'")->row();
-            $sum_qty_po = $get_item_po->hasilqty;
-            $total = $jumlah + $sum_qty_po;
+            $get_item_po_sql = $this->db_logistik_pt->query("SELECT SUM(qty) as hasilqty FROM item_po WHERE refppo = '$norefppo' AND kodebar='$kodebar'");
+            $get_item_po_nums = $get_item_po_sql->num_rows();
+            $get_item_po_row = $get_item_po_sql->row();
+
+            if ($get_item_po_nums == 1) {
+                $total = $jumlah;
+            } else {
+                $sum_qty_po = $get_item_po_row->hasilqty;
+                $total = $jumlah + $sum_qty_po;
+            }
 
             $data_ppo =  array(
                 'qty2' => $total,
