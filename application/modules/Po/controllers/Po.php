@@ -1231,7 +1231,6 @@ class Po extends CI_Controller
         $norefpo = $this->input->post('hidden_no_ref_po');
         $norefppo = $this->input->post('hidden_no_ref_spp');
         $kodebar = $this->input->post('hidden_kode_brg');
-        // $no_po = $this->input->post('hidden_no_po');
 
         if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00" || $this->input->post('txt_biaya_lain') != "0" || $this->input->post('txt_biaya_lain') != "0.00") {
             $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
@@ -1301,24 +1300,67 @@ class Po extends CI_Controller
 
         //cari PO where kodebar norefpo norefppo
         $cari_po = $this->M_po->cari_po($norefpo, $norefppo, $kodebar, $txt_jumlah);
-        $id_ppo = $this->input->post('id_item');
-        $qty2 = $this->input->post('txt_qty');
 
-        $data_ppo =  array(
-            'qty2' => $qty2,
-            // 'po' => 1
-        );
-        $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+
+
 
         if ($this->session->userdata('status_lokasi') == "SITE" && $this->session->userdata('status_lokasi') == "RO" && $this->session->userdata('status_lokasi') == "PKS") {
             if ($cari_po > 1500000) {
                 $updateitem = 'site';
             } else {
+                $id_ppo = $this->input->post('id_item_spp');
+                $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
+                $qtyinputan = $this->input->post('txt_qty');
+                $qtyitempo = $cek->qty2;
+
+                if ($qtyitempo > $qtyinputan) {
+                    # code...
+                    $qtyhasil = $qtyitempo - $qtyinputan;
+                    $jumlah = $qtyitempo - $qtyhasil;
+                } else if ($qtyitempo < $qtyinputan) {
+                    # code...
+                    $qtyhasil = $qtyinputan - $qtyitempo;
+                    $jumlah = $qtyitempo + $qtyhasil;
+                } else {
+                    $jumlah = $qtyitempo;
+                }
+
+                $data_ppo =  array(
+                    'qty2' => $jumlah,
+                );
+
+                $this->M_po->updatePPO($id_ppo, $data_ppo);
                 $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
             }
         } else {
+            $id_ppo = $this->input->post('id_item_spp');
+            $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
+            $qtyinputan = $this->input->post('txt_qty');
+            $qtyitempo = $cek->qty2;
+
+            if ($qtyitempo > $qtyinputan) {
+                # code...
+                $qtyhasil = $qtyitempo - $qtyinputan;
+                $jumlah = $qtyitempo - $qtyhasil;
+            } else if ($qtyitempo < $qtyinputan) {
+                # code...
+                $qtyhasil = $qtyinputan - $qtyitempo;
+                $jumlah = $qtyitempo + $qtyhasil;
+            } else {
+                $jumlah = $qtyitempo;
+            }
+
+            $data_ppo =  array(
+                'qty2' => $jumlah,
+            );
+
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
             $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
         }
+
+
+
         echo json_encode($updateitem);
     }
 

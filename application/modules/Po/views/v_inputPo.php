@@ -2377,6 +2377,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 // hidden_kodept: $('#hidden_kd_pt_' + id).val(),
                 // hidden_namapt: $('#hidden_nama_pt_' + id).val(),
                 // txt_no_spp: $('#noppo' + id).val(),
+                id_item_spp: $('#id_item_' + id).val(),
                 hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
                 hidden_no_ref_po: $('#hidden_no_ref_po').val(),
                 hidden_no_ref_spp: $('#hidden_no_ref_spp_' + id).val(),
@@ -2435,6 +2436,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 $('#btn_ubah_' + id).show();
                 $('#btn_hapus_' + id).show();
                 alert("KONEKSI TERPUTUS! GAGAL UPDATE DATA PO");
+                console.log(request.responseText)
             }
 
         });
