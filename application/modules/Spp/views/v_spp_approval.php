@@ -65,13 +65,13 @@
                                 <th class="no_th">No</th>
                                 <th>ID</th>
                                 <th class="kodebar_th">Kode&nbsp;Barang</th>
-                                <th class="nabar_th">Nama&nbsp;Barang</th>
-                                <th>Sat</th>
-                                <th>Qty</th>
-                                <th>Stok</th>
+                                <th class="nabar_th">Nama&nbsp;Barang </th>
+                                <th class="sat_th">Sat</th>
+                                <th class="qty_th">Qty</th>
+                                <th class="stok_th">Stok</th>
                                 <th class="ket_th">Ket</th>
                                 <!-- <th>Revisi&nbsp;Qty</th> -->
-                                <th>Status&nbsp;SPP</th>
+                                <th class="status_th">Status&nbsp;SPP</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,15 +96,25 @@
     }
 
     .kodebar_th {
-        width: 15% !important;
+        width: 12% !important;
     }
 
     .nabar_th {
-        width: 30% !important;
+        width: 27% !important;
     }
 
     .ket_th {
         width: 25% !important;
+    }
+
+    .status_th {
+        width: 18% !important;
+    }
+
+    .sat_th,
+    .qty_th,
+    .stok_th {
+        width: 5% !important;
     }
 
     table#datasppapproval td {

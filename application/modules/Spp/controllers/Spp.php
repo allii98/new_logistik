@@ -786,7 +786,7 @@ class Spp extends CI_Controller
         foreach ($list as $d) {
             if ($d->status2 == "1") {
                 $tgl_approve = date('d-m-Y H:i:s', strtotime($d->TGL_APPROVE));
-                $status = "<span style='color: green'><b>DISETUJUI<br>" . $tgl_approve . "</b></span>";
+                $status = "<span style='color: green'><b>DISETUJUI (" . $tgl_approve . ")</b></span>";
             } else {
                 $status = "DALAM PROSES";
             }
