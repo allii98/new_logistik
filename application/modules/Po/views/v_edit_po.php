@@ -1420,6 +1420,7 @@
                     $('#cmb_jenis_budget_' + id).val(item.grup);
                     $('#txt_merk_' + id).val(item.merek);
                     $('#txt_harga_' + id).val(item.harga);
+                    $('#txt_qty_' + id).val(item.qty);
                     $('#txt_disc_' + id).val(item.disc);
                     $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
                     $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
