@@ -1328,6 +1328,13 @@ class Po extends CI_Controller
         return $this->M_po->update_qty2_item_ppo($get_item_po_row->hasilqty, $norefppo, $kodebar);
     }
 
+    public function cek_qty()
+    {
+        $id_item_spp = $this->input->post('id_item_spp');
+        $data = $this->M_po->cek_qty($id_item_spp);
+        echo json_encode($data);
+    }
+
     // public function update()
     // {
 

@@ -1875,7 +1875,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
-
     function hitungqty(id) {
         $('#txt_qty_' + id).keyup(function() {
             var a = $('#txt_qty_' + id).val();

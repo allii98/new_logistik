@@ -266,12 +266,10 @@
                         <table id="dataspp" class="table table-striped table-bordered table-in" width="100%">
                             <thead>
                                 <tr>
-
                                     <th>#</th>
                                     <th>Tanggal</th>
                                     <th>Ref.&nbsp;SPP</th>
                                     <th>Departemen</th>
-
                                 </tr>
                             </thead>
                             <tbody>
@@ -950,8 +948,8 @@
             '<textarea class="form-control form-control-sm" id="txt_merk_' + no + '" name="txt_merk_' + no + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" readonly>' +
-            '<input type="hidden" class="form-control form-control-sm bg-light" id="qty_' + no + '" name="qty' + no + '" placeholder="Qty" size="8"  readonly>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" >' +
+            '<input type="hidden" class="form-control form-control-sm" id="qty_' + no + '" name="qty' + no + '" placeholder="Qty" size="8" >' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + no + '" name="qty2' + no + '" placeholder="Qty" size="8"/>' +
 
             '</td>';
@@ -1086,6 +1084,7 @@
         var lokasi = $('#status_lokasi').val();
         var biayalain = $('#txt_biaya_lain_' + id).val();
         var merk = $('#txt_merk_' + id).val();
+        var qty = $('#txt_qty_' + id).val();
         var hrg = $('#txt_harga_' + id).val();
         var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
         var ketRinci = $('#txt_keterangan_rinci_' + id).val();
@@ -1100,6 +1099,11 @@
         } else if (!hrg) {
             toast('Harga is required!');
             $('#txt_harga_' + id).css({
+                "background": "#FFCECE"
+            });
+        } else if (!qty) {
+            toast('QTY is required!');
+            $('#txt_qty_' + id).css({
                 "background": "#FFCECE"
             });
         } else if (!ketRinci) {
@@ -1178,6 +1182,7 @@
                 // hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                 // hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
                 // hidden_no_po: $('#hidden_no_po').val(),
+                id_item_spp: $('#id_item_' + id).val(),
                 hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
                 hidden_no_ref_po: $('#hidden_no_ref_po').val(),
                 hidden_no_ref_spp: $('#hidden_no_ref_spp_' + id).val(),
@@ -1193,6 +1198,9 @@
                 txt_jumlah: $('#txt_jumlah_' + id).val(),
             },
             success: function(data) {
+                var refspp = $('#hidden_no_ref_spp_' + id).val();
+                var kodebar = $('#hidden_kode_brg_' + id).val();
+                sum_qty(refspp, kodebar);
                 if (data == 'site') {
                     swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                     $('#lbl_status_simpan_' + id).empty();
@@ -1230,6 +1238,23 @@
                 $('#btn_ubah_' + id).show();
                 $('#btn_hapus_' + id).show();
                 alert("KONEKSI TERPUTUS!");
+            }
+        });
+    }
+
+    function sum_qty(refspp, kodebar) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/sum_ppo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                refspp: refspp,
+                kodebar: kodebar,
+            },
+            success: function(data) {
+                console.log(data);
             }
         });
     }
@@ -1324,6 +1349,7 @@
                     $('#nama_brg_' + i).text(nabar);
                     $('#txt_keterangan_rinci_' + i).val(ket);
                     $('#txt_qty_' + i).val(qty);
+                    $('#qty_' + i).val(qty);
                     $('#qty2_' + i).val(qty2);
                     $('#txt_merk_' + i).val(merk);
                     $('#cmb_kurs_' + i).val(kurs);
@@ -1357,8 +1383,8 @@
                     $('#hidden_no_ref_po_' + i).val(po.noreftxt);
 
 
-                    $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #jumlah_' + i + ',#txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
-                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #jumlah_' + i + ', #txt_jumlah_' + i + ',  #txt_keterangan_rinci_' + i).addClass('bg-light');
+                    $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #jumlah_' + i + ',#txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
+                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #jumlah_' + i + ', #txt_jumlah_' + i + ',  #txt_keterangan_rinci_' + i).addClass('bg-light');
                     $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
                     $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
                 }
@@ -1564,7 +1590,7 @@
             '<textarea class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')" readonly>' +
+            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
             '</td>';
@@ -1775,7 +1801,7 @@
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" />' +
 
@@ -1893,7 +1919,7 @@
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" />' +
 
@@ -1957,32 +1983,72 @@
     }
 
     function hitungqty(id) {
-
         $('#txt_qty_' + id).keyup(function() {
             var a = $('#txt_qty_' + id).val();
             var b = $('#qty_' + id).val();
             var c = $('#qty2_' + id).val();
-            var qty = Number(a);
-            var qty2 = Number(b);
+            var id_item_spp = $('#id_item_' + id).val();
+            var qtyInputan = Number(a);
+            var qtyInputan2 = Number(b);
             var qty2n = Number(c);
-            if (qty2n > 0) {
-                var tmbh = qty2 - qty2n;
-                if (qty > tmbh) {
-                    console.log('melebihi, inputan ke 2');
-                    $('#txt_qty_' + id).val(tmbh);
+            // if (qty2n > 0) {
+            //     var tmbh = qtyInputan2 - qty2n;
+            //     if (qtyInputan > tmbh) {
+            //         swal('Melebihi, inputan sebelumnya');
+            //         $('#txt_qty_' + id).val(tmbh);
+            //     }
+            // } else {
+            //     if (qtyInputan > qtyInputan2) {
+            //         // console.log('benar');
+            //         swal("Melebihi QTY SPP!");
+            //         $('#txt_qty_' + id).val(qtyInputan2);
+            //     } else {
+            //         console.log("sip dah");
+            //     }
+            // }
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Po/cek_qty'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                data: {
+                    id_item_spp: id_item_spp
+                },
+                success: function(data) {
+                    console.log(qtyInputan);
+                    var qty = data.qty;
+                    var qty2 = data.qty2;
+                    if (qty == qty2) {
+                        if (qtyInputan > qtyInputan2) {
+                            swal('Melebihi, inputan sebelumnya');
+                            $('#txt_qty_' + id).val(qtyInputan2);
+                        } else {
+                            console.log('oke deh');
+                        }
+                    } else {
+                        // console.log('oke')
+                        var hitung = qty - qty2;
+                        var hasil = hitung + qtyInputan2;
+                        // console.log('ini hasilnya', hitung);
+                        if (qtyInputan > hasil) {
+                            swal("Melebihi QTY SPP!");
+                            $('#txt_qty_' + id).val(qtyInputan2);
+
+                        } else {
+                            console.log('oke deh');
+                        }
+                    }
+                },
+                error: function(request) {
+                    console.log(request.responseText);
                 }
-            } else {
-                if (qty > qty2) {
-                    // console.log('benar');
-                    console.log("Qty melebihi bataaaas!")
-                    $('#txt_qty_' + id).val(qty2);
-                } else {
-                    console.log("sip dah");
-                }
-            }
+            });
+
 
         });
     }
+
 
     function jumlah(id) {
         // console.log('jumlahke', no_row)
@@ -2067,10 +2133,10 @@
 
     function ubah(i) {
 
-        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
-        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
-        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
-        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
+        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
 
         $('#btn_ubah_' + i).hide();
         $('#btn_hapus_' + i).hide();

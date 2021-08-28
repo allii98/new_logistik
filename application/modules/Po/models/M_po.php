@@ -183,6 +183,12 @@ class M_po extends CI_Model
         return $data;
     }
 
+    public function cek_qty($id_item_spp)
+    {
+        $data = $this->db_logistik_pt->query("SELECT qty, qty2 FROM item_ppo WHERE id='$id_item_spp'")->row();
+        return $data;
+    }
+
     public function get_itemppo()
     {
         $query = "SELECT * FROM item_ppo WHERE id = '" . $this->input->post('id') . "'";
