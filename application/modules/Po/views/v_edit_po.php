@@ -263,13 +263,15 @@
                 <div class="col-12">
                     <input type="hidden" id="no_row" name="no_row">
                     <div class="table-responsive">
-                        <table id="dataspp" class="table table-striped table-bordered table-in" width="100%">
+                        <table id="dataspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Tanggal</th>
-                                    <th>Ref.&nbsp;SPP</th>
-                                    <th>Departemen</th>
+
+                                    <th style="font-size: 11px; padding:10px">#</th>
+                                    <th style="font-size: 11px; padding:10px">Tanggal</th>
+                                    <th style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
+                                    <th style="font-size: 11px; padding:10px">Departemen</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -278,7 +280,7 @@
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <div class=" modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
             </div>
         </div>
@@ -395,11 +397,32 @@
         padding: 10px;
         font-size: 11px;
     }
+
+    table#dataspp td {
+        padding: 10px;
+        font-size: 11px;
+    }
 </style>
 
 <script>
     var cancleUpdatePO = true;
     var updateBaru = true;
+
+    function selected(selectedNoppo) {
+        var noppos = $('[id*=id_item_]');
+        // console.log(noppos);
+
+        var isSelected = false;
+        var a = noppos.each(function() {
+            var noppo = $(this).val();
+            if (noppo == selectedNoppo) {
+                console.log("isSelected sama", noppo, selectedNoppo)
+                isSelected = true;
+                return false;
+            }
+        });
+        return isSelected;
+    }
 
     $(document).ready(function() {
         var no_nopo_edit = $('#hidden_nopo_edit').val();
@@ -833,7 +856,7 @@
 
 
                     // console.log('nomer row nya', n);
-                    tambah_item_baru(n, value.statusaprove);
+
                     if (value.statusaprove == '0') {
                         $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
@@ -841,7 +864,7 @@
 
                     var idppo = value.id;
                     var opsi = value.noreftxt;
-                    console.log(opsi);
+                    // console.log(opsi);
                     var tglref = value.tglref;
                     var kodedept = value.kodedept;
                     var namadept = value.namadept;
@@ -856,30 +879,40 @@
                     var qty = value.qty;
                     var qty2 = value.qty2;
 
+                    var id = value.id;
+                    if (isSelected(id)) {
+                        alert('data sudah di pilih');
+                        return false;
+                    } else {
+                        tambah_item_baru(n, value.statusaprove);
+                        $('#id_ppo' + n).val(idppo);
+                        $('#id_item_' + n).val(idppo);
+                        $('#hidden_no_ref_spp_' + n).val(opsi);
+                        // $('#refspp').val(opsi);
+                        // $('#hidden_tgl_hidden' + n).val(tglref);
+                        $('#hidden_kd_departemen_' + n).val(kodedept);
+                        $('#hidden_departemen_' + n).val(namadept);
+                        $('#hidden_tgl_spp_' + n).val(tglppo);
+                        $('#hidden_kd_pt_' + n).val(kodept);
+                        $('#hidden_nama_pt_' + n).val(pt);
+                        $('#noppo' + n).val(noppo);
+                        $('#hidden_kode_brg_' + n).val(kodebar);
+                        $('#kode_brg_' + n).text(kodebar);
+                        $('#hidden_nama_brg_' + n).val(nabar);
+                        $('#nama_brg_' + n).text(nabar);
+                        $('#hidden_satuan_brg_' + n).val(sat);
+                        $('#txt_qty_' + n).val(qty);
+                        $('#getspp' + n).val(opsi);
 
-                    $('#id_ppo' + n).val(idppo);
-                    $('#id_item_' + n).val(idppo);
-                    $('#hidden_no_ref_spp_' + n).val(opsi);
-                    // $('#refspp').val(opsi);
-                    // $('#hidden_tgl_hidden' + n).val(tglref);
-                    $('#hidden_kd_departemen_' + n).val(kodedept);
-                    $('#hidden_departemen_' + n).val(namadept);
-                    $('#hidden_tgl_spp_' + n).val(tglppo);
-                    $('#hidden_kd_pt_' + n).val(kodept);
-                    $('#hidden_nama_pt_' + n).val(pt);
-                    $('#noppo' + n).val(noppo);
-                    $('#hidden_kode_brg_' + n).val(kodebar);
-                    $('#kode_brg_' + n).text(kodebar);
-                    $('#hidden_nama_brg_' + n).val(nabar);
-                    $('#nama_brg_' + n).text(nabar);
-                    $('#hidden_satuan_brg_' + n).val(sat);
-                    $('#txt_qty_' + n).val(qty);
-                    $('#getspp' + n).val(opsi);
+                        $('#qty_' + n).val(qty);
+                        $('#qty2_' + n).val(qty2);
+                        $('#hidden_tgl_ref_' + n).val(tglref);
 
-                    $('#qty_' + n).val(qty);
-                    $('#qty2_' + n).val(qty2);
-                    $('#hidden_tgl_ref_' + n).val(tglref);
-                    n++;
+                        n++;
+                    }
+
+
+
                 });
                 $('#modalcarispp').modal('hide');
             },
@@ -948,7 +981,7 @@
             '<textarea class="form-control form-control-sm" id="txt_merk_' + no + '" name="txt_merk_' + no + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" >' +
+            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" >' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + no + '" name="qty' + no + '" placeholder="Qty" size="8" >' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + no + '" name="qty2' + no + '" placeholder="Qty" size="8"/>' +
 
