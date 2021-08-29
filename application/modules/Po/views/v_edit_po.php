@@ -288,7 +288,7 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-full-width">
         <div class="modal-content">
             <div class="modal-header ml-2">
                 <h4 class="modal-title" id="myModalLabel">Pilih Item SPP</h4>
@@ -335,18 +335,18 @@
                 <div class="col-12">
                     <div class="table-responsive">
                         <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                        <table id="spp" class="table table-striped table-bordered table-in" width="100%">
+                        <table id="spp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>ID</th>
-                                    <th>No.&nbsp;SPP</th>
-                                    <th>Tgl.&nbsp;SPP</th>
-                                    <th>Ref.&nbsp;SPP</th>
-                                    <th>Departemen</th>
-                                    <th>Kode&nbsp;Barang</th>
-                                    <th>Item&nbsp;Barang</th>
-                                    <th>Ket</th>
+                                    <th style="font-size: 12px; padding:10px">No.</th>
+                                    <th style="font-size: 12px; padding:10px">ID</th>
+                                    <th style="font-size: 12px; padding:10px">No.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">Tgl.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">No&nbsp;Ref.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -395,7 +395,7 @@
 <style>
     table#spp td {
         padding: 10px;
-        font-size: 11px;
+        font-size: 12px;
     }
 
     table#dataspp td {
