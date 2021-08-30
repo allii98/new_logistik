@@ -6,9 +6,9 @@
 
 <div class="container-fluid">
     <div class="row mt-2">
-        <div class="row col-md">
-            <div class="col-md-6 col-md-6">
-                <div class="card card-body">
+        <div class="row col-lg-7 col-xl-7 col-12">
+            <div class="col-lg-6 col-xl-6 col-6">
+                <div class="card-box">
                     <div class="row">
                         <div class="col-3">
                             <div class="avatar-sm bg-blue rounded">
@@ -35,7 +35,7 @@
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
 
-            <div class="col-md-6 col-xl-3">
+            <div class="col-lg-6 col-xl-6 col-6">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -56,7 +56,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-lg-6 col-xl-6 col-6">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -82,7 +82,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-lg-6 col-xl-6 col-6">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -103,7 +103,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-lg-6 col-xl-6 col-6">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -130,7 +130,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-md-6 col-xl-3">
+            <div class="col-lg-6 col-xl-6 col-6">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -148,7 +148,7 @@
                         <div class="col-3">
                             <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="btn btn-white btn-rounded waves-effect">
                                 <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb_rev_qty'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu Rev QTY</p>
+                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Rev&nbsp;QTY</p>
                             </a>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
             </div> <!-- end col -->
         </div>
 
-        <div class="col-md-5">
+        <div class="col-lg-5 col-xl-5 col-12">
             <div class="card">
                 <div class="card-body">
                     <?php
