@@ -10,6 +10,14 @@ if ($this->session->userdata('app_pt') == 'MSAL') {
 } elseif ($this->session->userdata('app_pt') == 'KPP') {
     $dev = substr($stokmasuk->devisi, 25); // KPP
 }
+
+if ($stokmasuk->lokasi == 'HO') {
+    $alamat_lok = '<p style="font-size:8px">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru, JakartaSelatan, DKI Jakarta Raya-12140</p>';
+} else {
+    $alamat_lok = '';
+}
+
+$logo_pt = $this->session->userdata('logo_pt');
 ?>
 
 <head>
@@ -54,6 +62,43 @@ if ($this->session->userdata('app_pt') == 'MSAL') {
 </head>
 
 <body>
+    <table width="100%" border="0" align="center" style="margin-bottom: 5px;">
+        <tr>
+            <td rowspan="5" width="12%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/logo/<?= $logo_pt ?>"></td>
+            <td rowspan="5" align="left" style="vertical-align: text-top; padding-top:10px">
+                <b style="font-size:14px"><?= $stokmasuk->pt  ?></b> <br>
+                <?= $alamat_lok ?>
+            </td>
+            <td>Putih</td>
+            <td>:</td>
+            <td>Finance HO</td>
+        </tr>
+        <!--tr>
+            <td align="center" rowspan="5">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+            </td>
+        </tr-->
+        <tr>
+            <td>Merah</td>
+            <td>:</td>
+            <td>Accounting HO</td>
+        </tr>
+        <tr>
+            <td>Kuning</td>
+            <td>:</td>
+            <td>Gudang Est</td>
+        </tr>
+        <tr>
+            <td>Hijau</td>
+            <td>:</td>
+            <td>Accounting Est</td>
+        </tr>
+        <tr>
+            <td>Biru</td>
+            <td>:</td>
+            <td>Purchasing HO</td>
+        </tr>
+    </table>
+
     <hr style="width:100%;margin:0px; margin-bottom: 0%;">
     <table border="0" width="100%">
         <tr>
@@ -72,10 +117,10 @@ if ($this->session->userdata('app_pt') == 'MSAL') {
     </table>
     <table border="0" width="100%">
         <tr>
-            <td width="20%">Nama Supplier</td>
+            <td width="18%">Nama Supplier</td>
             <td width="2%">:</td>
             <td width="25%"><?= $stokmasuk->nama_supply; ?></td>
-            <td>No. Pesanan Pembelian</td>
+            <td width="20%">No. Pesanan Pembelian</td>
             <td width="2%">:</td>
             <td><?= $stokmasuk->refpo; ?></td>
         </tr>
