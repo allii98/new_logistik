@@ -41,6 +41,7 @@
 </head>
 
 <body>
+    <h3><?= $ppo->devisi ?></h3>
     <table class="singleborder" border="1" width="10%" align="right">
         <tr>
             <td align="center" style="font-size: 15px"><?= $ppo->lokasi; ?></td>

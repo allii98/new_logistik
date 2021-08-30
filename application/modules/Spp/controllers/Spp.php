@@ -753,7 +753,7 @@ class Spp extends CI_Controller
         // 			'margin_footer' => 0,
         // 		]);
 
-        $mpdf->SetHTMLHeader('<h3>' . $data['ppo']->devisi . '</h3>');
+        // $mpdf->SetHTMLHeader('<h3>' . $data['ppo']->devisi . '</h3>');
         // $mpdf->SetHTMLHeader('
         //                     <table width="100%" border="0" align="center">
         //                         <tr>
