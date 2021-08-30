@@ -155,9 +155,6 @@ function terbilang($x, $style = 4)
   switch ($lokasi_sesi) {
     case 'HO':
   ?>
-
-
-
       <hr>
       <table border="0">
         <tr>
@@ -182,6 +179,8 @@ function terbilang($x, $style = 4)
                 echo $pt->alamatnpwp;
                 break;
               case 'SITE': // RO
+              case 'RO': // RO
+              case 'PKS': // RO
                 echo "-";
                 break;
 
