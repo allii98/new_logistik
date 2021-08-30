@@ -281,7 +281,7 @@ class Po extends CI_Controller
         $html = $this->load->view('v_po_print', $data, true);
 
         $mpdf->WriteHTML($html);
-        $mpdf->Output();
+        $mpdf->Output("$no_refpo.pdf", "I");
     }
 
     public function index()
