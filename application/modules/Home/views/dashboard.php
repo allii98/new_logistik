@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="row mt-2">
         <div class="row col-lg-7 col-xl-7 col-12">
-            <div class="col-lg-6 col-xl-6 col-6">
+            <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -17,15 +17,15 @@
                         </div>
                         <div class="col-3">
                             <a href="<?= base_url('Spp'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp_approved'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp_approved'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Spp/sppApproval'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
                             </a>
                         </div>
                     </div>
@@ -35,7 +35,7 @@
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
 
-            <div class="col-lg-6 col-xl-6 col-6">
+            <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -46,8 +46,8 @@
                         <div class="col-4"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Po'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_po'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_po'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-lg-6 col-xl-6 col-6">
+            <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -67,8 +67,8 @@
                         <div class="col-4"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Pp'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_pp'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_pp'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-lg-6 col-xl-6 col-6">
+            <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -93,8 +93,8 @@
                         <div class="col-4"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Lpb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_lpb'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_lpb'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
                     </div>
@@ -103,7 +103,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-lg-6 col-xl-6 col-6">
+            <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -113,15 +113,15 @@
                         </div>
                         <div class="col-3">
                             <a href="<?= base_url('Bpb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb_approved'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb_approved'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Bpb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
                             </a>
                         </div>
                     </div>
@@ -130,7 +130,7 @@
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
-            <div class="col-lg-6 col-xl-6 col-6">
+            <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
                     <div class="row">
                         <div class="col-3">
@@ -140,15 +140,15 @@
                         </div>
                         <div class="col-3">
                             <a href="<?= base_url('Bkb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
                         <div class="col-3">
                             <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark my-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb_rev_qty'] ?></span></h3>
-                                <p class="text-muted mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Rev&nbsp;QTY</p>
+                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb_rev_qty'] ?></span></h3>
+                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Rev&nbsp;QTY</p>
                             </a>
                         </div>
                     </div>
