@@ -252,7 +252,7 @@ class Po extends CI_Controller
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => [190, 236],
-            'margin_top' => '28',
+            'margin_top' => '15',
             'orientation' => 'P'
         ]);
 
@@ -271,48 +271,9 @@ class Po extends CI_Controller
 
         // $namapt = $data['po']->namapt;
         $namapt = $data['po']->namapt;
-        $alamat_ho = $this->session->userdata('alamat_ho');
-        $alamat_site = $this->session->userdata('alamat_site');
-        $logo_pt = $this->session->userdata('logo_pt');
+
         $lokasi = $data['po']->lokasi;
-        switch ($lokasi) {
-            case 'HO':
-                $mpdf->SetHTMLHeader('
-                <table width="100%" border="0">
-                    <tr>
-                        <td rowspan="3"  width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/' . $logo_pt . '"></td>
-                    <tr>
-                    <td align="left" style="font-size:8.5px;"><h3 style="font-size:14px;font-weight:bold;"> ' . $namapt . ' </h3>
-                    ' . $alamat_ho . '
-                    </td>
-                    <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
-                    </tr>
-                   
-                </table>
-                
-                ');
-                break;
-            case 'SITE':
-            case 'RO':
-            case 'PKS':
-                $mpdf->SetHTMLHeader('
-                <table width="100%" border="0">
-                    <tr>
-                        <td rowspan="3"  width="10%" height="10px" align="right"><img width="10%" height="65px" style="padding-left:8px" src="././assets/logo/' . $logo_pt . '"></td>
-                    <tr>
-                    <td align="left" style="font-size:8.5px; vertical-align: top; "><h3 style="font-size:14px; font-weight:bold;">' . $namapt . '</h3>
-                    ' . $alamat_site . '
-                    </td>
-                    <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/' .  $qrcode . '"></td>
-                    </tr>
-                   
-                </table>
-                
-                ');
-                break;
-            default:
-                break;
-        }
+
         // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
 
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
