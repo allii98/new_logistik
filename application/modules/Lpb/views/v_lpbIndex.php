@@ -139,7 +139,9 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
-
+            "language": {
+                "infoFiltered": ""
+            },
         });
     });
 
@@ -178,8 +180,10 @@
                 "columnDefs ": [{
                     "targets": [0],
                     "orderable": false,
-
-                }, ]
+                }, ],
+                "language": {
+                    "infoFiltered": ""
+                },
             });
         });
 
