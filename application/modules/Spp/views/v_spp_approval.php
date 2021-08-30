@@ -311,6 +311,7 @@
                 "language": {
                     "infoFiltered": ""
                 },
+                "pageLength": 10,
             });
         });
     });
