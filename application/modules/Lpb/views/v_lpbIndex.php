@@ -54,10 +54,10 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th class="konagrup">Kode Barang</th>
+                                        <th class="kode_th">Kode Barang</th>
                                         <th class="nabar_style">Nama&nbsp;Barang</th>
                                         <th class="sapll">Satuan</th>
-                                        <th class="konagrup">Grup</th>
+                                        <th class="grup_th">Grup</th>
                                         <th class="sapll">Qty&nbsp;PO</th>
                                         <th class="sapll">Qty&nbsp;LPB</th>
                                         <th class="sapll">Sisa&nbsp;LPB</th>
@@ -79,15 +79,19 @@
 </div>
 <style>
     .nabar_style {
-        width: 18% !important;
+        width: 23% !important;
     }
 
     .sapll {
-        width: 8% !important;
+        width: 7% !important;
     }
 
-    .konagrup {
-        width: 15% !important;
+    .kode_th {
+        width: 12% !important;
+    }
+
+    .grup_th {
+        width: 16% !important;
     }
 
     .ket_style {
