@@ -252,30 +252,41 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalcarispp">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-full-width">
         <div class="modal-content">
             <div class="modal-header ml-2">
-                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                <h4 class="modal-title" id="modalcarispp">Pilih SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="col-12">
                     <input type="hidden" id="no_row" name="no_row">
+                    <input type="hidden" id="no_ref_spp_edit" name="no_ref_spp_edit">
                     <div class="table-responsive">
                         <table id="dataspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
 
-                                    <th style="font-size: 11px; padding:10px">#</th>
-                                    <th style="font-size: 11px; padding:10px">Tanggal</th>
-                                    <th style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
-                                    <th style="font-size: 11px; padding:10px">Departemen</th>
+                                    <th style="font-size: 12px; padding:10px">No.</th>
+                                    <th style="font-size: 12px; padding:10px">ID</th>
+                                    <th style="font-size: 12px; padding:10px">No.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">Tgl.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">No&nbsp;Ref.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Keterangan</th>
 
                                 </tr>
                             </thead>
                             <tbody>
                             </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem2()" data-placement="left">Pilih Item</button></th>
+                                </tr>
+                            </tfoot>
                         </table>
                     </div>
                 </div>
@@ -287,11 +298,11 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
             <div class="modal-header ml-2">
-                <h4 class="modal-title" id="myModalLabel">Pilih Item SPP</h4>
+                <h4 class="modal-title" id="modal-spp">Pilih Item SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -400,7 +411,7 @@
 
     table#dataspp td {
         padding: 10px;
-        font-size: 11px;
+        font-size: 12px;
     }
 </style>
 
@@ -430,27 +441,7 @@
         isi_edit();
         cekspp();
 
-        // dataspp site
-        $('#dataspp').DataTable({
 
-            "processing": true,
-            "serverSide": true,
-
-            "order": [],
-            "ajax": {
-                "url": "<?php echo site_url('Po/get_carispp') ?>",
-                "type": "POST"
-            },
-            "columnDefs ": [{
-                "targets": [0],
-                "orderable": false,
-            }, ],
-            "language": {
-                "infoFiltered": ""
-            }
-        });
-
-        // end dataspp site
 
         $('#cmb_filter_alokasi').change(function() {
             var data = this.value;
@@ -458,6 +449,88 @@
 
         })
     });
+
+    function sppSite(noref) {
+        // dataspp site
+        $('#dataspp').DataTable().destroy();
+        $('#dataspp').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "select": true,
+
+            "ajax": {
+                "url": "<?php echo site_url('Po/get_ajax2') ?>",
+                "type": "POST",
+                "data": {
+                    norefspp: noref
+                }
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+
+            }, ],
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#dataspp').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#dataspp').DataTable().rows().deselect();
+                    }
+                }
+            ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+            "aoColumnDefs": [{
+                "bSearchable": false,
+                "bVisible": false,
+                "aTargets": [1, 2]
+            }, ],
+
+            "columns": [{
+                    "width": "3%"
+                },
+                {
+                    "width": "2%"
+                },
+                {
+                    "width": "2%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "20%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "20%"
+                },
+                {
+                    "width": "20%"
+                },
+            ],
+            "language": {
+                "infoFiltered": ""
+            }
+        });
+
+        // end dataspp site
+    }
 
     function cekPO() {
         var refspp = $('#refspp').val();
@@ -643,6 +716,9 @@
                     "width": "20%"
                 },
             ],
+            "language": {
+                "infoFiltered": ""
+            }
         });
     }
 
@@ -774,6 +850,129 @@
                     // $('#hidden_no_table').val(n);
                 });
                 $('#modal-spp').modal('hide');
+                $('#txt_qty_' + n).focus();
+
+            },
+            error: function(request) {
+                alert("KONEKSI TERPUTUS!");
+            }
+        });
+    }
+
+    function pilihItem2() {
+        var rowcollection = $('#dataspp').DataTable().rows({
+            selected: true,
+
+        }).data().toArray();
+        // console.log(rowcollection);
+        $.each(rowcollection, function(index, elem) {
+            var id = rowcollection[index][1];
+            var no_spp = rowcollection[index][2];
+            var no_ref_spp = rowcollection[index][4];
+            var kodebar = rowcollection[index][6];
+            // isSelected(id);
+            if (isSelected(id)) {
+                alert('data sudah di pilih');
+                return false;
+            }
+            // console.log(id, no_spp, no_ref_spp, kodebar);
+            data_spp_dipilih2(id, no_spp, no_ref_spp, kodebar);
+        });
+
+    }
+
+
+    // $('#tableDetailSPP tbody').on('click', 'tr', function () {
+    function data_spp_dipilih2(id, no_spp, no_ref_spp, kodebar) {
+        // var dataClick = $('#spp').DataTable().row(this).data();
+        // var no_spp = dataClick[1];
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/get_detail_spp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                'id': id,
+                'no_spp': no_spp,
+                'no_ref_spp': no_ref_spp,
+                'kodebar': kodebar
+            },
+            success: function(data) {
+                // console.log(data);
+                var n = $('#tbody_item tr').length;
+                // console.log("ini dia", n);
+                $('#devisi').val(data[0].devisi);
+                $('#hidden_devisi').val(data[0].devisi);
+                // var n = 0;
+                $.each(data[1], function(index) {
+                    // if(index != 0){
+                    // if (n != 1) {
+                    // }
+                    var status = data[1][0].status2;
+                    tambah_item_baru(n, status);
+                    // console.log(status);
+
+
+                    $('#id_ppo' + n).val(data[0].id);
+                    $('#id_item_' + n).val(data[1][0].id);
+                    $('#getspp' + n).val(data[1][0].noreftxt);
+                    $('#hidden_kode_brg_' + n).val(data[1][0].kodebartxt);
+                    $('#kode_brg_' + n).text(data[1][0].kodebartxt);
+                    $('#txt_keterangan_rinci_' + n).val(data[1][0].ket);
+                    $('#hidden_nama_brg_' + n).val(data[1][0].nabar);
+                    $('#nama_brg_' + n).text(data[1][0].nabar);
+                    $('#hidden_satuan_brg_' + n).val(data[1][0].sat);
+                    var qty = data[1][0].qty;
+                    var qty2 = data[1][0].qty2;
+
+                    // $('#txt_qty_' + n).val(data[1][0].qty);
+
+
+                    if (qty2 != null) {
+                        var hasil = qty - qty2;
+                        $('#txt_qty_' + n).val(hasil);
+                    } else {
+                        $('#txt_qty_' + n).val(qty);
+                        // $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
+                    }
+
+                    if (qty2 != null) {
+                        var hasil = qty - qty2;
+                        $('#txt_qty_' + n).val(hasil);
+                        // console.log(hasil);
+                        if (hasil == 0) {
+
+                            $('.div_form_2').find('#cmb_jenis_budget_' + n + ',#txt_merk_' + n + ', #txt_qty_' + n + ' ,#cmb_kurs_' + n + ',#txt_disc_' + n + ', #txt_harga_' + n + ',#txt_biaya_lain_' + n + ',txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_biaya_lain_' + n + ',#txt_keterangan_rinci_' + n).attr('disabled', '');
+                            $('#btn_simpan_' + n).hide();
+                            $('#habis_' + n).show();
+                        }
+                    } else {
+                        $('#txt_qty_' + n).val(qty);
+                    }
+                    $('#qty_' + n).val(data[1][0].qty);
+                    $('#qty2_' + n).val(data[1][0].qty2);
+
+                    $('#hidden_no_ref_spp_' + n).val(data[1][0].noreftxt);
+                    $('#hidden_tgl_ref_' + n).val(data[0].tglref);
+                    $('#hidden_kd_departemen_' + n).val(data[1][0].kodedept);
+                    $('#hidden_departemen_' + n).val(data[1][0].namadept);
+                    $('#hidden_tgl_spp_' + n).val(data[1][0].tglppo);
+                    // $('#hidden_tgl_spp_' + n).val(dateToMDY(tglppo));
+                    $('#hidden_kd_pt_' + n).val(data[1][0].kodept);
+                    $('#hidden_nama_pt_' + n).val(data[1][0].namapt);
+
+                    $('#noppo' + n).val(data[1][0].noppotxt);
+
+                    // $('html, body').animate({
+                    //     scrollTop: $("#tr_" + n).offset()
+                    // }, 2000);
+
+                    // $('#txt_qty_' + n).val(data[1][0].qty);
+                    n++;
+                    // $('#hidden_no_table').val(n);
+                });
+                $('#modalcarispp').modal('hide');
                 $('#txt_qty_' + n).focus();
 
             },
@@ -1066,7 +1265,10 @@
 
     function tambahSpp(row) {
         var dt = $('#no_row').val(row);
-        // console.log('ini no rownya', dt);
+        var norefspp = $('#hidden_no_ref_spp_' + row).val();
+        // console.log('ini no refspp', norefspp);
+        $('#no_ref_spp_edit').val(norefspp);
+        sppSite(norefspp);
         $('#modalcarispp').modal('show');
     }
 
@@ -1601,7 +1803,6 @@
             '</select>'; +
         '</td>';
         var td_col_ = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
             '<font face="Verdana" size="1.5"><span id="nama_brg_' + row + '"></font><font face="Verdana" size="1.5"></span><br><span id="kode_brg_' + row + '" ></span></font>' +
             '<input type="hidden" id="ppo' + row + '" name="ppo' + row + '">' +
             '<input type="hidden" id="id_ppo' + row + '" name="id_ppo' + row + '">' +

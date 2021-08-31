@@ -221,14 +221,14 @@ function terbilang($x, $style = 4)
 
   <table border="1" class="singleborder" width="100%">
     <tr>
-      <td width="50%" style="padding:5px;">
+      <td width="58%" style="padding:5px;">
         Kepada YTH,<br />
         <?= $supplier->supplier; ?><br />
         <?= $alamat_supplier; ?><br />
         Tlp. <?= $tlp_supplier; ?><br />
         Fax. <?= $fax_supplier; ?><br />
       </td>
-      <td width="50%" style="padding:5px;">
+      <td width="60%" style="padding:5px;">
         <br />
         Syarat Pembayaran : <br />
         Jadwal Pengiriman : <?= $po->ket_kirim; ?> <br />
@@ -239,16 +239,16 @@ function terbilang($x, $style = 4)
   <table border="1" class="singleborder" width="100%">
     <thead>
       <tr>
-        <td align="center" width="2%">No</td>
+        <td align="center" width="3%">No</td>
         <td align="center" width="15%">Kode Barang</td>
         <td align="center" width="15%">Nama Barang</td>
-        <td align="center" width="17%">Merk</td>
-        <td align="center" width="5%">No. Part</td>
-        <td align="center" width="5%">Qty</td>
-        <td align="center" width="3%">SAT</td>
-        <td align="center" width="14%">Harga&nbsp;Satuan</td>
+        <td align="center" width="16%">Merk</td>
+        <td align="center" width="4%">No. Part</td>
+        <td align="center" width="8%">Qty</td>
+        <td align="center" width="5%">SAT</td>
+        <td align="center" width="15%">Harga&nbsp;Satuan</td>
         <td align="center" width="5%">Disc %</td>
-        <td align="center" width="18%" colspan="2">Total&nbsp;Harga</td>
+        <td align="center" width="15%" colspan="2">Total&nbsp;Harga</td>
 
       </tr>
     </thead>
@@ -286,37 +286,41 @@ function terbilang($x, $style = 4)
         $no++;
       }
       ?>
+    </tbody>
+  </table>
+  <table border="1" class="singleborder" width="100%">
+    <tbody>
 
       <tr>
-        <td colspan="7" rowspan="6" valign="top">
+        <td colspan="10" rowspan="6" valign="top">
           <b>Keterangan : </b><br />
           <?= htmlspecialchars($po->ket); ?>
           <!-- Nama Pemilik : <br />
-        No. Rekening : <br />
-        Uang Muka    : <br /> -->
+          No. Rekening : <br />
+          Uang Muka    : <br /> -->
         </td>
-        <td colspan="2">SUB TOTAL</td>
-        <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
+        <td colspan="3">SUB TOTAL</td>
+        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 3, ",", "."); ?></td>
       </tr>
       <tr>
-        <td colspan="2">PPN 10%</td>
-        <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
+        <td colspan="3">PPN 10%</td>
+        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
       </tr>
       <tr>
-        <td colspan="2">PPH</td>
-        <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
+        <td colspan="3">PPH</td>
+        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
       </tr>
       <tr>
-        <td colspan="2">Biaya Lainnya</td>
-        <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
+        <td colspan="3">Biaya Lainnya</td>
+        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 3, ",", "."); ?></td>
       </tr>
       <tr>
-        <td colspan="2"><?= join(", ", $nama_bebanbpo); ?></td>
-        <td colspan="2"></td>
+        <td colspan="3"><?= join(", ", $nama_bebanbpo); ?></td>
+        <td colspan="3"></td>
       </tr>
       <tr>
-        <td colspan="2">TOTAL</td>
-        <td colspan="2" align="right">
+        <td colspan="3">GRAND TOTAL</td>
+        <td colspan="3" align="right">
           <?php
           // var_dump($po->totalbayar);
           // var_dump($pot_ppn);
@@ -332,8 +336,13 @@ function terbilang($x, $style = 4)
         $total = $po->totalbayar;
         // var_dump("iyayayay".$total);exit();
         ?>
-        <td colspan="11"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
+        <td colspan="12"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
       </tr>
+    </tbody>
+  </table>
+  <table border="1" class="singleborder" width="100%">
+
+    <tbody>
       <?php
       $lokasi_sesi = $this->session->userdata('status_lokasi');
       switch ($lokasi_sesi) {
@@ -341,9 +350,8 @@ function terbilang($x, $style = 4)
         case 'SITE':
         case 'RO':
       ?>
-
           <tr>
-            <td align="center" colspan="3" width="30%" height="50">
+            <td align="center" colspan="3" width="35%" height="50">
               Menyetujui,<br />
               <br />
               <br />
@@ -359,7 +367,7 @@ function terbilang($x, $style = 4)
               <br />
               (KTU)
             </td>
-            <td align="center" colspan="5" width="40%" height="50">
+            <td align="center" colspan="5" width="30%" height="50">
               Menyetujui,<br />
               <br />
               <br />
@@ -375,7 +383,7 @@ function terbilang($x, $style = 4)
         ?>
 
           <tr>
-            <td align="center" colspan="3" width="30%" height="50">
+            <td align="center" colspan="3" width="35%" height="50">
               Menyetujui,<br />
               <br />
               <br />
@@ -397,7 +405,7 @@ function terbilang($x, $style = 4)
                 (Purchasing)
               <?php } ?>
             </td>
-            <td align="center" colspan="5" width="40%" height="50">
+            <td align="center" colspan="5" width="30%" height="50">
               Menyetujui,<br />
               <br />
               <br />
@@ -416,11 +424,19 @@ function terbilang($x, $style = 4)
 
     </tbody>
   </table>
-  <p style="padding: 0px;margin: 0px;"><small><b>Catatan : Mohon dicek kembali pesanan pembelian ini, apabila setuju tolong diteken dan dicap perusahaan/toko lalu difax kembali ke 021-7231819</b></small></p>
-  <p style="padding: 0px;margin: 0px;"><small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small><br />
-  <p style="padding: 0px;margin: 0px;"><small><i>Cetakan Ke : <?= $po->jml_cetak ?></i></small><br />
-    <small>Print generated by MIPS</small>
-  </p>
+
+  <table border="0" width="100%">
+    <tr>
+      <td><b>Catatan : Mohon dicek kembali pesanan pembelian ini, apabila setuju tolong diteken dan dicap perusahaan/toko</b></td>
+    </tr>
+    <tr>
+      <td><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?>,&nbsp;<?= $this->platform->agent(); ?>,&nbsp;Cetakan Ke : <?= $po->jml_cetak ?></i></td>
+    </tr>
+    <tr>
+      <td><i>Print generated by MIPS</i></td>
+    </tr>
+  </table>
+
 </body>
 
 </html>
