@@ -200,10 +200,10 @@
                         <h4 class="header-title mb-0">Mutasi Masuk</h4>
                         <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a>
                     </div>
-                    <div class="col-12">
+                    <div class="">
                         <div class="table-responsive">
                             <div id="cardCollpase5" class="collapse mt-2 show">
-                                <table class="table table-sm table-hover table-bordered m-0" id="tabel_mutasi">
+                                <table class="table table-sm table-hover table-bordered w-100" id="tabel_mutasi">
                                     <thead class="thead-light">
                                         <tr>
                                             <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No</th>
