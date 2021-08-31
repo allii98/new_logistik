@@ -59,6 +59,7 @@
             <div class="modal-body">
                 <div class="table-responsive" style="margin-top: -15px;">
                     <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
+                    <input type="hidden" id="hidden_noref_spp">
                     <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                         <thead>
                             <tr>
@@ -264,6 +265,7 @@
             var noref_spp = $(this).data('noref_spp');
 
             $('#hidden_id_ppo').val(id_ppo);
+            $('#hidden_noref_spp').val(noref_spp);
             $('#detail_noref_spp').html('<b>No. Ref. SPP : </b>' + noref_spp);
 
             $('#spp_approval').DataTable().destroy();
@@ -345,6 +347,7 @@
         }).data().toArray();
 
         var id_ppo = $('#hidden_id_ppo').val();
+        var noref_spp = $('#hidden_noref_spp').val();
 
         $.each(rowcollection, function(index, elem) {
             var id = rowcollection[index][1];
@@ -363,6 +366,7 @@
         //refresh datatable
         $('#datasppapproval').DataTable().ajax.reload();
         callBack_detail_approval(id_ppo);
+        cek_semua_approval(noref_spp);
     }
 
     function callBack_detail_approval(id_ppo) {
@@ -408,6 +412,23 @@
                 "bVisible": false,
                 "aTargets": [1]
             }, ]
+        });
+    }
+
+    function cek_semua_approval(noref_spp) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Spp/cek_semua_approval') ?>",
+            dataType: "JSON",
+            data: {
+                noref_spp: noref_spp
+            },
+
+            success: function(data) {
+                if (data == 0) {
+                    $("#modal-spp-approval").modal('hide');
+                }
+            }
         });
     }
 </script>

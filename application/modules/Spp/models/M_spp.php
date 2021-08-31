@@ -235,6 +235,14 @@ class M_spp extends CI_Model
             return $this->db_logistik_pt->update('ppo');
         }
     }
+
+    public function cek_semua_approval($noref_spp)
+    {
+        $this->db_logistik_pt->select('noreftxt');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where(['noreftxt' => $noref_spp, 'status2' => '0']);
+        return $this->db_logistik_pt->get()->num_rows();
+    }
 }
 
 /* End of file M_spp.php */

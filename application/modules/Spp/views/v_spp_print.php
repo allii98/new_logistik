@@ -19,7 +19,7 @@
             font-style: normal;
             font-variant: normal;
             font-weight: 400;
-            line-height: 20px;
+            /* line-height: 20px; */
         }
 
         .singleborder {
@@ -36,19 +36,34 @@
         .warna_sebagian {
             background-color: gray;
         }
+
+        .garis_tepi1 {
+            border: 2px solid black;
+            width: 50px;
+            height: 20px;
+            float: right;
+            line-height: 20px;
+        }
     </style>
-    <title>SPP - Surat Permintaan Pembelian</title>
+    <title><?= $ppo->jenis ?></title>
 </head>
+<?php
+if ($ppo->jenis == "SPPI") {
+    $jenis_spp = 'INTERNAL (SPPI)';
+} elseif ($ppo->jenis == "SPPA") {
+    $jenis_spp = 'ASET (SPPA)';
+} elseif ($ppo->jenis == "SPPK") {
+    $jenis_spp = "KHUSUS (SPPK)";
+} else {
+    $jenis_spp = ' (SPP)';
+}
+?>
 
 <body>
-    <h3><?= $ppo->devisi ?></h3>
-    <table class="singleborder" border="1" width="10%" align="right">
-        <tr>
-            <td align="center" style="font-size: 15px"><?= $ppo->lokasi; ?></td>
-        </tr>
-    </table>
-    <h3 align="left" style="margin-top: 0px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN (SPP)</h3>
-    <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By MIPS</small></p>
+    <h3 class="garis_tepi1" align="center"><?= $ppo->lokasi; ?></h3>
+    <h3 style="margin-bottom: 0px;"><?= $ppo->devisi ?></h3>
+    <h3 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
+    <p align="left" style="margin-top: 7px;margin-bottom: 0px;"><small>By MIPS LOGISTIK</small></p>
     <table class="singleborder" border="1" width="100%" id="tabel_spp">
         <tr>
             <td colspan="3">Nomor SPP Divisi &nbsp;&nbsp;: SPP - <?= $ppo->noppotxt; ?><br />
@@ -174,7 +189,7 @@
             <td colspan="1" align="center" height="70" valign="bottom">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</td>
         </tr>
     </table>
-    <small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small> -
+    <small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small><br>
     <small><i>Cetakan ke - <?= $urut['main_acct'] ?></i></small><br>
     <small>Abu-abu : Dalam proses</small>
 </body>
