@@ -827,6 +827,15 @@ class Spp extends CI_Controller
 
         echo json_encode($output);
     }
+
+    public function cek_semua_approval()
+    {
+        $noref_spp = $this->input->post('noref_spp');
+
+        $output = $this->M_spp->cek_semua_approval($noref_spp);
+
+        echo json_encode($output);
+    }
 }
 
 /* End of file Controllername.php */
