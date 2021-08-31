@@ -255,7 +255,7 @@
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
             <div class="modal-header ml-2">
-                <h4 class="modal-title" id="modalcarispp">Pilih SPP</h4>
+                <h4 class="modal-title" id="modalcarispp">Pilih Item SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -443,12 +443,90 @@
 
 
 
-        $('#cmb_filter_alokasi').change(function() {
-            var data = this.value;
-            sppHO(data);
+        // $('#cmb_filter_alokasi').change(function() {
+        //     var data = this.value;
+        //     sppHO(data);
 
-        })
+        // })
     });
+
+    function sppHO(noref) {
+        $('#spp').DataTable().destroy();
+        $('#spp').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            "select": true,
+
+            "ajax": {
+                "url": "<?php echo site_url('Po/get_ajax2') ?>",
+                "type": "POST",
+                "data": {
+                    norefspp: noref
+                }
+            },
+            "columnDefs ": [{
+                "targets": [0],
+                "orderable": false,
+
+            }, ],
+            "dom": 'Bfrtip',
+            "buttons": [{
+                    "text": "Select All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().select();
+                    }
+                },
+                {
+                    "text": "Unselect All",
+                    "action": function() {
+                        $('#spp').DataTable().rows().deselect();
+                    }
+                }
+            ],
+            "lengthMenu": [
+                [5, 10, 15, -1],
+                [10, 15, 20, 25]
+            ],
+            "aoColumnDefs": [{
+                "bSearchable": false,
+                "bVisible": false,
+                "aTargets": [1, 2]
+            }, ],
+
+            "columns": [{
+                    "width": "3%"
+                },
+                {
+                    "width": "2%"
+                },
+                {
+                    "width": "2%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "30%"
+                },
+                {
+                    "width": "18%"
+                },
+                {
+                    "width": "8%"
+                },
+                {
+                    "width": "5%"
+                },
+                {
+                    "width": "20%"
+                },
+            ],
+            "language": {
+                "infoFiltered": ""
+            }
+        });
+    }
 
     function sppSite(noref) {
         // dataspp site
@@ -644,83 +722,7 @@
         });
     }
 
-    function sppHO(data) {
-        $('#spp').DataTable().destroy();
-        $('#spp').DataTable({
-            "processing": true,
-            "serverSide": true,
-            "order": [],
-            "select": true,
 
-            "ajax": {
-                "url": "<?php echo site_url('Po/get_ajax') ?>",
-                "type": "POST",
-                "data": {
-                    data: data
-                }
-            },
-            "columnDefs ": [{
-                "targets": [0],
-                "orderable": false,
-
-            }, ],
-            "dom": 'Bfrtip',
-            "buttons": [{
-                    "text": "Select All",
-                    "action": function() {
-                        $('#spp').DataTable().rows().select();
-                    }
-                },
-                {
-                    "text": "Unselect All",
-                    "action": function() {
-                        $('#spp').DataTable().rows().deselect();
-                    }
-                }
-            ],
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [10, 15, 20, 25]
-            ],
-            "aoColumnDefs": [{
-                "bSearchable": false,
-                "bVisible": false,
-                "aTargets": [1, 2]
-            }, ],
-
-            "columns": [{
-                    "width": "3%"
-                },
-                {
-                    "width": "2%"
-                },
-                {
-                    "width": "2%"
-                },
-                {
-                    "width": "10%"
-                },
-                {
-                    "width": "30%"
-                },
-                {
-                    "width": "18%"
-                },
-                {
-                    "width": "8%"
-                },
-                {
-                    "width": "5%"
-                },
-                {
-                    "width": "20%"
-                },
-            ],
-            "language": {
-                "infoFiltered": ""
-            }
-        });
-    }
 
     function isSelected(selectedNoppo) {
         var noppos = $('[id*=id_item_]');
@@ -799,6 +801,7 @@
                     $('#kode_brg_' + n).text(data[1][0].kodebartxt);
                     $('#hidden_nama_brg_' + n).val(data[1][0].nabar);
                     $('#nama_brg_' + n).text(data[1][0].nabar);
+                    $('#txt_keterangan_rinci_' + n).val(data[1][0].ket);
                     $('#hidden_satuan_brg_' + n).val(data[1][0].sat);
                     var qty = data[1][0].qty;
                     var qty2 = data[1][0].qty2;
@@ -1275,10 +1278,9 @@
     function tambahSppHO(row) {
         var dt = $('#hidden_no_row').val(row);
         // console.log('ini no rownya', dt);
+        var norefspp = $('#hidden_no_ref_spp_' + row).val();
         $('#modal-spp').modal('show');
-
-        var data = "SEMUA";
-        sppHO(data);
+        sppHO(norefspp);
     }
 
     function cekspp() {

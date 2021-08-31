@@ -28,11 +28,22 @@ class M_spp extends CI_Model
     {
         $noref = $this->noref;
         $lokasi = $this->session->userdata('status_lokasi');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('po', 0);
-        $this->db_logistik_pt->where('status2', 1);
-        $this->db_logistik_pt->where('jenis !=', 'SPP');
-        $this->db_logistik_pt->where('noreftxt', $noref);
+        if ($lokasi != 'HO') {
+            # code...
+            $this->db_logistik_pt->from('item_ppo');
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('jenis !=', 'SPP');
+            $this->db_logistik_pt->where('noreftxt', $noref);
+        } else {
+            $this->db_logistik_pt->from('item_ppo');
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('jenis !=', 'SPPI');
+            $this->db_logistik_pt->where('noreftxt', $noref);
+            # code...
+        }
+
         // $this->db_logistik_pt->where('LOKASI', $lokasi);
         // $lokasi = $this->id;
 
