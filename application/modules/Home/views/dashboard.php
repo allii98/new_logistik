@@ -1,9 +1,3 @@
-<style>
-    .pull-left {
-        float: left !important;
-    }
-</style>
-
 <div class="container-fluid">
     <div class="row mt-2">
         <div class="row col-lg-6 col-xl-6 col-12">
@@ -203,7 +197,7 @@
 
                     <div class="table-responsive">
 
-                        <table class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;" id="tabel_mutasi">
+                        <table class="table table-sm table-hover table-bordered w-100" id="tabel_mutasi">
                             <thead class="thead-light">
                                 <tr>
                                     <th width="3%" style="font-size: 12px; padding:10px; text-align: center;">No</th>
