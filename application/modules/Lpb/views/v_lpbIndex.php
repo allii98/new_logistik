@@ -251,9 +251,10 @@
         $(document).on('click', '#edit_lpb', function() {
 
             var id_stokmasuk = $(this).data('id');
+            var mutasi = $(this).data('mutasi');
             // console.log(nabar);
 
-            window.location.href = "Lpb/edit_lpb/" + id_stokmasuk;
+            window.location.href = "Lpb/edit_lpb/" + id_stokmasuk + "/" + mutasi;
 
         });
     });

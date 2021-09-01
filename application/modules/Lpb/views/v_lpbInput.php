@@ -96,12 +96,12 @@ date_default_timezone_set('Asia/Jakarta');
                                 </div>
                             </div>
                         </div>
-                        <input type="hidden" id="hidden_id_lpb">
                     </div>
                     <hr class="mt-1 mb-2">
                     <div class="row div_form_2">
                         <div class="col-12">
                             <div class="sub-header" style="margin-top: -10px; margin-bottom: -22px;">
+                                <input type="hidden" id="hidden_id_lpb">
                                 <input type="hidden" id="hidden_no_lpb">
                                 <input type="hidden" id="hidden_no_ref_lpb">
                                 <input type="hidden" id="hidden_tglppo">
@@ -124,8 +124,8 @@ date_default_timezone_set('Asia/Jakarta');
                                     <thead>
                                         <tr>
                                             <!-- <th width="3%">#</th> -->
-                                            <th width="21%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Kode Barang</th>
-                                            <th width="24%" style="font-size: 12px; padding: 10px; padding-left: 15px;">Nama Barang / Satuan / Grup</th>
+                                            <th width="18%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Kode Barang</th>
+                                            <th width="27%" style="font-size: 12px; padding: 10px; padding-left: 15px;">Nama Barang / Satuan / Grup</th>
                                             <th width="9%" style="font-size: 12px; padding: 10px; padding-left: 15px;">Saldo Qty</th>
                                             <th width="9%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Qty</th>
                                             <th width="20%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Ket</th>
@@ -458,7 +458,7 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#sisa_qty_' + n).text(data);
             },
             error: function(response) {
-                alert(response.responseText);
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
         });
     }
@@ -758,6 +758,7 @@ date_default_timezone_set('Asia/Jakarta');
                     $('#lbl_status_simpan_' + n).empty();
                     $('#lbl_lpb_status').empty();
                     $('#new_lpb').removeAttr('disabled');
+                    $('#camera').attr('disabled', '');
 
                     $.toast({
                         position: 'top-right',

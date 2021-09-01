@@ -54,7 +54,7 @@ class Lpb extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
-                        data-id="' . $field->id . '"
+                        data-id="' . $field->id . '" data-mutasi="' . $field->mutasi . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
                         <button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
@@ -866,7 +866,12 @@ class Lpb extends CI_Controller
     public function edit_lpb()
     {
         $data['id_stokmasuk'] = $this->uri->segment('3');
-        $this->template->load('template', 'v_lpbEdit', $data);
+        $mutasi = $this->uri->segment('4');
+        if ($mutasi == 1) {
+            $this->template->load('template', 'v_lpbEdit_mutasi', $data);
+        } else {
+            $this->template->load('template', 'v_lpbEdit', $data);
+        }
     }
 
     public function cari_lpb_edit()
@@ -1012,7 +1017,11 @@ class Lpb extends CI_Controller
         // ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
-        $html = $this->load->view('v_lpbPrint', $data, true);
+        if (substr($data['stokmasuk']->refpo, 8, 6) == "MUTASI") {
+            $html = $this->load->view('v_lpbPrint_mutasi', $data, true);
+        } else {
+            $html = $this->load->view('v_lpbPrint', $data, true);
+        }
 
         $mpdf->WriteHTML($html);
         $mpdf->Output();
@@ -1042,6 +1051,59 @@ class Lpb extends CI_Controller
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
         $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
     }
+
+    public function updatePoAfterLpb()
+    {
+        $no_ref_po = $this->input->post('no_ref_po');
+
+        $output = $this->M_lpb->updatePoAfterLpb($no_ref_po);
+
+        echo json_encode($output);
+    }
+
+    public function deleteItemLpb()
+    {
+        $hidden_id_item_lpb = $this->input->post('hidden_id_item_lpb');
+        $norefpo = $this->input->post('norefpo');
+
+        $data = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
+
+        //update sttaus_lpb di po jadi 0
+        $this->M_lpb->update_status_lpb_po($norefpo);
+
+        echo json_encode($data);
+    }
+
+    public function cek_data_masukitem()
+    {
+        $noreflpb = $this->input->post('noreflpb');
+
+        $output = $this->M_lpb->cek_data_masukitem($noreflpb);
+
+        echo json_encode($output);
+    }
+
+    public function deleteLpb()
+    {
+        $noreflpb = $this->input->post('noreflpb');
+        $norefpo = $this->input->post('norefpo');
+
+        //update sudah_lpb di po jadi 0
+        $this->M_lpb->update_sudah_lpb_po($norefpo);
+
+        $data = $this->db_logistik_pt->delete('stokmasuk', array('noref' => $noreflpb));
+
+        echo json_encode($data);
+    }
+
+    public function cekDataLpb()
+    {
+        $noreflpb = $this->input->post('noreflpb');
+        $data =  $this->db_logistik_pt->get_where('masukitem', array('noref' => $noreflpb))->num_rows();
+
+        echo json_encode($data);
+    }
+
 
     // FOR LPB MUTASI PREN
     public function lpb_mutasi()
@@ -1096,55 +1158,11 @@ class Lpb extends CI_Controller
         echo json_encode($sisa_qty_po);
     }
 
-    public function updatePoAfterLpb()
+    public function sum_qty_edit_mutasi()
     {
-        $no_ref_po = $this->input->post('no_ref_po');
-
-        $output = $this->M_lpb->updatePoAfterLpb($no_ref_po);
-
-        echo json_encode($output);
-    }
-
-    public function deleteItemLpb()
-    {
-        $hidden_id_item_lpb = $this->input->post('hidden_id_item_lpb');
-        $norefpo = $this->input->post('norefpo');
-
-        $data = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
-
-        //update sttaus_lpb di po jadi 0
-        $this->M_lpb->update_status_lpb_po($norefpo);
-
-        echo json_encode($data);
-    }
-
-    public function cek_data_masukitem()
-    {
-        $noreflpb = $this->input->post('noreflpb');
-
-        $output = $this->M_lpb->cek_data_masukitem($noreflpb);
-
-        echo json_encode($output);
-    }
-
-    public function deleteLpb()
-    {
-        $noreflpb = $this->input->post('noreflpb');
-        $norefpo = $this->input->post('norefpo');
-
-        //update sudah_lpb di po jadi 0
-        $this->M_lpb->update_sudah_lpb_po($norefpo);
-
-        $data = $this->db_logistik_pt->delete('stokmasuk', array('noref' => $noreflpb));
-
-        echo json_encode($data);
-    }
-
-    public function cekDataLpb()
-    {
-        $noreflpb = $this->input->post('noreflpb');
-        $data =  $this->db_logistik_pt->get_where('masukitem', array('noref' => $noreflpb))->num_rows();
-
-        echo json_encode($data);
+        $kodebar = $this->input->post('kodebar');
+        $refpo = $this->input->post('refpo');
+        $result = $this->M_lpb_mutasi->sum_qty_edit_mutasi($kodebar, $refpo);
+        echo json_encode($result);
     }
 }

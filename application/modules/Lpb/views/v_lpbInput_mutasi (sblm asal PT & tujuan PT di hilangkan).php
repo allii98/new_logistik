@@ -22,19 +22,21 @@ date_default_timezone_set('Asia/Jakarta');
                               </p>
 
                               <div class="row">
-                                    <div class="row div_form_1 col-lg-12">
-                                          <div class="col-lg-2">
-                                                <p class="text-muted mb-0" style="font-size:12px;">Tgl Terima</p>
-                                                <div class="media mb-2">
-                                                      <div class="media-body">
+                                    <div class="row div_form_1 col-lg-3">
+                                          <div class="col-lg-12">
+                                                <div class="form-group row mb-1">
+                                                      <label class="col-lg-4 col-12 col-form-label" style="font-size:12px;">Tgl&nbsp;Terima<span class="required">*</span>
+                                                      </label>
+                                                      <div class="col-lg-8">
                                                             <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control form-control-sm" type="date" value="<?= date('Y-m-d') ?>">
                                                       </div>
                                                 </div>
                                           </div>
-                                          <div class="col-lg-3">
-                                                <p class="text-muted mb-0" style="font-size:12px;">No.Ref BKB*</p>
-                                                <div class="media mb-2">
-                                                      <div class="media-body">
+                                          <div class="col-12">
+                                                <div class="form-group row mb-1">
+                                                      <label class="col-lg-4 col-12 col-form-label" style="font-size:12px;">No.Ref&nbsp;BKB<span class="required">*</span>
+                                                      </label>
+                                                      <div class="col-lg-8">
                                                             <select class="js-data-example-ajax form-control select2_mutasi" id="select2_mutasi">
                                                             </select>
                                                             <input style="display:none;" id="multiple" class="form-control form-control-sm bg-light" type="text" readonly>
@@ -43,72 +45,117 @@ date_default_timezone_set('Asia/Jakarta');
                                                             <input type="hidden" id="txt_no_po">
                                                       </div>
                                                 </div>
-                                          </div>
-                                          <div class="col-lg-3">
-                                                <p class="text-muted mb-0" style="font-size:12px;">Asal PT</p>
-                                                <div class="media">
-                                                      <div class="media-body">
-                                                            <p class="mt-0" style="font-size: 12px; font-weight: bold;">
-                                                                  <span id="asal_devisi_txt"></span>
-                                                            </p>
-                                                      </div>
-                                                </div>
-                                          </div>
-                                          <div class="col-lg-4">
-                                                <p class="text-muted mb-0" style="font-size:12px;">PT Tujuan</p>
-                                                <div class="media">
-                                                      <div class="media-body">
-                                                            <p class="mt-0" style="font-size: 12px; font-weight: bold;">
-                                                                  <span id="devisi_tujuan_txt"></span>
-                                                                  <input type="hidden" id="devisi">
-                                                            </p>
-                                                      </div>
-                                                </div>
-                                          </div> <!-- end col -->
 
+                                          </div>
                                     </div>
 
-                                    <div class="row div_form_1 col-lg-12">
-                                          <div class="col-lg-2">
-                                                <p class="text-muted mb-0" style="font-size:12px;">Tanggal BKB</p>
-                                                <div class="media">
-                                                      <div class="media-body">
-                                                            <p class="mt-0">
-                                                                  <span id="tgl_bkb_txt" style="font-size: 12px; font-weight: bold;"></span>
-                                                            </p>
+                                    <div class="row div_form_1 col-9">
+                                          <div class="row col-lg-12">
+                                                <div class="col-lg-3">
+                                                      <!-- assignee -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">Tanggal BKB</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0">
+                                                                        <span id="tgl_bkb_txt" style="font-size: 12px; font-weight: bold;"></span>
+                                                                  </p>
+                                                            </div>
                                                       </div>
-                                                </div>
-                                          </div> <!-- end col -->
-                                          <div class="col-lg-3">
-                                                <p class="text-muted mb-0" style="font-size:12px;">Bagian</p>
-                                                <div class="media">
-                                                      <div class="media-body">
-                                                            <p class="mt-0" style="font-size: 12px; font-weight: bold;">
-                                                                  <span id="bagian_txt"></span>
-                                                            </p>
+                                                      <!-- end assignee -->
+                                                </div> <!-- end col -->
+
+                                                <div class="col-lg-3">
+                                                      <!-- start due date -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">Bagian</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0" style="font-size: 12px; font-weight: bold;">
+                                                                        <span id="bagian_txt"></span>
+                                                                  </p>
+                                                            </div>
                                                       </div>
+                                                      <!-- end due date -->
                                                 </div>
-                                          </div>
-                                          <div class="col-lg-3">
-                                                <p class="text-muted mb-0" style="font-size:12px;">Kepada</p>
-                                                <div class="media">
-                                                      <div class="media-body">
-                                                            <p class="mt-0" style="font-size: 12px; font-weight: bold;">
-                                                                  <span id="kepada_txt"></span>
-                                                            </p>
+
+                                                <div class="col-lg-3">
+                                                      <!-- start due date -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">Kepada</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0" style="font-size: 12px; font-weight: bold;">
+                                                                        <span id="kepada_txt"></span>
+                                                                  </p>
+                                                            </div>
                                                       </div>
-                                                </div>
-                                          </div> <!-- end col -->
-                                          <div class="col-lg-4">
-                                                <p class="text-muted mb-0" style="font-size:12px;">Keperluan</p>
-                                                <div class="media">
-                                                      <div class="media-body">
-                                                            <p class="mt-0" style="font-size: 12px; font-weight: bold;">
-                                                                  <span id="keperluan_txt"></span>
-                                                            </p>
+                                                      <!-- end due date -->
+                                                </div> <!-- end col -->
+                                                <div class="col-lg-3">
+                                                      <!-- start due date -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">Keperluan</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0" style="font-size: 12px; font-weight: bold;">
+                                                                        <span id="keperluan_txt"></span>
+                                                                  </p>
+                                                            </div>
                                                       </div>
+                                                      <!-- end due date -->
+                                                </div> <!-- end col -->
+                                          </div> <!-- end row -->
+
+                                          <div class="row col-12">
+                                                <div class="col-lg-3">
+                                                      <!-- assignee -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">Asal PT</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0" style="font-size: 12px; font-weight: bold;">
+                                                                        <span id="asal_pt_txt"></span>
+                                                                  </p>
+                                                            </div>
+                                                      </div>
+                                                      <!-- end assignee -->
+                                                </div> <!-- end col -->
+
+                                                <div class="col-lg-3">
+                                                      <!-- start due date -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">Asal Devisi</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0" style="font-size: 12px; font-weight: bold;">
+                                                                        <span id="asal_devisi_txt"></span>
+                                                                  </p>
+                                                            </div>
+                                                      </div>
+                                                      <!-- end due date -->
                                                 </div>
-                                          </div> <!-- end col -->
+
+                                                <div class="col-lg-3">
+                                                      <!-- start due date -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">PT Tujuan</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0" style="font-size: 12px; font-weight: bold;">
+                                                                        <span id="pt_tujuan_txt"></span>
+                                                                  </p>
+                                                            </div>
+                                                      </div>
+                                                      <!-- end due date -->
+                                                </div> <!-- end col -->
+                                                <div class="col-lg-3">
+                                                      <!-- start due date -->
+                                                      <p class="text-muted mb-0" style="font-size:12px;">Devisi Tujuan</p>
+                                                      <div class="media">
+                                                            <div class="media-body">
+                                                                  <p class="mt-0" style="font-size: 12px; font-weight: bold;">
+                                                                        <span id="devisi_tujuan_txt"></span>
+                                                                        <input type="hidden" id="devisi">
+                                                                  </p>
+                                                            </div>
+                                                      </div>
+                                                      <!-- end due date -->
+                                                </div> <!-- end col -->
+                                          </div> <!-- end row -->
                                     </div>
                               </div>
                               <hr class="mt-1 mb-2">
@@ -118,8 +165,6 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <input type="hidden" id="hidden_id_lpb">
                                                 <input type="hidden" id="hidden_no_lpb">
                                                 <input type="hidden" id="hidden_no_ref_lpb">
-                                                <input type="hidden" id="hidden_kd_dept">
-                                                <input type="hidden" id="hidden_ket_dept">
                                           </div>
                                           <div class="row mt-2 ml-0" style="margin-bottom: 4px;">
                                                 <h6><span id="noref_span"></span></h6>
@@ -135,12 +180,13 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <table class="table table-striped table-bordered" id="tableRinciLPB" width="100%">
                                                       <thead>
                                                             <tr>
-                                                                  <th width="18%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Kode Barang</th>
-                                                                  <th width="27%" style="font-size: 12px; padding: 10px; padding-left: 15px;">Nama Barang / Satuan / Grup</th>
-                                                                  <th width="9%" style="font-size: 12px; padding: 10px; padding-left: 15px;">Saldo Qty</th>
-                                                                  <th width="9%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Qty</th>
-                                                                  <th width="20%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Ket</th>
-                                                                  <th width="6%" style="font-size: 12px; padding: 10px; padding-left: 17px;">#</th>
+                                                                  <!-- <th width="3%">#</th> -->
+                                                                  <th width="21%" style="font-size:12px;">Kode Barang</th>
+                                                                  <th style="font-size:12px;">Nama Barang / Satuan / Grup</th>
+                                                                  <th width="9%" style="font-size:12px;">Saldo Qty</th>
+                                                                  <th width="6%" style="font-size:12px;">Qty</th>
+                                                                  <th width="20%" style="font-size:12px;">Ket</th>
+                                                                  <th width="3%" style="font-size:12px;">Aksi</th>
                                                             </tr>
                                                       </thead>
                                                       <tbody id="tbody_rincian" name="tbody_rincian">
@@ -251,24 +297,6 @@ date_default_timezone_set('Asia/Jakarta');
             </div>
       </div>
 </div>
-
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusLpb">
-      <div class="modal-dialog">
-            <div class="modal-content">
-                  <div class="modal-body p-4">
-                        <div class="text-center">
-                              <i class="dripicons-warning h1 text-warning"></i>
-                              <h4 class="mt-2">Konfirmasi Hapus</h4>
-                              <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
-                              <p class="mt-3">Apakah Anda yakin ingin menghapus LPB ini ???</p>
-                              <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekLpb()">Hapus</button>
-                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-                        </div>
-                  </div>
-            </div>
-      </div>
-</div>
-
 <style>
       .select2-container {
             white-space: nowrap;
@@ -276,44 +304,6 @@ date_default_timezone_set('Asia/Jakarta');
       }
 </style>
 <script>
-      function cekLpb() {
-
-            $.ajax({
-                  type: "POST",
-                  url: "<?php echo site_url('Lpb/cekDataLpb'); ?>",
-                  dataType: "JSON",
-                  beforeSend: function() {},
-
-                  data: {
-                        noreflpb: $('#hidden_no_ref_lpb').val(),
-                  },
-                  success: function(data) {
-
-                        for (var i = 0; i < data; i++) {
-                              //delete item 1 per satu
-                              console.log(i);
-                              updateRinciToZero(i);
-                        }
-                  },
-                  error: function(response) {
-                        alert('KONEKSI TERPUTUS! Gagal Menghapus LPB');
-                  }
-            });
-      }
-
-      function cancelLpb(n) {
-
-            $('#modalKonfirmasiHapusLpb').modal('show');
-      }
-
-      function goBack() {
-            window.history.back();
-      }
-
-      function new_lpb() {
-            location.href = "<?php echo base_url('Lpb/lpb_mutasi') ?>";
-      }
-
       function getGrupBarang(kodebar, n) {
             $.ajax({
                   type: "POST",
@@ -326,9 +316,6 @@ date_default_timezone_set('Asia/Jakarta');
                   },
                   success: function(data) {
                         $('#hidden_grup_' + n).text(data.grp);
-                  },
-                  error: function(response) {
-                        alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
                   }
             });
       }
@@ -348,16 +335,14 @@ date_default_timezone_set('Asia/Jakarta');
                   success: function(data) {
                         // console.log(data + 'sum');
                         $('#sisa_qty_' + i).text(data);
-                  },
-                  error: function(response) {
-                        alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
                   }
             });
       }
 
       var n = 0;
 
-      function tambah_row(row, status_item_lpb) {
+      function tambah_row(row, ) {
+            var status_item_lpb = '0';
             // var row = ++num_last;
             console.log(row);
             // var row = $('#hidden_no_table').val();
@@ -371,42 +356,39 @@ date_default_timezone_set('Asia/Jakarta');
             var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">'
             var td_col_2 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<div class="row">' +
-                  '<input type="text" class="form-control form-control-sm col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
+                  '<input type="text" class="form-control col-8" id="txt_kode_barang_' + row + '" name="txt_kode_barang_' + row + '" placeholder="Kode Barang" readonly>' +
                   '<label class="ml-1 mt-1">' +
                   '<input type="checkbox" id="chk_asset_' + row + '" name="chk_asset_' + row + '" value="">' +
-                  '<span class="text-muted" style="font-size: 12px;"> Asset ?</span>' +
+                  '<span class="text-muted" face="Verdana" size="1.8"> Asset ?</span>' +
                   '</label>' +
                   '</div>' +
                   '</td>';
             var td_col_3 = '<td style="padding-right: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<div class="row">' +
-                  '<span style="font-size: 12px;" face="Verdana" class="ml-2" id="txt_nama_brg_' + row + '">Nama Barang</span>&emsp;/' +
-                  '<span style="font-size: 12px;" face="Verdana" class="ml-2" id="txt_satuan_' + row + '">Satuan</span>&emsp;/' +
-                  '<span style="font-size: 12px;" face="Verdana" class="ml-2" id="txt_grup_' + row + '">Grup</span>' +
+                  '<span face="Verdana" class="ml-2" id="txt_nama_brg_' + row + '" size="1.8">Nama Barang</span>&emsp;/' +
+                  '<span face="Verdana" class="ml-2" id="txt_satuan_' + row + '" size="1.8">Satuan</span>&emsp;/' +
+                  '<span face="Verdana" class="ml-2" id="txt_grup_' + row + '" size="1.8">Grup</span>' +
                   '</div>' +
                   '</td>';
-            var td_col_4 = '<td style="padding-right: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
-                  '<span class="small text-muted" style="font-size:12px;">Qty&nbsp;MTS :&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-size:12px;"></span><br>' +
-                  '<span class="small text-muted" style="font-size:12px;">Sisa&nbsp;Qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-size:12px;"></span>' +
+            var td_col_4 = '<td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
+                  '<span class="small text-muted" style="font-size:12px;">qty&nbsp;BKB&emsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-size:12px;"></span><br>' +
+                  '<span class="small text-muted" style="font-size:12px;">sisa&nbsp;qty :&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-size:12px;"></span>' +
                   '</td>';
             var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                  '<input type="text" style="font-size: 12px;" class="form-control form-control-sm currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
-                  '<input type="hidden" id="hidden_qtypo_' + row + '" name="hidden_qtypo_' + row + '">' +
+                  '<input type="text" class="form-control currencyduadigit" id="txt_qty_' + row + '" name="txt_qty_' + row + '" placeholder="Qty" autocomplite="off" onkeyup="cek_qty(' + row + ')">' +
                   '</td>';
             var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                  '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="2" style="font-size: 12px;"></textarea>' +
+                  '<textarea class="resizable_textarea form-control" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="1"></textarea>' +
                   '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
                   '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
                   '</td>';
-            var td_col_7 = '<td style="padding-top: 2px;">' +
-                  '<div class="row">' +
-                  '<button class="btn btn-xs btn-success fa fa-save ml-1" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-                  '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit ml-1" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
-                  '<button style="display:none;" class="btn btn-xs btn-info fa fa-check ml-1" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-                  '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-                  '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                  '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
+                  '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
+                  '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
+                  '<button style="display:none;" class="btn btn-xs btn-primary  mdi mdi-close-thick" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+                  // '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
                   '<label id="lbl_status_simpan_' + row + '"></label>' +
-                  '</div>' +
                   '</td>';
             var td_col_7b = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<span class="small text-muted" style="font-size:12px;"><i>Habis!</i></span>' +
@@ -415,13 +397,12 @@ date_default_timezone_set('Asia/Jakarta');
             var tr_tutup = '</tr>';
 
             if (status_item_lpb == 1) {
-                  // $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7b + form_tutup + tr_tutup);
+                  $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7b + form_tutup + tr_tutup);
             } else {
                   $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + form_tutup + tr_tutup);
             }
 
-            // $('#txt_qty_' + row).number(true);
-            input_number(row);
+            $('#txt_qty_' + row).number(true);
 
             // $('html, body').animate({
             //     scrollTop: $("#tr_" + row).offset().top
@@ -429,16 +410,6 @@ date_default_timezone_set('Asia/Jakarta');
 
             // row++;
             // $('#hidden_no_table').val(row);
-      }
-
-      function input_number(n) {
-            $("#txt_qty_" + n).on("keypress keyup blur", function(event) {
-                  //this.value = this.value.replace(/[^0-9\.]/g,'');
-                  $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
-                  if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
-                        event.preventDefault();
-                  }
-            });
       }
 
       function sisaQtyPO(no_ref_po, kodebar, n) {
@@ -455,9 +426,6 @@ date_default_timezone_set('Asia/Jakarta');
                   },
                   success: function(data) {
                         $('#sisa_qty_' + n).text(data);
-                  },
-                  error: function(response) {
-                        alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
                   }
             });
       }
@@ -548,7 +516,7 @@ date_default_timezone_set('Asia/Jakarta');
                         for (i = 0; i < data_item_mutasi.length; i++) {
                               // var no = i + 1;
 
-                              tambah_row(i, data_item_mutasi[i].status_item_lpb);
+                              tambah_row(i);
                               sumqty(data_item_mutasi[i].kodebar, data_mutasi.NO_REF, data_item_mutasi[i].qty2, i);
 
                               var kodebar = data_item_mutasi[i].kodebar;
@@ -562,7 +530,6 @@ date_default_timezone_set('Asia/Jakarta');
                               $('#txt_kode_barang_' + i).val(kodebar);
                               $('#txt_nama_brg_' + i).text(nabar);
                               $('#qty_po_' + i).text(qty);
-                              $('#hidden_qtypo_' + i).val(qty);
                               $('#txt_satuan_' + i).text(sat);
                               $('#txt_grup_' + i).text(grp);
                               $('#txt_ket_rinci_' + i).text(ket);
@@ -570,7 +537,7 @@ date_default_timezone_set('Asia/Jakarta');
                         }
                   },
                   error: function(response) {
-                        alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
+                        console.log(response.responseText);
                   }
             });
       }
@@ -669,30 +636,27 @@ date_default_timezone_set('Asia/Jakarta');
                   data: {
                         txt_no_po: $('#txt_no_po').val(),
                         txt_ref_po: $('#txt_ref_po').val(),
-                        hidden_kd_dept: '',
-                        hidden_ket_dept: $('#bagian_txt').text(),
                         // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
+                        txt_kode_barang: $('#txt_kode_barang_' + n).val(),
+                        txt_nama_brg: $('#txt_nama_brg_' + n).text(),
                         txt_tgl_terima: $('#txt_tgl_terima').val(),
                         hidden_no_lpb: $('#hidden_no_lpb').val(),
                         hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
                         chk_asset: chk_asset,
                         // txt_kd_supplier: $('#txt_kd_supplier').val(),
-                        txt_kd_supplier: '',
+                        txt_kd_supplier: 'NULL',
                         // txt_supplier: $('#txt_supplier').val(),
-                        txt_supplier: '',
+                        txt_supplier: 'NULL',
                         // txt_no_pengantar: $('#txt_no_pengantar').val(),
-                        txt_no_pengantar: '',
+                        txt_no_pengantar: 'NULL',
                         // txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
-                        txt_lokasi_gudang: '',
+                        txt_lokasi_gudang: 'NULL',
                         // txt_ket_pengiriman: $('#txt_ket_pengiriman').val(),
-                        txt_ket_pengiriman: $('#keperluan_txt').text(),
+                        txt_ket_pengiriman: 'NULL',
                         devisi: $('#devisi').val(),
-                        txt_kode_barang: $('#txt_kode_barang_' + n).val(),
-                        txt_nama_brg: $('#txt_nama_brg_' + n).text(),
                         txt_satuan: $('#txt_satuan_' + n).text(),
                         hidden_grup: $('#txt_grup_' + n).text(),
                         txt_qty: $('#txt_qty_' + n).val(),
-                        hidden_qtypo: $('#hidden_qtypo_' + n).val(),
                         txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
                         mutasi: '1'
                   },
@@ -703,8 +667,6 @@ date_default_timezone_set('Asia/Jakarta');
 
                         $('#lbl_status_simpan_' + n).empty();
                         $('#lbl_lpb_status').empty();
-                        $('#new_lpb').removeAttr('disabled');
-                        $('#camera').attr('disabled', '');
 
                         $.toast({
                               position: 'top-right',
@@ -725,7 +687,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                         $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).addClass('bg-light');
                         $('.div_form_2').find('#txt_kode_barang_' + n + ', #chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n).attr('disabled', '');
-                        $('#cancelLpb').removeAttr('disabled');
+                        // $('.headspp').find('#cancelSpp').removeAttr('disabled');
 
                         $('#btn_hapus_row_' + n).css('display', 'none');
                         $('#btn_ubah_' + n).css('display', 'block');
@@ -738,14 +700,11 @@ date_default_timezone_set('Asia/Jakarta');
 
                         $('#hidden_txtperiode_' + n).val(data.txtperiode);
 
-                        $('#a_print_lpb').removeAttr('disabled');
+                        $('#a_print_lpb').show();
 
                   },
                   error: function(response) {
-                        $('#lbl_status_simpan_' + n).empty();
-                        $('#lbl_lpb_status').empty();
-                        $('#btn_simpan_' + n).css('display', 'block');
-                        alert('KONEKSI TERPUTUS! Gagal Save Data!');
+                        console.log(response.responseText);
                   }
             });
       }
@@ -764,20 +723,8 @@ date_default_timezone_set('Asia/Jakarta');
             $("#status_sukses").remove();
       };
 
-      function updateRinci(n) {
-
-            var qty = $('#txt_qty_' + n).val();
-
-            if (!qty || qty == 0) {
-                  toast('Qty');
-            } else {
-                  updateRinciClick(n);
-            }
-            return false;
-      };
-
       //Update Data
-      function updateRinciClick(n) {
+      function updateRinci(n) {
             if ($('#chk_asset_' + n).is(':checked')) {
                   var chk_asset = 'yes';
             }
@@ -836,11 +783,6 @@ date_default_timezone_set('Asia/Jakarta');
                         $('#btn_ubah_' + n).css('display', 'block');
                         $('#btn_hapus_' + n).css('display', 'block');
                         $('#btn_cancel_update_' + n).css('display', 'none');
-                  },
-                  error: function(response) {
-                        $('#btn_update_' + n).css('display', 'block');
-                        $('#lbl_status_simpan_' + n).empty();
-                        alert('KONEKSI TERPUTUS! Gagal Update Data!');
                   }
             });
       };
@@ -897,11 +839,6 @@ date_default_timezone_set('Asia/Jakarta');
                         $('#btn_ubah_' + n).css('display', 'block');
                         $('#btn_hapus_' + n).css('display', 'block');
 
-                  },
-                  error: function(response) {
-                        $('#btn_cancel_update_' + n).css('display', 'block');
-                        $('#lbl_status_simpan_' + n).empty();
-                        alert('KONEKSI TERPUTUS! Gagal Membatalkan Update!');
                   }
             });
       }
@@ -929,189 +866,5 @@ date_default_timezone_set('Asia/Jakarta');
             window.open("<?= base_url('Lpb/cetak/') ?>" + no_lpb + '/' + id, '_blank');
 
             $('.div_form_2').css('pointer-events', 'none');
-      }
-
-      function hapusRinci(n) {
-            // $('#hidden_no_delete').val(n);
-            Swal.fire({
-                  text: "Yakin akan menghapus Data ini?",
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Ya Hapus!'
-            }).then((result) => {
-                  if (result.value) {
-                        updateRinciToZero(n);
-                  }
-            })
-      }
-
-      function updateRinciToZero(n) {
-            if ($('#chk_asset_' + n).is(':checked')) {
-                  var chk_asset = 'yes';
-            }
-
-            var no_ref_po = $('#txt_ref_po').val();
-            var no_po = $('#txt_no_po').val();
-            var kodebar = $('#txt_kode_barang_' + n).val();
-            // var hidden_refppo = $('#hidden_refppo_' + n).val();
-
-            $.ajax({
-                  type: "POST",
-                  url: "<?php echo base_url('Lpb/updateLpb') ?>",
-                  dataType: "JSON",
-
-                  beforeSend: function() {
-
-                        $('#lbl_status_simpan_' + n).empty();
-                        $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
-                  },
-
-                  data: {
-                        // hidden_no_ref_bkb: $('#hidden_no_ref_bkb').val(),
-                        chk_asset: chk_asset,
-                        txt_qty: 0,
-                        txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
-                        hidden_no_lpb: $('#hidden_no_lpb').val(),
-                        hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
-                        hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                        hidden_txtperiode: $('#hidden_txtperiode_' + n).val(),
-                        kode_dev: $('#devisi').val(),
-                        nopo: no_po,
-                        norefpo: no_ref_po,
-                        kodebar: kodebar,
-                        mutasi: '1'
-                        // refppo: hidden_refppo,
-                  },
-
-                  success: function(data) {
-
-                        sisaQtyPO(no_ref_po, kodebar, n);
-
-                        deleteData(n);
-
-                  },
-                  error: function(response) {
-                        $('#lbl_status_simpan_' + n).empty();
-                        alert('KONEKSI TERPUTUS! Gagal Update Data!');
-                  }
-            });
-      };
-
-      function deleteData(n) {
-
-            $.ajax({
-                  type: "POST",
-                  url: "<?php echo base_url('Lpb/deleteItemLpb') ?>",
-                  dataType: "JSON",
-
-                  beforeSend: function() {
-                        $('#lbl_status_simpan_' + n).empty();
-                        $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
-                  },
-
-                  data: {
-                        hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                        norefpo: $('#txt_ref_po').val()
-                  },
-
-                  success: function(data) {
-                        console.log(data);
-
-                        $.toast({
-                              position: 'top-right',
-                              heading: 'Success',
-                              text: 'Berhasil DiHapus!',
-                              icon: 'success',
-                              loader: false
-                        });
-
-                        $('#chk_asset_' + n).prop('checked', false);
-                        $('#txt_qty_' + n).val('');
-                        $('#txt_ket_rinci_' + n).val('');
-
-                        //cek di masukitem jika data == 0 hapus stokmasuk
-                        cek_data_masukitem(n);
-                        // if (n == 1) {
-                        //     hapusLpb();
-                        // }
-                  },
-                  error: function(response) {
-                        $('#lbl_status_simpan_' + n).empty();
-                        alert('KONEKSI TERPUTUS! Gagal Delete Data!');
-                  }
-            });
-      };
-
-      function cek_data_masukitem(n) {
-            var noreflpb = $('#hidden_no_ref_lpb').val();
-
-            $.ajax({
-                  type: "POST",
-                  url: "<?php echo base_url('Lpb/cek_data_masukitem') ?>",
-                  dataType: "JSON",
-
-                  beforeSend: function() {
-                        $('#lbl_bkb_status').empty();
-                        $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Cek data LPB</label>');
-                  },
-
-                  data: {
-                        noreflpb: noreflpb
-                  },
-
-                  success: function(data) {
-                        // jika data masukitem == 0 maka hapus stokmasuk
-                        if (data == 0) {
-                              hapusLpb();
-                        } else {
-                              $('#lbl_status_simpan_' + n).empty();
-
-                              $('#btn_simpan_' + n).css('display', 'block');
-                              $('#btn_ubah_' + n).css('display', 'none');
-                              $('#btn_hapus_' + n).css('display', 'none');
-
-                              $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeClass('bg-light');
-                              $('.div_form_2').find('#chk_asset_' + n + ', #txt_qty_' + n + ',#txt_ket_rinci_' + n + '').removeAttr('disabled');
-                        }
-                  },
-                  error: function(response) {
-                        $('#lbl_bkb_status').empty();
-                        alert('KONEKSI TERPUTUS! Gagal Cek Data Masuk Item!');
-                  }
-            });
-      }
-
-      //kalo lpb item lpb nya tinggal satu hapus LPB stokmasuknya
-      function hapusLpb() {
-
-            var noreflpb = $('#hidden_no_ref_lpb').val();
-            var no_ref_po = $('#txt_ref_po').val();
-
-            $.ajax({
-                  type: "POST",
-                  url: "<?php echo base_url('Lpb/deleteLpb') ?>",
-                  dataType: "JSON",
-
-                  beforeSend: function() {
-                        $('#lbl_bkb_status').empty();
-                        $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Hapus LPB</label>');
-                  },
-
-                  data: {
-                        noreflpb: noreflpb,
-                        norefpo: no_ref_po,
-                  },
-
-                  success: function(data) {
-                        console.log(data);
-
-                        location.reload();
-                  },
-                  error: function(response) {
-                        $('#lbl_bkb_status').empty();
-                        alert('KONEKSI TERPUTUS! Gagal Hapus LPB!');
-                  }
-            });
       }
 </script>

@@ -10,20 +10,33 @@ class M_lpb_mutasi extends CI_Model
             $noref = $this->input->get('noref');
 
             $kode_pt_login = $this->session->userdata('kode_pt_login');
-            $role_user = $this->session->userdata('user');
+            $lokasi = $this->session->userdata('status_lokasi');
+            if ($lokasi == 'SITE') {
+                  $awal_noref = 'EST';
+            } elseif ($lokasi == 'PKS') {
+                  $awal_noref = 'FAC';
+            } elseif ($lokasi == 'RO') {
+                  $awal_noref = 'ROM';
+            }
 
-            $query = "SELECT NO_REF FROM tb_mutasi WHERE NO_REF LIKE '%$noref%' AND USER = '$role_user' AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
+            // $query = "SELECT NO_REF FROM tb_mutasi WHERE NO_REF LIKE '%$noref%' AND USER = '$role_user' AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
+
+            if ($lokasi != 'HO') {
+                  $query = "SELECT NO_REF FROM tb_mutasi WHERE NO_REF LIKE '%$noref%' AND status_lpb = 0 AND NO_REF LIKE '%$awal_noref%' AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
+            } else {
+                  $query = "SELECT NO_REF FROM tb_mutasi WHERE NO_REF LIKE '%$noref%' AND status_lpb = 0 AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
+            }
             return $this->db_logistik_center->query($query)->result_array();
       }
 
       public function get_data_mutasi_item($noref)
       {
-            $this->db_logistik_center->select('NO_REF, tgl, bag, kpd, keperluan, pt, devisi, pt_mutasi, devisi_mutasi, kode_devisi_mutasi');
+            $this->db_logistik_center->select('skb, NO_REF, tgl, bag, kpd, keperluan, pt, devisi, pt_mutasi, devisi_mutasi, kode_devisi_mutasi');
             $this->db_logistik_center->where('NO_REF', $noref);
             $this->db_logistik_center->from('tb_mutasi');
             $data_mutasi = $this->db_logistik_center->get()->row_array();
 
-            $this->db_logistik_center->select('kodebar, nabar, satuan, grp, qty2, ket');
+            $this->db_logistik_center->select('kodebar, nabar, satuan, grp, qty2, ket, status_item_lpb');
             $this->db_logistik_center->where('NO_REF', $noref);
             $this->db_logistik_center->from('tb_mutasi_item');
             $data_item_mutasi = $this->db_logistik_center->get()->result_array();
@@ -79,6 +92,22 @@ class M_lpb_mutasi extends CI_Model
             $this->db_logistik_center->set('status_lpb', NULL);
             $this->db_logistik_center->where('NO_REF', $no_ref_po);
             $this->db_logistik_center->update('tb_mutasi');
+      }
+
+      public function sum_qty_edit_mutasi($kodebar, $refpo)
+      {
+            $this->db_logistik_center->select('qty');
+            $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $refpo]);
+            $this->db_logistik_center->from('tb_mutasi_item');
+            $qty_po = $this->db_logistik_center->get()->row_array();
+
+            $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
+            $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'refpo' => $refpo]);
+            $this->db_logistik_pt->from('masukitem');
+            $sumqty_lpb = $this->db_logistik_pt->get()->row();
+
+            $result = $qty_po['qty'] - $sumqty_lpb->qty_lpb;
+            return $result;
       }
 }
 
