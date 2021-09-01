@@ -137,7 +137,7 @@ function terbilang($x, $style = 4)
   <?php  } else { ?>
     <table width="100%" border="0">
       <tr>
-        <td rowspan="3" width="8%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
+        <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
       <tr>
         <td align="left" style="font-size:8.5px;">
           <h3 style="font-size:14px;font-weight:bold;"> <?= $po->namapt ?> </h3>
@@ -288,58 +288,54 @@ function terbilang($x, $style = 4)
       ?>
     </tbody>
   </table>
-  <table border="1" class="singleborder" width="100%">
-    <tbody>
 
-      <tr>
-        <td colspan="10" rowspan="6" valign="top">
-          <b>Keterangan : </b><br />
-          <?= htmlspecialchars($po->ket); ?>
-          <!-- Nama Pemilik : <br />
+  <table border="1" class="singleborder" width="100%">
+    <tr>
+      <td colspan="7" width="399" rowspan="6" valign="top">
+        <b>Keterangan : </b><br />
+        <?= htmlspecialchars($po->ket); ?>
+        <!-- Nama Pemilik : <br />
           No. Rekening : <br />
           Uang Muka    : <br /> -->
-        </td>
-        <td colspan="3">SUB TOTAL</td>
-        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 3, ",", "."); ?></td>
-      </tr>
-      <tr>
-        <td colspan="3">PPN 10%</td>
-        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
-      </tr>
-      <tr>
-        <td colspan="3">PPH</td>
-        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
-      </tr>
-      <tr>
-        <td colspan="3">Biaya Lainnya</td>
-        <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 3, ",", "."); ?></td>
-      </tr>
-      <tr>
-        <td colspan="3"><?= join(", ", $nama_bebanbpo); ?></td>
-        <td colspan="3"></td>
-      </tr>
-      <tr>
-        <td colspan="3">GRAND TOTAL</td>
-        <td colspan="3" align="right">
-          <?php
-          // var_dump($po->totalbayar);
-          // var_dump($pot_ppn);
-          // var_dump($jumlah_biaya_lain);
-          // exit();
-          ?>
-          <br />
-          <?= $list_item->kurs; ?>. <?= number_format($po->totalbayar, 2, ",", "."); ?>
-        </td>
-      </tr>
-      <tr>
+      </td>
+      <td colspan="2">SUB TOTAL</td>
+      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
+    </tr>
+    <tr>
+      <td colspan="2">PPN 10%</td>
+      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
+    </tr>
+    <tr>
+      <td colspan="2">PPH</td>
+      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
+    </tr>
+    <tr>
+      <td colspan="2">Biaya Lainnya</td>
+      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
+    </tr>
+    <tr>
+      <td colspan="2"><?= join(", ", $nama_bebanbpo); ?></td>
+      <td colspan="3"></td>
+    </tr>
+    <tr>
+      <td colspan="2">GRAND TOTAL</td>
+      <td colspan="3" align="right">
         <?php
-        $total = $po->totalbayar;
-        // var_dump("iyayayay".$total);exit();
+        $isi = $po->totalbayar + $pot_ppn + $hit_pph + $jumlah_biaya_lain;
         ?>
-        <td colspan="12"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
-      </tr>
-    </tbody>
+        <br />
+        <?= $list_item->kurs; ?>. <?= number_format($isi, 2, ",", "."); ?>
+      </td>
+    </tr>
+    <tr>
+      <?php
+      $total = $po->totalbayar + $pot_ppn + $hit_pph + $jumlah_biaya_lain;
+      // var_dump("iyayayay".$total);exit();
+      ?>
+      <td colspan="7"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
+    </tr>
   </table>
+
   <table border="1" class="singleborder" width="100%">
 
     <tbody>

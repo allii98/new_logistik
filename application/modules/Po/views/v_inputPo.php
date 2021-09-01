@@ -793,7 +793,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     table#dataspp td {
         padding: 10px;
-        font-size: 11px;
+        font-size: 12px;
     }
 </style>
 

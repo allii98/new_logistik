@@ -2101,6 +2101,8 @@
         return true;
     }
 
+
+
     function tambah_row_baru(n) {
         // n++;
         console.log("bariske", n);
@@ -2114,7 +2116,7 @@
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="19%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="getspp' + n + '" name="spp' + n + '" >' +
+            '<input type="text" class="form-control form-control-sm bg-light" id="getspp' + n + '" name="spp' + n + '" readonly>' +
             '<input type="hidden" class="form-control form-control-sm" id="id_item_po' + n + '" name="id_item_po' + n + '" >' +
             '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
@@ -2216,7 +2218,25 @@
         $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
         hitungqty(n);
         jumlah(n);
+        // tittle(n);
+        // tool(n);
         return true;
+    }
+
+
+    function tool(n) {
+
+
+        $('#getspp' + n).tooltip({
+            title: tittle,
+            html: true
+        });
+    }
+
+    function tittle(n) {
+        var refspp = $('#hidden_no_ref_spp_' + n).val();
+
+        return refspp;
     }
 
     function hitungqty(id) {
