@@ -13,6 +13,7 @@ class Po extends CI_Controller
         $this->load->model('M_data');
         $this->load->model('M_cariSPP');
         $this->load->model('M_detail');
+        $this->load->model('M_spp');
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
@@ -51,6 +52,37 @@ class Po extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->M_po->count_all(),
             "recordsFiltered" => $this->M_po->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
+        echo json_encode($output);
+    }
+    function get_ajax2()
+    {
+        $noref = $this->input->post('norefspp');
+        $this->M_spp->where_datatables($noref);
+        $list = $this->M_spp->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            $no++;
+            $row = array();
+            $row[] = $no . ".";
+            $row[] = $d->id;
+            $row[] = $d->noppo;
+            $row[] = date_format(date_create($d->tglppo), 'd-m-Y');
+            $row[] = $d->noreftxt;
+            $row[] = $d->namadept;
+            $row[] = $d->kodebar;
+            $row[] = $d->nabar;
+            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($d->ket) . ' </p>';
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_spp->count_all(),
+            "recordsFiltered" => $this->M_spp->count_filtered(),
             "data" => $data,
         );
         // output to json format
@@ -179,6 +211,7 @@ class Po extends CI_Controller
             $row = array();
             $row[] = '<button class="btn btn-success btn-xs" id="data_spp" name="data_spp"
                     data-id="' . $d->id . '" data-jenis="' . $d->jenis . '"  data-noreftxt="' . $d->noreftxt . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih</button>';
+            $row[] = $no . ".";
             $row[] =  date_format(date_create($d->tglppo), 'd-m-Y');
             $row[] = $d->noreftxt;
             $row[] = $d->namadept;
@@ -252,7 +285,7 @@ class Po extends CI_Controller
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => [190, 236],
-            'margin_top' => '15',
+            'margin_top' => '8',
             'orientation' => 'P'
         ]);
 
@@ -452,7 +485,8 @@ class Po extends CI_Controller
             $total_pph = 0;
         }
 
-        $totbay = $data->totalbayar + $total_ppn + $total_pph;
+        // $totbay = $data->totalbayar + $total_ppn + $total_pph;
+        $totbay = $data->totalbayar;
 
         $dataedit['totalbayar'] = $totbay;
         $this->db_logistik_pt->set($dataedit);

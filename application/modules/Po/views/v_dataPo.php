@@ -36,7 +36,7 @@
 
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="detailpo">
-	<div class="modal-dialog modal-lg modal-dialog-scrollable">
+	<div class="modal-dialog modal-full-width">
 		<div class="modal-content">
 			<div class="modal-header ml-2">
 				<h4 style="font-size: 15px;" class="modal-title" id="detailpo">Detail PO</h4>
@@ -56,7 +56,7 @@
 									<th width="3%" style="font-size: 12px; padding:10px">No</th>
 									<!-- <th width="28%" style="font-size: 12px; padding:10px">Ref.&nbsp;PO</th> -->
 									<th width="15%" style="font-size: 12px; padding:10px">Ref.&nbsp;SPP</th>
-									<th width="10%" style="font-size: 12px; padding:10px">Nama&nbsp;&Kode&nbsp;Barang</th>
+									<th width="20%" style="font-size: 12px; padding:10px">Nama&nbsp;&Kode&nbsp;Barang</th>
 									<th width="5%" style="font-size: 12px; padding:10px">QTY</th>
 									<th width="10%" style="font-size: 12px; padding:10px">Tanggal PO</th>
 								</tr>

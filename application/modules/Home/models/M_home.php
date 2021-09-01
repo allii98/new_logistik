@@ -20,9 +20,29 @@ class M_home extends CI_Model
     {
         $kode_pt_login = $this->session->userdata('kode_pt_login');
         $role_user = $this->session->userdata('user');
+        $lokasi = $this->session->userdata('status_lokasi');
 
-        $this->db_logistik_center->where(['USER' => $role_user, 'kode_pt_mutasi' => $kode_pt_login, 'status_lpb' => NULL]);
-        $this->db_logistik_center->from($this->table);
+        if ($lokasi == 'SITE') {
+            $noref = 'EST';
+            # code...
+        } elseif ($lokasi == 'PKS') {
+            # code...
+            $noref = 'FAC';
+        } elseif ($lokasi == 'RO') {
+            # code...
+            $noref = 'ROM';
+        }
+
+        if ($lokasi != 'HO') {
+            $this->db_logistik_center->where(['kode_pt_mutasi' => $kode_pt_login, 'status_lpb' => 0]);
+            $this->db_logistik_center->like('NO_REF', $noref, 'both');
+            $this->db_logistik_center->from($this->table);
+            # code...
+        } else {
+            $this->db_logistik_center->where(['kode_pt_mutasi' => $kode_pt_login, 'status_lpb' => 0]);
+            $this->db_logistik_center->from($this->table);
+        }
+
 
         $i = 0;
 

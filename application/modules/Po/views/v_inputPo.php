@@ -31,10 +31,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     Jenis&nbsp;PO&nbsp;*
                                     <!-- <font face="Verdana" size="1.5">Jenis&nbsp;PO&nbsp;*</font> -->
                                 </label>
-                                <div class="col-9 col-xl-12">
+                                <div class="col-9 col-xl-12 ">
                                     <input type="hidden" id="hidden_jenis_spp" name="hidden_jenis_spp">
                                     <input type="hidden" id="status_lokasi" value="<?= $lokasi_sesi = $this->session->userdata('status_lokasi'); ?>">
-                                    <select class="form-control form-control-sm" id="cmb_pilih_jenis_po" onchange="jenisPO()">
+                                    <select class="form-control form-control-sm bg-light" id="cmb_pilih_jenis_po" disabled onchange="jenisPO()">
                                         <option disabled>
                                             <font face="Verdana" size="1.5">-Pilih-</font>
                                         </option>
@@ -230,9 +230,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     Pemesan*
                                 </label>
                                 <div class="col-8 col-xl-12">
-                                    <input type="hidden" name="nama_pemesan" id="nama_pemesan">
-                                    <select class="form-control form-control-sm" id="txt_pemesan" name="txt_pemesan" required>
-                                    </select>
+                                    <input type="hidden" name="txt_pemesan" id="txt_pemesan" value="<?= $this->session->userdata('id_user'); ?>">
+                                    <input type="text" class="form-control form-control-sm bg-light" id="nama_pemesan" name="nama_pemesan" value="<?= $this->session->userdata('user'); ?>" readonly required>
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -748,9 +747,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalcarispp">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-full-width">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header ml-2">
                 <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
@@ -763,10 +762,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <thead>
                                 <tr>
 
-                                    <th style="font-size: 11px; padding:10px">#</th>
-                                    <th style="font-size: 11px; padding:10px">Tanggal</th>
-                                    <th style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
-                                    <th style="font-size: 11px; padding:10px">Departemen</th>
+                                    <th width="5%" style="font-size: 11px; padding:10px; text-align: center;">#</th>
+                                    <th width="5%" style="font-size: 11px; padding:10px; text-align: center;">NO</th>
+                                    <th width="20%" style="font-size: 11px; padding:10px">Tanggal</th>
+                                    <th width="35%" style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
+                                    <th width="35%" style="font-size: 11px; padding:10px">Departemen</th>
 
                                 </tr>
                             </thead>
@@ -793,7 +793,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     table#dataspp td {
         padding: 10px;
-        font-size: 11px;
+        font-size: 12px;
     }
 </style>
 
@@ -949,28 +949,28 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         jenisPO();
         tittle();
-        pilihPemesan();
+        // pilihPemesan();
 
-        $('#txt_pemesan').change(function() {
-            var kode = this.value;
-            // console.log(isipemesan)
-            $.ajax({
-                type: "POST",
-                url: "<?php echo site_url('Po/cekPemesan'); ?>",
-                dataType: "JSON",
-                beforeSend: function() {},
+        // $('#txt_pemesan').change(function() {
+        //     var kode = this.value;
+        //     // console.log(isipemesan)
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "<?php echo site_url('Po/cekPemesan'); ?>",
+        //         dataType: "JSON",
+        //         beforeSend: function() {},
 
-                data: {
-                    kode: kode,
-                },
-                success: function(data) {
-                    $('#nama_pemesan').val(data.pemesan);
-                },
-                error: function(response) {
-                    console.log('KONEKSI TERPUTUS!');
-                }
-            });
-        });
+        //         data: {
+        //             kode: kode,
+        //         },
+        //         success: function(data) {
+        //             $('#nama_pemesan').val(data.pemesan);
+        //         },
+        //         error: function(response) {
+        //             console.log('KONEKSI TERPUTUS!');
+        //         }
+        //     });
+        // });
 
         // kuncinumber
         $("#pph, #no_penawaran, #tmpo_pengiriman, #tmpo_pembayaran").on("keypress keyup blur", function(event) {

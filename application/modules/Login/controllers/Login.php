@@ -59,6 +59,7 @@ class Login extends CI_Controller
             }
 
             $get_username = $this->$pt_login->get_where('user', array('username' => $username));
+            // $get_username = $this->db_logistik_center->get_where('user', array('username' => $username));
             $user = $get_username->row();
 
 
