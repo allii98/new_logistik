@@ -762,11 +762,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <thead>
                                 <tr>
 
-                                    <th width="5%" style="font-size: 11px; padding:10px; text-align: center;">#</th>
-                                    <th width="5%" style="font-size: 11px; padding:10px; text-align: center;">NO</th>
-                                    <th width="20%" style="font-size: 11px; padding:10px">Tanggal</th>
-                                    <th width="35%" style="font-size: 11px; padding:10px">Ref.&nbsp;SPP</th>
-                                    <th width="35%" style="font-size: 11px; padding:10px">Departemen</th>
+                                    <th style="font-size: 12px; padding:10px; text-align: center;">#</th>
+                                    <th style="font-size: 12px; padding:10px; text-align: center;">NO</th>
+                                    <th style="font-size: 12px; padding:10px">Tanggal</th>
+                                    <th style="font-size: 12px; padding:10px">Ref.&nbsp;SPP</th>
+                                    <th style="font-size: 12px; padding:10px">Departemen</th>
 
                                 </tr>
                             </thead>
@@ -1109,7 +1109,24 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             }, ],
             "language": {
                 "infoFiltered": ""
-            }
+            },
+            "columns": [{
+                    "width": "3%"
+                },
+                {
+                    "width": "3%"
+                },
+                {
+                    "width": "29%"
+                },
+                {
+                    "width": "35%"
+                },
+                {
+                    "width": "35%"
+                },
+
+            ],
         });
 
         // end dataspp site
