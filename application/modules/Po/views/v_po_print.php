@@ -321,7 +321,7 @@ function terbilang($x, $style = 4)
       <td colspan="2">GRAND TOTAL</td>
       <td colspan="3" align="right">
         <?php
-        $isi = $po->totalbayar + $pot_ppn + $hit_pph + $jumlah_biaya_lain;
+        $isi = $po->totalbayar + $pot_ppn + $hit_pph;
         ?>
         <br />
         <?= $list_item->kurs; ?>. <?= number_format($isi, 2, ",", "."); ?>
@@ -329,7 +329,7 @@ function terbilang($x, $style = 4)
     </tr>
     <tr>
       <?php
-      $total = $po->totalbayar + $pot_ppn + $hit_pph + $jumlah_biaya_lain;
+      $total = $po->totalbayar + $pot_ppn + $hit_pph;
       // var_dump("iyayayay".$total);exit();
       ?>
       <td colspan="7"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
