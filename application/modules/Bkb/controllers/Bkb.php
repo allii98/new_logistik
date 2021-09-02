@@ -15,15 +15,18 @@ class Bkb extends CI_Controller
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
-
         // DB logistik CENTER
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
-
         //DB MSAL
         $this->db_logistik_msal = $this->load->database('db_logistik_msal', TRUE);
-
         //DB MAPA
         $this->db_logistik_mapa = $this->load->database('db_logistik_mapa', TRUE);
+        //DB psam
+        $this->db_logistik_psam = $this->load->database('db_logistik_psam', TRUE);
+        //DB peak
+        $this->db_logistik_peak = $this->load->database('db_logistik_peak', TRUE);
+        //DB kpp
+        $this->db_logistik_kpp = $this->load->database('db_logistik_kpp', TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -370,6 +373,12 @@ class Bkb extends CI_Controller
             $data['get_devisi_mutasi'] = $this->db_logistik_msal->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
         } elseif ($data['get_pt_mutasi']['alias'] == 'MAPA') {
             $data['get_devisi_mutasi'] = $this->db_logistik_mapa->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
+        } elseif ($data['get_pt_mutasi']['alias'] == 'PSAM') {
+            $data['get_devisi_mutasi'] = $this->db_logistik_psam->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
+        } elseif ($data['get_pt_mutasi']['alias'] == 'PEAK') {
+            $data['get_devisi_mutasi'] = $this->db_logistik_peak->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
+        } elseif ($data['get_pt_mutasi']['alias'] == 'KPP') {
+            $data['get_devisi_mutasi'] = $this->db_logistik_kpp->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
         }
 
         // mendapatkan nilai rata2
@@ -731,10 +740,13 @@ class Bkb extends CI_Controller
             $output = $this->db_logistik_msal->get('tb_devisi')->result_array();
         } elseif ($data['pt_mutasi']['alias'] == 'MAPA') {
             $output = $this->db_logistik_mapa->get('tb_devisi')->result_array();
+        } elseif ($data['pt_mutasi']['alias'] == 'PSAM') {
+            $output = $this->db_logistik_psam->get('tb_devisi')->result_array();
+        } elseif ($data['pt_mutasi']['alias'] == 'PEAK') {
+            $output = $this->db_logistik_peak->get('tb_devisi')->result_array();
+        } elseif ($data['pt_mutasi']['alias'] == 'KPP') {
+            $output = $this->db_logistik_kpp->get('tb_devisi')->result_array();
         }
-        //pt peak dan psam belum!!
-
-        // $output = $this->M_bkb->get_devisi_mutasi($kode_pt);
 
         echo json_encode($output);
     }

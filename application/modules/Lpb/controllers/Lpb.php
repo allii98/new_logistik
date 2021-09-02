@@ -280,8 +280,10 @@ class Lpb extends CI_Controller
 
         if ($mutasi_ga == '1') {
             $mutasi = "1";
+            $noref_ppo = '0';
         } else {
             $mutasi = "0";
+            $noref_ppo = $this->input->post('hidden_norefppo');
         }
 
         $tgl_terima = date("Y-m-d H:i:s", strtotime($this->input->post('txt_tgl_terima')));
@@ -329,7 +331,6 @@ class Lpb extends CI_Controller
         $kode_devisi = $this->input->post('devisi');
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
-
         $data_stokmasuk = [
             'tgl' => $tgl_terima,
             'kd_dept' => $this->input->post('hidden_kd_dept'),
@@ -359,7 +360,7 @@ class Lpb extends CI_Controller
             'mutasi' => $mutasi,
             'lokasi' => $this->session->userdata('status_lokasi'),
             'tglppo' => $this->input->post('hidden_tglppo'),
-            'norefppo' => $this->input->post('hidden_norefppo'),
+            'norefppo' => $noref_ppo,
             'tglpo' => $this->input->post('txt_tgl_po'),
             'refpo' => $no_ref_po,
             'noref' => $no_ref_lpb,
@@ -404,7 +405,7 @@ class Lpb extends CI_Controller
             'noadjust' => '0',
             'ket' => $this->input->post('txt_ket_rinci'),
             'lokasi' => $this->session->userdata('status_lokasi'),
-            'norefppo' => $this->input->post('hidden_refppo'),
+            'norefppo' => $noref_ppo,
             'refpo' => $no_ref_po,
             'noref' => $no_ref_lpb,
             'BATAL' => '0',
