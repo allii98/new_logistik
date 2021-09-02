@@ -7,7 +7,7 @@ class M_home extends CI_Model
     // Start Data Table Server Side
     var $table = 'tb_mutasi'; //nama tabel dari database
     var $column_order = array(null, 'tgl', 'no_mutasi', 'pt', 'devisi', 'pt_mutasi', 'devisi_mutasi'); //field yang ada di table user
-    var $column_search = array('tgl', 'NO_REF', 'pt', 'devisi', 'pt_mutasi', 'devisi_mutasi'); //field yang diizin untuk pencarian 
+    var $column_search = array('tgl', 'no_mutasi', 'pt', 'devisi', 'pt_mutasi', 'devisi_mutasi'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
