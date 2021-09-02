@@ -7,7 +7,7 @@ class M_lpb_mutasi extends CI_Model
 
       public function get_bkb_mutasi()
       {
-            $noref = $this->input->get('noref');
+            $noref = $this->input->get('no_mutasi');
 
             $kode_pt_login = $this->session->userdata('kode_pt_login');
             $lokasi = $this->session->userdata('status_lokasi');
@@ -22,22 +22,28 @@ class M_lpb_mutasi extends CI_Model
             // $query = "SELECT NO_REF FROM tb_mutasi WHERE NO_REF LIKE '%$noref%' AND USER = '$role_user' AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
 
             if ($lokasi != 'HO') {
-                  $query = "SELECT NO_REF FROM tb_mutasi WHERE NO_REF LIKE '%$noref%' AND status_lpb = 0 AND NO_REF LIKE '%$awal_noref%' AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
+                  $query = "SELECT no_mutasi FROM tb_mutasi WHERE no_mutasi LIKE '%$noref%' AND status_lpb = 0 AND no_mutasi LIKE '%$awal_noref%' AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
             } else {
-                  $query = "SELECT NO_REF FROM tb_mutasi WHERE NO_REF LIKE '%$noref%' AND status_lpb = 0 AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
+                  $query = "SELECT no_mutasi FROM tb_mutasi WHERE no_mutasi LIKE '%$noref%' AND status_lpb = 0 AND kode_pt_mutasi = '$kode_pt_login' ORDER BY id DESC";
             }
             return $this->db_logistik_center->query($query)->result_array();
       }
 
       public function get_data_mutasi_item($noref)
       {
-            $this->db_logistik_center->select('skb, NO_REF, tgl, bag, kpd, keperluan, pt, devisi, pt_mutasi, devisi_mutasi, kode_devisi_mutasi');
-            $this->db_logistik_center->where('NO_REF', $noref);
+            $this->db_logistik_center->select('skb,no_mutasi, NO_REF, tgl, bag, kpd, keperluan, pt, devisi, pt_mutasi, devisi_mutasi, kode_devisi_mutasi');
+            $this->db_logistik_center->where('no_mutasi', $noref);
             $this->db_logistik_center->from('tb_mutasi');
             $data_mutasi = $this->db_logistik_center->get()->row_array();
 
+            //mencari NO_REF di tb_mutasi_item, karna no_mutasi tidak ada di tb_mutasi_item
+            $this->db_logistik_center->select('NO_REF');
+            $this->db_logistik_center->where('no_mutasi', $noref);
+            $this->db_logistik_center->from('tb_mutasi');
+            $no_ref_data_item_mutasi = $this->db_logistik_center->get()->row_array();
+
             $this->db_logistik_center->select('kodebar, nabar, satuan, grp, qty2, ket, status_item_lpb');
-            $this->db_logistik_center->where('NO_REF', $noref);
+            $this->db_logistik_center->where('NO_REF', $no_ref_data_item_mutasi['NO_REF']);
             $this->db_logistik_center->from('tb_mutasi_item');
             $data_item_mutasi = $this->db_logistik_center->get()->result_array();
 

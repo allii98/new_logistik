@@ -322,11 +322,7 @@ class Bkb extends CI_Controller
         $mutasi = $this->input->post('mutasi');
 
         if (empty($this->input->post('hidden_no_ref_bkb'))) {
-            if ($mutasi == '1') {
-                $no_ref = $text1 . "-BKB-MUTASI/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
-            } else {
-                $no_ref = $text1 . "-BKB/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
-            }
+            $no_ref = $text1 . "-BKB/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
         } else {
             $no_ref = $this->input->post('hidden_no_ref_bkb');
         }
@@ -384,6 +380,20 @@ class Bkb extends CI_Controller
         // mendapatkan nilai rata2
         $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);
 
+        // membuat noref Mutasi
+        if ($mutasi == 1) {
+            if ($data['get_devisi_mutasi']['lokasi'] == 'SITE') {
+                $text1_mutasi = 'EST';
+            } elseif ($data['get_devisi_mutasi']['lokasi'] == 'RO') {
+                $text1_mutasi = 'ROM';
+            } elseif ($data['get_devisi_mutasi']['lokasi'] == 'PKS') {
+                $text1_mutasi = 'FAC';
+            } elseif ($data['get_devisi_mutasi']['lokasi'] == 'HO') {
+                $text1_mutasi = 'PST';
+            }
+            $no_ref_mutasi = $text1_mutasi . "-MUTASI/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
+        }
+
         // $datastockkeluar['id']              = $id_stockkeluar;
         $datastockkeluar['tgl']             = $tgl . " 00:00:00";
         $datastockkeluar['skb']             = $skb;
@@ -393,7 +403,7 @@ class Bkb extends CI_Controller
         // jika mutasi
         if ($mutasi == '1') {
             $datastockkeluar['mutasi']              = '1';
-            $datastockkeluar['no_mutasi']           = $no_ref;
+            $datastockkeluar['no_mutasi']           = $no_ref_mutasi;
             $datastockkeluar['kode_devisi_mutasi']  = $kode_devisi_mutasi;
             $datastockkeluar['devisi_mutasi']       = $data['get_devisi_mutasi']['PT'];
             $datastockkeluar['kode_pt_mutasi']      = $kode_pt_mutasi;

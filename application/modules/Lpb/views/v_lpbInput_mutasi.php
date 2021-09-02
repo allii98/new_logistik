@@ -610,8 +610,8 @@ date_default_timezone_set('Asia/Jakarta');
                         var results = [];
                         $.each(data, function(index, item) {
                               results.push({
-                                    id: item.NO_REF,
-                                    text: item.NO_REF
+                                    id: item.no_mutasi,
+                                    text: item.no_mutasi
                               });
                         });
                         return {
