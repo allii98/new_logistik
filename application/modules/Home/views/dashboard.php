@@ -202,7 +202,7 @@
                                 <tr>
                                     <th width="3%" style="font-size: 12px; padding:10px; text-align: center;">No</th>
                                     <th width="15%" style="font-size: 12px; padding:10px; text-align: center;">Tgl&nbsp;BKB</th>
-                                    <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Ref.&nbsp;BKB</th>
+                                    <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Ref.&nbsp;Mutasi</th>
                                     <th width="10%" style="font-size: 12px; padding:10px; text-align: center;">Asal&nbsp;PT</th>
                                     <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">PT&nbsp;Tujuan</th>
                                 </tr>
