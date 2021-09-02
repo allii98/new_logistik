@@ -102,8 +102,14 @@ class M_lpb_mutasi extends CI_Model
 
       public function sum_qty_edit_mutasi($kodebar, $refpo)
       {
+            $this->db_logistik_center->select('NO_REF');
+            $this->db_logistik_center->where(['no_mutasi' => $refpo]);
+            $this->db_logistik_center->from('tb_mutasi');
+            $data_tb_mutasi = $this->db_logistik_center->get()->row_array();
+            $no_ref_po_mutasi = $data_tb_mutasi['NO_REF'];
+
             $this->db_logistik_center->select('qty');
-            $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $refpo]);
+            $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $no_ref_po_mutasi]);
             $this->db_logistik_center->from('tb_mutasi_item');
             $qty_po = $this->db_logistik_center->get()->row_array();
 

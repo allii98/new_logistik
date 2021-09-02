@@ -812,7 +812,7 @@
                 hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
                 hidden_txtperiode: $('#hidden_txtperiode_' + n).val(),
-                kode_dev: $('#devisi').val(),
+                kode_dev: $('#kode_dev').val(),
                 nopo: no_po,
                 norefpo: no_ref_po,
                 kodebar: kodebar,
