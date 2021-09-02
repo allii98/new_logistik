@@ -394,6 +394,14 @@ class Bkb extends CI_Controller
             $no_ref_mutasi = $text1_mutasi . "-MUTASI/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
         }
 
+        if ($mutasi == 1) {
+            $keperluan = 'MUTASI dari BKB NO. ' . $skb . ' ' . $data['get_devisi_mutasi']['PT'];
+            $diberikan_kpd = $data['get_devisi_mutasi']['lokasi'];
+        } else {
+            $keperluan = $this->input->post('txt_untuk_keperluan');
+            $diberikan_kpd = $this->input->post('txt_diberikan_kpd');
+        }
+
         // $datastockkeluar['id']              = $id_stockkeluar;
         $datastockkeluar['tgl']             = $tgl . " 00:00:00";
         $datastockkeluar['skb']             = $skb;
@@ -428,8 +436,8 @@ class Bkb extends CI_Controller
         $datastockkeluar['kode']            = $this->session->userdata('kode_pt');
         $datastockkeluar['devisi']          = $this->input->post('devisi');
         $datastockkeluar['kode_dev']        = $kode_dev;
-        $datastockkeluar['kpd']             = $this->input->post('txt_diberikan_kpd');
-        $datastockkeluar['keperluan']       = $this->input->post('txt_untuk_keperluan');
+        $datastockkeluar['kpd']             = $diberikan_kpd;
+        $datastockkeluar['keperluan']       = $keperluan;
         $datastockkeluar['bag']             = $this->input->post('cmb_bagian');
         $datastockkeluar['batal']           = '0';
         $datastockkeluar['id_user']         = $id_user;
