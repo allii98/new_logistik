@@ -413,6 +413,16 @@
         padding: 10px;
         font-size: 12px;
     }
+    table#tableItemPO th {
+        padding: 10px;
+        font-size: 12px;
+        padding-left: 17px;
+    }
+    table#tableRinciPO th {
+        padding: 10px;
+        font-size: 12px;
+        padding-left: 17px;
+    }
 </style>
 
 <script>
