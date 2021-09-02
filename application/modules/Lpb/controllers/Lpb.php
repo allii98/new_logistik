@@ -780,14 +780,22 @@ class Lpb extends CI_Controller
 
         //update stok awal harian
         if ($periode['qty'] != $data_item_lpb['qty']) {
-            $data = $this->M_lpb->editStokAwalHarian($kodebar, $periode['periode'], $periode['qty'], $data_item_lpb['qty'], $harga_item_po, $kode_dev);
-            $data = $this->M_lpb->editStokAwalBulananDevisi($kodebar, $periode['txtperiode'], $periode['qty'], $data_item_lpb['qty'], $kode_dev);
+            $data_editStokAwalHarian = $this->M_lpb->editStokAwalHarian($kodebar, $periode['periode'], $periode['qty'], $data_item_lpb['qty'], $harga_item_po, $kode_dev);
+            $data_editStokAwalBulananDevisi = $this->M_lpb->editStokAwalBulananDevisi($kodebar, $periode['txtperiode'], $periode['qty'], $data_item_lpb['qty'], $kode_dev);
         }
 
         //update stok awal
-        $this->update_stok_awal($kodebar, $txtperiode);
+        $update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
 
-        $data = $this->M_lpb->updateLpb($data_item_lpb, $id);
+        $data_update_lpb = $this->M_lpb->updateLpb($data_item_lpb, $id);
+
+        $data = [
+            'harga_item_po' => $harga_item_po,
+            'data_editStokAwalHarian' => $data_editStokAwalHarian,
+            'data_editStokAwalBulananDevisi' => $data_editStokAwalBulananDevisi,
+            'update_stok_awal' => $update_stok_awal,
+            'data_update_lpb' => $data_update_lpb,
+        ];
         echo json_encode($data);
     }
 
@@ -1018,7 +1026,7 @@ class Lpb extends CI_Controller
         // ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
-        if (substr($data['stokmasuk']->refpo, 8, 6) == "MUTASI") {
+        if (substr($data['stokmasuk']->refpo, 4, 6) == "MUTASI") {
             $html = $this->load->view('v_lpbPrint_mutasi', $data, true);
         } else {
             $html = $this->load->view('v_lpbPrint', $data, true);
@@ -1140,8 +1148,14 @@ class Lpb extends CI_Controller
         $no_ref_po = $this->input->post('no_ref_po');
         $kodebar = $this->input->post('kodebar');
 
+        $this->db_logistik_center->select('NO_REF');
+        $this->db_logistik_center->where(['no_mutasi' => $no_ref_po]);
+        $this->db_logistik_center->from('tb_mutasi');
+        $data_tb_mutasi = $this->db_logistik_center->get()->row_array();
+        $no_ref_po_mutasi = $data_tb_mutasi['NO_REF'];
+
         //QTY PO nya di ambil
-        $query_qty_mutasi = "SELECT qty FROM tb_mutasi_item WHERE NO_REF = '$no_ref_po' AND kodebartxt = '$kodebar'";
+        $query_qty_mutasi = "SELECT qty FROM tb_mutasi_item WHERE NO_REF = '$no_ref_po_mutasi' AND kodebartxt = '$kodebar'";
         $data_qty_mutasi = $this->db_logistik_center->query($query_qty_mutasi)->row();
 
         //sum qty LPB nya udah berapa

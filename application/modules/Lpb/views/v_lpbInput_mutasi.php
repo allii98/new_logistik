@@ -80,7 +80,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 </div>
                                           </div> <!-- end col -->
                                           <div class="col-lg-3">
-                                                <p class="text-muted mb-0" style="font-size:12px;">Bagian</p>
+                                                <p class="text-muted mb-0" style="font-size:12px;">Dari Departemen</p>
                                                 <div class="media">
                                                       <div class="media-body">
                                                             <p class="mt-0" style="font-size: 12px; font-weight: bold;">
@@ -570,7 +570,7 @@ date_default_timezone_set('Asia/Jakarta');
                               // var no = i + 1;
 
                               tambah_row(i, data_item_mutasi[i].status_item_lpb);
-                              sumqty(data_item_mutasi[i].kodebar, data_mutasi.NO_REF, data_item_mutasi[i].qty2, i);
+                              sumqty(data_item_mutasi[i].kodebar, data_mutasi.no_mutasi, data_item_mutasi[i].qty2, i);
 
                               var kodebar = data_item_mutasi[i].kodebar;
                               var nabar = data_item_mutasi[i].nabar;

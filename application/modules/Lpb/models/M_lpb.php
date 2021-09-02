@@ -289,8 +289,14 @@ class M_lpb extends CI_Model
 
     public function cari_harga_mutasi($no_ref_po, $kodebar)
     {
+        //mencari NOREF karna di tb_mutasi item tidak ada no_mutasi
+        $this->db_logistik_center->select('NO_REF');
+        $this->db_logistik_center->where(['no_mutasi' => $no_ref_po]);
+        $this->db_logistik_center->from('tb_mutasi');
+        $data_tb_mutasi = $this->db_logistik_center->get()->row_array();
+
         $this->db_logistik_center->select('qty2, nilai_item');
-        $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $no_ref_po]);
+        $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $data_tb_mutasi['NO_REF']]);
         $this->db_logistik_center->from('tb_mutasi_item');
         $data = $this->db_logistik_center->get()->row_array();
 

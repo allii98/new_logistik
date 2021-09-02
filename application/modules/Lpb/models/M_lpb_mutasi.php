@@ -67,43 +67,63 @@ class M_lpb_mutasi extends CI_Model
 
       public function updateStatusItemLpb_mutasi($no_ref_po, $kodebar)
       {
+            //di tb_mutasi item tidak ada no_mutasi
+            $this->db_logistik_center->select('NO_REF');
+            $this->db_logistik_center->where(['no_mutasi' => $no_ref_po]);
+            $this->db_logistik_center->from('tb_mutasi');
+            $data_tb_mutasi = $this->db_logistik_center->get()->row_array();
+            $no_ref_po_mutasi = $data_tb_mutasi['NO_REF'];
+
             //update status jadi 1 atau sudah abis qty lpb nya
             $this->db_logistik_center->set('status_item_lpb', 1);
-            $this->db_logistik_center->where(['NO_REF' => $no_ref_po, 'kodebar' => $kodebar]);
+            $this->db_logistik_center->where(['NO_REF' => $no_ref_po_mutasi, 'kodebar' => $kodebar]);
             $this->db_logistik_center->update('tb_mutasi_item');
 
             $this->db_logistik_center->select('NO_REF');
-            $this->db_logistik_center->where(['NO_REF' => $no_ref_po]);
+            $this->db_logistik_center->where(['NO_REF' => $no_ref_po_mutasi]);
             $this->db_logistik_center->from('tb_mutasi_item');
             $count_item_po = $this->db_logistik_center->count_all_results();
 
             $this->db_logistik_center->select_sum('status_item_lpb', 'sum_item_lpb');
-            $this->db_logistik_center->where(['NO_REF' => $no_ref_po]);
+            $this->db_logistik_center->where(['NO_REF' => $no_ref_po_mutasi]);
             $this->db_logistik_center->from('tb_mutasi_item');
             $sumqty_lpb = $this->db_logistik_center->get()->row();
 
             if ($count_item_po == $sumqty_lpb->sum_item_lpb) {
                   $this->db_logistik_center->set('status_lpb', 1);
-                  $this->db_logistik_center->where('NO_REF', $no_ref_po);
+                  $this->db_logistik_center->where('NO_REF', $no_ref_po_mutasi);
                   $this->db_logistik_center->update('tb_mutasi');
             }
       }
 
       public function updateStatusItemLpb2_mutasi($no_ref_po, $kodebar)
       {
+            //di tb_mutasi item tidak ada no_mutasi
+            $this->db_logistik_center->select('NO_REF');
+            $this->db_logistik_center->where(['no_mutasi' => $no_ref_po]);
+            $this->db_logistik_center->from('tb_mutasi');
+            $data_tb_mutasi = $this->db_logistik_center->get()->row_array();
+            $no_ref_po_mutasi = $data_tb_mutasi['NO_REF'];
+
             $this->db_logistik_center->set('status_item_lpb', 0);
-            $this->db_logistik_center->where(['NO_REF' => $no_ref_po, 'kodebar' => $kodebar]);
+            $this->db_logistik_center->where(['NO_REF' => $no_ref_po_mutasi, 'kodebar' => $kodebar]);
             $this->db_logistik_center->update('tb_mutasi_item');
 
             $this->db_logistik_center->set('status_lpb', NULL);
-            $this->db_logistik_center->where('NO_REF', $no_ref_po);
+            $this->db_logistik_center->where('NO_REF', $no_ref_po_mutasi);
             $this->db_logistik_center->update('tb_mutasi');
       }
 
       public function sum_qty_edit_mutasi($kodebar, $refpo)
       {
+            $this->db_logistik_center->select('NO_REF');
+            $this->db_logistik_center->where(['no_mutasi' => $refpo]);
+            $this->db_logistik_center->from('tb_mutasi');
+            $data_tb_mutasi = $this->db_logistik_center->get()->row_array();
+            $no_ref_po_mutasi = $data_tb_mutasi['NO_REF'];
+
             $this->db_logistik_center->select('qty');
-            $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $refpo]);
+            $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $no_ref_po_mutasi]);
             $this->db_logistik_center->from('tb_mutasi_item');
             $qty_po = $this->db_logistik_center->get()->row_array();
 
