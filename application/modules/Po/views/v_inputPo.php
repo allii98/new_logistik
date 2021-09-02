@@ -1686,6 +1686,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 swal('Data sudah di pilih!');
                 return false;
             }
+            // if (isSelectednoRef(no_ref_spp)) {
+            //     swal('jajaj!');
+            //     return false;
+
+            // }
             // console.log(id, no_spp, no_ref_spp, kodebar);
             data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
         });
@@ -1701,7 +1706,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var isSelectednoRef = false;
         var a = norefspp.each(function() {
             var noppo = $(this).val();
-            if (noppo == no_ref_spp) {
+            if (noppo != no_ref_spp) {
                 console.log("isSelectednoRef sama", noppo, no_ref_spp)
                 isSelectednoRef = true;
                 return false;

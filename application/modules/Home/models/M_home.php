@@ -35,7 +35,7 @@ class M_home extends CI_Model
 
         if ($lokasi != 'HO') {
             $this->db_logistik_center->where(['kode_pt_mutasi' => $kode_pt_login, 'status_lpb' => 0]);
-            $this->db_logistik_center->like('NO_REF', $noref, 'both');
+            $this->db_logistik_center->like('no_mutasi', $noref, 'both');
             $this->db_logistik_center->from($this->table);
             # code...
         } else {
