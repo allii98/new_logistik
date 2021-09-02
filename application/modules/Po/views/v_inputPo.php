@@ -2127,6 +2127,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     var kodebar = $('#hidden_kode_brg_' + id).val();
                     // console.log('ini kodebar nya', kodebar);
                     sum_qty(refspp, kodebar);
+                    var xxx = data.site_lebih_dari15;
+                    console.log('hasil lebih 15', xxx);
                     if (data.site_lebih_dari15 == 1) {
                         swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                         $('#lbl_status_simpan_' + id).empty();
@@ -2287,9 +2289,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 success: function(data) {
                     var refspp = data.refspp;
                     var kodebar = $('#hidden_kode_brg_' + id).val();
-                    console.log('ini kodebar nya', kodebar);
+                    // console.log('ini kodebar nya', kodebar);
                     sum_qty(refspp, kodebar);
-                    if ((data.site_lebih_dari15 == 1)) {
+                    var xxx = data.site_lebih_dari15;
+                    console.log('hasil lebih 15', xxx);
+                    if (data.site_lebih_dari15 == 1) {
                         swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                         $('#lbl_status_simpan_' + id).empty();
                         $('#lbl_spp_status').empty();

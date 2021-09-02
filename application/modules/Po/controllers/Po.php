@@ -787,7 +787,7 @@ class Po extends CI_Controller
             'id_item_spp' => $this->input->post('id_item')
         ];
 
-        if ($this->session->userdata('status_lokasi') == "SITE" && $this->session->userdata('status_lokasi') == "RO" && $this->session->userdata('status_lokasi') == "PKS") {
+        if ($this->session->userdata('status_lokasi') !== "HO") {
             if ($totalbayar > 1500000) {
                 $site_lebih_dari15 = 1;
                 $data1 = NULL;
@@ -983,7 +983,7 @@ class Po extends CI_Controller
             'id_item_spp' => $this->input->post('id_item')
         ];
 
-        if ($this->session->userdata('status_lokasi') == "SITE") {
+        if ($this->session->userdata('status_lokasi') !== "HO") {
             if ($totalbayar > 1500000) {
                 $site_lebih_dari15 = 1;
                 $data = NULL;
@@ -1296,7 +1296,7 @@ class Po extends CI_Controller
         //cari PO where kodebar norefpo norefppo
         $cari_po = $this->M_po->cari_po($norefpo, $norefppo, $kodebar, $txt_jumlah);
 
-        if ($this->session->userdata('status_lokasi') == "SITE" && $this->session->userdata('status_lokasi') == "RO" && $this->session->userdata('status_lokasi') == "PKS") {
+        if ($this->session->userdata('status_lokasi') != "HO") {
             if ($cari_po > 1500000) {
                 $updateitem = 'site';
             } else {
@@ -1670,7 +1670,17 @@ class Po extends CI_Controller
             'konversi' => "0"
         ];
 
-        if ($this->session->userdata('status_lokasi') == "SITE") {
+        if ($this->session->userdata('status_lokasi') != "HO") {
+            $id_ppo = $this->input->post('id_item');
+            $data_ppo =  array(
+                'qty2' => $this->input->post('txt_qty'),
+                'po' => 1
+            );
+            $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+            $site_lebih_dari15 = 0;
+            $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
+        } else {
             if ($totalbayar > 1500000) {
                 $site_lebih_dari15 = 1;
                 $data = NULL;
@@ -1685,16 +1695,6 @@ class Po extends CI_Controller
                 $site_lebih_dari15 = 0;
                 $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
             }
-        } else {
-            $id_ppo = $this->input->post('id_item');
-            $data_ppo =  array(
-                'qty2' => $this->input->post('txt_qty'),
-                'po' => 1
-            );
-            $this->M_po->updatePPO($id_ppo, $data_ppo);
-
-            $site_lebih_dari15 = 0;
-            $data = $this->db_logistik_pt->insert('item_po', $datainsertitem);
         }
 
         $data_return = [
