@@ -28,8 +28,9 @@ class Po extends CI_Controller
 
     function get_ajax()
     {
-        // $id = $this->input->post('data');
-        // $this->M_po->where_datatables($id);
+        $id = $this->input->post('data');
+        $kodedev = $this->input->post('kodedev');
+        $this->M_po->where_datatables($id, $kodedev);
         $list = $this->M_po->get_datatables();
         $data = array();
         $no = $_POST['start'];
@@ -336,6 +337,13 @@ class Po extends CI_Controller
         $this->template->load('template', 'v_inputPo', $data);
     }
 
+    function cek_devisi()
+    {
+        $kode_dev = $this->input->post('kodedev');
+        $data = $this->M_po->cek_devisi($kode_dev);
+        echo json_encode($data);
+    }
+
     public function pemesan()
     {
         $data = $this->db_logistik_pt->query("SELECT kode, pemesan FROM pemesan ORDER BY id DESC")->result();
@@ -598,23 +606,46 @@ class Po extends CI_Controller
 
         $hidden_jenis_spp = $this->input->post('hidden_jenis_spp');
 
-        if (!empty($this->input->post('hidden_no_ref_po'))) {
-            $norefpo = $this->input->post('hidden_no_ref_po');
-        } else {
-            // Est/swj/PO-Lokal/11/18/00034 atau Fac/swj/jkt/12/18/6100005 atau Est-POA/swj/jkt/12/18/6100004 atau Est2/swj/jkt/01/16/7100029
-            if ($hidden_jenis_spp == "SPP") {
-                # code...
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
-            } else if ($hidden_jenis_spp == "SPPA") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/POA/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
-            } else if ($hidden_jenis_spp == "SPPI") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-LOKAL/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
-            } else if ($hidden_jenis_spp == "SPPK") {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-KHUSUS/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+        if ($lokasibuatpo == 'HO') {
+            # code...
+            if (!empty($this->input->post('hidden_no_ref_po'))) {
+                $norefpo = $this->input->post('hidden_no_ref_po');
             } else {
-                $norefpo = $lokasibuatspp . "/" . $kodepo . "/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                // Est/swj/PO-Lokal/11/18/00034 atau Fac/swj/jkt/12/18/6100005 atau Est-POA/swj/jkt/12/18/6100004 atau Est2/swj/jkt/01/16/7100029
+                if ($hidden_jenis_spp == "SPP") {
+                    # code...
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else if ($hidden_jenis_spp == "SPPA") {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/POA/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else if ($hidden_jenis_spp == "SPPI") {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-LOKAL/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else if ($hidden_jenis_spp == "SPPK") {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-KHUSUS/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/JKT/" . date('m') . "/" . date('y') . "/" . $no_po;
+                }
             }
+        } else {
+            if (!empty($this->input->post('hidden_no_ref_po'))) {
+                $norefpo = $this->input->post('hidden_no_ref_po');
+            } else {
+                // Est/swj/PO-Lokal/11/18/00034 atau Fac/swj/jkt/12/18/6100005 atau Est-POA/swj/jkt/12/18/6100004 atau Est2/swj/jkt/01/16/7100029
+                if ($hidden_jenis_spp == "SPP") {
+                    # code...
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else if ($hidden_jenis_spp == "SPPA") {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/POA/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else if ($hidden_jenis_spp == "SPPI") {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-LOKAL/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else if ($hidden_jenis_spp == "SPPK") {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/PO-KHUSUS/" . date('m') . "/" . date('y') . "/" . $no_po;
+                } else {
+                    $norefpo = $lokasibuatspp . "/" . $kodepo . "/" . date('m') . "/" . date('y') . "/" . $no_po;
+                }
+            }
+            # code...
         }
+
 
         $tgl_po = date("Y-m-d", strtotime($this->input->post('txt_tgl_po')));
         $tgl_po_txt = date("Ymd", strtotime($this->input->post('txt_tgl_po')));

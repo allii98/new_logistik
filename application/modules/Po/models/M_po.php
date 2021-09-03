@@ -15,10 +15,11 @@ class M_po extends CI_Model
         $this->load->database();
     }
 
-    public function where_datatables($id)
+    public function where_datatables($id, $kodedev)
     {
         // global $nopo;
         $this->id = $id;
+        $this->kodedev = $kodedev;
         // return $nopo;
     }
 
@@ -26,37 +27,41 @@ class M_po extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $lokasi = $this->session->userdata('status_lokasi');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('po', 0);
-        $this->db_logistik_pt->where('status2', 1);
-        $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        // $lokasi = $this->session->userdata('status_lokasi');
+
         // $this->db_logistik_pt->where('LOKASI', $lokasi);
-        // $lokasi = $this->id;
+        $lokasi = $this->id;
+        $kodedev = $this->kodedev;
 
-        // if ($lokasi == "PKS") {
-        //     $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-        //     $this->db_logistik_pt->from('item_ppo');
-        //     $this->db_logistik_pt->where('po', 0);
-        //     $this->db_logistik_pt->where('status2', 1);
-        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
-        // } elseif ($lokasi == "SITE") {
-        //     $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-        //     $this->db_logistik_pt->from('item_ppo');
-        //     $this->db_logistik_pt->where('po', 0);
-        //     $this->db_logistik_pt->where('status2', 1);
-        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
-        //     # code...
-        // } elseif ($lokasi == "RO") {
-        //     $this->db_logistik_pt->select('id, noppo, tglppo, noreftxt, qty, namadept,kodebar,nabar, ket');
-        //     $this->db_logistik_pt->from('item_ppo');
-        //     $this->db_logistik_pt->where('po', 0);
-        //     $this->db_logistik_pt->where('status2', 1);
-        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
-        //     # code...
-        // } else {
+        $this->db_logistik_pt->from($this->table);
+        if ($lokasi == "PKS") {
 
-        // }
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('jenis !=', 'SPPI');
+            $this->db_logistik_pt->where('LOKASI', $lokasi);
+        } elseif ($lokasi == "SITE") {
+
+
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('jenis !=', 'SPPI');
+            $this->db_logistik_pt->where('LOKASI', $lokasi);
+            # code...
+        } elseif ($lokasi == "RO") {
+
+
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('jenis !=', 'SPPI');
+            $this->db_logistik_pt->where('LOKASI', $lokasi);
+            # code...
+        } else {
+
+            $this->db_logistik_pt->where('po', 0);
+            $this->db_logistik_pt->where('status2', 1);
+            $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        }
 
 
 
@@ -328,6 +333,12 @@ class M_po extends CI_Model
             $this->db_logistik_pt->order_by('lokasi', 'ASC');
             return $this->db_logistik_pt->get()->result_array();
         }
+    }
+
+    function cek_devisi($kode_dev)
+    {
+        $query = $this->db_logistik_pt->query("SELECT kodetxt, PT FROM tb_devisi WHERE kodetxt='$kode_dev'")->row();
+        return $query;
     }
 
     public function cari_po($norefpo, $norefppo, $kodebar, $new_jumharga)

@@ -234,17 +234,57 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <input type="text" class="form-control form-control-sm bg-light" id="nama_pemesan" name="nama_pemesan" value="<?= $this->session->userdata('user'); ?>" readonly required>
                                 </div>
                             </div>
-                            <div class="form-group row" style="margin-bottom: 2px;">
-                                <label for="devisi" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    Divisi*
-                                    <!-- <font face="Verdana" size="1.5">Devisi*</font> -->
-                                </label>
-                                <div class="col-8 col-xl-12">
-                                    <input type="text" class="form-control form-control-sm bg-light" id="devisi" name="devisi" readonly required>
-                                    <input type="hidden" name="" id="hidden_devisi">
-                                    <input type="hidden" name="" id="hidden_kode_devisi">
-                                </div>
-                            </div>
+                            <?php
+                            switch ($lokasi_sesi) {
+                                case 'HO':
+                            ?>
+                                    <div class="form-group row" style="margin-bottom: 2px;">
+                                        <label for="devisi" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                            Divisi*
+                                            <!-- <font face="Verdana" size="1.5">Devisi*</font> -->
+                                        </label>
+                                        <div class="col-8 col-xl-12">
+                                            <!-- <input type="text" class="form-control form-control-sm bg-light" id="devisi" name="devisi" readonly required> -->
+                                            <input type="hidden" name="" id="hidden_devisi">
+                                            <input type="hidden" name="" id="hidden_kode_devisi">
+
+                                            <select class="form-control form-control-sm" id="devisi" style="font-size: 12px;">
+                                                <option selected disabled>Pilih</option>
+                                                <?php
+                                                foreach ($devisi as $d) : { ?>
+                                                        <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
+                                                <?php }
+                                                endforeach;
+                                                ?>
+                                            </select>
+                                        </div>
+
+
+                                    </div>
+                                <?php
+                                    break;
+                                case 'RO':
+                                case 'SITE':
+                                case 'PKS':
+                                ?>
+                                    <div class="form-group row" style="margin-bottom: 2px;">
+                                        <label for="devisi" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                            Divisi*
+                                            <!-- <font face="Verdana" size="1.5">Devisi*</font> -->
+                                        </label>
+                                        <div class="col-8 col-xl-12">
+                                            <input type="text" class="form-control form-control-sm bg-light" id="devisi" name="devisi" readonly required>
+                                            <input type="hidden" name="" id="hidden_devisi">
+                                            <input type="hidden" name="" id="hidden_kode_devisi">
+                                        </div>
+                                    </div>
+                            <?php
+                                    break;
+                                default:
+                                    break;
+                            }
+                            ?>
+
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="ket_pengiriman" class="col-lg-4 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                     Ket.&nbsp;Pengirim
@@ -303,8 +343,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                         </label>
                                         <div class="col-9 col-xl-12">
                                             <select class="form-control form-control-sm" id="cmb_dikirim_ke_kebun" name="cmb_dikirim_ke_kebun" required>
-                                                <option value="Y">Y</option>
-                                                <option value="N" selected>N</option>
+                                                <option value="Y" selected>Y</option>
+                                                <option value="N">N</option>
                                             </select>
                                         </div>
                                     </div>
@@ -668,81 +708,59 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Pilih Item SPP</h4>
+            <div class="modal-header mb-1">
+                <h4 class="modal-title ml-2" id="modal-spp">Pilih Item SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <!-- <div class="form-group">
-                    <div class="col-4 float-right">
+            <div class="sub-header mb-1" style="margin-top: -15px;">
+                <div class="form-group">
+                    <div class="col-3">
                         <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
                             <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
-                            <?php
-                            switch ($this->session->userdata('status_lokasi')) {
-                                case 'PKS':
-                                case 'SITE':
-                            ?>
-                                    <option value="PKS">PKS</option>
-                                    <option value="SITE">SITE</option>
-                                <?php
-                                    break;
-                                case 'RO':
-                                ?>
-                                    <option value="PKS">PKS</option>
-                                    <option value="SITE">SITE</option>
-                                    <option value="RO">RO</option>
-                                <?php
-                                    break;
-                                case 'HO':
-                                ?>
-                                    <option value="PKS">PKS</option>
-                                    <option value="SITE">SITE</option>
-                                    <option value="RO">RO</option>
-                                    <option value="HO">HO</option>
-                            <?php
-                                    break;
-                                default:
-                                    break;
-                            }
-                            ?>
+                            <option value="PKS">PKS</option>
+                            <option value="SITE">SITE</option>
+                            <option value="RO">RO</option>
+                            <option value="HO">HO</option>
                         </select>
-                    </div>
-                </div> -->
-
-                <div class="col-12">
-                    <div class="table-responsive">
-                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                        <table id="tblspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
-                            <thead>
-                                <tr>
-                                    <th style="font-size: 12px; padding:10px">No.</th>
-                                    <th style="font-size: 12px; padding:10px">ID</th>
-                                    <th style="font-size: 12px; padding:10px">No.&nbsp;SPP</th>
-                                    <th style="font-size: 12px; padding:10px">Tgl.&nbsp;SPP</th>
-                                    <th style="font-size: 12px; padding:10px">No&nbsp;Ref.&nbsp;SPP</th>
-                                    <th style="font-size: 12px; padding:10px">Departemen</th>
-                                    <th style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
-                                    <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
-                                    <th style="font-size: 12px; padding:10px">Keterangan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                            <tfoot>
-                                <tr>
-                                    <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
-                                </tr>
-                            </tfoot>
-                        </table>
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            <div class="modal-body">
+                <div class="table-responsive" style="margin-top: -20px;">
+                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                    <table id="tblspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 12px; padding:10px">No.</th>
+                                <th style="font-size: 12px; padding:10px">ID</th>
+                                <th style="font-size: 12px; padding:10px">No.&nbsp;SPP</th>
+                                <th style="font-size: 12px; padding:10px">Tgl.&nbsp;SPP</th>
+                                <th style="font-size: 12px; padding:10px">No&nbsp;Ref.&nbsp;SPP</th>
+                                <th style="font-size: 12px; padding:10px">Departemen</th>
+                                <th style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
+                                <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
+                                <th style="font-size: 12px; padding:10px">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="pilihItem()" data-placement="left">Pilih Item</button></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
             </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -949,6 +967,31 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         jenisPO();
         tittle();
+
+        $('#devisi').change(function() {
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Po/cek_devisi'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: {
+                    kodedev: this.value
+                },
+                success: function(data) {
+                    // console.log('Ini devisinya', data);
+                    var pt = data.PT;
+                    var kode = data.kodetxt;
+                    $('#hidden_devisi').val(pt);
+                    $('#hidden_kode_devisi').val(kode);
+
+                },
+                error: function(request) {
+                    alert("KONEKSI TERPUTUS!");
+                }
+            });
+        })
         // pilihPemesan();
 
         // $('#txt_pemesan').change(function() {
@@ -1296,6 +1339,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         $('#cmb_filter_alokasi').change(function() {
             var data = this.value;
+            // console.log(data);
             sppHO(data);
 
         });
@@ -1306,12 +1350,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function modalSPP(id) {
         // $('#getspp').click(function() {
         var data = "SEMUA";
-        // sppHO(data);
-        sppHO();
+        sppHO(data);
+        // sppHO();
         $("#modal-spp").modal();
     }
 
-    function sppHO() {
+    function sppHO(data) {
+        var kodedev = $('#hidden_kode_devisi').val();
         $('#tblspp').DataTable().destroy();
         $('#tblspp').DataTable({
             "processing": true,
@@ -1322,7 +1367,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             "ajax": {
                 "url": "<?php echo site_url('Po/get_ajax') ?>",
                 "type": "POST",
-
+                "data": {
+                    kodedev: kodedev,
+                    data: data
+                }
             },
             "columnDefs ": [{
                 "targets": [0],
@@ -1884,7 +1932,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     // }
 
     function check_form_2() {
-        if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#cmb_dikirim_ke_kebun').val()) != '') {
+        if ($.trim($('#cmb_pilih_jenis_po').val()) != '' && $.trim($('#tgl_po').val()) != '' && $.trim($('#select2').val()) != '' && $.trim($('#cmb_status_bayar').val()) != '' && $.trim($('#tmpo_pembayaran').val()) != '' && $.trim($('#tmpo_pengiriman').val()) != '' && $.trim($('#lks_pengiriman').val()) != '' && $.trim($('#lks_pembelian').val()) != '' && $.trim($('#no_penawaran').val()) != '' && $.trim($('#txt_pemesan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#ket_pengiriman').val()) != '' && $.trim($('#pph').val()) != '' && $.trim($('#ppn').val()) != '' && $.trim($('#keterangan').val()) != '' && $.trim($('#cmb_dikirim_ke_kebun').val()) != '') {
             $('.div_form_2').show();
             // $('.div_form_3').find('input,textarea,select,button').removeAttr('disabled', '');
             // $('.div_form_3').find('input,textarea,select,button').prop('disabled', false);
