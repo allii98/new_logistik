@@ -95,36 +95,6 @@
                                 <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Alokasi*</label>
                                 <div class="col-lg-9 col-xl-9 col-12">
                                     <select class="form-control form-control-sm" id="cmb_alokasi" style="font-size: 12px;">
-                                        <option value="" selected disabled>Pilih</option>
-                                        <?php
-                                        switch ($sesi_sl) {
-                                            case 'HO':
-                                        ?>
-                                                <option value="HO">HO</option>
-                                                <option value="RO">RO</option>
-                                                <option value="SITE">KEBUN</option>
-                                                <option value="PKS">PKS</option>
-                                            <?php
-                                                break;
-                                            case 'RO':
-                                            ?>
-                                                <option value="RO">RO</option>
-                                            <?php
-                                                break;
-                                            case 'SITE':
-                                            ?>
-                                                <option value="SITE">KEBUN</option>
-                                            <?php
-                                                break;
-                                            case 'PKS':
-                                            ?>
-                                                <option value="PKS">PKS</option>
-                                        <?php
-                                                break;
-                                            default:
-                                                break;
-                                        }
-                                        ?>
                                     </select>
                                 </div>
                             </div>
@@ -375,7 +345,22 @@
     }
 
     function check_form_2() {
-        console.log('oke berjalan!');
+
+        //menjalankan jquery alokasi
+        if ($('#devisi').val() == null) {
+
+        } else if ($('#devisi').val() == '01') {
+            var alokasi_select = '<option value="HO">HO</option>';
+        } else if ($('#devisi').val() == '02') {
+            var alokasi_select = '<option value="RO">RO</option>';
+        } else if ($('#devisi').val() == '03') {
+            var alokasi_select = '<option value="PKS">PKS</option>';
+        } else {
+            var alokasi_select = '<option value="SITE">KEBUN</option>';
+        }
+        $('#cmb_alokasi').html(alokasi_select);
+
+
         if ($.trim($('#devisi').val()) != '') {
 
             $('#btn_simpan_1').removeAttr('disabled', '');

@@ -229,6 +229,8 @@ class Spp extends CI_Controller
             'jumharga' => "0",
             'kodept' => $this->session->userdata('kode_pt'),
             'namapt' => $this->session->userdata('pt'),
+            'kode_dev' => $kode_devisi,
+            'devisi' => $data['devisi']['PT'],
             'periode' => $periode,
             'periodetxt' => $periodetxt,
             'thn' => $thn,
