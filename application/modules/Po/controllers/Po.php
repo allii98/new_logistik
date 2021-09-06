@@ -523,6 +523,7 @@ class Po extends CI_Controller
         $no_spp = $this->input->post('no_spp');
         $no_ref_spp = $this->input->post('no_ref_spp');
         $kodebar = $this->input->post('kodebar');
+        $get_detail_spp = $this->input->post('get_detail_spp');
 
         $ppo = $this->M_po->get_detail_ppo($no_spp, $no_ref_spp)->row();
         $item_ppo = $this->M_po->get_detail_item_ppo($id, $no_ref_spp, $kodebar)->result();

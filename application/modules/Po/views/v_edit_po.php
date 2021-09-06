@@ -413,11 +413,13 @@
         padding: 10px;
         font-size: 12px;
     }
+
     table#tableItemPO th {
         padding: 10px;
         font-size: 12px;
         padding-left: 17px;
     }
+
     table#tableRinciPO th {
         padding: 10px;
         font-size: 12px;
@@ -2006,7 +2008,7 @@
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="19%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="getspp' + n + '" name="spp' + n + '" >' +
+            '<input type="text" class="form-control form-control-sm" style="font-size: 12px;" id="getspp' + n + '" name="spp' + n + '" >' +
             '<input type="hidden" class="form-control form-control-sm" id="id_item_po' + n + '" name="id_item_po' + n + '" >' +
             '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
@@ -2126,7 +2128,7 @@
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="19%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm bg-light" id="getspp' + n + '" name="spp' + n + '" readonly>' +
+            '<input type="text" class="form-control form-control-sm bg-light" style="font-size: 12px;" id="getspp' + n + '" name="spp' + n + '" readonly>' +
             '<input type="hidden" class="form-control form-control-sm" id="id_item_po' + n + '" name="id_item_po' + n + '" >' +
             '<input type="hidden" id="id_item_' + n + '" name="id_item_' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +

@@ -7,7 +7,7 @@ class M_data extends CI_Model
 
     var $table = 'po'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noreftxt', 'nopo', 'no_refppo', 'tgl_refppo', 'nopotxt', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb'); //field yang ada di table supplier  
-    var $column_search = array('noreftxt', 'nopotxt', 'no_refppo', 'nopo', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb'); //field yang diizin untuk pencarian 
+    var $column_search = array('noreftxt', 'no_refppo', 'tglpo', 'tgl_refppo', 'nama_supply', 'ket'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -20,28 +20,27 @@ class M_data extends CI_Model
     {
         // $Value = ;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
-        // $this->db_logistik_pt->from('po');
-
         $this->db_logistik_pt->from($this->table);
-        if ($lokasi_sesi == 'HO') {
-            # code...
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
-        } else if ($lokasi_sesi == 'SITE') {
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
+
+        if ($lokasi_sesi == 'SITE') {
+            // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
             $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+            $this->db_logistik_pt->where('lokasikirim', 'SITE');
+            // $this->db_logistik_pt->or_where('kirim', '1');
             # code...
         } else if ($lokasi_sesi == 'PKS') {
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
+            // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
             $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+            // $this->db_logistik_pt->where('lokasikirim', 'PKS');
+            // $this->db_logistik_pt->or_where('kirim', '1');
             # code...
         } else if ($lokasi_sesi == 'RO') {
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
-            # code...
+            // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+            $this->db_logistik_pt->where('lokasikirim', 'RO');
+            // $this->db_logistik_pt->or_where('kirim', '1');
+            # code...
         }
-
-        // $d = "SELECT p.id, p.no_refppo , p.nopo, p.tglpo, p.nama_supply, i.nabar, i.nopo, p.ket, p.terbayar FROM po p LEFT JOIN item_po i ON p.nopo = i.nopo ORDER BY p.id DESC";
-        // $this->db_logistik_pt->query($d);
 
 
         $i = 0;

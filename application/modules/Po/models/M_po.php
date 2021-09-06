@@ -34,34 +34,43 @@ class M_po extends CI_Model
         $kodedev = $this->kodedev;
 
         $this->db_logistik_pt->from($this->table);
-        if ($lokasi == "PKS") {
+        $this->db_logistik_pt->where('po', 0);
+        $this->db_logistik_pt->where('status2', 1);
+        $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        // $this->db_logistik_pt->where('LOKASI', $lokasi);
+        $this->db_logistik_pt->where('kode_dev', $kodedev);
+        // if ($lokasi == "PKS") {
 
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-            $this->db_logistik_pt->where('jenis !=', 'SPPI');
-            $this->db_logistik_pt->where('LOKASI', $lokasi);
-        } elseif ($lokasi == "SITE") {
-
-
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-            $this->db_logistik_pt->where('jenis !=', 'SPPI');
-            $this->db_logistik_pt->where('LOKASI', $lokasi);
-            # code...
-        } elseif ($lokasi == "RO") {
+        //     $this->db_logistik_pt->where('po', 0);
+        //     $this->db_logistik_pt->where('status2', 1);
+        //     $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
+        //     $this->db_logistik_pt->where('kode_dev', $kodedev);
+        // } elseif ($lokasi == "SITE") {
 
 
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-            $this->db_logistik_pt->where('jenis !=', 'SPPI');
-            $this->db_logistik_pt->where('LOKASI', $lokasi);
-            # code...
-        } else {
+        //     $this->db_logistik_pt->where('po', 0);
+        //     $this->db_logistik_pt->where('status2', 1);
+        //     $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
+        //     $this->db_logistik_pt->where('kode_dev', $kodedev);
+        //     # code...
+        // } elseif ($lokasi == "RO") {
 
-            $this->db_logistik_pt->where('po', 0);
-            $this->db_logistik_pt->where('status2', 1);
-            $this->db_logistik_pt->where('jenis !=', 'SPPI');
-        }
+
+        //     $this->db_logistik_pt->where('po', 0);
+        //     $this->db_logistik_pt->where('status2', 1);
+        //     $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        //     $this->db_logistik_pt->where('LOKASI', $lokasi);
+        //     $this->db_logistik_pt->where('kode_dev', $kodedev);
+        //     # code...
+        // } else {
+
+        //     $this->db_logistik_pt->where('po', 0);
+        //     $this->db_logistik_pt->where('status2', 1);
+        //     $this->db_logistik_pt->where('jenis !=', 'SPPI');
+        //     $this->db_logistik_pt->where('kode_dev', $kodedev);
+        // }
 
 
 

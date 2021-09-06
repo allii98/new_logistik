@@ -477,7 +477,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 </td>
                                                 <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                     <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control form-control-sm" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP">
+                                                        <input type="text" class="form-control form-control-sm" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP" style="font-size: 12px;">
                                                         <input type="hidden" class="form-control form-control-sm" id="id_item_1" name="id">
                                                         <input type="hidden" class="form-control form-control-sm" id="id_ppo1" name="id_ppo1">
                                                         <input type="hidden" class="form-control form-control-sm" id="hidden_no_ref_spp_1" name="ref">
@@ -709,11 +709,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
             <div class="modal-header mb-1">
-                <h4 class="modal-title ml-2" id="modal-spp">Pilih Item SPP</h4>
+                <h4 class="modal-title" id="modal-spp">Pilih Item SPP</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="sub-header mb-1" style="margin-top: -15px;">
+            <!-- <div class="sub-header mb-1" style="margin-top: -15px;">
                 <div class="form-group">
                     <div class="col-3">
                         <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
@@ -725,7 +725,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="modal-body">
                 <div class="table-responsive" style="margin-top: -20px;">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
@@ -1350,13 +1350,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function modalSPP(id) {
         // $('#getspp').click(function() {
         var data = "SEMUA";
-        sppHO(data);
+        var kodedev = $('#hidden_kode_devisi').val();
+        sppHO(kodedev);
         // sppHO();
         $("#modal-spp").modal();
     }
 
-    function sppHO(data) {
-        var kodedev = $('#hidden_kode_devisi').val();
+    function sppHO(kodedev) {
         $('#tblspp').DataTable().destroy();
         $('#tblspp').DataTable({
             "processing": true,
@@ -1368,8 +1368,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "url": "<?php echo site_url('Po/get_ajax') ?>",
                 "type": "POST",
                 "data": {
+                    // data: data,
                     kodedev: kodedev,
-                    data: data
                 }
             },
             "columnDefs ": [{
@@ -1609,7 +1609,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm"  id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')" placeholder="Pilih item SPP">' +
+            '<input type="text" class="form-control form-control-sm" style="font-size: 12px;" id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')" placeholder="Pilih item SPP">' +
             '<input type="hidden" id="id_item_' + n + '" name="id' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
             '<input type="hidden" id="id_ppo' + n + '" name="id_ppo' + n + '">' +
@@ -1740,6 +1740,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             // }
             // console.log(id, no_spp, no_ref_spp, kodebar);
+
             data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
         });
 
@@ -1759,6 +1760,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 isSelectednoRef = true;
                 return false;
             }
+
         });
         return isSelectednoRef;
     }
@@ -1779,8 +1781,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             success: function(data) {
                 // console.log(data);
-                $('#devisi').val(data[0].devisi);
-                $('#hidden_devisi').val(data[0].devisi);
+                // $('#devisi').val(data[0].devisi);
+                // $('#hidden_devisi').val(data[0].devisi);
                 $('#refspp').val(data[0].noreftxt);
                 var jenis = data[0].jenis;
                 cekJenis(jenis);
