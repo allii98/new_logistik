@@ -16,31 +16,63 @@ class M_data extends CI_Model
         $this->load->database();
     }
 
+    public function where_datatables($data)
+    {
+        // global $nopo;
+        $this->data = $data;
+        // return $nopo;
+    }
+
     private function _get_datatables_query()
     {
         // $Value = ;
+        $data = $this->data;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
-        $this->db_logistik_pt->from($this->table);
-
-        if ($lokasi_sesi == 'SITE') {
-            // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
-            $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
-            $this->db_logistik_pt->where('lokasikirim', 'SITE');
-            // $this->db_logistik_pt->or_where('kirim', '1');
+        if ($lokasi_sesi == 'HO') {
+            if ($data == 'HO') {
+                $this->db_logistik_pt->from($this->table);
+                $this->db_logistik_pt->like('noreftxt', 'PST', 'both');
+                # code...
+            } elseif ($data == 'SITE') {
+                $this->db_logistik_pt->from($this->table);
+                $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+                # code...
+            } elseif ($data == 'PKS') {
+                $this->db_logistik_pt->from($this->table);
+                $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+                # code...
+            } elseif ($data == 'RO') {
+                $this->db_logistik_pt->from($this->table);
+                $this->db_logistik_pt->like('noreftxt', 'RO', 'both');
+                # code...
+            } else {
+                $this->db_logistik_pt->from($this->table);
+            }
+        } else {
             # code...
-        } else if ($lokasi_sesi == 'PKS') {
-            // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
-            $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
-            // $this->db_logistik_pt->where('lokasikirim', 'PKS');
-            // $this->db_logistik_pt->or_where('kirim', '1');
-            # code...
-        } else if ($lokasi_sesi == 'RO') {
-            // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
-            $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
-            $this->db_logistik_pt->where('lokasikirim', 'RO');
-            // $this->db_logistik_pt->or_where('kirim', '1');
-            # code...
+            $this->db_logistik_pt->from($this->table);
+            if ($lokasi_sesi == 'SITE') {
+                // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
+                $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+                $this->db_logistik_pt->where('lokasikirim', 'SITE');
+                // $this->db_logistik_pt->or_where('kirim', '1');
+                # code...
+            } else if ($lokasi_sesi == 'PKS') {
+                // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
+                $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+                $this->db_logistik_pt->where('lokasikirim', 'PKS');
+                // $this->db_logistik_pt->or_where('kirim', '1');
+                # code...
+            } else if ($lokasi_sesi == 'RO') {
+                // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
+                $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+                $this->db_logistik_pt->where('lokasikirim', 'RO');
+                // $this->db_logistik_pt->or_where('kirim', '1');
+                # code...
+            }
         }
+
+
 
 
         $i = 0;

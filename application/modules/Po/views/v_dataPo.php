@@ -2,11 +2,26 @@
 	<div class="row justify-content-center">
 		<div class="col-12">
 			<div class="card">
-				<div class="card-body">
 
+				<div class="card-body">
 					<div class="row justify-content-between">
 						<h4 class="header-title ml-2 mb-3">Data PO</h4>
+						<?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+							<div class="form-group">
+								<div class="col-12">
+									<select class="form-control" id="filter" name="filter">
+										<option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+										<option value="PKS">PKS</option>
+										<option value="SITE">SITE</option>
+										<option value="RO">RO</option>
+										<option value="HO">HO</option>
+									</select>
+								</div>
+							</div>
+						<?php } ?>
 					</div>
+					<!-- <div class="sub-header mb-1" style="margin-top: -15px;">
+					</div> -->
 					<div class="table-responsive">
 						<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped">
 							<thead>
@@ -87,13 +102,11 @@
 	}
 </style>
 
-
-
 <script>
 	// $(document).ready(function() {
 	// 	$('#tableListPO').DataTable();
 	// });
-	var table;
+
 	$(document).ready(function() {
 
 		$(document).on('click', '#detail', function() {
@@ -108,20 +121,32 @@
 			window.location.href = "Po/edit/" + data;
 		});
 
+		$('#filter').change(function() {
+			var data = this.value;
+			// console.log(data);
+			dataPO(data);
+
+		});
+
 		//datatables
-		dataPO();
+		var data = "SEMUA";
+		dataPO(data);
 	});
 
-	function dataPO() {
-		table = $('#tableListPO').DataTable({
-
+	function dataPO(data) {
+		$('#tableListPO').DataTable().destroy();
+		$('#tableListPO').DataTable({
 			"processing": true,
 			"serverSide": true,
 			"order": [],
 
 			"ajax": {
 				"url": "<?php echo site_url('Po/dataPO') ?>",
-				"type": "POST"
+				"type": "POST",
+				"data": {
+					data: data,
+					// kodedev: kodedev,
+				}
 			},
 
 			"columnDefs": [{

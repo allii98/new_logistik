@@ -156,6 +156,8 @@ class Po extends CI_Controller
 
     public function dataPO()
     {
+        $data = $this->input->post('data');
+        $this->M_data->where_datatables($data);
         $list = $this->M_data->get_datatables();
         $data = array();
         $no = $_POST['start'];

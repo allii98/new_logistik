@@ -813,6 +813,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         padding: 10px;
         font-size: 12px;
     }
+
+    .tooltip-inner {
+        white-space: pre-wrap;
+        color: black;
+        font-weight: bold;
+        background-color: #ADD8E6;
+    }
 </style>
 
 <script>
