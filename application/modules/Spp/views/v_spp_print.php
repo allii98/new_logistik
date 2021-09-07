@@ -1,12 +1,5 @@
 <head>
     <style type="text/css">
-        /*body{
-      padding-top:1000px;
-      margin-top:1000px;
-    }*/
-        /*h4 {
-      font-size: 14px;
-    }*/
         #tabel_spp tr td {
             /*font-size: 12px;*/
             border: 1px solid;
@@ -14,7 +7,7 @@
         }
 
         body {
-            font-family: Verdana;
+            /* font-family: Verdana; */
             font-size: 8px;
             font-style: normal;
             font-variant: normal;
@@ -57,14 +50,70 @@ if ($ppo->jenis == "SPPI") {
 } else {
     $jenis_spp = ' (SPP)';
 }
+
+if ($ppo->lokasi == 'HO') {
+    $alamat_lok = '<p style="font-size:8px">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru, JakartaSelatan, DKI Jakarta Raya-12140</p>';
+} else {
+    $alamat_lok = '';
+}
+
+$logo_pt = $this->session->userdata('logo_pt');
 ?>
 
 <body>
-    <h3 class="garis_tepi1" align="center"><?= $ppo->lokasi; ?></h3>
-    <h3 style="margin-bottom: 0px;"><?= $ppo->devisi ?></h3>
-    <h3 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
-    <p align="left" style="margin-top: 7px;margin-bottom: 0px;"><small>By MIPS LOGISTIK</small></p>
-    <table class="singleborder" border="1" width="100%" id="tabel_spp">
+    <?php
+    if (substr($ppo->noreftxt, 0, 3) == 'PST') {
+    ?>
+        <table width="100%" border="0" align="center" style="margin-bottom: 0px;">
+            <tr>
+                <td width="12%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/logo/<?= $logo_pt ?>"></td>
+                <td align="left" style="vertical-align: text-top; padding:0px">
+                    <b style="font-size: 14px;"><?= $ppo->devisi ?></b><br>
+                    <?= $alamat_lok ?><br>
+                    <h3 align="left">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
+                </td>
+                <td width="12%"><img width="10%" height="10%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
+            </tr>
+        </table>
+
+        <table width="100%" border="0" align="center" style="margin-bottom: 0px;">
+            <tr>
+                <td>
+                    <p align="left" style="margin-top: 0px;margin-bottom: 0px; margin-right:0px;"><small>By MIPS LOGISTIK</small></p>
+                </td>
+                <td width="9%" class="singleborder" align="center" style="padding: 5px;">
+                    <h3 align="center"><?= $ppo->lokasi; ?></h3>
+                </td>
+                <td style="width: 2%;"></td>
+            </tr>
+        </table>
+    <?php
+    } else {
+    ?>
+        <table width="100%" border="0" align="center" style="margin-bottom: 0px;">
+            <tr>
+                <td colspan="2" align="left" style="vertical-align: text-top; padding-top:0px">
+                    <b style="margin-bottom: 0px; font-size: 14px;"><?= $ppo->devisi ?></b>
+                    <h6>&nbsp;</h6>
+                    <h3 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
+                </td>
+                <td style="width: 2%;"></td>
+                <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
+            </tr>
+            <tr>
+                <td>
+                    <p align="left" style="margin-top: 0px;margin-bottom: 0px; margin-right:0px;"><small>By MIPS LOGISTIK</small></p>
+                </td>
+                <td width="9%" class="singleborder" align="center" style="padding: 5px;">
+                    <h3 align="center"><?= $ppo->lokasi; ?></h3>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    <?php
+    }
+    ?>
+    <table class="singleborder" border="1" width="100%" id="tabel_spp" style="margin-top: 5px;">
         <tr>
             <td colspan="3">Nomor SPP Divisi &nbsp;&nbsp;: SPP - <?= $ppo->noppotxt; ?><br />
                 Tanggal SPP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= date("d-m-Y", strtotime($ppo->tglppo)); ?><br />
@@ -81,13 +130,13 @@ if ($ppo->jenis == "SPPI") {
             <td align="center" colspan="7">Sesuai dengan nomor SPP diatas, terlampir perincian sebagai berikut : </td>
         </tr>
         <tr>
-            <td align="center" width="4%">NO</td>
+            <td align="center" width="5%">NO</td>
             <td align="center" width="15%">KODE BARANG</td>
             <td align="center" width="25%">NAMA BARANG</td>
             <td align="center" width="15%">KUANTITAS</td>
             <td align="center" width="9%">SISA STOK</td>
             <td align="center" width="6%">SAT</td>
-            <td align="center" width="25%">KETERANGAN</td>
+            <td align="center" width="24%">KETERANGAN</td>
         </tr>
 
         <?php
@@ -155,36 +204,98 @@ if ($ppo->jenis == "SPPI") {
             <td colspan="1" align="center">Dibuat Oleh,</td>
         </tr>
         <tr>
-            <td colspan="2" align="center" height="70" valign="bottom"></td>
-            <td colspan="1" align="center" height="70" valign="bottom">
-                <?php if ($ppo->status2 == 1) {
-                ?>
-                    <img src="././assets/img/approved2.png" width="15%">
-                <?php
-                } else {
-                }
-                ?>
-                <br><?= 'KTU'; ?><br>
+            <td colspan="2" align="center" height="70" valign="bottom">
+                (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
             </td>
             <td colspan="1" align="center" height="70" valign="bottom">
-                <?php if ($ppo->status2 == 1) {
+                <?php if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) == 'EST') {
                 ?>
                     <img src="././assets/img/approved2.png" width="15%"><br>
+                    <br><?= 'KTU'; ?><br>
                 <?php
-                } else {
+                } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) == 'EST') {
+                ?>
+                    <br><?= 'KTU'; ?><br>
+                <?php
+                } else if ($ppo->status2 == 2 and substr($ppo->noreftxt, 0, 3) == 'EST') {
+                ?>
+                    <br><?= 'KTU'; ?><br>
+                <?php
+                } else if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    <img src="././assets/img/approved2.png" width="15%"><br><br>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
+                } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
+                } else if ($ppo->status2 == 2 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
                 }
                 ?>
-                <?= 'GM'; ?><br>
+            </td>
+            <td colspan="1" align="center" height="70" valign="bottom">
+                <?php if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) == 'EST') {
+                ?>
+                    <img src="././assets/img/approved2.png" width="15%"><br>
+                    <br><?= 'GM'; ?><br>
+                <?php
+                } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) == 'EST') {
+                ?>
+                    <br><?= 'GM'; ?><br>
+                <?php
+                } else if ($ppo->status2 == 2 and substr($ppo->noreftxt, 0, 3) == 'EST') {
+                ?>
+                    <br><?= 'GM'; ?><br>
+                <?php
+                } else if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    <img src="././assets/img/approved2.png" width="15%"><br><br>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
+                } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
+                } else if ($ppo->status2 == 2 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
+                }
+                ?>
             </td>
             <td colspan="2" align="center" height="70" valign="bottom">
-                <?php if ($ppo->status2 == 1) {
+                <?php if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) == 'EST') {
                 ?>
                     <img src="././assets/img/approved2.png" width="15%"><br>
+                    <br><?= 'Dept Head'; ?><br>
                 <?php
-                } else {
+                } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) == 'EST') {
+                ?>
+                    <br><?= 'Dept Head'; ?><br>
+                <?php
+                } else if ($ppo->status2 == 2 and substr($ppo->noreftxt, 0, 3) == 'EST') {
+                ?>
+                    <br><?= 'Dept Head'; ?><br>
+                <?php
+                } else if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    <img src="././assets/img/approved2.png" width="15%"><br><br>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
+                } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
+                } else if ($ppo->status2 == 2 and substr($ppo->noreftxt, 0, 3) != 'EST') {
+                ?>
+                    (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
+                <?php
                 }
                 ?>
-                <?= 'Dept Head'; ?><br>
             </td>
             <td colspan="1" align="center" height="70" valign="bottom">(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)</td>
         </tr>

@@ -23,12 +23,16 @@ class M_data_spp_approval extends CI_Model
         $this->db_logistik_pt->from($this->table);
         if ($lokasi == 'HO') {
             $this->db_logistik_pt->where('jenis !=', 'SPPI');
+            $this->db_logistik_pt->where('lokasi', $lokasi);
         } elseif ($lokasi == 'SITE') {
             $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+            $this->db_logistik_pt->where('lokasi', $lokasi);
         } elseif ($lokasi == 'PKS') {
             $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+            $this->db_logistik_pt->where('lokasi', $lokasi);
         } elseif ($lokasi == 'RO') {
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+            $this->db_logistik_pt->where('lokasi', $lokasi);
         }
         $this->db_logistik_pt->where(['status2 !=' => 1]);
 

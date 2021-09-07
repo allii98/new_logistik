@@ -723,6 +723,8 @@ class Spp extends CI_Controller
     {
         $nospp = $this->uri->segment('3');
         $id = $this->uri->segment('4');
+        $data['id'] = $id;
+        $data['nospp'] = $nospp;
 
         $data['urut'] = $this->M_spp->urut_cetak($nospp);
 
@@ -734,6 +736,8 @@ class Spp extends CI_Controller
         $query_approval = "SELECT DISTINCT nama_approval_ktu, tgl_approval_ktu, nama_approval_dept_head, tgl_approval_dept_head, nama_approval_gm, tgl_approval_gm FROM item_ppo_approval WHERE noreftxt = '$noreftxt' AND status2_ktu = '4' AND status2_dept_head = '1'";
         $data['item_ppo_approval'] = $this->db_logistik_pt->query($query_approval)->row();
 
+        $noref = $data['ppo']->noreftxt;
+        $this->qrcode($nospp, $id, $noref);
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => [190, 236],
@@ -775,6 +779,31 @@ class Spp extends CI_Controller
 
         $mpdf->WriteHTML($html);
         $mpdf->Output();
+    }
+
+    function qrcode($nospp, $id, $noref)
+    {
+        $this->load->library('Ciqrcode');
+        // header("Content-Type: image/png");
+
+        $config['cacheable']    = false; //boolean, the default is true
+        $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        $config['imagedir']     = './assets/qrcode/spp/'; //direktori penyimpanan qr code
+        $config['quality']      = true; //boolean, the default is true
+        $config['size']         = '1024'; //interger, the default is 1024
+        $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        $this->ciqrcode->initialize($config);
+
+        $image_name = $id . '_' . $nospp . '.png'; //buat name dari qr code
+
+        // $params['data'] = site_url('lpb/cetak/'.$no_lpb.'/'.$id); //data yang akan di jadikan QR CODE
+        $params['data'] = $noref; //data yang akan di jadikan QR CODE
+        $params['level'] = 'H'; //H=High
+        $params['size'] = 10;
+        $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
+        $this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
     }
 
     function get_detail_approval()

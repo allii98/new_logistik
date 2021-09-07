@@ -78,7 +78,9 @@ date_default_timezone_set('Asia/Jakarta');
                             <div class="form-group row mb-0">
                                 <label class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -2px; font-size: 12px;">Divisi*</label>
                                 <div class="col-lg-9 col-xl-9 col-12">
-                                    <select class="form-control form-control-sm" id="devisi" style="font-size: 12px;">
+                                    <input id="devisi_text" name="devisi_text" class="form-control form-control-sm bg-light" required="required" type="text" autocomplite="off" style="font-size: 12px;" readonly>
+                                    <input type="hidden" id="devisi">
+                                    <!-- <select class="form-control form-control-sm" id="devisi" style="font-size: 12px;">
                                         <option value="" selected disabled>Pilih</option>
                                         <?php
                                         foreach ($devisi as $d) : { ?>
@@ -86,7 +88,7 @@ date_default_timezone_set('Asia/Jakarta');
                                         <?php }
                                         endforeach;
                                         ?>
-                                    </select>
+                                    </select> -->
                                 </div>
                             </div>
                             <div class="form-group row mb-0">
@@ -269,9 +271,29 @@ date_default_timezone_set('Asia/Jakarta');
         white-space: nowrap;
         font-size: 9px;
     }
+
+    .tooltip-inner {
+        white-space: pre-wrap;
+        color: black;
+        font-weight: bold;
+        background-color: #ADD8E6;
+    }
 </style>
 
 <script>
+    $(function() {
+        $('#devisi_text').tooltip({
+            title: tittle,
+            html: true
+        });
+    });
+
+    function tittle() {
+        var devisi_text = $('#devisi_text').val();
+
+        return devisi_text;
+    }
+
     function cekLpb() {
 
         $.ajax({
@@ -476,6 +498,8 @@ date_default_timezone_set('Asia/Jakarta');
         $('#preview').show();
         $('#multiple').css('display', 'block');
         $('#select2_lpb').next(".select2-container").hide();
+        $('.div_form_2').hide();
+        tittle();
     });
 
     function showCamera() {
@@ -533,6 +557,7 @@ date_default_timezone_set('Asia/Jakarta');
             url: "<?php echo site_url('Lpb/get_data_po_qr'); ?>",
             dataType: "JSON",
             beforeSend: function() {
+                $('.div_form_2').show();
                 $('#tbody_rincian').empty();
             },
 
@@ -556,6 +581,8 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#txt_supplier').val(data_po.nama_supply);
                 $('#hidden_kd_dept').val(data_po.kd_dept);
                 $('#hidden_ket_dept').val(data_po.ket_dept);
+                $('#devisi_text').val(data_po.devisi);
+                $('#devisi').val(data_po.kode_dev);
 
                 //dibawah ini punya SPP
                 $('#hidden_tglppo').val(data_po.tglppo);
