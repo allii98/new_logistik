@@ -47,6 +47,8 @@ class Lpb extends CI_Controller
 
     public function get_data_lpb()
     {
+        $data = $this->input->post('data');
+        $this->M_lpb->where_datatables($data);
         $list = $this->M_lpb->get_datatables();
         $data = array();
         $no = $_POST['start'];
@@ -962,7 +964,7 @@ class Lpb extends CI_Controller
 
         $lokasibuatlpb = substr($noref, 0, 3);
         switch ($lokasibuatlpb) {
-            case 'LPB': // HO
+            case 'PST': // HO
                 $data['lokasilpb'] = "HO";
                 break;
             case 'ROM': // RO

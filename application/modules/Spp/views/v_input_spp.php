@@ -305,6 +305,7 @@
         color: black;
         font-weight: bold;
         background-color: #ADD8E6;
+        font-size: 12px;
     }
 </style>
 <script>

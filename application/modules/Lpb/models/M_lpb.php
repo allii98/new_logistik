@@ -16,11 +16,27 @@ class M_lpb extends CI_Model
         $this->load->database();
     }
 
+    public function where_datatables($data)
+    {
+        $this->data = $data;
+    }
+
     private function _get_datatables_query()
     {
+        $filter = $this->data;
         $lokasi = $this->session->userdata('status_lokasi');
         $this->db_logistik_pt->from($this->table);
-        if ($lokasi != 'HO') {
+        if ($lokasi == 'HO') {
+            if ($filter == 'HO') {
+                $this->db_logistik_pt->like('noref', 'PST', 'both');
+            } elseif ($filter == 'SITE') {
+                $this->db_logistik_pt->like('noref', 'EST', 'both');
+            } elseif ($filter == 'RO') {
+                $this->db_logistik_pt->like('noref', 'ROM', 'both');
+            } elseif ($filter == 'PKS') {
+                $this->db_logistik_pt->like('noref', 'FAC', 'both');
+            }
+        } else {
             if ($lokasi == 'SITE') {
                 $this->db_logistik_pt->like('noref', 'EST', 'both');
             } elseif ($lokasi == 'PKS') {
@@ -29,10 +45,6 @@ class M_lpb extends CI_Model
                 $this->db_logistik_pt->like('noref', 'ROM', 'both');
             }
         }
-        // $this->db_logistik_pt->where('user', $role_user);
-        // $this->db_logistik_pt->select('id', 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli');
-        // $this->db_logistik_pt->from('po');
-        // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
 

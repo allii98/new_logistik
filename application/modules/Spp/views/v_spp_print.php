@@ -69,7 +69,7 @@ $logo_pt = $this->session->userdata('logo_pt');
                 <td width="12%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/logo/<?= $logo_pt ?>"></td>
                 <td align="left" style="vertical-align: text-top; padding:0px">
                     <b style="font-size: 14px;"><?= $ppo->devisi ?></b><br>
-                    <?= $alamat_lok ?><br>
+                    <?= $alamat_lok ?><br><br><br>
                     <h3 align="left">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
                 </td>
                 <td width="12%"><img width="10%" height="10%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>

@@ -6,11 +6,19 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2 mb-3">Data LPB</h4>
-                        <!-- <div class="form-group">
-                            <select class="form-control" id="filter" name="filter">
-                                <option value="">Semua</option>
-                            </select>
-                        </div> -->
+                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <select class="form-control form-control-sm" id="filter" name="filter">
+                                        <option value="SEMUA">TAMPILKAN SEMUA</option>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                        <option value="RO">RO</option>
+                                        <option value="HO" selected>HO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
                     <table id="tableListLPB" class="table dataTable no-footer table-striped table-bordered w-100">
                         <thead>
@@ -121,12 +129,25 @@
     }
 </style>
 <script>
-    var table;
     $(document).ready(function() {
+        $('#filter').change(function() {
+            var data = this.value;
+            // console.log(data);
+            dataLpb(data);
+
+        });
 
         //datatables
-        table = $('#tableListLPB').DataTable({
+        var data = "HO";
+        dataLpb(data);
+    });
 
+    var table;
+
+    function dataLpb(data) {
+        $('#tableListLPB').DataTable().destroy();
+
+        table = $('#tableListLPB').DataTable({
             // "scrollY": 400,
             "scrollX": true,
 
@@ -136,7 +157,10 @@
 
             "ajax": {
                 "url": "<?php echo site_url('Lpb/get_data_lpb') ?>",
-                "type": "POST"
+                "type": "POST",
+                "data": {
+                    data: data
+                }
             },
 
             "columnDefs": [{
@@ -147,7 +171,7 @@
                 "infoFiltered": ""
             },
         });
-    });
+    };
 
     $(document).ready(function() {
         $(document).on('click', '#detail_lpb', function() {
