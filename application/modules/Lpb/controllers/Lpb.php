@@ -208,7 +208,7 @@ class Lpb extends CI_Controller
         $lokasibuatpo = substr($refpo, 0, 3);
         switch ($lokasibuatpo) {
             case 'PST': // HO
-                $ref_1 = "LPB";
+                $ref_1 = "PST-LPB";
                 $ref_2 = "BWJ";
                 break;
             case 'ROM': // RO
