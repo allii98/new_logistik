@@ -52,22 +52,16 @@ class M_data extends CI_Model
             # code...
             $this->db_logistik_pt->from($this->table);
             if ($lokasi_sesi == 'SITE') {
-                // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
                 $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
-                $this->db_logistik_pt->where('lokasikirim', 'SITE');
-                // $this->db_logistik_pt->or_where('kirim', '1');
+                $this->db_logistik_pt->where('kirim', '1');
                 # code...
             } else if ($lokasi_sesi == 'PKS') {
-                // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
                 $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
-                $this->db_logistik_pt->where('lokasikirim', 'PKS');
-                // $this->db_logistik_pt->or_where('kirim', '1');
+                $this->db_logistik_pt->where('kirim', '1');
                 # code...
             } else if ($lokasi_sesi == 'RO') {
-                // $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
                 $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
-                $this->db_logistik_pt->where('lokasikirim', 'RO');
-                // $this->db_logistik_pt->or_where('kirim', '1');
+                $this->db_logistik_pt->where('kirim', '1');
                 # code...
             }
         }

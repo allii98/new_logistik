@@ -354,6 +354,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 case 'SITE':
                                 case 'PKS':
                                 ?>
+                                    <input type="hidden" name="cmb_dikirim_ke_kebun" id="cmb_dikirim_ke_kebun" value="Y">
                             <?php
                                     break;
                                 default:
