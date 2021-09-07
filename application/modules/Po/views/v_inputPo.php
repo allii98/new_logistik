@@ -1162,13 +1162,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "infoFiltered": ""
             },
             "columns": [{
-                    "width": "3%"
+                    "width": "2%"
                 },
                 {
                     "width": "3%"
                 },
                 {
-                    "width": "29%"
+                    "width": "30%"
                 },
                 {
                     "width": "35%"
@@ -1788,6 +1788,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 'kodebar': kodebar
             },
             success: function(data) {
+
+                $('#devisi').attr('disabled', '');
+                $('#devisi').addClass('form-control bg-light');
                 // console.log(data);
                 // $('#devisi').val(data[0].devisi);
                 // $('#hidden_devisi').val(data[0].devisi);

@@ -10,11 +10,11 @@
 							<div class="form-group">
 								<div class="col-12">
 									<select class="form-control" id="filter" name="filter">
-										<option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+										<option value="SEMUA">TAMPILKAN SEMUA</option>
+										<option value="HO" selected>HO</option>
 										<option value="PKS">PKS</option>
 										<option value="SITE">SITE</option>
 										<option value="RO">RO</option>
-										<option value="HO">HO</option>
 									</select>
 								</div>
 							</div>
@@ -129,7 +129,7 @@
 		});
 
 		//datatables
-		var data = "SEMUA";
+		var data = "HO";
 		dataPO(data);
 	});
 
