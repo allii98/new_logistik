@@ -135,21 +135,18 @@ class M_home extends CI_Model
 
         $this->db_logistik_pt->select('noreftxt');
         $this->db_logistik_pt->from('po');
-        if ($lokasi == 'HO') {
-            # code...
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
-        } else if ($lokasi == 'SITE') {
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
+        if ($lokasi == 'SITE') {
             $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+            $this->db_logistik_pt->where('kirim', '1');
             # code...
         } else if ($lokasi == 'PKS') {
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
             $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+            $this->db_logistik_pt->where('kirim', '1');
             # code...
         } else if ($lokasi == 'RO') {
-            $this->db_logistik_pt->where('jenis_spp !=', 'SPP');
-            # code...
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+            $this->db_logistik_pt->where('kirim', '1');
+            # code...
         }
         $count_po = $this->db_logistik_pt->count_all_results();
 
