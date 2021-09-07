@@ -6,11 +6,19 @@
                 <div class="card-body">
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2 mb-3">Data SPP</h4>
-                        <!-- <div class="form-group">
-                            <select class="form-control" id="filter" name="filter">
-                                <option value="">Semua</option>
-                            </select>
-                        </div> -->
+                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                            <div class="form-group">
+                                <div class="col-12">
+                                    <select class="form-control form-control-sm" id="filter" name="filter">
+                                        <option value="SEMUA">TAMPILKAN SEMUA</option>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                        <option value="RO">RO</option>
+                                        <option value="HO" selected>HO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
 
                     <div class="table-responsive">
@@ -134,10 +142,24 @@
     }
 </style>
 <script type="text/javascript">
-    var table;
     $(document).ready(function() {
+        $('#filter').change(function() {
+            var data = this.value;
+            // console.log(data);
+            dataSppFilter(data);
+
+        });
 
         //datatables
+        var data = "HO";
+        dataSppFilter(data);
+    });
+
+    var table;
+
+    function dataSppFilter(data) {
+        $('#dataspp').DataTable().destroy();
+
         table = $('#dataspp').DataTable({
 
             "fixedColumns": true,
@@ -151,7 +173,10 @@
 
             "ajax": {
                 "url": "<?php echo site_url('Spp/get_data_spp') ?>",
-                "type": "POST"
+                "type": "POST",
+                "data": {
+                    data: data
+                }
             },
 
             "columnDefs": [{
@@ -163,7 +188,7 @@
             },
         });
 
-    });
+    };
 
     $(document).ready(function() {
         $(document).on('click', '#edit_spp', function() {

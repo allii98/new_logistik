@@ -575,6 +575,8 @@ class Spp extends CI_Controller
 
     public function get_data_spp()
     {
+        $data = $this->input->post('data');
+        $this->M_data_spp->where_datatables($data);
         $list = $this->M_data_spp->get_datatables();
         $data = array();
         $no = $_POST['start'];

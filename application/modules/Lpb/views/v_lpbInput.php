@@ -277,6 +277,7 @@ date_default_timezone_set('Asia/Jakarta');
         color: black;
         font-weight: bold;
         background-color: #ADD8E6;
+        font-size: 12px;
     }
 </style>
 
