@@ -282,6 +282,30 @@ date_default_timezone_set('Asia/Jakarta');
 </style>
 
 <script>
+    $(document).ready(function() {
+        // $('#a_print_lpb').hide();
+        $('#showCamera').modal('show');
+        $('#preview').show();
+        $('#multiple').css('display', 'block');
+        $('#select2_lpb').next(".select2-container").hide();
+        $('.div_form_2').hide();
+        tittle();
+        setInterval(function() {
+            check_form_2();
+        }, 1000);
+    });
+
+    function check_form_2() {
+        if ($.trim($('#txt_no_pengantar').val()) != '' && $.trim($('#txt_lokasi_gudang').val()) != '' && $.trim($('#txt_ket_pengiriman').val()) != '') {
+            $('.div_form_2').show();
+            // $('.div_form_3').find('input,textarea,select,button').removeAttr('disabled', '');
+            // $('.div_form_3').find('input,textarea,select,button').prop('disabled', false);
+        } else {
+            // $('.div_form_3').find('input,textarea,select,button').prop('disabled', true);
+            $('.div_form_2').hide();
+
+        }
+    }
     $(function() {
         $('#devisi_text').tooltip({
             title: tittle,
@@ -493,16 +517,6 @@ date_default_timezone_set('Asia/Jakarta');
         $('#select2_lpb').next(".select2-container").show();
     }
 
-    $(document).ready(function() {
-        // $('#a_print_lpb').hide();
-        $('#showCamera').modal('show');
-        $('#preview').show();
-        $('#multiple').css('display', 'block');
-        $('#select2_lpb').next(".select2-container").hide();
-        $('.div_form_2').hide();
-        tittle();
-    });
-
     function showCamera() {
         $('#showCamera').modal('show');
         $('#preview').show();
@@ -619,6 +633,8 @@ date_default_timezone_set('Asia/Jakarta');
 
                     // $('#sisa_qty_' + no).text(sumsisa);
                     getGrupBarang(kodebar, i);
+
+                    check_form_2();
                 }
             },
             error: function(response) {
