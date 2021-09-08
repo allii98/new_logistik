@@ -36,7 +36,7 @@ class Spp extends CI_Controller
         foreach ($list as $field) {
             $no++;
             $row = array();
-            $row[] = '<button class="btn btn-success btn-xs" id="data_barang" name="data_barang"
+            $row[] = '<button class="btn btn-success btn-xs" style="font-size: 11px;" id="data_barang" name="data_barang"
                     data-nabar="' . $field->nabar . '" data-kodebar="' . $field->kodebar . '" data-satuan="' . $field->satuan . '"
                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
                         Pilih
@@ -584,15 +584,15 @@ class Spp extends CI_Controller
             $no++;
 
             if ($field->status2 == 1) {
-                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-success">Approved</span></h5>';
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
             } elseif ($field->status2 == 2) {
-                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
             } else {
-                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             }
 
             if ($field->po == 1) {
-                $stat_po = '<h5 style="margin-top:0px;"><span class="badge badge-success">PO</span></h5>';
+                $stat_po = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">PO</span></h5>';
             } else {
                 $stat_po = '';
             }
@@ -612,7 +612,7 @@ class Spp extends CI_Controller
                 data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
                 data-toggle="tooltip" data-placement="top" title="Pilih" style="padding-right:8px;">
                 </button>
-                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp" style="margin-top: 2px;"></a>';
+                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             }
             $row = array();
             $row[] = $aks;
@@ -622,7 +622,7 @@ class Spp extends CI_Controller
             $row[] = date('d-m-Y', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
-            $row[] = '<p style="word-break: break-word; margin-bottom: 0px;">' . htmlspecialchars($field->ket) . ' </p>';
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($field->ket) . ' </p>';
             $row[] = $stat;
             $row[] = $stat_po;
             $row[] = $field->user;
@@ -656,15 +656,15 @@ class Spp extends CI_Controller
         foreach ($list as $field) {
             $no++;
             if ($field->status2 == 2) {
-                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
             } else {
-                $stat = '<h5 style="margin-top:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             }
 
             $row = array();
-            $row[] = '<button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval"
+            $row[] = '<button class="btn btn-info btn-xs" style="font-size: 11px;" id="detail_spp_approval" name="detail_spp_approval"
             data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
-            data-toggle="tooltip" data-placement="top" title="Pilih">Approve
+            data-toggle="tooltip" data-placement="top" title="Approve">Approve
             </button>';
             $row[] = $no;
             $row[] = $field->noreftxt;
@@ -672,7 +672,7 @@ class Spp extends CI_Controller
             $row[] = date('d-m-Y', strtotime($field->tgltrm));
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
-            $row[] = '<p style="word-break: break-word; margin-bottom: 0px;">' . htmlspecialchars($field->ket) . '</p>';
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($field->ket) . '</p>';
             $row[] = $stat;
             $row[] = $field->user;
 
@@ -819,9 +819,9 @@ class Spp extends CI_Controller
         foreach ($list as $d) {
             if ($d->status2 == "1") {
                 $tgl_approve = date('d-m-Y H:i:s', strtotime($d->TGL_APPROVE));
-                $status = "<span style='color: green'><b>DISETUJUI (" . $tgl_approve . ")</b></span>";
+                $status = "<h6 style='color: green; margin-top:0px; margin-bottom:0px;'><b>DISETUJUI (" . $tgl_approve . ")</b></h6>";
             } else {
-                $status = "DALAM PROSES";
+                $status = "<h6 style='margin-top:0px; margin-bottom:0px;'>DALAM PROSES</h6>";
             }
             $no++;
             $row = array();
@@ -832,7 +832,7 @@ class Spp extends CI_Controller
             $row[] = $d->sat;
             $row[] = $d->qty;
             $row[] = $d->STOK;
-            $row[] = '<p style="word-break: break-word; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . '</p>';
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom:0px;">' . htmlspecialchars($d->ket) . '</p>';
             // $row[] = '<button class="btn btn-xs btn-primary" type="button" disabled>Qty</button>';
             $row[] = $status;
 

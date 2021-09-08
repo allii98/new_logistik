@@ -4,11 +4,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between" style="margin-top: -10px;">
                         <h4 class="header-title ml-2 mb-3">Data SPP</h4>
                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                            <div class="form-group">
-                                <div class="col-12">
+                            <div class="row form-group mr-0">
+                                <div class="col-2">
+                                    <label for="" style="margin-top: 3px;">Filter</label>
+                                </div>
+                                <div class="col-10">
                                     <select class="form-control form-control-sm" id="filter" name="filter">
                                         <option value="SEMUA">TAMPILKAN SEMUA</option>
                                         <option value="PKS">PKS</option>
@@ -21,21 +24,21 @@
                         <?php } ?>
                     </div>
 
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="margin-top: -10px;">
                         <table id="dataspp" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th width="8%" style="font-size: 12px; padding:10px">#</th>
+                                    <th width="11%" style="font-size: 12px; padding:10px">#</th>
                                     <th width="3%" style="font-size: 12px; padding:10px">No</th>
-                                    <th width="18%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
-                                    <th width="9%" style="font-size: 12px; padding:10px">Tgl Ref</th>
-                                    <th width="9%" style="font-size: 12px; padding:10px">Tgl Terima</th>
-                                    <th width="11%" style="font-size: 12px; padding:10px">Departemen</th>
-                                    <th width="6%" style="font-size: 12px; padding:10px">Lokasi</th>
+                                    <th width="17%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Ref</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Terima</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th width="5%" style="font-size: 12px; padding:10px">Lokasi</th>
                                     <th width="18%" style="font-size: 12px; padding:10px">Keterangan</th>
                                     <th width="8%" style="font-size: 12px; padding:10px">Status SPP</th>
-                                    <th width="5%" style="font-size: 12px; padding:10px">Status PO</th>
-                                    <th width="5%" style="font-size: 12px; padding:10px">Input Oleh</th>
+                                    <th width="7%" style="font-size: 12px; padding:10px">Status PO</th>
+                                    <th width="7%" style="font-size: 12px; padding:10px">Input Oleh</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -127,12 +130,14 @@
     }
 
     table#dataspp td {
-        padding: 10px;
+        padding: 3px;
+        padding-left: 10px;
         font-size: 12px;
     }
 
     table#spp_approval td {
-        padding: 10px;
+        padding: 3px;
+        padding-left: 10px;
         font-size: 12px;
     }
 

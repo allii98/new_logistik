@@ -4,7 +4,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row justify-content-between headspp">
+                    <div class="row justify-content-between headspp" style="margin-top: -10px;">
                         <h4 class="header-title ml-2">SPP</h4>
                         <div class="button-list mr-2">
                             <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()" disabled>SPP Baru</button>
@@ -222,10 +222,10 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="margin-top: -20px;">
                 <div class="table-responsive">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                    <table id="dabar" class="table table-bordered" width="100%">
+                    <table id="dabar" class="table table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
                                 <th class="hastag_th">#</th>
@@ -269,23 +269,24 @@
     }
 
     .no_th {
-        width: 5% !important;
+        width: 4% !important;
     }
 
     .kodebar_th {
-        width: 20% !important;
+        width: 12% !important;
     }
 
     .nabar_th {
-        width: 35% !important;
+        width: 39% !important;
     }
 
     .grup_th {
-        width: 35% !important;
+        width: 40% !important;
     }
 
     table#dabar td {
-        padding: 10px;
+        padding: 3px;
+        padding-left: 10px;
         font-size: 12px;
     }
 
