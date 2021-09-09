@@ -45,7 +45,7 @@ class Po extends CI_Controller
             $row[] = $d->namadept;
             $row[] = $d->kodebar;
             $row[] = $d->nabar;
-            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($d->ket) . ' </p>';
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . ' </p>';
 
             $data[] = $row;
         }
@@ -76,7 +76,7 @@ class Po extends CI_Controller
             $row[] = $d->namadept;
             $row[] = $d->kodebar;
             $row[] = $d->nabar;
-            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($d->ket) . ' </p>';
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . ' </p>';
 
             $data[] = $row;
         }
@@ -104,7 +104,8 @@ class Po extends CI_Controller
             // $row[] =  $d->noref;
             $row[] =  $d->refppo;
             // $row[] =  $d->grup ;
-            $row[] =  '<p style="word-break: break-word;">' . $d->nabar . '<br>' . $d->kodebar . '</p>';
+            $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->nabar . '</p>';
+            $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->kodebar . '</p>';
             $row[] =  $d->qty;
             // $row[] = $d->tglpo;
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
@@ -167,17 +168,19 @@ class Po extends CI_Controller
 
             if ($d->sudah_lpb == 1) {
                 $aksi = '
-                <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail"></button> 
+                <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
                 <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-primary btn-xs fa fa-print" title="Cetak">
                 </a>
                 ';
+                $lpb = '<h5 style="margin-top:0px;"><span class="badge badge-success">LPB</span></h5>';
             } else {
                 $aksi = '
-                <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit"></button>
-                <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail"></button> 
-                <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print" style="margin-top: 2px;" title="Cetak">
+                <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
+                <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
                 </a>
                 ';
+                $lpb = '';
             }
 
             $row = array();
@@ -188,8 +191,9 @@ class Po extends CI_Controller
             $row[] = $d->no_refppo;
             $row[] = date_format(date_create($d->tgl_refppo), 'd-m-Y');
             $row[] = $d->nama_supply;
-            $row[] = '<p style="word-break: break-word">' . htmlspecialchars($d->ket) . ' </p>';
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . ' </p>';
             $row[] = $d->terbayar;
+            $row[] = $lpb;
 
             $data[] = $row;
         }
@@ -288,7 +292,7 @@ class Po extends CI_Controller
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => [190, 236],
-            'margin_top' => '8',
+            'margin_top' => '1',
             'orientation' => 'P'
         ]);
 

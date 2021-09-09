@@ -24,7 +24,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         </p>
 
                     </div>
-                    <div class="row div_form_1">
+                    <div class="row div_form_1" style="margin-top: -15px;">
                         <div class="col-lg-4 col-xl-4 col-12">
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="cmb_pilih_jenis_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
@@ -376,10 +376,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         </div>
 
                     </div>
-                    <br>
+
 
                     <!-- end row-->
-                    <hr class="mt-0 mb-2">
+                    <hr class="mt-1 mb-1">
                     <?php
                     switch ($sesi_sl) {
                         case 'HO':
@@ -405,7 +405,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
                                     <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
                                 </div>
-                                <div class="table-responsive mt-0">
+                                <div class="table-responsive" style="margin-top: -10px;">
                                     <table id="tableRinciPO" class="table table-striped table-bordered table-in">
                                         <thead>
                                             <tr>
@@ -770,7 +770,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         <div class="modal-content">
             <div class="modal-header ml-2">
                 <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> -->
                 </button>
             </div>
             <div class="modal-body">
@@ -795,9 +795,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     </div>
                 </div>
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
@@ -805,13 +805,27 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 <style>
+    table#tableRinciPO td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#tableItemPO td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
     table#tblspp td {
-        padding: 10px;
+        padding: 3px;
+        padding-left: 10px;
         font-size: 12px;
     }
 
     table#dataspp td {
-        padding: 10px;
+        padding: 3px;
+        padding-left: 10px;
         font-size: 12px;
     }
 
@@ -1035,7 +1049,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         //end kunci number
 
         //membuat format number pada tabel isian
-        $('#txt_qty_1, #txt_harga_1,#txt_disc_1, #txt_biaya_lain_1 ').number(true, 0);
+        $('#txt_qty_1,#qty_1,#qty2_1, #txt_harga_1,#txt_disc_1, #txt_biaya_lain_1 ').number(true, 2);
 
         var lokasi = $('#lokasi').val();
 
@@ -1099,11 +1113,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 var sat = value.sat;
                                 // var tglref = value.tglref;
                                 var qty = value.qty;
-                                // console.log('ini qty nya', qty)
                                 var qty2 = value.qty2;
                                 var ket_item_spp = value.ket_item_spp;
 
                                 var qtysum = qty - qty2;
+                                console.log('ini qty nya', qtysum);
 
 
                                 $('#id_ppo' + n).val(idppo);
@@ -1593,7 +1607,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
 
-        $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
+        $('#txt_qty_' + row + ',#qty_' + n + ',#qty2_' + n + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 2);
 
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
@@ -1602,6 +1616,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
         hitungqty(row);
         // jumlah(row);
+        // input_number(row);
+    }
+
+    function input_number(n) {
+        $("#txt_qty_" + n).on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
     }
 
     // var n = 2;
@@ -1718,9 +1743,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
 
-        $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
+        $('#txt_qty_' + n + ',#qty_' + n + ',#qty2_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 2);
         hitungqty(n);
         jumlah(n);
+        // input_number(n);
         return true;
     }
 
@@ -1930,7 +1956,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function number(row) {
-        $('#txt_qty_' + row).number(true, 0);
+        $('#txt_qty_' + row).number(true, 2);
         $('#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + ',#txt_jumlah_' + row).number(true, 2);
         row++;
     }
@@ -1999,7 +2025,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var pph = $('#pph').val();
         var ppn = $('#ppn').val();
         var qty = $('#txt_qty_' + id).val();
-        console.log(qty)
+        console.log('nah ini', qty);
         var harga = $('#txt_harga_' + id).val();
         var diskon = $('#txt_disc_' + id).val();
         if (diskon == '') {

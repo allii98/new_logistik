@@ -5,11 +5,14 @@
 
 				<div class="card-body">
 					<div class="row justify-content-between">
-						<h4 class="header-title ml-2 mb-3">Data PO</h4>
+						<h4 class="header-title ml-2">Data PO</h4>
 						<?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-							<div class="form-group">
-								<div class="col-12">
-									<select class="form-control" id="filter" name="filter">
+							<div class="row form-group mr-0">
+								<div class="col-2">
+									<label for="" style="margin-top: 3px;">Filter</label>
+								</div>
+								<div class="col-10">
+									<select class="form-control form-control-sm" id="filter" name="filter">
 										<option value="SEMUA">TAMPILKAN SEMUA</option>
 										<option value="HO" selected>HO</option>
 										<option value="PKS">PKS</option>
@@ -20,21 +23,24 @@
 							</div>
 						<?php } ?>
 					</div>
+
 					<!-- <div class="sub-header mb-1" style="margin-top: -15px;">
-					</div> -->
-					<div class="table-responsive">
+						</div> -->
+					<div class="table-responsive" style="margin-top: -10px;">
+
 						<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped">
 							<thead>
 								<tr>
-									<th width="8%" style="font-size: 12px; padding:10px">#</th>
+									<th width="11%" style="font-size: 12px; padding:10px">#</th>
 									<th width="3%" style="font-size: 12px; padding:10px">No</th>
-									<th width="20%" style="font-size: 12px; padding:10px">No. Ref PO</th>
-									<th width="8%" style="font-size: 12px; padding:10px">Tgl. PO</th>
-									<th width="17%" style="font-size: 12px; padding:10px">No. Ref SPP</th>
-									<th width="8%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
-									<th width="8%" style="font-size: 12px; padding:10px">Supplier</th>
-									<th width="17%" style="font-size: 12px; padding:10px">Ket</th>
+									<th width="15%" style="font-size: 12px; padding:10px">No. Ref PO</th>
+									<th width="7%" style="font-size: 12px; padding:10px">Tgl. PO</th>
+									<th width="15%" style="font-size: 12px; padding:10px">No. Ref SPP</th>
+									<th width="7%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
+									<th width="11%" style="font-size: 12px; padding:10px">Supplier</th>
+									<th width="15%" style="font-size: 12px; padding:10px">Keterangan</th>
 									<th width="8%" style="font-size: 12px; padding:10px">Terbayar</th>
+									<th width="8%" style="font-size: 12px; padding:10px">Status LPB</th>
 								</tr>
 							</thead>
 
@@ -63,15 +69,15 @@
 			</div>
 			<div class="modal-body">
 				<div class="col-12">
-					<div class="table-responsive">
+					<div class="table-responsive" style="margin-top: -15px;">
 						<input type="hidden" id="hidden_no_row" name="hidden_no_row">
 						<table id="datapo" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
 							<thead>
 								<tr>
 									<th width="3%" style="font-size: 12px; padding:10px">No</th>
-									<!-- <th width="28%" style="font-size: 12px; padding:10px">Ref.&nbsp;PO</th> -->
 									<th width="15%" style="font-size: 12px; padding:10px">Ref.&nbsp;SPP</th>
-									<th width="20%" style="font-size: 12px; padding:10px">Nama&nbsp;&Kode&nbsp;Barang</th>
+									<th width="15%" style="font-size: 12px; padding:10px">Nama&nbsp;Barang</th>
+									<th width="20%" style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
 									<th width="5%" style="font-size: 12px; padding:10px">QTY</th>
 									<th width="10%" style="font-size: 12px; padding:10px">Tanggal PO</th>
 								</tr>
@@ -92,12 +98,14 @@
 
 <style>
 	table#tableListPO td {
-		padding: 10px;
+		padding: 3px;
+		padding-left: 10px;
 		font-size: 12px;
 	}
 
 	table#datapo td {
-		padding: 10px;
+		padding: 3px;
+		padding-left: 10px;
 		font-size: 12px;
 	}
 </style>
@@ -123,7 +131,7 @@
 
 		$('#filter').change(function() {
 			var data = this.value;
-			// console.log(data);
+			console.log(data);
 			dataPO(data);
 
 		});
@@ -132,6 +140,15 @@
 		var data = "HO";
 		dataPO(data);
 	});
+
+	function filter() {
+		$('#filter').change(function() {
+			var data = this.value;
+			console.log(data);
+			dataPO(data);
+
+		});
+	}
 
 	function dataPO(data) {
 		$('#tableListPO').DataTable().destroy();
@@ -158,6 +175,22 @@
 			}
 
 		});
+		// $('<div class="row justify-content-center">' +
+		// 	'<label for="filter" class="col-1 col-xs-1 col-form-label" style="margin-top: -5px; font-size: 12px;">Filter</label>' +
+		// 	'<div class="col-3 col-xs-3">' +
+		// 	'<select class="form-control form-control-sm" id="filter" onclick="filter()" name="filter">' +
+		// 	'<option value="SEMUA">TAMPILKAN SEMUA</option>' +
+		// 	'<option value="HO" selected>HO</option>' +
+		// 	'<option value="PKS">PKS</option>' +
+		// 	'<option value="SITE">SITE</option>' +
+		// 	'<option value="RO">RO</option>' +
+		// 	'</select>' +
+		// 	'</div>' +
+		// 	'</div>'
+		// ).appendTo("#tableListPO_wrapper .dataTables_filter");
+
+
+		// $(".dataTables_filter label").addClass("row justify-content-center");
 	}
 
 
