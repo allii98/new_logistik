@@ -1,35 +1,36 @@
 <div class="container-fluid">
     <!-- start row-->
-    <div class="row justify-content-center mt-0">
+    <div class="row mt-0">
         <div class="col-12">
-            <div class="widget-rounded-circle card-box">
-                <div class="row justify-content-between">
-                    <h4 class="header-title ml-2">LPB <i>(Edit)</i></h4>
-                    <div class="button-list mr-2">
-                        <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()">LPB Baru</button>
-                        <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()">Batal LPB</button>
-                        <button class="btn btn-primary btn-xs" id="a_print_lpb" onclick="cetak_lpb()">Cetak</button>
-                        <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between" style="margin-top: -10px;">
+                        <h4 class="header-title ml-2">LPB <i>(Edit)</i></h4>
+                        <div class="button-list mr-2">
+                            <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()">LPB Baru</button>
+                            <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()">Batal LPB</button>
+                            <button class="btn btn-primary btn-xs" id="a_print_lpb" onclick="cetak_lpb()">Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
                     </div>
-                </div>
-                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                    Edit Laporan Penerimaan Barang
-                </p>
+                    <p class="sub-header">
+                        Edit Laporan Penerimaan Barang
+                    </p>
 
-                <!-- <div class="row div_form_1">
+                    <!-- <div class="row div_form_1">
                     <div class="col-md-3">
                         <div class="form-group row mb-1">
                             <label class="col-lg-4 col-12 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;PO<span class="required">*</span>
                             </label>
                             <div class="col-lg-8 col-11 row"> -->
-                <!-- <select class="js-data-example-ajax form-control select2" id="select2">
+                    <!-- <select class="js-data-example-ajax form-control select2" id="select2">
                                 </select> -->
-                <!-- <input id="multiple" class="form-control bg-light" type="text" class="col-2" onkeyup="cariPoqr()" readonly>
+                    <!-- <input id="multiple" class="form-control bg-light" type="text" class="col-2" onkeyup="cariPoqr()" readonly>
                                 <input type="hidden" id="txt_no_po"> -->
-                <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
-                <!-- </div> -->
-                <!-- <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button> -->
-                <!-- </div>
+                    <!-- <input id="txt_no_po" name="txt_no_po" class="form-control" type="text" onfocus="cariPo()" placeholder="No. PO" autocomplete="off"> -->
+                    <!-- </div> -->
+                    <!-- <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" type="button" id="openreader-multi" data-qrr-multiple="true" data-qrr-repeat-timeout="0" data-qrr-target="#multiple" data-qrr-line-color="#00FF00"></button> -->
+                    <!-- </div>
                         <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.Ref&nbsp;PO<span class="required">*</span>
                             </label>
@@ -57,7 +58,7 @@
                         </div>
                     </div>
                     <div class="col-md-3"> -->
-                <!-- <div class="form-group row mb-1">
+                    <!-- <div class="form-group row mb-1">
                             <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi<span class="required">*</span>
                             </label>
                             <div class="col-md-8">
@@ -72,14 +73,14 @@
                                 </select>
                             </div>
                         </div> -->
-                <!-- <div class="form-group row mb-1">
+                    <!-- <div class="form-group row mb-1">
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;Terima<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
                                 <input id="txt_tgl_terima" name="txt_tgl_terima" class="form-control" type="date" value="<?= date('Y-m-d') ?>">
                             </div>
                         </div> -->
-                <!-- <div class="form-group row">
+                    <!-- <div class="form-group row">
                             <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Gudang<span class="required">*</span>
                             </label>
                             <div class="col-md-7">
@@ -105,42 +106,43 @@
                     </div>
                 </div> -->
 
-                <hr style="margin-top: -15px;">
-                <div class="mx-0 div_form_2" style="margin-top: -25px;">
-                    <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                        <!-- <h6 id="lbl_lpb_status" name="lbl_lpb_status">
+                    <hr style="margin-top: -15px;">
+                    <div class="mx-0 div_form_2" style="margin-top: -25px;">
+                        <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
+                            <!-- <h6 id="lbl_lpb_status" name="lbl_lpb_status">
                             <font face="Verdana" size="2.5">No. LPB : ... &nbsp; No. Ref LPB : ...</font>
                         </h6> -->
-                        <input type="hidden" id="hidden_no_lpb">
-                        <input type="hidden" id="hidden_no_ref_lpb">
-                        <input type="hidden" id="kode_dev">
-                        <input type="hidden" id="txt_no_po" name="txt_no_po">
-                        <input type="hidden" id="txt_ref_po" name="txt_ref_po">
-                        <input type="hidden" id="hidden_id_lpb">
-                    </div>
-                    <div class="row mr-2 ml-0" style="margin-left:4px;">
-                        <h6>
-                            <span id="no_ref_po"></span>&emsp;&emsp;&emsp;&emsp;
-                            <span id="no_lpb"></span>&emsp;&emsp;
-                            <span id="no_ref_lpb"></span>
-                        </h6>
-                    </div>
-                    <div class="table-responsive">
-                        <table id="tableRinciLPB" class="table table-striped table-bordered" width="100%">
-                            <thead>
-                                <tr>
-                                    <th width="21%">Kode Barang</th>
-                                    <th width="24%" style="padding-left: 14px;">Nama Barang / Satuan / Grup</th>
-                                    <th width="9%" style="padding-left: 14px;">Saldo Qty</th>
-                                    <th width="9%">Qty</th>
-                                    <th width="20%">Ket</th>
-                                    <th width="6%">#</th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_rincian" name="tbody_rincian">
+                            <input type="hidden" id="hidden_no_lpb">
+                            <input type="hidden" id="hidden_no_ref_lpb">
+                            <input type="hidden" id="kode_dev">
+                            <input type="hidden" id="txt_no_po" name="txt_no_po">
+                            <input type="hidden" id="txt_ref_po" name="txt_ref_po">
+                            <input type="hidden" id="hidden_id_lpb">
+                        </div>
+                        <div class="row mr-2 ml-0" style="margin-left:4px;">
+                            <h6>
+                                <span id="no_ref_po"></span>&emsp;&emsp;&emsp;&emsp;
+                                <span id="no_lpb"></span>&emsp;&emsp;
+                                <span id="no_ref_lpb"></span>
+                            </h6>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tableRinciLPB" class="table table-striped table-bordered" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th width="21%">Kode Barang</th>
+                                        <th width="24%" style="padding-left: 14px;">Nama Barang / Satuan / Grup</th>
+                                        <th width="9%" style="padding-left: 14px;">Saldo Qty</th>
+                                        <th width="9%">Qty</th>
+                                        <th width="20%">Ket</th>
+                                        <th width="6%">#</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_rincian" name="tbody_rincian">
 
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,11 +4,14 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row justify-content-between">
+                    <div class="row justify-content-between" style="margin-top: -10px;">
                         <h4 class="header-title ml-2 mb-3">Data LPB</h4>
                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                            <div class="form-group">
-                                <div class="col-12">
+                            <div class="row form-group mr-0">
+                                <div class="col-2">
+                                    <label for="" style="margin-top: 3px;">Filter</label>
+                                </div>
+                                <div class="col-10">
                                     <select class="form-control form-control-sm" id="filter" name="filter">
                                         <option value="SEMUA">TAMPILKAN SEMUA</option>
                                         <option value="PKS">PKS</option>
@@ -20,23 +23,25 @@
                             </div>
                         <?php } ?>
                     </div>
-                    <table id="tableListLPB" class="table dataTable no-footer table-striped table-bordered w-100">
-                        <thead>
-                            <tr>
-                                <th width="8%" style="font-size: 12px; padding:10px">#</th>
-                                <th width="3%" style="font-size: 12px; padding:10px">No</th>
-                                <th width="9%" style="font-size: 12px; padding:10px">Tgl Terima</th>
-                                <th width="9%" style="font-size: 12px; padding:10px">Tgl Input</th>
-                                <th width="18%" style="font-size: 12px; padding:10px">No. Ref LPB</th>
-                                <th width="22%" style="font-size: 12px; padding:10px">No. Ref PO</th>
-                                <th width="9%" style="font-size: 12px; padding:10px">Supplier</th>
-                                <th width="17%" style="font-size: 12px; padding:10px">Keterangan</th>
-                                <th width="5%" style="font-size: 12px; padding:10px">Input Oleh</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive" style="margin-top: -10px;">
+                        <table id="tableListLPB" class="table dataTable no-footer table-striped table-bordered w-100">
+                            <thead>
+                                <tr>
+                                    <th width="11%" style="font-size: 12px; padding:10px">#</th>
+                                    <th width="3%" style="font-size: 12px; padding:10px">No</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Terima</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Input</th>
+                                    <th width="17%" style="font-size: 12px; padding:10px">No. Ref LPB</th>
+                                    <th width="20%" style="font-size: 12px; padding:10px">No. Ref PO</th>
+                                    <th width="9%" style="font-size: 12px; padding:10px">Supplier</th>
+                                    <th width="17%" style="font-size: 12px; padding:10px">Keterangan</th>
+                                    <th width="7%" style="font-size: 12px; padding:10px">Input Oleh</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
                 </div> <!-- end card-body -->
             </div> <!-- end card -->
         </div><!-- end col -->
@@ -119,12 +124,14 @@
     }
 
     table#tableDetailItemLpb td {
-        padding: 10px;
+        padding: 3px;
+        padding-left: 10px;
         font-size: 12px;
     }
 
     table#tableListLPB td {
-        padding: 10px;
+        padding: 3px;
+        padding-left: 10px;
         font-size: 12px;
     }
 </style>

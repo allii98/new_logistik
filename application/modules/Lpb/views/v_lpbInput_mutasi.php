@@ -7,7 +7,7 @@ date_default_timezone_set('Asia/Jakarta');
             <div class="col-12">
                   <div class="card">
                         <div class="card-body">
-                              <div class="row justify-content-between">
+                              <div class="row justify-content-between" style="margin-top: -10px;">
                                     <h4 class="header-title ml-2">LPB <b>MUTASI</b></h4>
                                     <div class="button-list mr-2">
                                           <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
@@ -111,7 +111,7 @@ date_default_timezone_set('Asia/Jakarta');
                                           </div> <!-- end col -->
                                     </div>
                               </div>
-                              <hr class="mt-1 mb-2">
+                              <hr class="mt-0 mb-2">
                               <div class="row div_form_2">
                                     <div class="col-12">
                                           <div class="sub-header" style="margin-top: -10px; margin-bottom: -22px;">
