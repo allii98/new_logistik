@@ -126,6 +126,7 @@ function terbilang($x, $style = 4)
     <table width="100%" border="0">
       <tr>
         <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="65px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
+      </tr>
       <tr>
         <td align="left" style="font-size:8.5px; vertical-align: top; ">
           <h3 style="font-size:14px; font-weight:bold;"><?= $nama_pt  . '&nbsp;(' . $lokasi . ')' ?></h3>
