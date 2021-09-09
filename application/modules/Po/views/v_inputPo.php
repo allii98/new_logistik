@@ -757,9 +757,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             </div>
 
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-        </div>
+
     </div>
 </div>
 </div>
