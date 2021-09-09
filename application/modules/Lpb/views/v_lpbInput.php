@@ -7,7 +7,7 @@ date_default_timezone_set('Asia/Jakarta');
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row justify-content-between headspp">
+                    <div class="row justify-content-between headspp" style="margin-top: -10px;">
                         <h4 class="header-title ml-2">LPB</h4>
                         <div class="button-list mr-2">
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>

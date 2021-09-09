@@ -63,7 +63,7 @@ class Lpb extends CI_Controller
                         data-noref="' . $field->noref . '" data-mutasi="' . $field->mutasi . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
-                        <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" style="margin-top:2px" id="a_print_lpb"></a>';
+                        <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
             $row[] = $no;
             $row[] = date("d-m-Y", strtotime($field->tgl));
             $row[] = date("d-m-Y", strtotime($field->tglinput));
