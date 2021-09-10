@@ -477,7 +477,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <!-- <button class="btn btn-xs btn-danger fa fa-minus btn_hapus_row_1" type="button" data-toggle="tooltip" data-placement="left" title="Hapus" id="btn_hapus_row_1" name="btn_hapus_row_1" onclick="hapus_row('1')"></button> -->
                                                 </td>
                                                 <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
-                                                    <td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td width="18%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="text" class="form-control form-control-sm" id="getspp1" onfocus="modalSPP('1')" name="spp" placeholder="Pilih item SPP" style="font-size: 12px;">
                                                         <input type="hidden" class="form-control form-control-sm" id="id_item_1" name="id">
                                                         <input type="hidden" class="form-control form-control-sm" id="id_ppo1" name="id_ppo1">
@@ -515,8 +515,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <textarea class="form-control form-control-sm" id="txt_merk_1" name="txt_merk_1" size="26" placeholder="Merk" rows="3"></textarea>
                                                     </td>
-                                                    <td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
-                                                        <input type="text" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1'); hitungqty('1');">
+                                                    <td width="9%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                        <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty" placeholder="Qty" size="8" onkeyup="jumlah('1'); hitungqty('1');">
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" />
                                                     </td>
@@ -1047,7 +1047,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         //end kunci number
 
         //membuat format number pada tabel isian
-        $('#txt_qty_1,#qty_1,#qty2_1, #txt_harga_1,#txt_disc_1, #txt_biaya_lain_1 ').number(true, 2);
+        $('#txt_harga_1,#txt_biaya_lain_1').number(true, 2);
+        // $('#total_pembayaran').number(true, 2);
+        $('#txt_disc_1').number(true, 0);
+
+        $('#txt_qty_1,#qty_1,#qty2_1').on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
 
         var lokasi = $('#lokasi').val();
 
@@ -1184,10 +1194,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     "width": "30%"
                 },
                 {
-                    "width": "35%"
+                    "width": "33%"
                 },
                 {
-                    "width": "35%"
+                    "width": "32%"
                 },
 
             ],
@@ -1422,31 +1432,31 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "aTargets": [1, 2]
             }, ],
             "columns": [{
-                    "width": "3%"
-                },
-                {
                     "width": "2%"
                 },
                 {
                     "width": "2%"
                 },
                 {
-                    "width": "10%"
+                    "width": "2%"
                 },
                 {
-                    "width": "25%"
-                },
-                {
-                    "width": "15%"
-                },
-                {
-                    "width": "8%"
+                    "width": "7%"
                 },
                 {
                     "width": "20%"
                 },
                 {
-                    "width": "25%"
+                    "width": "15%"
+                },
+                {
+                    "width": "5%"
+                },
+                {
+                    "width": "20%"
+                },
+                {
+                    "width": "30%"
                 },
             ],
             "language": {
@@ -1539,7 +1549,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<textarea class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
             '<input type="hidden" class="form-control form-control-sm bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
 
@@ -1605,8 +1615,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         $('#tbody_item').append(tr_buka + form_buka + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
 
-        $('#txt_qty_' + row + ',#qty_' + n + ',#qty2_' + n + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 2);
-
+        $('#txt_harga_' + n + ',#txt_biaya_lain_' + n + '').number(true, 2);
+        $('#txt_disc_' + n + '').number(true, 0);
+        $('#txt_qty_' + n + ',#qty_' + n + ',#qty2_' + n + '').on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
         } else {
@@ -1640,7 +1657,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
 
         var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
-        var td_col_2 = '<td width="20%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_2 = '<td width="18%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control form-control-sm" style="font-size: 12px;" id="getspp' + n + '" name="spp' + n + '" onfocus="modalSPP(' + n + ')" placeholder="Pilih item SPP">' +
             '<input type="hidden" id="id_item_' + n + '" name="id' + n + '">' +
             '<input type="hidden" id="ppo' + n + '" name="ppo' + n + '">' +
@@ -1685,7 +1702,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<textarea maxlength="250" class="form-control form-control-sm" id="txt_merk_' + n + '" name="txt_merk_' + n + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
 
             '</td>';
-        var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_5 = '<td width="9%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="text" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" >' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
@@ -1741,7 +1758,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
 
-        $('#txt_qty_' + n + ',#qty_' + n + ',#qty2_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 2);
+        $('#txt_harga_' + n + ',#txt_biaya_lain_' + n + '').number(true, 2);
+        $('#txt_disc_' + n + '').number(true, 0);
+        $('#txt_qty_' + n + ',#qty_' + n + ',#qty2_' + n + '').on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
         hitungqty(n);
         jumlah(n);
         // input_number(n);
