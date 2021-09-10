@@ -3,12 +3,13 @@
         #tabel_spp tr td {
             /*font-size: 12px;*/
             border: 1px solid;
-            padding: 5px;
+            padding: 3px;
+            /* font-size: 10px; */
         }
 
         body {
             /* font-family: Verdana; */
-            font-size: 8px;
+            font-size: 10px;
             font-style: normal;
             font-variant: normal;
             font-weight: 400;
@@ -81,10 +82,20 @@ $logo_pt = $this->session->userdata('logo_pt');
                 </td>
             </tr>
         </table>
-        <p style="margin-top: -5px; margin-bottom:-4px;">
-        <h3 align="left">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
+        <table border="0" width="100%">
+            <tr>
+                <td>
+                    <h2>SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h2>
+                </td>
+                <td align="right" style="padding-bottom: -10px;">
+                    <small>By MIPS LOGISTIK</small>
+                </td>
+            </tr>
+        </table>
+        <!-- <p style="margin-top: -10px; margin-bottom:-4px;">
         </p>
-        <p align="right" style="margin-top: -15px; margin-bottom:0px;"><small>By MIPS LOGISTIK</small></p>
+        <div style="margin-top: -20px; margin-bottom:0px;" align="right"></div> -->
+        <!-- <p style="margin-top: -20px; margin-bottom:0px;"><small align="right">By MIPS LOGISTIK</small></p> -->
     <?php
     } else {
     ?>
@@ -93,7 +104,7 @@ $logo_pt = $this->session->userdata('logo_pt');
                 <td colspan="2" align="left" style="vertical-align: text-top; padding-top:0px; padding-bottom: -10px;">
                     <b style="margin-bottom: 0px; font-size: 14px;"><?= $ppo->devisi ?></b>
                     <h6>&nbsp;</h6>
-                    <h3 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
+                    <h2 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h2>
                 </td>
                 <td style="width: 2%;"></td>
                 <td rowspan="2" width="8%" style="padding-bottom: -2px;"><img width="7%" height="7%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
@@ -151,13 +162,13 @@ $logo_pt = $this->session->userdata('logo_pt');
             <td align="center" colspan="7">Sesuai dengan nomor SPP diatas, terlampir perincian sebagai berikut : </td>
         </tr>
         <tr>
-            <td align="center" width="5%">NO</td>
-            <td align="center" width="12%">KODE BARANG</td>
-            <td align="center" width="25%">NAMA BARANG</td>
-            <td align="center" width="15%">KUANTITAS</td>
-            <td align="center" width="9%">SISA STOK</td>
-            <td align="center" width="6%">SAT</td>
-            <td align="center" width="27%">KETERANGAN</td>
+            <td align="center" style="padding: 5px;" width="5%">NO</td>
+            <td align="center" style="padding: 5px;" width="14%">KODE BARANG</td>
+            <td align="center" style="padding: 5px;" width="25%">NAMA BARANG</td>
+            <td align="center" style="padding: 5px;" width="15%">KUANTITAS</td>
+            <td align="center" style="padding: 5px;" width="9%">SISA STOK</td>
+            <td align="center" style="padding: 5px;" width="6%">SAT</td>
+            <td align="center" style="padding: 5px;" width="26%">KETERANGAN</td>
         </tr>
 
         <?php
@@ -261,7 +272,7 @@ $logo_pt = $this->session->userdata('logo_pt');
             <td colspan="1" align="center" height="70" valign="bottom">
                 <?php if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) == 'EST') {
                 ?>
-                    <img src="././assets/img/approved2.png" width="15%"><br>
+                    <img src="././assets/img/approved2.png" width="15%" style="padding-left: -2px; padding-right: -2px"><br>
                     <br><?= 'GM'; ?><br>
                 <?php
                 } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) == 'EST') {
@@ -274,7 +285,7 @@ $logo_pt = $this->session->userdata('logo_pt');
                 <?php
                 } else if ($ppo->status2 == 1 and substr($ppo->noreftxt, 0, 3) != 'EST') {
                 ?>
-                    <img src="././assets/img/approved2.png" width="15%"><br><br>
+                    <img src="././assets/img/approved2.png" width="15%" style="padding-left: -2px; padding-right: -2px"><br><br>
                     (&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)
                 <?php
                 } else if ($ppo->status2 == 0 and substr($ppo->noreftxt, 0, 3) != 'EST') {
