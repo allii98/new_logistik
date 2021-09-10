@@ -743,9 +743,11 @@ class Spp extends CI_Controller
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => [190, 236],
-            // 'format' => 'A4',
+            'format' => 'A4',
             // 'setAutoTopMargin' => 'stretch',
-            'margin_top' => '15',
+            'margin_top' => '2',
+            'margin_left' => '5',
+            'margin_right' => '5',
             'orientation' => 'P'
         ]);
 

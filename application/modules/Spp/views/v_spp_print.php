@@ -57,6 +57,7 @@ if ($ppo->lokasi == 'HO') {
     $alamat_lok = '';
 }
 
+$alamat_ho = $this->session->userdata('alamat_ho');
 $logo_pt = $this->session->userdata('logo_pt');
 ?>
 
@@ -66,42 +67,39 @@ $logo_pt = $this->session->userdata('logo_pt');
     ?>
         <table width="100%" border="0" align="center" style="margin-bottom: 0px;">
             <tr>
-                <td width="12%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/logo/<?= $logo_pt ?>"></td>
-                <td align="left" style="vertical-align: text-top; padding:0px">
-                    <b style="font-size: 14px;"><?= $ppo->devisi ?></b><br>
-                    <?= $alamat_lok ?><br><br><br>
-                    <h3 align="left">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
+                <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="65px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>">
                 </td>
-                <td width="12%"><img width="10%" height="10%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
+                <td rowspan="2" align="left" style="font-size:8.5px;">
+                    <h3 style="font-size:14px;font-weight:bold;"> <?= $ppo->devisi ?> </h3>
+                    <?= $alamat_ho ?>
+                </td>
+                <td style="padding-left: 20px;"><img width="5%" height="5%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
             </tr>
-        </table>
-
-        <table width="100%" border="0" align="center" style="margin-bottom: 0px;">
             <tr>
-                <td>
-                    <p align="left" style="margin-top: 0px;margin-bottom: 0px; margin-right:0px;"><small>By MIPS LOGISTIK</small></p>
-                </td>
                 <td width="9%" class="singleborder" align="center" style="padding: 5px;">
                     <h3 align="center"><?= $ppo->lokasi; ?></h3>
                 </td>
-                <td style="width: 2%;"></td>
             </tr>
         </table>
+        <p style="margin-top: -5px; margin-bottom:-4px;">
+        <h3 align="left">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
+        </p>
+        <p align="right" style="margin-top: -15px; margin-bottom:0px;"><small>By MIPS LOGISTIK</small></p>
     <?php
     } else {
     ?>
-        <table width="100%" border="0" align="center" style="margin-bottom: 0px;">
+        <table width="100%" border="0" align="center" style="margin-bottom: 2px;">
             <tr>
-                <td colspan="2" align="left" style="vertical-align: text-top; padding-top:0px">
+                <td colspan="2" align="left" style="vertical-align: text-top; padding-top:0px; padding-bottom: -10px;">
                     <b style="margin-bottom: 0px; font-size: 14px;"><?= $ppo->devisi ?></b>
                     <h6>&nbsp;</h6>
                     <h3 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h3>
                 </td>
                 <td style="width: 2%;"></td>
-                <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
+                <td rowspan="2" width="8%" style="padding-bottom: -2px;"><img width="7%" height="7%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
             </tr>
             <tr>
-                <td>
+                <td style="padding-bottom: -18px;">
                     <p align="left" style="margin-top: 0px;margin-bottom: 0px; margin-right:0px;"><small>By MIPS LOGISTIK</small></p>
                 </td>
                 <td width="9%" class="singleborder" align="center" style="padding: 5px;">
@@ -113,30 +111,53 @@ $logo_pt = $this->session->userdata('logo_pt');
     <?php
     }
     ?>
-    <table class="singleborder" border="1" width="100%" id="tabel_spp" style="margin-top: 5px;">
+    <table class="singleborder" border="1" width="100%">
         <tr>
-            <td colspan="3">Nomor SPP Divisi &nbsp;&nbsp;: SPP - <?= $ppo->noppotxt; ?><br />
-                Tanggal SPP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= date("d-m-Y", strtotime($ppo->tglppo)); ?><br />
-                Tanggal Terima &nbsp;&nbsp;&nbsp;&nbsp;: <?= date("d-m-Y", strtotime($ppo->tgltrm)); ?><br />
-                Kode Departemen : <?= $ppo->kodedept . "-" . $ppo->namadept; ?><br />
-            </td>
-            <td colspan="4">Nomor Referensi &nbsp;: <?= $ppo->noreftxt; ?><br />
-                Tgl. Referensi &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= date("d-m-Y", strtotime($ppo->tglref)); ?><br />
-                Keterangan &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= htmlspecialchars($ppo->ket); ?><br />
-                Status &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <b><?= $ppo->status; ?></b><br />
-            </td>
+            <td style="border: none; padding-left:5px; padding-top:5px;" width="13%">Nomor SPP Divisi</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border-left: none; border-bottom: none;" width="30%">SPP - <?= $ppo->noppotxt; ?></td>
+            <td style="border: none; padding-left:5px;" width="15%">Nomor Referensi</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border: none;"><?= $ppo->noreftxt; ?></td>
         </tr>
+        <tr>
+            <td style="border: none; padding-left:5px;" width="13%">Tanggal SPP</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border-left: none; border-bottom: none; border-top: none;" width="30%"><?= date("d-m-Y", strtotime($ppo->tglppo)); ?></td>
+            <td style="border: none; padding-left:5px;" width="15%">Tgl. Referensi</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border: none;"><?= date("d-m-Y", strtotime($ppo->tglref)); ?></td>
+        </tr>
+        <tr>
+            <td style="border: none; padding-left:5px;" width="13%">Tanggal Terima</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border-left: none; border-bottom: none; border-top: none;" width="30%"><?= date("d-m-Y", strtotime($ppo->tgltrm)); ?></td>
+            <td style="border: none; padding-left:5px;" width="15%">Keterangan</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border: none;"><?= htmlspecialchars($ppo->ket); ?></td>
+        </tr>
+        <tr>
+            <td style="border: none; padding-left:5px;" width="13%">Kode Departemen</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border-left: none; border-bottom: none; border-top: none;" width="30%"><?= $ppo->kodedept . "-" . $ppo->namadept; ?></td>
+            <td style="border: none; padding-left:5px;" width="15%">Status</td>
+            <td style="border: none;" width="1%">:</td>
+            <td style="border: none; padding-bottom:5px;"><b><?= $ppo->status; ?></b></td>
+        </tr>
+    </table>
+
+    <table class="singleborder" border="1" width="100%" id="tabel_spp" style="margin-top: 0px;">
         <tr>
             <td align="center" colspan="7">Sesuai dengan nomor SPP diatas, terlampir perincian sebagai berikut : </td>
         </tr>
         <tr>
             <td align="center" width="5%">NO</td>
-            <td align="center" width="15%">KODE BARANG</td>
+            <td align="center" width="12%">KODE BARANG</td>
             <td align="center" width="25%">NAMA BARANG</td>
             <td align="center" width="15%">KUANTITAS</td>
             <td align="center" width="9%">SISA STOK</td>
             <td align="center" width="6%">SAT</td>
-            <td align="center" width="24%">KETERANGAN</td>
+            <td align="center" width="27%">KETERANGAN</td>
         </tr>
 
         <?php
