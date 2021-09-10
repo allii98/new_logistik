@@ -70,6 +70,18 @@ function terbilang($x, $style = 4)
   }
   return $hasil;
 }
+
+if ($po->lokasi == 'HO') {
+  $alamat_lok = $this->session->userdata('alamat_ho');
+} else {
+  $alamat_lok = $this->session->userdata('alamat_site');
+}
+
+$alamat_ho = $this->session->userdata('alamat_ho');
+$alamat_site = $this->session->userdata('alamat_site');
+$logo_pt = $this->session->userdata('logo_pt');
+$lokasi = $this->session->userdata('status_lokasi');
+$nama_pt = $this->session->userdata('nama_pt');
 ?>
 
 <head>
@@ -116,43 +128,17 @@ function terbilang($x, $style = 4)
 </head>
 
 <body>
-  <?php
-  $alamat_ho = $this->session->userdata('alamat_ho');
-  $alamat_site = $this->session->userdata('alamat_site');
-  $logo_pt = $this->session->userdata('logo_pt');
-  $lokasi = $this->session->userdata('status_lokasi');
-  $nama_pt = $this->session->userdata('nama_pt');
-  if ($lokasi != 'HO') { ?>
-    <table width="100%" border="0">
-      <tr>
-        <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="65px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
-      </tr>
-      <tr>
-        <td align="left" style="font-size:8.5px; vertical-align: top; ">
-          <h3 style="font-size:14px; font-weight:bold;"><?= $nama_pt  . '&nbsp;(' . $lokasi . ')' ?></h3>
-          <?= $alamat_site ?>
-        </td>
-        <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/<?= $po->qr_code ?>"></td>
-      </tr>
-
-    </table>
-
-  <?php  } else { ?>
-    <table width="100%" border="0">
-      <tr>
-        <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
-      <tr>
-        <td align="left" style="font-size:8.5px;">
-          <h3 style="font-size:14px;font-weight:bold;"> <?= $nama_pt  . '&nbsp;(' . $lokasi . ')' ?> </h3>
-          <?= $alamat_ho ?>
-        </td>
-        <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/<?= $po->qr_code ?>"></td>
-      </tr>
-
-    </table>
-
-
-  <?php  } ?>
+  <table width="100%" border="0">
+    <tr>
+      <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
+    <tr>
+      <td align="left" style="font-size:8.5px;">
+        <h3 style="font-size:14px;font-weight:bold;"> <?= $nama_pt  . '&nbsp;(' . $po->lokasi . ')' ?> </h3>
+        <?= $alamat_lok ?>
+      </td>
+      <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="././assets/qrcode/po/<?= $po->qr_code ?>"></td>
+    </tr>
+  </table>
   <?php
   $lokasi_sesi = $this->session->userdata('status_lokasi');
   switch ($lokasi_sesi) {
@@ -208,6 +194,8 @@ function terbilang($x, $style = 4)
       break;
   }
   ?>
+
+
   <hr>
   <h3 align="right" style="margin-bottom: 0px;margin-top: 0px; font-weight: normal;"><small>Jakarta, <?= date('d-m-Y') ?></small></h3>
   <h2 align="center" style="margin: 0px;margin-top: -10px;">PESANAN PEMBELIAN</h2>

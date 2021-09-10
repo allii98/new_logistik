@@ -291,9 +291,11 @@ class Po extends CI_Controller
 
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
-            'format' => [190, 236],
+            'format' => 'A4',
+            // 'format' => [190, 236],
             'margin_top' => '0',
             'margin_left' => '3',
+            'margin_right' => '3',
             'orientation' => 'P'
         ]);
 
