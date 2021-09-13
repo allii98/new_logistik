@@ -784,6 +784,9 @@ class Lpb extends CI_Controller
         if ($periode['qty'] != $data_item_lpb['qty']) {
             $data_editStokAwalHarian = $this->M_lpb->editStokAwalHarian($kodebar, $periode['periode'], $periode['qty'], $data_item_lpb['qty'], $harga_item_po, $kode_dev);
             $data_editStokAwalBulananDevisi = $this->M_lpb->editStokAwalBulananDevisi($kodebar, $periode['txtperiode'], $periode['qty'], $data_item_lpb['qty'], $kode_dev);
+        } else {
+            $data_editStokAwalHarian = 0;
+            $data_editStokAwalBulananDevisi = 0;
         }
 
         //update stok awal
