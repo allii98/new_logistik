@@ -398,7 +398,13 @@ $nama_pt = $this->session->userdata('nama_pt');
               <br />
               <br />
               <br />
-              (Direktur Pembelian)
+              <?php
+              $total = $po->totalbayar;
+              if ($total > 5000000) { ?>
+                (Direktur Pembelian)
+              <?php } else { ?>
+                (Manager Purchasing)
+              <?php } ?>
             </td>
           </tr>
 
