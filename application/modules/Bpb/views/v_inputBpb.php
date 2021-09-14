@@ -2,42 +2,50 @@
 
     <div class="row">
         <div class="col-12">
-            <div class="card-body">
+            <div class="card">
 
-                <div class="card-box">
-                    <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BPB</h4>
+                <div class="card-body">
                     <div class="row justify-content-between">
-                        <p class="sub-header ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                        <h4 class="header-title ml-2">BPB</h4>
+                        <div class="button-list mr-2">
+                            <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">BPB Baru</button>
+                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal BPB</button>
+                            <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
+                    </div>
+                    <h6 id="lbl_status_delete_po"></h6>
+                    <div class="row">
+                        <p class="sub-header ml-2" style="margin-top: -12px;">
                             Input Bon Permintaan Barang
                         </p>
-                        <button class="btn btn-xs btn-primary h-50 mr-2" id="inputNew" style="display:none;" onclick="inputBaru()">Input Bpb Baru</button>
                     </div>
 
-                    <div class="row div_form_1">
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB
+                    <div class="row div_form_1" style="margin-top: -15px;">
+                        <div class="col-lg-4 col-xl-4 col-12">
+                            <div class="form-group row mb-0">
+                                <label for="txt_tgl_bpb" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Tgl&nbsp;BPB
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off">
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control form-control-sm" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Untuk keperluan
+                            <div class="form-group row mb-0">
+                                <label for="txt_untuk_keperluan" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Keperluan
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <textarea class="form-control" rows="1" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
+                                <div class="col-9 col-xl-12">
+                                    <textarea class="form-control form-control-sm" maxlength="250" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Devisi*
+                            <div class="form-group row mb-0">
+                                <label for="devisi" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Divisi
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <select class="form-control" id="devisi" onchange="check_form()">
-                                        <option selected disabled>Pilih</option>
+                                <div class="col-9 col-xl-12">
+                                    <select class="form-control form-control-sm" id="devisi">
+                                        <option selected disabled>--Pilih--</option>
                                         <?php
                                         foreach ($devisi as $d) : { ?>
                                                 <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
@@ -48,24 +56,25 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian
+                        <div class="col-lg-4 col-xl-4 col-12">
+                            <div class="form-group row mb-0">
+                                <label for="cmb_bagian" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Bagian
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
-                                        <option disabled selected>--Pilih --</option>
+                                <div class="col-9 col-xl-12">
+                                    <select class="form-control form-control-sm" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
+                                        <option disabled selected>--Pilih--</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan Bakar
+                            <div class="form-group row mb-0">
+                                <label for="bhnbakar" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Bahan&nbsp;Bakar
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <select class="form-control bg-light" id="bhnbakar" name="bhnbakar" disabled>
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
+
+                                <div class="col-9 col-xl-12">
+                                    <select class="form-control form-control-sm bg-light" id="bhnbakar" name="bhnbakar" disabled>
+                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih--</option>
                                         <option value="BBM">BBM</option>
                                         <option value="NONBBM">NON BBM</option>
                                     </select>
@@ -74,13 +83,14 @@
                             <!-- <div class="form-group row mb-1" style="display:none;" id="bhnbakar"> -->
 
 
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate
+                            <div class="form-group row mb-0">
+                                <label for="cmb_alokasi_est" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Alokasi&nbsp;Estate
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <select class="form-control bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
+
+                                <div class="col-9 col-xl-12">
+                                    <select class="form-control form-control-sm bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
+                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih--</option>
                                         <option value="03">03</option>
                                         <option value="06">06</option>
                                         <option value="07">07</option>
@@ -94,42 +104,40 @@
                                 </div>
                             </div>
                         </div>
-                        &nbsp;
-                        <div class="col-md-3" id="databbm">
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;Alat/Kend
+                        <div class="col-lg-4 col-xl-4 col-12" id="databbm">
+                            <div class="form-group row mb-0">
+                                <label for="txt_jns_alat" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Jenis&nbsp;Alat
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="Jenis Alat" autocomplite="off" disabled>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode/Nomor
+                            <div class="form-group row mb-0">
+                                <label for="txt_kd_nmr" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Kode/Nomor
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="Kode/Nomor" autocomplite="off" disabled>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">HM/KM
+                            <div class="form-group row mb-0">
+                                <label for="txt_hm_km" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    HM/KM
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="HM/KM" autocomplite="off" disabled>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Kerja
+                            <div class="form-group row mb-0">
+                                <label for="txt_lokasi_kerja" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Lokasi&nbsp;Kerja
                                 </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="Lokasi Kerja" autocomplite="off" disabled>
                                 </div>
                             </div>
                         </div>
@@ -151,21 +159,21 @@
                             <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
                             <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
                             <div class="table-responsive">
-                                <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
+                                <table class="table table-striped table-bordered table-in" id="tableRinciBPB">
                                     <thead>
                                         <tr>
                                             <th width="3%"></th>
-                                            <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM/TBM</th>
-                                            <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Afd/Unit</th>
-                                            <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Blok/Sub</th>
-                                            <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Thn Tanam</th>
-                                            <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
-                                            <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
-                                            <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang/Satuan</th>
-                                            <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok/Booking</th>
-                                            <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty&nbsp;Diminta</th>
+                                            <th width="8%">TM/TBM</th>
+                                            <th width="8%">Afd/Unit</th>
+                                            <th width="8%">Blok/Sub</th>
+                                            <th width="8%">Thn Tanam</th>
+                                            <th width="20%">Bahan</th>
+                                            <th width="15%">Account Beban</th>
+                                            <th width="15%">Barang/Satuan</th>
+                                            <th width="20%">Stok/Booking</th>
+                                            <th width="25%">Qty&nbsp;Diminta</th>
                                             <!-- <th width="8%">Qty Disetujui</th> -->
-                                            <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
+                                            <th width="25%">Keterangan</th>
                                             <th width="3%"></th>
                                         </tr>
                                     </thead>
@@ -179,7 +187,7 @@
                                             <form id="form_rinci_1" name="form_rinci_1" method="POST" action="javascript:;">
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- TM/TBM -->
-                                                    <select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
+                                                    <select class="form-control form-control-sm set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
                                                         <option value="-">-</option>
                                                         <!-- <option value=""></option> -->
                                                         <option value="TM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM</option>
@@ -190,31 +198,31 @@
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- AFD/UNIT -->
-                                                    <select class="form-control set_strip_cmb" id="cmb_afd_unit_1" name="cmb_afd_unit_1" onchange="cmb_blok_sub(1)">
+                                                    <select class="form-control form-control-sm set_strip_cmb" id="cmb_afd_unit_1" name="cmb_afd_unit_1" onchange="cmb_blok_sub(1)">
                                                         <option value="-">-</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- BLOK/SUB -->
-                                                    <select class="form-control set_strip_cmb" id="cmb_blok_sub_1" name="cmb_blok_sub_1" onchange="cmb_tahun_tanam(1)">
+                                                    <select class="form-control form-control-sm set_strip_cmb" id="cmb_blok_sub_1" name="cmb_blok_sub_1" onchange="cmb_tahun_tanam(1)">
                                                         <option value="-">-</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- Tahun Tanam -->
-                                                    <select class="form-control set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)">
+                                                    <select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)">
                                                         <option value="-">-</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- Bahan -->
-                                                    <select class="form-control set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
+                                                    <select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
                                                         <option value="-">-</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
                                                     <!-- Account Beban -->
-                                                    <input type="text" class="form-control" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
+                                                    <input type="text" class="form-control form-control-sm" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
                                                     <!-- <label class="control-label" id="lbl_no_acc_1"></label>
                                                 <label class="control-label" id="lbl_nama_acc_1"></label> -->
                                                     <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1" value="0">
@@ -222,7 +230,7 @@
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                     <!-- Barang -->
-                                                    <input type="text" class="form-control" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
+                                                    <input type="text" class="form-control form-control-sm" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
                                                     <!-- <label id="lbl_kode_barang_1"></label>
                                                 <label id="lbl_nama_barang_1"></label> -->
 
@@ -247,12 +255,12 @@
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                     <!-- Qty Diminta & Stok di Tgl ini & Satuan -->
-                                                    <input type="number" class="form-control currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off" onkeyup="validasi_qty_diminta('1')">
+                                                    <input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off" onkeyup="validasi_qty_diminta('1')">
                                                 </td>
 
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                     <!-- Keterangan -->
-                                                    <textarea class="form-control ket" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')"></textarea>
+                                                    <textarea class="form-control form-control-sm ket" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')"></textarea>
                                                     <label id="lbl_status_simpan_1"></label>
                                                     <input type="hidden" id="hidden_id_bpbitem_1" name="hidden_id_bpbitem_1">
                                                 </td>
@@ -406,6 +414,13 @@
 
 </div>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
+<style>
+    table#tableRinciBPB th {
+        padding: 10px;
+        font-size: 12px;
+        padding-left: 17px;
+    }
+</style>
 
 <script>
     function cetak() {
@@ -416,13 +431,27 @@
         window.open('cetak/' + no_bpb + '/' + id_bpb, '_blank');
     }
 
+    function goBack() {
+        window.history.back();
+    }
+
     $(document).ready(function() {
 
-        check_form();
+        // check_form();
+        $('.div_form_2').hide();
+        setInterval(function() {
+            check_form();
+        }, 1000);
 
         // pilihDevisi();   
         cari_dept();
         $('#hidden_no_table').val(2);
+
+        $('#cmb_bagian').change(function() {
+            console.log(this.value);
+        });
+
+
 
     });
 
@@ -470,10 +499,15 @@
         if (dt != "BBM") {
             $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
             $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
+            $('#txt_jns_alat').val('');
+            $('#txt_kd_nmr').val('');
+            $('#txt_hm_km').val('');
+            $('#txt_lokasi_kerja').val('');
         } else {
             $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeAttr('disabled', '');
             $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').removeClass('bg-light');
         }
+
     });
 
     function cari_dept() {
@@ -497,21 +531,43 @@
     }
 
     function check_form() {
-        console.log('oke siap berjalan');
+        // console.log('oke siap berjalan');
+        if ($('#cmb_bagian :selected').text() == "TANAMAN" || $('#cmb_bagian :selected').text() == "TANAMAN UMUM") {
 
-        if ($.trim($('#devisi').val()) != '') {
-            $('#btn_simpan_1').removeAttr('disabled', '');
-            $('#btn_tambah_row').removeAttr('disabled', '');
-            $('#btn_tambah_row_1').removeAttr('disabled', '');
-            $('#tableRinciBPB').find('input,textarea,select').removeAttr('disabled');
+            if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
+                $('.div_form_2').show();
+            } else {
+                $('.div_form_2').hide();
+
+            }
+        } else if ($('#cmb_bagian :selected').text() == "TEKNIK") {
+            if ($('#bhnbakar :selected').text() == "BBM") {
+
+                if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#txt_jns_alat').val()) != '' && $.trim($('#txt_kd_nmr').val()) != '' && $.trim($('#txt_hm_km').val()) != '' && $.trim($('#txt_lokasi_kerja').val()) != '') {
+                    $('.div_form_2').show();
+                } else {
+                    $('.div_form_2').hide();
+
+                }
+            } else {
+                if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#bhnbakar').val()) != '') {
+                    $('.div_form_2').show();
+                } else {
+                    $('.div_form_2').hide();
+
+
+                }
+            }
         } else {
-            // $('.div_form_2').hide();
-            $('#btn_simpan_1').attr('disabled', '');
-            $('#btn_tambah_row').attr('disabled', '');
-            $('#btn_tambah_row_1').attr('disabled', '');
-            $('#tableRinciBPB').find('input,textarea,select').attr('disabled', '');
+            if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '') {
+                $('.div_form_2').show();
+            } else {
+                $('.div_form_2').hide();
+
+            }
 
         }
+
 
     }
 
@@ -1465,7 +1521,7 @@
 
     function cek_tm_tbm(row) {
         // check_form();
-        if ($('#cmb_bagian :selected').text() != "TANAMAN") {
+        if ($('#cmb_bagian :selected').text() != "TANAMAN" && $('#cmb_bagian :selected').text() != "TANAMAN UMUM") {
             var strip_cmb = '<option value="-">-</option>';
             // $('.set_strip_cmb').empty();
             // $('.set_strip_cmb').append(strip_cmb);

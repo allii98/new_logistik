@@ -409,62 +409,46 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <table id="tableRinciPO" class="table table-striped table-bordered table-in">
                                         <thead>
                                             <tr>
-                                                <?php
-                                                switch ($sesi_sl) {
-                                                    case 'HO':
-                                                ?>
-                                                        <th>#</th>
-                                                        <th>
-                                                            <font face="Verdana" size="1.5">SPP</font>
-                                                        </th>
-                                                    <?php
-                                                        break;
-                                                    case 'RO':
-                                                    case 'SITE':
-                                                    case 'PKS':
-                                                    ?>
-                                                <?php
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-                                                ?>
 
+                                                <th>#</th>
+                                                <th>
+                                                    SPP
+                                                </th>
                                                 <!-- <th>
                                                 <font face="Verdana" size="1.5">Jenis Budget</font>
                                             </th> -->
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Nama&nbsp;&<br>Kode&nbsp;Barang</font>
+                                                    Nama&nbsp;&<br>Kode&nbsp;Barang
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Merk</font>
+                                                    Merk
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Qty</font>
-                                                </th>
-
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Harga</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Kurs</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Disc<span>%</span></font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Biaya&nbsp;Lainnya</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Ket.&nbsp;Biaya</font>
+                                                    Qty
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Keterangan</font>
+                                                    Harga
+                                                </th>
+                                                <th>
+                                                    Kurs
+                                                </th>
+                                                <th>
+                                                    Disc<span>%</span>
+                                                </th>
+                                                <th>
+                                                    Biaya&nbsp;Lainnya
+                                                </th>
+                                                <th>
+                                                    Ket.&nbsp;Biaya
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="1.5">#</font>
+                                                    Keterangan
+                                                </th>
+
+                                                <th>
+                                                    #
                                                 </th>
                                             </tr>
                                         </thead>
@@ -582,15 +566,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 <table border="0" width="70%">
 
                                     <td>
-                                        <font face="Verdana" size="1.5">
-                                            <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
-                                        </font>
+
+                                        <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+
 
                                     </td>
                                     <td>
-                                        <font face="Verdana" size="1.5">
-                                            <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                                        </font>
+
+                                        <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+
 
                                     </td>
                                 </table>
@@ -622,38 +606,38 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                 <font face="Verdana" size="2.5">Jenis Budget</font>
                                             </th> -->
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Nama&nbsp;&&nbsp;Kode&nbsp;Barang</font>
+                                                    Nama&nbsp;&&nbsp;Kode&nbsp;Barang
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Merk</font>
+                                                    Merk
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Qty</font>
+                                                    Qty
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Harga</font>
+                                                    Harga
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Kurs</font>
+                                                    Kurs
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Disc<span>%</span></font>
+                                                    Disc<span>%</span>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Biaya&nbsp;Lainnya</font>
+                                                    Biaya&nbsp;Lainnya
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Ket.&nbsp;Biaya</font>
+                                                    Ket.&nbsp;Biaya
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Keterangan</font>
+                                                    Keterangan
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Jumlah&nbsp;Rp</font>
+                                                    Jumlah&nbsp;Rp
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">#</font>
+                                                    #
                                                 </th>
                                             </tr>
                                         </thead>
@@ -805,16 +789,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 <style>
-    table#tableRinciPO td {
-        padding: 3px;
-        padding-left: 10px;
+    table#tableRinciPO th {
+        padding: 10px;
         font-size: 12px;
+        padding-left: 17px;
     }
 
-    table#tableItemPO td {
-        padding: 3px;
-        padding-left: 10px;
+    table#tableItemPO th {
+        padding: 10px;
+        padding-left: 17px;
         font-size: 12px;
+
     }
 
     table#tblspp td {
@@ -1147,7 +1132,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     $('#sisa_qty_' + n).text(b);
                                 } else {
                                     var j = 0;
-                                    $('#sisa_qty_' + n).text(j);
+                                    $('#qty_po_' + n).text(j);
+                                    $('#sisa_qty_' + n).text(qty);
 
                                 }
 
@@ -1173,7 +1159,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#txt_keterangan_rinci_' + n).val(ket_item_spp);
                                 $('#qty_' + n).val(qty);
                                 $('#qty2_' + n).val(qty2);
-                                $('#qty_po_' + n).text(qty2);
+
 
                                 $('#hidden_tgl_ref_' + n).val(tglref);
                                 n++;
@@ -1904,6 +1890,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     } else {
                         $('#txt_qty_' + n).val(qty);
                         $('#qty_po_' + n).text("0");
+                        $('#sisa_qty_' + n).text(qty);
                         // $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n).attr('disabled', '');
                     }
 
@@ -2137,7 +2124,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         $('#jumlah_' + id).val(jum);
         $('#hasil_jumlah_' + id).html(jum);
         $('#hasil_jumlah_1').number(true, 2);
-        $('#jumlah_'+id).number(true, 2);
+        $('#jumlah_' + id).number(true, 2);
         // console.log(tot_nilai);
     }
 
