@@ -44,15 +44,20 @@
 </head>
 
 <body>
+    <table width="100%" border="0" align="center">
+        <tr>
+            <td align="left" style="font-size:14px;font-weight:bold;"><?= $stockkeluar->devisi; ?></td>
+        </tr>
+    </table>
     <?php
     if ($stockkeluar->bhn_bakar == 'BBM') {
     ?>
         <!-- // jika bbm -->
         <table border="0" width="100%">
             <tr>
-                <td rowspan="4" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
+                <td rowspan="4" width="12%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
                 <td rowspan="2" align="center" valign="bottom">
-                    <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h2>
+                    <h2 align="center" style="margin: 0px;padding: 0px;"><u>BUKTI KELUAR BARANG (BKB)</u></h2>
                 </td>
                 <td width="13%">jenis alat/kend</td>
                 <td width="2%">:</td>
@@ -82,9 +87,9 @@
     ?>
         <table border="0" width="100%">
             <tr>
-                <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
+                <td rowspan="2" width="12%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
                 <td align="center" valign="bottom">
-                    <h2 align="center" style="margin: 0px;padding: 0px;">BUKTI KELUAR BARANG</h4>
+                    <h2 align="center" style="margin: 0px;padding: 0px;"><u>BUKTI KELUAR BARANG (BKB)</u></h4>
                 </td>
             </tr>
             <tr>
@@ -108,15 +113,15 @@
             <td align="center" rowspan="2" class="pddg" width="5%">No</td>
             <td align="center" rowspan="2" class="pddg" width="18%">No. Kode Barang</td>
             <td align="center" rowspan="2" class="pddg" width="22%">Nama / Spesifikasi Barang</td>
-            <td align="center" rowspan="2" class="pddg">Sat</td>
+            <td align="center" rowspan="2" class="pddg" width="5%">Sat</td>
             <td align="center" colspan="2" class="pddg">Jumlah</td>
             <td align="center" rowspan="2" class="pddg">Kode Beban</td>
             <td align="center" rowspan="2" class="pddg">Blok</td>
             <td align="center" rowspan="2" class="pddg" width="12%">Keterangan</td>
         </tr>
         <tr>
-            <td class="pddg">Diminta</td>
-            <td class="pddg">Dikeluarkan</td>
+            <td class="pddg" width="10%">Diminta</td>
+            <td class="pddg" width="10%">Dikeluarkan</td>
         </tr>
         <?php
         $no = 1;

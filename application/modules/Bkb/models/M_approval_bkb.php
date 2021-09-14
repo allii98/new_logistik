@@ -6,8 +6,8 @@ class M_approval_bkb extends CI_Model
 {
 
     var $table = 'keluarbrgitem'; //nama tabel dari database
-    // var $column_order = array(null, 'keluarbrgitem.id', 'keluarbrgitem.NO_REF',  'keluarbrgitem.kodebar', 'keluarbrgitem.nabar', 'keluarbrgitem.satuan', 'keluarbrgitem.qty', 'keluarbrgitem.qty2', 'approval_bkb.status_kasie_gudang'); //field yang ada di table supplier  
-    var $column_search = array('keluarbrgitem.id', 'keluarbrgitem.NO_REF', 'keluarbrgitem.kodebar', 'keluarbrgitem.nabar', 'keluarbrgitem.satuan', 'keluarbrgitem.qty', 'keluarbrgitem.qty2', 'approval_bkb.status_kasie_gudang'); //field yang diizin untuk pencarian 
+    var $column_order = array('keluarbrgitem.id', 'keluarbrgitem.NO_REF', 'keluarbrgitem.kodebar', 'keluarbrgitem.nabar', 'keluarbrgitem.satuan', 'keluarbrgitem.qty', 'keluarbrgitem.qty2', 'keluarbrgitem.ket', 'approval_bkb.status_kasie_gudang'); //field yang ada di table supplier  
+    var $column_search = array('keluarbrgitem.id', 'keluarbrgitem.NO_REF', 'keluarbrgitem.kodebar', 'keluarbrgitem.nabar', 'keluarbrgitem.satuan', 'keluarbrgitem.qty', 'keluarbrgitem.qty2', 'keluarbrgitem.ket', 'approval_bkb.status_kasie_gudang'); //field yang diizin untuk pencarian 
     var $order = array('keluarbrgitem.id' => 'DESC'); // default order 
 
     public function __construct()
@@ -24,7 +24,7 @@ class M_approval_bkb extends CI_Model
     private function _get_datatables_query()
     {
         $no_ref = $this->n_r;
-        $this->db_logistik_pt->select('keluarbrgitem.id, keluarbrgitem.SKBTXT, keluarbrgitem.NO_REF, keluarbrgitem.kodebar, keluarbrgitem.nabar, keluarbrgitem.satuan, keluarbrgitem.qty, keluarbrgitem.qty2, approval_bkb.status_kasie_gudang, approval_bkb.tgl_kasie_gudang');
+        $this->db_logistik_pt->select('keluarbrgitem.id, keluarbrgitem.SKBTXT, keluarbrgitem.NO_REF, keluarbrgitem.kodebar, keluarbrgitem.nabar, keluarbrgitem.satuan, keluarbrgitem.qty, keluarbrgitem.qty2, keluarbrgitem.ket, approval_bkb.status_kasie_gudang, approval_bkb.tgl_kasie_gudang');
         $this->db_logistik_pt->from($this->table);
         $this->db_logistik_pt->join('approval_bkb', 'approval_bkb.no_id_item_bkb = keluarbrgitem.id', 'left');
         $this->db_logistik_pt->where('keluarbrgitem.NO_REF', $no_ref);

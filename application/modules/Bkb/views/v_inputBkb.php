@@ -8,9 +8,9 @@
                         <h4 class="header-title ml-2">BKB</h4>
                         <div class="button-list mr-2">
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
-                            <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()" disabled>BKB Baru</button>
-                            <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelBkb()" disabled>Batal BKB</button>
-                            <button class="btn btn-xs btn-primary" id="a_print_lpb" onclick="cetak_lpb()" disabled>Cetak</button>
+                            <button class="btn btn-xs btn-success" id="new_bkb" onclick="new_bkb()" disabled>BKB Baru</button>
+                            <button class="btn btn-xs btn-danger" id="cancelBkb" onclick="cancelBkb()" disabled>Batal BKB</button>
+                            <button class="btn btn-xs btn-primary" id="a_print_bkb" onclick="cetak_bkb()" disabled>Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
                     </div>
@@ -144,26 +144,23 @@
                                     <h6><span id="h4_no_ref_bkb"></span></h6>
                                 </div>
                             </div>
-                            <h6 class="mr-2">
-                                <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_bkb()"></button>
-                            </h6>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
                                 <thead>
                                     <tr>
-                                        <th style="font-size: 12px; padding: 10px; padding-left: 17px;">TM/TBM</th>
-                                        <th style="font-size: 12px; padding: 10px; padding-left: 17px;">Afd/Unit</th>
-                                        <th style="font-size: 12px; padding: 10px; padding-left: 17px;">Blok/Sub</th>
-                                        <th style="font-size: 12px; padding: 10px; padding-left: 17px;">Thn&nbsp;Tanam</th>
-                                        <th width="15%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Bahan</th>
-                                        <th width="15%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Account Beban</th>
-                                        <th width="25%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Barang</th>
-                                        <th width="15%" style="font-size: 12px; padding: 10px; padding-left: 14px;">Sat/Stok</th>
-                                        <th width="10%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Qty Diminta</th>
-                                        <th width="10%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Qty Disetujui</th>
-                                        <th width="25%" style="font-size: 12px; padding: 10px; padding-left: 17px;">Keterangan</th>
-                                        <th style="font-size: 12px; padding: 10px; padding-left: 17px;">#</th>
+                                        <th>TM/TBM</th>
+                                        <th>Afd/Unit</th>
+                                        <th>Blok/Sub</th>
+                                        <th>Thn&nbsp;Tanam</th>
+                                        <th width="13%">Bahan</th>
+                                        <th width="16%">Account Beban</th>
+                                        <th width="20%">Barang</th>
+                                        <th width="10%" style="font-size: 12px; padding: 10px; padding-left: 14px;">Sat/Stok</th>
+                                        <th width="10%">Qty Diminta</th>
+                                        <th width="10%">Qty Disetujui</th>
+                                        <th width="13%">Keterangan</th>
+                                        <th width="8%">#</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_rincian" name="tbody_rincian">
@@ -200,25 +197,27 @@
 </div>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListBpb">
-    <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-dialog modal-full-width modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">List Data BPB</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" style="margin-top: -20px;">
                 <div class="table-responsive">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                     <table id="databpb" class="table table-bordered" style="width: 100%;">
                         <thead>
                             <tr>
-                                <th style="width: 3% !important;">#</th>
-                                <th style="width: 5% !important;">No</th>
-                                <th style="width: 10% !important;">No. Ref. Bpb</th>
-                                <th style="width: 20% !important;">Keperluan</th>
-                                <th style="width: 20% !important;">Tgl Input</th>
-                                <th style="width: 20% !important;">Diminta Oleh</th>
+                                <th class="hastag_th">#</th>
+                                <th class="no_th">No</th>
+                                <th class="tgl_th">Tgl Input</th>
+                                <th class="noref_th">No. Ref. Bpb</th>
+                                <th class="div_th">Divisi</th>
+                                <th class="dept_th">Departemen</th>
+                                <th class="kep_th">Keperluan</th>
+                                <th class="oleh_th">Diminta Oleh</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -238,6 +237,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Scan QRcode</h4>
+                <label class="btn btn-info active btn-xs ml-1">
+                    <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Front Camera
+                </label>
+                <label class="btn btn-secondary btn-xs">
+                    <input type="radio" name="putar_camera" value="2" autocomplete="off"> Back Camera
+                </label>
                 <button type="button" id="modalCameraClose" onclick="modalCameraClose()" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -278,8 +283,65 @@
         -moz-appearance: textfield;
         /* Firefox */
     }
+
+    .hastag_th {
+        width: 5% !important;
+    }
+
+    .no_th {
+        width: 3% !important;
+    }
+
+    .tgl_th {
+        width: 8% !important;
+    }
+
+    .noref_th {
+        width: 18% !important;
+    }
+
+    .div_th {
+        width: 23% !important;
+    }
+
+    .dept_th {
+        width: 13% !important;
+    }
+
+    .kep_th {
+        width: 20% !important;
+    }
+
+    .oleh_th {
+        width: 10% !important;
+    }
+
+    table#databpb td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#databpb th {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    table#tableRinciBKB th {
+        padding: 10px;
+        font-size: 12px;
+        padding-left: 17px;
+    }
 </style>
 <script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function new_bkb() {
+        location.href = "<?php echo base_url('Bkb/input') ?>";
+    }
+
     function cancelBkb(n) {
 
         $('#modalKonfirmasiHapusBkb').modal('show');
@@ -347,6 +409,21 @@
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
             scanner.start(cameras[0]);
+            $('[name="putar_camera"]').on('change', function() {
+                if ($(this).val() == 1) {
+                    if (cameras[0] != "") {
+                        scanner.start(cameras[0]);
+                    } else {
+                        alert('No Front camera found!');
+                    }
+                } else if ($(this).val() == 2) {
+                    if (cameras[1] != "") {
+                        scanner.start(cameras[1]);
+                    } else {
+                        alert('No Back camera found!');
+                    }
+                }
+            });
         } else {
             console.error('No cameras found.');
         }
@@ -539,23 +616,23 @@
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
         var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- TM/TBM -->' +
-            '<input type="text" class="form-control form-control-sm bg-light" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
+            '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
             '</td>';
         var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- AFD/UNIT -->' +
-            '<input type="text" class="form-control form-control-sm bg-light" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
+            '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
             '</td>';
         var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- BLOK/SUB -->' +
-            '<input type="text" class="form-control form-control-sm bg-light" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
+            '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Tahun Tanam -->' +
-            '<input type="text" class="form-control form-control-sm bg-light" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
+            '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Bahan -->' +
-            '<input type="text" class="form-control form-control-sm bg-light" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" disabled>' +
+            '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" disabled>' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Account Beban -->' +
@@ -575,16 +652,16 @@
             '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
             '</td>';
         var td_col_9 = '<td style="padding-right: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
-            '<span class="small text-muted" style="font-size:12px;">Sat&nbsp;&emsp;&nbsp;:&nbsp;</span><span id="sat_bpb_' + row + '" class="small" style="font-size:12px;"></span><br>' +
-            '<span class="small text-muted" style="font-size:12px;">Stok&nbsp;&nbsp;&nbsp;:&nbsp;</span><span id="stok_' + row + '" class="small" style="font-size:12px;"></span>' +
+            '<span class="small text-muted" style="font-size:12px;">Sat&nbsp;:&nbsp;</span><span id="sat_bpb_' + row + '" class="small" style="font-size:12px;"></span><br>' +
+            '<span class="small text-muted" style="font-size:12px;">Stok&nbsp;:&nbsp;</span><span id="stok_' + row + '" class="small" style="font-size:12px;"></span>' +
             '</td>';
         var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-            '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" disabled>' +
+            '<input type="number" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" disabled>' +
             '</td>';
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-            '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_disetujui_' + row + '" name="txt_qty_disetujui_' + row + '" placeholder="Qty Diminta" disabled>' +
+            '<input type="number" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_disetujui_' + row + '" name="txt_qty_disetujui_' + row + '" placeholder="Qty Diminta" disabled>' +
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Keterangan -->' +
@@ -593,7 +670,7 @@
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button class="badge bagde-warning btn-warning" id="rev_qty_' + row + '" name="rev_qty_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="btnRevQty(' + row + ')"><b>Rev</b></button>' +
+            '<button class="badge bagde-warning btn-warning" style="margin-left: 3px;" id="rev_qty_' + row + '" name="rev_qty_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Req Rev Qty" onclick="btnRevQty(' + row + ')"><b>Rev</b></button>' +
             '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
@@ -754,9 +831,10 @@
                 },
 
                 success: function(data) {
-                    $('#new_lpb').removeAttr('disabled');
+                    $('#new_bkb').removeAttr('disabled');
                     $('#camera').attr('disabled', '');
-                    $('#cancelLpb').removeAttr('disabled');
+                    $('#cancelBkb').removeAttr('disabled');
+                    $('#a_print_bkb').removeAttr('disabled');
 
                     $('#lbl_status_simpan_' + n).empty();
 
@@ -782,8 +860,6 @@
 
                     //hitung ulang stok?
                     get_stok(n, hidden_kode_barang, data.txtperiode, kode_dev);
-
-                    $('#a_print_bkb').show();
 
                     $('#hidden_id_bkb').val(data.id_stockkeluar);
 
@@ -811,7 +887,7 @@
 
         window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
 
-        $('.div_form_2').css('pointer-events', 'none');
+        // $('.div_form_2').css('pointer-events', 'none');
     }
 
     function btnRevQty(n) {

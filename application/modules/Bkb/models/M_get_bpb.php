@@ -6,8 +6,8 @@ class M_get_bpb extends CI_Model
 {
 
     var $table = 'bpb'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'norefbpb', 'keperluan', 'tglinput', 'user'); //field yang ada di table supplier  
-    var $column_search = array('id', 'norefbpb', 'keperluan', 'tglinput', 'user'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'norefbpb', 'keperluan', 'tglinput', 'user', 'devisi', 'bag'); //field yang ada di table supplier  
+    var $column_search = array('id', 'norefbpb', 'keperluan', 'tglinput', 'user', 'devisi', 'bag'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()

@@ -1,15 +1,22 @@
 <div class="container-fluid">
-      <div class="row justify-content-center mt-2">
+
+      <div class="row mt-0">
             <div class="col-12">
-                  <div class="widget-rounded-circle card-box">
-                        <div class="row justify-content-between">
-                              <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BKB</h4>
-                              <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4>
-                        </div>
-                        <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                              Bukti Keluar Barang
-                        </p>
-                        <!-- <div class="row div_form_1 mt-0">
+                  <div class="card">
+                        <div class="card-body">
+                              <div class="row justify-content-between" style="margin-top: -10px;">
+                                    <h4 class="header-title ml-2">BKB <i>(Edit)</i></h4>
+                                    <div class="button-list mr-2">
+                                          <button class="btn btn-xs btn-success" id="new_bkb" onclick="new_bkb()">BKB Baru</button>
+                                          <button class="btn btn-xs btn-danger" id="cancelBkb" onclick="cancelBkb()">Batal BKB</button>
+                                          <button class="btn btn-xs btn-primary" id="a_print_bkb" onclick="cetak_bkb()">Cetak</button>
+                                          <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                                    </div>
+                              </div>
+                              <p class="sub-header">
+                                    Bukti Keluar Barang <i>(Edit)</i>
+                              </p>
+                              <!-- <div class="row div_form_1 mt-0">
                               <div class="col-lg-2 col-12">
                                     <div class="form-group">
                                           <div class="form-group">
@@ -27,9 +34,9 @@
                                           </label>
                                           <div class="row">
                                                 <div class="row col-lg-10 col-md-10 col-11 ml-0"> -->
-                        <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
+                              <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
                                     </select> -->
-                        <!-- <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()" placeholder="pilih no BPB">
+                              <!-- <input id="cari_bpb" name="cari_bpb" class="form-control" type="text" onfocus="cari_bpb()" placeholder="pilih no BPB">
                                                       <input style="display:none;" id="multiple" class="form-control bg-light" type="text" readonly>
                                                       <input type="hidden" id="txt_no_bpb">
                                                 </div>
@@ -37,7 +44,7 @@
                                           </div>
                                     </div>
                               </div> -->
-                        <!-- <div class="col-lg-2 col-12">
+                              <!-- <div class="col-lg-2 col-12">
                                     <div class="form-group">
                                           <label for="example-select">
                                                 <font face="Verdana" size="2.5">Bagian*</font>
@@ -72,7 +79,7 @@
                               <input type="hidden" id="hidden_id_ppo">
                         </div> -->
 
-                        <!-- <fieldset style="display: none;" class="border mb-1 p-1" id="fieldset_bbm">
+                              <!-- <fieldset style="display: none;" class="border mb-1 p-1" id="fieldset_bbm">
                               <div class="row div_form_bbm mt-0">
                                     <div class="col-lg-2 col-12">
                                           <div class="form-group">
@@ -118,7 +125,7 @@
                                     </div>
                               </div>
                         </fieldset> -->
-                        <!-- <fieldset class="border mb-1 p-1">
+                              <!-- <fieldset class="border mb-1 p-1">
                               <div class="row">
                                     <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
                                           <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
@@ -145,64 +152,124 @@
                               </div>
                         </fieldset> -->
 
-                        <input type="hidden" id="hidden_id_bkb">
-                        <hr class="mt-0 mb-0">
-                        <div class="x_content div_form_2 mb-0">
-                              <div class="row justify-content-between">
-                                    <div class="row ml-2">
-                                          <h6 id="lbl_bkb_status" name="lbl_bkb_status">
-                                                <!-- <font face="Verdana" size="2.5">No. BKB : ... &nbsp; No. Ref. BKB : ...</font> -->
-                                          </h6>
-                                          <input type="hidden" id="hidden_no_bkb">
-                                          <input type="hidden" id="hidden_no_ref_bkb">
-                                          <input type="hidden" id="hidden_kode_dev">
-                                          <input type="hidden" id="hidden_devisi">
-                                          <input type="hidden" id="hidden_norefbpb">
-                                          <div class="row" style="margin-left:4px;">
-                                                <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
-                                                <h6><span id="h4_no_ref_bkb"></span></h6>
+                              <hr class="mb-0" style="margin-top: -15px;">
+                              <div class="x_content div_form_2 mb-0">
+                                    <div class="row justify-content-between">
+                                          <div class="row ml-2">
+                                                <h6 id="lbl_bkb_status" name="lbl_bkb_status">
+                                                      <!-- <font face="Verdana" size="2.5">No. BKB : ... &nbsp; No. Ref. BKB : ...</font> -->
+                                                </h6>
+                                                <input type="hidden" id="hidden_id_bkb">
+                                                <input type="hidden" id="hidden_no_bkb">
+                                                <input type="hidden" id="hidden_no_ref_bkb">
+                                                <input type="hidden" id="hidden_kode_dev">
+                                                <input type="hidden" id="hidden_devisi">
+                                                <input type="hidden" id="hidden_norefbpb">
+                                                <div class="row" style="margin-left:4px;">
+                                                      <h6>
+                                                            <span id="norefbpb_text"></span>&emsp;&emsp;&emsp;&emsp;
+                                                            <span id="h4_no_bkb"></span>&emsp;&emsp;
+                                                            <span id="h4_no_ref_bkb"></span>
+                                                      </h6>
+                                                </div>
                                           </div>
+                                          <h6 class="mr-2">
+                                                <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_bkb()"></button>
+                                          </h6>
                                     </div>
-                                    <h6 class="mr-2">
-                                          <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_bkb()"></button>
-                                    </h6>
-                              </div>
-                              <div class="table-responsive">
-                                    <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
-                                          <thead>
-                                                <tr>
-                                                      <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">TM/TBM</th>
-                                                      <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Afd/Unit</th>
-                                                      <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Blok/Sub</th>
-                                                      <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Thn&nbsp;Tanam</th>
-
-                                                      <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Bahan</th>
-                                                      <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Account Beban</th>
-                                                      <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Barang</th>
-                                                      <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Sat/Stok</th>
-                                                      <!-- <th width="8%">Qty Diminta</th> -->
-                                                      <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty Diminta</th>
-                                                      <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty Disetujui</th>
-
-                                                      <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Keterangan</th>
-                                                      <th></th>
-                                                </tr>
-                                          </thead>
-                                          <tbody id="tbody_rincian" name="tbody_rincian">
-                                          </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                          <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
+                                                <thead>
+                                                      <tr>
+                                                            <th>TM/TBM</th>
+                                                            <th>Afd/Unit</th>
+                                                            <th>Blok/Sub</th>
+                                                            <th>Thn&nbsp;Tanam</th>
+                                                            <th width="13%">Bahan</th>
+                                                            <th width="16%">Account Beban</th>
+                                                            <th width="20%">Barang</th>
+                                                            <th width="10%" style="font-size: 12px; padding: 10px; padding-left: 14px;">Sat/Stok</th>
+                                                            <th width="10%">Qty Diminta</th>
+                                                            <th width="10%">Qty Disetujui</th>
+                                                            <th width="17%">Keterangan</th>
+                                                            <th width="4%">#</th>
+                                                      </tr>
+                                                </thead>
+                                                <tbody id="tbody_rincian" name="tbody_rincian">
+                                                </tbody>
+                                          </table>
+                                    </div>
                               </div>
                         </div>
-
-
                   </div> <!-- end widget-rounded-circle-->
             </div>
       </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusBkb">
+      <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-body p-4">
+                        <div class="text-center">
+                              <i class="dripicons-warning h1 text-warning"></i>
+                              <h4 class="mt-2">Konfirmasi Hapus</h4>
+                              <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                              <p class="mt-3">Apakah Anda yakin ingin menghapus BKB ini ???</p>
+                              <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekBkb()">Hapus</button>
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+
 <input type="hidden" id="noref_bkb_edit" value="<?= $noref_bkb_edit ?>">
+<style>
+      table#tableRinciBKB th {
+            padding: 10px;
+            font-size: 12px;
+            padding-left: 17px;
+      }
+</style>
 
 <script>
+      function goBack() {
+            window.history.back();
+      }
+
+      function new_bkb() {
+            location.href = "<?php echo base_url('Bkb/input') ?>";
+      }
+
+      function cancelBkb(n) {
+
+            $('#modalKonfirmasiHapusBkb').modal('show');
+      }
+
+      function cekBkb() {
+
+            $.ajax({
+                  type: "POST",
+                  url: "<?php echo site_url('Bkb/cekDataBkb'); ?>",
+                  dataType: "JSON",
+                  beforeSend: function() {},
+
+                  data: {
+                        'noref_bkb': $('#hidden_no_ref_bkb').val()
+                  },
+                  success: function(data) {
+
+                        for (var i = 0; i < data; i++) {
+                              //delete item 1 per satu
+                              KembalikanNilaiStock(i);
+                        }
+                  },
+                  error: function(response) {
+                        alert('KONEKSI TERPUTUS! Gagal Menghapus BKB');
+                  }
+            });
+      }
+
       $(document).ready(function() {
             var noref_bkb = $('#noref_bkb_edit').val();
             cariBkbEdit(noref_bkb);
@@ -232,12 +299,15 @@
                         bkb_item = data.keluarbrgitem;
 
                         $('#h4_no_bkb').text('No. BKB : ' + stockkeluar.skb);
+                        $('#hidden_no_bkb').val(stockkeluar.skb);
                         $('#h4_no_ref_bkb').text('No. Ref BKB : ' + stockkeluar.NO_REF);
+                        $('#hidden_no_ref_bkb').val(stockkeluar.NO_REF);
                         $('#hidden_norefbpb').val(stockkeluar.nobpb);
+                        $('#norefbpb_text').text('No. Ref BPB : ' + stockkeluar.nobpb);
+                        $('#hidden_id_bkb').val(stockkeluar.id);
 
 
                         for (i = 0; i < bkb_item.length; i++) {
-                              // var no = i + 1;
 
                               tambah_row(i, bkb_item[i].approval);
                               tahun_tanam(i, bkb_item[i].kodebebantxt);
@@ -289,27 +359,27 @@
             var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
             var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- TM/TBM -->' +
-                  '<input type="text" class="form-control bg-light" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
                   '</td>';
             var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- AFD/UNIT -->' +
-                  '<input type="text" class="form-control bg-light" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
                   '</td>';
             var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- BLOK/SUB -->' +
-                  '<input type="text" class="form-control bg-light" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
                   '</td>';
             var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Tahun Tanam -->' +
-                  '<input type="text" class="form-control bg-light" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
                   '</td>';
             var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Bahan -->' +
-                  '<input type="text" class="form-control bg-light" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" disabled>' +
                   '</td>';
             var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Account Beban -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" disabled>' +
                   // '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
                   // '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
                   '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
@@ -317,28 +387,28 @@
                   '</td>';
             var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Barang -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_barang_' + row + '" name="txt_barang_' + row + '" placeholder="Barang" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_barang_' + row + '" name="txt_barang_' + row + '" placeholder="Barang" disabled>' +
                   // '<label id="lbl_kode_barang_' + row + '"></label>' +
                   // '<label id="lbl_nama_barang_' + row + '"></label>' +
                   '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
                   // '<input type="hidden" id="hidden_nama_barang_' + row + '" name="hidden_nama_barang_' + row + '" value="0">' +
                   '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
                   '</td>';
-            var td_col_9 = '<td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
-                  '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Sat&nbsp;&emsp;&nbsp;:&nbsp;</span><span id="sat_bpb_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span><br>' +
-                  '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok&nbsp;&nbsp;&nbsp;:&nbsp;</span><span id="stok_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
+            var td_col_9 = '<td style="padding-right: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
+                  '<span class="small text-muted">Sat&nbsp;:&nbsp;</span><span id="sat_bpb_' + row + '" class="small"></span><br>' +
+                  '<span class="small text-muted">Stok&nbsp;:&nbsp;</span><span id="stok_' + row + '" class="small"></span>' +
                   '</td>';
             var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" disabled>' +
+                  '<input type="number" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" disabled>' +
                   '</td>';
             var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_qty_disetujui_' + row + '" name="txt_qty_disetujui_' + row + '" placeholder="Qty Diminta" disabled>' +
+                  '<input type="number" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_disetujui_' + row + '" name="txt_qty_disetujui_' + row + '" placeholder="Qty Diminta" disabled>' +
                   '</td>';
             var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Keterangan -->' +
-                  '<textarea class="resizable_textarea form-control bg-light" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="1" placeholder="Keterangan" disabled></textarea>' +
+                  '<textarea class="resizable_textarea form-control form-control-sm bg-light" style="font-size:12px;" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="1" placeholder="Keterangan" disabled></textarea>' +
                   '<input type="hidden" id="id_keluarbrgitem_' + row + '" name="id_keluarbrgitem_' + row + '">' +
                   '</td>';
             var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +

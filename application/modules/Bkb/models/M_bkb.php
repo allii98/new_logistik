@@ -276,14 +276,18 @@ class M_bkb extends CI_Model
         $qty2 = $get_data_keluarbrgitem['qty2'];
         $txtperiode = $get_data_keluarbrgitem['txtperiode'];
 
-        $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, nilai_keluar');
+        $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, nilai_keluar, nilai_masuk, nilai_keluar, QTY_MASUK, QTY_KELUAR');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
 
         $jumlah = $stock_awal['QTY_KELUAR'] - $qty2;
 
-        $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
+        if ($stock_awal['saldoakhir_nilai'] == 0 and $stock_awal['saldoakhir_qty'] == 0) {
+            $rata2 = $stock_awal['nilai_keluar'] / $stock_awal['QTY_KELUAR'];
+        } else {
+            $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
+        }
 
         $kurangin_nilai_keluar = $rata2 * $qty2;
 

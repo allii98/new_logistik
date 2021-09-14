@@ -68,31 +68,31 @@ class Bkb extends CI_Controller
 
             if ($field->approval == 1) {
                 $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
-                data-noref="' . $field->NO_REF . '"
-                data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
+                data-noref="' . $field->NO_REF . '" data-id="' . $field->id . '" 
+                data-toggle="tooltip" data-placement="top" title="detail">
                 </button>
-                <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
             } else {
                 $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
-                data-noref="' . $field->NO_REF . '"
-                data-toggle="tooltip" data-placement="top" title="detail" onClick="detail_bkb(' . $field->id . ')">
+                data-noref="' . $field->NO_REF . '" data-id="' . $field->id . '" 
+                data-toggle="tooltip" data-placement="top" title="detail">
                 </button>
                 <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
                 data-id="' . $field->id . '"
                 data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                 </button>
-                <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
             }
 
             $row = array();
             $row[] = $aksi;
             $row[] = $no;
+            $row[] = date("d-m-Y", strtotime($field->tgl));
             $row[] = $field->NO_REF;
             $row[] = $field->nobpb;
             $row[] = $field->no_mutasi;
             $row[] = $field->bag;
             $row[] = $field->keperluan;
-            $row[] = date("Y-m-d", strtotime($field->tgl));
             $row[] = $field->USER;
 
             $data[] = $row;
@@ -228,9 +228,11 @@ class Bkb extends CI_Controller
                         data-toggle="tooltip" data-placement="top" title="detail">pilih
                         </button>';
             $row[] = $no;
+            $row[] = date("d-m-Y", strtotime($field->tglinput));
             $row[] = $field->norefbpb;
+            $row[] = $field->devisi;
+            $row[] = $field->bag;
             $row[] = $field->keperluan;
-            $row[] = date("Y-m-d", strtotime($field->tglinput));
             $row[] = $field->user;
 
             $data[] = $row;
@@ -578,7 +580,11 @@ class Bkb extends CI_Controller
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => [190, 236],
-            'setAutoTopMargin' => 'stretch',
+            'format' => 'A4',
+            // 'setAutoTopMargin' => 'stretch',
+            'margin_top' => '2',
+            'margin_left' => '5',
+            'margin_right' => '5',
             'orientation' => 'P'
         ]);
 
@@ -601,19 +607,19 @@ class Bkb extends CI_Controller
         }
 
         // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
-        $mpdf->SetHTMLHeader('
-                            <table width="100%" border="0" align="center">
-                                <tr>
-                                    <td rowspan="2" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
-                                    <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $lokasibkb . ')</td>
-                                </tr>
-                                <!--tr>
-                                    <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
-                                    </td>
-                                </tr-->
-                            </table>
-                            <hr style="width:100%;margin:0px;">
-                            ');
+        // $mpdf->SetHTMLHeader('
+        //                     <table width="100%" border="0" align="center">
+        //                         <tr>
+        //                             <td rowspan="2" width="15%" height="10px"><!--img width="10%" height="60px" style="padding-left:8px" src="././assets/img/msal.jpg"--></td>
+        //                             <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari (' . $lokasibkb . ')</td>
+        //                         </tr>
+        //                         <!--tr>
+        //                             <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+        //                             </td>
+        //                         </tr-->
+        //                     </table>
+        //                     <hr style="width:100%;margin:0px;">
+        //                     ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
         $html = $this->load->view('v_bkbPrint', $data, true);
@@ -657,22 +663,22 @@ class Bkb extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $d) {
-            if ($d->status_kasie_gudang == "1") {
-                $status = "<span style='color: green'><b>DISETUJUI<br>" . $d->tgl_kasie_gudang . "</b></span>";
-            } else {
-                $status = "DALAM PROSES";
-            }
+            // if ($d->status_kasie_gudang == "1") {
+            //     $status = "<span style='color: green'><b>DISETUJUI" . $d->tgl_kasie_gudang . "</b></span>";
+            // } else {
+            //     $status = "DALAM PROSES";
+            // }
 
             $no++;
             $row = array();
             $row[] = $no . ".";
             $row[] = $d->id;
-            $row[] = '<font face="Verdana" size="2">' . $d->kodebar . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->nabar . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->satuan . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->qty . '</font>';
-            $row[] = '<font face="Verdana" size="2">' . $d->qty2 . '</font>';
-            $row[] = $status;
+            $row[] = $d->kodebar;
+            $row[] = $d->nabar;
+            $row[] = $d->satuan;
+            $row[] = $d->qty;
+            $row[] = $d->qty2;
+            $row[] = $d->ket;
 
             $data[] = $row;
         }

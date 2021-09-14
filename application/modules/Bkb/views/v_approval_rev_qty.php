@@ -1,39 +1,59 @@
 <div class="container-fluid">
 
     <!-- start row-->
-    <div class="row justify-content-center">
+    <div class="row mt-0">
         <div class="col-12">
-            <div class="widget-rounded-circle card-box">
-                <div class="row justify-content-between">
-                    <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Approval Revisi QTY</h4>
-                    <div class="form-group">
-                        <select class="form-control" id="filter" name="filter">
-                            <option value="">Semua</option>
-                        </select>
+            <div class="card">
+                <div class="card-body">
+                    <div class="row justify-content-between" style="margin-top: -10px;">
+                        <h4 class="header-title ml-2 mb-3">Approval Revisi QTY</h4>
+                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                            <div class="row form-group mr-0">
+                                <div class="col-2">
+                                    <label for="" style="margin-top: 3px;">Filter</label>
+                                </div>
+                                <div class="col-10">
+                                    <select class="form-control form-control-sm" id="filter" name="filter">
+                                        <option value="SEMUA">TAMPILKAN SEMUA</option>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                        <option value="RO">RO</option>
+                                        <option value="HO" selected>HO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
-                </div>
 
-                <table id="tableApprovalRevQty" class="table table-sm table-striped table-bordered" width="100%">
-                    <thead>
-                        <tr>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Approval</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref BPB</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Kode Barang</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Nama Barang</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Qty</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Revisi Qty</th>
-                            <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Request Oleh</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                    <table id="tableApprovalRevQty" class="table table-sm table-striped table-bordered" width="100%">
+                        <thead>
+                            <tr>
+                                <th style="font-size: 12px; padding:10px">Approval</th>
+                                <th style="font-size: 12px; padding:10px">No.</th>
+                                <th style="font-size: 12px; padding:10px">No. Ref BPB</th>
+                                <th style="font-size: 12px; padding:10px">Kode Barang</th>
+                                <th style="font-size: 12px; padding:10px">Nama Barang</th>
+                                <th style="font-size: 12px; padding:10px">Qty</th>
+                                <th style="font-size: 12px; padding:10px">Revisi Qty</th>
+                                <th style="font-size: 12px; padding:10px">Request Oleh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<style>
+    table#tableApprovalRevQty td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+</style>
 <script>
     var table;
     $(document).ready(function() {
@@ -41,7 +61,7 @@
         //datatables
         table = $('#tableApprovalRevQty').DataTable({
 
-            "scrollY": 400,
+            // "scrollY": 400,
             "scrollX": true,
 
             "processing": true,
@@ -57,7 +77,9 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
-
+            "language": {
+                "infoFiltered": ""
+            },
         });
     });
 
