@@ -86,7 +86,7 @@ class M_bkb extends CI_Model
 
     public function get_data_bpb_qr($noref)
     {
-        $this->db_logistik_pt->select('bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev');
+        $this->db_logistik_pt->select('norefbpb, bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev');
         $this->db_logistik_pt->where('norefbpb', $noref);
         $this->db_logistik_pt->from('bpb');
         $data_bpb = $this->db_logistik_pt->get()->row_array();
