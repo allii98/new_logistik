@@ -2099,7 +2099,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var pph = $('#pph').val();
         var ppn = $('#ppn').val();
         var qty = $('#txt_qty_' + id).val();
-        console.log('nah ini', qty);
+        // console.log('nah ini', qty);
         var harga = $('#txt_harga_' + id).val();
         var diskon = $('#txt_disc_' + id).val();
         if (diskon == '') {
@@ -2288,9 +2288,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 },
                 success: function(data) {
                     // console.log(data, 'nah ini');
-                    var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
-                    var id_item_spp = $('#id_item_' + id).val();
-                    sisaQtyPO(no_ref_spp, id_item_spp, id);
 
 
                     var refspp = data.refspp;
@@ -2304,6 +2301,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#lbl_status_simpan_' + id).empty();
                         $('#lbl_spp_status').empty();
                     } else {
+                        var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                        var id_item_spp = $('#id_item_' + id).val();
+                        sisaQtyPO(no_ref_spp, id_item_spp, id);
                         $('#lbl_status_simpan_' + id).empty();
                         $.toast({
                             position: 'top-right',
@@ -2457,9 +2457,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 },
 
                 success: function(data) {
-                    var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
-                    var id_item_spp = $('#id_item_' + id).val();
-                    sisaQtyPO(no_ref_spp, id_item_spp, id);
 
                     var refspp = data.refspp;
                     var kodebar = $('#hidden_kode_brg_' + id).val();
@@ -2472,6 +2469,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#lbl_status_simpan_' + id).empty();
                         $('#lbl_spp_status').empty();
                     } else {
+                        var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                        var id_item_spp = $('#id_item_' + id).val();
+                        sisaQtyPO(no_ref_spp, id_item_spp, id);
                         $('#lbl_status_simpan_' + id).empty();
                         $.toast({
                             position: 'top-right',
@@ -2593,9 +2593,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             success: function(data) {
                 // console.log(data + 'afterupdate');
-                var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
-                var id_item_spp = $('#id_item_' + id).val();
-                sisaQtyPO(no_ref_spp, id_item_spp, id);
 
                 var refspp = $('#hidden_no_ref_spp_' + id).val();
                 var kodebar = $('#hidden_kode_brg_' + id).val();
@@ -2604,6 +2601,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                     $('#lbl_status_simpan_' + id).empty();
                 } else {
+                    var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                    var id_item_spp = $('#id_item_' + id).val();
+                    sisaQtyPO(no_ref_spp, id_item_spp, id);
                     // $('#lbl_status_simpan_1' + id).empty();
                     // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-check" style="color:#6fc1ad;"></i> Berhasil diupdate</label>');
 

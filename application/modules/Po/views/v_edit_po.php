@@ -30,10 +30,7 @@
                     ?>
                             <div class="x_content mb-0 div_form_2">
 
-                                <!-- <div class="row">
-                                    <h6 id="h4_no_po" name="h4_no_po"></h6>&emsp;&emsp;
-                                    <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                                </div> -->
+
 
                                 <table border="0" width="50%">
 
@@ -57,66 +54,51 @@
                                         <thead>
                                             <tr>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">#</font>
+                                                    #
                                                 </th>
-                                                <?php
-                                                switch ($sesi_sl) {
-                                                    case 'HO':
-                                                ?>
-                                                        <th>
-                                                            <font face="Verdana" size="1.5">SPP</font>
-                                                        </th>
-                                                    <?php
-                                                        break;
-                                                    case 'RO':
-                                                    case 'SITE':
-                                                    case 'PKS':
-                                                    ?>
-                                                <?php
-                                                        break;
-                                                    default:
-                                                        break;
-                                                }
-                                                ?>
+
+                                                <th>
+                                                    SPP
+                                                </th>
 
                                                 <!-- <th>
-                                                    <font face="Verdana" size="1.5">Jenis Budget</font>
+                                                    Jenis Budget
                                                 </th> -->
 
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Nama&nbsp;&<br>Kode&nbsp;Barang</font>
+                                                    Nama&nbsp;&<br>Kode&nbsp;Barang
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Merk</font>
+                                                    Merk
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Qty</font>
-                                                </th>
-
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Harga</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Kurs</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Disc <span>%</span></font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Biaya Lainnya</font>
-                                                </th>
-                                                <th>
-                                                    <font face="Verdana" size="1.5">Ket.&nbsp;Biaya</font>
+                                                    Qty
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Keterangan</font>
+                                                    Harga
+                                                </th>
+                                                <th>
+                                                    Kurs
+                                                </th>
+                                                <th>
+                                                    Disc <span>%</span>
+                                                </th>
+                                                <th>
+                                                    Biaya Lainnya
+                                                </th>
+                                                <th>
+                                                    Ket.&nbsp;Biaya
+                                                </th>
+
+                                                <th>
+                                                    Keterangan
                                                 </th>
                                                 <!-- <th>
-                                                    <font face="Verdana" size="1.5">Jumlah&nbsp;Rp</font>
+                                                    Jumlah&nbsp;Rp
                                                 </th> -->
                                                 <th>
-                                                    <font face="Verdana" size="1.5">#</font>
+                                                    #
                                                 </th>
                                             </tr>
                                         </thead>
@@ -140,20 +122,20 @@
                                         </font>
                                     </td> -->
                                     <td width="15%">
-                                        <font face="Verdana" size="1.5">
-                                            <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
-                                        </font>
+
+                                        <h6 id="h4_no_ref_spp" name="h4_no_ref_spp"></h6>
+
                                     </td>
                                     <!-- <td width="7%">
-                                        <font face="Verdana" size="1.5">
+                                        
                                             <h6 id="tgl_po" name="tgl_po">
                                             </h6>
-                                        </font>
+                                        
                                     </td> -->
                                     <td width="15%">
-                                        <font face="Verdana" size="1.5">
-                                            <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
-                                        </font>
+
+                                        <h6 id="h4_no_ref_po" name="h4_no_ref_po"></h6>
+
 
                                     </td>
 
@@ -174,44 +156,44 @@
 
 
                                                 <!-- <th>
-                                                    <font face="Verdana" size="1.5">Jenis Budget</font>
+                                                    Jenis Budget
                                                 </th> -->
                                                 <th>
-                                                    <font face="Verdana" size="1.5">#</font>
+                                                    #
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Nama&nbsp;&&nbsp;Kode&nbsp;Barang</font>
+                                                    Nama&nbsp;&&nbsp;Kode&nbsp;Barang
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Merk</font>
+                                                    Merk
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Qty</font>
+                                                    Qty
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Harga</font>
+                                                    Harga
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Kurs</font>
+                                                    Kurs
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Disc<span>%</span></font>
+                                                    Disc<span>%</span>
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Biaya&nbsp;Lainnya</font>
+                                                    Biaya&nbsp;Lainnya
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Ket.&nbsp;Biaya</font>
+                                                    Ket.&nbsp;Biaya
                                                 </th>
 
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Keterangan</font>
+                                                    Keterangan
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">Jumlah&nbsp;Rp</font>
+                                                    Jumlah&nbsp;Rp
                                                 </th>
                                                 <th>
-                                                    <font face="Verdana" size="1.5">#</font>
+                                                    #
                                                 </th>
                                             </tr>
                                         </thead>
@@ -424,6 +406,19 @@
         padding: 10px;
         font-size: 12px;
         padding-left: 17px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0;
+        /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+        /* Firefox */
     }
 </style>
 
@@ -1195,13 +1190,15 @@
             '<textarea class="form-control form-control-sm" id="txt_merk_' + no + '" name="txt_merk_' + no + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" >' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + no + '" name="txt_qty' + no + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + no + ')" >' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + no + '" name="qty' + no + '" placeholder="Qty" size="8" >' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + no + '" name="qty2' + no + '" placeholder="Qty" size="8"/>' +
+            '<span class="small text-muted" style="font-size: 11px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + no + '" class="small" style="font-size: 11px;"></span><br>' +
+            '<span class="small text-muted" style="font-size: 11px;">SIsa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + no + '" class="small" style="font-size: 11px;"></span>' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + no + '" name="txt_harga_' + no + '" onkeyup="jumlah(' + no + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_harga_' + no + '" name="txt_harga_' + no + '" onkeyup="jumlah(' + no + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1216,11 +1213,11 @@
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + no + '" name="txt_disc_' + no + '" size="8" value="0" onkeyup="jumlah(' + no + ')" placeholder="Disc"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_disc_' + no + '" name="txt_disc_' + no + '" size="8" value="0" onkeyup="jumlah(' + no + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + no + '" name="txt_biaya_lain_' + no + '" size="15" value="0" onkeyup="jumlah(' + no + ')" placeholder="Biaya Lain"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + no + '" name="txt_biaya_lain_' + no + '" size="15" value="0" onkeyup="jumlah(' + no + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1267,7 +1264,13 @@
 
         $('#tbody_item').append(tr_buka + form_buka + td_col_1 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
 
-        $('#txt_qty_' + no + ',#txt_harga_' + no + ',#txt_disc_' + no + ',#txt_biaya_lain_' + no + '').number(true, 0);
+        // $('#txt_qty_' + no + ',#txt_harga_' + no + ',#txt_disc_' + no + ',#txt_biaya_lain_' + no + '').number(true, 0);
+        $('#txt_qty_' + no + ',#qty_' + no + ',#qty2_' + no + ',#txt_harga_' + no + ',#txt_biaya_lain_' + no + ',#txt_disc_' + no + '').on("keypress keyup blur", function(event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
 
         // if (no == 1) {
         //     $('#btn_hapus_row_' + no).hide();
@@ -1508,6 +1511,39 @@
         });
     }
 
+    function sisaQtyPO(no_ref_spp, id_item_spp, n) {
+        console.log('sisa qty no ' + n);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/sum_sisa_qty_spp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref_spp': no_ref_spp,
+                'id_item_spp': id_item_spp,
+            },
+            success: function(data) {
+                console.log('apa ini', data);
+                var qty = data.qty;
+                var qty2 = data.qty2;
+                // $('#sisa_qty_' + n).text(data);
+
+                if (qty2 != null) {
+                    var hasil = qty - qty2;
+                    $('#qty_po_' + n).text(qty2);
+                    $('#sisa_qty_' + n).text(hasil);
+                } else {
+                    $('#qty_po_' + n).text("0");
+                    $('#sisa_qty_' + n).text(qty);
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
+            }
+        });
+    }
+
     function cari_po_edit(nopo) {
         $.ajax({
             type: "POST",
@@ -1521,6 +1557,8 @@
             },
             success: function(data) {
                 // console.log(data);
+
+
 
                 var po = data.po;
                 // var item_ppo = data.item_ppo;
@@ -1608,6 +1646,10 @@
                     $('#txt_harga_' + i).val(harga);
                     $('#txt_jumlah_' + i).val(jumharga);
 
+                    var no_ref_spp = norefppo;
+                    var id_item_spp = iditemspp;
+                    sisaQtyPO(no_ref_spp, id_item_spp, i);
+
                     var bilangan = jumharga;
                     var number_string = bilangan.toString(),
                         sisa = number_string.length % 3,
@@ -1618,8 +1660,11 @@
                         separator = sisa ? '.' : '';
                         rupiah += separator + ribuan.join('.');
                     }
-                    $('#jumlah_' + i).val(rupiah);
-                    $('#hasil_jumlah_' + i).html(rupiah);
+                    $('#jumlah_' + i).val(jumharga);
+                    $('#hasil_jumlah_' + i).html(jumharga);
+                    $('#hasil_jumlah_' + i).number(true, 2);
+                    $('#jumlah_' + i).number(true, 2);
+
                     $('#id_item_po' + i).val(iditem);
                     $('#id_item_' + i).val(iditemspp);
                     $('#hidden_id_po_item_' + i).val(iditem);
@@ -1839,12 +1884,14 @@
             '<textarea class="form-control form-control-sm" id="txt_merk_' + row + '" name="txt_merk_' + row + '" size="26" placeholder="Merk" rows="3"></textarea><br />' +
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
+            '<span class="small text-muted" style="font-size: 11px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-size: 11px;"></span><br>' +
+            '<span class="small text-muted" style="font-size: 11px;">SIsa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-size: 11px;"></span>' +
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_harga_' + row + '" name="txt_harga_' + row + '" onkeyup="jumlah(' + row + ')" placeholder="Harga dalam Rupiah" size="15" autocomplite="off" /><br />' +
             '</td>';
         var td_col_7 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<select class="form-control form-control-sm" id="cmb_kurs_' + row + '" name="cmb_kurs_' + row + '" required="">' +
@@ -1858,10 +1905,10 @@
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="10" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
             '</td>';
         var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')" rows="3"></textarea><br />' +
@@ -1891,7 +1938,15 @@
         var lokasi = $('#lokasi').val();
 
         $('#tbody_item').append(tr_buka + form_buka + td_col_1 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + form_tutup + tr_tutup);
-        $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
+        // $('#txt_qty_' + row + ',#txt_harga_' + row + ',#txt_disc_' + row + ',#txt_biaya_lain_' + row + '').number(true, 0);
+        $('#txt_qty_' + row + ',#qty_' + row + ',#qty2_' + row + ',#txt_harga_' + row + ',#txt_biaya_lain_' + row + ',#txt_disc_' + row + '').on("keypress keyup blur", function(event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
         } else {
@@ -2050,13 +2105,15 @@
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" />' +
+            '<span class="small text-muted" style="font-size: 11px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + n + '" class="small" style="font-size: 11px;"></span><br>' +
+            '<span class="small text-muted" style="font-size: 11px;">SIsa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + n + '" class="small" style="font-size: 11px;"></span>' +
 
             '</td>';
         var td_col_6 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -2071,11 +2128,11 @@
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -2107,7 +2164,13 @@
         var lokasi = $('#lokasi').val();
 
         $('#tbody_rincian').append(tr_buka + form_buka + td_col_1 + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
-        $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
+        // $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
+        $('#txt_qty_' + n + ',#qty_' + n + ',#qty2_' + n + ',#txt_harga_' + n + ',#txt_biaya_lain_' + n + ',#txt_disc_' + n + '').on("keypress keyup blur", function(event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
         hitungqty(n);
         jumlah(n);
         return true;
@@ -2170,13 +2233,15 @@
 
             '</td>';
         var td_col_5 = '<td width="7%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" size="8" onkeyup="jumlah(' + n + ')" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty_' + n + '" name="qty_' + n + '" placeholder="Qty" size="8" />' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + n + '" name="qty2_' + n + '" placeholder="Qty" size="8" />' +
+            '<span class="small text-muted" style="font-size: 11px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + n + '" class="small" style="font-size: 11px;"></span><br>' +
+            '<span class="small text-muted" style="font-size: 11px;">SIsa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + n + '" class="small" style="font-size: 11px;"></span>' +
 
             '</td>';
         var td_col_6 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
+            '<input type="number" class="form-control form-control-sm" id="txt_harga_' + n + '" name="txt_harga_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Harga dalam Rupiah" size="15" required /><br />' +
 
             '</td>';
         var td_col_7 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -2191,11 +2256,11 @@
             '</select><br />' +
             '</td>';
         var td_col_8 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_disc_' + n + '" name="txt_disc_' + n + '" size="10" value="0" onkeyup="jumlah(' + n + ')" placeholder="Disc"/>' +
 
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="text" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
+            '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
         var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -2227,7 +2292,13 @@
         var lokasi = $('#lokasi').val();
 
         $('#tbody_rincian').append(tr_buka + form_buka + td_col_1 + td_col_2 + td_col_ + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_13 + form_tutup + tr_tutup);
-        $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
+        // $('#txt_qty_' + n + ',#txt_harga_' + n + ',#txt_disc_' + n + ',#txt_biaya_lain_' + n + '').number(true, 0);
+        $('#txt_qty_' + n + ',#qty_' + n + ',#qty2_' + n + ',#txt_harga_' + n + ',#txt_biaya_lain_' + n + ',#txt_disc_' + n + '').on("keypress keyup blur", function(event) {
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
         hitungqty(n);
         jumlah(n);
         // tittle(n);
@@ -2350,20 +2421,22 @@
         }
 
         // mengitung pph dan ppn if true condition
-        var hargaDisc = (parseInt(harga) * parseInt(disc)) / 100;
-        var hargaSetelahDisc = parseInt(harga) - parseInt(hargaDisc);
+        var hargaDisc = (parseFloat(harga) * parseInt(disc)) / 100;
+        var hargaSetelahDisc = parseFloat(harga) - parseInt(hargaDisc);
 
         var qty_harga = qty * hargaSetelahDisc;
         if (pph != 0) {
-            var jml_pph = pph / 100;
-            var total_pph = qty_harga * jml_pph;
+            // var jml_pph = pph / 100;
+            // var total_pph = qty_harga * jml_pph;
+            var total_pph = 0;
         } else {
             var total_pph = 0;
         }
 
         if (ppn == 10) {
-            var jml_ppn = ppn / 100;
-            var total_ppn = qty_harga * jml_ppn;
+            // var jml_ppn = ppn / 100;
+            // var total_ppn = qty_harga * jml_ppn;
+            var total_ppn = 0;
         } else {
             var total_ppn = 0;
         }
@@ -2371,10 +2444,10 @@
         var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
 
         var tot_nilai = nilai + total_pph + total_ppn;
-        // console.log(nilai);
 
         var jum = tot_nilai.toFixed(2);
 
+        console.log('ini jumlahnya', jum);
         $('#txt_jumlah_' + id).val(jum);
         var bilangan = tot_nilai.toFixed(2);
         var number_string = bilangan.toString(),
@@ -2386,8 +2459,10 @@
             separator = sisa ? '.' : '';
             rupiah += separator + ribuan.join('.');
         }
-        $('#jumlah_' + id).val(rupiah);
-        $('#hasil_jumlah_' + id).html(rupiah);
+        $('#jumlah_' + id).val(jum);
+        $('#hasil_jumlah_' + id).html(jum);
+        $('#hasil_jumlah_' + id).number(true, 2);
+        $('#jumlah_' + id).number(true, 2);
     }
 
     function saveRinciEnter(e, no) {
@@ -2631,12 +2706,16 @@
                 },
                 success: function(data) {
                     // console.log(data, 'nah ini');
+
                     if (data.site_lebih_dari15 == 1) {
                         swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                         $('#lbl_status_simpan_' + id).empty();
                         $('#lbl_spp_status').empty();
                     } else {
                         $('#lbl_status_simpan_' + id).empty();
+                        var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                        var id_item_spp = $('#id_item_' + id).val();
+                        sisaQtyPO(no_ref_spp, id_item_spp, id);
 
                         $.toast({
                             position: 'top-right',
@@ -2725,12 +2804,17 @@
                     txt_jumlah: $('#txt_jumlah_' + id).val(),
                 },
                 success: function(data) {
+
                     if ((data.site_lebih_dari15 == 1)) {
                         swal('User SITE tidak boleh PO lebih dari Rp. 1.500.000!');
                         $('#lbl_status_simpan_' + id).empty();
                         $('#lbl_spp_status').empty();
                     } else {
                         $('#lbl_status_simpan_' + id).empty();
+                        var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                        var id_item_spp = $('#id_item_' + id).val();
+                        sisaQtyPO(no_ref_spp, id_item_spp, id);
+                        
                         $.toast({
                             position: 'top-right',
                             heading: 'Success',
