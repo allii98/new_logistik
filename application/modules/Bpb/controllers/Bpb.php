@@ -377,9 +377,17 @@ class Bpb extends CI_Controller
         echo json_encode($data);
     }
 
+    function get_devisi()
+    {
+        $kodedev = $this->input->post('kodedev');
+        $data = $this->db_logistik_pt->query("SELECT PT FROM tb_devisi WHERE kodetxt='$kodedev'")->row();
+        echo json_encode($data);
+    }
+
     function list_barang()
     {
-
+        $kodedev = $this->input->post('kode_dev');
+        $this->M_brg->where_datatables($kodedev);
         $list = $this->M_brg->get_datatables();
         $data = array();
         $no = $_POST['start'];

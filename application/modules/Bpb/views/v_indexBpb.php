@@ -1,38 +1,40 @@
 <div class="container-fluid">
     <!-- start page title -->
-    <!-- <div class="row">
-        <div class="col-12">
-            <div class="page-title-box">
-
-                <h4 class="page-title"></h4>
-            </div>
-        </div>
-    </div> -->
-
     <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-2 justify-content-between">
-                        <h4 class="header-title mb-3"><?= $title; ?></h4>
-                        <a class="btn btn-info btn-rounded waves-effect waves-light mr-2" id="btn_input" href="<?= base_url('Bpb/input') ?>">Input BPB</a>
+                    <div class="row mb-0 ml-0 justify-content-between">
+                        <h4 class="header-title mb-2"><?= $title; ?></h4>
+                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                            <div class="row form-group mr-0">
+                                <div class="col-2">
+                                    <label for="" style="margin-top: 3px;">Filter</label>
+                                </div>
+                                <div class="col-10">
+                                    <select class="form-control form-control-sm" id="filter" name="filter">
+                                        <option value="SEMUA">TAMPILKAN SEMUA</option>
+                                        <option value="HO" selected>HO</option>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                        <option value="RO">RO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="margin-top: -15px;">
                         <table id="tableListBPB" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="width: 1px;">#</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No. Ref. BPB</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Item Barang</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em; width: 88px;">Keperluan</th>
-
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl Input</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Diminta Oleh</th>
-                                    <!-- <th>KTU</th> -->
-                                    <!-- <th>Mgr</th> -->
-                                    <!-- <th>GM</th> -->
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Approval</th>
+                                    <th style="width: 1px;" style="font-size: 12px; padding:10px">#</th>
+                                    <th style="font-size: 12px; padding:10px">No</th>
+                                    <th style="font-size: 12px; padding:10px">No.&nbsp;Ref.&nbsp;BPB</th>
+                                    <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Keperluan</th>
+                                    <th style="font-size: 12px; padding:10px">Tgl&nbsp;Input</th>
+                                    <th style="font-size: 12px; padding:10px">Diminta&nbsp;Oleh</th>
+                                    <th style="font-size: 12px; padding:10px">Approval</th>
                                 </tr>
                             </thead>
 
@@ -48,7 +50,7 @@
 
 
     <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="pp" data-backdrop="static">
-        <div class="modal-dialog modal-xl">
+        <div class="modal-dialog modal-full-width">
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title" id="myModalLabel">List Item BPB</h4>
@@ -62,22 +64,22 @@
                         <table id="pp" class="table table-striped table-bordered" width="100%">
                             <thead>
                                 <tr>
-                                    <th>No.</th>
-                                    <th>No. BPB</th>
-                                    <th>No. REF BPB</th>
-                                    <th>Kode Barang</th>
-                                    <th>Nama Barang</th>
-                                    <th>Qty Diminta</th>
-                                    <th>Qty Disetujui</th>
-                                    <th>Satuan</th>
-                                    <th>Asisten Afd</th>
-                                    <th>Kepala Kebun</th>
-                                    <th>Kasie Agronomi</th>
-                                    <th>KTU</th>
-                                    <!-- <th>Manager</th> -->
-                                    <th>GM</th>
-                                    <th>Kasie Gudang</th>
-                                    <th>Kasie Pembukuan</th>
+                                    <th style="font-size: 12px; padding:10px">No.</th>
+                                    <th style="font-size: 12px; padding:10px">No. BPB</th>
+                                    <th style="font-size: 12px; padding:10px">No. REF BPB</th>
+                                    <th style="font-size: 12px; padding:10px">Kode Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Nama Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Qty Diminta</th>
+                                    <th style="font-size: 12px; padding:10px">Qty Disetujui</th>
+                                    <th style="font-size: 12px; padding:10px">Satuan</th>
+                                    <th style="font-size: 12px; padding:10px">Asisten Afd</th>
+                                    <th style="font-size: 12px; padding:10px">Kepala Kebun</th>
+                                    <th style="font-size: 12px; padding:10px">Kasie Agronomi</th>
+                                    <th style="font-size: 12px; padding:10px">KTU</th>
+                                    <!-- <th style="font-size: 12px; padding:10px">Manager</th> -->
+                                    <th style="font-size: 12px; padding:10px">GM</th>
+                                    <th style="font-size: 12px; padding:10px">Kasie Gudang</th>
+                                    <th style="font-size: 12px; padding:10px">Kasie Pembukuan</th>
                                 </tr>
                             </thead>
 
@@ -108,29 +110,27 @@
     <!-- aprrove untuk sementara -->
 
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListApproval" data-backdrop="static">
-        <div class="modal-dialog modal-xl">
+    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListApproval">
+        <div class="modal-dialog modal-full-width">
             <div class="modal-content">
-                <div class="modal-header">
+                <div class="modal-header mb-1" style="margin-bottom: -10px;">
                     <h4 class="modal-title" id="myModalLabel">List Item BPB</h4>
                     <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- <input type="hidden" id="hidden_id_setuju" name="hidden_id_setuju"> -->
-                    <!-- <input type="hidden" id="hidden_noppotxt_setuju" name="hidden_noppotxt_setuju"> -->
-                    <div class="table-responsive">
-                        <table id="tableListBPBItem" class="table table-striped table-bordered" width="100%">
+                    <div class="table-responsive" style="margin-top: -20px;">
+                        <table id="tableListBPBItem" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                             <thead>
                                 <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No.</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. BPB</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">No. REF BPB</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Kode Barang</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Nama Barang</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Diminta</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Qty Disetujui</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:11px; padding: 0.6em;">Status BPB</th>
+                                    <th style="font-size: 12px; padding:10px">No.</th>
+                                    <th style="font-size: 12px; padding:10px">No. BPB</th>
+                                    <th style="font-size: 12px; padding:10px">No. REF BPB</th>
+                                    <th style="font-size: 12px; padding:10px">Kode Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Nama Barang</th>
+                                    <th style="font-size: 12px; padding:10px">Qty Diminta</th>
+                                    <th style="font-size: 12px; padding:10px">Qty Disetujui</th>
+                                    <th style="font-size: 12px; padding:10px">Status BPB</th>
                                 </tr>
                             </thead>
 
@@ -138,9 +138,9 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th style="text-align: center;" colspan="8"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button><br>
+                                    <th style="text-align: center; padding:15px" colspan="8"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button>
                                         <br>
-                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" id="btn_setuju_all" onclick="no_approve()" data-placement="left">No Approve</button>
+                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" id="btn_setuju_all" onclick="no_approve()" data-placement="left" style="margin-top: 1px;">No Approve</button>
                                     </th>
                                 </tr>
                             </tfoot>
@@ -174,6 +174,19 @@
         </div>
     </div>
 </div>
+<style>
+    table#tableListBPB td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#tableListBPBItem td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+</style>
 
 
 <script>

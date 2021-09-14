@@ -1,160 +1,176 @@
 <div class="container-fluid">
 
-    <div class="row justify-content-center mt-0">
-        <div class="col-md">
-            <div class="widget-rounded-circle card-box mt-2">
+    <div class="row mt-0">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
 
-                <h4 class="header-title">
-                    <font face="Verdana"> BPB <i>(Edit)</i> </font>
-                </h4>
-                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
-                    Edit Bon Permintaan Barang
-                </p>
+                    <div class="row justify-content-between">
+                        <h4 class="header-title">
+                            BPB <i>(Edit)</i>
+                        </h4>
+                        <div class="button-list mr-2">
 
-                <!-- <div class="row div_form_1">
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off">
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Untuk keperluan
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <textarea class="resizable_textarea form-control" rows="1" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
-                                </div>
-                            </div>
+                            <button onclick="new_bpb()" class="btn btn-xs btn-success" id="a_po_baru">BPB Baru</button>
+                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po">Batal BPB</button>
+                            <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
+                            <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan Bakar
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <select class="form-control bg-light" id="bhnbakar" name="bhnbakar" disabled>
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
-                                        <option value="BBM">BBM</option>
-                                        <option value="NONBBM">NON BBM</option>
-                                    </select>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="row">
 
-                            <div class="form-group row mb-1">
-                                <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <select class="form-control bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
-                                        <option value="03">03</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                    </select>
-                                    <div id="txt_estate"></div>
+                        <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
+                            Edit Bon Permintaan Barang
+                        </p>
+                    </div>
+
+
+                    <!-- <div class="row div_form_1">
+                                <div class="col-md-4">
+                                    <div class="form-group row mb-1">
+        
+                                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl&nbsp;BPB
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <input id="txt_tgl_bpb" name="txt_tgl_bpb" class="form-control" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" type="date" value="<?= date('Y-m-d') ?>" autocomplite="off">
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-1">
+                                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Untuk keperluan
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <textarea class="resizable_textarea form-control" rows="1" id="txt_untuk_keperluan" name="txt_untuk_keperluan" placeholder="Untuk keperluan" required="" autocomplite="off"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="col-md-4">
+                                    <div class="form-group row mb-1">
+                                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bagian
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <select class="form-control" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
+                                                <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-1">
+                                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan Bakar
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <select class="form-control bg-light" id="bhnbakar" name="bhnbakar" disabled>
+                                                <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih --</option>
+                                                <option value="BBM">BBM</option>
+                                                <option value="NONBBM">NON BBM</option>
+                                            </select>
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group row mb-1">
+                                        <label class="control-label col-md-2 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Alokasi Estate
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <select class="form-control bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
+                                                <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">-- Pilih --</option>
+                                                <option value="03">03</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="21">21</option>
+                                                <option value="22">22</option>
+                                            </select>
+                                            <div id="txt_estate"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                &nbsp;
+                                <div class="col-md-3" id="databbm">
+                                    <div class="form-group row mb-1">
+        
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;Alat/Kend
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-1">
+        
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode/Nomor
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-1">
+        
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">HM/KM
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row mb-1">
+        
+                                        <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Kerja
+                                        </label>
+                                        <div class="col-md-1"></div>
+                                        <div class="col-md-7">
+                                            <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+        
+        
+                            </div> -->
+
+                    <hr style="margin-top: -15px;">
+                    <div class="row div_form_2" style="margin-top: -25px;">
+                        <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
+                            <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
+                            <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
+                            <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
+                            <input type="hidden" id="hidden_kode_dev" name="hidden_kode_dev">
                         </div>
-                        &nbsp;
-                        <div class="col-md-3" id="databbm">
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis&nbsp;Alat/Kend
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_jns_alat" name="txt_jns_alat" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode/Nomor
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_kd_nmr" name="txt_kd_nmr" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">HM/KM
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_hm_km" name="txt_hm_km" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="control-label col-md-4 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Lokasi&nbsp;Kerja
-                                </label>
-                                <div class="col-md-1"></div>
-                                <div class="col-md-7">
-                                    <input id="txt_lokasi_kerja" name="txt_lokasi_kerja" class="form-control form-control-sm bg-light" style="font-family: Verdana, Geneva, Tahoma, sans-serif;" required="required" value="" placeholder="" autocomplite="off" disabled>
-                                </div>
-                            </div>
+                        <div class="row" style="margin-left:4px;">
+                            <label id="lbl_bpb_status" name="lbl_bpb_status">No. Ref. BPB : ...</label>
+                            <!-- <h6 id="h4_no_bpb" name="h4_no_bpb"></h6>&nbsp;&nbsp; -->
+                            <h6 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h6>
                         </div>
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-in" id="tableRinciBPB">
+                                <thead>
+                                    <tr>
+                                        <!-- <th width="3%"></th> -->
+                                        <th width="10%">TM/TBM</th>
+                                        <th width="10%">Afd/Unit</th>
+                                        <th width="8%">Blok/Sub</th>
+                                        <th width="10%">Thn Tanam</th>
+                                        <th width="20%">Bahan</th>
+                                        <th width="15%">Account Beban</th>
+                                        <th width="15%">Barang/Satuan</th>
+                                        <th width="20%">Stok/Booking</th>
+                                        <th width="25%">Qty&nbsp;Diminta</th>
+                                        <!-- <th width="8%">Qty Disetujui</th> -->
+                                        <th width="25%">Keterangan</th>
+                                        <th width="3%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tbody_rincian" name="tbody_rincian">
 
-
-                    </div> -->
-
-                <hr style="margin-top: -15px;">
-                <div class="row mx-0 div_form_2" style="margin-top: -25px;">
-                    <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
-                        <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
-                        <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
-                        <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
-                        <input type="hidden" id="hidden_kode_dev" name="hidden_kode_dev">
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="row" style="margin-left:4px;">
-                        <label id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp;&nbsp;&nbsp; No. Ref. BPB : ...</label>
-                        <h6 id="h4_no_bpb" name="h4_no_bpb"></h6>&nbsp;&nbsp;
-                        <h6 id="h4_no_ref_bpb" name="h4_no_ref_bpb"></h6>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table w-100 table-striped table-bordered" role="grid" aria-describedby="scroll-horizontal-datatable_info" style="width: 1101px;" id="tableRinciBPB">
-                            <thead>
-                                <tr>
-                                    <!-- <th width="3%"></th> -->
-                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM/TBM</th>
-                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Afd/Unit</th>
-                                    <th width="8%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Blok/Sub</th>
-                                    <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Thn Tanam</th>
-                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Bahan</th>
-                                    <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Account Beban</th>
-                                    <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Barang/Satuan</th>
-                                    <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok/Booking</th>
-                                    <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Qty&nbsp;Diminta</th>
-                                    <!-- <th width="8%">Qty Disetujui</th> -->
-                                    <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</th>
-                                    <th width="3%"></th>
-                                </tr>
-                            </thead>
-                            <tbody id="tbody_rincian" name="tbody_rincian">
 
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
 
@@ -177,19 +193,19 @@
                                 <thead>
                                     <tr>
                                         <th>
-                                            <font face="Verdana" size="2.5">No.</font>
+                                            No.
                                         </th>
                                         <th>
-                                            <font face="Verdana" size="2.5">No. COA</font>
+                                            No.&nbsp;COA
                                         </th>
                                         <th>
-                                            <font face="Verdana" size="2.5">Nama Account</font>
+                                            Nama&nbsp;Account
                                         </th>
                                         <th>
-                                            <font face="Verdana" size="2.5">Type</font>
+                                            Type
                                         </th>
                                         <th>
-                                            <font face="Verdana" size="2.5">Grup</font>
+                                            Grup
                                         </th>
 
                                     </tr>
@@ -285,8 +301,28 @@
     </div>
 
 </div>
+
+<style>
+    table#tableRinciBPB th {
+        padding: 10px;
+        font-size: 12px;
+        padding-left: 17px;
+    }
+</style>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 <script>
+    function new_bpb() {
+        location.href = "<?php echo base_url('Bpb/input') ?>";
+    }
+
+    function cetak() {
+        var no_bpb = $('#hidden_no_bpb').val();
+        var id_bpb = $('#hidden_id_bpb').val();
+
+
+        window.open('<?= base_url() ?>Bpb/cetak/' + no_bpb + '/' + id_bpb, '_blank');
+        // window.open('cetak/' + no_bpb + '/' + id_bpb, '_blank');
+    }
     $(document).ready(function() {
         var id = <?php echo $this->uri->segment(4) ?>;
         var no_bpb = <?php echo $this->uri->segment(3) ?>;
@@ -315,6 +351,7 @@
                 $('#h4_no_ref_bpb').html('No. Ref BPB : ' + data.data_bpb.norefbpb);
                 $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
                 $('#hidden_id_bpb').val(data.data_bpb.id);
+                $('#hidden_no_bpb').val(data.data_bpb.nobpb);
 
                 $('#hidden_no_table').val(1);
 
@@ -334,7 +371,7 @@
                     var form_buka = '<form id="form_rinci_' + n + '" name="form_rinci_' + n + '" method="POST" action="javascript:;">';
                     var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
                         '<!-- TM/TBM -->' +
-                        '<select class="form-control set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + n + '" name="cmb_tm_tbm_' + n + '" onchange="cmb_afd_unit(' + n + ')" disabled>' +
+                        '<select class="form-control form-control-sm set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_' + n + '" name="cmb_tm_tbm_' + n + '" onchange="cmb_afd_unit(' + n + ')" disabled>' +
                         '<option value="-">-</option>' +
                         '<option value="TM">TM</option>' +
                         '<option value="TBM">TBM</option>' +
@@ -344,31 +381,31 @@
                         '</td>';
                     var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                         '<!-- AFD/UNIT -->' +
-                        '<select class="form-control set_strip_cmb" id="cmb_afd_unit_' + n + '" name="cmb_afd_unit_' + n + '" onchange="cmb_blok_sub(' + n + ')">' +
+                        '<select class="form-control form-control-sm set_strip_cmb" id="cmb_afd_unit_' + n + '" name="cmb_afd_unit_' + n + '" onchange="cmb_blok_sub(' + n + ')">' +
                         '<option value="-">-</option>' +
                         '</select>' +
                         '</td>';
                     var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                         '<!-- BLOK/SUB -->' +
-                        '<select class="form-control set_strip_cmb" id="cmb_blok_sub_' + n + '" name="cmb_blok_sub_' + n + '" onchange="cmb_tahun_tanam(' + n + ')">' +
+                        '<select class="form-control form-control-sm set_strip_cmb" id="cmb_blok_sub_' + n + '" name="cmb_blok_sub_' + n + '" onchange="cmb_tahun_tanam(' + n + ')">' +
                         '<option value="-">-</option>' +
                         '</select>' +
                         '</td>';
                     var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                         '<!-- Tahun Tanam -->' +
-                        '<select class="form-control set_strip_cmb" id="cmb_tahun_tanam_' + n + '" name="cmb_tahun_tanam_' + n + '" onchange="cmb_bahan(' + n + ')">' +
+                        '<select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_' + n + '" name="cmb_tahun_tanam_' + n + '" onchange="cmb_bahan(' + n + ')">' +
                         '<option value="-">-</option>' +
                         '</select>' +
                         '</td>';
                     var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                         '<!-- Bahan -->' +
-                        '<select class="form-control set_strip_cmb" id="cmb_bahan_' + n + '" name="cmb_bahan_' + n + '">' +
+                        '<select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_' + n + '" name="cmb_bahan_' + n + '">' +
                         '<option value="-">-</option>' +
                         '</select>' +
                         '</td>';
                     var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                         '<!-- Account Beban -->' +
-                        '<input type="text" class="form-control" id="txt_account_beban_' + n + '" value="-" name="txt_account_beban_' + n + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + n + ')" >' +
+                        '<input type="text" class="form-control form-control-sm" id="txt_account_beban_' + n + '" value="-" name="txt_account_beban_' + n + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + n + ')" >' +
                         // '<label class="control-label" id="lbl_no_acc_' + n + '"></label>' +
                         // '<label class="control-label" id="lbl_nama_acc_' + n + '"></label>' +
                         '<input type="hidden" id="hidden_no_acc_' + n + '" name="hidden_no_acc_' + n + '" value="0">' +
@@ -376,7 +413,7 @@
                         '</td>';
                     var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
                         '<!-- Barang -->' +
-                        '<input type="text" class="form-control" id="txt_barang_' + n + '" name="txt_barang_' + n + '" onfocus="cari_barang(' + n + ')" placeholder="Barang">' +
+                        '<input type="text" class="form-control form-control-sm" id="txt_barang_' + n + '" name="txt_barang_' + n + '" onfocus="cari_barang(' + n + ')" placeholder="Barang">' +
                         // '<label id="lbl_kode_barang_' + row + '"></label>' +
                         // '<label id="lbl_nama_barang_' + row + '"></label>' +
                         '<input type="hidden" id="hidden_kode_barang_' + n + '" name="hidden_kode_barang_' + n + '" value="0">' +
@@ -395,7 +432,7 @@
                         '</td>';
                     var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
                         '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-                        '<input type="text" class="form-control" id="txt_qty_diminta_' + n + '" name="txt_qty_diminta_' + n + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + n + ')">' +
+                        '<input type="text" class="form-control form-control-sm" id="txt_qty_diminta_' + n + '" name="txt_qty_diminta_' + n + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + n + ')">' +
                         '</td>';
 
                     var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
