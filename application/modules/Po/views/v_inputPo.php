@@ -2124,7 +2124,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
         $('#jumlah_' + id).val(jum);
         $('#hasil_jumlah_' + id).html(jum);
-        $('#hasil_jumlah_1').number(true, 2);
+        $('#hasil_jumlah_'+ id).number(true, 2);
         $('#jumlah_' + id).number(true, 2);
         // console.log(tot_nilai);
     }

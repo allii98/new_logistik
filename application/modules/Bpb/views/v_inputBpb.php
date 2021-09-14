@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     <hr class="mt-0 mb-2">
-                    <div class="row div_form_2">
+                    <div class="row div_form_2" style="margin-bottom: -10px;">
                         <div class="col-sm-12">
                             <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
                                 <h6 id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. BPB : ... &nbsp;&nbsp;&nbsp;&nbsp; No. Ref. BPB : ...</h6>
@@ -167,13 +167,13 @@
                                             <th width="8%">Afd/Unit</th>
                                             <th width="8%">Blok/Sub</th>
                                             <th width="8%">Thn Tanam</th>
-                                            <th width="15%">Bahan</th>
-                                            <th width="15%">Account Beban</th>
-                                            <th width="15%">Barang/Satuan</th>
-                                            <th width="15%">Stok/Booking</th>
-                                            <th width="15%">Qty&nbsp;Diminta</th>
+                                            <th width="10%">Bahan</th>
+                                            <th width="10%">Account Beban</th>
+                                            <th width="10%">Barang/Satuan</th>
+                                            <th width="10%">Stok/Booking</th>
+                                            <th width="8%">Qty&nbsp;Diminta</th>
                                             <!-- <th width="8%">Qty Disetujui</th> -->
-                                            <th width="25%">Keterangan</th>
+                                            <th width="20%">Keterangan</th>
                                             <th width="3%"></th>
                                         </tr>
                                     </thead>
@@ -244,18 +244,18 @@
                                                     Satuan :<b id="b_satuan_1" name="b_satuan_1"></b>
                                                 </span><br> -->
                                                     <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
-                                                    <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                    <span class="small text-muted" style="font-size:small;">
                                                         Stok :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
                                                     </span><br>
                                                     <input type="hidden" id="hidden_stok_tgl_ini_1" name="hidden_stok_tgl_ini_1">
-                                                    <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                                                    <span class="small text-muted" style="font-size:small;">
                                                         Booking :<b id="b_stok_booking_1" name="b_stok_booking_1"></b>
                                                     </span>
                                                     <input type="hidden" id="hidden_stok_booking_1" name="hidden_stok_booking_1">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                     <!-- Qty Diminta & Stok di Tgl ini & Satuan -->
-                                                    <input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty Diminta" autocomplite="off" onkeyup="validasi_qty_diminta('1')">
+                                                    <input type="number" class="form-control form-control-sm currencyduadigit" id="txt_qty_diminta_1" name="txt_qty_diminta_1" placeholder="Qty" autocomplite="off" onkeyup="validasi_qty_diminta('1')">
                                                 </td>
 
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
@@ -798,16 +798,16 @@
         var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             // '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
             // '<label>Stok di tgl ini : <b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></label>' +
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok :<b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></span><br>' +
-            '<input type="hidden" id="hidden_stok_tgl_ini_' + row + '" name="hidden_stok_tgl_ini_' + row + '">&nbsp;' +
+            '<span class="small text-muted" font-size:small">Stok :<b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></span><br>' +
+            '<input type="hidden" id="hidden_stok_tgl_ini_' + row + '" name="hidden_stok_tgl_ini_' + row + '">' +
 
-            '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Booking :<b id="b_stok_booking_' + row + '"  name="b_stok_booking_' + row + '"></b></span>' +
+            '<span class="small text-muted" font-size:small">Booking :<b id="b_stok_booking_' + row + '"  name="b_stok_booking_' + row + '"></b></span>' +
             '<input type="hidden" id="hidden_stok_booking_' + row + '" name="hidden_stok_booking_' + row + '">' +
             '<input type="hidden" id="hidden_satuan_' + row + '" name="hidden_satuan_' + row + '">' +
             '</td>';
         var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
-            '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-            '<input type="number" class="form-control" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + row + ')">' +
+            '<!-- Qty & Stok di Tgl ini & Satuan -->' +
+            '<input type="number" class="form-control" id="txt_qty_diminta_' + row + '" name="txt_qty_diminta_' + row + '" placeholder="Qty" onkeyup="validasi_qty_diminta(' + row + ')">' +
             '</td>';
 
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
