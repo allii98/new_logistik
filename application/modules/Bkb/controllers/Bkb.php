@@ -184,15 +184,23 @@ class Bkb extends CI_Controller
         echo json_encode($data);
     }
 
+    public function cekDataBkb()
+    {
+        $noref_bkb = $this->input->post('noref_bkb');
+        $data =  $this->db_logistik_pt->get_where('keluarbrgitem', array('NO_REF' => $noref_bkb))->num_rows();
+
+        echo json_encode($data);
+    }
+
     public function cekDataBkbItem()
     {
         $noref_bkb = $this->input->post('noref_bkb');
 
         $output = $this->M_bkb->cekDataBkbItem($noref_bkb);
 
-        if ($output >= 1) {
-            $this->M_bkb->cek_status_approve($noref_bkb);
-        }
+        // if ($output >= 1) {
+        //     $this->M_bkb->cek_status_approve($noref_bkb);
+        // }
 
         echo json_encode($output);
     }
@@ -487,6 +495,7 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['kodesubtxt']    = $this->input->post('hidden_no_acc');
         $datakeluarbrgitem['ketsub']        = $this->input->post('hidden_nama_acc');
         $datakeluarbrgitem['batal']         = '0';
+        $datakeluarbrgitem['id_user']       = $id_user;
         $datakeluarbrgitem['USER']          = $this->session->userdata('user');
         $datakeluarbrgitem['cetak']         = '0';
         $datakeluarbrgitem['posting']       = '0';
@@ -522,6 +531,10 @@ class Bkb extends CI_Controller
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_stockkeluar = $generate_id->id_stockkeluar;
 
+        $query_id = "SELECT MAX(id) as id_keluarbrgitem FROM keluarbrgitem WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_keluarbrgitem = $generate_id->id_keluarbrgitem;
+
         $data = [
             'update_stockawal_bulanan_devisi' => $result_update_stockawal_bulanan_devisi,
             'datastockkeluar' => $savedatastockkeluar,
@@ -532,6 +545,7 @@ class Bkb extends CI_Controller
             'no_bkb' => $skb,
             'noref_bkb' => $no_ref,
             'id_stockkeluar' => $id_stockkeluar,
+            'id_keluarbrgitem' => $id_keluarbrgitem,
             'txtperiode' => $txtperiode
         ];
 
