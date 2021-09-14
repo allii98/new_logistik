@@ -534,7 +534,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     </td>
                                                     <td width="35%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_rinci_1" name="txt_keterangan_rinci_1" size="26" placeholder="Keterangan" rows="2"></textarea>
-                                                        <h6>Jumlah : <span id="hasil_jumlah_1"></span></h6>
+                                                        <h6>Jumlah : <span id="hasil_jumlah_1">0.00</span></h6>
                                                         <input type="hidden" class="form-control bg-light" id="txt_jumlah_1" name="txt_jumlah_1" onkeyup="jumlah('1')" size="15" placeholder="Jumlah" readonly />
                                                         <input type="hidden" id="hidden_id_po_item_1" name="hidden_id_po_item_1">
                                                     </td>
@@ -2124,7 +2124,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
         $('#jumlah_' + id).val(jum);
         $('#hasil_jumlah_' + id).html(jum);
-        $('#hasil_jumlah_'+ id).number(true, 2);
+        $('#hasil_jumlah_' + id).number(true, 2);
         $('#jumlah_' + id).number(true, 2);
         // console.log(tot_nilai);
     }
