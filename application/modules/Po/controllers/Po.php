@@ -26,6 +26,15 @@ class Po extends CI_Controller
         $this->load->library('form_validation');
     }
 
+    function sum_sisa_qty_spp()
+    {
+        $norefspp = $this->input->post('no_ref_spp');
+        $id = $this->input->post('id_item_spp');
+
+        $data = $this->db_logistik_pt->query("SELECT qty, qty2 FROM item_ppo WHERE noreftxt='$norefspp' AND id='$id'")->row();
+        echo json_encode($data);
+    }
+
     function get_ajax()
     {
         $id = $this->input->post('data');

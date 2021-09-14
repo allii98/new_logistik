@@ -1389,6 +1389,38 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     });
 
+    function sisaQtyPO(no_ref_spp, id_item_spp, n) {
+        console.log('sisa qty no ' + n);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/sum_sisa_qty_spp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref_spp': no_ref_spp,
+                'id_item_spp': id_item_spp,
+            },
+            success: function(data) {
+                var qty = data.qty;
+                var qty2 = data.qty2;
+                // $('#sisa_qty_' + n).text(data);
+
+                if (qty2 != null) {
+                    var hasil = qty - qty2;
+                    $('#qty_po_' + n).text(qty2);
+                    $('#sisa_qty_' + n).text(hasil);
+                } else {
+                    $('#qty_po_' + n).text("0");
+                    $('#sisa_qty_' + n).text(qty);
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
+            }
+        });
+    }
+
 
     function modalSPP(id) {
         // $('#getspp').click(function() {
@@ -2256,6 +2288,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 },
                 success: function(data) {
                     // console.log(data, 'nah ini');
+                    var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                    var id_item_spp = $('#id_item_' + id).val();
+                    sisaQtyPO(no_ref_spp, id_item_spp, id);
+
+
                     var refspp = data.refspp;
                     var kodebar = $('#hidden_kode_brg_' + id).val();
                     // console.log('ini kodebar nya', kodebar);
@@ -2420,6 +2457,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 },
 
                 success: function(data) {
+                    var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                    var id_item_spp = $('#id_item_' + id).val();
+                    sisaQtyPO(no_ref_spp, id_item_spp, id);
+
                     var refspp = data.refspp;
                     var kodebar = $('#hidden_kode_brg_' + id).val();
                     // console.log('ini kodebar nya', kodebar);
@@ -2551,7 +2592,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 txt_jumlah: $('#txt_jumlah_' + id).val(),
             },
             success: function(data) {
-                console.log(data + 'afterupdate');
+                // console.log(data + 'afterupdate');
+                var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                var id_item_spp = $('#id_item_' + id).val();
+                sisaQtyPO(no_ref_spp, id_item_spp, id);
+
                 var refspp = $('#hidden_no_ref_spp_' + id).val();
                 var kodebar = $('#hidden_kode_brg_' + id).val();
                 sum_qty(refspp, kodebar);
@@ -2631,6 +2676,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     id_po_item: $('#hidden_id_po_item_' + id).val(),
                 },
                 success: function(data) {
+                    var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
+                    var id_item_spp = $('#id_item_' + id).val();
+                    sisaQtyPO(no_ref_spp, id_item_spp, id);
+
                     var refspp = $('#hidden_no_ref_spp_' + id).val();
                     var kodebar = $('#hidden_kode_brg_' + id).val();
                     sum_qty(refspp, kodebar);
