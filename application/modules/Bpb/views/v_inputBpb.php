@@ -167,11 +167,11 @@
                                             <th width="8%">Afd/Unit</th>
                                             <th width="8%">Blok/Sub</th>
                                             <th width="8%">Thn Tanam</th>
-                                            <th width="20%">Bahan</th>
+                                            <th width="15%">Bahan</th>
                                             <th width="15%">Account Beban</th>
                                             <th width="15%">Barang/Satuan</th>
-                                            <th width="20%">Stok/Booking</th>
-                                            <th width="25%">Qty&nbsp;Diminta</th>
+                                            <th width="15%">Stok/Booking</th>
+                                            <th width="15%">Qty&nbsp;Diminta</th>
                                             <!-- <th width="8%">Qty Disetujui</th> -->
                                             <th width="25%">Keterangan</th>
                                             <th width="3%"></th>

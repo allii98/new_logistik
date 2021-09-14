@@ -1128,8 +1128,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 var qtysum = qty - qty2;
                                 var b = qty - qty2;
                                 // console.log('ini qty nya', qtysum);
-                                if (b != null) {
+                                if (qty2 != null) {
                                     $('#sisa_qty_' + n).text(b);
+                                    $('#qty_po_' + n).text(qty2);
                                 } else {
                                     var j = 0;
                                     $('#qty_po_' + n).text(j);
@@ -1563,8 +1564,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="number" class="form-control form-control-sm" id="txt_qty_' + row + '" name="txt_qty' + row + '" placeholder="Qty" autocomplite="off" size="8" onkeyup="jumlah(' + row + ')">' +
             '<input type="hidden" class="form-control form-control-sm bg-light" id="qty_' + row + '" name="qty' + row + '" placeholder="Qty" size="8"  readonly>' +
             '<input type="hidden" class="form-control form-control-sm" id="qty2_' + row + '" name="qty2' + row + '" placeholder="Qty" size="8"/>' +
-            '<span class="small text-muted" style="font-size: 11px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + n + '" class="small" style="font-size: 11px;"></span><br>' +
-            '<span class="small text-muted" style="font-size: 11px;">SIsa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + n + '" class="small" style="font-size: 11px;"></span>' +
+            '<span class="small text-muted" style="font-size: 11px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_' + row + '" class="small" style="font-size: 11px;"></span><br>' +
+            '<span class="small text-muted" style="font-size: 11px;">SIsa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_' + row + '" class="small" style="font-size: 11px;"></span>' +
 
             '</td>';
         var td_col_6 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
