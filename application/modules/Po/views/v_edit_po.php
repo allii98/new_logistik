@@ -2421,8 +2421,11 @@
         }
 
         // mengitung pph dan ppn if true condition
-        var hargaDisc = (parseFloat(harga) * parseInt(disc)) / 100;
-        var hargaSetelahDisc = parseFloat(harga) - parseInt(hargaDisc);
+        // var hargaDisc = (parseFloat(harga) * parseInt(disc)) / 100;
+        // var hargaSetelahDisc = parseFloat(harga) - parseInt(hargaDisc);
+
+        var hargaDisc = (parseFloat(harga) * parseFloat(disc)) / 100;
+        var hargaSetelahDisc = parseFloat(harga) - parseFloat(hargaDisc);
 
         var qty_harga = qty * hargaSetelahDisc;
         if (pph != 0) {
@@ -2814,7 +2817,7 @@
                         var no_ref_spp = $('#hidden_no_ref_spp_' + id).val();
                         var id_item_spp = $('#id_item_' + id).val();
                         sisaQtyPO(no_ref_spp, id_item_spp, id);
-                        
+
                         $.toast({
                             position: 'top-right',
                             heading: 'Success',

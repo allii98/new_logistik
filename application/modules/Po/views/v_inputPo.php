@@ -2116,8 +2116,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
 
         // mengitung pph dan ppn if true condition
-        var hargaDisc = (parseFloat(harga) * parseInt(disc)) / 100;
-        var hargaSetelahDisc = parseFloat(harga) - parseInt(hargaDisc);
+        var hargaDisc = (parseFloat(harga) * parseFloat(disc)) / 100;
+        var hargaSetelahDisc = parseFloat(harga) - parseFloat(hargaDisc);
 
         var qty_harga = qty * hargaSetelahDisc;
         if (pph != 0) {
