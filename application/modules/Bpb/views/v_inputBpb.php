@@ -960,8 +960,8 @@
         var a = $('#hidden_stok_tgl_ini_' + no + '').val();
         var b = $('#txt_qty_diminta_' + no + '').val();
 
-        var hidden_stok_tgl_ini = $('#hidden_stok_tgl_ini_' + no + '').val();
-        var txt_qty_diminta = $('#txt_qty_diminta_' + no + '').val();
+        var hidden_stok_tgl_ini = Number(a);
+        var txt_qty_diminta = Number(b);
         if (txt_qty_diminta > hidden_stok_tgl_ini) {
             swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
             $('#txt_qty_diminta_' + no + '').val('');
@@ -983,8 +983,8 @@
         var a = $('#hidden_stok_tgl_ini_' + no + '').val();
         var b = $('#txt_qty_diminta_' + no + '').val();
 
-        var hidden_stok_tgl_ini = $('#hidden_stok_tgl_ini_' + no + '').val();
-        var txt_qty_diminta = $('#txt_qty_diminta_' + no + '').val();
+        var hidden_stok_tgl_ini = Number(a);
+        var txt_qty_diminta = Number(b);
         if (txt_qty_diminta > hidden_stok_tgl_ini) {
             swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
             $('#txt_qty_diminta_' + no + '').val('');
