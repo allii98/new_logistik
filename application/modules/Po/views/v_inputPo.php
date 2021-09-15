@@ -1049,7 +1049,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         //membuat format number pada tabel isian
         // $('#txt_harga_1,#txt_biaya_lain_1').number(true, 0);
         // $('#total_pembayaran').number(true, 2);
-        // $('#hasil_jumlah_1').number(true, 2);
+        $('#hasil_jumlah_1').number(true, 2);
         // $('#txt_disc_1').number(true, 0);
 
         $('#txt_qty_1,#qty_1,#qty2_1,#txt_harga_1,#txt_biaya_lain_1,#txt_disc_1').on("keypress keyup blur", function(event) {
