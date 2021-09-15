@@ -115,7 +115,7 @@ $logo_pt = $this->session->userdata('logo_pt');
         </tr>
         <tr>
             <td align="center" valign="baseline">
-                <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b>No. LPB : <?= $stokmasuk->noref; ?></b></h4>
+                <h3 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b>No. LPB : <?= $stokmasuk->noref; ?></b></h3>
             </td>
             <td width="8%"></td>
         </tr>

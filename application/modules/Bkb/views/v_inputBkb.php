@@ -45,7 +45,7 @@
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select" style="font-size: 12px;">Divisi*</label>
-                                <input id="devisi_text" name="devisi_text" class="form-control bg-light form-control-sm" required="required" type="text" disabled style="font-size: 12px; margin-top: -5px;">
+                                <input id="devisi_text" name="devisi_text" class="form-control bg-light form-control-sm" required="required" type="text" readonly style="font-size: 12px; margin-top: -5px;">
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
@@ -332,8 +332,42 @@
         font-size: 12px;
         padding-left: 17px;
     }
+
+    .tooltip-inner {
+        white-space: pre-wrap;
+        color: black;
+        font-weight: bold;
+        background-color: #ADD8E6;
+        font-size: 11px;
+    }
 </style>
 <script>
+    $(function() {
+        $('#devisi_text').tooltip({
+            title: tittle,
+            html: true
+        });
+    });
+
+    function tittle() {
+        var devisi_text = $('#devisi_text').val();
+
+        return devisi_text;
+    }
+
+    $(function() {
+        $('#cari_bpb').tooltip({
+            title: tittle2,
+            html: true
+        });
+    });
+
+    function tittle2() {
+        var cari_bpb = $('#cari_bpb').val();
+
+        return cari_bpb;
+    }
+
     function goBack() {
         window.history.back();
     }
@@ -378,6 +412,8 @@
         $('#cari_bpb').css('display', 'none');
         // $('#select2').next(".select2-container").hide();
         $('.div_form_2').hide();
+        tittle();
+        tittle2();
     });
 
     function modalCameraClose() {
