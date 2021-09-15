@@ -45,7 +45,7 @@
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select" style="font-size: 12px;">Divisi*</label>
-                                <input id="devisi_text" name="devisi_text" class="form-control bg-light form-control-sm" required="required" type="text" disabled style="font-size: 12px; margin-top: -5px;">
+                                <input id="devisi_text" name="devisi_text" class="form-control bg-light form-control-sm" required="required" type="text" readonly style="font-size: 12px; margin-top: -5px;">
                             </div>
                         </div>
                         <div class="col-lg-2 col-12">
@@ -98,40 +98,40 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset class="border mb-1 p-1">
-                        <div class="row">
-                            <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
-                                <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
-                                <label class="custom-control-label" for="cexbox_mutasi" style="font-size: 12px;">Mutasi?</label>
-                                <input type="hidden" id="hidden_cekbox_mutasi" value="">
-                            </div>
-                            <div class="col-3">
-                                <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled style="font-size: 12px;">
-                                    <option value="" selected disabled>Pilih PT Tujuan</option>
-                                    <?php
-                                    foreach ($pt_mutasi as $d) : {
-                                    ?>
-                                            <option value="<?= $d['kode_pt']; ?>"><?= $d['kode_pt'] . ' - ' . $d['nama_pt']; ?></option>
-                                    <?php
-                                        }
-                                    endforeach;
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="col-3">
-                                <select class="form-control form-control-sm" id="devisi_mutasi" disabled style="font-size: 12px;">
-                                </select>
-                            </div>
-                            <!-- <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4> -->
-                        </div>
-                    </fieldset>
-                    <input type="hidden" id="hidden_id_bkb">
-                    <hr class="mt-0 mb-0">
                     <div class="x_content div_form_2 mb-0">
+                        <fieldset class="border mb-1 p-1">
+                            <div class="row">
+                                <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
+                                    <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
+                                    <label class="custom-control-label" for="cexbox_mutasi" style="font-size: 12px;">Mutasi?</label>
+                                    <input type="hidden" id="hidden_cekbox_mutasi" value="">
+                                </div>
+                                <div class="col-3">
+                                    <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled style="font-size: 12px;">
+                                        <option value="" selected disabled>Pilih PT Tujuan</option>
+                                        <?php
+                                        foreach ($pt_mutasi as $d) : {
+                                        ?>
+                                                <option value="<?= $d['kode_pt']; ?>"><?= $d['kode_pt'] . ' - ' . $d['nama_pt']; ?></option>
+                                        <?php
+                                            }
+                                        endforeach;
+                                        ?>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <select class="form-control form-control-sm" id="devisi_mutasi" disabled style="font-size: 12px;">
+                                    </select>
+                                </div>
+                                <!-- <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4> -->
+                            </div>
+                        </fieldset>
+                        <hr class="mt-0 mb-0">
                         <div class="row justify-content-between">
                             <div class="row ml-2">
                                 <h6><span id="txt_norefbpb"></span></h6>
                                 <h6 id="lbl_bkb_status" name="lbl_bkb_status">No. BKB : ... &nbsp; No. Ref. BKB : ...</h6>
+                                <input type="hidden" id="hidden_id_bkb">
                                 <input type="hidden" id="hidden_id_ppo">
                                 <input type="hidden" id="hidden_no_bkb">
                                 <input type="hidden" id="hidden_no_ref_bkb">
@@ -332,8 +332,42 @@
         font-size: 12px;
         padding-left: 17px;
     }
+
+    .tooltip-inner {
+        white-space: pre-wrap;
+        color: black;
+        font-weight: bold;
+        background-color: #ADD8E6;
+        font-size: 11px;
+    }
 </style>
 <script>
+    $(function() {
+        $('#devisi_text').tooltip({
+            title: tittle,
+            html: true
+        });
+    });
+
+    function tittle() {
+        var devisi_text = $('#devisi_text').val();
+
+        return devisi_text;
+    }
+
+    $(function() {
+        $('#cari_bpb').tooltip({
+            title: tittle2,
+            html: true
+        });
+    });
+
+    function tittle2() {
+        var cari_bpb = $('#cari_bpb').val();
+
+        return cari_bpb;
+    }
+
     function goBack() {
         window.history.back();
     }
@@ -377,6 +411,9 @@
         $('#multiple').css('display', 'block');
         $('#cari_bpb').css('display', 'none');
         // $('#select2').next(".select2-container").hide();
+        $('.div_form_2').hide();
+        tittle();
+        tittle2();
     });
 
     function modalCameraClose() {
@@ -602,8 +639,8 @@
                         $('#txt_qty_disetujui_' + i).val(qty);
                     }
                     $('#txt_ket_rinci_' + i).val(ket);
-
                 }
+                $('.div_form_2').show();
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);

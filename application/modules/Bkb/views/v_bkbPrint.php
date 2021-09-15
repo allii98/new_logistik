@@ -55,7 +55,7 @@
         <!-- // jika bbm -->
         <table border="0" width="100%">
             <tr>
-                <td rowspan="4" width="12%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
+                <td rowspan="4" width="6%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
                 <td rowspan="2" align="center" valign="bottom">
                     <h2 align="center" style="margin: 0px;padding: 0px;"><u>BUKTI KELUAR BARANG (BKB)</u></h2>
                 </td>
@@ -70,7 +70,7 @@
             </tr>
             <tr>
                 <td rowspan="2" align="center" valign="baseline">
-                    <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
+                    <h3 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h3>
                 </td>
                 <td>HM/KM</td>
                 <td>:</td>
@@ -87,15 +87,17 @@
     ?>
         <table border="0" width="100%">
             <tr>
-                <td rowspan="2" width="12%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
+                <td rowspan="2" width="6%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
                 <td align="center" valign="bottom">
-                    <h2 align="center" style="margin: 0px;padding: 0px;"><u>BUKTI KELUAR BARANG (BKB)</u></h4>
+                    <h2 align="center" style="margin: 0px;padding: 0px;"><u>BUKTI KELUAR BARANG (BKB)</u></h2>
                 </td>
+                <td width="6%"></td>
             </tr>
             <tr>
                 <td align="center" valign="baseline">
-                    <h4 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h4>
+                    <h3 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h3>
                 </td>
+                <td width="6%"></td>
             </tr>
         </table>
     <?php
@@ -111,7 +113,7 @@
     <table class="singleborder" border="1" width="100%">
         <tr>
             <td align="center" rowspan="2" class="pddg" width="5%">No</td>
-            <td align="center" rowspan="2" class="pddg" width="18%">No. Kode Barang</td>
+            <td align="center" rowspan="2" class="pddg" width="15%">Kode Barang</td>
             <td align="center" rowspan="2" class="pddg" width="22%">Nama / Spesifikasi Barang</td>
             <td align="center" rowspan="2" class="pddg" width="5%">Sat</td>
             <td align="center" colspan="2" class="pddg">Jumlah</td>
@@ -130,14 +132,14 @@
         ?>
             <tr>
                 <td class="cntr"><?= $no ?></td>
-                <td><?= $listkeluarbrgitem->kodebartxt; ?></td>
-                <td><?= $listkeluarbrgitem->nabar; ?></td>
-                <td><?= $listkeluarbrgitem->satuan; ?></td>
+                <td class="pddg"><?= $listkeluarbrgitem->kodebartxt; ?></td>
+                <td class="pddg"><?= $listkeluarbrgitem->nabar; ?></td>
+                <td class="pddg"><?= $listkeluarbrgitem->satuan; ?></td>
                 <td class="cntr"><?= $listkeluarbrgitem->qty; ?></td>
                 <td class="cntr"><?= $listkeluarbrgitem->qty2; ?></td>
-                <td><?= $listkeluarbrgitem->kodebebantxt; ?></td>
-                <td><?= $listkeluarbrgitem->blok; ?></td>
-                <td><?= $listkeluarbrgitem->ket; ?></td>
+                <td class="pddg"><?= $listkeluarbrgitem->kodesubtxt; ?></td>
+                <td class="pddg"><?= $listkeluarbrgitem->blok; ?></td>
+                <td class="pddg"><?= $listkeluarbrgitem->ket; ?></td>
             </tr>
         <?php } ?>
         <tr>
