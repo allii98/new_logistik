@@ -41,7 +41,21 @@
 </head>
 
 <body>
+    <!-- <table width="100%" border="0" align="center">
+        <tr>
+            <td align="left" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</br>
+                <h5>Kebun / Unit</h5>
+            </td>
+            <td align="right" style="font-size:14px;font-weight:bold;"><img width="10%" height="60px" style="padding-right:8px" src="./assets/qrcode/lpb/<?= $id . "_" . $no_bpb   ?>.png"></td>
+        </tr>
+    </table> -->
     <table border="0" width="100%">
+        <tr>
+            <td align="left" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</br>
+                <h5>Kebun / Unit</h5>
+            </td>
+            <td align="right" style="font-size:14px;font-weight:bold;"><img width="10%" height="60px" style="padding-right:8px" src="./assets/qrcode/lpb/<?= $id . "_" . $no_bpb   ?>.png"></td>
+        </tr>
         <tr>
             <td align="center" colspan="2" valign="bottom">
                 <h3 align="center" style="margin: 0px;padding: 0px;">Bon Permintaan Bahan Bakar Minyak</h3>
@@ -49,7 +63,7 @@
         </tr><br>
         <tr>
             <td>
-                <h5>No. Ref&nbsp;&nbsp;: <?= $bpb->norefbpb; ?><br />Tanggal&nbsp;: <?= $bpb->tglinput; ?><br />Jam&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $bpb->jaminput; ?> WIB</h5>
+                <h5>No. Ref&nbsp;&nbsp;: <?= $bpb->norefbpb; ?><br />Tanggal&nbsp;: <?= date_format(date_create($bpb->tglinput), 'd-m-Y'); ?><br />Jam&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: <?= $bpb->jaminput; ?> WIB</h5>
             </td>
             <td>
 
@@ -89,7 +103,7 @@
                 <td><?= $listbpbitem->nabar; ?></td>
                 <td><?= $listbpbitem->satuan; ?></td>
                 <td><?= $listbpbitem->qty; ?></td>
-                <td><?= $listbpbitem->ket; ?></td>
+                <td><?= htmlspecialchars($listbpbitem->ket); ?></td>
             </tr>
         <?php } ?>
         <tr>
@@ -113,7 +127,7 @@
                     <tr>
                         <!-- <td align="center">(___________________)</td> -->
                         <td align="center">(___________________)</td>
-                        <td align="center">(___________________)</td>
+                        <td align="center"><img src="<?php echo base_url() ?>assets/img/approved2.png" width="15%"><br></td>
                         <!-- <td align="center"><img src="<?php echo base_url() ?>assets/img/approved2.png" width="15%"><br></td> -->
                         <td align="center">(___________________)</td>
                     </tr>

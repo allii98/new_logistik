@@ -36,7 +36,14 @@
 </head>
 
 <body>
-    <table border="0" width="100%">
+    <table width="100%" border="0" align="center">
+        <tr>
+            <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
+        </tr>
+
+    </table>
+    <hr style="width:100%;margin:0px;">
+    <table border="0" width="90%">
         <tr>
             <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bpb/<?php echo $id . "_" . $no_bpb; ?>.png"></td>
             <td align="center" valign="bottom">
@@ -49,12 +56,12 @@
             </td>
         </tr>
     </table>
-    <table width="100%">
-        <tr>
-            <!-- <td>Depart/Divisi : <?= $bpb->bag; ?></td> -->
-            <!-- <td align="right">Tanggal : <?= $bpb->tgl; ?></td> -->
-        </tr>
-    </table>
+    <!-- <table width="100%"> -->
+    <!-- <tr> -->
+    <!-- <td>Depart/Divisi : <?= $bpb->bag; ?></td> -->
+    <!-- <td align="right">Tanggal : <?= $bpb->tgl; ?></td> -->
+    <!-- </tr> -->
+    <!-- </table> -->
     <table class="singleborder" border="1" width="100%">
         <tr>
             <td align="center">No</td>
@@ -74,7 +81,7 @@
                 <td><?= $listbpbitem->nabar; ?></td>
                 <td><?= $listbpbitem->satuan; ?></td>
                 <td><?= $listbpbitem->qty; ?></td>
-                <td><?= $listbpbitem->ket; ?></td>
+                <td><?= htmlspecialchars($listbpbitem->ket); ?></td>
             </tr>
         <?php } ?>
         <tr>
