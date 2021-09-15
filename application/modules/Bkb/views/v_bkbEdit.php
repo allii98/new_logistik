@@ -614,6 +614,6 @@
 
             window.open("<?= base_url('Bkb/cetak/') ?>" + no_bkb + '/' + id, '_blank');
 
-            $('.div_form_2').css('pointer-events', 'none');
+            // $('.div_form_2').css('pointer-events', 'none');
       }
 </script>

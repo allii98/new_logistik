@@ -280,23 +280,15 @@ class Bkb extends CI_Controller
         if ($sess_lokasi == "HO") {
             $text1 = "PST";
             $text2 = "BWJ";
-            $dig_1 = "1";
-            $dig_2 = "1";
         } else if ($sess_lokasi == "SITE") {
             $text1 = "EST";
             $text2 = "SWJ";
-            $dig_1 = "6";
-            $dig_2 = "2";
         } else if ($sess_lokasi == "RO") {
             $text1 = "ROM";
             $text2 = "PKY";
-            $dig_1 = "2";
-            $dig_2 = "4";
         } else if ($sess_lokasi == "PKS") {
             $text1 = "FAC";
             $text2 = "SWJ";
-            $dig_1 = "3";
-            $dig_2 = "3";
         }
 
         // $query_id_stockkeluar = "SELECT MAX(id)+1 as id_stockkeluar FROM stockkeluar";
@@ -313,9 +305,19 @@ class Bkb extends CI_Controller
         //     $id_keluarbrgitem = 1;
         // }
 
+        $kode_devisi = $this->input->post('kode_dev');
+        $dig_1 = preg_replace("/[^1-9]/", "", $kode_devisi);
+
+        if ($this->session->userdata('status_lokasi') == "HO") {
+            $dig_2 = "1";
+        } else {
+            $dig_2 = "2";
+        }
+
         $digit = $dig_1 . $dig_2;
 
-        $query_stockkeluar = "SELECT MAX(SUBSTRING(SKBTXT, 3)) as maxid_skb from stockkeluar WHERE SKBTXT LIKE '$digit%'";
+        $hitung_digit1_2 = strlen($digit);
+        $query_stockkeluar = "SELECT MAX(SUBSTRING(SKBTXT, $hitung_digit1_2+1)) as maxid_skb from stockkeluar WHERE SKBTXT LIKE '$digit%'";
         $generate_stockkeluar = $this->db_logistik_pt->query($query_stockkeluar)->row();
         $noUrut_stockkeluar = (int)($generate_stockkeluar->maxid_skb);
         $noUrut_stockkeluar++;
