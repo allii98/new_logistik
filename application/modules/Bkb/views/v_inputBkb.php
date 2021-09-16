@@ -139,6 +139,7 @@
                                 <input type="hidden" id="hidden_devisi">
                                 <input type="hidden" id="alokasi_est">
                                 <input type="hidden" id="hidden_norefbpb">
+                                <input type="hidden" id="hidden_id_mutasi">
                                 <div class="row" style="margin-left:4px;">
                                     <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
                                     <h6><span id="h4_no_ref_bkb"></span></h6>
@@ -578,7 +579,7 @@
 
                 $('#bagian').val(data_bpb.bag);
                 $('#alokasi_est').val(data_bpb.alokasi);
-                $('#diberikan_kpd').val(data_bpb.user);
+                // $('#diberikan_kpd').val(data_bpb.user);
                 $('#utk_keperluan').val(data_bpb.keperluan);
                 $('#hidden_kode_dev').val(data_bpb.kode_dev);
                 $('#hidden_devisi').val(data_bpb.devisi);
@@ -704,6 +705,7 @@
             '<!-- Keterangan -->' +
             '<textarea class="resizable_textarea form-control form-control-sm bg-light" style="font-size:12px;" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="2" placeholder="Keterangan" disabled></textarea>' +
             '<input type="hidden" id="id_keluarbrgitem_' + row + '" name="id_keluarbrgitem_' + row + '">' +
+            '<input type="hidden" id="hidden_id_mutasi_item_' + row + '" name="hidden_id_mutasi_item_' + row + '">' +
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -882,6 +884,9 @@
 
                     $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
                     $('#hidden_no_ref_bkb').val(data.noref_bkb);
+
+                    $('#hidden_id_mutasi').val(data.id_mutasi);
+                    $('#hidden_id_mutasi_item_' + n).val(data.id_mutasi_item);
 
                     $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
 
@@ -1096,6 +1101,13 @@
     }
 
     function hapusItemBkb(n) {
+
+        if ($('#cexbox_mutasi').is(':checked')) {
+            var cexbox_mutasi = '1';
+        } else {
+            var cexbox_mutasi = '0';
+        }
+
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/hapusItemBkb'); ?>",
@@ -1107,8 +1119,10 @@
 
             data: {
                 'id_keluarbrgitem': $('#id_keluarbrgitem_' + n).val(),
+                'id_mutasi_item': $('#hidden_id_mutasi_item_' + n).val(),
                 'kodebar': $('#hidden_kode_barang_' + n).val(),
-                'norefbpb': $('#hidden_norefbpb').val()
+                'norefbpb': $('#hidden_norefbpb').val(),
+                'mutasi': cexbox_mutasi
             },
             success: function(data) {
 
@@ -1150,6 +1164,13 @@
     }
 
     function hapusBkb(n) {
+
+        if ($('#cexbox_mutasi').is(':checked')) {
+            var cexbox_mutasi = '1';
+        } else {
+            var cexbox_mutasi = '0';
+        }
+
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/hapusBkb'); ?>",
@@ -1160,7 +1181,9 @@
             },
 
             data: {
-                'noref_bkb': $('#hidden_no_ref_bkb').val()
+                'noref_bkb': $('#hidden_no_ref_bkb').val(),
+                'id_mutasi': $('#hidden_id_mutasi').val(),
+                'mutasi': cexbox_mutasi
             },
             success: function(data) {
 

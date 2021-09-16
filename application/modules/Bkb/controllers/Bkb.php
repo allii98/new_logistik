@@ -172,6 +172,11 @@ class Bkb extends CI_Controller
         $id_keluarbrgitem = $this->input->post('id_keluarbrgitem');
         $kodebar = $this->input->post('kodebar');
         $norefbpb = $this->input->post('norefbpb');
+        $mutasi = $this->input->post('mutasi');
+        $id_mutasi_item = $this->input->post('id_mutasi_item');
+        $cmb_blok_sub = $this->input->post('cmb_blok_sub');
+        $edit = $this->input->post('edit');
+        $noref_bkb = $this->input->post('noref_bkb');
 
         //ubah status_item_bkb di bpbitem
         $this->M_bkb->update_status_item_bkb($kodebar, $norefbpb);
@@ -180,6 +185,16 @@ class Bkb extends CI_Controller
         $this->M_bkb->update_status_bkb($norefbpb);
 
         $data = $this->db_logistik_pt->delete('keluarbrgitem', array('id' => $id_keluarbrgitem));
+
+        if ($mutasi == 1) {
+            if ($edit == 1) {
+                //jika dihapus nya lewat data BKB
+                $this->db_logistik_center->where(['kodebar' => $kodebar, 'blok' => $cmb_blok_sub, 'NO_REF' => $noref_bkb]);
+                $this->db_logistik_center->delete('tb_mutasi_item');
+            } else {
+                $this->db_logistik_center->delete('tb_mutasi_item', array('id' => $id_mutasi_item));
+            }
+        }
 
         echo json_encode($data);
     }
@@ -208,8 +223,19 @@ class Bkb extends CI_Controller
     public function hapusBkb()
     {
         $noref_bkb = $this->input->post('noref_bkb');
+        $mutasi = $this->input->post('mutasi');
+        $id_mutasi = $this->input->post('id_mutasi');
+        $edit = $this->input->post('edit');
 
         $data = $this->db_logistik_pt->delete('stockkeluar', array('NO_REF' => $noref_bkb));
+
+        if ($mutasi == 1) {
+            if ($edit == 1) {
+                $this->db_logistik_center->delete('tb_mutasi', array('NO_REF' => $noref_bkb));
+            } else {
+                $this->db_logistik_center->delete('tb_mutasi', array('id' => $id_mutasi));
+            }
+        }
 
         echo json_encode($data);
     }
@@ -539,6 +565,19 @@ class Bkb extends CI_Controller
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_keluarbrgitem = $generate_id->id_keluarbrgitem;
 
+        if ($mutasi == 1) {
+            $query_id = "SELECT MAX(id) as id_mutasi FROM tb_mutasi WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+            $generate_id = $this->db_logistik_center->query($query_id)->row();
+            $id_mutasi = $generate_id->id_mutasi;
+
+            $query_id = "SELECT MAX(id) as id_mutasi_item FROM tb_mutasi_item WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+            $generate_id = $this->db_logistik_center->query($query_id)->row();
+            $id_mutasi_item = $generate_id->id_mutasi_item;
+        } else {
+            $id_mutasi = NULL;
+            $id_mutasi_item = NULL;
+        }
+
         $data = [
             'update_stockawal_bulanan_devisi' => $result_update_stockawal_bulanan_devisi,
             'datastockkeluar' => $savedatastockkeluar,
@@ -550,6 +589,8 @@ class Bkb extends CI_Controller
             'noref_bkb' => $no_ref,
             'id_stockkeluar' => $id_stockkeluar,
             'id_keluarbrgitem' => $id_keluarbrgitem,
+            'id_mutasi' => $id_mutasi,
+            'id_mutasi_item' => $id_mutasi_item,
             'txtperiode' => $txtperiode
         ];
 

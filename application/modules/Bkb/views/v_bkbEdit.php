@@ -165,6 +165,7 @@
                                                 <input type="hidden" id="hidden_kode_dev">
                                                 <input type="hidden" id="hidden_devisi">
                                                 <input type="hidden" id="hidden_norefbpb">
+                                                <input type="hidden" id="hidden_mutasi">
                                                 <div class="row" style="margin-left:4px;">
                                                       <h6>
                                                             <span id="norefbpb_text"></span>&emsp;&emsp;&emsp;&emsp;
@@ -305,6 +306,7 @@
                         $('#hidden_norefbpb').val(stockkeluar.nobpb);
                         $('#norefbpb_text').text('No. Ref BPB : ' + stockkeluar.nobpb);
                         $('#hidden_id_bkb').val(stockkeluar.id);
+                        $('#hidden_mutasi').val(stockkeluar.mutasi);
 
 
                         for (i = 0; i < bkb_item.length; i++) {
@@ -543,7 +545,11 @@
                   data: {
                         'id_keluarbrgitem': $('#id_keluarbrgitem_' + n).val(),
                         'kodebar': $('#hidden_kode_barang_' + n).val(),
-                        'norefbpb': $('#hidden_norefbpb').val()
+                        'norefbpb': $('#hidden_norefbpb').val(),
+                        'cmb_blok_sub': $('#cmb_blok_sub_' + n).val(),
+                        'noref_bkb': $('#noref_bkb_edit').val(),
+                        'mutasi': $('#hidden_mutasi').val(),
+                        'edit': '1',
                   },
                   success: function(data) {
 
@@ -595,7 +601,9 @@
                   },
 
                   data: {
-                        'noref_bkb': $('#noref_bkb_edit').val()
+                        'noref_bkb': $('#noref_bkb_edit').val(),
+                        'mutasi': $('#hidden_mutasi').val(),
+                        'edit': '1'
                   },
                   success: function(data) {
 

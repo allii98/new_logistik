@@ -47,15 +47,15 @@
     <table width="100%" border="0" align="center">
         <tr>
             <td align="left" style="font-size:14px;font-weight:bold;"><?= $stockkeluar->devisi; ?></td>
+            <td width="6%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
         </tr>
     </table>
     <?php
     if ($stockkeluar->bhn_bakar == 'BBM') {
     ?>
         <!-- // jika bbm -->
-        <table border="0" width="100%">
+        <table border="0" width="100%" style="margin-top: -15px;">
             <tr>
-                <td rowspan="4" width="6%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
                 <td rowspan="2" align="center" valign="bottom">
                     <h2 align="center" style="margin: 0px;padding: 0px;"><u>BUKTI KELUAR BARANG (BKB)</u></h2>
                 </td>
@@ -87,17 +87,14 @@
     ?>
         <table border="0" width="100%">
             <tr>
-                <td rowspan="2" width="6%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
                 <td align="center" valign="bottom">
                     <h2 align="center" style="margin: 0px;padding: 0px;"><u>BUKTI KELUAR BARANG (BKB)</u></h2>
                 </td>
-                <td width="6%"></td>
             </tr>
             <tr>
                 <td align="center" valign="baseline">
                     <h3 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b><?= $stockkeluar->NO_REF; ?></b></h3>
                 </td>
-                <td width="6%"></td>
             </tr>
         </table>
     <?php
