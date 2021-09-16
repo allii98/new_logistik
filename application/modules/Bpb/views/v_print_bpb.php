@@ -1,5 +1,10 @@
 <?php
 // var_dump($bpb);exit();
+$alamat_ho = $this->session->userdata('alamat_ho');
+$alamat_site = $this->session->userdata('alamat_site');
+$logo_pt = $this->session->userdata('logo_pt');
+$lokasi = $this->session->userdata('status_lokasi');
+$nama_pt = $this->session->userdata('nama_pt');
 ?>
 
 <head>
@@ -36,32 +41,41 @@
 </head>
 
 <body>
-    <table border="0" width="100%">
+    <table width="100%" border="0" align="center">
+        <tr>
+            <td align="center" style="font-size:8.5px;">
+                <h3 style="font-size:14px;font-weight:bold;"> <?= $nama_pt   ?> </h3>
+            </td>
+        </tr>
+
+    </table>
+    <hr style="width:100%;margin:0px;">
+    <table border="0" width="90%">
         <tr>
             <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/bpb/<?php echo $id . "_" . $no_bpb; ?>.png"></td>
             <td align="center" valign="bottom">
-                <h4 align="center" style="margin: 0px;padding: 0px;">Bon Permintaan Barang</h4>
+                <h2 align="center" style="margin: 0px;padding: 0px; font-size: 12px;">Bon Permintaan Barang</h2>
             </td>
         </tr>
         <tr>
             <td align="center" valign="baseline">
-                <h5 align="center" style="margin: 0px;padding: 0px 0px 10px 0px;"><b>No. BPB : <?= $bpb->nobpb; ?> <br /> No. Ref BPB : <?= $bpb->norefbpb; ?></b></h5>
+                <h3 align="center" style="font-weight: normal;margin-top: -8px; margin-bottom:0px; font-size: 8px;">No. BPB : <?= $bpb->nobpb; ?> <br /> No. Ref BPB : <?= $bpb->norefbpb; ?></h3>
             </td>
         </tr>
     </table>
-    <table width="100%">
-        <tr>
-            <!-- <td>Depart/Divisi : <?= $bpb->bag; ?></td> -->
-            <!-- <td align="right">Tanggal : <?= $bpb->tgl; ?></td> -->
-        </tr>
-    </table>
+    <!-- <table width="100%"> -->
+    <!-- <tr> -->
+    <!-- <td>Depart/Divisi : <?= $bpb->bag; ?></td> -->
+    <!-- <td align="right">Tanggal : <?= $bpb->tgl; ?></td> -->
+    <!-- </tr> -->
+    <!-- </table> -->
     <table class="singleborder" border="1" width="100%">
         <tr>
             <td align="center">No</td>
             <td align="center">No. Kode Barang</td>
             <td align="center">Nama / Spesifikasi Barang</td>
             <td align="center">Sat</td>
-            <td align="center">Jml Diminta</td>
+            <td align="center">Jumlah Diminta</td>
             <td align="center">Keterangan</td>
         </tr>
         <?php
@@ -74,7 +88,7 @@
                 <td><?= $listbpbitem->nabar; ?></td>
                 <td><?= $listbpbitem->satuan; ?></td>
                 <td><?= $listbpbitem->qty; ?></td>
-                <td><?= $listbpbitem->ket; ?></td>
+                <td><?= htmlspecialchars($listbpbitem->ket); ?></td>
             </tr>
         <?php } ?>
         <tr>

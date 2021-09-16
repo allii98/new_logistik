@@ -170,7 +170,6 @@
                                             <th width="10%">Barang/Satuan</th>
                                             <th width="10%">Stok/Booking</th>
                                             <th width="8%">Qty&nbsp;Diminta</th>
-                                            <!-- <th width="8%">Qty Disetujui</th> -->
                                             <th width="20%">Keterangan</th>
                                             <th width="3%"></th>
                                         </tr>
@@ -188,10 +187,10 @@
                                                     <select class="form-control form-control-sm set_strip_cmb cmb_tm_tbm" id="cmb_tm_tbm_1" name="cmb_tm_tbm_1" onchange="cmb_afd_unit(1)">
                                                         <option value="-">-</option>
                                                         <!-- <option value=""></option> -->
-                                                        <option value="TM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TM</option>
-                                                        <option value="TBM" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">TBM</option>
-                                                        <option value="LANDCLEARING" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">LANDCLEARING</option>
-                                                        <option value="PEMBIBITAN" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PEMBIBITAN</option>
+                                                        <option value="TM" style="font-size: 12px;">TM</option>
+                                                        <option value="TBM" style="font-size: 12px;">TBM</option>
+                                                        <option value="LANDCLEARING" style="font-size: 12px;">LANDCLEARING</option>
+                                                        <option value="PEMBIBITAN" style="font-size: 12px;">PEMBIBITAN</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">
@@ -606,7 +605,7 @@
             data: '',
             success: function(data) {
                 $.each(data, function(index) {
-                    var opsi_cmb_bagian = '<option value="' + data[index].kode + '">' + data[index].nama + '</option>';
+                    var opsi_cmb_bagian = '<option value="' + data[index].kode + '" style="font-size: 12px">' + data[index].nama + '</option>';
                     $('#cmb_bagian').append(opsi_cmb_bagian);
                 });
             },
@@ -667,7 +666,7 @@
             data: '',
             success: function(data) {
                 $.each(data, function(index) {
-                    var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
+                    var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '" style="font-size: 12px">' + data[index].PT + '</option>';
                     $('#cmb_pilih_est').append(opsi_cmb_devisi);
                 });
             },
@@ -1741,7 +1740,7 @@
 
                 $.each(data, function(index) {
                     // var opsi_afd_unit = '<option value="'+data[index].AFD+'">'+data[index].AFD+'</option>';
-                    var opsi_afd_unit = '<option value="' + data[index].afd + '">' + data[index].afd + '</option>';
+                    var opsi_afd_unit = '<option value="' + data[index].afd + '" style="font-size: 12px">' + data[index].afd + '</option>';
                     $('#cmb_afd_unit_' + row).append(opsi_afd_unit);
                 });
                 // cmb_tahun_tanam(row);
@@ -1774,7 +1773,7 @@
                 $('#cmb_blok_sub_' + row).append(opsi_pilih_master_blok);
 
                 $.each(data, function(index) {
-                    var opsi_master_blok = '<option value="' + data[index].blok + '">' + data[index].blok + '</option>';
+                    var opsi_master_blok = '<option value="' + data[index].blok + '" style="font-size: 12px;">' + data[index].blok + '</option>';
                     $('#cmb_blok_sub_' + row).append(opsi_master_blok);
                 });
             },
@@ -1808,7 +1807,7 @@
                 $('#cmb_tahun_tanam_' + row).append(opsi_pilih_tahun_tanam);
 
                 $.each(data, function(index) {
-                    var opsi_tahun_tanam = '<option value="' + data[index].tahuntanam + '">' + data[index].tahuntanam + '</option>';
+                    var opsi_tahun_tanam = '<option value="' + data[index].tahuntanam + '" style="font-size: 12px;">' + data[index].tahuntanam + '</option>';
                     $('#cmb_tahun_tanam_' + row).append(opsi_tahun_tanam);
                 });
             },
@@ -1849,7 +1848,7 @@
 
                 $.each(data, function(index) {
                     // var opsi_cmb_bahan = '<option value="'+data[index].coa_material+'">'+data[index].coa_material+'-'+data[index].ket+'</option>';
-                    var opsi_cmb_bahan = '<option value="' + data[index][0] + '">' + data[index][1] + '-' + data[index][0] + '</option>';
+                    var opsi_cmb_bahan = '<option value="' + data[index][0] + '" style="font-size: 12px;">' + data[index][1] + '-' + data[index][0] + '</option>';
                     $('#cmb_bahan_' + row).append(opsi_cmb_bahan);
                 });
             },
@@ -1875,7 +1874,6 @@
         //datatables
         // var nopo = nopotxt;
         // console.log(cmb_bahan);
-        $('#tableAccBeban').DataTable().destroy();
         $('#tableAccBeban').DataTable({
             "destroy": true,
             "processing": true,
@@ -1891,30 +1889,27 @@
                 }
             },
 
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [10, 15, 20, 25]
-            ],
-
             "columnDefs": [{
                 "targets": [0],
                 "orderable": false,
             }, ],
-
+            "language": {
+                "infoFiltered": ""
+            },
             "columns": [{
-                    "width": "5%"
+                    "width": "3%"
                 },
                 {
-                    "width": "25%"
+                    "width": "33%"
                 },
                 {
-                    "width": "25%"
+                    "width": "50%"
                 },
                 {
-                    "width": "25%"
+                    "width": "7%"
                 },
                 {
-                    "width": "20%"
+                    "width": "7%"
                 },
 
             ],
@@ -1936,23 +1931,10 @@
     function listBarang(no_row) {
         var kode_dev = $('#devisi').val();
         // console.log(kode_dev);
-        $('#tableListBarang').DataTable().destroy();
         $('#tableListBarang').DataTable({
-            "paging": true,
-            "scrollY": false,
-            "scrollX": false,
-            "searching": true,
-            "select": true,
-            "bLengthChange": true,
-            "scrollCollapse": true,
-            "bPaginate": true,
-            "bInfo": true,
-            "bSort": false,
             "processing": true,
             "serverSide": true,
-            "stateSave": true,
             "order": [],
-            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
             "ajax": {
                 "url": "<?php echo site_url('Bpb/list_barang') ?>",
                 "type": "POST",
@@ -1965,25 +1947,20 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [10, 15, 20, 25]
-            ],
             "language": {
                 "infoFiltered": ""
             },
-
             "columns": [{
-                    "width": "3%"
+                    "width": "2%"
                 },
                 {
-                    "width": "5%"
+                    "width": "3%"
                 },
                 {
                     "width": "10%"
                 },
                 {
-                    "width": "20%"
+                    "width": "25%"
                 },
                 {
                     "width": "20%"

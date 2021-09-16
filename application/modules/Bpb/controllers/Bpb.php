@@ -979,24 +979,27 @@ class Bpb extends CI_Controller
         if ($isi == "BBM") {
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
-                'format' => [190, 236],
-                'setAutoTopMargin' => 'stretch',
+                'format' => 'A4',
+                // 'format' => [190, 236],
+                'margin_top' => '0',
+                'margin_left' => '3',
+                'margin_right' => '3',
                 'orientation' => 'P'
             ]);
 
             // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
-            $mpdf->SetHTMLHeader('
-                                <table width="100%" border="0" align="center">
-                                    <tr>
-                                        <td align="left" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</br><h5>Kebun / Unit</h5></td>
-                                        <td align="right" style="font-size:14px;font-weight:bold;"><img width="10%" height="10%" src=" ' . site_url('assets/qrcode/bpb/' . $id . "_" . $no_bpb . '.png') . '"></td>
-                                    </tr>
-                                  
-                                    
-    
-                                    
-                                </table>
-                                ');
+            // $mpdf->SetHTMLHeader('
+            //                     <table width="100%" border="0" align="center">
+            //                         <tr>
+            //                             <td align="left" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</br><h5>Kebun / Unit</h5></td>
+            //                             <td align="right" style="font-size:14px;font-weight:bold;"><img width="10%" height="10%" src=" ' . site_url('assets/qrcode/bpb/' . $id . "_" . $no_bpb . '.png') . '"></td>
+            //                         </tr>
+
+
+
+
+            //                     </table>
+            //                     ');
             // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
             $html = $this->load->view('v_cetakbpb', $data, true);
@@ -1007,28 +1010,31 @@ class Bpb extends CI_Controller
             # code...
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
-                'format' => [190, 236],
-                'setAutoTopMargin' => 'stretch',
+                'format' => 'A4',
+                // 'format' => [190, 236],
+                'margin_top' => '1',
+                'margin_left' => '3',
+                'margin_right' => '3',
                 'orientation' => 'P'
             ]);
 
             // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
-            $mpdf->SetHTMLHeader('
-                                <table width="100%" border="0" align="center">
-                                    <tr>
-                                        <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
-                                    </tr>
-                                    <!-- <tr>
-                                        <td rowspan="2" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:8px" src="' . base_url() . 'assets/img/msal.jpg"></td>
-                                        <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
-                                    </tr> -->
-                                    <!-- <tr>
-                                        <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
-                                        </td>
-                                    </tr> -->
-                                </table>
-                                <hr style="width:100%;margin:0px;">
-                                ');
+            // $mpdf->SetHTMLHeader('
+            //                     <table width="100%" border="0" align="center">
+            //                         <tr>
+            //                             <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
+            //                         </tr>
+            //                         <!-- <tr>
+            //                             <td rowspan="2" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:8px" src="' . base_url() . 'assets/img/msal.jpg"></td>
+            //                             <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
+            //                         </tr> -->
+            //                         <!-- <tr>
+            //                             <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
+            //                             </td>
+            //                         </tr> -->
+            //                     </table>
+            //                     <hr style="width:100%;margin:0px;">
+            //                     ');
             // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
             $html = $this->load->view('v_print_bpb', $data, true);
