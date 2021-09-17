@@ -57,6 +57,13 @@ class Bkb extends CI_Controller
         $this->template->load('template', 'v_inputBkb', $data);
     }
 
+    public function cari_pt_mutasi()
+    {
+        $output = $this->db_logistik_center->get('tb_pt')->result_array();
+
+        echo json_encode($output);
+    }
+
     // //Start Data Table Server Side
     public function get_data_bkb()
     {
@@ -827,6 +834,8 @@ class Bkb extends CI_Controller
             $output = $this->db_logistik_peak->get('tb_devisi')->result_array();
         } elseif ($data['pt_mutasi']['alias'] == 'KPP') {
             $output = $this->db_logistik_kpp->get('tb_devisi')->result_array();
+        } else {
+            $output = NULL;
         }
 
         echo json_encode($output);

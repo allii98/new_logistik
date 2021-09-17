@@ -108,15 +108,6 @@
                                 </div>
                                 <div class="col-3">
                                     <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled style="font-size: 12px;">
-                                        <option value="" selected disabled>Pilih PT Tujuan</option>
-                                        <?php
-                                        foreach ($pt_mutasi as $d) : {
-                                        ?>
-                                                <option value="<?= $d['kode_pt']; ?>"><?= $d['kode_pt'] . ' - ' . $d['nama_pt']; ?></option>
-                                        <?php
-                                            }
-                                        endforeach;
-                                        ?>
                                     </select>
                                 </div>
                                 <div class="col-3">
@@ -415,6 +406,7 @@
         $('.div_form_2').hide();
         tittle();
         tittle2();
+        cari_pt_mutasi('0');
     });
 
     function modalCameraClose() {
@@ -642,11 +634,38 @@
                     $('#txt_ket_rinci_' + i).val(ket);
                 }
                 $('.div_form_2').show();
+
+                //cek mutasi
+                cek_mutasi(ketsub);
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);
             }
         });
+    }
+
+    function cek_mutasi(ketsub) {
+
+        $('#cexbox_mutasi').removeAttr('checked', '');
+        $('#cexbox_mutasi').attr('disabled', '');
+        $('#devisi_mutasi').val('');
+        $('#pt_mutasi').val('');
+
+        if (ketsub == 'PSAM, PT') {
+
+            $('#cexbox_mutasi').attr('checked', '');
+            $('#cexbox_mutasi').attr('disabled', '');
+            $('#devisi_mutasi').removeAttr('disabled', '');
+            var kode_pt = '02';
+            cari_pt_mutasi(kode_pt);
+
+        } else if (ketsub == 'MAPA, PT') {
+            $('#cexbox_mutasi').attr('checked', '');
+            $('#cexbox_mutasi').attr('disabled', '');
+            $('#devisi_mutasi').removeAttr('disabled', '');
+            var kode_pt = '04';
+            cari_pt_mutasi(kode_pt);
+        }
     }
 
     function tambah_row(row, status_item_bkb, approval_item, req_rev_qty_item) {
@@ -1010,6 +1029,37 @@
         }
     }
 
+    function cari_pt_mutasi(kode_pt) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bkb/cari_pt_mutasi'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {},
+            success: function(data) {
+
+                // console.log(data);
+                var html = '';
+                var i;
+                html += '<option disabled selected>Pilih Divisi</option>';
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].kode_pt == kode_pt) {
+                        html += '<option value=' + data[i].kode_pt + ' selected>' + data[i].kode_pt + ' - ' + data[i].nama_pt + '</option>';
+                    }
+                }
+                $('#pt_mutasi').html(html);
+
+                //menjalankan jquery get divisi mutasi
+
+                //terakhir sudah jalan jquery nya tapi masih muncul eror
+                pt_mutasi();
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
+    }
+
     function pt_mutasi() {
         var kode_pt = $('#pt_mutasi').val();
 
@@ -1039,27 +1089,27 @@
         });
     }
 
-    function cekbox_mutasi() {
+    // function cekbox_mutasi() {
 
-        var mutasi = $('#hidden_cekbox_mutasi').val();
+    //     var mutasi = $('#hidden_cekbox_mutasi').val();
 
-        if (mutasi == 0) {
+    //     if (mutasi == 0) {
 
-            $('#hidden_cekbox_mutasi').val('1');
+    //         $('#hidden_cekbox_mutasi').val('1');
 
-            $('#pt_mutasi').removeAttr('disabled');
-            $('#devisi_mutasi').removeAttr('disabled');
+    //         $('#pt_mutasi').removeAttr('disabled');
+    //         $('#devisi_mutasi').removeAttr('disabled');
 
-        } else if (mutasi == 1) {
+    //     } else if (mutasi == 1) {
 
-            $('#pt_mutasi').prop('disabled', true);
-            $('#devisi_mutasi').prop('disabled', true);
+    //         $('#pt_mutasi').prop('disabled', true);
+    //         $('#devisi_mutasi').prop('disabled', true);
 
-            $('#hidden_cekbox_mutasi').val('');
-            $('#pt_mutasi').val('');
-            $('#devisi_mutasi').val('');
-        }
-    }
+    //         $('#hidden_cekbox_mutasi').val('');
+    //         $('#pt_mutasi').val('');
+    //         $('#devisi_mutasi').val('');
+    //     }
+    // }
 
     function hapusRinci(n) {
         // $('#hidden_no_delete').val(n);
