@@ -12,9 +12,9 @@ if ($this->session->userdata('app_pt') == 'MSAL') {
 }
 
 if ($stokmasuk->lokasi == 'HO') {
-      $alamat_lok = '<p style="font-size:8px">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru, JakartaSelatan, DKI Jakarta Raya-12140</p>';
+      $alamat_lok = $this->session->userdata('alamat_ho');
 } else {
-      $alamat_lok = '';
+      $alamat_lok = $this->session->userdata('alamat_site');;
 }
 
 $logo_pt = $this->session->userdata('logo_pt');
@@ -51,6 +51,10 @@ $logo_pt = $this->session->userdata('logo_pt');
             }
 
             .pddg {
+                  padding: 3px;
+            }
+
+            .pddg2 {
                   padding: 5px;
             }
 
@@ -64,8 +68,8 @@ $logo_pt = $this->session->userdata('logo_pt');
 <body>
       <table width="100%" border="0" align="center" style="margin-bottom: 5px;">
             <tr>
-                  <td rowspan="5" width="12%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/logo/<?= $logo_pt ?>"></td>
-                  <td rowspan="5" align="left" style="vertical-align: text-top; padding-top:10px">
+                  <td rowspan="5" width="11%" height="10px"><img width="10%" height="60px" style="padding-left: 0px" src="././assets/logo/<?= $logo_pt ?>"></td>
+                  <td rowspan="5" align="left" style="vertical-align: text-top; padding-top:10px; font-size:8.5px;">
                         <b style="font-size:14px"><?= $stokmasuk->pt  ?></b> <br>
                         <?= $alamat_lok ?>
                   </td>
@@ -78,31 +82,31 @@ $logo_pt = $this->session->userdata('logo_pt');
             </td>
         </tr-->
             <tr>
-                  <td>Merah</td>
-                  <td>:</td>
-                  <td>Accounting HO</td>
+                  <td style="padding-top: -5px;">Merah</td>
+                  <td style="padding-top: -5px;">:</td>
+                  <td style="padding-top: -5px;">Accounting HO</td>
             </tr>
             <tr>
-                  <td>Kuning</td>
-                  <td>:</td>
-                  <td>Gudang Est</td>
+                  <td style="padding-top: -5px;">Kuning</td>
+                  <td style="padding-top: -5px;">:</td>
+                  <td style="padding-top: -5px;">Gudang Est</td>
             </tr>
             <tr>
-                  <td>Hijau</td>
-                  <td>:</td>
-                  <td>Accounting Est</td>
+                  <td style="padding-top: -5px;">Hijau</td>
+                  <td style="padding-top: -5px;">:</td>
+                  <td style="padding-top: -5px;">Accounting Est</td>
             </tr>
             <tr>
-                  <td>Biru</td>
-                  <td>:</td>
-                  <td>Purchasing HO</td>
+                  <td style="padding-top: -5px;">Biru</td>
+                  <td style="padding-top: -5px;">:</td>
+                  <td style="padding-top: -5px;">Purchasing HO</td>
             </tr>
       </table>
 
       <hr style="width:100%;margin:0px; margin-bottom: 0%;">
       <table border="0" width="100%">
             <tr>
-                  <td rowspan="2" width="12%"><img width="10%" height="10%" src="./assets/qrcode/lpb/<?php echo $id . "_" . $no_lpb; ?>.png"></td>
+                  <td rowspan="2" width="12%"><img width="5%" height="5%" src="./assets/qrcode/lpb/<?php echo $id . "_" . $no_lpb; ?>.png"></td>
                   <td align="center" valign="bottom">
                         <h2 align="center" style="margin: 0px;padding: 0px;"><b><u>Laporan Penerimaan Barang Mutasi</u></b></h2>
                   </td>
@@ -161,12 +165,12 @@ $logo_pt = $this->session->userdata('logo_pt');
       <table border="1" width="100%" class="singleborder">
             <thead>
                   <tr>
-                        <th width="5%" class="pddg">No</th>
-                        <th width="17%" class="pddg">Kode Barang</th>
-                        <th width="30%" class="pddg">Nama Barang</th>
-                        <th width="10%" class="pddg">Qty</th>
-                        <th width="8%" class="pddg">Satuan</th>
-                        <th width="30%" class="pddg">Keterangan</th>
+                        <th width="5%" class="pddg2">No</th>
+                        <th width="15%" class="pddg2">Kode Barang</th>
+                        <th width="34%" class="pddg2">Nama Barang</th>
+                        <th width="8%" class="pddg2">Qty</th>
+                        <th width="8%" class="pddg2">Satuan</th>
+                        <th width="30%" class="pddg2">Keterangan</th>
                   </tr>
             </thead>
             <tbody>

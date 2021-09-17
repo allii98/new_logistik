@@ -672,7 +672,11 @@ class Bkb extends CI_Controller
         //                     ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
-        $html = $this->load->view('v_bkbPrint', $data, true);
+        if ($data['stockkeluar']->mutasi == 1) {
+            $html = $this->load->view('v_bkbPrint_mutasi', $data, true);
+        } else {
+            $html = $this->load->view('v_bkbPrint', $data, true);
+        }
 
         $mpdf->WriteHTML($html);
         $mpdf->Output();
@@ -825,14 +829,29 @@ class Bkb extends CI_Controller
         $data['pt_mutasi'] = $this->db_logistik_center->get_where('tb_pt', ['kode_pt' => $kode_pt])->row_array();
 
         if ($data['pt_mutasi']['alias'] == 'MSAL') {
+            $this->db_logistik_msal->where('lokasi !=', 'HO');
+            $this->db_logistik_msal->where('lokasi !=', 'RO');
+            $this->db_logistik_msal->order_by('kodetxt', 'asc');
             $output = $this->db_logistik_msal->get('tb_devisi')->result_array();
         } elseif ($data['pt_mutasi']['alias'] == 'MAPA') {
+            $this->db_logistik_mapa->where('lokasi !=', 'HO');
+            $this->db_logistik_mapa->where('lokasi !=', 'RO');
+            $this->db_logistik_mapa->order_by('kodetxt', 'asc');
             $output = $this->db_logistik_mapa->get('tb_devisi')->result_array();
         } elseif ($data['pt_mutasi']['alias'] == 'PSAM') {
+            $this->db_logistik_psam->where('lokasi !=', 'HO');
+            $this->db_logistik_psam->where('lokasi !=', 'RO');
+            $this->db_logistik_psam->order_by('kodetxt', 'asc');
             $output = $this->db_logistik_psam->get('tb_devisi')->result_array();
         } elseif ($data['pt_mutasi']['alias'] == 'PEAK') {
+            $this->db_logistik_peak->where('lokasi !=', 'HO');
+            $this->db_logistik_peak->where('lokasi !=', 'RO');
+            $this->db_logistik_peak->order_by('kodetxt', 'asc');
             $output = $this->db_logistik_peak->get('tb_devisi')->result_array();
         } elseif ($data['pt_mutasi']['alias'] == 'KPP') {
+            $this->db_logistik_kpp->where('lokasi !=', 'HO');
+            $this->db_logistik_kpp->where('lokasi !=', 'RO');
+            $this->db_logistik_kpp->order_by('kodetxt', 'asc');
             $output = $this->db_logistik_kpp->get('tb_devisi')->result_array();
         } else {
             $output = NULL;

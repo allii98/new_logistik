@@ -106,11 +106,11 @@
                                     <label class="custom-control-label" for="cexbox_mutasi" style="font-size: 12px;">Mutasi?</label>
                                     <input type="hidden" id="hidden_cekbox_mutasi" value="">
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled style="font-size: 12px;">
                                     </select>
                                 </div>
-                                <div class="col-3">
+                                <div class="col-4">
                                     <select class="form-control form-control-sm" id="devisi_mutasi" disabled style="font-size: 12px;">
                                     </select>
                                 </div>
