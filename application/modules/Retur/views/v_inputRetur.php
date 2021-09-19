@@ -506,7 +506,7 @@
         });
     }
 
-    var row = 1;
+    var row = 0;
 
     function tambah_row() {
         var tr_buka = '<tr id="tr_' + row + '">';
@@ -583,22 +583,11 @@
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
             '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
-        var td_col_14_1 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-            '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-            // '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
-            '<label id="lbl_status_simpan_' + row + '"></label>' +
-            '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
 
-        if (row == 1) {
-            $('#tbody_rincian').append(tr_buka + td_col_1_1 + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14_1 + form_tutup + tr_tutup);
-        } else {
-            $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14 + form_tutup + tr_tutup);
-        }
+        $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14 + form_tutup + tr_tutup);
+
 
         $('#txt_qty_retur_' + row).addClass('currencyduadigit');
         $('.currencyduadigit').number(true, 0);
@@ -642,12 +631,12 @@
         } else if (!qty_retur) {
             toast('QTY Retur');
         } else {
-            // saveRinci(n);
-            if (n == 1) {
+            if ($.trim($('#h4_no_ref_retur').text()) == '') {
                 cekNoBa(n, no_ba);
             } else {
                 saveRinci(n);
             }
+
         }
         return false;
     };
@@ -1012,6 +1001,30 @@
         });
     }
 
+    function cekRetur() {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Retur/cekDataRetur'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'norefretur': $('#hidden_norefretur').val()
+            },
+            success: function(data) {
+
+                for (var i = 0; i < data; i++) {
+                    //delete item 1 per satu
+                    updateItemToZero(i);
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Gagal Menghapus Retur');
+            }
+        });
+    }
+
     function hapusRinci(n) {
         // $('#hidden_no_delete').val(n);
         Swal.fire({
@@ -1115,9 +1128,7 @@
                 $('#txt_sub_beban_' + n).empty();
                 $('#hidden_kodesub_' + n).empty();
 
-                if (n == 1) {
-                    hapusRetur();
-                }
+                cekReturItem(n);
 
             }
         });
@@ -1128,12 +1139,12 @@
         $('#modalKonfirmasiHapusRetur').modal('show');
     }
 
-    function cekRetur() {
+    function cekReturItem(n) {
         var norefretur = $('#hidden_norefretur').val();
 
         $.ajax({
             type: "POST",
-            url: "<?php echo base_url('Retur/cekRetur') ?>",
+            url: "<?php echo base_url('Retur/cekReturItem') ?>",
             dataType: "JSON",
 
             beforeSend: function() {
@@ -1149,10 +1160,11 @@
 
                 $('#lbl_bkb_status').empty();
 
-                if (data > 1) {
-                    swal('Tidak bisa menghapus Retur yang item nya lebih dari 1 !');
+                if (data == 0) {
+                    hapusRetur();
                 } else {
-                    updateItemToZero(1);
+                    $('#tr_' + n).remove();
+                    $('#lbl_status_simpan_' + n).empty();
                 }
             }
         });

@@ -700,11 +700,20 @@ class Retur extends CI_Controller
         echo json_encode($data);
     }
 
-    public function cekRetur()
+    public function cekReturItem()
     {
         $norefretur = $this->input->post('norefretur');
 
-        $data = $this->M_retur->cekRetur($norefretur);
+        $data = $this->M_retur->cekReturItem($norefretur);
+
+        echo json_encode($data);
+    }
+
+    public function cekDataRetur()
+    {
+        $norefretur = $this->input->post('norefretur');
+
+        $data = $this->M_retur->cekDataRetur($norefretur);
 
         echo json_encode($data);
     }

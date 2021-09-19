@@ -393,7 +393,15 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->delete('retskb', array('norefretur' => $norefretur));
     }
 
-    public function cekRetur($norefretur)
+    public function cekReturItem($norefretur)
+    {
+        $this->db_logistik_pt->select('norefretur');
+        $this->db_logistik_pt->from('ret_skbitem');
+        $this->db_logistik_pt->where('norefretur', $norefretur);
+        return $this->db_logistik_pt->get()->num_rows();
+    }
+
+    public function cekDataRetur($norefretur)
     {
         $this->db_logistik_pt->select('norefretur');
         $this->db_logistik_pt->from('ret_skbitem');
