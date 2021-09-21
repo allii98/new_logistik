@@ -100,7 +100,7 @@
                     </fieldset> -->
 
                     <hr class="mt-0 mb-0">
-                    <div class="row div_form_2">
+                    <div class="div_form_2">
                         <div class="row ml-2">
                             <h6><span id="txt_norefbkb"></span></h6>
                             <h6 id="lbl_bkb_status" name="lbl_bkb_status">No. Retur BKB : ... &nbsp; No. Ref. Retur BKB : ...</h6>
@@ -197,7 +197,7 @@
                                 <th class="no_th">No</th>
                                 <th class="tgl_th">Tgl Input</th>
                                 <th class="noref_th">No. Ref. BKB</th>
-                                <th class="devisi_th">Devisi</th>
+                                <th class="devisi_th">Divisi</th>
                                 <th class="bagian_th">Bagian</th>
                                 <th class="keperluan_th">Keperluan</th>
                             </tr>
@@ -397,7 +397,20 @@
         $('#btn_tambah_row_1, #txt_barang_1').attr('disabled', '');
         tittle();
         tittle2();
+
+        setInterval(function() {
+            check_form_2();
+        }, 1000);
     });
+
+    function check_form_2() {
+        if ($.trim($('#no_ba').val()) != '' && $.trim($('#cari_bkb').val()) != '' && $.trim($('#keterangan').val()) != '') {
+            $('.div_form_2').show();
+        } else {
+            $('.div_form_2').hide();
+
+        }
+    }
 
     function modalCameraClose() {
         scanner.stop();

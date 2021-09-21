@@ -407,7 +407,20 @@
         tittle();
         tittle2();
         cari_pt_mutasi('0');
+
+        setInterval(function() {
+            check_form_2();
+        }, 1000);
     });
+
+    function check_form_2() {
+        if ($.trim($('#diberikan_kpd').val()) != '' && $.trim($('#utk_keperluan').val()) != '' && $.trim($('#cari_bpb').val()) != '') {
+            $('.div_form_2').show();
+        } else {
+            $('.div_form_2').hide();
+
+        }
+    }
 
     function modalCameraClose() {
         scanner.stop();

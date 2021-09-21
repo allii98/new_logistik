@@ -128,7 +128,7 @@
             // var_dump($keluarbrgitem);exit();
         ?>
             <tr>
-                <td class="cntr"><?= $no ?></td>
+                <td class="cntr"><?= $no++ ?></td>
                 <td class="pddg"><?= $listkeluarbrgitem->kodebartxt; ?></td>
                 <td class="pddg"><?= $listkeluarbrgitem->nabar; ?></td>
                 <td class="pddg"><?= $listkeluarbrgitem->satuan; ?></td>
