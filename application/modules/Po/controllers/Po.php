@@ -183,12 +183,21 @@ class Po extends CI_Controller
                 ';
                 $lpb = '<h5 style="margin-top:0px;"><span class="badge badge-success">LPB</span></h5>';
             } else {
-                $aksi = '
-                <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
+                if ($d->terbayar != 0) {
+                    $aksi = '
                 <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
-                <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
+                <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-primary btn-xs fa fa-print" title="Cetak">
                 </a>
                 ';
+                } else {
+
+                    $aksi = '
+                    <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
+                    <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                    <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
+                    </a>
+                    ';
+                }
                 $lpb = '';
             }
 
@@ -201,7 +210,7 @@ class Po extends CI_Controller
             $row[] = date_format(date_create($d->tgl_refppo), 'd-m-Y');
             $row[] = $d->nama_supply;
             $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . ' </p>';
-            $row[] = $d->terbayar;
+            $row[] = number_format($d->terbayar, 2, ",", ".");;
             $row[] = $lpb;
 
             $data[] = $row;

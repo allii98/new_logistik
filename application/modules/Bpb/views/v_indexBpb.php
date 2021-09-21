@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row mb-0 ml-0 justify-content-between">
-                        <h4 class="header-title mb-2"><?= $title; ?></h4>
+                        <h4 class="header-title mb-3"><?= $title; ?></h4>
                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
                             <div class="row form-group mr-0">
                                 <div class="col-2">
@@ -27,7 +27,7 @@
                         <table id="tableListBPB" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="width: 1px;" style="font-size: 12px; padding:10px">#</th>
+                                    <th style="font-size: 12px; padding:10px">#</th>
                                     <th style="font-size: 12px; padding:10px">No</th>
                                     <th style="font-size: 12px; padding:10px">No.&nbsp;Ref.&nbsp;BPB</th>
                                     <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
@@ -58,8 +58,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <!-- <input type="hidden" id="hidden_id_setuju" name="hidden_id_setuju"> -->
-                    <!-- <input type="hidden" id="hidden_noppotxt_setuju" name="hidden_noppotxt_setuju"> -->
                     <div class="table-responsive">
                         <table id="pp" class="table table-striped table-bordered" width="100%">
                             <thead>
@@ -217,6 +215,8 @@
         } else {
             // console.log("Oke");
             data_bpb_dipilih(nobpb, norefbpb, kodebar, approval, alasan);
+            var filter = "Semua";
+            listBPB(filter);
             $('#modalbatal').modal('hide');
         }
     }
@@ -288,6 +288,7 @@
     }
 
     function modalBatal(nobpb, norefbpb, kodebar, approval) {
+        $('#modalListApproval').modal('hide');
         var a = $('#nobpb').val(nobpb);
         var b = $('#norefbpb').val(norefbpb);
         var d = $('#kodebar').val(kodebar);
@@ -340,13 +341,15 @@
 
             success: function(data) {
                 var x = data.status;
-                console.log(x);
+                // console.log(x);
 
                 if (x == true) {
                     konfirmasi(nobpb, norefbpb, kodebar, approval);
+
                     // console.log("oke");
                 } else {
                     swal('Item sudah di approve!');
+
                 }
 
             }
@@ -401,6 +404,9 @@
             success: function(data) {
                 // console.log(data);
                 listBPBItem(nobpb, norefbpb);
+                var filter = "Semua";
+                listBPB(filter);
+                $('#modalListApproval').modal('hide');
             },
             error: function(request) {
                 alert(request.responseText);
@@ -422,12 +428,45 @@
                 "url": "<?php echo site_url('Bpb/data') ?>",
                 "type": "POST"
             },
+            "language": {
+                "infoFiltered": ""
+            },
 
             "columnDefs": [{
                 "targets": [],
                 "orderable": false,
             }, ],
+            "columns": [{
+                    "width": "10%"
+                },
+                {
+                    "width": "5%"
+                },
+                {
+                    "width": "15%"
+                },
+                {
+                    "width": "20%"
+                },
+                {
+                    "width": "15%"
+                },
+                {
+                    "width": "8%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "10%"
+                }
+            ],
         });
+
+        var rel = setInterval(function() {
+            $('#tableListBPB').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
 
         var detailRows = [];
 
@@ -457,9 +496,9 @@
             $.each(detailRows, function(i, id) {
                 $('#' + id + ' td.details-control').trigger('click');
             });
-
-
         });
+
+
     }
 
     function modalListApproval(nobpb, norefbpb) {

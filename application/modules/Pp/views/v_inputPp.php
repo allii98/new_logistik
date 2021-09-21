@@ -1,235 +1,282 @@
-<style>
-    tbody tr {
-
-        cursor: pointer;
-    }
-</style>
 <div class="container-fluid">
     <!-- start row-->
-    <div class="row justify-content-center mt-2">
-
-        <div class="col-md">
-            <div class="widget-rounded-circle card-box">
-                <!-- <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">PP</h4>
-                <p class="sub-header" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                    Input Permohonan Pembayaran
-                </p> -->
-                <div class="row mb-2 justify-content-between">
-                    <h4 class="header-title mb-3"><?= $title; ?></h4>
-                    <!-- <a class="btn btn-info btn-rounded waves-effect waves-light mr-2" id="btn_input" href="<?= base_url('Pp/input') ?>">Input PP</a> -->
-                </div>
-                <form action="javascript:;" class="form-horizontal" id="form_input_pp" name="form_input_pp" method="POST">
+    <div class="row mt-0">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <!-- <form action="javascript:;" id="form_input_pp" name="form_input_pp" method="POST"> -->
+                    <div class="row mb-2 justify-content-between">
+                        <h4 class="header-title ml-2"><?= $title; ?></h4>
+                        <div class="button-list mr-2">
+                            <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
+                            <button type="button" onclick="new_bpb()" class="btn btn-xs btn-success" id="">PP Baru</button>
+                            <!-- <button type="button" onclick="batal()" class="btn btn-xs btn-danger" id="" disabled>Batal PP</button> -->
+                            <!-- <button type="button" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button> -->
+                            <button type="button" onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                        </div>
+                    </div>
                     <div class="row">
-                        <div class="col-md-4">
-                            <!-- <div class="form-group"> -->
-                            <!-- <label class="control-label">No. PP</label> -->
-                            <!-- <label class="control-label col-md-8 col-sm-3 col-xs-12" id="lbl_no_pp"></label> -->
+                        <div class="col-lg-4 col-xl-4 col-12">
+
                             <input type="hidden" id="hidden_no_pp" name="hidden_no_pp">
                             <input type="hidden" id="hidden_refpp" name="hidden_refpp">
+                            <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                             <!-- </div> -->
 
-                            <div class="form-group row mb-1">
-                                <label class="col-3  mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Ref&nbsp;PO&nbsp;*</label>
-                                <div class="col-8">
-                                    <input id="txt_no_ref_po" name="txt_no_ref_po" class="form-control col-xs-12" required="required" type="text" placeholder="No. Ref. PO" onfocus="tampilModal()">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_no_ref_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Ref&nbsp;PO&nbsp;
+                                </label>
+
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_no_ref_po" name="txt_no_ref_po" class="form-control form-control-sm" required="required" type="text" placeholder="No. Ref. PO" onfocus="tampilModal()">
                                     <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                                     <input type="hidden" id="hidden_grup" name="hidden_grup">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pembayaran</label>
-                                <div class="col-4">
-                                    <input id="txt_pembayaran" name="txt_pembayaran" class="form-control col-xs-12" required="required" type="text" placeholder="Pembayaran">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_pembayaran" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Pembayaran
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_pembayaran" name="txt_pembayaran" class="form-control form-control-sm" required="required" type="text" placeholder="Pembayaran">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Supplier&nbsp;*</label>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="kd_supplier" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Supplier
+                                </label>
                                 <div class="col-3" style="padding-right: 0.01em;">
-                                    <input type="text" class="form-control bg-light" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" readonly>
+                                    <input type="text" class="form-control form-control-sm bg-light" id="kd_supplier" name="kd_supplier" placeholder="Kode Supplier" autocomplite="off" readonly>
                                 </div>
-                                <div class="col-5">
-                                    <input type="text" class="form-control bg-light" id="txt_supplier" name="txt_supplier" placeholder="Supplier" autocomplite="off" readonly>
-                                </div>
-                            </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nilai&nbsp;PO</label>
-                                <div class="col-5">
-
-                                    <input id="txt_nilai_po" name="txt_nilai_po" class="form-control bg-light" required="required" type="text" placeholder="Nilai PO" onkeyup="hitungTotalPO()" value="0" readonly="">
-
+                                <div class="col-6 col-xl-12">
+                                    <input type="text" class="form-control form-control-sm bg-light" id="txt_supplier" name="txt_supplier" placeholder="Supplier" autocomplite="off" readonly>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kurs</label>
-                                <label class="control-label col-md-1 col-sm-3 col-xs-12" id="lbl_kurs" name="lbl_kurs"></label>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_nilai_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Nilai&nbsp;PO
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_nilai_po" name="txt_nilai_po" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Nilai PO" onkeyup="hitungTotalPO()" value="0" readonly="">
+
+                                </div>
+                            </div>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="lbl_kurs" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Kurs
+                                </label>
+                                <label class="control-label col-md-2 col-sm-3" id="lbl_kurs" name="lbl_kurs"></label>
                                 <div class="col-3">
                                     <input type="hidden" id="hidden_kurs" name="hidden_kurs" required="" value="Rp" class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Pajak</label>
-                                <div class="col-5">
-                                    <input type="number" placeholder="" class="form-control " value="0" id="txt_pajak" name="txt_pajak" onkeyup="hitungTotalPO()" required="required">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_pajak" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Pajak
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input type="number" placeholder="" class="form-control form-control-sm" value="0" id="txt_pajak" name="txt_pajak" onkeyup="hitungTotalPO()" required="required">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-                                <label class="col-3 mr-2 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nilai&nbsp;BPO</label>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_nilai_bpo1" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Nilai&nbsp;BPO
+                                </label>
                                 <div class="col-4" style="padding-right: 0.01em;">
-                                    <input type="number" placeholder="" class="form-control " value="0" id="txt_nilai_bpo1" name="txt_nilai_bpo1" onkeyup="hitungTotalPO()" required="required">
-
+                                    <input type="number" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo1" name="txt_nilai_bpo1" onkeyup="hitungTotalPO()" required="required">
                                 </div>
-                                <div class="col-4">
-                                    <input type="number" placeholder="" class="form-control " value="0" id="txt_nilai_bpo2" name="txt_nilai_bpo2" onkeyup="hitungTotalPO()" required="required">
+                                <div class="col-5 col-xl-12">
+                                    <input type="number" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo2" name="txt_nilai_bpo2" onkeyup="hitungTotalPO()" required="required">
                                 </div>
                             </div>
 
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1">
-
-                                <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total&nbsp;PO</label>
-                                <div class="col-6">
-                                    <input id="txt_total_po" name="txt_total_po" class="form-control  bg-light" required="required" type="text" placeholder="Total PO" readonly="">
-
-                                    <!-- <input type="text" name="total_po" id="total_po"> -->
+                        <div class="col-lg-4 col-xl-4 col-12">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_total_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Total&nbsp;PO
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_total_po" name="txt_total_po" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Total PO" readonly="">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="col-4 col-sm-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Sudah&nbsp;Bayar</label>
-                                <div class="col-5 col-sm-5">
-                                    <input id="txt_sudah_dibayar" name="txt_sudah_dibayar" class="form-control autonumber bg-light" required="required" type="text" placeholder="Sudah dibayar" readonly="">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_sudah_dibayar" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Sudah&nbsp;Bayar
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_sudah_dibayar" name="txt_sudah_dibayar" class="form-control form-control-sm autonumber bg-light" required="required" type="text" placeholder="Sudah dibayar" readonly="">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PP</label>
-                                <div class="col-5">
-                                    <input id="txt_tgl_pp" name="txt_tgl_pp" class="form-control col-xs-12" required="required" type="text" placeholder="Tgl. PP">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_tgl_pp" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Tgl.&nbsp;PP
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_tgl_pp" name="txt_tgl_pp" class="form-control form-control-sm" required="required" type="text" placeholder="Tgl. PP">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl.&nbsp;PO</label>
-                                <div class="col-5">
-                                    <input id="txt_tgl_po" name="txt_tgl_po" class="form-control bg-light" type="text" readonly>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_tgl_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Tgl.&nbsp;PO
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_tgl_po" name="txt_tgl_po" class="form-control form-control-sm bg-light" type="text" readonly>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_dibayar_ke" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Dibayar&nbsp;ke
+                                </label>
 
-                                <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Dibayar&nbsp;ke</label>
-                                <div class="col-6">
-                                    <input id="txt_dibayar_ke" name="txt_dibayar_ke" class="form-control col-xs-12" required="required" type="text" placeholder="Dibayar ke">
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_dibayar_ke" name="txt_dibayar_ke" class="form-control form-control-sm" required="required" type="text" placeholder="Dibayar ke">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_jumlah" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Jumlah
+                                </label>
 
-                                <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jumlah</label>
-                                <div class="col-7">
-                                    <input id="txt_jumlah" name="txt_jumlah" class="form-control" required="required" type="number" placeholder="Jumlah" onkeyup="getTerbilang()">
-                                    <!-- <input type="text" name="jumlah" id="jumlah" onkeyup="tes()"> -->
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_jumlah" name="txt_jumlah" class="form-control form-control-sm" required="required" type="number" placeholder="Jumlah" onkeyup="getTerbilang()">
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Terbilang</label>
-                                <div class="col-7">
-                                    <textarea class="form-control bg-light" id="txt_terbilang" name="txt_terbilang" placeholder="Terbilang" rows="3" required="required" readonly=""></textarea>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_terbilang" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Terbilang
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <textarea class="form-control form-control-sm bg-light" id="txt_terbilang" name="txt_terbilang" placeholder="Terbilang" rows="3" required="required" readonly=""></textarea>
                                 </div>
                             </div>
-                            <div class="form-group row mb-1">
-
-                                <label class="col-4 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Keterangan</label>
-                                <div class="col-8">
-                                    <input id="txt_keterangan" name="txt_keterangan" class="form-control col-xs-12" required="required" type="text" placeholder="Keterangan" autocomplete="off">
-
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_keterangan" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Keterangan
+                                </label>
+                                <div class="col-9 col-xl-12">
+                                    <input id="txt_keterangan" name="txt_keterangan" class="form-control form-control-sm" required="required" type="text" placeholder="Keterangan" autocomplete="off">
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-4">
-                            <div class="form-group row mb-1  ">
-                                <label class="col-md-12 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Kode Budget : </label>
-                                <label class="col-md-12 col-sm-3 col-xs-12" id="lbl_kode_budget"></label>
+                        <div class="col-lg-4 col-xl-4 col-12">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="lbl_kode_budget" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Kode Budget&nbsp;
+                                </label>
+                                <label class="control-label col-md-2 col-sm-3" id="lbl_kode_budget"></label>
                                 <input type="hidden" id="hidden_kode_budget" name="hidden_kode_budget">
                             </div>
-                            <div class=" form-group row mb-1">
-                                <label class="col-md-12 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Jenis Budget : </label>
-                                <label class="col-md-12 col-sm-3 col-xs-12" id="lbl_jenis_budget"></label>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="lbl_jenis_budget" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Jenis&nbsp;Budget&nbsp;
+                                </label>
+                                <label class="control-label col-md-2 col-sm-3" id="lbl_jenis_budget"></label>
                                 <input type="hidden" id="hidden_jenis_budget" name="hidden_jenis_budget">
                             </div>
-                            <div class=" form-group row mb-1">
-                                <label class="col-md-12 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Main Account Budget : </label>
-                                <label class="col-md-12 col-sm-3 col-xs-12" id="lbl_main_account_budget"></label>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="lbl_main_account_budget" class="col-lg-5 col-xl-5 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Main&nbsp;Account&nbsp;Budget&nbsp;
+                                </label>
+                                <label class="control-label col-md-2 col-sm-3" id="lbl_main_account_budget"></label>
                                 <input type="hidden" id="hidden_main_account" name="hidden_main_account">
                             </div>
-                            <div class=" form-group row mb-1">
-                                <label class="col-md-12 col-sm-3 col-xs-12" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Nama Account : </label>
-                                <label class="col-md-12 col-sm-3 col-xs-12" id="lbl_nama_account"></label>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="lbl_nama_account" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Nama&nbsp;Account&nbsp;
+                                </label>
+                                <label class="control-label col-md-2 col-sm-3" id="lbl_nama_account"></label>
                                 <input type="hidden" id="hidden_nama_account" name="hidden_nama_account">
                             </div>
-                            <div>
-                                <label class=" col-md-12 col-sm-3 col-xs-12 row mb-1" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">User : <?php echo $this->session->userdata('user'); ?></label>
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="lbl_nama_account" class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    User&nbsp;
+                                </label>
+                                <label class="control-label col-6 col-xl-12"><?php echo $this->session->userdata('user'); ?></label>
                             </div>
-                            <div class=" form-group row mb-1">
-                                <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No.&nbsp;Voucher</label>
-                                <div class="col-5">
-                                    <input type="number" class="form-control" id="txt_no_voucher" name="txt_no_voucher" placeholder="No Voucher" autocomplete="off">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_no_voucher" class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    No.&nbsp;Voucher
+                                </label>
+                                <div class="col-8 col-xl-12">
+                                    <input type="number" class="form-control form-control-sm" id="txt_no_voucher" name="txt_no_voucher" placeholder="No Voucher" autocomplete="off">
                                 </div>
                             </div>
-                            <div class=" form-group row mb-1">
-                                <label class="col-5 col-form-label" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Tgl</label>
-                                <div class="col-7">
-                                    <input type="text" class="form-control bg-light" id="txt_tgl_voucher" name="txt_tgl_voucher" readonly placeholder="Tanggal">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_tgl_voucher" class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Tanggal
+                                </label>
+                                <div class="col-8 col-xl-12">
+                                    <input type="text" class="form-control form-control-sm bg-light" id="txt_tgl_voucher" name="txt_tgl_voucher" readonly placeholder="Tanggal">
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-5"></div>
-                        <div class="col-md-2">
-                            <br>
-                            <div class="form-group">
-                                <button class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Simpan" id="btn_simpan" name="btn_simpan">Simpan</button>
-                            </div>
-                        </div>
-                        <div class="col-md-5"></div>
-                    </div>
-                </form>
+                    <!-- </form> -->
+                </div>
             </div>
         </div>
+
+
+
     </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="fullWidthModalLabel" aria-hidden="true" id="modalcariPO">
         <div class="modal-dialog modal-full-width">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="modalcariPO">PO</h4>
+                    <ul class="nav nav-tabs nav-bordered">
+                        <li class="nav-item">
+                            <a href="#home" at="po" data-bs-toggle="tab" aria-expanded="false" class="nav-link active">
+                                PO
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#scanqr" at="qr" data-bs-toggle="tab" aria-expanded="true" class="nav-link">
+                                Scan QRcode
+                            </a>
+                        </li>
 
+                    </ul>
+                    <label class="btn btn-info active btn-xs ml-4" id="kamera1" style="display: none;">
+                        <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Front Camera
+                    </label>
+                    <label class="btn btn-secondary btn-xs" id="kamera2" style="display: none;">
+                        <input type="radio" name="putar_camera" value="2" autocomplete="off"> Back Camera
+                    </label>
                 </div>
                 <div class="modal-body">
-                    <div class="table-responsive">
-                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                        <table id="tableDataPO" class="table table-striped table-bordered table-in" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Tgl</th>
-                                    <th>No. Ref. PO</th>
-                                    <th>No PO</th>
-                                    <th>Kd Supplier</th>
-                                    <th>Supplier</th>
-                                    <th>Bayar</th>
-                                    <th>Harga PO+PPN</th>
-                                    <th>BPO</th>
-                                    <th>Terbayar</th>
-                                    <th>Saldo</th>
-                                    <th>Kurs</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+
+                    <div id="listpo" style="display: block;">
+                        <div class="table-responsive">
+                            <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                            <table id="tableDataPO" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 12px; padding:10px">id</th>
+                                        <th style="font-size: 12px; padding:10px">Tgl</th>
+                                        <th style="font-size: 12px; padding:10px">No. Ref. PO</th>
+                                        <th style="font-size: 12px; padding:10px">No PO</th>
+                                        <th style="font-size: 12px; padding:10px">Kd Supplier</th>
+                                        <th style="font-size: 12px; padding:10px">Supplier</th>
+                                        <th style="font-size: 12px; padding:10px">Bayar</th>
+                                        <th style="font-size: 12px; padding:10px">Harga PO+PPN</th>
+                                        <th style="font-size: 12px; padding:10px">BPO</th>
+                                        <th style="font-size: 12px; padding:10px">Terbayar</th>
+                                        <th style="font-size: 12px; padding:10px">Saldo</th>
+                                        <th style="font-size: 12px; padding:10px">Kurs</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="camera" style="display: none;">
+                        <video id="preview" width="100%"></video>
                     </div>
                 </div>
                 <!-- <div class="modal-footer">
@@ -241,8 +288,61 @@
 
 
 </div>
+<style>
+    table#tableDataPO td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0;
+        /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+        /* Firefox */
+    }
+</style>
 <script>
     $(document).ready(function() {
+        // console.log('ini dia',$(this).attr('at'));
+        $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar').number(true, 2);
+
+        scanner.stop();
+        $(".nav-link").click(function() {
+            $(".nav-link").removeClass("active");
+            $(this).addClass("active");
+            var jenis = $(this).attr('at');
+            if (jenis != 'po') {
+                scanner.start();
+                $('#preview').show();
+                $(".modal-dialog").removeClass("modal-full-width");
+                $(".modal-dialog").addClass("modal-md");
+                $("#judulpo").css('display', 'none');
+                $("#judulqr").css('display', 'block');
+                $("#listpo").css('display', 'none');
+                $("#camera").css('display', 'block');
+                $("#kamera1").css('display', 'block');
+                $("#kamera2").css('display', 'block');
+            } else {
+                $('#preview').hide();
+                scanner.stop();
+                $(".modal-dialog").removeClass("modal-md");
+                $(".modal-dialog").addClass("modal-full-width");
+                $("#judulpo").css('display', 'block');
+                $("#judulqr").css('display', 'none');
+                $("#camera").css('display', 'none');
+                $("#listpo").css('display', 'block');
+                $("#kamera1").css('display', 'none');
+                $("#kamera2").css('display', 'none');
+            }
+        });
+
 
         $("#txt_jumlah").on("keypress keyup blur", function(event) {
             //this.value = this.value.replace(/[^0-9\.]/g,'');
@@ -266,17 +366,41 @@
         tampilModal();
 
         $('#txt_tgl_voucher').val('');
-        // $('#txt_jumlah').autoNumeric('init', {
-        //     aSep: '.',
-        //     aDec: ',',
-        //     mDec: '0'
-        // });
-        // $('#txt_sudah_dibayar').autoNumeric('init', {
-        //     aSep: '.',
-        //     aDec: ',',
-        //     mDec: '0'
-        // });
     });
+
+    //untuk scan
+    let scanner = new Instascan.Scanner({
+        video: document.getElementById('preview')
+    });
+    scanner.addListener('scan', function(content) {
+        $('#preview').hide();
+        scanner.stop();
+    });
+    Instascan.Camera.getCameras().then(function(cameras) {
+        if (cameras.length > 0) {
+            scanner.start(cameras[0]);
+            $('[name="putar_camera"]').on('change', function() {
+                if ($(this).val() == 1) {
+                    if (cameras[0] != "") {
+                        scanner.start(cameras[0]);
+                    } else {
+                        alert('No Front camera found!');
+                    }
+                } else if ($(this).val() == 2) {
+                    if (cameras[1] != "") {
+                        scanner.start(cameras[1]);
+                    } else {
+                        alert('No Back camera found!');
+                    }
+                }
+            });
+        } else {
+            console.error('No cameras found.');
+        }
+    }).catch(function(e) {
+        console.error(e);
+    });
+    //end
 
     $("#form_input_pp").validate({
         ignore: [],
@@ -286,12 +410,12 @@
     });
 
     function saveData() {
-        $('#btn_simpan').attr('disabled', '');
-        // console.log("OKE");
+        $('#simpan_pp').attr('disabled', '');
 
 
         var form_data = new FormData();
 
+        form_data.append('hidden_id_po', $('#hidden_id_po').val());
         form_data.append('hidden_no_pp', $('#hidden_no_pp').val());
         form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
         form_data.append('hidden_no_po', $('#hidden_no_po').val());
@@ -322,7 +446,9 @@
             type: "POST",
             url: "<?php echo site_url('Pp/simpan_pp'); ?>",
             dataType: "JSON",
-            beforeSend: function() {},
+            beforeSend: function() {
+                $('#update').attr('disabled', '');
+            },
             cache: false,
             contentType: false,
             processData: false,
@@ -384,7 +510,7 @@
             "aoColumnDefs": [{
                 "bSearchable": false,
                 "bVisible": false,
-                "aTargets": [2, 3]
+                "aTargets": [0, 0]
             }, ],
             "language": {
                 "infoFiltered": ""
@@ -394,25 +520,29 @@
 
         $('#tableDataPO tbody').on('click', 'tr', function() {
             var dataClick = $('#tableDataPO').DataTable().row(this).data();
-            var tgl_po = new Date(dataClick[0]);
-            var no_ref_po = dataClick[1];
-            var no_po = dataClick[2];
-            var kd_supplier = dataClick[3];
-            var nama_supplier = dataClick[4];
-            var bayar = dataClick[5];
-            var nilai_po = dataClick[6];
-            var nilai_bpo = dataClick[7];
-            var sudah_dibayar = dataClick[8];
-            var jumlah = dataClick[9];
-            var kurs = dataClick[10];
+            // var tgl_po = new Date(dataClick[0]);
+            var id_po = dataClick[0];
+            var tgl_po = dataClick[1];
+            // console.log('tanggal', tgl_po);
+            var no_ref_po = dataClick[2];
+            var no_po = dataClick[3];
+            var kd_supplier = dataClick[4];
+            var nama_supplier = dataClick[5];
+            var bayar = dataClick[6];
+            var nilai_po = dataClick[7];
+            var nilai_bpo = dataClick[8];
+            var sudah_dibayar = dataClick[9];
+            var jumlah = dataClick[10];
+            var kurs = dataClick[11];
 
             // $('#txt_tgl_po').val(tgl_po);
-            var tgl = dateToMDY(tgl_po);
+            // var tgl = tgl_po.replace("-", "/");
             if (jumlah == 0) {
                 swal('Saldo sudah 0!')
             } else {
-
-                $('#txt_tgl_po').val(tgl);
+                console.log(tgl_po);
+                $('#hidden_id_po').val(id_po);
+                $('#txt_tgl_po').val(tgl_po);
 
                 $('#txt_no_ref_po').val(no_ref_po);
                 $('#hidden_no_po').val(no_po);
@@ -421,6 +551,7 @@
                 $('#txt_supplier').val(nama_supplier);
                 $('#txt_dibayar_ke').val(nama_supplier);
 
+                var bpo = nilai_bpo.replace(/,/g, "");
                 $('#txt_nilai_po').val(nilai_po);
                 var bpo = nilai_bpo.replace(/,/g, "");
                 $('#txt_nilai_bpo2').val(bpo);

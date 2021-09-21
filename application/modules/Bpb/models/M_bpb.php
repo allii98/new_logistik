@@ -6,9 +6,9 @@ class M_bpb extends CI_Model
 {
 
     var $table = 'noac'; //nama tabel dari database
-    var $column_order = array(null, 'noid', 'noac', 'nama', 'group', 'type'); //field yang ada di table user
-    var $column_search = array('noid', 'noac', 'nama', 'group', 'type'); //field yang diizin untuk pencarian 
-    var $order = array('noid' => 'desc'); // default order 
+    var $column_order = array(null, 'NOID', 'noac15', 'nama', 'group', 'type'); //field yang ada di table user
+    var $column_search = array('NOID', 'noac15', 'nama', 'group', 'type'); //field yang diizin untuk pencarian 
+    var $order = array('NOID' => 'desc'); // default order 
 
     public function __construct()
     {
@@ -16,20 +16,36 @@ class M_bpb extends CI_Model
         $this->load->database();
     }
 
-    public function where_datatables($cmb_bahan)
+    public function where_datatables($dt, $cmb_bahan)
     {
         // global $nopo;
+        $this->dt = $dt;
+        // $this->afd = $afd;
+        // $this->thn_tanam = $thn_tanam;
         $this->cmb_bahan = $cmb_bahan;
         // return $nopo;
     }
 
     private function _get_datatables_query()
     {
+        $grub = $this->dt;
         $bahan = $this->cmb_bahan;
+        $this->db_mips_gl->from($this->table);
         if ($bahan != '-') {
-            $this->db_logistik->where('general', $bahan);
+            $this->db_mips_gl->like('noac15', $grub, 'both');
+            $this->db_mips_gl->or_where('nama', 'PSAM, PT'); ///tadinya gak ada
+            $this->db_mips_gl->or_where('nama', 'MAPA, PT'); ///tadinya gak ada
+        } else {
+            $tm = '7005';
+            $tbm = '2024';
+            $landclearing = '2090';
+            $pembibitan = '2095';
+            $this->db_mips_gl->like('noac15', $tm, 'match');
+            $this->db_mips_gl->or_like('noac15', $tbm, 'match');
+            $this->db_mips_gl->or_like('noac15', $landclearing, 'match');
+            $this->db_mips_gl->or_like('noac15', $pembibitan, 'match');
+            # code...
         }
-        $this->db_logistik->from($this->table);
 
         $i = 0;
 
@@ -40,23 +56,23 @@ class M_bpb extends CI_Model
 
                 if ($i === 0) // looping awal
                 {
-                    $this->db_logistik->group_start();
-                    $this->db_logistik->like($item, $_POST['search']['value']);
+                    $this->db_mips_gl->group_start();
+                    $this->db_mips_gl->like($item, $_POST['search']['value']);
                 } else {
-                    $this->db_logistik->or_like($item, $_POST['search']['value']);
+                    $this->db_mips_gl->or_like($item, $_POST['search']['value']);
                 }
 
                 if (count($this->column_search) - 1 == $i)
-                    $this->db_logistik->group_end();
+                    $this->db_mips_gl->group_end();
             }
             $i++;
         }
 
         if (isset($_POST['order'])) {
-            $this->db_logistik->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db_mips_gl->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } else if (isset($this->order)) {
             $order = $this->order;
-            $this->db_logistik->order_by(key($order), $order[key($order)]);
+            $this->db_mips_gl->order_by(key($order), $order[key($order)]);
         }
     }
 
@@ -64,22 +80,22 @@ class M_bpb extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-            $this->db_logistik->limit($_POST['length'], $_POST['start']);
-        $query = $this->db_logistik->get();
+            $this->db_mips_gl->limit($_POST['length'], $_POST['start']);
+        $query = $this->db_mips_gl->get();
         return $query->result();
     }
 
     function count_filtered()
     {
         $this->_get_datatables_query();
-        $query = $this->db_logistik->get();
+        $query = $this->db_mips_gl->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-        $this->db_logistik->from($this->table);
-        return $this->db_logistik->count_all_results();
+        $this->db_mips_gl->from($this->table);
+        return $this->db_mips_gl->count_all_results();
     }
     // end server side table
 
@@ -87,9 +103,9 @@ class M_bpb extends CI_Model
     {
         $lokasi = $this->session->userdata('status_lokasi');
 
-        if ($lokasi == 'SITE') {
+        if ($lokasi != 'HO') {
             $this->db_logistik_pt->select('PT, kodetxt');
-            $this->db_logistik_pt->where('lokasi', 'SITE');
+            $this->db_logistik_pt->where('lokasi', $lokasi);
             $this->db_logistik_pt->from('tb_devisi');
             $this->db_logistik_pt->order_by('lokasi', 'ASC');
             return $this->db_logistik_pt->get()->result_array();
@@ -128,7 +144,9 @@ class M_bpb extends CI_Model
         $afd_unit       = $this->input->post('cmb_afd_unit');
         $blok_sub       = $this->input->post('cmb_blok_sub');
         // $tahun_tanam    = $this->input->post('cmb_tahun_tanam');
+        $tm_tbm          = $this->input->post('cmb_tm_tbm');
         $bahan          = $this->input->post('cmb_bahan');
+        $thun_tanam          = $this->input->post('cmb_tahun_tanam');
         $no_acc         = $this->input->post('hidden_no_acc');
         $nama_acc       = $this->input->post('hidden_nama_acc');
         $kodebar        = $this->input->post('hidden_kode_barang');
@@ -226,11 +244,21 @@ class M_bpb extends CI_Model
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
+        if ($tm_tbm == 'TM') {
+            $tm_tbm1 = '7005';
+        } else if ($tm_tbm == 'TBM') {
+            $tm_tbm1 = '2024';
+        } else if ($tm_tbm == 'LANDCLEARING') {
+            $tm_tbm1 = '2090';
+        } else {
+            $tm_tbm1 = '2095';
+        }
+        $noac15 = $this->input->post('hidden_no_acc');
         if ($bahan == '-') {
             $ketbeban = NULL;
         } else {
-            $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$bahan'";
-            $get_coa = $this->db_logistik->query($query_coa)->row();
+            $query_coa = "SELECT noac15, nama FROM noac WHERE noac15 = '$noac15'";
+            $get_coa = $this->db_mips_gl->query($query_coa)->row();
             $ketbeban = $get_coa->nama;
         }
 
@@ -287,7 +315,7 @@ class M_bpb extends CI_Model
         $databpbitem['afd']           = $afd_unit;
         $databpbitem['blok']          = $blok_sub;
         $databpbitem['noadjust']      = "0";
-        $databpbitem['kodebebantxt']  = $bahan;
+        $databpbitem['kodebebantxt']  = $noac15;
         $databpbitem['ketbeban']      = $ketbeban;
         $databpbitem['kodesubtxt']    = $no_acc;
         $databpbitem['ketsub']        = $nama_acc;
@@ -417,14 +445,19 @@ class M_bpb extends CI_Model
     {
         $id_bpbitem = $this->input->post('hidden_id_bpbitem');
         $norefbpb = $this->input->post('hidden_no_ref_bpb');
-        $bahan          = $this->input->post('cmb_bahan');
+        $bahan   = $this->input->post('cmb_bahan');
+        $tm_tbm          = $this->input->post('cmb_tm_tbm');
+        $afd_unit       = $this->input->post('cmb_afd_unit');
+        $thun_tanam          = $this->input->post('cmb_tahun_tanam');
 
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
+
+        $noac15 = $this->input->post('hidden_no_acc');
         if ($bahan == '-') {
             $ketbeban = NULL;
         } else {
-            $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$bahan'";
-            $get_coa = $this->db_logistik->query($query_coa)->row();
+            $query_coa = "SELECT noac15, nama FROM noac WHERE noac15 = '$noac15'";
+            $get_coa = $this->db_mips_gl->query($query_coa)->row();
             $ketbeban = $get_coa->nama;
         }
 
@@ -432,7 +465,7 @@ class M_bpb extends CI_Model
 
         $databpbitem['afd']             = $this->input->post('cmb_afd_unit');
         $databpbitem['blok']           = $this->input->post('cmb_blok_sub');
-        $databpbitem['kodebebantxt']  = $bahan;
+        $databpbitem['kodebebantxt']  = $noac15;
         $databpbitem['ketbeban']     = $ketbeban;
         $databpbitem['kodesubtxt']  = $this->input->post('hidden_no_acc');
         $databpbitem['ketsub']     = $this->input->post('hidden_nama_acc');

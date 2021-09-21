@@ -3,23 +3,38 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row mb-2 justify-content-between">
+                    <div class="row mb-0 ml-0 justify-content-between">
                         <h4 class="header-title mb-3"><?= $title; ?></h4>
-                        <a class="btn btn-info btn-rounded waves-effect waves-light mr-2" id="btn_input" href="<?= base_url('Pp/input') ?>">Input PP</a>
+                        <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
+                            <div class="row form-group mr-0">
+                                <div class="col-2">
+                                    <label for="" style="margin-top: 3px;">Filter</label>
+                                </div>
+                                <div class="col-10">
+                                    <select class="form-control form-control-sm" id="filter" name="filter">
+                                        <option value="SEMUA">TAMPILKAN SEMUA</option>
+                                        <option value="HO" selected>HO</option>
+                                        <option value="PKS">PKS</option>
+                                        <option value="SITE">SITE</option>
+                                        <option value="RO">RO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
-                    <div class="table-responsive">
+                    <div class="table-responsive" style="margin-top: -15px;">
                         <table id="tableListPP" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">#</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">No.</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Ref. PP</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Ref PO</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl. PP</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Tgl. PO</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Nama Supplier</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">User Input</th>
-                                    <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding: 0.4em;">Ket</th>
+                                    <th style="font-size: 12px; padding:10px">#</th>
+                                    <th style="font-size: 12px; padding:10px">No.</th>
+                                    <th style="font-size: 12px; padding:10px">Ref. PP</th>
+                                    <th style="font-size: 12px; padding:10px">Ref PO</th>
+                                    <th style="font-size: 12px; padding:10px">Tgl. PP</th>
+                                    <th style="font-size: 12px; padding:10px">Tgl. PO</th>
+                                    <th style="font-size: 12px; padding:10px">Nama Supplier</th>
+                                    <th style="font-size: 12px; padding:10px">User Input</th>
+                                    <th style="font-size: 12px; padding:10px">Ket</th>
                                 </tr>
                             </thead>
 
@@ -53,6 +68,14 @@
     </div>
 </div>
 
+<style>
+    table#tableListPP td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+</style>
+
 <script>
     $(document).ready(function() {
         listPP();
@@ -62,20 +85,9 @@
     function listPP() {
         $('#tableListPP').DataTable().destroy();
         var dt = $('#tableListPP').DataTable({
-            "paging": true,
-            "scrollY": true,
-            "scrollX": true,
-            "searching": true,
-            "select": false,
-            "bLengthChange": true,
-            "scrollCollapse": true,
-            "bPaginate": true,
-            "bInfo": true,
-            "bSort": false,
             "processing": true,
             "serverSide": true,
             "order": [],
-            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
             "ajax": {
                 "url": "<?php echo site_url('Pp/list_pp'); ?>",
                 "type": "POST",
@@ -85,22 +97,22 @@
                 }
             },
             "columns": [{
-                    "width": "5%"
-                },
-                {
-                    "width": null
-                },
-                {
-                    "width": "20%"
-                },
-                {
-                    "width": "20%"
-                },
-                {
                     "width": "10%"
                 },
                 {
-                    "width": "10%"
+                    "width": "3%"
+                },
+                {
+                    "width": "18%"
+                },
+                {
+                    "width": "18%"
+                },
+                {
+                    "width": "8%"
+                },
+                {
+                    "width": "8%"
                 },
                 {
                     "width": null
@@ -109,7 +121,7 @@
                     "width": null
                 },
                 {
-                    "width": null
+                    "width": "12%"
                 },
             ],
             "columnDefs": [{

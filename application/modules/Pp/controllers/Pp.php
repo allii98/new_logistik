@@ -35,14 +35,14 @@ class Pp extends CI_Controller
             $refpp = $hasil->ref_pp;
             $noref = str_replace('/', '.', $refpp);
 
-            $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp">
+            $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $noref) . '" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
 
-            <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po">
+            <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
             <a href="javascript:;" id="a_delete_pp">
-                <button class="btn btn-danger fa fa-trash btn-xs" id="btn_delete_pp" name="btn_batal_pp" data-toggle="tooltip" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp .  ')">
+                <button class="btn btn-danger fa fa-trash btn-xs" id="btn_delete_pp" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp .  ')">
                 </button>
             </a>
-                </a>
+                
                 ';
 
 
@@ -53,7 +53,7 @@ class Pp extends CI_Controller
             $row[] = date('d-m-Y', strtotime($hasil->tglpo));
             $row[] = $hasil->nama_supply;
             $row[] = $hasil->user;
-            $row[] = $hasil->ket;
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($hasil->ket) . ' </p>';
             $data[] = $row;
         }
 
@@ -126,7 +126,8 @@ class Pp extends CI_Controller
             $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
 
 
-            $row[] = $d->tglpo;
+            $row[] = $d->id;
+            $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
             $row[] = $d->noreftxt;
             $row[] = $d->nopotxt;
             $row[] = $d->kode_supply;
@@ -165,32 +166,41 @@ class Pp extends CI_Controller
         $this->qrcode($no_pp, $id);
 
         $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('ref_pp' => $no_pp, 'id' => $id))->row();
+        $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $data['data_pp']->ref_po))->row();
+
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->where('ref_pp', $no_pp);
+        $cek = $this->db_logistik_pt->get_where('pp');
+        if ($cek->num_rows() > 0) {
+            $cek = $cek->row();
+            $jml_ = (int)$cek->jml_cetak;
+            // echo $jml_;
+            $up = [
+                'jml_cetak' => $jml_ + 1
+            ];
+            $this->db_logistik_pt->where('id', $id);
+            $this->db_logistik_pt->where('ref_pp', $no_pp);
+            $this->db_logistik_pt->update('pp', $up);
+        } else {
+            $ins = [
+                'jml_cetak' => 1
+            ];
+            $this->db_logistik_pt->where('id', $id);
+            $this->db_logistik_pt->where('ref_pp', $no_pp);
+            $this->db_logistik_pt->update('pp', $ins);
+            // $this->db_logistik_pt->insert('po', $ins);
+        }
 
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
-            'format' => [190, 236],
-            'setAutoTopMargin' => 'stretch',
+            'format' => 'A4',
+            // 'format' => [190, 236],
+            'margin_top' => '0',
+            'margin_left' => '3',
+            'margin_right' => '3',
             'orientation' => 'P'
         ]);
 
-        $mpdf->SetHTMLHeader('
-        					<table width="100%" border="0" align="left">
-        						<tr>
-        							<td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
-        						</tr>
-        					</table>
-                            <!--table width="100%" border="0" align="center">
-                                <tr>
-                                    <td rowspan="2" width="15%" height="10px"><img width="10%" height="60px" style="padding-left:8px" src="' . base_url() . 'assets/img/msal.jpg"></td>
-                                    <td align="center" style="font-size:14px;font-weight:bold;">PT Mulia Sawit Agro Lestari</td>
-                                </tr>
-                                <tr>
-                                    <td align="center">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru,  JakartaSelatan, DKI Jakarta Raya-12140 <br /> Telp : 021-7231999, 7202418 (Hunting) <br /> Fax : 021-7231819
-                                    </td>
-                                </tr>
-                            </table-->
-                            <hr style="width:100%;margin:0px;">
-                            ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
 
         $html = $this->load->view('v_pp_print', $data, true);

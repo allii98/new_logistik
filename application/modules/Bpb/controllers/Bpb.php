@@ -13,6 +13,7 @@ class Bpb extends CI_Controller
         $this->load->model('M_listbpb');
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
         if (!$this->session->userdata('id_user')) {
@@ -79,18 +80,12 @@ class Bpb extends CI_Controller
     function pilih_afd()
     {
         $tm_tbm = $this->input->post('tm_tbm');
-        switch ($tm_tbm) {
-            case 'TM':
-                $tmtbm = 'TM';
-                break;
-            default:
-                $tmtbm = 'TBM';
-                break;
-        }
+
         // $query = "SELECT * FROM afd WHERE tmtbm = '$tmtbm' AND AFD <> '' ORDER BY afd ASC";
         // $data = $this->db_logistik_pt->query($query)->result();
 
-        $query = "SELECT DISTINCT(afd) FROM masterblok WHERE afd <> '00' ORDER BY afd ASC";
+        // $query = "SELECT DISTINCT(afd) FROM masterblok WHERE afd <> '00' ORDER BY afd ASC";
+        $query = "SELECT DISTINCT(afd) FROM item_pekerjaan WHERE kategori='$tm_tbm' ORDER BY afd ASC";
         $data = $this->db_msal_personalia->query($query)->result();
         echo json_encode($data);
     }
@@ -108,7 +103,7 @@ class Bpb extends CI_Controller
                 $tmtbm = 'TBM';
                 break;
         }
-        $query_master_blok = "SELECT DISTINCT blok FROM masterblok WHERE afd = '$afd_unit'";
+        $query_master_blok = "SELECT DISTINCT(blok) FROM masterblok WHERE afd = '$afd_unit'";
         $data = $this->db_msal_personalia->query($query_master_blok)->result();
 
         // $data = array('data_thn_tanam'=>$data_thn_tanam,'data_master_blok'=>$data_master_blok);
@@ -130,7 +125,7 @@ class Bpb extends CI_Controller
         }
         // $query_thn_tanam = "SELECT DISTINCT thn_tanam FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' ORDER BY thn_tanam ASC";
         // $data_thn_tanam = $this->db_logistik_pt->query($query_thn_tanam)->result();
-        $query_thn_tanam = "SELECT DISTINCT tahuntanam FROM masterblok WHERE afd = '$afd_unit' AND blok = '$blok_sub' ORDER BY tahuntanam ASC";
+        $query_thn_tanam = "SELECT DISTINCT(tahuntanam) FROM masterblok WHERE afd = '$afd_unit' AND blok = '$blok_sub' ORDER BY tahuntanam ASC";
         $data = $this->db_msal_personalia->query($query_thn_tanam)->result();
 
         echo json_encode($data);
@@ -142,16 +137,16 @@ class Bpb extends CI_Controller
         $afd_unit = $this->input->post('afd_unit');
         $blok_sub = $this->input->post('blok_sub');
         $thn_tanam = $this->input->post('thn_tanam');
-        switch ($tm_tbm) {
-            case 'TM':
-                $tmtbm = 'TM';
-                break;
-            default:
-                $tmtbm = 'TBM';
-                break;
-        }
+        // switch ($tm_tbm) {
+        //     case 'TM':
+        //         $tmtbm = 'TM';
+        //         break;
+        //     default:
+        //         $tmtbm = 'TBM';
+        //         break;
+        // }
         // $query = "SELECT DISTINCT ket, coa_material FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' AND thn_tanam = '$thn_tanam' ORDER BY thn_tanam ASC";
-        $query = "SELECT DISTINCT coa_material FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' AND thn_tanam = '$thn_tanam'";
+        $query = "SELECT DISTINCT(coa_material) FROM tahun_tanam WHERE tmtbm = '$tm_tbm' AND AFD = '$afd_unit' AND thn_tanam = '$thn_tanam'";
         $data_coa_material = $this->db_logistik_pt->query($query)->result();
         $data = array();
         foreach ($data_coa_material as $list_coa_material) {
@@ -184,25 +179,20 @@ class Bpb extends CI_Controller
                         </a>';
             if ($hasil->approval == '0') {
                 $print = "";
-                $ubah = '<a href="' . site_url('Bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Detail LPB" id="btn_detail_barang">';
-                // $batal = '<a href="javascript:;" id="a_batal_bpb">
-                //     <button class="btn btn-warning fa fa-undo btn-xs" id="btn_batal_bpb" name="btn_batal_bpb" data-toggle="tooltip" data-placement="top" title="Batal bpb" onClick="konfirmasiBatalBPB(' . $id . ',' . $hasil->nobpb . ')">
-                //     </button>
-                // </a>';
+                $ubah = '<button type="button" id="detail" data-id="' . $hasil->norefbpb . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button>
+                <a href="' . site_url('Bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update BPB" id="btn_detail_barang"></a>
+                <a href="' . site_url('Bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb"></a>';
             } else {
-                $print = '<a href="' . site_url('Bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb">
-                </a>';
+                $print = '<button type="button" id="detail" data-id="' . $hasil->norefbpb . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button>
+                <a href="' . site_url('Bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb"></a>';
                 $ubah = "";
-                // $batal = "";
             }
 
 
-            $row[] = $ubah . $print;
             $no++;
-
+            $row[] = $ubah . $print;
             $row[] =  $no . ".";
             $row[] = $hasil->norefbpb;
-
             $query_bpbitem = "SELECT nabar FROM bpbitem WHERE nobpb = '$hasil->nobpb'";
             $data_bpbitem = $this->db_logistik_pt->query($query_bpbitem)->result();
             $data_detail = array();
@@ -236,8 +226,11 @@ class Bpb extends CI_Controller
 
     public function list_acc_beban()
     {
+        $dt = $this->input->post('dt');
+        // $afd = $this->input->post('afd');
+        // $thn_tanam = $this->input->post('thn_tanam');
         $cmb_bahan = $this->input->post('cmb_bahan');
-        $this->M_bpb->where_datatables($cmb_bahan);
+        $this->M_bpb->where_datatables($dt, $cmb_bahan);
         $list = $this->M_bpb->get_datatables();
         $data = array();
         $no = $_POST['start'];
@@ -246,7 +239,7 @@ class Bpb extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $field->noac;
+            $row[] = $field->noac15;
             $row[] = $field->nama;
             $row[] = $field->type;
             $row[] = $field->group;

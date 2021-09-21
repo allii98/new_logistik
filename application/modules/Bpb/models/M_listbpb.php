@@ -31,7 +31,7 @@ class M_listbpb extends CI_Model
         $noref_bpb = $this->norefbpb;
         $array = array('nobpb' => $no_bpb, 'norefbpb' => $noref_bpb);
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('batal !=', 1);
+        // $this->db_logistik_pt->where('batal !=', 1);
         $this->db_logistik_pt->like($array);
 
         $i = 0;

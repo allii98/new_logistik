@@ -313,17 +313,24 @@ $nama_pt = $this->session->userdata('nama_pt');
       <td colspan="3" align="right">
         <?php
         $isi = $po->totalbayar + $pot_ppn + $hit_pph;
+        $hasil = round($isi);
         ?>
         <br />
-        <?= $list_item->kurs; ?>. <?= number_format($isi, 2, ",", "."); ?>
+        <?= $list_item->kurs; ?>. <?= number_format($hasil, 2, ",", "."); ?>
       </td>
     </tr>
     <tr>
       <?php
       $total = $po->totalbayar + $pot_ppn + $hit_pph;
       // var_dump("iyayayay".$total);exit();
+      $jumlah = round($total);
+
+      $kur = $list_item->kurs;
+      if ($kur == "Rp") {
+        $kurs = "Rupiah";
+      }
       ?>
-      <td colspan="7"><b>Terbilang : <?= terbilang($total, $style = 3); ?> (<?= $list_item->kurs; ?>)</b></td>
+      <td colspan="7"><b>Terbilang : <?= terbilang($jumlah, $style = 3) . '&nbsp;' . $kurs ?></b></td>
     </tr>
   </table>
 
@@ -421,7 +428,7 @@ $nama_pt = $this->session->userdata('nama_pt');
   <table border="0" width="100%">
     <tr>
       <td><b>Catatan : Mohon dicek kembali pesanan pembelian ini, apabila setuju tolong diteken dan dicap perusahaan/toko</b></td>
-      <td><?php echo $this->session->userdata('user'); ?></td>
+      <td style="text-align: right;">User : <?php echo $this->session->userdata('user'); ?></td>
     </tr>
     <tr>
       <td colspan="2"><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?>,&nbsp;<?= $this->platform->agent(); ?>,&nbsp;Cetakan Ke : <?= $po->jml_cetak ?></i></td>

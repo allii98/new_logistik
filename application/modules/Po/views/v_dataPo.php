@@ -4,8 +4,8 @@
 			<div class="card">
 
 				<div class="card-body">
-					<div class="row justify-content-between">
-						<h4 class="header-title ml-2" style="margin-top: -10px;">Data PO</h4>
+					<div class="row justify-content-between" style="margin-top: -10px;">
+						<h4 class="header-title ml-2 mb-3">Data PO</h4>
 						<?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
 							<div class="row form-group mr-0">
 								<div class="col-2">
@@ -26,21 +26,21 @@
 
 					<!-- <div class="sub-header mb-1" style="margin-top: -15px;">
 						</div> -->
-					<div class="table-responsive" style="margin-top: -10px;">
+					<div class="table-responsive" style="margin-top: -9px;">
 
 						<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped">
 							<thead>
 								<tr>
 									<th width="11%" style="font-size: 12px; padding:10px">#</th>
 									<th width="3%" style="font-size: 12px; padding:10px">No</th>
-									<th width="15%" style="font-size: 12px; padding:10px">No. Ref PO</th>
+									<th width="17%" style="font-size: 12px; padding:10px">No. Ref PO</th>
 									<th width="7%" style="font-size: 12px; padding:10px">Tgl. PO</th>
 									<th width="15%" style="font-size: 12px; padding:10px">No. Ref SPP</th>
 									<th width="7%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
 									<th width="11%" style="font-size: 12px; padding:10px">Supplier</th>
 									<th width="15%" style="font-size: 12px; padding:10px">Keterangan</th>
 									<th width="8%" style="font-size: 12px; padding:10px">Terbayar</th>
-									<th width="8%" style="font-size: 12px; padding:10px">Status LPB</th>
+									<th width="5%" style="font-size: 12px; padding:10px">Status LPB</th>
 								</tr>
 							</thead>
 

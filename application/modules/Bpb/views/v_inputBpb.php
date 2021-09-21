@@ -207,14 +207,21 @@
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- Tahun Tanam -->
-                                                    <select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)">
+                                                    <!-- <select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)"> -->
+                                                    <select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1">
                                                         <option value="-">-</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- Bahan -->
-                                                    <select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
+                                                    <!-- <select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
                                                         <option value="-">-</option>
+                                                    </select> -->
+                                                    <select class="form-control form-control-sm" id="cmb_bahan_1" name="cmb_bahan_1">
+                                                        <option value="-">-</option>
+                                                        <option value="021">UPKEEP BAHAN</option>
+                                                        <option value="051">PEMUPUKAN BAHAN</option>
+                                                        <option value="081">PANEN BAHAN</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
@@ -580,7 +587,7 @@
 
     $('#bhnbakar').change(function() {
         var dt = this.value;
-        console.log(dt);
+        // console.log(dt);
         if (dt != "BBM") {
             $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
             $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
@@ -874,7 +881,7 @@
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Tahun Tanam -->' +
-            '<select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" onchange="cmb_bahan(' + row + ')">' +
+            '<select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" >' +
             '<option value="-">-</option>' +
             '</select>' +
             '</td>';
@@ -882,6 +889,9 @@
             '<!-- Bahan -->' +
             '<select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '">' +
             '<option value="-">-</option>' +
+            '<option value="021">UPKEEP BAHAN</option>' +
+            '<option value="051">PEMUPUKAN BAHAN</option>' +
+            '<option value="081">PANEN BAHAN</option>' +
             '</select>' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -1717,6 +1727,7 @@
         // }
     }
 
+    //ngambil dari HRIS nama db -> msalgrou_personalia
     function cmb_afd_unit(row) {
         var tm_tbm = $('#cmb_tm_tbm_' + row).val();
         console.log(tm_tbm);
@@ -1726,13 +1737,11 @@
             dataType: "JSON",
             beforeSend: function() {},
             cache: false,
-            // contentType : false,
-            // processData : false,
-
             data: {
                 'tm_tbm': tm_tbm
             },
             success: function(data) {
+                // console.log(data);
                 $('#cmb_afd_unit_' + row).empty();
 
                 var opsi_pilih = '<option value=""></option>';
@@ -1751,6 +1760,7 @@
         });
     }
 
+    //ngambil dari HRIS nama db -> msalgrou_personalia
     function cmb_blok_sub(row) {
         var tm_tbm = $('#cmb_tm_tbm_' + row).val();
         var afd_unit = $('#cmb_afd_unit_' + row).val();
@@ -1783,6 +1793,7 @@
         });
     }
 
+    //ngambil dari HRIS nama db -> msalgrou_personalia
     function cmb_tahun_tanam(row) {
         var tm_tbm = $('#cmb_tm_tbm_' + row).val();
         var afd_unit = $('#cmb_afd_unit_' + row).val();
@@ -1869,13 +1880,27 @@
     var table;
 
     function tableAccBeban(row) {
-
+        var tm_tbm = $('#cmb_tm_tbm_' + row).val();
+        if (tm_tbm == 'TM') {
+            tm_tbm1 = '7005';
+        } else if (tm_tbm == 'TBM') {
+            tm_tbm1 = '2024';
+        } else if (tm_tbm == 'LANDCLEARING') {
+            tm_tbm1 = '2090';
+        } else {
+            tm_tbm1 = '2095';
+        }
+        var afd = $('#cmb_afd_unit_' + row).val();
+        var thn_tanam = $('#cmb_tahun_tanam_' + row).val();
         var cmb_bahan = $('#cmb_bahan_' + row).val();
+
+        var dt = tm_tbm1 + afd + thn_tanam + cmb_bahan;
+        // console.log(dt);
         //datatables
         // var nopo = nopotxt;
         // console.log(cmb_bahan);
         $('#tableAccBeban').DataTable({
-            "destroy": true,
+            // "destroy": true,
             "processing": true,
             "serverSide": true,
 
@@ -1885,7 +1910,11 @@
                 "url": "<?php echo site_url('Bpb/list_acc_beban') ?>",
                 "type": "POST",
                 "data": {
-                    cmb_bahan: cmb_bahan
+                    // tm_tbm: tm_tbm,
+                    // afd: afd,
+                    // thn_tanam: thn_tanam,
+                    dt: dt,
+                    cmb_bahan: cmb_bahan,
                 }
             },
 
