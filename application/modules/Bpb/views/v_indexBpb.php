@@ -37,7 +37,6 @@
                                     <th style="font-size: 12px; padding:10px">Approval</th>
                                 </tr>
                             </thead>
-
                             <tbody id="tbody_list_po">
 
                             </tbody>
@@ -172,8 +171,54 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="detailBPB">
+    <div class="modal-dialog modal-full-width">
+        <div class="modal-content">
+            <div class="modal-header ml-2">
+                <h4 style="font-size: 15px;" class="modal-title" id="detailBPB">Detail BPB</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:28px;">
+                <span id="detail_noref_bpb" style="font-size: 12px;"></span>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <div class="table-responsive" style="margin-top: -15px;">
+                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                        <table id="datadetailBPB" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                            <thead>
+                                <tr>
+                                    <th width="3%" style="font-size: 12px; padding:10px">No</th>
+                                    <th width="20%" style="font-size: 12px; padding:10px">Nama&nbsp;Barang</th>
+                                    <th width="20%" style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
+                                    <th width="20%" style="font-size: 12px; padding:10px">Divisi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 <style>
     table#tableListBPB td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#datadetailBPB td {
         padding: 3px;
         padding-left: 10px;
         font-size: 12px;
@@ -194,6 +239,39 @@
         var filter = "Semua";
         listBPB(filter);
     });
+    $(document).on('click', '#detail', function() {
+        var id = $(this).data('id');
+        detail(id);
+    });
+
+    function detail(id) {
+        $('#detailBPB').modal('show');
+        $('#detail_noref_bpb').html('<b>No. Ref. BPB : </b>' + id);
+        $('#datadetailBPB').DataTable({
+            "destroy": true,
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+
+            "ajax": {
+                "url": "<?php echo site_url('Bpb/detail') ?>",
+                "type": "POST",
+                "data": {
+                    id: id
+                }
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+            "language": {
+                "infoFiltered": ""
+            },
+
+
+        });
+    }
 
     function validasi() {
         var alasan = $('#alasan').val();

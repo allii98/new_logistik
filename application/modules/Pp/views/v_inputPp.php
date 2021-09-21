@@ -310,17 +310,15 @@
 </style>
 <script>
     $(document).ready(function() {
+        // $('#preview').show();
         // console.log('ini dia',$(this).attr('at'));
         $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar').number(true, 2);
 
-        scanner.stop();
         $(".nav-link").click(function() {
             $(".nav-link").removeClass("active");
             $(this).addClass("active");
             var jenis = $(this).attr('at');
             if (jenis != 'po') {
-                scanner.start();
-                $('#preview').show();
                 $(".modal-dialog").removeClass("modal-full-width");
                 $(".modal-dialog").addClass("modal-md");
                 $("#judulpo").css('display', 'none');
@@ -330,8 +328,6 @@
                 $("#kamera1").css('display', 'block');
                 $("#kamera2").css('display', 'block');
             } else {
-                $('#preview').hide();
-                scanner.stop();
                 $(".modal-dialog").removeClass("modal-md");
                 $(".modal-dialog").addClass("modal-full-width");
                 $("#judulpo").css('display', 'block');
@@ -372,10 +368,15 @@
     let scanner = new Instascan.Scanner({
         video: document.getElementById('preview')
     });
+
     scanner.addListener('scan', function(content) {
+        console.log(content);
         $('#preview').hide();
+        cariPoqr(content);
+        $('#modalcariPO').modal('hide');
         scanner.stop();
     });
+
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
             scanner.start(cameras[0]);
@@ -401,6 +402,73 @@
         console.error(e);
     });
     //end
+    function tampilModal() {
+        $('#modalcariPO').modal('show');
+        $('#preview').show();
+        // scanner.start();
+        dataPO();
+    }
+
+    function cariPoqr(noref) {
+        // alert(noref);
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Pp/caripo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                refpo: noref
+            },
+            success: function(data) {
+                // console.log(data.po.bayar);
+                var totalbayar = data.po.totalbayar;
+                var kasir = data.kasir.kasir_bayar;
+
+                var jumlah = parseFloat(totalbayar) - parseFloat(totalbayar);
+
+                if (jumlah == 0) {
+                    // swal('Saldo sudah 0!');
+                    Swal.fire({
+                        text: "Saldo sudah 0!",
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'OK'
+                    }).then((result) => {
+                        if (result.value) {
+                            tampilModal();
+                        }
+                    });
+                } else {
+                    // console.log(tgl_po);
+                    // $('#hidden_id_po').val(id_po);
+                    // $('#txt_tgl_po').val(tgl_po);
+
+                    // $('#txt_no_ref_po').val(no_ref_po);
+                    // $('#hidden_no_po').val(no_po);
+                    // $('#txt_pembayaran').val(bayar);
+                    // $('#kd_supplier').val(kd_supplier);
+                    // $('#txt_supplier').val(nama_supplier);
+                    // $('#txt_dibayar_ke').val(nama_supplier);
+
+                    // var bpo = nilai_bpo.replace(/,/g, "");
+                    // $('#txt_nilai_po').val(nilai_po);
+                    // var bpo = nilai_bpo.replace(/,/g, "");
+                    // $('#txt_nilai_bpo2').val(bpo);
+                    // $('#lbl_kurs').html(kurs);
+                    // $('#hidden_kurs').val(kurs);
+
+                    // $('#txt_sudah_dibayar').val(sudah_dibayar);
+
+                    // $('#modalcariPO').modal('hide');
+                    // hitungTotalPO();
+                }
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    }
 
     $("#form_input_pp").validate({
         ignore: [],
@@ -479,10 +547,7 @@
         });
     }
 
-    function tampilModal() {
-        $('#modalcariPO').modal('show');
-        dataPO();
-    }
+
 
     function dataPO() {
         $('#tableDataPO').DataTable().destroy();
@@ -563,6 +628,7 @@
                 $('#modalcariPO').modal('hide');
                 hitungTotalPO();
             }
+            scanner.stop();
             // console.log(d);
         });
     }

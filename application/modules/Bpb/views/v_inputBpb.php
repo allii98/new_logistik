@@ -217,12 +217,13 @@
                                                     <!-- <select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
                                                         <option value="-">-</option>
                                                     </select> -->
-                                                    <select class="form-control form-control-sm" id="cmb_bahan_1" name="cmb_bahan_1">
+                                                    <select class="form-control form-control-sm" id="cmb_bahan_1" name="cmb_bahan_1" onchange="ketbeban('1')">
                                                         <option value="-">-</option>
                                                         <option value="021">UPKEEP BAHAN</option>
                                                         <option value="051">PEMUPUKAN BAHAN</option>
                                                         <option value="081">PANEN BAHAN</option>
                                                     </select>
+                                                    <input type="hidden" name="hidden_nama_bahan_1" id="hidden_nama_bahan_1">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
                                                     <!-- Account Beban -->
@@ -499,6 +500,12 @@
         window.history.back();
     }
 
+    function ketbeban(id) {
+        var isi = $('#cmb_bahan_' + id + ' option:selected').text();
+        // console.log(isi);
+        $('#hidden_nama_bahan_' + id).val(isi);
+    }
+
     $(document).ready(function() {
 
         // check_form();
@@ -531,7 +538,7 @@
         //             $('#hidden_devisi').val(devisi);
         //         },
         //         error: function(request) {
-        //             alert(request.responseText);
+        //             alert("KONEKSI TERPUTUS!");
         //         }
         //     });
         // });
@@ -617,7 +624,7 @@
                 });
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -678,7 +685,7 @@
                 });
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -737,7 +744,7 @@
                     // $('.modal-success').modal('show');
                 },
                 error: function(request) {
-                    alert(request.responseText);
+                    alert("KONEKSI TERPUTUS!");
                 }
             });
         } else {
@@ -796,7 +803,7 @@
                 // $('.modal-success').modal('show');
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -887,12 +894,13 @@
             '</td>';
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Bahan -->' +
-            '<select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '">' +
+            '<select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" onchange="ketbeban(' + row + ')">' +
             '<option value="-">-</option>' +
             '<option value="021">UPKEEP BAHAN</option>' +
             '<option value="051">PEMUPUKAN BAHAN</option>' +
             '<option value="081">PANEN BAHAN</option>' +
             '</select>' +
+            '<input type="hidden" name="hidden_nama_bahan_' + row + '" id="hidden_nama_bahan_' + row + '">' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Account Beban -->' +
@@ -915,10 +923,10 @@
         var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             // '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
             // '<label>Stok di tgl ini : <b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></label>' +
-            '<span class="small text-muted" font-size:small">Stok :<b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></span><br>' +
+            '<span class="small text-muted" style="font-size:small">Stok :<b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></span><br>' +
             '<input type="hidden" id="hidden_stok_tgl_ini_' + row + '" name="hidden_stok_tgl_ini_' + row + '">' +
 
-            '<span class="small text-muted" font-size:small">Booking :<b id="b_stok_booking_' + row + '"  name="b_stok_booking_' + row + '"></b></span>' +
+            '<span class="small text-muted" style="font-size:small">Booking :<b id="b_stok_booking_' + row + '"  name="b_stok_booking_' + row + '"></b></span>' +
             '<input type="hidden" id="hidden_stok_booking_' + row + '" name="hidden_stok_booking_' + row + '">' +
             '<input type="hidden" id="hidden_satuan_' + row + '" name="hidden_satuan_' + row + '">' +
             '</td>';
@@ -1139,6 +1147,7 @@
         form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
         form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
         form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
+        form_data.append('hidden_nama_bahan', $('#hidden_nama_bahan_' + no).val());
 
         form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
         form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
@@ -1239,7 +1248,7 @@
                 }
             },
             error: function(request) {
-                alert('Error Save Data : ' + request.responseText);
+                alert('KONEKSI TERPUTUS!');
 
                 $('#lbl_status_simpan_' + no).empty();
                 $('#lbl_status_simpan_' + no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
@@ -1334,7 +1343,7 @@
                 $('#hidden_proses_status_' + no).val('');
             },
             error: function(request) {
-                alert('Error Get Data : ' + request.responseText);
+                alert('KONEKSI TERPUTUS!');
             }
         });
     }
@@ -1437,9 +1446,12 @@
         var kodebar = $('#hidden_kode_barang_' + no).val();
         var kode_dev = $('#devisi').val();
 
+        form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
         form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
         form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
+        form_data.append('hidden_nama_bahan', $('#hidden_nama_bahan_' + no).val());
+
         form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
         form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
         form_data.append('hidden_kode_barang', $('#hidden_kode_barang_' + no).val());
@@ -1500,7 +1512,7 @@
                 }
             },
             error: function(request) {
-                alert('Error Update Data : ' + request.responseText);
+                alert('KONEKSI TERPUTUS!');
 
                 $('#lbl_status_simpan_' + no).empty();
                 $('#lbl_status_simpan_' + no).append('<label style="color:#ff0000;"><i class="fa fa-close" style="color:#ff0000;"></i> Gagal Tersimpan !</label>');
@@ -1755,7 +1767,7 @@
                 // cmb_tahun_tanam(row);
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -1788,7 +1800,7 @@
                 });
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -1823,7 +1835,7 @@
                 });
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -1864,7 +1876,7 @@
                 });
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -2116,7 +2128,7 @@
                 }
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -2141,7 +2153,7 @@
                 $('#hidden_stok_booking_' + row).val(data);
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }
@@ -2204,7 +2216,7 @@
 
             },
             error: function(request) {
-                alert(request.responseText);
+                alert("KONEKSI TERPUTUS!");
             }
         });
     }

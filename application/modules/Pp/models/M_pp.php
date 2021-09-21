@@ -92,6 +92,12 @@ class M_pp extends CI_Model
         return $this->db_logistik_pt->count_all_results();
     }
 
+    function caripo($noref)
+    {
+        $data = $this->db_logistik_pt->query("SELECT id, tglpo, noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar FROM po WHERE noreftxt='$noref' ")->row();
+        return $data;
+    }
+
     function simpan_pp()
     {
         $query_id_pp = "SELECT MAX(id)+1 as id_pp FROM pp";

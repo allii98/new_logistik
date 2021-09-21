@@ -11,6 +11,7 @@ class Bpb extends CI_Controller
         $this->load->model('M_brg');
         $this->load->model('M_databpb');
         $this->load->model('M_listbpb');
+        $this->load->model('M_detail');
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
         $this->db_mips_gl = $this->load->database('db_mips_gl', TRUE);
@@ -37,9 +38,36 @@ class Bpb extends CI_Controller
     function get_all_cmb()
     {
         $bahan = $this->input->post('bahan');
-        $query = "SELECT * FROM tahun_tanam WHERE coa_material = '$bahan' ORDER BY thn_tanam ASC";
-        $data = $this->db_logistik_pt->query($query)->row();
-        echo json_encode($data);
+        $isi = substr($bahan, 0, 4);
+        $thun = substr($bahan, 6, 4);
+
+        if ($isi == '7005') {
+            $data = 'TM';
+        } else if ($isi == '2024') {
+            $data = 'TBM';
+            # code...
+        } else if ($isi == '2090') {
+            $data = 'LANDCLEARING';
+            # code...
+        } else if ($isi == '2095') {
+            $data = 'PEMBIBITAN';
+            # code...
+        } else {
+            $data = NULL;
+        }
+
+        if ($thun != null) {
+            $tahun = $thun;
+        } else {
+            $tahun = '-';
+        }
+        $d = [
+            'data' => $data,
+            'thun' => $tahun
+        ];
+        // $query = "SELECT * FROM tahun_tanam WHERE coa_material = '$bahan' ORDER BY thn_tanam ASC";
+        // $data = $this->db_logistik_pt->query($query)->row();
+        echo json_encode($d);
     }
 
     function get_edit_bpb()
@@ -255,6 +283,33 @@ class Bpb extends CI_Controller
             "data" => $data,
         );
         //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function detail()
+    {
+        $id = $this->input->post('id');
+        $this->M_detail->where_datatables($id);
+        $list = $this->M_detail->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $d) {
+            $no++;
+            $row = array();
+            $row[] = $no . ".";
+            $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->nabar . '</p>';
+            $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->kodebar . '</p>';
+            $row[] =  $d->devisi;
+
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_detail->count_all(),
+            "recordsFiltered" => $this->M_detail->count_filtered(),
+            "data" => $data,
+        );
+        // output to json format
         echo json_encode($output);
     }
 

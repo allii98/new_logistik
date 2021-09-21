@@ -246,13 +246,21 @@ class M_bpb extends CI_Model
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
         if ($tm_tbm == 'TM') {
             $tm_tbm1 = '7005';
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
         } else if ($tm_tbm == 'TBM') {
             $tm_tbm1 = '2024';
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
         } else if ($tm_tbm == 'LANDCLEARING') {
             $tm_tbm1 = '2090';
-        } else {
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
+        } else if ($tm_tbm == 'PEMBIBITAN') {
             $tm_tbm1 = '2095';
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
+        } else {
+            $tm_tbm1 = '';
+            $kodebeban = NULL;
         }
+        $ketbebanfix = $this->input->post('hidden_nama_bahan');
         $noac15 = $this->input->post('hidden_no_acc');
         if ($bahan == '-') {
             $ketbeban = NULL;
@@ -315,8 +323,8 @@ class M_bpb extends CI_Model
         $databpbitem['afd']           = $afd_unit;
         $databpbitem['blok']          = $blok_sub;
         $databpbitem['noadjust']      = "0";
-        $databpbitem['kodebebantxt']  = $noac15;
-        $databpbitem['ketbeban']      = $ketbeban;
+        $databpbitem['kodebebantxt']  = $kodebeban;
+        $databpbitem['ketbeban']      = $ketbebanfix;
         $databpbitem['kodesubtxt']    = $no_acc;
         $databpbitem['ketsub']        = $nama_acc;
         $databpbitem['batal']         = "0";
@@ -451,7 +459,24 @@ class M_bpb extends CI_Model
         $thun_tanam          = $this->input->post('cmb_tahun_tanam');
 
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
-
+        // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
+        if ($tm_tbm == 'TM') {
+            $tm_tbm1 = '7005';
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
+        } else if ($tm_tbm == 'TBM') {
+            $tm_tbm1 = '2024';
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
+        } else if ($tm_tbm == 'LANDCLEARING') {
+            $tm_tbm1 = '2090';
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
+        } else if ($tm_tbm == 'PEMBIBITAN') {
+            $tm_tbm1 = '2095';
+            $kodebeban = $tm_tbm1 . $afd_unit . $thun_tanam . $bahan;
+        } else {
+            $tm_tbm1 = '';
+            $kodebeban = NULL;
+        }
+        $ketbebanfix = $this->input->post('hidden_nama_bahan');
         $noac15 = $this->input->post('hidden_no_acc');
         if ($bahan == '-') {
             $ketbeban = NULL;
@@ -465,8 +490,8 @@ class M_bpb extends CI_Model
 
         $databpbitem['afd']             = $this->input->post('cmb_afd_unit');
         $databpbitem['blok']           = $this->input->post('cmb_blok_sub');
-        $databpbitem['kodebebantxt']  = $noac15;
-        $databpbitem['ketbeban']     = $ketbeban;
+        $databpbitem['kodebebantxt']  = $kodebeban;
+        $databpbitem['ketbeban']     = $ketbebanfix;
         $databpbitem['kodesubtxt']  = $this->input->post('hidden_no_acc');
         $databpbitem['ketsub']     = $this->input->post('hidden_nama_acc');
         $databpbitem['kodebar']   = $kodebar;

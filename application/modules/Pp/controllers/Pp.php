@@ -150,6 +150,21 @@ class Pp extends CI_Controller
         echo json_encode($output);
     }
 
+    function caripo()
+    {
+        $refpo = $this->input->post('refpo');
+        $dt = $this->M_pp->caripo($refpo); // sum kasir bayar pada tabel pp
+        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp where ref_po = '$refpo'";
+        $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
+        // endsum
+        $data = [
+            'po' => $dt,
+            'kasir' => $get_jumlah_sudah_bayar
+        ];
+
+        echo json_encode($data);
+    }
+
     public function simpan_pp()
     {
         $data = $this->M_pp->simpan_pp();

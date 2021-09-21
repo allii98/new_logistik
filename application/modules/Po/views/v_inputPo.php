@@ -176,15 +176,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     Lokasi&nbsp;Pengiriman*
                                 </label>
                                 <div class="col-8 col-xl-12">
-                                    <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                        <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="HO" autocomplite="off" required>
-                                    <?php } else if ($this->session->userdata('status_lokasi') == 'SITE') { ?>
-                                        <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="SITE" autocomplite="off" required>
-                                    <?php } else if ($this->session->userdata('status_lokasi') == 'RO') { ?>
-                                        <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="RO" autocomplite="off" required>
-                                    <?php } else if ($this->session->userdata('status_lokasi') == 'PKS') { ?>
-                                        <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" value="PKS" autocomplite="off" required>
-                                    <?php } ?>
+                                    <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman"  autocomplite="off" required>
+                                   
 
                                 </div>
                             </div>

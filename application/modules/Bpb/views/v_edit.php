@@ -542,10 +542,10 @@
                     $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
                 } else {
 
-                    $('#cmb_tm_tbm_' + n).val(data.tmtbm);
+                    $('#cmb_tm_tbm_' + n).val(data.data);
                     // $('#cmb_tahun_tanam_' + n).val(data.thn_tanam);
 
-                    var opsi_cmb_thn_tanam = '<option value="' + data.thn_tanam + '">' + data.thn_tanam + '</option>';
+                    var opsi_cmb_thn_tanam = '<option value="' + data.thun + '">' + data.thun + '</option>';
                     $('#cmb_tahun_tanam_' + n).empty();
                     $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
                 }
