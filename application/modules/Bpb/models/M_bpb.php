@@ -322,6 +322,8 @@ class M_bpb extends CI_Model
         $databpbitem['ket']           = $ket;
         $databpbitem['afd']           = $afd_unit;
         $databpbitem['blok']          = $blok_sub;
+        $databpbitem['tmtbm']           = $tm_tbm;
+        $databpbitem['thntanam']          = $thun_tanam;
         $databpbitem['noadjust']      = "0";
         $databpbitem['kodebebantxt']  = $kodebeban;
         $databpbitem['ketbeban']      = $ketbebanfix;
@@ -495,6 +497,8 @@ class M_bpb extends CI_Model
         $databpbitem['kodesubtxt']  = $this->input->post('hidden_no_acc');
         $databpbitem['ketsub']     = $this->input->post('hidden_nama_acc');
         $databpbitem['kodebar']   = $kodebar;
+        $databpbitem['tmtbm']           = $tm_tbm;
+        $databpbitem['thntanam']          = $thun_tanam;
         $databpbitem['nabar']    = $this->input->post('hidden_nama_barang');
         $databpbitem['grp']     = $this->input->post('hidden_grup_barang');
         $databpbitem['satuan'] = $this->input->post('hidden_satuan');

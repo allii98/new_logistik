@@ -38,6 +38,7 @@ class Bpb extends CI_Controller
     function get_all_cmb()
     {
         $bahan = $this->input->post('bahan');
+        $carihris = $this->db_msal_personalia->query("SELECT kategori, thntanam FROM item_pekerjaan WHERE coakerja='$bahan'")->row();
         $isi = substr($bahan, 0, 4);
         $thun = substr($bahan, 6, 4);
 
@@ -63,7 +64,8 @@ class Bpb extends CI_Controller
         }
         $d = [
             'data' => $data,
-            'thun' => $tahun
+            'thun' => $tahun,
+            'hris' => $carihris
         ];
         // $query = "SELECT * FROM tahun_tanam WHERE coa_material = '$bahan' ORDER BY thn_tanam ASC";
         // $data = $this->db_logistik_pt->query($query)->row();
