@@ -957,6 +957,14 @@
 
         cek_bagian(row);
 
+        $('#txt_qty_diminta_' + row).on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
         $('#txt_qty_diminta_' + row).addClass('currencyduadigit');
         $('.currencyduadigit').number(true, 0);
         // $('#txt_account_beban_'+row).attr('disabled','');

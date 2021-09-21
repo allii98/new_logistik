@@ -308,6 +308,19 @@
         font-size: 12px;
         padding-left: 17px;
     }
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        /* display: none; <- Crashes Chrome on hover */
+        -webkit-appearance: none;
+        margin: 0;
+        /* <-- Apparently some margin are still there even though it's hidden */
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+        /* Firefox */
+    }
 </style>
 <input type="hidden" id="hidden_no_table" name="hidden_no_table">
 <script>
@@ -432,7 +445,7 @@
                         '</td>';
                     var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
                         '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-                        '<input type="text" class="form-control form-control-sm" id="txt_qty_diminta_' + n + '" name="txt_qty_diminta_' + n + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + n + ')">' +
+                        '<input type="number" class="form-control form-control-sm" id="txt_qty_diminta_' + n + '" name="txt_qty_diminta_' + n + '" placeholder="Qty Diminta" onkeyup="validasi_qty_diminta(' + n + ')">' +
                         '</td>';
 
                     var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
@@ -500,6 +513,14 @@
                     i++;
                     $('#hidden_no_table').val(n);
                     // var kodbar = data.data_bpbitem[index].kodebar;
+
+                    $('#txt_qty_diminta_' + n).on("keypress keyup blur", function(event) {
+                        //this.value = this.value.replace(/[^0-9\.]/g,'');
+                        $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+                        if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                            event.preventDefault();
+                        }
+                    });
                 })
             },
             error: function(request) {

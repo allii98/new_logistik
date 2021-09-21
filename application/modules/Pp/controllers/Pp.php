@@ -154,12 +154,13 @@ class Pp extends CI_Controller
     {
         $refpo = $this->input->post('refpo');
         $dt = $this->M_pp->caripo($refpo); // sum kasir bayar pada tabel pp
-        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp where ref_po = '$refpo'";
+        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp WHERE ref_po = '$refpo'";
         $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
         // endsum
+        $saldo = number_format($dt->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar);
         $data = [
-            'po' => $dt,
-            'kasir' => $get_jumlah_sudah_bayar
+            'data' => $dt,
+            'saldo' => $saldo,
         ];
 
         echo json_encode($data);
