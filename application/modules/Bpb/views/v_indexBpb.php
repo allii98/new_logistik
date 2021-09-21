@@ -193,6 +193,7 @@
                                     <th width="3%" style="font-size: 12px; padding:10px">No</th>
                                     <th width="20%" style="font-size: 12px; padding:10px">Nama&nbsp;Barang</th>
                                     <th width="20%" style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
+                                    <th width="20%" style="font-size: 12px; padding:10px">QTY</th>
                                     <th width="20%" style="font-size: 12px; padding:10px">Divisi</th>
                                 </tr>
                             </thead>

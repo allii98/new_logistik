@@ -302,6 +302,7 @@ class Bpb extends CI_Controller
             $row[] = $no . ".";
             $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->nabar . '</p>';
             $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->kodebar . '</p>';
+            $row[] =  $d->qty;
             $row[] =  $d->devisi;
 
             $data[] = $row;
