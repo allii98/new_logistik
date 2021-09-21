@@ -439,8 +439,9 @@ class Bkb extends CI_Controller
             $no_ref_mutasi = $text1_mutasi . "-MUTASI/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
         }
 
+        $mutasi_dari_devisi = $this->input->post('devisi');
         if ($mutasi == 1) {
-            $keperluan = 'MUTASI dari BKB NO. ' . $skb . ' ' . $data['get_devisi_mutasi']['PT'];
+            $keperluan = 'MUTASI dari BKB NO. ' . $skb . ' ' . $mutasi_dari_devisi;
             $diberikan_kpd = $data['get_devisi_mutasi']['lokasi'];
         } else {
             $keperluan = $this->input->post('txt_untuk_keperluan');

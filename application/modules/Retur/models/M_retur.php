@@ -5,8 +5,8 @@ class M_retur extends CI_Model
 {
     // Start Data Table Server Side
     var $table = 'retskb'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'norefretur', 'noretur', 'tgl', 'bag', 'devisi', 'keterangan', 'user'); //field yang ada di table user
-    var $column_search = array('id', 'norefretur', 'noretur', 'tgl', 'bag', 'devisi', 'keterangan', 'user'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'norefretur', 'noretur', 'tgl', 'bag', 'devisi', 'keterangan', 'user', 'no_ba'); //field yang ada di table user
+    var $column_search = array('id', 'norefretur', 'noretur', 'tgl', 'bag', 'devisi', 'keterangan', 'user', 'no_ba'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()

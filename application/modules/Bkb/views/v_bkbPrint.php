@@ -128,7 +128,7 @@
             // var_dump($keluarbrgitem);exit();
         ?>
             <tr>
-                <td class="cntr"><?= $no ?></td>
+                <td class="cntr"><?= $no++ ?></td>
                 <td class="pddg"><?= $listkeluarbrgitem->kodebartxt; ?></td>
                 <td class="pddg"><?= $listkeluarbrgitem->nabar; ?></td>
                 <td class="pddg"><?= $listkeluarbrgitem->satuan; ?></td>
@@ -176,5 +176,5 @@
     </table>
     <small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small><br />
     <small><i>Cetakan ke - <?= $urut['cetak'] ?></i></small><br>
-    <small>By MIPS LOGISTIk</small>
+    <small>By MIPS LOGISTIK</small>
 </body>

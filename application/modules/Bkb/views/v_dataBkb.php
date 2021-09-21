@@ -233,7 +233,7 @@
             // console.log(noref + 'ninoref');
 
             $("#modal-detail-bkb").modal('show');
-            $('#detail_noref_bkb').html('<b>No. Ref. LPB : </b>' + noref);
+            $('#detail_noref_bkb').html('<b>No. Ref. BKB : </b>' + noref);
             detail_bkb(id);
         });
     });
