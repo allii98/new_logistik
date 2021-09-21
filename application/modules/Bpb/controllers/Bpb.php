@@ -37,35 +37,36 @@ class Bpb extends CI_Controller
 
     function get_all_cmb()
     {
+        $id = $this->input->post('id');
         $bahan = $this->input->post('bahan');
-        $carihris = $this->db_msal_personalia->query("SELECT kategori, thntanam FROM item_pekerjaan WHERE coakerja='$bahan'")->row();
-        $isi = substr($bahan, 0, 4);
-        $thun = substr($bahan, 6, 4);
+        $bpbitem = $this->db_logistik_pt->query("SELECT tmtbm, thntanam FROM bpbitem WHERE id='$id'")->row();
+        // $isi = substr($bahan, 0, 4);
+        // $thun = substr($bahan, 6, 4);
 
-        if ($isi == '7005') {
-            $data = 'TM';
-        } else if ($isi == '2024') {
-            $data = 'TBM';
-            # code...
-        } else if ($isi == '2090') {
-            $data = 'LANDCLEARING';
-            # code...
-        } else if ($isi == '2095') {
-            $data = 'PEMBIBITAN';
-            # code...
-        } else {
-            $data = NULL;
-        }
+        // if ($isi == '7005') {
+        //     $data = 'TM';
+        // } else if ($isi == '2024') {
+        //     $data = 'TBM';
+        //     # code...
+        // } else if ($isi == '2090') {
+        //     $data = 'LANDCLEARING';
+        //     # code...
+        // } else if ($isi == '2095') {
+        //     $data = 'PEMBIBITAN';
+        //     # code...
+        // } else {
+        //     $data = NULL;
+        // }
 
-        if ($thun != null) {
-            $tahun = $thun;
-        } else {
-            $tahun = '-';
-        }
+        // if ($thun != null) {
+        //     $tahun = $thun;
+        // } else {
+        //     $tahun = '-';
+        // }
         $d = [
-            'data' => $data,
-            'thun' => $tahun,
-            'hris' => $carihris
+            'data' => $bahan,
+            // 'thun' => $tahun,
+            'bpbitem' => $bpbitem
         ];
         // $query = "SELECT * FROM tahun_tanam WHERE coa_material = '$bahan' ORDER BY thn_tanam ASC";
         // $data = $this->db_logistik_pt->query($query)->row();

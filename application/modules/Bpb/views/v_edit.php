@@ -493,9 +493,9 @@
 
                     sum_stok(data.data_bpbitem[index].kodebar, n, data.data_bpbitem[index].kode_dev);
 
-                    get_all_cmb(data.data_bpbitem[index].kodebebantxt, n);
+                    get_all_cmb(data.data_bpbitem[index].kodebebantxt, data.data_bpbitem[index].id, n);
                     sum_stok_booking(data.data_bpbitem[index].kodebar, n, data.data_bpbitem[index].kode_dev);
-
+                    // console.log('id nya gaes', data.data_bpbitem[index].id);
                     n++;
                     i++;
                     $('#hidden_no_table').val(n);
@@ -509,7 +509,7 @@
 
     });
 
-    function get_all_cmb(bahan, n) {
+    function get_all_cmb(bahan, id, n) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bpb/get_all_cmb'); ?>",
@@ -520,12 +520,13 @@
             // processData : false,
 
             data: {
-                'bahan': bahan
+                'bahan': bahan,
+                'id': id,
             },
             success: function(data) {
                 console.log("ini datanya", data);
 
-                if (data == null) {
+                if (data.data == null) {
                     var opsi_tm_tbm_ = '<option value="' + '-' + '">' + '-' + '</option>';
                     $('#cmb_tm_tbm_' + n).append(opsi_tm_tbm_);
 
@@ -542,10 +543,10 @@
                     $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
                 } else {
 
-                    $('#cmb_tm_tbm_' + n).val(data.data);
+                    $('#cmb_tm_tbm_' + n).val(data.bpbitem.tmtbm);
                     // $('#cmb_tahun_tanam_' + n).val(data.thn_tanam);
 
-                    var opsi_cmb_thn_tanam = '<option value="' + data.thun + '">' + data.thun + '</option>';
+                    var opsi_cmb_thn_tanam = '<option value="' + data.bpbitem.thntanam + '">' + data.bpbitem.thntanam + '</option>';
                     $('#cmb_tahun_tanam_' + n).empty();
                     $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
                 }
