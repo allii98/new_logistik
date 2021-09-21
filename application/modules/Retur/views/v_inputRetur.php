@@ -573,8 +573,10 @@
             var grp = $(this).data('grp');
             var qty2 = $(this).data('qty2');
             var satuan = $(this).data('satuan');
+            var tmtbm = $(this).data('tmtbm');
             var afd = $(this).data('afd');
             var blok = $(this).data('blok');
+            var thntanam = $(this).data('thntanam');
             var kodebeban = $(this).data('kodebeban');
             var ketbeban = $(this).data('ketbeban');
             var kodesub = $(this).data('kodesub');
@@ -591,8 +593,10 @@
             $('#txt_qty_bkb_' + n).val(qty2);
             $('#hidden_satuan_brg_' + n).val(satuan);
             $('#sat_' + n).text(satuan);
+            $('#cmb_tm_tbm_' + n).val(tmtbm);
             $('#cmb_afd_unit_' + n).val(afd);
             $('#cmb_blok_sub_' + n).val(blok);
+            $('#cmb_tahun_tanam_' + n).val(thntanam);
             $('#txt_account_beban_' + n).val(ketbeban);
             $('#hidden_kodebeban_' + n).val(kodebeban);
             $('#txt_sub_beban_' + n).val(ketsub);
@@ -685,10 +689,12 @@
         var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- AFD/UNIT -->' +
             '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
+            '<input type="hidden" class="form-control form-control-sm bg-light" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
             '</td>';
         var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- BLOK/SUB -->' +
             '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
+            '<input type="hidden" class="form-control form-control-sm bg-light" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
             '</td>';
         // var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
         //     '<!-- Tahun Tanam -->' +
@@ -722,7 +728,7 @@
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Keterangan -->' +
-            '<textarea class="resizable_textarea form-control form-control-sm" style="font-size:12px;" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="1" placeholder="Keterangan"></textarea>' +
+            '<textarea class="resizable_textarea form-control form-control-sm" style="font-size:12px;" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="2" placeholder="Keterangan"></textarea>' +
             '<input type="hidden" id="hidden_id_retskbitem_' + row + '" name="hidden_id_retskbitem_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '</td>';
@@ -881,8 +887,10 @@
                 txt_barang: $('#txt_barang_' + n).val(),
                 hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
                 hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                cmb_tm_tbm: $('#cmb_tm_tbm_' + n).val(),
                 cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
                 cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
+                cmb_tahun_tanam: $('#cmb_tahun_tanam_' + n).val(),
                 txt_qty_retur: $('#txt_qty_retur_' + n).val(),
                 txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
                 txt_account_beban: $('#txt_account_beban_' + n).val(),

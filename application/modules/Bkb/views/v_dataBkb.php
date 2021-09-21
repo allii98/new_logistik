@@ -199,7 +199,9 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
-
+            "language": {
+                "infoFiltered": ""
+            },
         });
     });
 

@@ -312,14 +312,16 @@
                         for (i = 0; i < bkb_item.length; i++) {
 
                               tambah_row(i, bkb_item[i].approval);
-                              tahun_tanam(i, bkb_item[i].kodebebantxt);
+                              // tahun_tanam(i, bkb_item[i].kodebebantxt);
 
                               //sum stok all periode / qtymasuk - qtykeluar
                               get_stok(i, bkb_item[i].kodebar, bkb_item[i].txtperiode, bkb_item[i].kode_dev);
 
                               var id_keluarbrgitem = bkb_item[i].id;
+                              var tmtbm = bkb_item[i].tmtbm;
                               var afd = bkb_item[i].afd;
                               var blok = bkb_item[i].blok;
+                              var thntanam = bkb_item[i].thntanam;
                               var kodebebantxt = bkb_item[i].kodebebantxt;
                               var kodesubtxt = bkb_item[i].kodesubtxt;
                               var ketbeban = bkb_item[i].ketbeban;
@@ -334,8 +336,10 @@
 
                               // Set data
                               $('#id_keluarbrgitem_' + i).val(id_keluarbrgitem);
+                              $('#cmb_tm_tbm_' + i).val(tmtbm);
                               $('#cmb_afd_unit_' + i).val(afd);
                               $('#cmb_blok_sub_' + i).val(blok);
+                              $('#cmb_tahun_tanam_' + i).val(thntanam);
                               $('#cmb_bahan_' + i).val(ketbeban);
                               $('#hidden_kodebebantxt' + i).val(kodebebantxt);
                               $('#txt_account_beban_' + i).val(ketsub);
@@ -436,9 +440,9 @@
 
             // cek_bagian(row);
 
-            $('#txt_qty_diminta_' + row).addClass('currencyduadigit');
-            $('#txt_qty_disetujui_' + row).addClass('currencyduadigit');
-            $('.currencyduadigit').number(true, 0);
+            // $('#txt_qty_diminta_' + row).addClass('currencyduadigit');
+            // $('#txt_qty_disetujui_' + row).addClass('currencyduadigit');
+            // $('.currencyduadigit').number(true, 0);
             // $('#txt_account_beban_'+row).attr('disabled','');
 
             // $('html, body').animate({
@@ -446,29 +450,29 @@
             // }, 2000);
       }
 
-      function tahun_tanam(i, coa_material) {
-            $.ajax({
-                  type: "POST",
-                  url: "<?php echo site_url('Bkb/get_tahun_tanam'); ?>",
-                  dataType: "JSON",
-                  beforeSend: function() {},
+      // function tahun_tanam(i, coa_material) {
+      //       $.ajax({
+      //             type: "POST",
+      //             url: "<?php echo site_url('Bkb/get_tahun_tanam'); ?>",
+      //             dataType: "JSON",
+      //             beforeSend: function() {},
 
-                  data: {
-                        'coa_material': coa_material
-                  },
-                  success: function(data) {
+      //             data: {
+      //                   'coa_material': coa_material
+      //             },
+      //             success: function(data) {
 
-                        if (data) {
-                              $('#cmb_tm_tbm_' + i).val(data.tmtbm);
-                              $('#cmb_tahun_tanam_' + i).val(data.thn_tanam);
-                        }
+      //                   if (data) {
+      //                         $('#cmb_tm_tbm_' + i).val(data.tmtbm);
+      //                         $('#cmb_tahun_tanam_' + i).val(data.thn_tanam);
+      //                   }
 
-                  },
-                  error: function(response) {
-                        alert('ERROR! ' + response.responseText);
-                  }
-            });
-      }
+      //             },
+      //             error: function(response) {
+      //                   alert('ERROR! ' + response.responseText);
+      //             }
+      //       });
+      // }
 
       function get_stok(i, kodebar, txtperiode, kode_dev) {
             $.ajax({

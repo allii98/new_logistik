@@ -424,7 +424,7 @@ class M_retur extends CI_Model
         $this->db_logistik_pt->where('id', $id_retskb);
         $retskb = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('id, kodebar, nabar, grp, satuan, afd, blok, qty, ket, ketbeban, kodebeban, ketsub, kodesub, txtperiode');
+        $this->db_logistik_pt->select('id, kodebar, nabar, grp, satuan, afd, blok, qty, ket, ketbeban, kodebeban, ketsub, kodesub, txtperiode, tmtbm, thntanam');
         $this->db_logistik_pt->from('ret_skbitem');
         $this->db_logistik_pt->where('norefretur', $retskb['norefretur']);
         $ret_skbitem = $this->db_logistik_pt->get()->result_array();

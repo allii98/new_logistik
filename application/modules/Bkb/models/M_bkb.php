@@ -91,7 +91,7 @@ class M_bkb extends CI_Model
         $this->db_logistik_pt->from('bpb');
         $data_bpb = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('afd, blok, kodebebantxt, ketbeban, nabar, qty, qty_disetujui, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item, req_rev_qty_item, periode');
+        $this->db_logistik_pt->select('afd, blok, kodebebantxt, ketbeban, nabar, qty, qty_disetujui, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item, req_rev_qty_item, periode, tmtbm, thntanam');
         $this->db_logistik_pt->where('norefbpb', $noref);
         $this->db_logistik_pt->from('bpbitem');
         $data_item_bpb = $this->db_logistik_pt->get()->result_array();
@@ -103,13 +103,13 @@ class M_bkb extends CI_Model
         return $d_return;
     }
 
-    public function get_tahun_tanam($coa_material)
-    {
-        $this->db_logistik_pt->select('thn_tanam, tmtbm');
-        $this->db_logistik_pt->where('coa_material', $coa_material);
-        $this->db_logistik_pt->from('tahun_tanam');
-        return $this->db_logistik_pt->get()->row_array();
-    }
+    // public function get_tahun_tanam($coa_material)
+    // {
+    //     $this->db_logistik_pt->select('thntanam, kategori');
+    //     $this->db_logistik_pt->where('coakerja', $coa_material);
+    //     $this->db_logistik_pt->from('item_pekerjaan');
+    //     return $this->db_logistik_pt->get()->row_array();
+    // }
 
     public function get_stok($kodebar, $txtperiode, $kode_dev)
     {

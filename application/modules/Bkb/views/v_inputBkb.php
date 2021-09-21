@@ -607,13 +607,15 @@
                 for (i = 0; i < data_item_bpb.length; i++) {
 
                     tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item, data_item_bpb[i].req_rev_qty_item);
-                    tahun_tanam(i, data_item_bpb[i].kodebebantxt);
+                    // tahun_tanam(i, data_item_bpb[i].kodebebantxt);
 
                     //sum stok all periode / qtymasuk - qtykeluar
                     get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
 
+                    var tmtbm = data_item_bpb[i].tmtbm;
                     var afd = data_item_bpb[i].afd;
                     var blok = data_item_bpb[i].blok;
+                    var thntanam = data_item_bpb[i].thntanam;
                     var kodebebantxt = data_item_bpb[i].kodebebantxt;
                     var kodesubtxt = data_item_bpb[i].kodesubtxt;
                     var ketbeban = data_item_bpb[i].ketbeban;
@@ -627,8 +629,10 @@
                     var ket = data_item_bpb[i].ket;
 
                     // Set data
+                    $('#cmb_tm_tbm_' + i).val(tmtbm);
                     $('#cmb_afd_unit_' + i).val(afd);
                     $('#cmb_blok_sub_' + i).val(blok);
+                    $('#cmb_tahun_tanam_' + i).val(thntanam);
                     $('#cmb_bahan_' + i).val(ketbeban);
                     $('#hidden_kodebebantxt' + i).val(kodebebantxt);
                     $('#txt_account_beban_' + i).val(ketsub);
@@ -778,29 +782,30 @@
         // }, 2000);
     }
 
-    function tahun_tanam(i, coa_material) {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Bkb/get_tahun_tanam'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
+    // function tahun_tanam(i, coa_material) {
+    //     console.log(coa_material);
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo site_url('Bkb/get_tahun_tanam'); ?>",
+    //         dataType: "JSON",
+    //         beforeSend: function() {},
 
-            data: {
-                'coa_material': coa_material
-            },
-            success: function(data) {
+    //         data: {
+    //             'coa_material': coa_material
+    //         },
+    //         success: function(data) {
 
-                if (data) {
-                    $('#cmb_tm_tbm_' + i).val(data.tmtbm);
-                    $('#cmb_tahun_tanam_' + i).val(data.thn_tanam);
-                }
+    //             if (data) {
+    //                 $('#cmb_tm_tbm_' + i).val(data.kategori);
+    //                 $('#cmb_tahun_tanam_' + i).val(data.thntanam);
+    //             }
 
-            },
-            error: function(response) {
-                alert('ERROR! ' + response.responseText);
-            }
-        });
-    }
+    //         },
+    //         error: function(response) {
+    //             alert('ERROR! ' + response.responseText);
+    //         }
+    //     });
+    // }
 
     function get_stok(i, kodebar, txtperiode, kode_dev) {
         $.ajax({
@@ -883,8 +888,10 @@
                     hidden_nama_barang: $('#txt_barang_' + n).val(),
                     hidden_satuan: $('#sat_bpb_' + n).text(),
                     hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
+                    cmb_tm_tbm: $('#cmb_tm_tbm_' + n).val(),
                     cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
                     cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
+                    cmb_tahun_tanam: $('#cmb_tahun_tanam_' + n).val(),
                     txt_qty_diminta: $('#txt_qty_diminta_' + n).val(),
                     txt_qty_disetujui: $('#txt_qty_disetujui_' + n).val(),
                     txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),

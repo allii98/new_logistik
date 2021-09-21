@@ -289,12 +289,12 @@ class Bkb extends CI_Controller
         echo json_encode($result);
     }
 
-    public function get_tahun_tanam()
-    {
-        $coa_material = $this->input->post('coa_material');
-        $result = $this->M_bkb->get_tahun_tanam($coa_material);
-        echo json_encode($result);
-    }
+    // public function get_tahun_tanam()
+    // {
+    //     $coa_material = $this->input->post('coa_material');
+    //     $result = $this->M_bkb->get_tahun_tanam($coa_material);
+    //     echo json_encode($result);
+    // }
 
     public function get_stok()
     {
@@ -510,8 +510,10 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['pt']            = $this->session->userdata('pt');
         $datakeluarbrgitem['kode_dev']      = $kode_dev;
         $datakeluarbrgitem['devisi']        = $this->input->post('devisi');
+        $datakeluarbrgitem['tmtbm']         = $this->input->post('cmb_tm_tbm');
         $datakeluarbrgitem['afd']           = $afd_unit;
         $datakeluarbrgitem['blok']          = $blok;
+        $datakeluarbrgitem['thntanam']      = $this->input->post('cmb_tahun_tanam');
         $datakeluarbrgitem['qty']           = $qty;
         $datakeluarbrgitem['qty2']          = $qty2;
         $datakeluarbrgitem['nilai_item']    = $nilai_keluarbrgitem;

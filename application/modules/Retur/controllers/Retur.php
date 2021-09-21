@@ -293,8 +293,10 @@ class Retur extends CI_Controller
         $data_retskbitem['grp']             = $grp;
         $data_retskbitem['kodept']          = $this->input->post('hidden_kode_pt');
         $data_retskbitem['pt']              = $this->input->post('hidden_nama_pt');
+        $data_retskbitem['tmtbm']           = $this->input->post('cmb_tm_tbm');
         $data_retskbitem['afd']             = $this->input->post('cmb_afd_unit');
         $data_retskbitem['blok']            = $this->input->post('cmb_blok_sub');
+        $data_retskbitem['thntanam']        = $this->input->post('cmb_tahun_tanam');
         $data_retskbitem['qty']             = $quantiti;
         $data_retskbitem['tgl']             = $tgl;
         $data_retskbitem['nobkb']           = $nobkb;
@@ -516,8 +518,10 @@ class Retur extends CI_Controller
             'nabar' => $this->input->post('txt_barang'),
             'grp' => $this->input->post('hidden_grup_barang'),
             'satuan' => $this->input->post('hidden_satuan_brg'),
+            'tmtbm' => $this->input->post('cmb_tm_tbm'),
             'blok' => $this->input->post('cmb_blok_sub'),
             'afd' => $this->input->post('cmb_afd_unit'),
+            'thntanam' => $this->input->post('cmb_tahun_tanam'),
             'kodebeban' => $this->input->post('hidden_kodebeban'),
             'kodebebantxt' => $this->input->post('hidden_kodebeban'),
             'ketbeban' => $this->input->post('txt_account_beban'),
@@ -666,6 +670,7 @@ class Retur extends CI_Controller
                     data-kodesub="' . $field->kodesub . '" data-kode_dev="' . $field->kode_dev . '"
                     data-ketsub="' . $field->ketsub . '" data-txtperiode="' . $field->txtperiode . '" 
                     data-ketbeban="' . $field->ketbeban . '" data-no_ref="' . $field->NO_REF . '"
+                    data-tmtbm="' . $field->tmtbm . '" data-thntanam="' . $field->thntanam . '"
                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
                         Pilih
                     </button>

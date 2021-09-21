@@ -158,8 +158,10 @@
                               $('#hidden_grup_barang_' + i).val(ret_skbitem[i].grp);
                               $('#hidden_satuan_brg_' + i).val(ret_skbitem[i].satuan);
                               $('#sat_' + i).text(ret_skbitem[i].satuan);
+                              $('#cmb_tm_tbm_' + i).val(ret_skbitem[i].tmtbm);
                               $('#cmb_afd_unit_' + i).val(ret_skbitem[i].afd);
                               $('#cmb_blok_sub_' + i).val(ret_skbitem[i].blok);
+                              $('#cmb_tahun_tanam_' + i).val(ret_skbitem[i].thntanam);
                               $('#txt_qty_retur_' + i).val(ret_skbitem[i].qty);
                               $('#txt_ket_rinci_' + i).val(ret_skbitem[i].ket);
                               $('#txt_account_beban_' + i).val(ret_skbitem[i].ketbeban);
@@ -279,10 +281,12 @@
             var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- AFD/UNIT -->' +
                   '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
+                  '<input type="hidden" class="form-control form-control-sm bg-light" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
                   '</td>';
             var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- BLOK/SUB -->' +
                   '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
+                  '<input type="hidden" class="form-control form-control-sm bg-light" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
                   '</td>';
             // var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             //     '<!-- Tahun Tanam -->' +
@@ -394,8 +398,10 @@
                               txt_barang: $('#txt_barang_' + n).val(),
                               hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
                               hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                              cmb_tm_tbm: $('#cmb_tm_tbm_' + n).val(),
                               cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
                               cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
+                              cmb_tahun_tanam: $('#cmb_tahun_tanam_' + n).val(),
                               txt_account_beban: $('#txt_account_beban_' + n).val(),
                               hidden_kodebeban: $('#hidden_kodebeban_' + n).val(),
                               txt_sub_beban: $('#txt_sub_beban_' + n).val(),

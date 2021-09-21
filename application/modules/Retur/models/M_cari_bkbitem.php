@@ -7,8 +7,8 @@ class M_cari_bkbitem extends CI_Model
 
       // Start Data Table Server Side
       var $table = 'keluarbrgitem'; //nama tabel dari database
-      var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan', 'qty2', 'afd', 'blok', 'kodebeban', 'ketbeban', 'kodesub', 'ketsub', 'kode_dev', 'txtperiode', 'NO_REF'); //field yang ada di table user
-      var $column_search = array('id', 'kodebar', 'nabar', 'grp', 'satuan', 'qty2', 'afd', 'blok', 'kodebeban', 'ketbeban', 'kodesub', 'ketsub', 'kode_dev', 'txtperiode', 'NO_REF'); //field yang diizin untuk pencarian 
+      var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan', 'qty2', 'afd', 'blok', 'kodebeban', 'ketbeban', 'kodesub', 'ketsub', 'kode_dev', 'txtperiode', 'NO_REF', 'tmtbm', 'thntanam'); //field yang ada di table user
+      var $column_search = array('id', 'kodebar', 'nabar', 'grp', 'satuan', 'qty2', 'afd', 'blok', 'kodebeban', 'ketbeban', 'kodesub', 'ketsub', 'kode_dev', 'txtperiode', 'NO_REF', 'tmtbm', 'thntanam'); //field yang diizin untuk pencarian 
       var $order = array('id' => 'asc'); // default order 
 
       public function __construct()
