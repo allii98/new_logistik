@@ -1,68 +1,66 @@
 <div class="container-fluid">
-      <div class="row justify-content-center mt-2">
+      <div class="row mt-0">
             <div class="col-12">
-                  <div class="widget-rounded-circle card-box">
-                        <div class="row justify-content-between">
-                              <h4 class="header-title ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Retur <b>BKB</b> <i>(Edit)</i></h4>
-                              <h4 class="header-title mr-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span id="devisi_span"></span></h4>
-                        </div>
-                        <div class="row justify-content-between">
-                              <p class="sub-header ml-2" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
+                  <div class="card">
+                        <div class="card-body">
+                              <div class="row justify-content-between" style="margin-top: -10px;">
+                                    <h4 class="header-title ml-2">Retur <b>BKB</b> <i>(Edit)</i></h4>
+                                    <div class="button-list mr-2">
+                                          <button class="btn btn-xs btn-success" id="new_bkb" onclick="new_retur()">BKB Baru</button>
+                                          <button class="btn btn-xs btn-danger" id="cancelBkb" onclick="batalRetur()">Batal BKB</button>
+                                          <button class="btn btn-xs btn-primary" id="a_print_bkb" onclick="cetak_retur()">Cetak</button>
+                                          <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
+                                    </div>
+                              </div>
+                              <p class="sub-header">
                                     Retur <b>Bukti Keluar Barang</b> <i>(Edit)</i>
                               </p>
-                              <button class="btn btn-xs btn-danger h-50 mr-2" id="cancelRetur" onclick="batalRetur()">Batalkan Retur</button>
-                        </div>
 
-                        <hr class="mt-0 mb-0">
-                        <div class="x_content div_form_2 mb-0">
-                              <div class="row justify-content-between">
-                                    <div class="row ml-2">
-                                          <div class="row" style="margin-left:4px;">
-                                                <h6 id="noretur" name="noretur"></h6>&emsp;&emsp;
-                                                <h6 id="norefretur" name="norefretur"></h6>
-                                          </div>
-                                          <input type="hidden" id="hidden_noretur">
-                                          <input type="hidden" id="hidden_norefretur">
-                                          <input type="hidden" id="hidden_id_retskb">
-                                          <input type="hidden" id="hidden_norefbkb">
-                                          <input type="hidden" id="hidden_nobkb">
-                                          <input type="hidden" id="hidden_kode_dev">
-                                          <input type="hidden" id="hidden_devisi">
-                                          <input type="hidden" id="hidden_nama_pt">
-                                          <input type="hidden" id="hidden_kode_pt">
-                                          <div class="row" style="margin-left:4px;">
-                                                <h6><span id="h4_no_retur"></span></h6>&emsp;&emsp;
-                                                <h6><span id="h4_no_ref_retur"></span></h6>
+                              <hr class="mb-0" style="margin-top: -15px;">
+                              <div class="x_content div_form_2 mb-0">
+                                    <div class="row justify-content-between">
+                                          <div class="row ml-2">
+                                                <input type="hidden" id="hidden_noretur">
+                                                <input type="hidden" id="hidden_norefretur">
+                                                <input type="hidden" id="hidden_id_retskb">
+                                                <input type="hidden" id="hidden_norefbkb">
+                                                <input type="hidden" id="hidden_nobkb">
+                                                <input type="hidden" id="hidden_kode_dev">
+                                                <input type="hidden" id="hidden_devisi">
+                                                <input type="hidden" id="hidden_nama_pt">
+                                                <input type="hidden" id="hidden_kode_pt">
+                                                <div class="row" style="margin-left:0px;">
+                                                      <h6>
+                                                            <span id="norefbkb_text"></span>&emsp;&emsp;&emsp;&emsp;
+                                                            <span id="noretur"></span>&emsp;&emsp;
+                                                            <span id="norefretur"></span>
+                                                      </h6>
+                                                </div>
                                           </div>
                                     </div>
-                                    <h6 class="mr-2">
-                                          <button class="btn btn-danger btn-xs fa fa-print" id="a_print_bkb" style="display:none" onclick="cetak_retur()"></button>
-                                    </h6>
-                              </div>
-                              <div class="table-responsive">
-                                    <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
-                                          <thead>
-                                                <tr>
-                                                      <!-- <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">#</th> -->
-                                                      <th width="20%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Nama Barang</th>
-                                                      <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Afd/Unit</th>
-                                                      <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Blok/Sub</th>
-                                                      <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Account Beban</th>
-                                                      <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Sub Beban</th>
-                                                      <th width="15%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">QTY Retur/Stok/Sat</th>
-                                                      <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty BKB</th>
-                                                      <th width="10%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Qty Retur</th>
-
-                                                      <th width="25%" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">Keterangan</th>
-                                                      <th></th>
-                                                </tr>
-                                          </thead>
-                                          <tbody id="tbody_rincian" name="tbody_rincian">
-                                          </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                          <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
+                                                <thead>
+                                                      <tr>
+                                                            <!-- <th style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small; padding-right: 0.2em; padding-left: 0.2em; padding-top: 0.2px; padding-bottom: 0.1em;">#</th> -->
+                                                            <th width="16%">Nama Barang</th>
+                                                            <th>Afd/Unit</th>
+                                                            <th>Blok/Sub</th>
+                                                            <th width="15%">Account Beban</th>
+                                                            <th width="15%">Sub Beban</th>
+                                                            <th width="12%" style="font-size: 12px; padding: 10px; padding-left: 14px;">QTY Retur/Stok/Sat</th>
+                                                            <th width="10%">Qty BKB</th>
+                                                            <th width="10%">Qty Retur</th>
+                                                            <th width="15%">Keterangan</th>
+                                                            <th width="7%">#</th>
+                                                      </tr>
+                                                </thead>
+                                                <tbody id="tbody_rincian" name="tbody_rincian">
+                                                </tbody>
+                                          </table>
+                                    </div>
                               </div>
                         </div>
-
                   </div> <!-- end widget-rounded-circle-->
             </div>
       </div>
@@ -85,9 +83,37 @@
       </div>
 </div>
 
+<style>
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0;
+            /* <-- Apparently some margin are still there even though it's hidden */
+      }
+
+      input[type=number] {
+            -moz-appearance: textfield;
+            /* Firefox */
+      }
+
+      table#tableRinciBKB th {
+            padding: 10px;
+            font-size: 12px;
+            padding-left: 17px;
+      }
+</style>
 <input type="hidden" id="id_retskb" value="<?= $id_retskb ?>">
 
 <script>
+      function goBack() {
+            window.history.back();
+      }
+
+      function new_retur() {
+            location.href = "<?php echo base_url('Retur/input') ?>";
+      }
+
       $(document).ready(function() {
             var id_retskb = $('#id_retskb').val();
             cari_retur_edit(id_retskb);
@@ -109,10 +135,13 @@
                         var ret_skbitem = data.ret_skbitem;
 
                         $('#noretur').text('No. Retur : ' + retskb.noretur);
+                        $('#hidden_noretur').val(retskb.noretur);
                         $('#norefretur').text('No. Ref Retur : ' + retskb.norefretur);
                         $('#hidden_norefbkb').val(retskb.norefbkb);
                         $('#hidden_kode_dev').val(retskb.kode_dev);
                         $('#hidden_norefretur').val(retskb.norefretur);
+                        $('#norefbkb_text').text(retskb.norefbkb);
+                        $('#hidden_id_retskb').val(id_retskb);
 
                         var dev = retskb.kode_dev + ' - ' + retskb.devisi;
                         $('#devisi_span').text(dev);
@@ -238,74 +267,76 @@
             var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
             var td_col_2 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Barang -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_barang_' + row + '" name="txt_barang_' + row + '" placeholder="Pilih Barang" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_barang_' + row + '" name="txt_barang_' + row + '" placeholder="Pilih Barang" disabled>' +
                   '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
                   '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
                   '<input type="hidden" id="hidden_satuan_brg_' + row + '" name="hidden_satuan_brg_' + row + '" value="0">' +
                   '</td>';
             // var td_col_3 = '<td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;">' +
             //     '<!-- TM/TBM -->' +
-            //     '<input type="text" class="form-control bg-light" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
+            //     '<input type="text" class="form-control form-control-sm bg-light" id="cmb_tm_tbm_' + row + '" name="cmb_tm_tbm_' + row + '" disabled>' +
             //     '</td>';
             var td_col_4 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- AFD/UNIT -->' +
-                  '<input type="text" class="form-control bg-light" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_afd_unit_' + row + '" name="cmb_afd_unit_' + row + '" disabled>' +
                   '</td>';
             var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- BLOK/SUB -->' +
-                  '<input type="text" class="form-control bg-light" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="cmb_blok_sub_' + row + '" name="cmb_blok_sub_' + row + '" disabled>' +
                   '</td>';
             // var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             //     '<!-- Tahun Tanam -->' +
-            //     '<input type="text" class="form-control bg-light" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
+            //     '<input type="text" class="form-control form-control-sm bg-light" id="cmb_tahun_tanam_' + row + '" name="cmb_tahun_tanam_' + row + '" disabled>' +
             //     '</td>';
             // var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             //     '<!-- Bahan -->' +
-            //     '<input type="text" class="form-control bg-light" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" disabled>' +
+            //     '<input type="text" class="form-control form-control-sm bg-light" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" disabled>' +
             //     '</td>';
             var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Account Beban -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" disabled>' +
                   '<input type="hidden" id="hidden_kodebeban_' + row + '" name="hidden_kodebeban_' + row + '" value="0">' +
                   '</td>';
             var td_col_9 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Account Beban -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_sub_beban_' + row + '" value="-" name="txt_sub_beban_' + row + '" disabled>' +
+                  '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_sub_beban_' + row + '" value="-" name="txt_sub_beban_' + row + '" disabled>' +
                   '<input type="hidden" id="hidden_kodesub_' + row + '" name="hidden_kodesub_' + row + '" value="0">' +
                   '</td>';
-            var td_col_10 = '<td style="padding-right: 0.4em; padding-left: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
-                  '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">QTY Retur&nbsp;:&nbsp;</span><span id="qty_sudah_retur_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span><br>' +
-                  '<span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Stok&nbsp;:&nbsp;</span><span id="stok_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>&nbsp;/&nbsp;<span id="sat_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
+            var td_col_10 = '<td style="padding-right: 0.4em; padding-top: 1px; padding-bottom: 0em;">' +
+                  '<span style="font-size:12px;">QTY Retur&nbsp;:&nbsp;</span><span style="font-size:12px;" id="qty_sudah_retur_' + row + '" class="small"></span><br>' +
+                  '<span style="font-size:12px;">Stok&nbsp;:&nbsp;</span><span style="font-size:12px;" id="stok_' + row + '" class="small"></span>&nbsp;/&nbsp;<span id="sat_' + row + '" class="small" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small"></span>' +
                   '</td>';
             var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_qty_bkb_' + row + '" name="txt_qty_bkb_' + row + '" disabled>' +
+                  '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_bkb_' + row + '" name="txt_qty_bkb_' + row + '" disabled>' +
                   '</td>';
             var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-                  '<input type="text" class="form-control bg-light" id="txt_qty_retur_' + row + '" name="txt_qty_retur_' + row + '" placeholder="Qty Retur" onkeyup="validasi_qty(' + row + ')" disabled>' +
+                  '<input type="number" class="form-control form-control-sm bg-light" id="txt_qty_retur_' + row + '" name="txt_qty_retur_' + row + '" placeholder="Qty Retur" onkeyup="validasi_qty(' + row + ')" disabled>' +
                   '</td>';
             var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
                   '<!-- Keterangan -->' +
-                  '<textarea class="resizable_textarea form-control bg-light" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="1" placeholder="Keterangan" disabled></textarea>' +
+                  '<textarea class="resizable_textarea form-control form-control-sm bg-light" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="1" placeholder="Keterangan" disabled></textarea>' +
                   '<input type="hidden" id="hidden_id_retskbitem_' + row + '" name="hidden_id_retskbitem_' + row + '">' +
                   '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
                   '</td>';
-            var td_col_14 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            var td_col_14 = '<td style="padding-top: 2px;">' +
+                  '<div class="row">' +
                   '<button style="display:none;" class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
                   '<button class="btn btn-xs btn-warning fa fa-edit" id="btn_ubah_' + row + '" name="btn_ubah_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Ubah" onclick="ubahRinci(' + row + ')"></button>' +
                   '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="updateRinci(' + row + ')"></button>' +
-                  '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
-                  '<button class="btn btn-xs btn-danger fa fa-trash" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+                  '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick ml-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
+                  '<button class="btn btn-xs btn-danger fa fa-trash ml-1" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
                   '<label id="lbl_status_simpan_' + row + '"></label>' +
+                  '</div>' +
                   '</td>';
             var form_tutup = '</form>';
             var tr_tutup = '</tr>';
 
             $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_4 + td_col_5 + td_col_8 + td_col_9 + td_col_10 + td_col_11 + td_col_12 + td_col_13 + td_col_14 + form_tutup + tr_tutup);
 
-            $('#txt_qty_retur_' + row).addClass('currencyduadigit');
-            $('.currencyduadigit').number(true, 0);
+            // $('#txt_qty_retur_' + row).addClass('currencyduadigit');
+            // $('.currencyduadigit').number(true, 0);
 
             // row++;
             // $('#txt_account_beban_'+row).attr('disabled','');
@@ -677,5 +708,16 @@
                         window.location = "<?= base_url('Retur') ?>";
                   }
             });
+      }
+
+      function cetak_retur() {
+            var noretur = $('#hidden_noretur').val();
+            var id_retskb = $('#hidden_id_retskb').val();
+
+            window.open("<?= base_url('Retur/cetak/') ?>" + noretur + '/' + id_retskb, '_blank');
+
+            // $('#cancelRetur').hide();
+
+            // $('.div_form_2').css('pointer-events', 'none');
       }
 </script>

@@ -166,7 +166,7 @@
                                                 <input type="hidden" id="hidden_devisi">
                                                 <input type="hidden" id="hidden_norefbpb">
                                                 <input type="hidden" id="hidden_mutasi">
-                                                <div class="row" style="margin-left:4px;">
+                                                <div class="row" style="margin-left:0px;">
                                                       <h6>
                                                             <span id="norefbpb_text"></span>&emsp;&emsp;&emsp;&emsp;
                                                             <span id="h4_no_bkb"></span>&emsp;&emsp;

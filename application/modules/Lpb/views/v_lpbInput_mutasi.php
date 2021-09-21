@@ -32,7 +32,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 </div>
                                           </div>
                                           <div class="col-lg-3">
-                                                <p class="text-muted mb-0" style="font-size:12px;">No.Ref BKB*</p>
+                                                <p class="text-muted mb-0" style="font-size:12px;">No.Ref Mutasi*</p>
                                                 <div class="media mb-2">
                                                       <div class="media-body">
                                                             <select class="js-data-example-ajax form-control select2_mutasi" id="select2_mutasi">
@@ -120,6 +120,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <input type="hidden" id="hidden_no_ref_lpb">
                                                 <input type="hidden" id="hidden_kd_dept">
                                                 <input type="hidden" id="hidden_ket_dept">
+                                                <input type="hidden" id="hidden_asal_devisi_txt">
                                           </div>
                                           <div class="row mt-2 ml-0" style="margin-bottom: 4px;">
                                                 <h6><span id="noref_span"></span></h6>
@@ -551,7 +552,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                         console.log(data);
 
-                        $('#noref_span').html(data_mutasi.NO_REF + '&emsp;&emsp;&emsp;&emsp;');
+                        $('#noref_span').html('No. Mutasi : ' + data_mutasi.no_mutasi + '&emsp;&emsp;&emsp;&emsp;');
                         $('#txt_no_po').val(data_mutasi.skb);
                         $('#tgl_bkb_txt').text(data_mutasi.tgl);
                         $('#bagian_txt').text(data_mutasi.bag);
@@ -559,6 +560,7 @@ date_default_timezone_set('Asia/Jakarta');
                         $('#keperluan_txt').text(data_mutasi.keperluan);
                         $('#asal_pt_txt').text(data_mutasi.pt);
                         $('#asal_devisi_txt').text(data_mutasi.devisi);
+                        $('#hidden_asal_devisi_txt').val(data_mutasi.devisi);
                         $('#pt_tujuan_txt').text(data_mutasi.pt_mutasi);
                         $('#devisi_tujuan_txt').text(data_mutasi.devisi_mutasi);
                         $('#devisi').val(data_mutasi.kode_devisi_mutasi);
@@ -701,7 +703,7 @@ date_default_timezone_set('Asia/Jakarta');
                         // txt_kd_supplier: $('#txt_kd_supplier').val(),
                         txt_kd_supplier: '',
                         // txt_supplier: $('#txt_supplier').val(),
-                        txt_supplier: '',
+                        txt_supplier: $('#hidden_asal_devisi_txt').val(),
                         // txt_no_pengantar: $('#txt_no_pengantar').val(),
                         txt_no_pengantar: '',
                         // txt_lokasi_gudang: $('#txt_lokasi_gudang').val(),
