@@ -5,6 +5,14 @@ $alamat_site = $this->session->userdata('alamat_site');
 $logo_pt = $this->session->userdata('logo_pt');
 $lokasi = $this->session->userdata('status_lokasi');
 $nama_pt = $this->session->userdata('nama_pt');
+$statusmutasi = $bpb->status_mutasi;
+if ($statusmutasi != 0) {
+    $mutasi = "Mutasi";
+} else {
+    $mutasi = "";
+    # code...
+}
+
 ?>
 
 <head>
@@ -54,7 +62,7 @@ $nama_pt = $this->session->userdata('nama_pt');
         <tr>
             <td rowspan="2" width="12%"><img width="5%" height="5%" src="./assets/qrcode/bpb/<?php echo $id . "_" . $no_bpb; ?>.png"></td>
             <td align="center" valign="bottom">
-                <h2 align="center" style="margin: 0px;padding: 0px; font-size: 12px;">Bon Permintaan Barang</h2>
+                <h2 align="center" style="margin: 0px;padding: 0px; font-size: 12px;">Bon Permintaan Barang <?= $mutasi; ?></h2>
             </td>
         </tr>
         <tr>
@@ -112,7 +120,11 @@ $nama_pt = $this->session->userdata('nama_pt');
                     <tr>
                         <!-- <td align="center">(___________________)</td> -->
                         <td align="center">(___________________)</td>
-                        <td align="center"><img src="<?php echo base_url() ?>assets/img/approved2.png" width="15%"><br></td>
+                        <?php if ($bpb->approval != 1) { ?>
+                            <td align="center">(___________________)</td>
+                        <?php } else { ?>
+                            <td align="center"><img src="././assets/img/approved2.png" width="15%"><br></td>
+                        <?php } ?>
                         <td align="center">(___________________)</td>
                     </tr>
                     <tr>
@@ -120,7 +132,7 @@ $nama_pt = $this->session->userdata('nama_pt');
                         foreach ($bpb_approval as $app) : ?>
                             <?php $tgl = $app->tgl_ktu; ?>
                         <?php endforeach; ?>
-                        <td align="center"><br><?= $bpb->user; ?></td>
+                        <td align="center" valign="top"><?= $bpb->user; ?></td>
                         <td align="center">KTU<br><?= $tgl; ?></td>
 
                         <!-- <td align="center">Kasie Gudang</td> -->

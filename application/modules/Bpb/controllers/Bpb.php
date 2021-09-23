@@ -103,7 +103,14 @@ class Bpb extends CI_Controller
 
     public function cari_dept()
     {
-        $query = "SELECT kode, nama FROM dept ORDER BY kode ASC";
+        $lokasi = $this->session->userdata('status_lokasi');
+        if ($lokasi == 'SITE') {
+            $query = "SELECT kode, nama FROM dept WHERE kode <> 3 ORDER BY kode ASC";
+        } else if ($lokasi == 'PKS') {
+            $query = "SELECT kode, nama FROM dept WHERE kode <> 1 AND kode <> 2 ORDER BY kode ASC";
+            # code...
+        }
+
         $data = $this->db_logistik_pt->query($query)->result();
         echo json_encode($data);
     }
@@ -258,10 +265,10 @@ class Bpb extends CI_Controller
     public function list_acc_beban()
     {
         $dt = $this->input->post('dt');
-        // $afd = $this->input->post('afd');
-        // $thn_tanam = $this->input->post('thn_tanam');
         $cmb_bahan = $this->input->post('cmb_bahan');
-        $this->M_bpb->where_datatables($dt, $cmb_bahan);
+        $mutasi_pt = $this->input->post('mutasi_pt');
+        $mutasi_lokal = $this->input->post('mutasi_lokal');
+        $this->M_bpb->where_datatables($dt, $cmb_bahan, $mutasi_pt, $mutasi_lokal);
         $list = $this->M_bpb->get_datatables();
         $data = array();
         $no = $_POST['start'];
@@ -1016,9 +1023,9 @@ class Bpb extends CI_Controller
         $data['id'] = $id;
         $data['bpb'] = $this->db_logistik_pt->get_where('bpb', array('id' => $id, 'nobpb' => $no_bpb))->row();
         $data['bpbitem'] = $this->db_logistik_pt->get_where('bpbitem', array('nobpb' => $no_bpb))->result();
-        $data['bpb_approval'] = $this->db_logistik_pt->get_where('approval_bpb', array('no_bpb' => $no_bpb))->result();
-
         $noref = $data['bpb']->norefbpb;
+        $data['bpb_approval'] = $this->db_logistik_pt->get_where('approval_bpb', array('no_bpb' => $no_bpb, 'norefbpb' => $noref))->result();
+
         $this->qrcode($no_bpb, $id, $noref);
 
         // cek bahan bakar
@@ -1033,7 +1040,7 @@ class Bpb extends CI_Controller
                 'mode' => 'utf-8',
                 'format' => 'A4',
                 // 'format' => [190, 236],
-                'margin_top' => '0',
+                'margin_top' => '1',
                 'margin_left' => '3',
                 'margin_right' => '3',
                 'orientation' => 'P'

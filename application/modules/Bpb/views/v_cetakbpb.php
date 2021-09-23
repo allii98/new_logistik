@@ -5,6 +5,14 @@ $alamat_site = $this->session->userdata('alamat_site');
 $logo_pt = $this->session->userdata('logo_pt');
 $lokasi = $this->session->userdata('status_lokasi');
 $nama_pt = $this->session->userdata('nama_pt');
+
+$statusmutasi = $bpb->status_mutasi;
+if ($statusmutasi != 0) {
+    $mutasi = "Mutasi";
+} else {
+    $mutasi = "";
+    # code...
+}
 ?>
 
 <head>
@@ -64,7 +72,7 @@ $nama_pt = $this->session->userdata('nama_pt');
         <tr>
 
             <td align="center" colspan="1">
-                <h2 align="center" style="margin: 0px;padding: 0px; font-size:12px;">Bon Permintaan Bahan Bakar Minyak</h2>
+                <h2 align="center" style="margin: 0px;padding: 0px; font-size:12px;">Bon Permintaan Bahan Bakar Minyak <?= $mutasi; ?></h2>
             </td>
         </tr>
     </table>
@@ -135,7 +143,7 @@ $nama_pt = $this->session->userdata('nama_pt');
                     <tr>
                         <!-- <td align="center">(___________________)</td> -->
                         <td align="center">(___________________)</td>
-                        <td align="center"><img src="<?php echo base_url() ?>assets/img/approved2.png" width="15%"><br></td>
+                        <td align="center"><img src="././assets/img/approved2.png" width="15%"><br></td>
                         <!-- <td align="center"><img src="<?php echo base_url() ?>assets/img/approved2.png" width="15%"><br></td> -->
                         <td align="center">(___________________)</td>
                     </tr>

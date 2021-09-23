@@ -6,7 +6,7 @@ class M_pp extends CI_Model
 {
 
     var $table = 'po'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'tglpo', 'nopotxt', 'noreftxt', 'kode_supply', 'nama_supply', 'totalbayar', 'bayar', 'grup', 'terbayar'); //field yang ada di table supplier  
+    var $column_order = array(null, 'id', 'tglpo', 'nopotxt', 'noreftxt', 'kode_supply', 'nama_supply', 'totalbayar', 'bayar', 'grup', 'terbayar', 'ppn'); //field yang ada di table supplier  
     var $column_search = array('noreftxt', 'nopotxt', 'nama_supply', 'tglpo'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
@@ -94,7 +94,12 @@ class M_pp extends CI_Model
 
     function caripo($noref)
     {
-        $data = $this->db_logistik_pt->query("SELECT id, tglpo, noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar FROM po WHERE noreftxt='$noref' ")->row();
+        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph FROM po WHERE noreftxt='$noref' ")->row();
+        return $data;
+    }
+    function ambilpo($id, $noref)
+    {
+        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph FROM po WHERE id='$id' AND noreftxt='$noref' ")->row();
         return $data;
     }
 

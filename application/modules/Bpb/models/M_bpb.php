@@ -7,8 +7,8 @@ class M_bpb extends CI_Model
 
     var $table = 'noac'; //nama tabel dari database
     var $column_order = array(null, 'NOID', 'noac15', 'nama', 'group', 'type'); //field yang ada di table user
-    var $column_search = array('NOID', 'noac15', 'nama', 'group', 'type'); //field yang diizin untuk pencarian 
-    var $order = array('NOID' => 'desc'); // default order 
+    var $column_search = array('noac15', 'nama', 'group', 'type'); //field yang diizin untuk pencarian 
+    var $order = array('noac15' => 'ASC'); // default order 
 
     public function __construct()
     {
@@ -16,13 +16,13 @@ class M_bpb extends CI_Model
         $this->load->database();
     }
 
-    public function where_datatables($dt, $cmb_bahan)
+    public function where_datatables($dt, $cmb_bahan, $mutasi_pt, $mutasi_lokal)
     {
         // global $nopo;
         $this->dt = $dt;
-        // $this->afd = $afd;
-        // $this->thn_tanam = $thn_tanam;
         $this->cmb_bahan = $cmb_bahan;
+        $this->mutasi_pt = $mutasi_pt;
+        $this->mutasi_lokal = $mutasi_lokal;
         // return $nopo;
     }
 
@@ -30,22 +30,30 @@ class M_bpb extends CI_Model
     {
         $grub = $this->dt;
         $bahan = $this->cmb_bahan;
+        $mutasi_pt = $this->mutasi_pt;
+        $mutasi_lokal = $this->mutasi_lokal;
+
+
         $this->db_mips_gl->from($this->table);
         if ($bahan != '-') {
             $this->db_mips_gl->like('noac15', $grub, 'both');
-            $this->db_mips_gl->or_where('nama', 'PSAM, PT'); ///tadinya gak ada
-            $this->db_mips_gl->or_where('nama', 'MAPA, PT'); ///tadinya gak ada
-        } else {
-            $tm = '7005';
-            $tbm = '2024';
-            $landclearing = '2090';
-            $pembibitan = '2095';
-            $this->db_mips_gl->like('noac15', $tm, 'match');
-            $this->db_mips_gl->or_like('noac15', $tbm, 'match');
-            $this->db_mips_gl->or_like('noac15', $landclearing, 'match');
-            $this->db_mips_gl->or_like('noac15', $pembibitan, 'match');
-            # code...
+        } else if ($mutasi_pt == 'mutasi_pt') {
+            $this->db_mips_gl->where('nama', 'PSAM, PT');
+            $this->db_mips_gl->or_where('nama', 'MAPA, PT');
+        } else if ($mutasi_lokal == 'mutasi_lokal') {
+            $this->db_mips_gl->like('nama', 'HUBUNGAN INTRA COMPANY', 'both');
         }
+        //  else {
+        //     $tm = '7005';
+        //     $tbm = '2024';
+        //     $landclearing = '2090';
+        //     $pembibitan = '2095';
+        //     $this->db_mips_gl->like('noac15', $tm, 'match');
+        //     $this->db_mips_gl->or_like('noac15', $tbm, 'match');
+        //     $this->db_mips_gl->or_like('noac15', $landclearing, 'match');
+        //     $this->db_mips_gl->or_like('noac15', $pembibitan, 'match');
+        //     # code...
+        // }
 
         $i = 0;
 
@@ -233,12 +241,21 @@ class M_bpb extends CI_Model
             $nobpb = $this->input->post('hidden_no_bpb');
         }
 
+
         $format_m_y = date("m/Y");
 
         if (empty($this->input->post('hidden_no_ref_bpb'))) {
-            $norefbpb = $text1 . "-BPB/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+            $noref_bpb = $text1 . "-BPB/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
         } else {
-            $norefbpb = $this->input->post('hidden_no_ref_bpb');
+            $noref_bpb = $this->input->post('hidden_no_ref_bpb');
+        }
+
+        if (empty($this->input->post('hidden_mutasi_pt')) && empty($this->input->post('hidden_mutasi_lokal'))) {
+            $norefbpb = $noref_bpb;
+            $statusmutasi = 0;
+        } else {
+            $statusmutasi = 1;
+            $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
         }
 
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
@@ -299,6 +316,7 @@ class M_bpb extends CI_Model
         $databpb['no_kode']        = $kd_nmr;
         $databpb['hm_km']        = $hm_km;
         $databpb['lok_kerja']        = $lokasi_kerja;
+        $databpb['status_mutasi']        = $statusmutasi;
 
         $databpbitem['id']            = $id_bpbitem;
         $databpbitem['kodebar']       = $kodebar;

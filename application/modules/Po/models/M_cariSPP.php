@@ -6,7 +6,7 @@ class M_cariSPP extends CI_Model
 {
     // 
     var $table = 'ppo'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noppo', 'jenis', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept'); //field yang ada di table supplier  
+    var $column_order = array(null, 'id', 'noppo', 'jenis', 'noreftxt', 'tglppo', 'tglref', 'tglppotxt', 'namadept', 'ket'); //field yang ada di table supplier  
     var $column_search = array('noreftxt', 'tglppo', 'namadept'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'desc'); // default order 
 

@@ -111,6 +111,7 @@ class Pp extends CI_Controller
             $get_harga_po = $this->db_logistik_pt->query($query_harga_po)->row();
             // endsum
 
+
             // untuk sum jumlah bpo pada item_po
             $query_jumlah_bpo = "SELECT SUM(JUMLAHBPO) AS jumlahbpo FROM item_po where noref = '$ref_po'";
             $get_jumlah_bpo = $this->db_logistik_pt->query($query_jumlah_bpo)->row();
@@ -125,6 +126,18 @@ class Pp extends CI_Controller
             $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$d->nopotxt' AND noref = '$ref_po'";
             $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
 
+            //ppn
+            $ppn = $d->ppn;
+            if ($ppn == 10) {
+                $jml_ppn = $ppn / 100;
+                $total_ppn = $get_harga_po->hargapo * $jml_ppn;
+                $hasil = $get_harga_po->hargapo + $total_ppn;
+            } else {
+                $hasil = $get_harga_po->hargapo;
+            }
+
+            //saldo
+            $saldo = $d->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar;
 
             $row[] = $d->id;
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
@@ -133,10 +146,11 @@ class Pp extends CI_Controller
             $row[] = $d->kode_supply;
             $row[] = $d->nama_supply;
             $row[] = $d->bayar;
-            $row[] = number_format($get_harga_po->hargapo);
-            $row[] = number_format($get_jumlah_bpo->jumlahbpo);
-            $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar);
-            $row[] = number_format($d->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar);
+            // $row[] = number_format($get_harga_po->hargapo);
+            $row[] = number_format(round($hasil), 2, ",", ".");
+            $row[] = number_format(round($get_jumlah_bpo->jumlahbpo), 2, ",", ".");
+            $row[] = number_format(round($get_jumlah_sudah_bayar->kasir_bayar), 2, ",", ".");
+            $row[] = number_format(round($saldo), 2, ",", ".");
             $row[] = $get_kurs->kurs;
             $data[] = $row;
         }
@@ -150,13 +164,105 @@ class Pp extends CI_Controller
         echo json_encode($output);
     }
 
+    function ambilpo()
+    {
+        $id = $this->input->post('id');
+        $refpo = $this->input->post('refpo');
+        $no_po = $this->input->post('nopo');
+        $dt = $this->M_pp->ambilpo($id, $refpo);
+
+        // untuk sum harga dan qty pada item_Po
+        $query_harga_po = "SELECT SUM(harga*qty) AS hargapo FROM item_po WHERE noref = '$refpo'";
+        $get_harga_po = $this->db_logistik_pt->query($query_harga_po)->row();
+        // endsum
+
+        // untuk sum jumlah bpo pada item_po
+        $query_jumlah_bpo = "SELECT SUM(JUMLAHBPO) AS jumlahbpo FROM item_po where noref = '$refpo'";
+        $get_jumlah_bpo = $this->db_logistik_pt->query($query_jumlah_bpo)->row();
+        // endsum
+
+        // sum kasir bayar pada tabel pp
+        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp where ref_po = '$refpo'";
+        $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
+        // endsum
+
+        //kurs
+        $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$no_po' AND noref = '$refpo'";
+        $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
+
+        //ppn
+        $ppn = $dt->ppn;
+        if ($ppn == 10) {
+            $jml_ppn = $ppn / 100;
+            //ppn
+            $hasil_ppn = $get_harga_po->hargapo * $jml_ppn;
+        } else {
+            //ppn
+            $hasil_ppn = 0;
+        }
+
+        //pph
+        $pph = $dt->pph;
+        if ($pph != 0) {
+            $jml_pph = $pph / 100;
+            $total_pph = $get_harga_po->hargapo * $jml_pph;
+        } else {
+            $total_pph = 0;
+        }
+
+        //pajak
+        $p = $hasil_ppn + $total_pph;
+        // $pajak = number_format(round($p), 2, ",", ".");
+        $pajak = round($p);
+        //tootal po
+        $ttlpo = $get_harga_po->hargapo + $p;
+        // $total_po = number_format(round($ttlpo), 2, ",", ".");
+        $total_po = round($ttlpo);
+        //nilai po
+        $nilai_po = round($get_harga_po->hargapo);
+        // $nilai_po = number_format(round($get_harga_po->hargapo), 2, ",", ".");
+        //bpo
+        $bpo = round($get_jumlah_bpo->jumlahbpo);
+        // $bpo = number_format(round($get_jumlah_bpo->jumlahbpo), 2, ",", ".");
+        //saldo
+        $sisa_saldo = $dt->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar;
+        $saldo = round($sisa_saldo);
+        // $saldo = number_format(round($sisa_saldo), 2, ",", ".");
+        //tglpo
+        $tglpo = date_format(date_create($dt->tglpo), 'd-m-Y');
+        //kurs
+        $kurs = $get_kurs->kurs;
+        //terbayar
+        $bayar = round($get_jumlah_sudah_bayar->kasir_bayar);
+        // $bayar = number_format(round($get_jumlah_sudah_bayar->kasir_bayar), 2, ",", ".");
+
+        $data = [
+            'po' => $dt,
+            'pajak' => $pajak,
+            'nilaipo' => $nilai_po,
+            'totalpo' => $total_po,
+            'bpo' => $bpo,
+            'bayar' => $bayar,
+            'saldo' => $saldo,
+            'tglpo' => $tglpo,
+            'kurs' => $kurs,
+        ];
+
+        echo json_encode($data);
+    }
+
     function caripo()
     {
         $refpo = $this->input->post('refpo');
-        $dt = $this->M_pp->caripo($refpo); // sum kasir bayar pada tabel pp
+        $dt = $this->M_pp->caripo($refpo);
+        // sum kasir bayar pada tabel pp
         $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp WHERE ref_po = '$refpo'";
         $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
         // endsum
+        //kurs
+        $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$dt->nopotxt' AND noref = '$refpo'";
+        $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
+        //end kurs
         $saldo = number_format($dt->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar);
         $data = [
             'data' => $dt,
@@ -179,7 +285,7 @@ class Pp extends CI_Controller
 
         $id = $this->uri->segment('4');
 
-        $this->qrcode($no_pp, $id);
+        // $this->qrcode($no_pp, $id);
 
         $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('ref_pp' => $no_pp, 'id' => $id))->row();
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $data['data_pp']->ref_po))->row();

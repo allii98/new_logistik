@@ -9,7 +9,7 @@
                         <h4 class="header-title ml-2">BPB</h4>
                         <div class="button-list mr-2">
                             <button onclick="new_bpb()" class="btn btn-xs btn-success" id="">BPB Baru</button>
-                            <button onclick="batal()" class="btn btn-xs btn-danger" id="" disabled>Batal BPB</button>
+                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batalBPB" disabled>Batal BPB</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -65,6 +65,7 @@
                                     <select class="form-control form-control-sm" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
                                         <option disabled selected>--Pilih--</option>
                                     </select>
+                                    <input type="hidden" name="hidden_bagian" id="hidden_bagian">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -74,15 +75,12 @@
 
                                 <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm bg-light" id="bhnbakar" name="bhnbakar" disabled>
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih--</option>
+                                        <option disabled selected>--Pilih--</option>
                                         <option value="BBM">BBM</option>
                                         <option value="NONBBM">NON BBM</option>
                                     </select>
                                 </div>
                             </div>
-                            <!-- <div class="form-group row" style="margin-bottom: 2px;" style="display:none;" id="bhnbakar"> -->
-
-
                             <div class="form-group row mb-0">
                                 <label for="cmb_alokasi_est" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                     Alokasi&nbsp;Estate
@@ -90,7 +88,7 @@
 
                                 <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
-                                        <option disabled selected style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">--Pilih--</option>
+                                        <option disabled value="" selected>--Pilih--</option>
                                         <option value="03">03</option>
                                         <option value="06">06</option>
                                         <option value="07">07</option>
@@ -142,10 +140,25 @@
                             </div>
                         </div>
                     </div>
-                    <hr class="mt-0 mb-2">
                     <div class="row div_form_2" style="margin-bottom: -10px;">
-                        <div class="col-sm-12">
-                            <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
+                        <div class="col-sm-12" style="margin-top: -15px;">
+                            <fieldset class="border mb-1 p-1">
+                                <div class="row">
+                                    <div class="custom-control custom-checkbox ml-3 mt-0 col-1 ptmutasi">
+                                        <input type="checkbox" name="mutasi_pt" class="custom-control-input" id="mutasi_pt" value="mutasi_pt">
+                                        <label class="custom-control-label" for="mutasi_pt" style="font-size: 12px;">Mutasi PT?</label>
+                                        <input type="hidden" id="hidden_mutasi_pt">
+                                    </div>
+                                    <div class="custom-control custom-checkbox ml-3 mt-0 col-3 lokalmutasi">
+                                        <input type="checkbox" name="mutasi_lokal" class="custom-control-input" id="mutasi_lokal" value="mutasi_lokal">
+                                        <label class="custom-control-label" for="mutasi_lokal" style="font-size: 12px;">Mutasi LOKAL?</label>
+                                        <input type="hidden" id="hidden_mutasi_lokal">
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                            <hr class="mt-0 mb-3">
+                            <div class="sub-header" style="margin-bottom: -25px;">
                                 <h6 id="lbl_bpb_status" name="lbl_bpb_status" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">No. Ref. BPB : ...</h6>
                             </div>
                             <div class="row ml-1 mr-1 justify-content-between">
@@ -506,7 +519,21 @@
         $('#hidden_nama_bahan_' + id).val(isi);
     }
 
+
     $(document).ready(function() {
+
+
+        //mutasi LOKASI
+        $('#mutasi_lokal').click(function() {
+            if ($(this).prop("checked") == true) {
+                $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
+                var lokal = $('.lokalmutasi').find('input[type=checkbox]').val();
+                $('#hidden_mutasi_lokal').val(lokal);
+            } else if ($(this).prop("checked") == false) {
+                $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
+                $('#hidden_mutasi_lokal').val('');
+            }
+        });
 
         // check_form();
         $('.div_form_2').hide();
@@ -518,30 +545,11 @@
         cari_dept();
         $('#hidden_no_table').val(2);
 
-        $('#cmb_bagian').change(function() {
-            console.log(this.value);
-        });
-
-        // $('#devisi').change(function() {
-        //     // console.log(this.value)
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "<?php echo site_url('Bpb/get_devisi'); ?>",
-        //         dataType: "JSON",
-        //         beforeSend: function() {},
-        //         cache: false,
-        //         data: {
-        //             kodedev: this.value
-        //         },
-        //         success: function(data) {
-        //             var devisi = data.PT;
-        //             $('#hidden_devisi').val(devisi);
-        //         },
-        //         error: function(request) {
-        //             alert("KONEKSI TERPUTUS!");
-        //         }
-        //     });
+        // $('#cmb_bagian').change(function() {
+        //     console.log(this.value);
         // });
+
+
 
         $("#txt_qty_diminta_1").on("keypress keyup blur", function(event) {
             //this.value = this.value.replace(/[^0-9\.]/g,'');
@@ -553,6 +561,27 @@
 
 
     });
+
+    $('#cmb_bagian').change(function() {
+        // console.log(this.value);
+        var data = this.value;
+        $('#hidden_bagian').val(data);
+        if (data != 1 && data != 2) {
+            $('#cmb_tm_tbm_1').attr('disabled', '');
+            $('#cmb_afd_unit_1').attr('disabled', '');
+            $('#cmb_blok_sub_1').attr('disabled', '');
+            $('#cmb_tahun_tanam_1').attr('disabled', '');
+            $('#cmb_bahan_1').attr('disabled', '');
+            $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
+        } else {
+            $('#cmb_tm_tbm_1').removeAttr('disabled', '');
+            $('#cmb_afd_unit_1').removeAttr('disabled', '');
+            $('#cmb_blok_sub_1').removeAttr('disabled', '');
+            $('#cmb_tahun_tanam_1').removeAttr('disabled', '');
+            $('#cmb_bahan_1').removeAttr('disabled', '');
+            $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').removeClass('bg-light');
+        }
+    })
 
 
     $('#cmb_alokasi_est').change(function() {
@@ -630,8 +659,14 @@
     }
 
     function check_form() {
+
         // console.log('oke siap berjalan');
         if ($('#cmb_bagian :selected').text() == "TANAMAN" || $('#cmb_bagian :selected').text() == "TANAMAN UMUM") {
+
+            //kunci checkbox
+            $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
+            $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
+
 
             if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
                 $('.div_form_2').show();
@@ -640,6 +675,20 @@
 
             }
         } else if ($('#cmb_bagian :selected').text() == "TEKNIK") {
+            //mutasi PT
+            // $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
+            // $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
+            $('#mutasi_pt').click(function() {
+                if ($(this).prop("checked") == true) {
+                    $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
+                    var pt = $('.ptmutasi').find('input[type=checkbox]').val();
+                    $('#hidden_mutasi_pt').val(pt);
+                } else if ($(this).prop("checked") == false) {
+                    $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
+                    $('#hidden_mutasi_pt').val("");
+                }
+            });
+
             if ($('#bhnbakar :selected').text() == "BBM") {
 
                 if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#txt_jns_alat').val()) != '' && $.trim($('#txt_kd_nmr').val()) != '' && $.trim($('#txt_hm_km').val()) != '' && $.trim($('#txt_lokasi_kerja').val()) != '') {
@@ -658,6 +707,19 @@
                 }
             }
         } else {
+            // $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
+            // $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
+            //mutasi PT
+            $('#mutasi_pt').click(function() {
+                if ($(this).prop("checked") == true) {
+                    $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
+                    var pt = $('.ptmutasi').find('input[type=checkbox]').val();
+                    $('#hidden_mutasi_pt').val(pt);
+                } else if ($(this).prop("checked") == false) {
+                    $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
+                    $('#hidden_mutasi_pt').val("");
+                }
+            });
             if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '') {
                 $('.div_form_2').show();
             } else {
@@ -669,6 +731,8 @@
 
 
     }
+
+
 
     function pilihDevisi() {
         $.ajax({
@@ -965,6 +1029,8 @@
             }
         });
 
+        cek(row);
+
         $('#txt_qty_diminta_' + row).addClass('currencyduadigit');
         $('.currencyduadigit').number(true, 0);
         // $('#txt_account_beban_'+row).attr('disabled','');
@@ -978,6 +1044,35 @@
 
         row++;
         $('#hidden_no_table').val(row);
+    }
+
+    function cek(row) {
+        var data = $('#hidden_bagian').val();
+        if (data != 1 && data != 2) {
+            $('#cmb_tm_tbm_' + row).attr('disabled', '');
+            $('#cmb_afd_unit_' + row).attr('disabled', '');
+            $('#cmb_blok_sub_' + row).attr('disabled', '');
+            $('#cmb_tahun_tanam_' + row).attr('disabled', '');
+            $('#cmb_bahan_' + row).attr('disabled', '');
+            $('#cmb_tm_tbm_' + row).addClass('form-control bg-light');
+            $('#cmb_afd_unit_' + row).addClass('form-control bg-light');
+            $('#cmb_blok_sub_' + row).addClass('form-control bg-light');
+            $('#cmb_tahun_tanam_' + row).addClass('form-control bg-light');
+            $('#cmb_bahan_' + row).addClass('form-control bg-light');
+
+        } else {
+            $('#cmb_tm_tbm_' + row).removeAttr('disabled');
+            $('#cmb_afd_unit_' + row).removeAttr('disabled');
+            $('#cmb_blok_sub_' + row).removeAttr('disabled');
+            $('#cmb_tahun_tanam_' + row).removeAttr('disabled');
+            $('#cmb_bahan_' + row).removeAttr('disabled');
+
+            $('#cmb_tm_tbm_' + row).removeClass('bg-light');
+            $('#cmb_afd_unit_' + row).removeClass('bg-light');
+            $('#cmb_blok_sub_' + row).removeClass('bg-light');
+            $('#cmb_tahun_tanam_' + row).removeClass('bg-light');
+            $('#cmb_bahan_' + row).removeClass('bg-light');
+        }
     }
 
     function saveRinciClick(no) {
@@ -1149,6 +1244,8 @@
         form_data.append('kd_nmr', $('#txt_kd_nmr').val());
         form_data.append('hm_km', $('#txt_hm_km').val());
         form_data.append('lokasi_kerja', $('#txt_lokasi_kerja').val());
+        form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
+        form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
 
         form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
@@ -1216,8 +1313,10 @@
                         // $('#input-baru').show();
                         $('#inputNew').css('display', 'block');
 
-                        $('.div_form_1').find('input,textarea,select').attr('disabled', '');
-                        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $('.div_form_1').find('input,textarea,select,checkbox').attr('disabled', '');
+                        $('.div_form_1').find('input,textarea,select,checkbox').addClass('form-control bg-light');
+                        $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
+                        $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
 
                         $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
@@ -1230,6 +1329,7 @@
                             loader: false
                         });
                         $('#cetak').removeAttr('disabled', '');
+                        $('#batalBPB').removeAttr('disabled', '');
 
 
                         $('#lbl_bpb_status').empty();
@@ -1529,6 +1629,32 @@
     }
 
     function ubahRinci(no) {
+        var data = $('#hidden_bagian').val();
+        if (data != 1 && data != 2) {
+            $('#cmb_tm_tbm_' + no).attr('disabled', '');
+            $('#cmb_afd_unit_' + no).attr('disabled', '');
+            $('#cmb_blok_sub_' + no).attr('disabled', '');
+            $('#cmb_tahun_tanam_' + no).attr('disabled', '');
+            $('#cmb_bahan_' + no).attr('disabled', '');
+            $('#cmb_tm_tbm_' + no).addClass('form-control bg-light');
+            $('#cmb_afd_unit_' + no).addClass('form-control bg-light');
+            $('#cmb_blok_sub_' + no).addClass('form-control bg-light');
+            $('#cmb_tahun_tanam_' + no).addClass('form-control bg-light');
+            $('#cmb_bahan_' + no).addClass('form-control bg-light');
+
+        } else {
+            $('#cmb_tm_tbm_' + no).removeAttr('disabled');
+            $('#cmb_afd_unit_' + no).removeAttr('disabled');
+            $('#cmb_blok_sub_' + no).removeAttr('disabled');
+            $('#cmb_tahun_tanam_' + no).removeAttr('disabled');
+            $('#cmb_bahan_' + no).removeAttr('disabled');
+
+            $('#cmb_tm_tbm_' + no).removeClass('bg-light');
+            $('#cmb_afd_unit_' + no).removeClass('bg-light');
+            $('#cmb_blok_sub_' + no).removeClass('bg-light');
+            $('#cmb_tahun_tanam_' + no).removeClass('bg-light');
+            $('#cmb_bahan_' + no).removeClass('bg-light');
+        }
         $('#tr_' + no).find('input,textarea,select').removeAttr('disabled', '');
         $('#tr_' + no).find('input,textarea,select').removeClass('bg-light');
 
@@ -1669,9 +1795,12 @@
         // console.log($('#cmb_bagian :selected').text());
         if ($('#cmb_bagian :selected').text() != "TANAMAN") {
             var strip_cmb = '<option value="-">-</option>';
+            // cari_dept();
             // $('.set_strip_cmb').empty();
             // $('.set_strip_cmb').append(strip_cmb);
             $('.set_strip_cmb').html(strip_cmb);
+            $("#cmb_alokasi_est").prop('selectedIndex', 0);
+            // $('#cmb_alokasi_est').val("");
             // $('#cmb_tm_tbm_'+row).html(strip_cmb);
         } else {
             var cmb_tm_tbm = '<option value=""></option>';
@@ -1702,9 +1831,12 @@
             $('.set_strip_cmb').html(strip_cmb);
             $('#cmb_alokasi_est').addClass('form-control bg-light');
             $('#cmb_alokasi_est').attr('disabled', '');
+            $("#cmb_alokasi_est").prop('selectedIndex', 0);
+            $('#txt_estate').text('');
             // $('#cmb_tm_tbm_'+row).html(strip_cmb);
             if ($('#cmb_bagian :selected').text() != "TEKNIK") {
                 $('#bhnbakar').addClass('form-control bg-light');
+                $("#bhnbakar").prop('selectedIndex', 0);
                 $('#bhnbakar').attr('disabled', '');
             } else {
                 $('#bhnbakar').removeAttr('disabled', '');
@@ -1900,6 +2032,9 @@
     var table;
 
     function tableAccBeban(row) {
+        var mutasi_pt = $('#hidden_mutasi_pt').val();
+        var mutasi_lokal = $('#hidden_mutasi_lokal').val();
+
         var tm_tbm = $('#cmb_tm_tbm_' + row).val();
         if (tm_tbm == 'TM') {
             tm_tbm1 = '7005';
@@ -1915,10 +2050,7 @@
         var cmb_bahan = $('#cmb_bahan_' + row).val();
 
         var dt = tm_tbm1 + afd + thn_tanam + cmb_bahan;
-        // console.log(dt);
-        //datatables
-        // var nopo = nopotxt;
-        // console.log(cmb_bahan);
+
         $('#tableAccBeban').DataTable({
             // "destroy": true,
             "processing": true,
@@ -1930,11 +2062,10 @@
                 "url": "<?php echo site_url('Bpb/list_acc_beban') ?>",
                 "type": "POST",
                 "data": {
-                    // tm_tbm: tm_tbm,
-                    // afd: afd,
-                    // thn_tanam: thn_tanam,
                     dt: dt,
                     cmb_bahan: cmb_bahan,
+                    mutasi_pt: mutasi_pt,
+                    mutasi_lokal: mutasi_lokal
                 }
             },
 

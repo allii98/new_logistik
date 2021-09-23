@@ -58,8 +58,8 @@
                                     Nilai&nbsp;PO
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <input id="txt_nilai_po" name="txt_nilai_po" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Nilai PO" onkeyup="hitungTotalPO()" value="0" readonly="">
-
+                                    <input id="txt_nilai_po" name="txt_nilai_po" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Nilai PO" readonly="" onkeyup="hitungTotalPO()">
+                                    <input type="hidden" name="hidden_nilai_po" id="hidden_nilai_po">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -76,7 +76,7 @@
                                     Pajak
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <input type="number" placeholder="" class="form-control form-control-sm" value="0" id="txt_pajak" name="txt_pajak" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="text" placeholder="" class="form-control form-control-sm" value="0" id="txt_pajak" name="txt_pajak" onkeyup="hitungTotalPO()" required="required">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -84,10 +84,10 @@
                                     Nilai&nbsp;BPO
                                 </label>
                                 <div class="col-4" style="padding-right: 0.01em;">
-                                    <input type="number" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo1" name="txt_nilai_bpo1" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="text" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo1" name="txt_nilai_bpo1" onkeyup="hitungTotalPO()" required="required">
                                 </div>
                                 <div class="col-5 col-xl-12">
-                                    <input type="number" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo2" name="txt_nilai_bpo2" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="text" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo2" name="txt_nilai_bpo2" onkeyup="hitungTotalPO()" required="required">
                                 </div>
                             </div>
 
@@ -107,7 +107,7 @@
                                     Sudah&nbsp;Bayar
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <input id="txt_sudah_dibayar" name="txt_sudah_dibayar" class="form-control form-control-sm autonumber bg-light" required="required" type="text" placeholder="Sudah dibayar" readonly="">
+                                    <input id="txt_sudah_dibayar" name="txt_sudah_dibayar" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Sudah dibayar" readonly="">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -141,7 +141,7 @@
                                 </label>
 
                                 <div class="col-9 col-xl-12">
-                                    <input id="txt_jumlah" name="txt_jumlah" class="form-control form-control-sm" required="required" type="number" placeholder="Jumlah" onkeyup="getTerbilang()">
+                                    <input id="txt_jumlah" name="txt_jumlah" class="form-control form-control-sm" required="required" type="text" placeholder="Jumlah" onkeyup="getTerbilang()">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -253,7 +253,7 @@
                     <div id="listpo" style="display: block;">
                         <div class="table-responsive">
                             <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                            <table id="tableDataPO" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                            <table id="tableDataPO" class="table table-striped table-bordered" width="100%">
                                 <thead>
                                     <tr>
                                         <th style="font-size: 12px; padding:10px">id</th>
@@ -312,7 +312,8 @@
     $(document).ready(function() {
         // $('#preview').show();
         // console.log('ini dia',$(this).attr('at'));
-        $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar').number(true, 2);
+        $('#txt_pajak,#txt_nilai_bpo1,#txt_nilai_bpo2').number(true);
+        $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar,#txt_jumlah').number(true);
 
         $(".nav-link").click(function() {
             $(".nav-link").removeClass("active");
@@ -418,10 +419,10 @@
             beforeSend: function() {},
             cache: false,
             data: {
-                refpo: noref
+                refpo: noref,
             },
             success: function(data) {
-
+                console.log(data);
                 var jumlah = data.saldo;
                 if (jumlah == 0) {
                     // swal('Saldo sudah 0!');
@@ -438,24 +439,35 @@
                     });
                 } else {
                     // console.log(tgl_po);
+                    var id_po = data.data.id;
+                    var tgl_po = data.data.tglpo;
+                    var no_ref_po = data.data.noreftxt;
+                    var no_po = data.data.nopo;
+                    var bayar = data.data.bayar;
+                    var kd_supply = data.data.kode_supply;
+                    var nama_supply = data.data.nama_supply;
+                    var nama_supply = data.data.nama_supply;
+
+
+
                     $('#hidden_id_po').val(id_po);
                     $('#txt_tgl_po').val(tgl_po);
 
                     $('#txt_no_ref_po').val(no_ref_po);
                     $('#hidden_no_po').val(no_po);
                     $('#txt_pembayaran').val(bayar);
-                    $('#kd_supplier').val(kd_supplier);
-                    $('#txt_supplier').val(nama_supplier);
-                    $('#txt_dibayar_ke').val(nama_supplier);
+                    $('#kd_supplier').val(kd_supply);
+                    $('#txt_supplier').val(nama_supply);
+                    $('#txt_dibayar_ke').val(nama_supply);
 
-                    var bpo = nilai_bpo.replace(/,/g, "");
-                    $('#txt_nilai_po').val(nilai_po);
-                    var bpo = nilai_bpo.replace(/,/g, "");
-                    $('#txt_nilai_bpo2').val(bpo);
+                    // var bpo = nilai_bpo.replace(/,/g, "");
+                    // $('#txt_nilai_po').val(nilai_po);
+                    // var bpo = nilai_bpo.replace(/,/g, "");
+                    // $('#txt_nilai_bpo2').val(bpo);
                     $('#lbl_kurs').html(kurs);
                     $('#hidden_kurs').val(kurs);
 
-                    $('#txt_sudah_dibayar').val(sudah_dibayar);
+                    // $('#txt_sudah_dibayar').val(sudah_dibayar);
 
                     $('#modalcariPO').modal('hide');
                     // hitungTotalPO();
@@ -491,8 +503,8 @@
         form_data.append('kd_supplier', $('#kd_supplier').val());
         form_data.append('txt_supplier', $('#txt_supplier').val());
         var total_po = $('#txt_nilai_po').val();
-        var hasil = total_po.replace(/,/g, "");
-        form_data.append('txt_nilai_po', hasil);
+        // var hasil = total_po.replace(/,/g, "");
+        form_data.append('txt_nilai_po', total_po);
         form_data.append('hidden_kurs', $('#hidden_kurs').val());
         form_data.append('txt_pajak', $('#txt_pajak').val());
         form_data.append('txt_nilai_bpo1', $('#txt_nilai_bpo1').val());
@@ -564,6 +576,43 @@
                 "orderable": false,
 
             }, ],
+            "columns": [{
+                    "width": "3%"
+                },
+                {
+                    "width": "7%"
+                },
+                {
+                    "width": "18%"
+                },
+                {
+                    "width": "3%"
+                },
+                {
+                    "width": "8%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "5%"
+                },
+                {
+                    "width": "12%"
+                },
+                {
+                    "width": "8%"
+                },
+                {
+                    "width": "12%"
+                },
+                {
+                    "width": "10%"
+                },
+                {
+                    "width": "5%"
+                },
+            ],
 
             "lengthMenu": [
                 [5, 10, 15, -1],
@@ -572,7 +621,7 @@
             "aoColumnDefs": [{
                 "bSearchable": false,
                 "bVisible": false,
-                "aTargets": [0, 0]
+                "aTargets": [0, 3]
             }, ],
             "language": {
                 "infoFiltered": ""
@@ -599,56 +648,124 @@
 
             // $('#txt_tgl_po').val(tgl_po);
             // var tgl = tgl_po.replace("-", "/");
-            if (jumlah == 0) {
-                swal('Saldo sudah 0!')
+            if (jumlah == "0,00") {
+                Swal.fire({
+                    text: "Saldo sudah 0!",
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'OK'
+                }).then((result) => {
+                    if (result.value) {
+                        tampilModal();
+                        // scanner.start();
+                    }
+                });
             } else {
-                console.log(tgl_po);
-                $('#hidden_id_po').val(id_po);
-                $('#txt_tgl_po').val(tgl_po);
+                // console.log(tgl_po);
+                ambilPO(id_po, no_ref_po, no_po);
+                // $('#hidden_id_po').val(id_po);
+                // $('#txt_tgl_po').val(tgl_po);
 
-                $('#txt_no_ref_po').val(no_ref_po);
-                $('#hidden_no_po').val(no_po);
-                $('#txt_pembayaran').val(bayar);
-                $('#kd_supplier').val(kd_supplier);
-                $('#txt_supplier').val(nama_supplier);
-                $('#txt_dibayar_ke').val(nama_supplier);
+                // $('#txt_no_ref_po').val(no_ref_po);
+                // $('#hidden_no_po').val(no_po);
+                // $('#txt_pembayaran').val(bayar);
+                // $('#kd_supplier').val(kd_supplier);
+                // $('#txt_supplier').val(nama_supplier);
+                // $('#txt_dibayar_ke').val(nama_supplier);
 
-                var bpo = nilai_bpo.replace(/,/g, "");
-                $('#txt_nilai_po').val(nilai_po);
-                var bpo = nilai_bpo.replace(/,/g, "");
-                $('#txt_nilai_bpo2').val(bpo);
-                $('#lbl_kurs').html(kurs);
-                $('#hidden_kurs').val(kurs);
+                // var bpo = nilai_bpo.replace(/,/g, "");
+                // $('#txt_nilai_po').val(nilai_po);
+                // var bpo = nilai_bpo.replace(/,/g, "");
+                // $('#txt_nilai_bpo2').val(bpo);
+                // $('#lbl_kurs').html(kurs);
+                // $('#hidden_kurs').val(kurs);
 
-                $('#txt_sudah_dibayar').val(sudah_dibayar);
+                // $('#txt_sudah_dibayar').val(sudah_dibayar);
 
-                $('#modalcariPO').modal('hide');
-                hitungTotalPO();
+                // $('#modalcariPO').modal('hide');
+
             }
             scanner.stop();
             // console.log(d);
         });
     }
 
+    function ambilPO(id_po, no_ref_po, nopo) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Pp/ambilpo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                id: id_po,
+                refpo: no_ref_po,
+                nopo: nopo,
+            },
+            success: function(data) {
+                console.log(data);
+                var id_po = data.po.id;
+                var tgl_po = data.tglpo;
+                var no_ref_po = data.po.noreftxt;
+                var no_po = data.po.nopo;
+                var pembayaran = data.po.bayar;
+                var kd_supply = data.po.kode_supply;
+                var nama_supply = data.po.nama_supply;
+                var kurs = data.kurs;
+                var bayar = data.bayar;
+                var saldo = data.saldo;
+                var nilaipo = data.nilaipo;
+                var pajak = data.pajak;
+                var totalpo = data.totalpo;
+                var bpo = data.bpo;
+
+
+
+                $('#hidden_id_po').val(id_po);
+                $('#txt_tgl_po').val(tgl_po);
+
+                $('#txt_no_ref_po').val(no_ref_po);
+                $('#hidden_no_po').val(no_po);
+                $('#txt_pembayaran').val(pembayaran);
+                $('#kd_supplier').val(kd_supply);
+                $('#txt_supplier').val(nama_supply);
+                $('#txt_dibayar_ke').val(nama_supply);
+
+                $('#txt_nilai_po').val(nilaipo);
+                $('#hidden_nilai_po').val(nilaipo);
+                $('#txt_pajak').val(pajak);
+                $('#txt_total_po').val(totalpo);
+                // var bpo = nilai_bpo.replace(/,/g, "");
+                $('#txt_nilai_bpo1').val(bpo);
+                $('#lbl_kurs').html(kurs);
+                $('#hidden_kurs').val(kurs);
+
+                $('#txt_sudah_dibayar').val(bayar);
+                $('#modalcariPO').modal('hide');
+                scanner.stop();
+
+                hitungTotalPO();
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    }
+
     function hitungTotalPO() {
-        var nilai_po = $('#txt_nilai_po').val();
-        var c = $('#txt_pajak').val();
-        var a = $('#txt_nilai_bpo1').val();
-        var b = $('#txt_nilai_bpo2').val();
+        var nilai_po = $('#hidden_nilai_po').val();
+        var pajak = $('#txt_pajak').val();
+        var nilai_bpo1 = $('#txt_nilai_bpo1').val();
+        var nilai_bpo2 = $('#txt_nilai_bpo2').val();
         var sudah_dibayar = $('#txt_sudah_dibayar').val();
 
-        var po = nilai_po.replace(/,/g, "");
-        var pajak = c.replace(/,/g, "");
-        var nilai_bpo1 = a.replace(/,/g, "");
-        var nilai_bpo2 = b.replace(/,/g, "");
-        var sudah = sudah_dibayar.replace(/,/g, "");
+
 
 
         // var data = Number(dt) + Number(pajak) + Number(nilai_bpo1) + Number(nilai_bpo2);
-        var total_po = Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2);
-        var a = addCommas(total_po);
-        // console.log(data);
-        var sisabayar = (Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2)) - Number(sudah);
+        var total_po = parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
+        console.log('total po', total_po);
+        var sisabayar = (parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2)) - parseFloat(sudah_dibayar);
 
         // console.log(total_po);
 
@@ -662,20 +779,14 @@
 
     function getTerbilang() {
         var nilai_po = $('#txt_nilai_po').val();
-        var c = $('#txt_pajak').val();
-        var a = $('#txt_nilai_bpo1').val();
-        var b = $('#txt_nilai_bpo2').val();
+        var pajak = $('#txt_pajak').val();
+        var nilai_bpo1 = $('#txt_nilai_bpo1').val();
+        var nilai_bpo2 = $('#txt_nilai_bpo2').val();
         var sudah_dibayar = $('#txt_sudah_dibayar').val();
 
-        var po = nilai_po.replace(/,/g, "");
-        var pajak = c.replace(/,/g, "");
-        var nilai_bpo1 = a.replace(/,/g, "");
-        var nilai_bpo2 = b.replace(/,/g, "");
-        var sudah = sudah_dibayar.replace(/,/g, "");
-
-        var total_po = Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2);
+        var total_po = parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
         // var total_po = addCommas(nStr);
-        var sisabayar = (Number(po) + parseInt(pajak) + parseInt(nilai_bpo1) + parseInt(nilai_bpo2)) - Number(sudah);
+        var sisabayar = (parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2)) - parseFloat(sudah_dibayar);
 
         // var sisa = addCommas(sisabayar);
 
@@ -694,13 +805,7 @@
             $('#jumlah').val(sisabayar);
             // $('#txt_terbilang').val('');
         }
-        // // if (jml < 0) $('#txt_jumlah').val(sisabayar);
-        // // if (jml > sisabayar) $('#txt_jumlah').val(sisabayar);
-        // // console.log(d);
-        // var terbi = $('#txt_jumlah').val();
-        // var data = jml.split('.').join("");
-        // // console.log(data)
-        // // tes(terbi);
+
         $('#txt_terbilang').val(terbilang($('#txt_jumlah').val()));
     }
 

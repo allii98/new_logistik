@@ -240,6 +240,7 @@ class Po extends CI_Controller
             $row[] =  date_format(date_create($d->tglppo), 'd-m-Y');
             $row[] = $d->noreftxt;
             $row[] = $d->namadept;
+            $row[] = $d->ket;
             // $row[] = '<div class="ribbon ribbon-danger float-right" id="pesan_"><i class="mdi mdi-access-point mr-1"></i>Habis!</div>';
             $data[] = $row;
         }

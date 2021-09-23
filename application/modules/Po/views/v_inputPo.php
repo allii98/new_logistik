@@ -176,8 +176,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     Lokasi&nbsp;Pengiriman*
                                 </label>
                                 <div class="col-8 col-xl-12">
-                                    <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman"  autocomplite="off" required>
-                                   
+                                    <input class="form-control form-control-sm" type="text" id="lks_pengiriman" name="lks_pengiriman" placeholder="Lokasi Pengiriman" autocomplite="off" required>
+
 
                                 </div>
                             </div>
@@ -709,7 +709,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             <div class="modal-body">
                 <div class="table-responsive" style="margin-top: -20px;">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                    <table id="tblspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                    <table id="tblspp" class="table table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
                                 <th style="font-size: 12px; padding:10px">No.</th>
@@ -745,32 +745,32 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalcarispp">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
-            <div class="modal-header ml-2">
+            <div class="modal-header ml-2" style="margin-bottom: -10px;">
                 <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
                 <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> -->
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="col-12">
-                    <div class="table-responsive">
-                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                        <table id="dataspp" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
-                            <thead>
-                                <tr>
+            <div class="modal-body" style="margin-top: -20px;">
+                <div class="table-responsive">
+                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                    <table id="dataspp" class="table table-striped table-bordered" width="100%">
+                        <thead>
+                            <tr>
 
-                                    <th style="font-size: 12px; padding:10px; text-align: center;">#</th>
-                                    <th style="font-size: 12px; padding:10px; text-align: center;">NO</th>
-                                    <th style="font-size: 12px; padding:10px">Tanggal</th>
-                                    <th style="font-size: 12px; padding:10px">Ref.&nbsp;SPP</th>
-                                    <th style="font-size: 12px; padding:10px">Departemen</th>
+                                <th class="hastag_th">#</th>
+                                <th class="no_th">NO</th>
+                                <th class="tgl_th">Tanggal</th>
+                                <th class="ref_th">Ref.&nbsp;SPP</th>
+                                <th class="dept_th">Departemen</th>
+                                <th class="ket_th">Ket</th>
 
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
+
             </div>
             <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
@@ -782,6 +782,36 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 <style>
+    .hastag_th {
+        font-size: 12px;
+        width: 2% !important;
+    }
+
+    .no_th {
+        font-size: 12px;
+        width: 3% !important;
+    }
+
+    .tgl_th {
+        font-size: 12px;
+        width: 10% !important;
+    }
+
+    .ref_th {
+        font-size: 12px;
+        width: 25% !important;
+    }
+
+    .dept_th {
+        font-size: 12px;
+        width: 30% !important;
+    }
+
+    .ket_th {
+        font-size: 12px;
+        width: 30% !important;
+    }
+
     table#tableRinciPO th {
         padding: 10px;
         font-size: 12px;
@@ -1176,7 +1206,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             "processing": true,
             "serverSide": true,
-
             "order": [],
             "ajax": {
                 "url": "<?php echo site_url('Po/get_carispp') ?>",
@@ -1189,23 +1218,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             "language": {
                 "infoFiltered": ""
             },
-            "columns": [{
-                    "width": "2%"
-                },
-                {
-                    "width": "3%"
-                },
-                {
-                    "width": "30%"
-                },
-                {
-                    "width": "33%"
-                },
-                {
-                    "width": "32%"
-                },
 
-            ],
         });
 
         // end dataspp site
