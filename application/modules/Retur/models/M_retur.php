@@ -118,6 +118,16 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->insert('ret_skbitem', $data);
     }
 
+    public function savedatastokmasuk($data)
+    {
+        return $this->db_logistik_pt->insert('stokmasuk', $data);
+    }
+
+    public function savedatamasukitem($data)
+    {
+        return $this->db_logistik_pt->insert('masukitem', $data);
+    }
+
     public function urut_cetak($norefretur)
     {
         $this->db_logistik_pt->set('cetak', 'cetak+1', FALSE);
@@ -134,6 +144,18 @@ class M_retur extends CI_Model
     {
         $this->db_logistik_pt->where('id', $id_retskbitem);
         return $this->db_logistik_pt->update('ret_skbitem', $data_item_retur);
+    }
+
+    public function update_masukitem($id_masukitem, $data_masukitem)
+    {
+        $this->db_logistik_pt->where('id', $id_masukitem);
+        return $this->db_logistik_pt->update('masukitem', $data_masukitem);
+    }
+
+    public function update_masukitem_edit($norefretur, $kodebar, $data_masukitem)
+    {
+        $this->db_logistik_pt->where(['refpo' => $norefretur, 'kodebar' => $kodebar]);
+        return $this->db_logistik_pt->update('masukitem', $data_masukitem);
     }
 
     public function cari_harga_bkb($no_ref_bkb, $kodebar)
@@ -391,6 +413,11 @@ class M_retur extends CI_Model
     public function deleteRetur($norefretur)
     {
         return $this->db_logistik_pt->delete('retskb', array('norefretur' => $norefretur));
+    }
+
+    public function deleteStokMasuk($norefretur)
+    {
+        return $this->db_logistik_pt->delete('stokmasuk', array('refpo' => $norefretur));
     }
 
     public function cekReturItem($norefretur)

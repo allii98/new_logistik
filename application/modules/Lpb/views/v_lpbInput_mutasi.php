@@ -279,7 +279,8 @@ date_default_timezone_set('Asia/Jakarta');
 <style>
       .select2-container {
             white-space: nowrap;
-            font-size: 9px;
+            font-size: 12px;
+            height: 50%;
       }
 </style>
 <script>

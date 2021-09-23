@@ -137,9 +137,9 @@
                         $('#noretur').text('No. Retur : ' + retskb.noretur);
                         $('#hidden_noretur').val(retskb.noretur);
                         $('#norefretur').text('No. Ref Retur : ' + retskb.norefretur);
+                        $('#hidden_norefretur').val(retskb.norefretur);
                         $('#hidden_norefbkb').val(retskb.norefbkb);
                         $('#hidden_kode_dev').val(retskb.kode_dev);
-                        $('#hidden_norefretur').val(retskb.norefretur);
                         $('#norefbkb_text').text(retskb.norefbkb);
                         $('#hidden_id_retskb').val(id_retskb);
 
@@ -370,75 +370,77 @@
       //Update Data
       function updateRinci(n) {
 
-            txtperiode = $('#hidden_txtperiode_' + n).val(),
-                  kodebar = $('#hidden_kode_barang_' + n).val(),
-                  kode_dev = $('#hidden_kode_dev').val(),
-                  no_ref = $('#hidden_norefbkb').val(),
+            txtperiode = $('#hidden_txtperiode_' + n).val();
+            kodebar = $('#hidden_kode_barang_' + n).val();
+            kode_dev = $('#hidden_kode_dev').val();
+            no_ref = $('#hidden_norefbkb').val();
 
-                  $.ajax({
-                        type: "POST",
-                        url: "<?php echo base_url('Retur/updateRetur') ?>",
-                        dataType: "JSON",
+            $.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url('Retur/updateRetur') ?>",
+                  dataType: "JSON",
 
-                        beforeSend: function() {
+                  beforeSend: function() {
 
-                              $('#btn_update_' + n).css('display', 'none');
+                        $('#btn_update_' + n).css('display', 'none');
 
-                              $('#lbl_status_simpan_' + n).empty();
-                              $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
-                        },
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+                  },
 
-                        data: {
+                  data: {
 
-                              hidden_kode_dev: kode_dev,
-                              hidden_txtperiode: txtperiode,
-                              hidden_norefbkb: no_ref,
-                              hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
-                              hidden_kode_barang: kodebar,
-                              txt_barang: $('#txt_barang_' + n).val(),
-                              hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
-                              hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
-                              cmb_tm_tbm: $('#cmb_tm_tbm_' + n).val(),
-                              cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
-                              cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
-                              cmb_tahun_tanam: $('#cmb_tahun_tanam_' + n).val(),
-                              txt_account_beban: $('#txt_account_beban_' + n).val(),
-                              hidden_kodebeban: $('#hidden_kodebeban_' + n).val(),
-                              txt_sub_beban: $('#txt_sub_beban_' + n).val(),
-                              hidden_kodesub: $('#hidden_kodesub_' + n).val(),
-                              txt_qty_retur: $('#txt_qty_retur_' + n).val(),
-                              txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
-                        },
+                        hidden_kode_dev: kode_dev,
+                        hidden_txtperiode: txtperiode,
+                        hidden_norefbkb: no_ref,
+                        hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
+                        hidden_norefretur: $('#hidden_norefretur').val(),
+                        hidden_kode_barang: kodebar,
+                        txt_barang: $('#txt_barang_' + n).val(),
+                        hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
+                        hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                        cmb_tm_tbm: $('#cmb_tm_tbm_' + n).val(),
+                        cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
+                        cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
+                        cmb_tahun_tanam: $('#cmb_tahun_tanam_' + n).val(),
+                        txt_account_beban: $('#txt_account_beban_' + n).val(),
+                        hidden_kodebeban: $('#hidden_kodebeban_' + n).val(),
+                        txt_sub_beban: $('#txt_sub_beban_' + n).val(),
+                        hidden_kodesub: $('#hidden_kodesub_' + n).val(),
+                        txt_qty_retur: $('#txt_qty_retur_' + n).val(),
+                        txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                        edit: '1'
+                  },
 
-                        success: function(data) {
+                  success: function(data) {
 
-                              console.log(data);
+                        console.log(data);
 
-                              $('#lbl_status_simpan_' + n).empty();
-                              $.toast({
-                                    position: 'top-right',
-                                    heading: 'Success',
-                                    text: 'Berhasil Diupdate!',
-                                    icon: 'success',
-                                    loader: false
-                              });
+                        $('#lbl_status_simpan_' + n).empty();
+                        $.toast({
+                              position: 'top-right',
+                              heading: 'Success',
+                              text: 'Berhasil Diupdate!',
+                              icon: 'success',
+                              loader: false
+                        });
 
-                              $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
-                              $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
+                        $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').addClass('bg-light');
+                        $('.div_form_2').find('#txt_qty_retur_' + n + ',#txt_ket_rinci_' + n + '').attr('disabled', '');
 
-                              $('#btn_ubah_' + n).css('display', 'block');
-                              $('#btn_hapus_' + n).css('display', 'block');
-                              $('#btn_cancel_update_' + n).css('display', 'none');
+                        $('#btn_ubah_' + n).css('display', 'block');
+                        $('#btn_hapus_' + n).css('display', 'block');
+                        $('#btn_cancel_update_' + n).css('display', 'none');
 
-                              get_stok(n, kodebar, txtperiode, kode_dev);
+                        get_stok(n, kodebar, txtperiode, kode_dev);
 
-                              get_qty_retur(n, no_ref, kodebar);
+                        get_qty_retur(n, no_ref, kodebar);
 
-                        },
-                        error: function(request) {
-                              alert(request.responseText);
-                        }
-                  });
+                  },
+                  error: function(request) {
+                        alert(request.responseText);
+                  }
+            });
       };
 
       // cancel update
@@ -619,7 +621,10 @@
                   },
 
                   data: {
-                        hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val()
+                        hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
+                        kodebar: $('#hidden_kode_barang_' + n).val(),
+                        hidden_norefretur: $('#hidden_norefretur').val(),
+                        delete_item_retur: '1'
                   },
 
                   success: function(data) {

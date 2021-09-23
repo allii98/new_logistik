@@ -56,11 +56,11 @@ class Lpb extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_lpb" name="edit_lpb"
-                        data-id="' . $field->id . '" data-mutasi="' . $field->mutasi . '"
+                        data-id="' . $field->id . '" data-mutasi="' . $field->jenis_lpb . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
                         <button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
-                        data-noref="' . $field->noref . '" data-mutasi="' . $field->mutasi . '"
+                        data-noref="' . $field->noref . '" data-mutasi="' . $field->jenis_lpb . '"
                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                         </button>
                         <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
@@ -207,22 +207,36 @@ class Lpb extends CI_Controller
         //         break;
         // }
 
+        $mutasi_ga = $this->input->post('mutasi');
+
+        if ($mutasi_ga == '1') {
+            $mutasi = "1";
+            $noref_ppo = '0';
+            $jenis_lpb = '1'; // 0 = lpb, 1 = lpb mutasi, 2 = lpb retur
+            $alias_ref = '-MUT';
+        } else {
+            $mutasi = "0";
+            $noref_ppo = $this->input->post('hidden_norefppo');
+            $jenis_lpb = '0'; // 0 = lpb, 1 = lpb mutasi, 2 = lpb retur
+            $alias_ref = '';
+        }
+
         $lokasibuatpo = substr($refpo, 0, 3);
         switch ($lokasibuatpo) {
             case 'PST': // HO
-                $ref_1 = "PST-LPB";
+                $ref_1 = "PST-LPB" . $alias_ref . "";
                 $ref_2 = "BWJ";
                 break;
             case 'ROM': // RO
-                $ref_1 = "ROM-LPB";
+                $ref_1 = "ROM-LPB" . $alias_ref . "";
                 $ref_2 = "PKY";
                 break;
             case 'FAC': // PKS
-                $ref_1 = "FAC-LPB";
+                $ref_1 = "FAC-LPB" . $alias_ref . "";
                 $ref_2 = "SWJ";
                 break;
             case 'EST': // SITE
-                $ref_1 = "EST-LPB";
+                $ref_1 = "EST-LPB" . $alias_ref . "";
                 $ref_2 = "SWJ";
                 break;
             default:
@@ -276,16 +290,6 @@ class Lpb extends CI_Controller
             $asset = "1";
         } else {
             $asset = "0";
-        }
-
-        $mutasi_ga = $this->input->post('mutasi');
-
-        if ($mutasi_ga == '1') {
-            $mutasi = "1";
-            $noref_ppo = '0';
-        } else {
-            $mutasi = "0";
-            $noref_ppo = $this->input->post('hidden_norefppo');
         }
 
         $tgl_terima = date("Y-m-d H:i:s", strtotime($this->input->post('txt_tgl_terima')));
@@ -359,7 +363,7 @@ class Lpb extends CI_Controller
             'kode' => $kodept,
             'devisi' => $data['devisi']['PT'],
             'kode_dev' => $kode_devisi,
-            'mutasi' => $mutasi,
+            'jenis_lpb' => $jenis_lpb,
             'lokasi' => $this->session->userdata('status_lokasi'),
             'tglppo' => $this->input->post('hidden_tglppo'),
             'norefppo' => $noref_ppo,

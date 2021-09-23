@@ -6,8 +6,8 @@ class M_get_bkb extends CI_Model
 {
 
     var $table = 'stockkeluar'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'NO_REF', 'keperluan', 'tglinput', 'USER', 'bag', 'devisi', 'kode_dev', 'skb', 'pt', 'kode'); //field yang ada di table supplier  
-    var $column_search = array('id', 'NO_REF', 'keperluan', 'tglinput', 'USER', 'bag', 'devisi', 'kode_dev', 'skb', 'pt', 'kode'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'NO_REF', 'keperluan', 'tglinput', 'USER', 'bag', 'devisi', 'kode_dev', 'skb', 'pt', 'kode', 'tgl'); //field yang ada di table supplier  
+    var $column_search = array('id', 'NO_REF', 'keperluan', 'tglinput', 'USER', 'bag', 'devisi', 'kode_dev', 'skb', 'pt', 'kode', 'tgl'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()

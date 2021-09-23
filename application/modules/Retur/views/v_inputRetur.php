@@ -113,6 +113,10 @@
                             <input type="hidden" id="hidden_devisi">
                             <input type="hidden" id="hidden_nama_pt">
                             <input type="hidden" id="hidden_kode_pt">
+                            <input type="hidden" id="hidden_tgl_bkb">
+                            <input type="hidden" id="hidden_no_lpb">
+                            <input type="hidden" id="hidden_no_ref_lpb">
+                            <input type="hidden" id="hidden_id_stokmasuk">
                             <div class="row" style="margin-left:4px;">
                                 <h6><span id="h4_no_retur"></span></h6>&emsp;&emsp;
                                 <h6><span id="h4_no_ref_retur"></span></h6>
@@ -507,6 +511,7 @@
             var kode_dev = $(this).data('kode_dev');
             var devisi = $(this).data('devisi');
             var bag = $(this).data('bag');
+            var hidden_tgl_bkb = $(this).data('tgl_bkb');
             var dev = kode_dev + ' - ' + devisi;
 
             // Set data
@@ -519,6 +524,7 @@
             $('#hidden_devisi').val(devisi);
             $('#bagian').val(bag);
             $('#devisi_text').val(dev);
+            $('#hidden_tgl_bkb').val(hidden_tgl_bkb);
 
             $("#modalListBkb").modal('hide');
 
@@ -730,6 +736,7 @@
             '<!-- Keterangan -->' +
             '<textarea class="resizable_textarea form-control form-control-sm" style="font-size:12px;" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="2" placeholder="Keterangan"></textarea>' +
             '<input type="hidden" id="hidden_id_retskbitem_' + row + '" name="hidden_id_retskbitem_' + row + '">' +
+            '<input type="hidden" id="hidden_id_masukitem_' + row + '" name="hidden_id_masukitem_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '</td>';
         var td_col_14 = '<td style="padding-top: 2px;">' +
@@ -870,6 +877,9 @@
             },
 
             data: {
+                hidden_no_lpb: $('#hidden_no_lpb').val(),
+                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                hidden_tgl_bkb: $('#hidden_tgl_bkb').val(),
                 hidden_noretur: $('#hidden_noretur').val(),
                 hidden_norefretur: $('#hidden_norefretur').val(),
                 hidden_nobkb: $('#hidden_nobkb').val(),
@@ -891,6 +901,7 @@
                 cmb_afd_unit: $('#cmb_afd_unit_' + n).val(),
                 cmb_blok_sub: $('#cmb_blok_sub_' + n).val(),
                 cmb_tahun_tanam: $('#cmb_tahun_tanam_' + n).val(),
+                txt_qty_bkb: $('#txt_qty_bkb_' + n).val(),
                 txt_qty_retur: $('#txt_qty_retur_' + n).val(),
                 txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
                 txt_account_beban: $('#txt_account_beban_' + n).val(),
@@ -920,9 +931,11 @@
                     $('#lbl_bkb_status').empty();
                     $('#h4_no_retur').html('No. Retur BKB : ' + data.no_retur);
                     $('#hidden_noretur').val(data.no_retur);
+                    $('#hidden_no_lpb').val(data.no_lpb);
 
                     $('#h4_no_ref_retur').html('No. Ref. Retur BKB : ' + data.noref_retur);
                     $('#hidden_norefretur').val(data.noref_retur);
+                    $('#hidden_no_ref_lpb').val(data.noref_lpb);
 
                     $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').attr('disabled', '');
                     $('.div_form_1').find('#txt_tgl_retur, #cari_bkb, #camera, #no_ba, #keterangan').addClass('bg-light');
@@ -946,6 +959,9 @@
                     $('#btn_ubah_' + n).css('display', 'block');
                     $('#btn_hapus_' + n).css('display', 'block');
 
+
+                    $('#hidden_id_stokmasuk').val(data.id_stokmasuk);
+                    $('#hidden_id_masukitem_' + n).val(data.id_masukitem);
                     $('#hidden_id_retskb').val(data.id_retskb);
                     $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
                     $('#hidden_txtperiode_' + n).val(data.txtperiode);
@@ -1008,6 +1024,7 @@
                 hidden_txtperiode: txtperiode,
                 hidden_norefbkb: no_ref,
                 hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
+                hidden_id_masukitem: $('#hidden_id_masukitem_' + n).val(),
                 hidden_kode_barang: kodebar,
                 txt_barang: $('#txt_barang_' + n).val(),
                 hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
@@ -1020,6 +1037,7 @@
                 hidden_kodesub: $('#hidden_kodesub_' + n).val(),
                 txt_qty_retur: $('#txt_qty_retur_' + n).val(),
                 txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                edit: '0'
             },
 
             success: function(data) {
@@ -1269,7 +1287,9 @@
             },
 
             data: {
-                hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val()
+                hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
+                hidden_id_masukitem: $('#hidden_id_masukitem_' + n).val(),
+                delete_item_retur: '0'
             },
 
             success: function(data) {
@@ -1342,6 +1362,7 @@
     function hapusRetur() {
 
         var norefretur = $('#hidden_norefretur').val();
+        var no_ref_lpb = $('#hidden_no_ref_lpb').val();
 
         $.ajax({
             type: "POST",
@@ -1373,7 +1394,7 @@
 
         // $('#cancelRetur').hide();
 
-        $('.div_form_2').css('pointer-events', 'none');
+        // $('.div_form_2').css('pointer-events', 'none');
     }
 
     // $("#select2").select2({

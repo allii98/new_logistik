@@ -144,7 +144,7 @@ class Retur extends CI_Controller
                         data-no_ref="' . $field->NO_REF . '" data-devisi="' . $field->devisi . '"
                         data-kode_dev="' . $field->kode_dev . '" data-bag="' . $field->bag . '"
                         data-skb="' . $field->skb . '" data-pt="' . $field->pt . '"
-                        data-kode="' . $field->kode . '"
+                        data-kode="' . $field->kode . '" data-tgl_bkb="' . $field->tgl . '"
                         data-toggle="tooltip" data-placement="top" title="detail">pilih
                         </button>';
             $row[] = $no;
@@ -318,9 +318,155 @@ class Retur extends CI_Controller
         $data_retskbitem['id_user']         = $id_user;
         $data_retskbitem['user']            = $this->session->userdata('user');
 
+        //-------------------------KEBUTUHAN SAVE KE LPB----------------------/
+        $lokasibuatpo = substr($norefbkb, 0, 3);
+        switch ($lokasibuatpo) {
+            case 'PST': // HO
+                $ref_1 = "PST-LPB-RET";
+                $ref_2 = "BWJ";
+                break;
+            case 'ROM': // RO
+                $ref_1 = "ROM-LPB-RET";
+                $ref_2 = "PKY";
+                break;
+            case 'FAC': // PKS
+                $ref_1 = "FAC-LPB-RET";
+                $ref_2 = "SWJ";
+                break;
+            case 'EST': // SITE
+                $ref_1 = "EST-LPB-RET";
+                $ref_2 = "SWJ";
+                break;
+            default:
+                break;
+        }
+
+        if ($this->session->userdata('status_lokasi') == "HO") {
+            $digit2 = "1";
+        } else {
+            $digit2 = "2";
+        }
+
+        $kode_devisi    = $this->input->post('hidden_kode_dev');
+        $digit1 = preg_replace("/[^1-9]/", "", $kode_devisi);
+
+        $digit1_2 = $digit1 . $digit2;
+
+        $hitung_digit1_2 = strlen($digit1_2);
+        $query_masuk_item = "SELECT MAX(SUBSTRING(ttgtxt, $hitung_digit1_2+1)) as maxttg from masukitem WHERE ttg LIKE '$digit1_2%'";
+        $generate_masuk_item = $this->db_logistik_pt->query($query_masuk_item)->row();
+        $noUrut_masuk_item = (int)($generate_masuk_item->maxttg);
+        $noUrut_masuk_item++;
+        $print_masuk_item = sprintf("%05s", $noUrut_masuk_item);
+
+        $ref_3 = date("m/y", strtotime($this->input->post('txt_tgl_retur')));
+
+        if (empty($this->input->post('hidden_no_lpb'))) {
+            $no_lpb = $digit1_2 . $print_masuk_item; // 6207836;
+        } else {
+            $no_lpb = $this->input->post('hidden_no_lpb');
+        }
+
+        if (empty($this->input->post('hidden_no_ref_lpb'))) {
+            $no_ref_lpb = $ref_1 . "/" . $ref_2 . "/" . $ref_3 . "/" . $no_lpb; //LPB/PST/01/00233 // Est-LPB/swj/12/18/07836 // EST/SWJ/RETURN/642/XIV/12/2018
+        } else {
+            $no_ref_lpb = $this->input->post('hidden_no_ref_lpb');
+        }
+
+        $data_stokmasuk = [
+            'tgl' => $tgl,
+            'kd_dept' => '0',
+            'ket_dept' => $this->input->post('bagian'),
+            'nopo' => $noretur,
+            'nopotxt' => $noretur,
+            'LOKAL' => '0',
+            'ASSET' => '0',
+            'kode_supply' => '0',
+            'nama_supply' => '-',
+            'ttg' => $no_lpb,
+            'ttgtxt' => $no_lpb,
+            'no_pengtr' => '-',
+            'lokasi_gudang' => '-',
+            'ket' => $this->input->post('keterangan'),
+            'tglinput' => date("Y-m-d H:i:s"),
+            'txttgl' => $txttgl,
+            'thn' => $thn,
+            'periode1' => $periode1,
+            'periode2' => NULL,
+            'txtperiode1' => $txtperiode,
+            'txtperiode2' => NULL,
+            'pt' => $this->session->userdata('pt'),
+            'kode' => $this->session->userdata('kode_pt'),
+            'devisi' => $devisi,
+            'kode_dev' => $kode_dev,
+            'jenis_lpb' => '2', //2 itu lpb retur
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'tglppo' => '-',
+            'norefppo' => '-',
+            'tglpo' => $this->input->post('hidden_tgl_bkb'),
+            'refpo' => $norefretur,
+            'noref' => $no_ref_lpb,
+            'BATAL' => '0',
+            'alasan_batal' => '0',
+            'id_user' => $id_user,
+            'USER' => $this->session->userdata('user'),
+            'cetak' => '0',
+            'posting' => '0',
+            'approval' => '1',
+            'approval_kasie' => '1',
+            'approval_ktu' => '1',
+            'flag_lpb' => '1'
+        ];
+
+        $data_masukitem = [
+            'kdpt' => $this->session->userdata('kode_pt'),
+            'nopo' => $noretur,
+            'nopotxt' => $noretur,
+            'LOKAL' => '0',
+            'ASSET' => '0',
+            'pt' => $this->session->userdata('pt'),
+            'devisi' => $devisi,
+            'kode_dev' => $kode_dev,
+            'afd' => '-',
+            'kodebar' => $this->input->post('hidden_kode_barang'),
+            'kodebartxt' => $this->input->post('hidden_kode_barang'),
+            'nabar' => $nabar,
+            'satuan' => $sat,
+            'grp' => $grp,
+            'qtypo' => $this->input->post('txt_qty_bkb'),
+            'qty' => $quantiti,
+            'tgl' => $tgl,
+            'tglpo' => $this->input->post('hidden_tgl_bkb'),
+            'ttg' => $no_lpb,
+            'ttgtxt' => $no_lpb,
+            'tglinput' => date("Y-m-d H:i:s"),
+            'txttgl' => $txttgl,
+            'thn' => $thn,
+            'periode' => $periode1,
+            'txtperiode' => $txtperiode,
+            'noadjust' => '0',
+            'ket' => $this->input->post('txt_ket_rinci'),
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'norefppo' => '0',
+            'refpo' => $norefretur,
+            'noref' => $no_ref_lpb,
+            'BATAL' => '0',
+            'alasan_batal' => '0',
+            'kurs' => 'Rp',
+            'konversi' => '0',
+            'id_user' => $id_user,
+            'USER' => $this->session->userdata('user'),
+            'cetak' => '0',
+            'posting' => '0',
+            'qtyditerima' => '0',
+        ];
+        //-------------------------END KEBUTUHAN SAVE KE LPB----------------------/
+
         if (empty($this->input->post('hidden_noretur'))) {
             $savedataretskb = $this->M_retur->savedataretskb($data_retskb);
             $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
+            $savedatastokmasuk = $this->M_retur->savedatastokmasuk($data_stokmasuk);
+            $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
             $item_exist = 0;
         } else {
             //cek item jika sudah ada tidak bisa save
@@ -329,10 +475,14 @@ class Retur extends CI_Controller
                 $item_exist = 1;
                 $savedataretskb = NULL;
                 $savedataretskbitem = NULL;
+                $savedatastokmasuk = NULL;
+                $savedatamasukitem = NULL;
             } else {
                 $item_exist = 0;
                 $savedataretskb = NULL;
+                $savedatastokmasuk = NULL;
                 $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
+                $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
             }
         }
 
@@ -361,15 +511,29 @@ class Retur extends CI_Controller
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_retskbitem = $generate_id->id_retskbitem;
 
+        $query_id = "SELECT MAX(id) as id_stokmasuk FROM stokmasuk WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_stokmasuk = $generate_id->id_stokmasuk;
+
+        $query_id = "SELECT MAX(id) as id_masukitem FROM masukitem WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_masukitem = $generate_id->id_masukitem;
+
         $data = [
             'insert_stok_awal_harian' => $result_insert_stok_awal_harian,
             'insert_stok_awal_bulanan' => $result_insert_stok_awal_bulanan,
             'update_stok_awal' => $result_update_stok_awal,
             'dataretskb' => $savedataretskb,
             'dataretskbitem' => $savedataretskbitem,
+            'datastokmasuk' => $savedatastokmasuk,
+            'datamasukitem' => $savedatamasukitem,
             'no_retur' => $noretur,
             'noref_retur' => $norefretur,
+            'no_lpb' => $no_lpb,
+            'noref_lpb' => $no_ref_lpb,
             'id_retskb' => $id_retskb,
+            'id_stokmasuk' => $id_stokmasuk,
+            'id_masukitem' => $id_masukitem,
             'id_retskbitem' => $id_retskbitem,
             'txtperiode' => $txtperiode,
             'item_exist' => $item_exist
@@ -418,9 +582,7 @@ class Retur extends CI_Controller
             return $this->M_retur->updateStokAwalHarian($kodebar, $data_insert_stok_harian['periode'], $data_insert_stok_harian['txtperiode'], $qty, $harga_item_bkb, $kode_dev);
         } else {
             //insert stok awal harian
-            // return $this->M_retur->saveStokAwalHarian($data_insert_stok_harian);
-            // untuk retur dia pasti ada barang nya di stok awal
-            return false;
+            return $this->M_retur->saveStokAwalHarian($data_insert_stok_harian);
         }
     }
 
@@ -458,9 +620,7 @@ class Retur extends CI_Controller
             return $this->M_retur->updateStokAwalBulananDevisi($kodebar, $data_insert_stok_bulanan['txtperiode'], $qty, $kode_dev);
         } else {
             //insert stok awal bulanan devisi
-            // untuk retur dia pasti ada barang nya di stok awal
-            // return $this->M_retur->saveStokAwalBulananDevisi($data_insert_stok_bulanan);
-            return false;
+            return $this->M_retur->saveStokAwalBulananDevisi($data_insert_stok_bulanan);
         }
     }
 
@@ -507,10 +667,18 @@ class Retur extends CI_Controller
 
     public function updateRetur()
     {
+        $id_masukitem = $this->input->post('hidden_id_masukitem');
         $id_retskbitem = $this->input->post('hidden_id_retskbitem');
         $txtperiode = $this->input->post('hidden_txtperiode');
         $kode_dev = $this->input->post('hidden_kode_dev');
         $no_ref_bkb = $this->input->post('hidden_norefbkb');
+        $edit = $this->input->post('edit');
+        $norefretur = $this->input->post('hidden_norefretur');
+
+        $data_masukitem = [
+            'qty' => $this->input->post('txt_qty_retur'),
+            'ket' => $this->input->post('txt_ket_rinci'),
+        ];
 
         $data_item_retur = [
             'kodebar' => $this->input->post('hidden_kode_barang'),
@@ -549,7 +717,18 @@ class Retur extends CI_Controller
 
         $result_update = $this->M_retur->update_retur($id_retskbitem, $data_item_retur);
 
-        echo json_encode($result_update);
+        if ($edit == '1') {
+            $result_update_masukitem = $this->M_retur->update_masukitem_edit($norefretur, $data_item_retur['kodebar'], $data_masukitem);
+        } else {
+            $result_update_masukitem = $this->M_retur->update_masukitem($id_masukitem, $data_masukitem);
+        }
+
+        $output = [
+            'result_update' => $result_update,
+            'result_update_masukitem' => $result_update_masukitem
+        ];
+
+        echo json_encode($output);
     }
 
     public function cancelUpdateRetur()
@@ -707,10 +886,25 @@ class Retur extends CI_Controller
     public function deleteItemRetur()
     {
         $id_retskbitem = $this->input->post('hidden_id_retskbitem');
+        $id_masukitem = $this->input->post('hidden_id_masukitem');
+        $kodebar = $this->input->post('kodebar');
+        $norefretur = $this->input->post('hidden_norefretur');
+        $delete_item_retur = $this->input->post('delete_item_retur');
 
         $data = $this->db_logistik_pt->delete('ret_skbitem', array('id' => $id_retskbitem));
 
-        echo json_encode($data);
+        if ($delete_item_retur == '1') {
+            $data1 = $this->db_logistik_pt->delete('masukitem', array('kodebar' => $kodebar, 'refpo' => $norefretur));
+        } else {
+            $data1 = $this->db_logistik_pt->delete('masukitem', array('id' => $id_masukitem));
+        }
+
+        $output = [
+            'data' => $data,
+            'data1' => $data1,
+        ];
+
+        echo json_encode($output);
     }
 
     public function cekReturItem()
@@ -736,8 +930,14 @@ class Retur extends CI_Controller
         $norefretur = $this->input->post('norefretur');
 
         $data = $this->M_retur->deleteRetur($norefretur);
+        $data1 = $this->M_retur->deleteStokMasuk($norefretur);
 
-        echo json_encode($data);
+        $output = [
+            'data' => $data,
+            'data1' => $data1
+        ];
+
+        echo json_encode($output);
     }
 
     public function cekNoBa()
