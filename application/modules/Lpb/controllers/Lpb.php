@@ -1130,6 +1130,7 @@ class Lpb extends CI_Controller
     // FOR LPB MUTASI PREN
     public function lpb_mutasi()
     {
+        $data['noref_mutasi'] = str_replace('.', '/', $this->uri->segment('3'));
         $data['title'] = 'LPB Mutasi';
         $this->template->load('template', 'v_lpbInput_mutasi', $data);
     }

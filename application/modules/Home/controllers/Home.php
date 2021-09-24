@@ -53,7 +53,7 @@ class Home extends CI_Controller
 
             $row = array();
             $row[] = $no;
-            $row[] = date('d-m-Y', strtotime($field->tgl));;
+            $row[] = date('d-m-Y', strtotime($field->tgl));
             $row[] = $field->no_mutasi;
             $row[] = $field->pt;
             $row[] = $field->devisi_mutasi;

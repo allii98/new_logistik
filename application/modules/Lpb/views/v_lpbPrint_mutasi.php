@@ -123,7 +123,7 @@ $logo_pt = $this->session->userdata('logo_pt');
             <tr>
                   <td width="18%">Nama Supplier</td>
                   <td width="2%">:</td>
-                  <td width="25%"> -</td>
+                  <td width="25%"><?= $stokmasuk->nama_supply; ?></td>
                   <td width="20%">No. BKB</td>
                   <td width="2%">:</td>
                   <td><?= $stokmasuk->refpo; ?></td>

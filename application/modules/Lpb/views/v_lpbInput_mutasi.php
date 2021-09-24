@@ -121,6 +121,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <input type="hidden" id="hidden_kd_dept">
                                                 <input type="hidden" id="hidden_ket_dept">
                                                 <input type="hidden" id="hidden_asal_devisi_txt">
+                                                <input type="hidden" id="hidden_noref_mutasi" value="<?= $noref_mutasi ?>">
                                           </div>
                                           <div class="row mt-2 ml-0" style="margin-bottom: 4px;">
                                                 <h6><span id="noref_span"></span></h6>
@@ -157,7 +158,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 </div> <!-- container -->
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListPo">
+<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalListPo">
       <div class="modal-dialog modal-lg">
             <div class="modal-content">
                   <div class="modal-header">
@@ -195,9 +196,9 @@ date_default_timezone_set('Asia/Jakarta');
                   </div>
             </div>
       </div>
-</div>
+</div> -->
 
-<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalListItemPo">
+<!-- <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalListItemPo">
       <div class="modal-dialog modal-lg">
             <div class="modal-content">
                   <div class="modal-header">
@@ -236,7 +237,7 @@ date_default_timezone_set('Asia/Jakarta');
                   </div>
             </div>
       </div>
-</div>
+</div> -->
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="showCamera">
       <div class="modal-dialog modal-md">
@@ -356,6 +357,7 @@ date_default_timezone_set('Asia/Jakarta');
                   success: function(data) {
                         // console.log(data + 'sum');
                         $('#sisa_qty_' + i).text(data);
+                        $('#hidden_sisa_qty_' + i).val(data);
                   },
                   error: function(response) {
                         alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
@@ -405,6 +407,7 @@ date_default_timezone_set('Asia/Jakarta');
                   '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="2" style="font-size: 12px;"></textarea>' +
                   '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
                   '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
+                  '<input type="hidden" id="hidden_sisa_qty_' + row + '" name="hidden_sisa_qty_' + row + '">' +
                   '</td>';
             var td_col_7 = '<td style="padding-top: 2px;">' +
                   '<div class="row">' +
@@ -472,17 +475,33 @@ date_default_timezone_set('Asia/Jakarta');
 
       // qrcode
       function modalCameraClose() {
-            scanner.stop();
-            $('#multiple').css('display', 'none');
-            $('#select2_mutasi').next(".select2-container").show();
+            if (!$('#hidden_noref_mutasi').val()) {
+                  scanner.stop();
+                  $('#multiple').css('display', 'none');
+                  $('#select2_mutasi').next(".select2-container").show();
+            } else {
+                  scanner.stop();
+                  $('#multiple').css('display', 'block');
+                  $('#select2_mutasi').next(".select2-container").hide();
+            }
       }
 
       $(document).ready(function() {
             // $('#a_print_lpb').hide();
-            $('#showCamera').modal('show');
-            $('#preview').show();
-            $('#multiple').css('display', 'block');
-            $('#select2_mutasi').next(".select2-container").hide();
+            if (!$('#hidden_noref_mutasi').val()) {
+                  console.log('kosong');
+                  $('#showCamera').modal('show');
+                  $('#select2_mutasi').next(".select2-container").show();
+                  $('#preview').show();
+                  $('#multiple').css('display', 'none');
+            } else {
+                  $('#select2_mutasi').next(".select2-container").hide();
+                  $('#multiple').css('display', 'block');
+                  var hidden_noref_mutasi = $('#hidden_noref_mutasi').val();
+                  $('#multiple').val(hidden_noref_mutasi);
+                  cariBkbItemqr(hidden_noref_mutasi);
+                  $('#txt_ref_po').val(hidden_noref_mutasi);
+            }
       });
 
       function showCamera() {
@@ -498,10 +517,13 @@ date_default_timezone_set('Asia/Jakarta');
       });
       scanner.addListener('scan', function(content) {
             console.log(content);
+            $('#select2_mutasi').next(".select2-container").hide();
             $('#preview').hide();
             cariBkbItemqr(content);
             $('#showCamera').modal('hide');
+            $('#multiple').css('display', 'block');
             $('#multiple').val(content);
+            $('#txt_ref_po').val(content);
             scanner.stop();
       });
       Instascan.Camera.getCameras().then(function(cameras) {
@@ -555,7 +577,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                         $('#noref_span').html('No. Mutasi : ' + data_mutasi.no_mutasi + '&emsp;&emsp;&emsp;&emsp;');
                         $('#txt_no_po').val(data_mutasi.skb);
-                        $('#tgl_bkb_txt').text(data_mutasi.tgl);
+                        $('#tgl_bkb_txt').text(formatDate(data_mutasi.tgl));
                         $('#bagian_txt').text(data_mutasi.bag);
                         $('#kepada_txt').text(data_mutasi.kpd);
                         $('#keperluan_txt').text(data_mutasi.keperluan);
@@ -597,6 +619,20 @@ date_default_timezone_set('Asia/Jakarta');
                         alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
                   }
             });
+      }
+
+      function formatDate(date) {
+            var d = new Date(date),
+                  month = '' + (d.getMonth() + 1),
+                  day = '' + d.getDate(),
+                  year = d.getFullYear();
+
+            if (month.length < 2)
+                  month = '0' + month;
+            if (day.length < 2)
+                  day = '0' + day;
+
+            return [year, month, day].join('-');
       }
 
       $("#select2_mutasi").select2({
@@ -934,7 +970,7 @@ date_default_timezone_set('Asia/Jakarta');
       function cek_qty(n) {
             $('#txt_qty_' + n).keyup(function() {
                   var qty = $('#txt_qty_' + n).val();
-                  var hidden_qty = $('#sisa_qty_' + n).text();
+                  var hidden_qty = $('#hidden_sisa_qty_' + n).val();
                   var a = Number(qty);
                   var b = Number(hidden_qty);
                   if (a > b) {

@@ -431,6 +431,7 @@
             },
             success: function(data) {
                 $('#sisa_qty_' + i).text(data);
+                $('#hidden_sisa_qty_' + i).val(data);
             },
             error: function(response) {
                 alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
@@ -519,6 +520,7 @@
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '<input type="hidden" id="hidden_refppo_' + row + '" name="hidden_refppo_' + row + '">' +
+            '<input type="hidden" id="hidden_sisa_qty_' + row + '" name="hidden_sisa_qty_' + row + '">' +
             '</td>';
         var td_col_7 = '<td style="padding-top: 2px;">' +
             // '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -760,10 +762,12 @@
         $('#txt_qty_' + n).keyup(function() {
             var qty = $('#txt_qty_' + n).val();
             var qty_awal = $('#hidden_txt_qty_' + n).val();
-            var hidden_qty = $('#sisa_qty_' + n).text();
+            var hidden_qty = $('#hidden_sisa_qty_' + n).val();
             var a = Number(qty);
             var b = Number(hidden_qty);
-            if (a > b) {
+            var c = Number(qty_awal);
+            var b_c = b + c;
+            if (a > b_c) {
                 swal("Qty melebihi sisa Qty LPB");
                 $('#txt_qty_' + n).val(qty_awal);
             }

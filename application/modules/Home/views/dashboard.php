@@ -192,7 +192,7 @@
                     <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small><br>
                     <div class="row justify-content-between ml-0 mr-0 mt-2 mb-2">
                         <h4 class="header-title mb-0">Mutasi Masuk</h4>
-                        <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a>
+                        <!-- <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a> -->
                     </div>
 
                     <div class="table-responsive">
@@ -247,7 +247,7 @@
         table = $('#tabel_mutasi').DataTable({
 
 
-            "scrollY": 300,
+            // "scrollY": 300,
             "scrollX": true,
 
             "processing": true,
@@ -269,5 +269,13 @@
 
         });
 
+    });
+
+    $('#tabel_mutasi tbody').on('click', 'tr', function() {
+        var dataClick = $('#tabel_mutasi').DataTable().row(this).data();
+        var no_ref_mutasi = dataClick[2];
+        var noref_rpc = no_ref_mutasi.replaceAll('/', '.');
+
+        window.open('Lpb/lpb_mutasi/' + noref_rpc + '/', '_blank');
     });
 </script>

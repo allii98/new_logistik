@@ -612,12 +612,39 @@
 
             get_stok(n, kodebar, txtperiode, kode_dev);
 
-            get_qty_retur(n, no_ref, kodebar);
+            get_qty_retur_awal(n, no_ref, kodebar)
 
             $('#cari_bkb, #camera').attr('disabled', '');
 
         });
     });
+
+    function get_qty_retur_awal(n, no_ref, kodebar) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Retur/get_qty_retur'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref': no_ref,
+                'kodebar': kodebar
+            },
+            success: function(data) {
+
+                if (!data.qty) {
+                    $('#qty_sudah_retur_' + n).text(0);
+                    $('#hidden_qty_sudah_retur_' + n).val(data.qty);
+                } else {
+                    $('#qty_sudah_retur_' + n).text(data.qty);
+                    $('#hidden_qty_sudah_retur_' + n).val(data.qty);
+                }
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
+    }
 
     function get_qty_retur(n, no_ref, kodebar) {
         $.ajax({
@@ -738,6 +765,7 @@
             '<input type="hidden" id="hidden_id_retskbitem_' + row + '" name="hidden_id_retskbitem_' + row + '">' +
             '<input type="hidden" id="hidden_id_masukitem_' + row + '" name="hidden_id_masukitem_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
+            '<input type="hidden" id="hidden_qty_sudah_retur_' + row + '" name="hidden_qty_sudah_retur_' + row + '">' +
             '</td>';
         var td_col_14 = '<td style="padding-top: 2px;">' +
             '<div class="row">' +
@@ -1134,12 +1162,14 @@
         var a = $('#txt_qty_bkb_' + n + '').val();
         var b = $('#txt_qty_retur_' + n + '').val();
         var c = $('#qty_sudah_retur_' + n + '').text();
+        var d = $('#hidden_qty_sudah_retur_' + n + '').val();
 
         var txt_qty_bkb = Number(a);
         var txt_qty_retur = Number(b);
         var qty_sudah_retur = Number(c);
+        var hidden_qty_sudah_retur = Number(d);
 
-        var subto = txt_qty_retur + qty_sudah_retur;
+        var subto = txt_qty_retur + hidden_qty_sudah_retur;
 
         if (subto > txt_qty_bkb) {
             swal('Melibihi QTY BKB!, sudah retur sebanyak ' + qty_sudah_retur);
