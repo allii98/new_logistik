@@ -7,9 +7,10 @@
                     <!-- <form action="javascript:;" id="form_input_pp" name="form_input_pp" method="POST"> -->
                     <div class="row mb-2 justify-content-between">
                         <h4 class="header-title ml-2"><?= $title; ?></h4>
+                        <h6 id="lbl_status_pp"></h6>
                         <div class="button-list mr-2">
                             <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
-                            <button type="button" onclick="new_bpb()" class="btn btn-xs btn-success" id="">PP Baru</button>
+                            <button type="button" onclick="new_pp()" class="btn btn-xs btn-success" id="">PP Baru</button>
                             <!-- <button type="button" onclick="batal()" class="btn btn-xs btn-danger" id="" disabled>Batal PP</button> -->
                             <!-- <button type="button" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button> -->
                             <button type="button" onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
@@ -142,6 +143,7 @@
 
                                 <div class="col-9 col-xl-12">
                                     <input id="txt_jumlah" name="txt_jumlah" class="form-control form-control-sm" required="required" type="text" placeholder="Jumlah" onkeyup="getTerbilang()">
+                                    <input type="hidden" name="jumlah" id="jumlah">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -309,6 +311,9 @@
     }
 </style>
 <script>
+    function new_pp() {
+        location.href = "<?php echo base_url('Pp/input') ?>";
+    }
     $(document).ready(function() {
         // $('#preview').show();
         // console.log('ini dia',$(this).attr('at'));
@@ -422,7 +427,7 @@
                 refpo: noref,
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 var jumlah = data.saldo;
                 if (jumlah == 0) {
                     // swal('Saldo sudah 0!');
@@ -524,7 +529,7 @@
             url: "<?php echo site_url('Pp/simpan_pp'); ?>",
             dataType: "JSON",
             beforeSend: function() {
-                $('#update').attr('disabled', '');
+                $('#simpan_pp').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
             },
             cache: false,
             contentType: false,
@@ -630,6 +635,7 @@
         });
 
         $('#tableDataPO tbody').on('click', 'tr', function() {
+
             var dataClick = $('#tableDataPO').DataTable().row(this).data();
             // var tgl_po = new Date(dataClick[0]);
             var id_po = dataClick[0];
@@ -661,41 +667,24 @@
                     }
                 });
             } else {
-                // console.log(tgl_po);
                 ambilPO(id_po, no_ref_po, no_po);
-                // $('#hidden_id_po').val(id_po);
-                // $('#txt_tgl_po').val(tgl_po);
-
-                // $('#txt_no_ref_po').val(no_ref_po);
-                // $('#hidden_no_po').val(no_po);
-                // $('#txt_pembayaran').val(bayar);
-                // $('#kd_supplier').val(kd_supplier);
-                // $('#txt_supplier').val(nama_supplier);
-                // $('#txt_dibayar_ke').val(nama_supplier);
-
-                // var bpo = nilai_bpo.replace(/,/g, "");
-                // $('#txt_nilai_po').val(nilai_po);
-                // var bpo = nilai_bpo.replace(/,/g, "");
-                // $('#txt_nilai_bpo2').val(bpo);
-                // $('#lbl_kurs').html(kurs);
-                // $('#hidden_kurs').val(kurs);
-
-                // $('#txt_sudah_dibayar').val(sudah_dibayar);
-
-                // $('#modalcariPO').modal('hide');
 
             }
-            scanner.stop();
+
+
             // console.log(d);
         });
     }
 
     function ambilPO(id_po, no_ref_po, nopo) {
+        scanner.stop();
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Pp/ambilpo'); ?>",
             dataType: "JSON",
-            beforeSend: function() {},
+            beforeSend: function() {
+
+            },
             cache: false,
             data: {
                 id: id_po,
@@ -703,7 +692,6 @@
                 nopo: nopo,
             },
             success: function(data) {
-                console.log(data);
                 var id_po = data.po.id;
                 var tgl_po = data.tglpo;
                 var no_ref_po = data.po.noreftxt;
@@ -718,7 +706,6 @@
                 var pajak = data.pajak;
                 var totalpo = data.totalpo;
                 var bpo = data.bpo;
-
 
 
                 $('#hidden_id_po').val(id_po);
@@ -736,21 +723,25 @@
                 $('#txt_pajak').val(pajak);
                 $('#txt_total_po').val(totalpo);
                 // var bpo = nilai_bpo.replace(/,/g, "");
-                $('#txt_nilai_bpo1').val(bpo);
+                $('#txt_nilai_bpo2').val(bpo);
                 $('#lbl_kurs').html(kurs);
                 $('#hidden_kurs').val(kurs);
 
                 $('#txt_sudah_dibayar').val(bayar);
                 $('#modalcariPO').modal('hide');
-                scanner.stop();
 
                 hitungTotalPO();
+                // setTimeout(function() {
+                //     scanner.stop();
+                // }, 1000);
+
             },
             error: function(request) {
                 console.log(request.responseText);
             }
         });
     }
+
 
     function hitungTotalPO() {
         var nilai_po = $('#hidden_nilai_po').val();
@@ -760,22 +751,37 @@
         var sudah_dibayar = $('#txt_sudah_dibayar').val();
 
 
-
-
-        // var data = Number(dt) + Number(pajak) + Number(nilai_bpo1) + Number(nilai_bpo2);
         var total_po = parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
-        console.log('total po', total_po);
         var sisabayar = (parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2)) - parseFloat(sudah_dibayar);
-
-        // console.log(total_po);
-
 
         $('#txt_total_po').val(total_po);
         $('#total_po').val(total_po);
         $('#txt_jumlah').val(sisabayar);
         $('#jumlah').val(sisabayar);
-        $('#txt_terbilang').val(terbilang(sisabayar));
+
+        var kurs = $('#hidden_kurs').val();
+
+        if (kurs == 'Rp') {
+            var kur = ' Rupiah';
+        } else if (kurs == 'USD') {
+            var kur = ' Dolar';
+        } else if (kurs == 'USD') {
+            var kur = ' Singapore Dolar';
+        } else if (kurs == 'Euro') {
+            var kur = ' Euro';
+        } else if (kurs == 'GBP') {
+            var kur = ' Pound Sterling';
+        } else if (kurs == 'Yen') {
+            var kur = ' Yen';
+        } else if (kurs == 'MYR') {
+            var kur = ' Ringgit';
+        }
+
+        $('#txt_terbilang').val(terbilang(sisabayar) + kur);
+
     }
+
+
 
     function getTerbilang() {
         var nilai_po = $('#txt_nilai_po').val();
@@ -806,7 +812,25 @@
             // $('#txt_terbilang').val('');
         }
 
-        $('#txt_terbilang').val(terbilang($('#txt_jumlah').val()));
+        var kurs = $('#hidden_kurs').val();
+
+        if (kurs == 'Rp') {
+            var kur = ' Rupiah';
+        } else if (kurs == 'USD') {
+            var kur = ' Dolar';
+        } else if (kurs == 'USD') {
+            var kur = ' Singapore Dolar';
+        } else if (kurs == 'Euro') {
+            var kur = ' Euro';
+        } else if (kurs == 'GBP') {
+            var kur = ' Pound Sterling';
+        } else if (kurs == 'Yen') {
+            var kur = ' Yen';
+        } else if (kurs == 'MYR') {
+            var kur = ' Ringgit';
+        }
+
+        $('#txt_terbilang').val(terbilang($('#txt_jumlah').val()) + kur);
     }
 
     function tes(data) {

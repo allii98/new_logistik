@@ -109,6 +109,8 @@ class Bpb extends CI_Controller
         } else if ($lokasi == 'PKS') {
             $query = "SELECT kode, nama FROM dept WHERE kode <> 1 AND kode <> 2 ORDER BY kode ASC";
             # code...
+        } else {
+            $query = "SELECT kode, nama FROM dept  ORDER BY kode ASC";
         }
 
         $data = $this->db_logistik_pt->query($query)->result();

@@ -32,9 +32,10 @@ class Laporan extends CI_Controller
 		$data = array();
 		$no = $_POST['start'];
 		foreach ($list as $hasil) {
+			$no++;
 			$row   = array();
 			$id    = "'" . $hasil->id . "'";
-			$row[] = $no++;
+			$row[] =  $no . ".";
 			$row[] = $hasil->kodebartxt;
 			$row[] = $hasil->nopart;
 			$row[] = $hasil->nabar;
@@ -305,11 +306,13 @@ class Laporan extends CI_Controller
 	{
 		$lokasi = $this->session->userdata('status_lokasi');
 		if ($lokasi == 'SITE') {
-			$query = "SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt IN ('06', '07') ORDER BY kodetxt ASC";
-		} else if ($lokasi == 'HO') {
-			$query = "SELECT PT, kodetxt FROM tb_devisi ORDER BY kodetxt ASC";
+			$query = "SELECT PT, kodetxt FROM tb_devisi WHERE lokasi = '$lokasi' ORDER BY kodetxt ASC";
+		} else if ($lokasi == 'RO') {
+			$query = "SELECT PT, kodetxt FROM tb_devisi WHERE lokasi = '$lokasi' ORDER BY kodetxt ASC";
+		} else if ($lokasi == 'PKS') {
+			$query = "SELECT PT, kodetxt FROM tb_devisi WHERE lokasi = '$lokasi' ORDER BY kodetxt ASC";
 		} else {
-			$query = "SELECT PT, kodetxt FROM tb_devisi WHERE PT LIKE '%$lokasi%' ORDER BY kodetxt ASC";
+			$query = "SELECT PT, kodetxt FROM tb_devisi ORDER BY kodetxt ASC";
 		}
 
 		$data = $this->db_logistik_pt->query($query)->result();
@@ -425,24 +428,43 @@ class Laporan extends CI_Controller
 
 	public function barang()
 	{
+
+		$kodedev = $this->uri->segment(3);
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
+			'margin_top' => '0',
 			'setAutoTopMargin' => 'stretch',
 			'orientation' => 'P'
 		]);
 
-		$query_grp = "SELECT DISTINCT grp FROM  kodebar ORDER BY grp ASC LIMIT 100";
+		$query_grp = "SELECT DISTINCT grp FROM kodebar WHERE kode='$kodedev' ORDER BY grp ASC ";
+		$divisi = "SELECT pt FROM kodebar WHERE kode='$kodedev'";
+		// $query_grp = "SELECT DISTINCT grp FROM kodebar  ORDER BY grp ASC LIMIT 100";
+		$devisi = $this->db_logistik->query($divisi)->row();
 		$data['data_grp'] = $this->db_logistik->query($query_grp)->result();
 
-		$query = "SELECT id, kodebartxt, nabar, nopart, satuan FROM kodebar ORDER BY nabar ASC LIMIT 100";
+		$query = "SELECT id, kodebartxt, nabar, nopart, satuan FROM kodebar WHERE kode='$kodedev' ORDER BY nabar ASC ";
+		// $query = "SELECT id, kodebartxt, nabar, nopart, satuan FROM kodebar ORDER BY nabar ASC LIMIT 100";
 		$data['data_barang'] = $this->db_logistik->query($query)->result();
 
 		// var_dump(json_decode($this->list_barang()));exit();
 		// $data['data_barang'] = json_decode($this->list_barang());
 
 
-		$mpdf->SetHTMLHeader('<h4 align="center">MASTER KODE BARANG</h4>');
+		$mpdf->SetHTMLHeader('<table border="0" width="100%">
+		<tr>
+		  <td>
+			<h3 style="font-size:14px;font-weight:bold;"> ' . $devisi->pt . '  </h3>
+		  </td>
+		</tr>
+		<tr>
+	
+		  <td style="text-align: center;">
+			<h4 style="font-size:11px;font-weight:bold;" align="center">MASTER KODE BARANG</h4>
+		  </td>
+		</tr>
+	  </table>');
 		$mpdf->SetHTMLFooter('<h5 align="left">{DATE j-m-Y H:i:s} - ' . $this->input->ip_address() . ' - ' . $this->platform->agent() . '</h5> <h5 align="right">Halaman {PAGENO} dari {nb}</h5>');
 
 		$html = $this->load->view('barang/vw_lap_barang_print', $data, true);

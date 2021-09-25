@@ -33,23 +33,23 @@ class Pp extends CI_Controller
             $row   = array();
             $id = $hasil->id;
             $refpp = $hasil->ref_pp;
+            $ref_po = $hasil->ref_po;
             $noref = str_replace('/', '.', $refpp);
+            $norefpo = str_replace('/', '.', $ref_po);
 
             $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $noref) . '" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
 
             <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
             <a href="javascript:;" id="a_delete_pp">
-                <button class="btn btn-danger fa fa-trash btn-xs" id="btn_delete_pp" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp .  ')">
+                <button class="btn btn-danger fa fa-trash btn-xs" id="btn_delete_pp" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp . ','  . $hasil->jumlah . ',' . $hasil->nopotxt . ')">
                 </button>
-            </a>
-                
-                ';
+            </a>';
 
 
             $row[] = $no . ".";
             $row[] = $hasil->ref_pp;
             $row[] = $hasil->ref_po;
-            $row[] =  date('d-m-Y', strtotime($hasil->tglpp));
+            $row[] = date('d-m-Y', strtotime($hasil->tglpp));
             $row[] = date('d-m-Y', strtotime($hasil->tglpo));
             $row[] = $hasil->nama_supply;
             $row[] = $hasil->user;
@@ -137,7 +137,7 @@ class Pp extends CI_Controller
             }
 
             //saldo
-            $saldo = $d->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar;
+            $saldo = ($hasil + $get_jumlah_bpo->jumlahbpo) - $get_jumlah_sudah_bayar->kasir_bayar;
 
             $row[] = $d->id;
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
@@ -225,11 +225,11 @@ class Pp extends CI_Controller
         $bpo = round($get_jumlah_bpo->jumlahbpo);
         // $bpo = number_format(round($get_jumlah_bpo->jumlahbpo), 2, ",", ".");
         //saldo
-        $sisa_saldo = $dt->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar;
+        $sisa_saldo = ($dt->totalbayar) - $get_jumlah_sudah_bayar->kasir_bayar;
         $saldo = round($sisa_saldo);
         // $saldo = number_format(round($sisa_saldo), 2, ",", ".");
         //tglpo
-        $tglpo = date_format(date_create($dt->tglpo), 'd-m-Y');
+        $tglpo = date_format(date_create($dt->tglpo), 'Y/m/d');
         //kurs
         $kurs = $get_kurs->kurs;
         //terbayar
@@ -379,12 +379,18 @@ class Pp extends CI_Controller
     {
         $id_pp = $this->input->post('id_pp');
         $nopp = $this->input->post('nopp');
+        // $ref_po = str_replace('.', '/', $this->input->post('ref_po'));
 
-        // $user = $this->session->userdata('user');
-        // $ip = $this->input->ip_address();
-        // $platform = $this->platform->agent();
+        $jumlah = $this->input->post('jumlah');
+        $nopo = $this->input->post('nopo');
 
+        $po = $this->db_logistik_pt->query("SELECT terbayar FROM po WHERE nopo='$nopo'")->row();
 
+        $hasil = $po->terbayar - $jumlah;
+        $data_po['terbayar'] = $hasil;
+        $this->db_logistik_pt->where('nopo', $nopo);
+        // $this->db_logistik_pt->where('noreftxt', $ref_po);
+        $this->db_logistik_pt->update('po', $data_po);
 
         $pp_logistik = $this->db_caba->delete('pp_logistik', array('nopp' => $nopp));
         $pp = $this->db_logistik_pt->delete('pp', array('id' => $id_pp, 'nopp' => $nopp));
@@ -393,7 +399,6 @@ class Pp extends CI_Controller
             'pp_logistik' => $pp_logistik,
             'pp' => $pp
         ];
-        // $data  = array($id_pp, $nopp);
 
         echo json_encode($data);
     }

@@ -58,7 +58,9 @@
                     <h4 class="mt-2">Konfirmasi Hapus</h4>
                     <input type="hidden" id="id_pp" name="id_pp">
                     <input type="hidden" id="nopp" name="nopp">
-                    <input type="hidden" id="ref_pp" name="ref_pp">
+                    <input type="hidden" id="ref_po" name="ref_po">
+                    <input type="hidden" id="jumlah" name="jumlah">
+                    <input type="hidden" id="nopo" name="nopo">
                     <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
                     <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Hapus</button>
                     <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
@@ -137,10 +139,13 @@
     }
 
 
-    function deletePP(id, nopp) {
+    function deletePP(id, nopp, jumlah, nopo) {
         // console.log(id, nopp);
         $('#id_pp').val(id);
         $('#nopp').val(nopp);
+        // $('#ref_po').val(ref_po);
+        $('#jumlah').val(jumlah);
+        $('#nopo').val(nopo);
         $('#modalKonfirmasiHapus').modal('show');
     }
 
@@ -155,7 +160,10 @@
             beforeSend: function() {},
             data: {
                 id_pp: $('#id_pp').val(),
-                nopp: $('#nopp').val()
+                nopp: $('#nopp').val(),
+                // ref_po: $('#ref_po').val(),
+                jumlah: $('#jumlah').val(),
+                nopo: $('#nopo').val(),
             },
             success: function(data) {
                 console.log(data)

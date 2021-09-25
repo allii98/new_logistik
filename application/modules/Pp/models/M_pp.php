@@ -14,6 +14,7 @@ class M_pp extends CI_Model
     {
         parent::__construct();
         $this->load->database();
+        date_default_timezone_set('Asia/Jakarta');
     }
 
     private function _get_datatables_query()
@@ -228,7 +229,18 @@ class M_pp extends CI_Model
         $data_pp['nama_account']    = $this->input->post('hidden_nama_account');
         $data_pp['batal']           = "0";
 
-        $data_po['terbayar'] = $jumlah;
+        //cek po
+        $id_po = $this->input->post('hidden_id_po');
+        $noref_po = $this->input->post('txt_no_ref_po');
+        $ambilpo = $this->db_logistik_pt->query("SELECT terbayar FROM po WHERE id='$id_po' AND noreftxt='$noref_po'")->row();
+        $hasil = $ambilpo->terbayar;
+        if ($hasil != 0) {
+            $tot_terbayar = $hasil + $jumlah;
+        } else {
+            $tot_terbayar = $jumlah;
+        }
+        $data_po['terbayar'] = $tot_terbayar;
+
 
         $this->db_logistik_pt->where('id', $this->input->post('hidden_id_po'));
         $this->db_logistik_pt->where('noreftxt', $this->input->post('txt_no_ref_po'));

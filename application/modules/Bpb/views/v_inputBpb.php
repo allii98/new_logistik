@@ -573,6 +573,8 @@
             $('#cmb_tahun_tanam_1').attr('disabled', '');
             $('#cmb_bahan_1').attr('disabled', '');
             $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
+            $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
+            $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
         } else {
             $('#cmb_tm_tbm_1').removeAttr('disabled', '');
             $('#cmb_afd_unit_1').removeAttr('disabled', '');
@@ -580,6 +582,8 @@
             $('#cmb_tahun_tanam_1').removeAttr('disabled', '');
             $('#cmb_bahan_1').removeAttr('disabled', '');
             $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').removeClass('bg-light');
+            $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
+            $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
         }
     })
 

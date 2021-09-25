@@ -1511,6 +1511,8 @@
 
         <!-- Terbilang JS -->
         <script src="<?php echo base_url(); ?>assets/terbilang/terbilang.js"></script>
+        <!-- <script src="<?php echo base_url(); ?>assets/terbilang.js"></script>
+        <script src="<?php echo base_url(); ?>assets/terbilang.min.js"></script> -->
 
         <!-- JQuery Number -->
         <script src="<?php echo base_url(); ?>assets/jquerynumber/jquery.number.js"></script>
