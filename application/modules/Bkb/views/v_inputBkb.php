@@ -143,7 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive div_form_2">
+                        <div class="table-responsive">
                             <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
                                 <thead>
                                     <tr>
