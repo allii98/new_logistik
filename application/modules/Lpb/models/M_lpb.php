@@ -26,6 +26,7 @@ class M_lpb extends CI_Model
         $filter = $this->data;
         $lokasi = $this->session->userdata('status_lokasi');
         $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_pt->where('jenis_lpb !=', 2);
         if ($lokasi == 'HO') {
             if ($filter == 'HO') {
                 $this->db_logistik_pt->like('noref', 'PST', 'both');
