@@ -31,27 +31,17 @@ class Lap extends CI_Controller
 
     function get_pt()
     {
-        $sess_lokasi = $this->session->userdata('status_lokasi');
-
-        switch ($sess_lokasi) {
-            case 'HO':
-                $where = "";
-                break;
-            case 'RO':
-                $where = "WHERE kodetxt IN('02','03','06')";
-                break;
-            case 'SITE':
-                $where = "WHERE kodetxt IN('06','03')";
-                break;
-            case 'PKS':
-                $where = "WHERE kodetxt IN('03')";
-                break;
-            default:
-                # code...
-                break;
+        $lokasi = $this->session->userdata('status_lokasi');
+        if ($lokasi == 'SITE') {
+            $query = "SELECT PT, kodetxt FROM tb_devisi WHERE lokasi = '$lokasi' ORDER BY kodetxt ASC";
+        } else if ($lokasi == 'RO') {
+            $query = "SELECT PT, kodetxt FROM tb_devisi WHERE lokasi = '$lokasi' ORDER BY kodetxt ASC";
+        } else if ($lokasi == 'PKS') {
+            $query = "SELECT PT, kodetxt FROM tb_devisi WHERE lokasi = '$lokasi' ORDER BY kodetxt ASC";
+        } else {
+            $query = "SELECT PT, kodetxt FROM tb_devisi ORDER BY kodetxt ASC";
         }
 
-        $query = "SELECT kodetxt,PT FROM pt $where";
         $data = $this->db_logistik_pt->query($query)->result();
         echo json_encode($data);
     }
@@ -66,14 +56,14 @@ class Lap extends CI_Controller
 
         $pt = $this->uri->segment(3);
 
-        $query_alamat = "SELECT lokasi FROM pt WHERE kodetxt = '$pt'";
+        $query_alamat = "SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC";
         $get_alamat_pt = $this->db_logistik_pt->query($query_alamat)->row();
 
 
         $kd_stock_1 = $this->uri->segment(4);
         $kd_stock_2 = $this->uri->segment(5);
         $pilihan = $this->uri->segment(7);
-        $namapt = $this->db_logistik_pt->query("SELECT kodetxt,PT FROM pt WHERE kodetxt='$pt'")->row();
+        $namapt = $this->db_logistik_pt->query("SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC")->row();
 
         $str_periode = $this->uri->segment(6);
         $periode = str_replace("_", "/", $str_periode);
@@ -105,7 +95,7 @@ class Lap extends CI_Controller
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
                 'format' => [190, 236],
-                'margin_top' => '15',
+                'margin_top' => '2',
                 'orientation' => 'P'
             ]);
 
@@ -119,7 +109,7 @@ class Lap extends CI_Controller
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
                 'format' => [190, 236],
-                'margin_top' => '15',
+                'margin_top' => '2',
                 'orientation' => 'P'
             ]);
 
@@ -139,7 +129,7 @@ class Lap extends CI_Controller
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
                 'format' => [190, 236],
-                'margin_top' => '15',
+                'margin_top' => '2',
                 'orientation' => 'P'
             ]);
 
@@ -158,9 +148,6 @@ class Lap extends CI_Controller
             $data['grp_stockawal_harian'] = $this->db_logistik_pt->query($query_stockawal_harian)->result();
             $this->load->view('lapRS/vw_lap_nilai_rupiah_harian', $data);
         }
-
-
-
         // echo "<pre>";
         // print_r($data);
         // echo "</pre>";

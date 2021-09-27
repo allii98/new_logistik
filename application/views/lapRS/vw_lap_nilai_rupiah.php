@@ -24,13 +24,13 @@
 <body>
     <table width="100%" border="0">
         <tr>
-            <td>
-                <h2>PT MULIA SAWIT AGRO LESTARI</h2>
+            <td colspan="2">
+                <h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;"><?= $namapt; ?></h2>
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <h3>Rincian Pemakaian Stock Material Gudang</h3>
+                <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Rincian Pemakaian Stock Material Gudang</h3>
             </td>
         </tr>
         <tr>
@@ -48,7 +48,6 @@
             <td width="50%" align="right">By MIPS</small></td>
         </tr>
     </table>
-    <br>
 
     <?php
     if (count($grp_stockawal) == "0") {
@@ -79,7 +78,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="7">No Data Available</td>
+                    <td colspan="13" style="text-align: center;">Tidak ada data</td>
                 </tr>
             </tbody>
         </table>

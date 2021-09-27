@@ -2686,6 +2686,7 @@ class Laporan extends CI_Controller
 		$data['kodebar'] = $kode_stok;
 		$data['grup'] = $grup;
 		$data['kode_dev'] = $devisi;
+		$data['alamat'] = $devisi;
 		$data['periode'] = $periode;
 		$data['txtperiode'] = $txtperiode;
 		$data['p1'] = $p1;
@@ -2694,7 +2695,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 

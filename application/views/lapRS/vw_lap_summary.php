@@ -24,13 +24,13 @@
 <body>
     <table width="100%" border="0">
         <tr>
-            <td>
-                <h2>PT MULIA SAWIT AGRO LESTARI</h2>
+            <td colspan="2">
+                <h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;"><?= $namapt; ?></h2>
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <h3>Register Pemakaian Stock Material Gudang</h3>
+                <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Register Pemakaian Stock Material Gudang</h3>
             </td>
         </tr>
         <tr>
@@ -63,7 +63,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td colspan="8">No Data Available</td>
+                    <td colspan="8">Tidak ada data</td>
                 </tr>
             </tbody>
         </table>
@@ -153,7 +153,6 @@
     <?php
     }
     ?>
-
     <br>
     <table width="80%" align="center" border="0">
         <thead>
@@ -166,10 +165,10 @@
         </thead>
         <tbody>
             <tr>
-                <td height="100px" valign="bottom" align="center">(________________________)</td>
-                <td height="100px" valign="bottom" align="center">(________________________)</td>
-                <td height="100px" valign="bottom" align="center">(________________________)</td>
-                <td height="100px" valign="bottom" align="center">(________________________)</td>
+                <td height="70px" valign="bottom" align="center">(________________________)</td>
+                <td height="70px" valign="bottom" align="center">(________________________)</td>
+                <td height="70px" valign="bottom" align="center">(________________________)</td>
+                <td height="70px" valign="bottom" align="center">(________________________)</td>
             </tr>
             <tr>
                 <td align="center">KTU</td>
