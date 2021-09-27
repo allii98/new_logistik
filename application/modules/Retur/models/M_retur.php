@@ -169,6 +169,14 @@ class M_retur extends CI_Model
         return $harga;
     }
 
+    public function cari_kodebar($kodebar, $txtperiode)
+    {
+        $this->db_logistik_pt->select('kodebar');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+        $this->db_logistik_pt->from('stockawal');
+        return $this->db_logistik_pt->get()->num_rows();
+    }
+
     public function cek_stokawal_harian($kodebar, $periode, $kode_dev)
     {
         $this->db_logistik_pt->select('kodebar');

@@ -462,6 +462,8 @@ class Retur extends CI_Controller
         ];
         //-------------------------END KEBUTUHAN SAVE KE LPB----------------------/
 
+        $cari_kodebar_stock_awal = $this->M_retur->cari_kodebar($kodebar, $txtperiode);
+
         if (empty($this->input->post('hidden_noretur'))) {
             $savedataretskb = $this->M_retur->savedataretskb($data_retskb);
             $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
@@ -492,6 +494,12 @@ class Retur extends CI_Controller
             $result_insert_stok_awal_bulanan = NULL;
             $result_update_stok_awal = NULL;
         } else {
+
+            //insert stock awal
+            if ($cari_kodebar_stock_awal == 0) {
+
+                $this->insert_stokawal($kodebar, $data_masukitem['nabar'], $data_masukitem['satuan'], $data_masukitem['grp'], $norefbkb, $quantiti);
+            }
 
             //insert stock awal harian sama seperti LPB
             $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $norefbkb, $quantiti, $devisi, $kode_dev);
@@ -540,6 +548,45 @@ class Retur extends CI_Controller
         ];
 
         echo json_encode($data);
+    }
+
+    function insert_stokawal($kodebar, $nabar, $satuan, $grp, $no_ref_bkb, $qty)
+    {
+        $harga_item_bkb = $this->M_retur->cari_harga_bkb($no_ref_bkb, $kodebar);
+        $saldoakhir_nilai = $harga_item_bkb * $qty;
+
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+
+        $pt = $this->session->userdata('pt');
+        $KODE = $this->session->userdata('kode_pt');
+        $kodebar = $kodebar;
+
+        $data_input_stock_awal["pt"] = $pt;
+        $data_input_stock_awal["KODE"] = $KODE;
+        $data_input_stock_awal["afd"] = "-";
+        $data_input_stock_awal["kodebar"] = $kodebar;
+        $data_input_stock_awal["kodebartxt"] = $kodebar;
+        $data_input_stock_awal["nabar"] = $nabar;
+        $data_input_stock_awal["satuan"] = $satuan;
+        $data_input_stock_awal["grp"] = $grp;
+        $data_input_stock_awal["saldoawal_qty"] = 0;
+        $data_input_stock_awal["saldoawal_nilai"] = 0;
+        $data_input_stock_awal["tglinput"] = date("Y-m-d H:i:s");
+        $data_input_stock_awal["thn"] = date("Y");
+        $data_input_stock_awal["saldoakhir_qty"] = $qty;
+        $data_input_stock_awal["saldoakhir_nilai"] = $saldoakhir_nilai;
+        $data_input_stock_awal["nilai_masuk"] = 0;
+        $data_input_stock_awal["nilai_keluar"] = 0;
+        $data_input_stock_awal["QTY_MASUK"] = $qty;
+        $data_input_stock_awal["QTY_KELUAR"] = "0";
+        $data_input_stock_awal["HARGARAT"] = "0";
+        $data_input_stock_awal["periode"] = $periode;
+        $data_input_stock_awal["txtperiode"] = $txtperiode;
+        $data_input_stock_awal["account"] = "-";
+        $data_input_stock_awal["ket_account"] = "-";
+
+        $this->db_logistik_pt->insert('stockawal', $data_input_stock_awal);
     }
 
     function insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_bkb, $qty, $devisi, $kode_dev)
@@ -833,6 +880,9 @@ class Retur extends CI_Controller
     //Start Data Table Server Side
     function get_data_bkbitem()
     {
+        // mengambil periode bulan ini
+        $txtperiode = $this->session->userdata('ym_periode');
+
         $norefbkb = $this->input->post('norefbkb');
         $this->M_cari_bkbitem->getWhere($norefbkb);
         $list = $this->M_cari_bkbitem->get_datatables();
@@ -847,7 +897,7 @@ class Retur extends CI_Controller
                     data-qty2="' . $field->qty2 . '" data-afd="' . $field->afd . '"
                     data-blok="' . $field->blok . '" data-kodebeban="' . $field->kodebeban . '"
                     data-kodesub="' . $field->kodesub . '" data-kode_dev="' . $field->kode_dev . '"
-                    data-ketsub="' . $field->ketsub . '" data-txtperiode="' . $field->txtperiode . '" 
+                    data-ketsub="' . $field->ketsub . '" data-txtperiode="' . $txtperiode . '" 
                     data-ketbeban="' . $field->ketbeban . '" data-no_ref="' . $field->NO_REF . '"
                     data-tmtbm="' . $field->tmtbm . '" data-thntanam="' . $field->thntanam . '"
                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
