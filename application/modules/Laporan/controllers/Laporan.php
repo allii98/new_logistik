@@ -58,15 +58,19 @@ class Laporan extends CI_Controller
 	{
 		$noref = str_replace('.', '/', $this->uri->segment(3));
 		$data['ppo'] = $this->db_logistik_pt->get_where('ppo', ['noreftxt' => $noref])->row();
+		$data['id'] = $data['ppo']->id;
+		$data['nospp'] = $data['ppo']->noppotxt;
 		$data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $noref))->result();
 
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'format' => 'A4',
+			'margin_top' => '2',
+			'margin_left' => '5',
+			'margin_right' => '5',
 			'orientation' => 'P'
 		]);
-		// $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3>');
 		$html = $this->load->view('lapSpp/v_lap_spp_print', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
@@ -324,7 +328,7 @@ class Laporan extends CI_Controller
 	{
 		// ini_set('max_execution_time', '300');
 		ini_set("pcre.backtrack_limit", "50000000");
-		$lokasi = $this->uri->segment(3);
+		$lokasii = $this->uri->segment(3);
 		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
 		$tahun = $this->uri->segment(9);
@@ -369,39 +373,61 @@ class Laporan extends CI_Controller
 				$bulan = "";
 				break;
 		}
-		switch ($lokasi) {
+		switch ($lokasii) {
 			case '01':
+				$lok = "AND kode_dev='01'";
 				$lokasi = "AND lokasi = 'HO'";
-				$lokasi1 = "HO";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lokasii' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "HO";
 				break;
 			case '02':
+				$lok = "AND kode_dev='02'";
 				$lokasi = "AND lokasi = 'RO'";
-				$lokasi1 = "RO";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lokasii' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "RO";
 				break;
 			case '03':
+				$lok = "AND kode_dev='03'";
 				$lokasi = "AND lokasi = 'PKS'";
-				$lokasi1 = "PKS";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lokasii' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "PKS";
 				break;
 			case '07':
-			case '06':
+				$lok = "AND kode_dev='07'";
 				$lokasi = "AND lokasi = 'SITE'";
-				$lokasi1 = "SITE";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lokasii' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "SITE";
+				break;
+			case '06':
+				$lok = "AND kode_dev='06'";
+				$lokasi = "AND lokasi = 'SITE'";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lokasii' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "SITE";
 				break;
 			default:
+				$lok = "";
 				$lokasi = "";
-				$lokasi1 = "";
+				$lokasi1 = $this->session->userdata('nama_pt');
+				$lokasi2 = "";
 				break;
 		}
 		// $data['lokasi']= $this->uri->segment(3);
-		$query = "SELECT * FROM po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2";
+		$query = "SELECT * FROM po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 $lok";
 		$data['po'] = $this->db_logistik_pt->query($query)->result();
 		$data['periode'] = $bulan . " " . $tahun;
 
 		$data['lokasi1'] = $lokasi1;
+		$data['lok'] = $lokasii;
+		$data['lokasi2'] = $lokasi2;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => 'A4',
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 		// $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3><h6>JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>');
@@ -409,6 +435,123 @@ class Laporan extends CI_Controller
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 		// var_dump($query);
+
+		echo "<pre>";
+		print_r($data);
+		echo "</pre>";
+	}
+
+	function print_lap_spp_register()
+	{
+		$lok = $this->uri->segment(3);
+		$tanggal1 = "'" . $this->uri->segment(7) . "-" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "'";
+		$tanggal2 = "'" . $this->uri->segment(10) . "-" . $this->uri->segment(9) . "-" . $this->uri->segment(8) . "'";
+		$tahun = $this->uri->segment(10);
+		switch ($this->uri->segment(9)) {
+			case '01':
+				$bulan = "Januari";
+				break;
+			case '02':
+				$bulan = "Februari";
+				break;
+			case '03':
+				$bulan = "Maret";
+				break;
+			case '04':
+				$bulan = "April";
+				break;
+			case '05':
+				$bulan = "Mei";
+				break;
+			case '06':
+				$bulan = "Juni";
+				break;
+			case '07':
+				$bulan = "Juli";
+				break;
+			case '08':
+				$bulan = "Agustus";
+				break;
+			case '09':
+				$bulan = "September";
+				break;
+			case '10':
+				$bulan = "Oktober";
+				break;
+			case '11':
+				$bulan = "November";
+				break;
+			case '12':
+				$bulan = "Desember";
+				break;
+			default:
+				$bulan = "";
+				break;
+		}
+		switch ($lok) {
+			case '01':
+				$lokasii = "AND kode_dev='01'";
+				$lokasi = "AND lokasi = 'HO'";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "HO";
+				break;
+			case '02':
+				$lokasii = "AND kode_dev='02'";
+				$lokasi = "AND lokasi = 'RO'";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "RO";
+				break;
+			case '03':
+				$lokasii = "AND kode_dev='03'";
+				$lokasi = "AND lokasi = 'PKS'";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "PKS";
+				break;
+			case '07':
+				$lokasii = "AND kode_dev='07'";
+				$lokasi = "AND lokasi = 'SITE'";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "SITE";
+				break;
+			case '06':
+				$lokasii = "AND kode_dev='06'";
+				$lokasi = "AND lokasi = 'SITE'";
+				$devisi = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$lokasi1 = $devisi->PT;
+				$lokasi2 = "SITE";
+				break;
+			default:
+				$lokasii = "";
+				$lokasi = "";
+				$lokasi1 = $this->session->userdata('nama_pt');
+				$lokasi2 = "";
+				break;
+		}
+		$query = "SELECT * FROM ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2 $lokasii $lokasi";
+		$data['spp'] = $this->db_logistik_pt->query($query)->result();
+		$data['periode'] = $bulan . " " . $tahun;
+		$data['lokasi1'] = $lokasi1;
+		$data['lok'] = $lok;
+		$data['lokasi2'] = $lokasi2;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => 'A4',
+			'margin_top' => '2',
+			'orientation' => 'P'
+		]);
+		// $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3><h6>JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>');
+		$html = $this->load->view('lapSpp/v_lap_spp_register', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+		// var_dump($query);
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 
 	function listPOCetakan()
@@ -495,12 +638,15 @@ class Laporan extends CI_Controller
 		$query4 = "SELECT * FROM item_po WHERE noref = '" . $noreftxt . "' AND refppo = '" . $no_refppo . "'";
 		$data['po'] = $this->db_logistik_pt->query($query)->row();
 		$data['pt'] = $this->db_logistik_pt->query($query2)->row();
-		$data['supply'] = $this->db_logistik->query($query3)->row();
+		$data['supplier'] = $this->db_logistik->query($query3)->row();
 		$data['item_po'] = $this->db_logistik_pt->query($query4)->result();
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
-			'format' => [190, 236],
-			'margin_top' => '15',
+			'format' => 'A4',
+			// 'format' => [190, 236],
+			'margin_top' => '0',
+			'margin_left' => '3',
+			'margin_right' => '3',
 			'orientation' => 'P'
 		]);
 		$html = $this->load->view('lapPo/vw_lap_po_print_cetakan', $data, true);
@@ -510,7 +656,7 @@ class Laporan extends CI_Controller
 
 	function print_lap_po_lokal_r()
 	{
-		$lokasi = $this->uri->segment(3);
+		$lok = $this->uri->segment(3);
 		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
 		$tahun = $this->uri->segment(9);
@@ -555,27 +701,41 @@ class Laporan extends CI_Controller
 				$bulan = "";
 				break;
 		}
-		switch ($lokasi) {
+		switch ($lok) {
 			case '01':
 				$lokasi = "AND lokasi = 'HO'";
 				$lokasi1 = "HO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '02':
 				$lokasi = "AND lokasi = 'RO'";
 				$lokasi1 = "RO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '03':
 				$lokasi = "AND lokasi = 'PKS'";
 				$lokasi1 = "PKS";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '07':
+				$lokasi = "AND lokasi = 'SITE'";
+				$lokasi1 = "ESTATE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
 			case '06':
 				$lokasi = "AND lokasi = 'SITE'";
 				$lokasi1 = "ESTATE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			default:
 				$lokasi = "";
 				$lokasi1 = "";
+				$devisi = $this->session->userdata('nama_pt');
 				break;
 		}
 		$query = "SELECT * FROM po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 AND no_refppo LIKE '%SPPI%'";
@@ -583,10 +743,12 @@ class Laporan extends CI_Controller
 		$data['periode'] = $bulan . " " . $tahun;
 		$data['lokasi1'] = $lokasi1;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lok;
+		$data['devisi'] = $devisi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 		$html = $this->load->view('lapPo/vw_lap_po_print_lr', $data, true);
@@ -596,7 +758,7 @@ class Laporan extends CI_Controller
 
 	function print_lap_po_cash()
 	{
-		$lokasi = $this->uri->segment(3);
+		$lok = $this->uri->segment(3);
 		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
 		$tahun = $this->uri->segment(9);
@@ -641,27 +803,41 @@ class Laporan extends CI_Controller
 				$bulan = "";
 				break;
 		}
-		switch ($lokasi) {
+		switch ($lok) {
 			case '01':
 				$lokasi = "AND lokasi = 'HO'";
 				$lokasi1 = "HO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '02':
 				$lokasi = "AND lokasi = 'RO'";
 				$lokasi1 = "RO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '03':
 				$lokasi = "AND lokasi = 'PKS'";
 				$lokasi1 = "PKS";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '07':
+				$lokasi = "AND lokasi = 'SITE'";
+				$lokasi1 = "SITE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
 			case '06':
 				$lokasi = "AND lokasi = 'SITE'";
 				$lokasi1 = "SITE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			default:
 				$lokasi = "";
 				$lokasi1 = "";
+				$devisi = $this->session->userdata('nama_pt');
 				break;
 		}
 		$query = "SELECT * FROM po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 AND bayar = 'CASH'";
@@ -669,20 +845,26 @@ class Laporan extends CI_Controller
 		$data['periode'] = $bulan . " " . $tahun;
 		$data['lokasi1'] = $lokasi1;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lok;
+		$data['devisi'] = $devisi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 		$html = $this->load->view('lapPo/vw_lap_po_print_cs', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
+
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 
 	function print_lap_po_lokal_t()
 	{
-		$lokasi = $this->uri->segment(3);
+		$lok = $this->uri->segment(3);
 		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
 		$tahun = $this->uri->segment(9);
@@ -727,27 +909,41 @@ class Laporan extends CI_Controller
 				$bulan = "";
 				break;
 		}
-		switch ($lokasi) {
+		switch ($lok) {
 			case '01':
 				$lokasi = "AND lokasi = 'HO'";
 				$lokasi1 = "HO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '02':
 				$lokasi = "AND lokasi = 'RO'";
 				$lokasi1 = "RO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '03':
 				$lokasi = "AND lokasi = 'PKS'";
 				$lokasi1 = "PKS";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			case '07':
+				$lokasi = "AND lokasi = 'SITE'";
+				$lokasi1 = "ESTATE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
 			case '06':
 				$lokasi = "AND lokasi = 'SITE'";
 				$lokasi1 = "ESTATE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
 				break;
 			default:
 				$lokasi = "";
 				$lokasi1 = "";
+				$devisi = $this->session->userdata('nama_pt');
 				break;
 		}
 		$query = "SELECT * FROM item_po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 AND refppo LIKE '%SPPI%'";
@@ -755,10 +951,12 @@ class Laporan extends CI_Controller
 		$data['periode'] = $bulan . " " . $tahun;
 		$data['lokasi1'] = $lokasi1;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lok;
+		$data['devisi'] = $devisi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 
@@ -809,10 +1007,11 @@ class Laporan extends CI_Controller
 		$tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
 		$data['periode'] = str_replace("'", " ", ($tanggal1 . ' - ' . $tanggal2));
 		$data['lokasi'] = $lokasi1;
+		$data['alamat'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 
@@ -858,10 +1057,11 @@ class Laporan extends CI_Controller
 		$tanggal2 = date_format(date_create($tanggal2), 'd/m/Y');
 		$data['periode'] = $tanggal1 . ' - ' . $tanggal2;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -897,11 +1097,12 @@ class Laporan extends CI_Controller
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['lokasi1'] = $lok;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -930,17 +1131,18 @@ class Laporan extends CI_Controller
 		} else if ($lokasi == '07') {
 			$lok = 'ESTATE2';
 		}
-		$query = "SELECT a.*, b.nama_supply, b.devisi FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND b.kode_dev = '$lokasi' AND b.mutasi = '1'";
+		$query = "SELECT a.*, b.nama_supply, b.devisi FROM masukitem a, stokmasuk b WHERE a.refpo = b.refpo AND a.noref = b.noref AND a.tgl BETWEEN '$tanggal1' AND '$tanggal2' AND b.kode_dev = '$lokasi' AND b.jenis_lpb = '1'";
 		$data['mutasi'] = $this->db_logistik_pt->query($query)->result();
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['lokasi1'] = $lok;
 		$data['lokasi1'] = "Tes";
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1014,11 +1216,12 @@ class Laporan extends CI_Controller
 		$data['tanggal1'] = $tanggal1;
 		$data['tanggal2'] = $tanggal2;
 		$data['lokasi'] = $lok;
+		$data['alamat'] = $lokasi;
 		$data['lokasi1'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 
@@ -1049,11 +1252,12 @@ class Laporan extends CI_Controller
 		$data['tanggal1'] = $tanggal1;
 		$data['tanggal2'] = $tanggal2;
 		$data['lokasi'] = $lok;
+		$data['alamat'] = $lokasi;
 		$data['lokasi1'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 
@@ -1113,11 +1317,12 @@ class Laporan extends CI_Controller
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['lokasi1'] = $lok;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1152,7 +1357,7 @@ class Laporan extends CI_Controller
 			$row[] = $field->norefretur;
 			$row[] = $field->bag;
 			$row[] = $field->keterangan;
-			$row[] = '<a href="' . site_url('Laporan/cetakRETUR/' . $noref . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+			$row[] = '<a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
 
 			$data[] = $row;
 		}
@@ -1226,7 +1431,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 
@@ -1281,10 +1486,11 @@ class Laporan extends CI_Controller
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1442,10 +1648,11 @@ class Laporan extends CI_Controller
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1598,10 +1805,11 @@ class Laporan extends CI_Controller
 		$data['tgl1'] = $tanggal1;
 		$data['tgl2'] = $tanggal2;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1650,10 +1858,11 @@ class Laporan extends CI_Controller
 		$data['tgl1'] = str_replace('.', '/', $this->uri->segment(4));
 		$data['tgl2'] = str_replace('.', '/', $this->uri->segment(5));
 		$data['bag'] = $bag;
+		$data['alamat'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1704,6 +1913,7 @@ class Laporan extends CI_Controller
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['bagian'] = $bagian;
 		$dev = $this->uri->segment(7);
 		$dev = str_replace('._', '(', $dev);
@@ -1717,7 +1927,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1770,6 +1980,7 @@ class Laporan extends CI_Controller
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['bagian'] = $bagian;
 		$dev = $this->uri->segment(7);
 		$dev = str_replace('._', '(', $dev);
@@ -1781,7 +1992,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1829,6 +2040,7 @@ class Laporan extends CI_Controller
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['bagian'] = $bagian;
 		$dev = $this->uri->segment(7);
 		$dev = str_replace('._', '(', $dev);
@@ -1840,7 +2052,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1888,10 +2100,12 @@ class Laporan extends CI_Controller
 
 		$data['bmut'] = $this->db_logistik_pt->query($query)->result();
 		$data['lokasi1'] = $lokasi;
+		$data['periode'] = str_replace('.', '/', $tanggal1) . ' - ' . str_replace('.', '/', $tanggal2);
+		$data['alamat'] = $lokasi;
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -1944,6 +2158,7 @@ class Laporan extends CI_Controller
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['bagian'] = $bagian;
 		$dev = $this->uri->segment(7);
 		$dev = str_replace('._', '(', $dev);
@@ -1954,7 +2169,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2000,6 +2215,7 @@ class Laporan extends CI_Controller
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['bagian'] = $bagian;
 		$dev = $this->uri->segment(7);
 		$dev = str_replace('._', '(', $dev);
@@ -2010,7 +2226,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2061,6 +2277,7 @@ class Laporan extends CI_Controller
 		$data['p1'] = $p1;
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
+		$data['alamat'] = $lokasi;
 		$data['bagian'] = $bagian;
 		$dev = $this->uri->segment(7);
 		$dev = str_replace('._', '(', $dev);
@@ -2071,7 +2288,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2119,6 +2336,7 @@ class Laporan extends CI_Controller
 
 		$isi = $this->db_logistik_pt->query("SELECT PT FROM tb_devisi WHERE kodetxt='$lokasi'")->row();
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['p1'] = $p1;
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
@@ -2132,7 +2350,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2180,6 +2398,7 @@ class Laporan extends CI_Controller
 
 		$isi = $this->db_logistik_pt->query("SELECT PT FROM tb_devisi WHERE kodetxt='$lokasi'")->row();
 		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lokasi;
 		$data['p1'] = $p1;
 		$data['p2'] = $p2;
 		$data['pt'] = $lok;
@@ -2193,7 +2412,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2276,6 +2495,7 @@ class Laporan extends CI_Controller
 		}
 
 		$data['kode_dev'] = $devisi;
+		$data['alamat'] = $devisi;
 		$data['periode'] = $periode;
 		$data['txtperiode'] = $txtperiode;
 		$data['p1'] = $p1;
@@ -2284,7 +2504,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2369,6 +2589,7 @@ class Laporan extends CI_Controller
 		}
 
 		$data['kode_dev'] = $devisi;
+		$data['alamat'] = $devisi;
 		$data['periode'] = $periode;
 		$data['txtperiode'] = $txtperiode;
 		$data['p1'] = $p1;
@@ -2377,7 +2598,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '15',
+			'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 

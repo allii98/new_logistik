@@ -18,7 +18,17 @@ class M_laporan extends CI_Model
 
     private function _get_datatables_query()
     {
+        $lokasi = $this->session->userdata('status_lokasi');
+
         $this->db_logistik->from($this->table);
+        if ($lokasi == 'SITE') {
+            $this->db_logistik->where('kode', '06');
+            $this->db_logistik->or_where('kode', '07');
+        } elseif ($lokasi == 'RO') {
+            $this->db_logistik->where('kode', '02');
+        } elseif ($lokasi == 'PKS') {
+            $this->db_logistik->where('kode', '03');
+        }
 
         $i = 0;
 
@@ -296,16 +306,17 @@ class M_laporan extends CI_Model
         foreach ($data_tabel as $hasil) {
             $tglpp = date_create($hasil->tglpp);
             $nopp = "'" . $hasil->nopp . "'";
-            $ref_po = "'" . $hasil->ref_po . "'";
-            $ref_po = str_replace("/", ".", $ref_po);
+            $refpp =  $hasil->ref_pp;
+            $ref_pp = str_replace("/", ".", $refpp);
+            $id = $hasil->id;
             $kode_supply = "'" . $hasil->kode_supply . "'";
             $row   = array();
             $row[] = $no++;
             $row[] = date_format($tglpp, "d-m-Y");
-            $row[] = $hasil->nopp;
+            $row[] = $hasil->ref_pp;
             $row[] = $hasil->ref_po;
             $row[] = $hasil->nama_supply;
-            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printPPClick(' . $nopp . ',' . $ref_po . ',' . $kode_supply . ')"></button>';
+            $row[] = ' <a href="' .  site_url('Pp/cetak/' .  $ref_pp . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>';
             $data[] = $row;
         }
         $output = array(
@@ -336,7 +347,7 @@ class M_laporan extends CI_Model
         $txt_periode13 = date_format($txt_periode13, "Y-m-d");
         if (!empty($_POST['search']['value'])) {
             $keyword = $_POST['search']['value'];
-            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode_dev ='$cmb_devisi3' AND a.BATAL = '0' AND ( 
+            $query = "SELECT a.*, a.id as id_stokmasuk, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode_dev ='$cmb_devisi3' AND a.BATAL = '0' AND ( 
                         a.tgl LIKE '%$keyword%'
                         OR a.refpo LIKE '%$keyword%'
                         OR a.noref LIKE '%$keyword%'
@@ -346,17 +357,15 @@ class M_laporan extends CI_Model
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         } else {
-            $query = "SELECT a.*, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode_dev ='$cmb_devisi3' AND a.BATAL = '0'";
+            $query = "SELECT a.*, a.id as id_stokmasuk, b.ket_dept FROM stokmasuk a, po b WHERE a.refpo = b.noreftxt AND a.tgl BETWEEN '" . $txt_periode12 . "' AND '" . $txt_periode13 . "' AND a.kode_dev ='$cmb_devisi3' AND a.BATAL = '0'";
             $count_all = $this->db_logistik_pt->query($query)->num_rows();
             $data_tabel = $this->db_logistik_pt->query($query . " LIMIT $start,$length")->result();
         }
 
         foreach ($data_tabel as $hasil) {
             $tgl = date_create($hasil->tgl);
-            $noref = "'" . $hasil->noref . "'";
-            $noref = str_replace("/", ".", $noref);
-            $refpo = "'" . $hasil->refpo . "'";
-            $refpo = str_replace("/", ".", $refpo);
+            $no_lpb = $hasil->ttgtxt;
+            $id = $hasil->id_stokmasuk;
             // $ket_dept = "'" . $hasil->ket_dept . "'";
             // $ket_dept = str_replace(' ','.',$ket_dept);
             // $ket_dept = str_replace('&','-',$ket_dept);
@@ -366,7 +375,8 @@ class M_laporan extends CI_Model
             $row[] = $hasil->refpo;
             $row[] = $hasil->noref;
             $row[] = $hasil->ket_dept;
-            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printLPBSlipClick(' . $noref . ',' . $refpo . ')"></button>';
+            $row[] = '<a href="' . site_url('Lpb/cetak/' . $no_lpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
+            // $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printLPBSlipClick(' . $no_lpb . ',' . $id . ')"></button>';
             $data[] = $row;
         }
         $output = array(
@@ -558,7 +568,7 @@ class M_laporan extends CI_Model
             $row[] = $hasil->NO_REF;
             $row[] = $hasil->bag;
             // $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printBKBSlipClick(' . $noref . ',' . $refpo . ')"></button>';
-            $row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printBKBSlipClick(' . $NO_REF . ',' . $skb . ',' . $bag . ',' . $txt_periode14 . ',' . $txt_periode15 . ',' . $id . ')"></button>';
+            $row[] = '<a href="' . site_url('Bkb/cetak/' . $hasil->SKBTXT . '/' . $hasil->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
             $data[] = $row;
         }
         $output = array(

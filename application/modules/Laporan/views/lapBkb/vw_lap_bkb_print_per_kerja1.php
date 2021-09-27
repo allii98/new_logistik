@@ -37,8 +37,12 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI</h2>
-    <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
+    <h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;"><?= $dev; ?></h2>
+    <?php if ($alamat != '01') {
+        echo '';
+    } else {
+        echo '<h6 style="z-index: 0; margin-top: 5px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+    } ?>
     <div style="text-align: center;">
         <h3><u>REGISTER KELUAR BARANG (BKB)</u></h3>
     </div>

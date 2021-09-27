@@ -37,12 +37,15 @@
 </head>
 
 <body>
-    <h2 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI</h2>
-    <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
+    <h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;"><?= $dev; ?></h2>
+    <?php if ($alamat != '01') {
+        echo '';
+    } else {
+        echo '<h6 style="z-index: 0; margin-top: 5px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+    } ?>
     <div style="text-align: center;">
-        <h3><u>REGISTER KELUAR BARANG (BKB)</u></h3>
+        <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; "><u>REGISTER KELUAR BARANG (BKB)</u></h3>
     </div>
-    <br>
     <?php if (empty($bt)) { ?>
         <table border="0" width="100%">
             <thead>
@@ -58,7 +61,6 @@
                 </tr>
             </thead>
         </table>
-        <br>
         <table width="100%" class="singleborder" border="1">
             <thead style="text-align: center;">
                 <tr>
@@ -74,13 +76,13 @@
             <tbody>
 
                 <tr>
-                    <td colspan="5"><b>- &nbsp; -</b></td>
+                    <td style="text-align: center;" colspan="7"><b>Tidak ada data</b></td>
                     <td></td>
                     <td></td>
                 </tr>
 
                 <tr>
-                    <td style="text-align: center;" colspan="7">Tidak ada data</td>
+                    <td style="text-align: center;" colspan="7"><b>Tidak ada data</b></td>
                 </tr>
 
                 <tr>
@@ -92,7 +94,6 @@
 
             </tbody>
         </table>
-        <br>
         <?php } else {
         foreach ($bt as $b) { ?>
             <table border="0" width="100%">

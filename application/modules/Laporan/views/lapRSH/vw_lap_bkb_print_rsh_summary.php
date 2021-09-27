@@ -39,30 +39,24 @@
 <body>
     <?php
     if ($kode_dev == 'Semua') {
-        echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->pt . '</h2>';
+        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $kode_stock[0]->pt . '</h2>';
     } else {
         if (empty($kode_stock[0]->devisi)) {
-            echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
+            echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
         } else {
-            echo '<h2 style="margin-bottom: 0;">' . $kode_stock[0]->devisi . '</h2>';
+            echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $kode_stock[0]->devisi . '</h2>';
         }
     }
+    if ($alamat != '01') {
+        echo '';
+    } else {
+        echo '<h6 style="z-index: 0; margin-top: 5px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+    }
     ?>
-    <h5 style="margin-top: 5px;"> JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, Kebayoran Baru, Jakarta Selatan, DKI Jakarta Raya - 12140</h5>
     <div style="text-align: center;">
-        <h3>Register Summary Harian Material Gudang</h3>
+        <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Register Summary Harian Material Gudang</h3>
     </div>
-    <br>
-    <?php
-    foreach ($kode_stock as $ks) {
-        $kode_dev2 = (int)$kode_dev;
-        if ($kode_dev == 'Semua') {
-            $saldo = "SELECT saldoawal_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' ORDER BY periode DESC LIMIT 1";
-        } else {
-            $saldo = "SELECT saldoawal_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY periode DESC LIMIT 1";
-        }
-        $saldo = $this->db_logistik_pt->query($saldo)->row();
-    ?>
+    <?php if (empty($kode_stock)) { ?>
         <table border="0" width="100%">
             <thead>
                 <tr>
@@ -70,13 +64,11 @@
                     <td style="text-align: right;"><i>By System MIPS</i></td>
                 </tr>
                 <tr>
-                    <td style="text-align: left;"><b> <?= $ks->kodebar; ?> &nbsp; <?= $ks->nabar; ?></b></td>
-                    <td style="text-align: right;"><b>Saldo Sebelum Periode : <?php if ($saldo != NULL) echo number_format($saldo->saldoawal_qty, 2) . ' ' . $saldo->satuan;
-                                                                                else ''; ?></b></td>
+                    <td style="text-align: left;"><b> Tidak ada data</b></td>
+                    <td style="text-align: right;"><b>Saldo Sebelum Periode : 0.00</b></td>
                 </tr>
             </thead>
         </table>
-        <br>
         <table width="100%" class="singleborder" border="1">
             <thead style="text-align: center;">
                 <tr>
@@ -89,70 +81,125 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $no = 1;
-                $s_a = $saldo->saldoawal_qty;
 
-                if ($kode_dev == 'Semua') {
-                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb UNION SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB LEFT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb";
-                } else {
-                    $q_sum = "SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb UNION SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB lEFT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb";
-                }
-                $q_sum = $this->db_logistik_pt->query($q_sum)->result();
-                $s_a = $saldo->saldoawal_qty;
-                $gt_lpb = 0;
-                $gt_bkb = 0;
-                foreach ($q_sum as $qs) {
-                    $s_a = $s_a + $qs->jml_qty_l - $qs->jml_qty_b;
-                    $gt_lpb += $qs->jml_qty_l;
-                    $gt_bkb += $qs->jml_qty_b;
+                <tr>
+                    <td style="text-align: center;">1.</td>
+                    <td style="text-align: center;" colspan="4"><b>Tidak ada data</b></td>
+                    <td></td>
+                </tr>
 
-                    if ($qs->tgl_lpb == NULL) {
-                ?>
-                        <tr>
-                            <td style="text-align: center;"><?= $no++; ?></td>
-                            <td style="text-align: center;"><?= date_format(date_create($qs->tgl_bkb), 'd/m/Y'); ?></td>
-                            <td style="text-align: right;"><?= number_format($qs->jml_qty_l, 2); ?></td>
-                            <td style="text-align: right;"><?= number_format($qs->jml_qty_b, 2); ?></td>
-                            <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
-                            <td></td>
-                        </tr>
-                    <?php
-                    } else {
-                    ?>
-                        <tr>
-                            <td style="text-align: center;"><?= $no++; ?></td>
-                            <td style="text-align: center;"><?= date_format(date_create($qs->tgl_lpb), 'd/m/Y'); ?></td>
-                            <td style="text-align: right;"><?= number_format($qs->jml_qty_l, 2); ?></td>
-                            <td style="text-align: right;"><?= number_format($qs->jml_qty_b, 2); ?></td>
-                            <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
-                            <td></td>
-                        </tr>
-                    <?php
-                    }
-                    ?>
 
-                <?php } ?>
                 <tr>
                     <td style="text-align: center;" colspan="2"><b>GRAND TOTAL</b></td>
-                    <td style="text-align: right;"><b><?= number_format($gt_lpb, 2); ?></b></td>
-                    <td style="text-align: right;"><b><?= number_format($gt_bkb, 2); ?></b></td>
-                    <td></td>
+                    <td style="text-align: right;"><b><?= number_format(0, 2); ?></b></td>
+                    <td style="text-align: right;"><b><?= number_format(0, 2); ?></b></td>
+                    <td style="text-align: right;"><b><?= number_format(0, 2); ?></b></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td style="text-align: center;" colspan="6"><b>Saldo : <?= number_format($s_a, 2); ?></b></td>
+                    <td style="text-align: center;" colspan="6"><b>Saldo : <?= number_format(0, 2); ?></b></td>
                 </tr>
 
             </tbody>
         </table>
-    <?php } ?>
-    <br>
+        <?php } else {
+        foreach ($kode_stock as $ks) {
+            $kode_dev2 = (int)$kode_dev;
+            if ($kode_dev == 'Semua') {
+                $saldo = "SELECT saldoawal_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' ORDER BY periode DESC LIMIT 1";
+            } else {
+                $saldo = "SELECT saldoawal_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY periode DESC LIMIT 1";
+            }
+            $saldo = $this->db_logistik_pt->query($saldo)->row();
+        ?>
+            <table border="0" width="100%">
+                <thead>
+                    <tr>
+                        <td style="text-align: left;"><b> PERIODE : <?= $periode; ?> </b></td>
+                        <td style="text-align: right;"><i>By System MIPS</i></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;"><b> <?= $ks->kodebar; ?> &nbsp; <?= $ks->nabar; ?></b></td>
+                        <td style="text-align: right;"><b>Saldo Sebelum Periode : <?php if ($saldo != NULL) echo number_format($saldo->saldoawal_qty, 2) . ' ' . $saldo->satuan;
+                                                                                    else ''; ?></b></td>
+                    </tr>
+                </thead>
+            </table>
+            <table width="100%" class="singleborder" border="1">
+                <thead style="text-align: center;">
+                    <tr>
+                        <td>No</td>
+                        <td>Tgl</td>
+                        <td>Qty Masuk</td>
+                        <td>Qty Keluar</td>
+                        <td>Saldo</td>
+                        <td>Keterangan</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $no = 1;
+                    $s_a = $saldo->saldoawal_qty;
+
+                    if ($kode_dev == 'Semua') {
+                        $q_sum = "SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb UNION SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS BKB LEFT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb";
+                    } else {
+                        $q_sum = "SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB RIGHT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb UNION SELECT * FROM (SELECT tgl AS tgl_bkb, COUNT(tgl) AS jml_tgl, SUM(qty2) AS jml_qty_b, kode_dev FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS BKB lEFT JOIN (SELECT tgl AS tgl_lpb, COUNT(tgl) AS jml_tgl, SUM(qty) AS jml_qty_l, kode_dev FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY tgl) AS LPB ON LPB.tgl_lpb = BKB.tgl_bkb";
+                    }
+                    $q_sum = $this->db_logistik_pt->query($q_sum)->result();
+                    $s_a = $saldo->saldoawal_qty;
+                    $gt_lpb = 0;
+                    $gt_bkb = 0;
+                    foreach ($q_sum as $qs) {
+                        $s_a = $s_a + $qs->jml_qty_l - $qs->jml_qty_b;
+                        $gt_lpb += $qs->jml_qty_l;
+                        $gt_bkb += $qs->jml_qty_b;
+
+                        if ($qs->tgl_lpb == NULL) {
+                    ?>
+                            <tr>
+                                <td style="text-align: center;"><?= $no++; ?></td>
+                                <td style="text-align: center;"><?= date_format(date_create($qs->tgl_bkb), 'd/m/Y'); ?></td>
+                                <td style="text-align: right;"><?= number_format($qs->jml_qty_l, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format($qs->jml_qty_b, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
+                                <td></td>
+                            </tr>
+                        <?php
+                        } else {
+                        ?>
+                            <tr>
+                                <td style="text-align: center;"><?= $no++; ?></td>
+                                <td style="text-align: center;"><?= date_format(date_create($qs->tgl_lpb), 'd/m/Y'); ?></td>
+                                <td style="text-align: right;"><?= number_format($qs->jml_qty_l, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format($qs->jml_qty_b, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
+                                <td></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+
+                    <?php } ?>
+                    <tr>
+                        <td style="text-align: center;" colspan="2"><b>GRAND TOTAL</b></td>
+                        <td style="text-align: right;"><b><?= number_format($gt_lpb, 2); ?></b></td>
+                        <td style="text-align: right;"><b><?= number_format($gt_bkb, 2); ?></b></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" colspan="6"><b>Saldo : <?= number_format($s_a, 2); ?></b></td>
+                    </tr>
+
+                </tbody>
+            </table>
+    <?php }
+    } ?>
     <i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
     <div style="text-align: right; ">
         AirLangga Est, 19 August 2020
     </div>
-    <br><br>
     <table border="0" width="100%">
         <thead>
             <tr>

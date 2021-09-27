@@ -21,21 +21,23 @@ class M_pp extends CI_Model
     {
         // $Value = ;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
+        $this->db_logistik_pt->from($this->table);
         if ($lokasi_sesi == 'HO') {
-
-            $this->db_logistik_pt->from($this->table);
+            $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
         } else {
             # code...
-            $this->db_logistik_pt->from($this->table);
             if ($lokasi_sesi == 'SITE') {
+                $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
                 # code...
             } else if ($lokasi_sesi == 'PKS') {
+                $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
                 # code...
             } else if ($lokasi_sesi == 'RO') {
+                $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
                 # code...
