@@ -41,22 +41,26 @@
     if (empty($bmut[0]->devisi)) {
         echo '<h2>Data tidak ditemukan pada Divisi tersebut!</h2>';
     } else {
-        echo '<h2 style="margin-bottom: 0;">' . $bmut[0]->devisi . '</h2>';
+        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $bmut[0]->devisi . '</h2>';
+    }
+
+    if ($alamat != '01') {
+        echo '';
+    } else {
+        echo '<h6 style="z-index: 0; margin-top: 5px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
     }
     ?>
     <div style="text-align: center;">
-        <h3><u>REGISTER KELUAR BARANG (BKB) MUTASI</u></h3>
+        <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; "><u>REGISTER KELUAR BARANG (BKB) MUTASI</u></h3>
     </div>
-    <br>
     <table border="0" width="100%">
         <thead>
             <tr>
-                <td style="text-align: left;"><b> PERIODE : 26/06/2020-26/07/2020 </b></td>
-                <td style="text-align: right;"><br><br><i>By System MIPS</i></td>
+                <td style="text-align: left;"><b> PERIODE : <?= $periode; ?></b></td>
+                <td style="text-align: right;"><i>By System MIPS</i></td>
             </tr>
         </thead>
     </table>
-    <br>
     <table width="100%" border="1" class="singleborder">
         <thead style="text-align: center;">
             <tr>
@@ -85,7 +89,7 @@
                         <td style="text-align: center;"><?= $bm->kodebar; ?></td>
                         <td style="text-align: left;"><?= $bm->nabar; ?></td>
                         <td style="text-align: center;"><?= $bm->satuan; ?></td>
-                        <td style="text-align: right;"><?= number_format($bm->qty2, 2); ?></td>
+                        <td style="text-align: right;"><?= number_format($bm->qty, 2); ?></td>
                         <td style="text-align: center;"><?= $bm->pt_mutasi; ?></td>
                     </tr>
             <?php }
@@ -96,7 +100,6 @@
     <div style="text-align: right; ">
         Sriwijaya Estate, 19 August 2020
     </div>
-    <br><br>
     <table border="0" width="100%">
         <thead>
             <tr>

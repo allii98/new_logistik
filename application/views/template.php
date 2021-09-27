@@ -429,7 +429,7 @@
                                 <font face="Verdana" size="2">PT *</font>
                             </label>
                             <div class="col-12">
-                                <select class="form-control" id="cmb_devisi" name="cmb_devisi" required="">
+                                <select class="form-control form-control-sm" id="cmb_devisi" name="cmb_devisi" required="">
                                 </select>
                             </div>
                         </div>
@@ -438,7 +438,7 @@
                                 <font face="Verdana" size="2">BAGIAN *</font>
                             </label>
                             <div class="col-12">
-                                <select class="form-control" id="lap_cmb_bagian" name="lap_cmb_bagian" required="">
+                                <select class="form-control form-control-sm" id="lap_cmb_bagian" name="lap_cmb_bagian" required="">
                                 </select>
                             </div>
                         </div>
@@ -448,14 +448,14 @@
                             </label>
                             <div class="row">&nbsp;&nbsp;&nbsp;
                                 <div class="col-5">
-                                    <input type="text" class="form-control" id="tglAwalSPP" name="tglAwalSPP">
+                                    <input type="text" class="form-control form-control-sm" id="tglAwalSPP" name="tglAwalSPP">
 
                                 </div>
                                 <div class="col-1">
                                     <label class="control-label">s/d</label>
                                 </div>
                                 <div class="col-5">
-                                    <input type="text" class="form-control" id="tglAkhirSPP" name="tglAkhirSPP">
+                                    <input type="text" class="form-control form-control-sm" id="tglAkhirSPP" name="tglAkhirSPP">
 
                                 </div>
                             </div>
@@ -466,6 +466,10 @@
                             <div class="radio radio-info form-check-inline">
                                 <input type="radio" value="semua" id="rbt_semua" name="rbt_pilihan" checked>
                                 <label for="rbt_semua">Semua SPP</label>
+                            </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="slip" id="rbt_slip" name="rbt_pilihan">
+                                <label for="rbt_slip">Slip SPP</label>
                             </div>
                             <div class="radio radio-info form-check-inline">
                                 <input type="radio" value="proses" id="rbt_proses" name="rbt_pilihan">
@@ -500,10 +504,10 @@
 
         <!-- data spp -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapSPP">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                    <div class="modal-header" style="margin-bottom: -2%;">
+                        <h4 class="modal-title ml-2" id="myModalLabel">Pilih SPP</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -517,11 +521,11 @@
                                     <thead>
                                         <tr>
 
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 10% !important;">Tgl</th>
-                                            <th style="width: 10% !important;">Dept</th>
-                                            <th style="width: 25% !important;">Noref</th>
-                                            <th style="width: 10% !important;">Opsi</th>
+                                            <th style="width: 5% !important;font-size: 12px; padding:10px">No</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">Tgl</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">Dept</th>
+                                            <th style="width: 30% !important;font-size: 12px; padding:10px">Noref</th>
+                                            <th style="width: 3% !important;font-size: 12px; padding:10px">Opsi</th>
 
                                         </tr>
                                     </thead>
@@ -551,19 +555,18 @@
                     </div>
                     <div class="modal-body">
 
-
                         <div class="col-12">
                             <div class="table-responsive">
                                 <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                                 <table id="tableListLapSPP" class="table table-striped table-bordered table-in" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 20% !important;">Tanggal</th>
-                                            <th style="width: 20% !important;">Noref PO</th>
-                                            <th style="width: 20% !important;">Noref SPP</th>
-                                            <th style="width: 25% !important;">Supplier</th>
-                                            <th style="width: 10% !important;">Opsi</th>
+                                            <th style="width: 5% !important; font-size: 12px; padding:10px">No</th>
+                                            <th style="width: 5% !important; font-size: 12px; padding:10px">Tanggal</th>
+                                            <th style="width: 25% !important; font-size: 12px; padding:10px">Noref PO</th>
+                                            <th style="width: 25% !important; font-size: 12px; padding:10px">Noref SPP</th>
+                                            <th style="width: 25% !important; font-size: 12px; padding:10px">Supplier</th>
+                                            <th style="width: 3% !important; font-size: 12px; padding:10px">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -582,7 +585,7 @@
 
         <!-- data listPo -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapPO">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h4 class="modal-title" id="myModalLabel">List PO</h4>
@@ -590,27 +593,23 @@
                         </button>
                     </div>
                     <div class="modal-body">
+                        <div class="table-responsive" style="margin-top: -1%;">
+                            <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                            <table id="tableListLapPOCetakan" class="table table-striped table-bordered table-in" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 5% !important; font-size: 12px; padding:10px">No</th>
+                                        <th style="width: 5% !important; font-size: 12px; padding:10px">Tanggal</th>
+                                        <th style="width: 25% !important; font-size: 12px; padding:10px">Noref PO</th>
+                                        <th style="width: 25% !important; font-size: 12px; padding:10px">Noref SPP</th>
+                                        <th style="width: 25% !important; font-size: 12px; padding:10px">Supplier</th>
+                                        <th style="width: 3% !important; font-size: 12px; padding:10px">Opsi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
 
-
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                                <table id="tableListLapPOCetakan" class="table table-striped table-bordered table-in" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 20% !important;">Tanggal</th>
-                                            <th style="width: 20% !important;">Noref PO</th>
-                                            <th style="width: 20% !important;">Noref SPP</th>
-                                            <th style="width: 25% !important;">Supplier</th>
-                                            <th style="width: 10% !important;">Opsi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-
-                                </table>
-                            </div>
+                            </table>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -774,10 +773,10 @@
 
         <!-- data listPP -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapPP">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">List PO</h4>
+                        <h4 class="modal-title ml-2" id="myModalLabel">List PP</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                         </button>
                     </div>
@@ -785,17 +784,17 @@
 
 
                         <div class="col-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="margin-top: -1%;">
                                 <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                                 <table id="tableListLapPP" class="table table-striped table-bordered table-in" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 20% !important;">Tanggal</th>
-                                            <th style="width: 20% !important;">Noref PO</th>
-                                            <th style="width: 20% !important;">Noref SPP</th>
-                                            <th style="width: 25% !important;">Supplier</th>
-                                            <th style="width: 10% !important;">Opsi</th>
+                                            <th style="width: 5% !important;font-size: 12px; padding:10px">No</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">Tanggal</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">Noref PP</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">Noref PO</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">Supplier</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -815,26 +814,26 @@
 
         <!-- data registerLPB -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapLPBSlip">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">List LPB Slip</h4>
+                        <h4 class="modal-title ml-2" id="myModalLabel">List LPB Slip</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="margin-top: -1%;">
                                 <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                                 <table id="tableListLapLPBSlip" class="table table-striped table-bordered table-in" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 10% !important;">Tgl</th>
-                                            <th style="width: 25% !important;">No PO</th>
-                                            <th style="width: 25% !important;">No LPB</th>
-                                            <th style="width: 25% !important;">Departement</th>
-                                            <th style="width: 10% !important;">Opsi</th>
+                                            <th style="width: 5% !important; font-size: 12px; padding:10px">No</th>
+                                            <th style="width: 10% !important; font-size: 12px; padding:10px">Tgl</th>
+                                            <th style="width: 25% !important; font-size: 12px; padding:10px">No PO</th>
+                                            <th style="width: 25% !important; font-size: 12px; padding:10px">No LPB</th>
+                                            <th style="width: 25% !important; font-size: 12px; padding:10px">Departement</th>
+                                            <th style="width: 10% !important; font-size: 12px; padding:10px">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_listbarang">
@@ -854,26 +853,26 @@
 
         <!-- data listLPB PO -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapLPBPO">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">List LPB Per PO</h4>
+                        <h4 class="modal-title ml-2" id="myModalLabel">List LPB Per PO</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="margin-top: -1%;">
                                 <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                                 <table id="tableListLapLPBPO" class="table table-striped table-bordered table-in" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 25% !important;">Tanggal</th>
-                                            <th style="width: 25% !important;">No Ref PO</th>
-                                            <th style="width: 25% !important;">No Ref LPB</th>
-                                            <th style="width: 25% !important;">Supplier</th>
-                                            <th style="width: 10% !important;">Opsi</th>
+                                            <th style="width: 5% !important;font-size: 12px; padding:10px">No</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">Tanggal</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">No Ref PO</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">No Ref LPB</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">Supplier</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_listbarang">
@@ -893,25 +892,25 @@
 
         <!-- data listLPB PO -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapLPBSlipR">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">List LPB Slip Retur</h4>
+                        <h4 class="modal-title ml-2" id="myModalLabel">List LPB Slip Retur</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="margin-top: -1%;">
                                 <table id="tableListLapLPBSlipR" class="table table-striped table-bordered table-in" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 15% !important;">Tgl Retur</th>
-                                            <th style="width: 35% !important;">No Retur</th>
-                                            <th style="width: 35% !important;">Bagian</th>
-                                            <th style="width: 35% !important;">Keterangan</th>
-                                            <th style="width: 10% !important;">Opsi</th>
+                                            <th style="width: 5% !important;font-size: 12px; padding:10px">No</th>
+                                            <th style="width: 15% !important;font-size: 12px; padding:10px">Tgl Retur</th>
+                                            <th style="width: 35% !important;font-size: 12px; padding:10px">No Retur</th>
+                                            <th style="width: 35% !important;font-size: 12px; padding:10px">Bagian</th>
+                                            <th style="width: 35% !important;font-size: 12px; padding:10px">Keterangan</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_listbarang"></tbody>
@@ -1137,26 +1136,25 @@
 
         <!-- data slip BKB  -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapSlipBKB">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">List LPB Slip Retur</h4>
+                        <h4 class="modal-title ml-2" id="myModalLabel">List BKB</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="col-12">
-                            <div class="table-responsive">
+                            <div class="table-responsive" style="margin-top: -1%;">
                                 <table id="tableListLapSlipBKB" class="table table-striped table-bordered table-in" width="100%">
                                     <thead>
                                         <tr>
-                                            <th style="width: 5% !important;">No</th>
-                                            <th style="width: 20% !important;">Tgl</th>
-                                            <!-- <th style="width: 20% !important;">No BPB</th> -->
-                                            <th style="width: 20% !important;">No BKB</th>
-                                            <th style="width: 25% !important;">No Ref BKB</th>
-                                            <th style="width: 20% !important;">Departement</th>
-                                            <th style="width: 10% !important;">Opsi</th>
+                                            <th style="width: 5% !important;font-size: 12px; padding:10px">No</th>
+                                            <th style="width: 20% !important;font-size: 12px; padding:10px">Tgl</th>
+                                            <th style="width: 20% !important;font-size: 12px; padding:10px">No BKB</th>
+                                            <th style="width: 25% !important;font-size: 12px; padding:10px">No Ref BKB</th>
+                                            <th style="width: 20% !important;font-size: 12px; padding:10px">Departement</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">Opsi</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_listbarang"></tbody>
@@ -1471,6 +1469,51 @@
         </div>
 
         <!-- end lap rsh -->
+
+
+        <style>
+            table#tableListLapSPP td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+
+            table#tableListLapPOCetakan td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+
+            table#tableListLapPP td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+
+            table#tableListLapLPBSlip td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+
+            table#tableListLapLPBPO td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+
+            table#tableListLapLPBSlipR td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+
+            table#tableListLapSlipBKB td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+        </style>
 
 
 
@@ -2531,6 +2574,9 @@
             var rbt_pilihan = $("input[name='rbt_pilihan']:checked").val();
 
             if (rbt_pilihan == 'semua') {
+                window.open('<?= site_url("Laporan/print_lap_spp_register"); ?>/' + cmb_devisi + '/' + lap_cmb_bagian + '/' + tglAwalSPP + '/' +
+                    tglAkhirSPP);
+            } else if (rbt_pilihan == 'slip') {
 
                 // window.open('<?= site_url("Laporan/tampilkan_spp"); ?>/' + cmb_devisi + '/' + lap_cmb_bagian + '/' + tglAwalSPP + '/' + tglAkhirSPP);
                 $('#modalListLapSPP').modal('show');
@@ -3118,6 +3164,8 @@
             });
         }
 
+        function printPPClick() {}
+
         function tampilkanpp() {
             var cmb_devisi1 = $('#devisi1').val();
             var txt_periode4 = $('#tanggalawalPP').val();
@@ -3397,6 +3445,9 @@
                         "targets": [],
                         "orderable": false,
                     }, ],
+                    "language": {
+                        "infoFiltered": ""
+                    }
                 });
                 var rel = setInterval(function() {
                     $('#tableListLapLPBSlipR').DataTable().ajax.reload();

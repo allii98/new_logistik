@@ -32,11 +32,22 @@
 </head>
 
 <body>
-    <h3 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI (<?= $lokasi; ?>)</h3>
-    <h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>
+    <h3 style="font-size:14px;font-weight:bold;margin-bottom: 0%;">PT. MULIA SAWIT AGRO LESTARI (<?= $lokasi; ?>)</h3>
+    <?php if ($alamat != '01') {
+        echo '';
+    } else {
+        echo '<h6 style="z-index: 0; margin-top: -1%;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+    }
+
+    ?>
     <div style="text-align: center;">
-        <h1>PERMOHONAN PEMBAYARAN (PP)</h1>
-        <table border="0" class="center">
+
+        <table border="0" class="center" style="margin-top: -1%;">
+            <tr>
+                <td style="text-align: center;" colspan="3">
+                    <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%;">PERMOHONAN PEMBAYARAN (PP)</h3>
+                </td>
+            </tr>
             <tr>
                 <td>PERIODE</td>
                 <td>:</td>
@@ -48,7 +59,7 @@
                 <td><?= date("d/m/Y"); ?></td>
             </tr>
         </table>
-        <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By MIPS</small></p>
+        <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>By MIPS</small></p>
         <hr>
         <hr>
         <table border="0" class="center" width="100%">
@@ -66,31 +77,48 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $no = 1;
-                $total = 0;
-                foreach ($pp as $list_pp) {
-                    $total += $list_pp->jumlah;
+                <?php if (empty($pp)) {
+                    $total = 0;
                 ?>
                     <tr>
-                        <td><?= $no++; ?></td>
-                        <td><?= $list_pp->nopp; ?></td>
-                        <td><?= date_format((date_create($list_pp->tglpp)), "d/m/Y"); ?></td>
-                        <td><?= date_format((date_create($list_pp->tglpo)), "d/m/Y"); ?></td>
-                        <td><?= $list_pp->ref_po; ?></td>
-                        <td><?= $list_pp->no_voutxt; ?></td>
-                        <td><?= date_format((date_create($list_pp->tgl_vou)), "d/m/Y"); ?></td>
-                        <td><?= $list_pp->nama_supply; ?></td>
+                        <td>1</td>
+                        <td colspan="7" style="text-align: center;"><b>Tidak ada data</b></td>
+
                         <td>
                             <table border="0" width="100%">
                                 <tr>
                                     <td>Rp</td>
-                                    <td style="text-align: right;"><?= number_format(($list_pp->jumlah), 2) ?></td>
+                                    <td style="text-align: right;">0.00</td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
-                <?php } ?>
+                    <?php } else {
+                    $no = 1;
+                    $total = 0;
+                    foreach ($pp as $list_pp) {
+                        $total += $list_pp->jumlah;
+                    ?>
+                        <tr>
+                            <td><?= $no++; ?></td>
+                            <td><?= $list_pp->nopp; ?></td>
+                            <td><?= date_format((date_create($list_pp->tglpp)), "d/m/Y"); ?></td>
+                            <td><?= date_format((date_create($list_pp->tglpo)), "d/m/Y"); ?></td>
+                            <td><?= $list_pp->ref_po; ?></td>
+                            <td><?= $list_pp->no_voutxt; ?></td>
+                            <td><?= date_format((date_create($list_pp->tgl_vou)), "d/m/Y"); ?></td>
+                            <td><?= $list_pp->nama_supply; ?></td>
+                            <td>
+                                <table border="0" width="100%">
+                                    <tr>
+                                        <td>Rp</td>
+                                        <td style="text-align: right;"><?= number_format(($list_pp->jumlah), 2) ?></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                <?php }
+                } ?>
 
             </tbody>
         </table>

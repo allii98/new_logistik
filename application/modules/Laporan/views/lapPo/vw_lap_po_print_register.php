@@ -41,20 +41,20 @@
 </head>
 
 <body>
-    <?php
-    if ($lokasi1 == '') {
 
-        echo '<h3 style="margin-bottom: 0;"> PT. MULIA SAWIT AGRO LESTARI</h3><h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+    <h3 style="font-size:14px;font-weight:bold; margin-bottom: -1%;"><?= $lokasi1 ?></h3>
+
+    <?php
+    if ($lok != '01') {
+        echo '';
     } else {
-        if ($lokasi1 == 'SITE')
-            echo '<h3 style="margin-bottom: 0;"> PT. MULIA SAWIT AGRO LESTARI (ESTATE)</h3><h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
-        else
-            echo '<h3 style="margin-bottom: 0;"> PT. MULIA SAWIT AGRO LESTARI (' . $lokasi1 . ')</h3><h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+        echo '<h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
     }
     ?>
+
     <!-- <div style="margin-top: 10px; margin-bottom: 10;"></div> -->
     <div style="text-align: center;">
-        <h1>REGISTER PURCHASE ORDER (PO)</h1>
+        <h3 style="font-size:11px;font-weight:bold; margin-bottom: -1%;">REGISTER PURCHASE ORDER (PO)</h3>
         <table border="0" class="center">
             <tr>
                 <td>PERIODE</td>
@@ -67,10 +67,6 @@
                 <td><?= date('d/m/Y'); ?></td>
             </tr>
         </table>
-        <br>
-        <!-- <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By System MIPS (<?= date("d-m-Y H:i:s"); ?>)</small></p> -->
-        <!-- <hr>
-        <hr> -->
         <table border="1" class="singleborder">
             <thead>
                 <tr>
@@ -88,12 +84,13 @@
                 </tr>
             </thead>
             <tbody>
+
                 <?php
                 $no = 1;
-                if ($lokasi1 == "") {
+                if ($lokasi2 == "") {
                     $lokasi = "";
                 } else {
-                    $lokasi = "AND lokasi = '" . $lokasi1 . "'";
+                    $lokasi = "AND lokasi = '" . $lokasi2 . "'";
                 }
                 foreach ($po as $list_po) { ?>
                     <tr>

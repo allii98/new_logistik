@@ -32,11 +32,22 @@
 </head>
 
 <body>
-    <h3 style="margin-bottom: 0;">PT. MULIA SAWIT AGRO LESTARI <?= $lokasi1; ?></h3>
-    <h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>
-    <div style="text-align: center;">
-        <h1>REGISTER PURCHASE ORDER LOKAL (PO)</h1>
-        <table border="0" class="center">
+    <h3 style="font-size:14px;font-weight:bold;margin-bottom: 0%;"><?= $devisi; ?> </h3>
+    <?php if ($alamat != '01') {
+        echo '';
+    } else {
+        echo '<h6 style="z-index: 0; margin-top: -1%;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+    }
+
+    ?>
+    <div style="text-align: center; ">
+
+        <table border="0" class="center" style="margin-top: -1%;">
+            <tr>
+                <td style="text-align: center;" colspan="3">
+                    <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%;">REGISTER PURCHASE ORDER (PO)</h3>
+                </td>
+            </tr>
             <tr>
                 <td>PERIODE</td>
                 <td>:</td>

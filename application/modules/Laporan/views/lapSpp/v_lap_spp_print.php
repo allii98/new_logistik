@@ -3,16 +3,17 @@
         #tabel_spp tr td {
             /*font-size: 12px;*/
             border: 1px solid;
-            padding: 5px;
+            padding: 3px;
+            /* font-size: 10px; */
         }
 
         body {
-            font-family: Verdana;
-            font-size: 8px;
+            /* font-family: Verdana; */
+            font-size: 10px;
             font-style: normal;
             font-variant: normal;
             font-weight: 400;
-            line-height: 20px;
+            /* line-height: 20px; */
         }
 
         .singleborder {
@@ -29,65 +30,116 @@
         .warna_sebagian {
             background-color: gray;
         }
+
+        .garis_tepi1 {
+            border: 2px solid black;
+            width: 50px;
+            height: 20px;
+            float: right;
+            line-height: 20px;
+        }
     </style>
     <title>SPP - Surat Permintaan Pembelian</title>
 </head>
 
+<?php
+if ($ppo->jenis == "SPPI") {
+    $jenis_spp = 'INTERNAL (SPPI)';
+} elseif ($ppo->jenis == "SPPA") {
+    $jenis_spp = 'ASET (SPPA)';
+} elseif ($ppo->jenis == "SPPK") {
+    $jenis_spp = "KHUSUS (SPPK)";
+} else {
+    $jenis_spp = ' (SPP)';
+}
+
+if ($ppo->lokasi == 'HO') {
+    $alamat_lok = '<p style="font-size:8px">Jl. Radio Dalam Raya No.87A, RT.005/RW.014, Gandaria Utara, Kebayoran Baru, JakartaSelatan, DKI Jakarta Raya-12140</p>';
+} else {
+    $alamat_lok = '';
+}
+
+$alamat_ho = $this->session->userdata('alamat_ho');
+$logo_pt = $this->session->userdata('logo_pt');
+?>
+<h3><?= $ppo->devisi; ?> </h3>
+<table class="singleborder" border="1" width="10%" align="right">
+    <tr>
+        <td align="center" style="font-size: 15px"><?= $lokasi1; ?></td>
+    </tr>
+</table>
+<?php
+if ($ppo->jenis == "SPP") {
+    $judul = "SURAT PERMINTAAN PEMBELIAN (SPP)";
+} else if ($ppo->jenis == "SPPI") {
+    $judul = "SURAT PERMINTAAN PEMBELIAN INTERNAL (SPPI)";
+} else if ($ppo->jenis == "SPPA") {
+    $judul = "SURAT PERMINTAAN PEMBELIAN ASET (SPPA)";
+}
+?>
+
 <body>
     <?php
-    if ($this->session->userdata('app_pt') == "MSAL") {
-        $headTitle = "PT. MULIA SAWIT AGRO LESTARI";
-        // if($ppo->kodept == 'SITE'){
-        //   $k = 'ESTATE1';
-        //   $k1 = "<h6 style='margin-top: 0px;'>SRIWIJAYA ESTATE</h6>";
-        // }else{
-        //   $k = $ppo->kodept;
-        //   $k1 = "";
-        //   $k1 = "<h6 style='margin-top: 0px;'>SRIWIJAYA ESTATE</h6>";
-        // }
-        switch ($ppo->kodept) {
-            case '01':
-                $lokasi = 'HO';
-                $lokasi1 = 'HO';
-                $nama_kebun = '';
-                break;
-            case '02':
-                $lokasi = 'RO';
-                $lokasi1 = 'RO';
-                $nama_kebun = '';
-                break;
-            case '03':
-                $lokasi = 'PKS';
-                $lokasi1 = 'PKS';
-                $nama_kebun = '';
-                break;
-            default:
-                $lokasi = 'ESTATE';
-                $lokasi1 = 'SITE';
-                $nama_kebun = "<h6 style='margin-top: 0px;'>SRIWIJAYA ESTATE</h6>";
-                break;
-        }
-    }
+    if (substr($ppo->noreftxt, 0, 3) == 'PST') {
     ?>
-    <h3><?= $ppo->devisi; ?> </h3>
-    <?= $nama_kebun; ?>
-    <table class="singleborder" border="1" width="10%" align="right">
-        <tr>
-            <td align="center" style="font-size: 15px"><?= $lokasi1; ?></td>
-        </tr>
-    </table>
+        <table width="100%" border="0" align="center" style="margin-bottom: 0px;">
+            <tr>
+                <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="65px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>">
+                </td>
+                <td rowspan="2" align="left" style="font-size:8.5px;">
+                    <h3 style="font-size:14px;font-weight:bold;"> <?= $ppo->devisi ?> </h3>
+                    <?= $alamat_ho ?>
+                </td>
+                <td style="padding-left: 20px;"><img width="5%" height="5%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
+            </tr>
+            <tr>
+                <td width="9%" class="singleborder" align="center" style="padding: 5px;">
+                    <h3 align="center"><?= $ppo->lokasi; ?></h3>
+                </td>
+            </tr>
+        </table>
+        <table border="0" width="100%">
+            <tr>
+                <td>
+                    <h2>SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h2>
+                </td>
+                <td align="right" style="padding-bottom: -10px;">
+                    <small>By MIPS LOGISTIK</small>
+                </td>
+            </tr>
+        </table>
+        <!-- <p style="margin-top: -10px; margin-bottom:-4px;">
+        </p>
+        <div style="margin-top: -20px; margin-bottom:0px;" align="right"></div> -->
+        <!-- <p style="margin-top: -20px; margin-bottom:0px;"><small align="right">By MIPS LOGISTIK</small></p> -->
     <?php
-    if ($ppo->jenis == "SPP") {
-        $judul = "SURAT PERMINTAAN PEMBELIAN (SPP)";
-    } else if ($ppo->jenis == "SPPI") {
-        $judul = "SURAT PERMINTAAN PEMBELIAN INTERNAL (SPPI)";
-    } else if ($ppo->jenis == "SPPA") {
-        $judul = "SURAT PERMINTAAN PEMBELIAN ASET (SPPA)";
+    } else {
+    ?>
+        <table width="100%" border="0" align="center" style="margin-bottom: 2px;">
+            <tr>
+                <td colspan="2" align="left" style="vertical-align: text-top; padding-top:0px; padding-bottom: -10px;">
+                    <b style="margin-bottom: 0px; font-size: 14px;"><?= $ppo->devisi ?></b>
+                    <h6>&nbsp;</h6>
+                    <h2 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h2>
+                </td>
+                <td style="width: 2%;"></td>
+                <td rowspan="2" width="8%" style="padding-bottom: -2px;"><img width="7%" height="7%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
+            </tr>
+            <tr>
+                <td style="padding-bottom: -18px;">
+                    <p align="left" style="margin-top: 0px;margin-bottom: 0px; margin-right:0px;"><small>By MIPS LOGISTIK</small></p>
+                </td>
+                <td width="9%" class="singleborder" align="center" style="padding: 5px;">
+                    <h3 align="center"><?= $ppo->lokasi; ?></h3>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+    <?php
     }
     ?>
 
-    <h3 align="left" style="margin-top: 0px;margin-bottom: 0px;"><?= $judul; ?></h3>
-    <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By MIPS</small></p>
+
     <table class="singleborder" border="1" width="100%" id="tabel_spp">
         <tr>
             <td colspan="3">Nomor SPP Devisi : SPP - <?= $ppo->noppotxt; ?><br />
@@ -105,12 +157,12 @@
             <td align="center" colspan="7">Sesuai dengan nomor SPP diatas, terlampir perincian sebagai berikut : </td>
         </tr>
         <tr>
-            <td align="center">NO.</td>
-            <td align="center">KODE BARANG</td>
+            <td align="center" width="5%">NO.</td>
+            <td align="center" width="14%">KODE BARANG</td>
             <td align="center" width="30%">NAMA BARANG</td>
-            <td align="center">KUANTITAS</td>
-            <td align="center">SISA STOK</td>
-            <td align="center">SAT</td>
+            <td align="center" width="15%">KUANTITAS</td>
+            <td align="center" width="9%">SISA STOK</td>
+            <td align="center" width="6%">SAT</td>
             <td align="center" width="30%">KETERANGAN</td>
         </tr>
 
