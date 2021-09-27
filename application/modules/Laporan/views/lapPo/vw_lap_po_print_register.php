@@ -96,9 +96,9 @@
                     <tr>
                         <td><?= $no; ?></td>
                         <td><?= $list_po->nopotxt; ?></td>
-                        <td><?= date_format(date_create($list_po->tglpo), "Y/m/d"); ?></td>
+                        <td><?= date_format(date_create($list_po->tglpo), "d/m/Y"); ?></td>
                         <td><?= $list_po->no_refppo; ?></td>
-                        <td><?= date_format(date_create($list_po->tgl_refppo), "Y/m/d"); ?></td>
+                        <td><?= date_format(date_create($list_po->tgl_refppo), "d/m/Y"); ?></td>
                         <td><?= $list_po->ket; ?></td>
                         <td><?= $list_po->kode_supply; ?> - <?= $list_po->nama_supply ?></td>
                         <td><?= $list_po->kode_pemesan; ?> - <?= $list_po->pemesan ?></td>
@@ -113,13 +113,13 @@
                             <table border="1" id="tabelPO" class="singleborder" width="100%">
                                 <thead>
                                     <tr>
-                                        <td style="width:20%">Kode Barang</td>
-                                        <td style="width:20%">Nama Barang</td>
-                                        <td style="width:5%">Satuan</td>
-                                        <td style="width:8%">Kuantitas</td>
-                                        <td style="width:20%">Harga Satuan</td>
-                                        <td style="width:20%">Total</td>
-                                        <td style="width:7%">PPN 10%</td>
+                                        <th style="width:20%">Kode Barang</th>
+                                        <th style="width:20%">Nama Barang</th>
+                                        <th style="width:5%">Satuan</th>
+                                        <th style="width:8%">Kuantitas</th>
+                                        <th style="width:20%">Harga Satuan</th>
+                                        <th style="width:20%">Total</th>
+                                        <th style="width:7%">PPN 10%</th>
                                     </tr>
 
                                 </thead>

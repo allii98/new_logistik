@@ -250,12 +250,15 @@ class M_bpb extends CI_Model
             $noref_bpb = $this->input->post('hidden_no_ref_bpb');
         }
 
-        if (empty($this->input->post('hidden_mutasi_pt')) && empty($this->input->post('hidden_mutasi_lokal'))) {
-            $norefbpb = $noref_bpb;
-            $statusmutasi = 0;
-        } else {
+        if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
             $statusmutasi = 1;
             $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+        } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
+            $statusmutasi = 2;
+            $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+        } else {
+            $norefbpb = $noref_bpb;
+            $statusmutasi = 0;
         }
 
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();

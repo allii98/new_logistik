@@ -842,6 +842,8 @@ class Laporan extends CI_Controller
 		}
 		$query = "SELECT * FROM po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 AND bayar = 'CASH'";
 		$data['po'] = $this->db_logistik_pt->query($query)->result();
+		$po = $this->db_logistik_pt->query($query)->row();
+		$data['dikurangi_biayalain'] = $po->totalbayar - $po->biayalain;
 		$data['periode'] = $bulan . " " . $tahun;
 		$data['lokasi1'] = $lokasi1;
 		$data['lokasi'] = $lokasi;

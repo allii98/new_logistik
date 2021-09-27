@@ -147,12 +147,12 @@
                                     <div class="custom-control custom-checkbox ml-3 mt-0 col-1 ptmutasi">
                                         <input type="checkbox" name="mutasi_pt" class="custom-control-input" id="mutasi_pt" value="mutasi_pt">
                                         <label class="custom-control-label" for="mutasi_pt" style="font-size: 12px;">Mutasi PT?</label>
-                                        <input type="hidden" id="hidden_mutasi_pt">
+                                        <input type="text" id="hidden_mutasi_pt">
                                     </div>
                                     <div class="custom-control custom-checkbox ml-3 mt-0 col-3 lokalmutasi">
                                         <input type="checkbox" name="mutasi_lokal" class="custom-control-input" id="mutasi_lokal" value="mutasi_lokal">
                                         <label class="custom-control-label" for="mutasi_lokal" style="font-size: 12px;">Mutasi LOKAL?</label>
-                                        <input type="hidden" id="hidden_mutasi_lokal">
+                                        <input type="text" id="hidden_mutasi_lokal">
                                     </div>
 
                                 </div>

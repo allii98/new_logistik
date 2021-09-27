@@ -211,19 +211,19 @@ class M_laporan extends CI_Model
 
         switch ($cmb_company) {
             case '01':
-                $dev = "AND namapt LIKE '%(HO)%'";
+                $dev = "AND kode_dev = '01'";
                 break;
             case '02':
-                $dev = "AND namapt LIKE '%(RO)%'";
+                $dev = "AND kode_dev = '02'";
                 break;
             case '03':
-                $dev = "AND namapt LIKE '%(PKS)%'";
+                $dev = "AND kode_dev = '03'";
                 break;
             case '06':
-                $dev = "AND namapt LIKE '%ESTATE%'";
+                $dev = "AND kode_dev = '06'";
                 break;
             case '07':
-                $dev = "AND namapt LIKE '%ESTATE2%'";
+                $dev = "AND kode_dev = '07'";
                 break;
             default:
                 $dev = "";

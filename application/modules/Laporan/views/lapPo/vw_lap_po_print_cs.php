@@ -83,7 +83,12 @@
             </thead>
             <tbody>
                 <?php $no = 1;
-                foreach ($po as $list_po) { ?>
+                $ppn = 0;
+                foreach ($po as $list_po) {
+                    // $ppn = $pot_ppn_format = ($po->ppn == "10") ? number_format($dikurangi_biayalain * 0.1, 2, ",", ".") : "0";
+                    $ppn = $list_po->ppn;
+
+                ?>
                     <tr>
                         <td><?= $no++; ?></td>
                         <td><?= $list_po->noreftxt; ?></td>
