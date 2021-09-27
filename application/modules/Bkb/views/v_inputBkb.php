@@ -101,16 +101,21 @@
                     <div class="x_content div_form_2 mb-0">
                         <fieldset class="border mb-1 p-1">
                             <div class="row">
-                                <div class="custom-control custom-checkbox ml-3 mt-0 col-1">
+                                <div class="custom-control custom-checkbox ml-3 mt-0 col-3 col-lg-1 col-xl-1">
                                     <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
                                     <label class="custom-control-label" for="cexbox_mutasi" style="font-size: 12px;">Mutasi?</label>
                                     <input type="hidden" id="hidden_cekbox_mutasi" value="">
                                 </div>
-                                <div class="col-4">
+                                <div class="custom-control custom-checkbox mt-0 col-6 col-lg-1 col-xl-1">
+                                    <input type="checkbox" name="cexbox_mutasi_local" class="custom-control-input" id="cexbox_mutasi_local" onclick="cekbox_mutasi()">
+                                    <label class="custom-control-label" for="cexbox_mutasi_local" style="font-size: 12px;">Mutasi&nbsp;Lokal?</label>
+                                    <input type="hidden" id="hidden_cekbox_mutasi" value="">
+                                </div>
+                                <div class="col-6 col-lg-4 col-xl-4">
                                     <select class="form-control form-control-sm" id="pt_mutasi" onchange="pt_mutasi()" disabled style="font-size: 12px;">
                                     </select>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-6 col-lg-4 col-xl-4">
                                     <select class="form-control form-control-sm" id="devisi_mutasi" disabled style="font-size: 12px;">
                                     </select>
                                 </div>
@@ -131,13 +136,14 @@
                                 <input type="hidden" id="alokasi_est">
                                 <input type="hidden" id="hidden_norefbpb">
                                 <input type="hidden" id="hidden_id_mutasi">
+                                <input type="hidden" id="hidden_kode_pt_login" value="<?= $this->session->userdata('kode_pt_login'); ?>">
                                 <div class="row" style="margin-left:4px;">
                                     <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
                                     <h6><span id="h4_no_ref_bkb"></span></h6>
                                 </div>
                             </div>
                         </div>
-                        <div class="table-responsive">
+                        <div class="table-responsive div_form_2">
                             <table class="table table-striped table-bordered" id="tableRinciBKB" width="100%">
                                 <thead>
                                     <tr>
@@ -653,7 +659,7 @@
                 $('.div_form_2').show();
 
                 //cek mutasi
-                cek_mutasi(ketsub);
+                cek_mutasi(ketsub, data_bpb.kode_dev, data_bpb.status_mutasi);
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);
@@ -661,27 +667,68 @@
         });
     }
 
-    function cek_mutasi(ketsub) {
+    function cek_mutasi(ketsub, kode_dev, status_mutasi) {
 
         $('#cexbox_mutasi').removeAttr('checked', '');
+        $('#cexbox_mutasi_local').removeAttr('checked', '');
         $('#cexbox_mutasi').attr('disabled', '');
+        $('#cexbox_mutasi_local').attr('disabled', '');
         $('#devisi_mutasi').val('');
         $('#pt_mutasi').val('');
 
-        if (ketsub == 'PSAM, PT') {
+        var kode_pt_login = $('#hidden_kode_pt_login').val();
+
+        // 1 mutasi PT, 2 mutasi local
+        if (status_mutasi == 1) {
 
             $('#cexbox_mutasi').attr('checked', '');
             $('#cexbox_mutasi').attr('disabled', '');
             $('#devisi_mutasi').removeAttr('disabled', '');
-            var kode_pt = '02';
-            cari_pt_mutasi(kode_pt);
 
-        } else if (ketsub == 'MAPA, PT') {
-            $('#cexbox_mutasi').attr('checked', '');
-            $('#cexbox_mutasi').attr('disabled', '');
-            $('#devisi_mutasi').removeAttr('disabled', '');
-            var kode_pt = '04';
-            cari_pt_mutasi(kode_pt);
+            // baru PSAM, MAPA
+            if (ketsub == 'PSAM, PT') {
+                var kode_pt = '02';
+                cari_pt_mutasi(kode_pt);
+
+            } else if (ketsub == 'MAPA, PT') {
+                var kode_pt = '04';
+                cari_pt_mutasi(kode_pt);
+            }
+        } else if (status_mutasi == 2) {
+            $('#cexbox_mutasi_local').attr('checked', '');
+            $('#cexbox_mutasi_local').attr('disabled', '');
+            $('#devisi_mutasi_local').removeAttr('disabled', '');
+
+            var str = ketsub.substring(23);
+            console.log(str);
+            if (str == 'EST 1 <> EST 2') {
+                // jika kode_dev == 06 berarti est1 > est2
+                if (kode_dev == '06') {
+                    var kode_devisi_mutasi = '07';
+                } else if (kode_dev == '07') {
+                    var kode_devisi_mutasi = '06';
+                }
+                cari_pt_mutasi(kode_pt_login, kode_devisi_mutasi, status_mutasi);
+            } else if (str == 'EST 1 <> PKS') {
+                // jika kode_dev == 06 berarti est1 > PKS
+                if (kode_dev == '06') {
+                    var kode_devisi_mutasi = '03';
+                } else if (kode_dev == '03') {
+                    var kode_devisi_mutasi = '06';
+                }
+                cari_pt_mutasi(kode_pt_login, kode_devisi_mutasi, status_mutasi);
+            } else if (str == 'EST 2 <> PKS') {
+                // jika kode_dev == 06 berarti est1 > PKS
+                if (kode_dev == '07') {
+                    var kode_devisi_mutasi = '03';
+                } else if (kode_dev == '03') {
+                    var kode_devisi_mutasi = '07';
+                }
+                cari_pt_mutasi(kode_pt_login, kode_devisi_mutasi, status_mutasi);
+            } else {
+                swal('coa mutasi lokal tersebut belum bisa digunakan!');
+                $('.div_form_2').css('pointer-events', 'none');
+            }
         }
     }
 
@@ -840,6 +887,10 @@
         var devisi_mutasi = $('#devisi_mutasi').val();
 
         if ($('#cexbox_mutasi').is(':checked')) {
+            var cexbox_mutasi = '1';
+        }
+
+        if ($('#cexbox_mutasi_local').is(':checked')) {
             var cexbox_mutasi = '1';
         }
 
@@ -1049,7 +1100,7 @@
         }
     }
 
-    function cari_pt_mutasi(kode_pt) {
+    function cari_pt_mutasi(kode_pt, kode_devisi_mutasi, status_mutasi) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/cari_pt_mutasi'); ?>",
@@ -1070,9 +1121,7 @@
                 $('#pt_mutasi').html(html);
 
                 //menjalankan jquery get divisi mutasi
-
-                //terakhir sudah jalan jquery nya tapi masih muncul eror
-                pt_mutasi();
+                pt_mutasi(kode_pt, kode_devisi_mutasi, status_mutasi);
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);
@@ -1080,8 +1129,8 @@
         });
     }
 
-    function pt_mutasi() {
-        var kode_pt = $('#pt_mutasi').val();
+    function pt_mutasi(kode_pt, kode_devisi_mutasi, status_mutasi) {
+        // var kode_pt = $('#pt_mutasi').val();
 
         $.ajax({
             type: "POST",
@@ -1098,9 +1147,19 @@
                 var html = '';
                 var i;
                 html += '<option disabled selected>Pilih Divisi</option>';
-                for (i = 0; i < data.length; i++) {
-                    html += '<option value=' + data[i].kodetxt + '>' + data[i].kodetxt + ' - ' + data[i].PT + '</option>';
+                if (status_mutasi == 2) {
+                    //mutasi lokal selected from coa
+                    for (i = 0; i < data.length; i++) {
+                        if (data[i].kodetxt == kode_devisi_mutasi) {
+                            html += '<option value=' + data[i].kodetxt + ' selected>' + data[i].kodetxt + ' - ' + data[i].PT + '</option>';
+                        }
+                    }
+                } else {
+                    for (i = 0; i < data.length; i++) {
+                        html += '<option value=' + data[i].kodetxt + '>' + data[i].kodetxt + ' - ' + data[i].PT + '</option>';
+                    }
                 }
+
                 $('#devisi_mutasi').html(html);
             },
             error: function(response) {
@@ -1178,6 +1237,12 @@
             var cexbox_mutasi = '0';
         }
 
+        if ($('#cexbox_mutasi_local').is(':checked')) {
+            var cexbox_mutasi = '1';
+        } else {
+            var cexbox_mutasi = '0';
+        }
+
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/hapusItemBkb'); ?>",
@@ -1236,6 +1301,12 @@
     function hapusBkb(n) {
 
         if ($('#cexbox_mutasi').is(':checked')) {
+            var cexbox_mutasi = '1';
+        } else {
+            var cexbox_mutasi = '0';
+        }
+
+        if ($('#cexbox_mutasi_local').is(':checked')) {
             var cexbox_mutasi = '1';
         } else {
             var cexbox_mutasi = '0';
