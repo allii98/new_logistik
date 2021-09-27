@@ -3,151 +3,146 @@
         <div class="row col-lg-6 col-xl-6 col-12">
             <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
-                    <div class="row">
+                    <div style="margin-top: -20px;">
+                        <h4><span class="badge bg-blue p-2 text-white">SPP</span></h4>
+                    </div>
+                    <div class="row" style="margin-bottom: -10px;">
                         <div class="col-3">
-                            <div class="avatar-sm bg-blue rounded">
+                            <!-- <div class="avatar-sm bg-blue rounded">
                                 <i class="fe-file avatar-title font-22 text-white"></i>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Spp'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp_approved'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
+                        <div class="col-3" style="margin-top: -50px;">
+                            <a href="<?= base_url('Spp'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_spp_approved'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Approved</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Spp/sppApproval'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_spp'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
+                        <div class="col-3" style="margin-top: -50px;">
+                            <a href="<?= base_url('Spp/sppApproval'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_spp'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Menunggu</p>
                             </a>
                         </div>
-                    </div>
-                    <div class="mt-1">
-                        <h4 class="text-uppercase" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">SPP</h4>
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
 
             <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
-                    <div class="row">
+                    <div style="margin-top: -20px;">
+                        <h4><span class="badge bg-success p-2 text-white">PO</span></h4>
+                    </div>
+                    <div class="row" style="margin-bottom: -10px;">
                         <div class="col-3">
-                            <div class="avatar-sm bg-success rounded">
+                            <!-- <div class="avatar-sm bg-success rounded">
                                 <i class="fe-clipboard avatar-title font-22 text-white"></i>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-4"></div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Po'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_po'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                        <div class="col-3 ml-4" style="margin-top: -50px;">
+                            <a href="<?= base_url('Po'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_po'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Total</p>
                             </a>
                         </div>
-                    </div>
-                    <div class="mt-1">
-                        <h4 class="text-uppercase" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PO</h4>
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
             <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
-                    <div class="row">
+                    <div style="margin-top: -20px;">
+                        <h4><span class="badge bg-warning p-2 text-white">PP</span></h4>
+                    </div>
+                    <div class="row" style="margin-bottom: -10px;">
                         <div class="col-3">
-                            <div class="avatar-sm bg-warning rounded">
+                            <!-- <div class="avatar-sm bg-warning rounded">
                                 <i class="fe-credit-card  avatar-title font-22 text-white"></i>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-4"></div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Pp'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_pp'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                        <div class="col-3 ml-4" style="margin-top: -50px;">
+                            <a href="<?= base_url('Pp'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_pp'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Total</p>
                             </a>
                         </div>
-                    </div>
-                    <div class="mt-1">
-                        <h4 class="text-uppercase" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">PP</h4>
-                        <!-- <div class="progress progress-sm m-0">
-                        <div class="progress-bar bg-warning" role="progressbar" aria-valuenow="18" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                            <span class="sr-only">18% Complete</span>
-                        </div>
-                    </div> -->
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
             <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
-                    <div class="row">
+                    <div style="margin-top: -20px;">
+                        <h4><span class="badge bg-info p-2 text-white">LPB</span></h4>
+                    </div>
+                    <div class="row" style="margin-bottom: -10px;">
                         <div class="col-3">
-                            <div class="avatar-sm bg-info rounded">
+                            <!-- <div class="avatar-sm bg-info rounded">
                                 <i class="fe-plus-square avatar-title font-22 text-white"></i>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="col-4"></div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Lpb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_lpb'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                        <div class="col-3 ml-4" style="margin-top: -50px;">
+                            <a href="<?= base_url('Lpb'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_lpb'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Total</p>
                             </a>
                         </div>
-                    </div>
-                    <div class="mt-1">
-                        <h4 class="text-uppercase" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">LPB</h4>
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
             <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
-                    <div class="row">
+                    <div style="margin-top: -20px;">
+                        <h4><span class="badge bg-secondary p-2 text-white">BPB</span></h4>
+                    </div>
+                    <div class="row" style="margin-bottom: -10px;">
                         <div class="col-3">
-                            <div class="avatar-sm bg-secondary rounded">
+                            <!-- <div class="avatar-sm bg-secondary rounded">
                                 <i class="fe-file-text avatar-title font-22 text-white"></i>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Bpb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb_approved'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Approved</p>
+                        <div class="col-3" style="margin-top: -50px;">
+                            <a href="<?= base_url('Bpb'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_bpb_approved'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Approved</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Bpb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bpb'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Menunggu</p>
+                        <div class="col-3" style="margin-top: -50px;">
+                            <a href="<?= base_url('Bpb'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_bpb'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Menunggu</p>
                             </a>
                         </div>
-                    </div>
-                    <div class="mt-1">
-                        <h4 class="text-uppercase" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BPB</h4>
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
             <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card-box">
-                    <div class="row">
+                    <div style="margin-top: -20px;">
+                        <h4><span class="badge bg-danger p-2 text-white">BKB</span></h4>
+                    </div>
+                    <div class="row" style="margin-bottom: -10px;">
                         <div class="col-3">
-                            <div class="avatar-sm bg-danger rounded">
+                            <!-- <div class="avatar-sm bg-danger rounded">
                                 <i class="fe-truck avatar-title font-22 text-white"></i>
-                            </div>
+                            </div> -->
                         </div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Bkb'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Total</p>
+                        <div class="col-3 ml-2" style="margin-top: -50px;">
+                            <a href="<?= base_url('Bkb'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_bkb'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Total</p>
                             </a>
                         </div>
                         <div class="col-1"></div>
-                        <div class="col-3">
-                            <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="btn btn-white btn-rounded waves-effect">
-                                <h3 class="text-dark" style="font-family: Verdana, Geneva, Tahoma, sans-serif;"><span data-plugin="counterup"><?= $count['count_bkb_rev_qty'] ?></span></h3>
-                                <p class="text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">Rev&nbsp;QTY</p>
+                        <div class="col-3" style="margin-top: -50px;">
+                            <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                                <h3 class="text-dark"><span><?= $count['count_bkb_rev_qty'] ?></span></h3>
+                                <p class="text-muted" style="font-size:small">Rev&nbsp;QTY</p>
                             </a>
                         </div>
-                    </div>
-                    <div class="mt-1">
-                        <h4 class="text-uppercase" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">BKB</h4>
                     </div>
                 </div> <!-- end card-box-->
             </div> <!-- end col -->
@@ -247,7 +242,7 @@
         table = $('#tabel_mutasi').DataTable({
 
 
-            // "scrollY": 300,
+            // "scrollY": 221,
             "scrollX": true,
 
             "processing": true,
