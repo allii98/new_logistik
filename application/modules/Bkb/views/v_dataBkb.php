@@ -27,13 +27,13 @@
                     <table id="tableListBKB" class="table table-sm table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
-                                <th width="13%" style="font-size: 12px; padding:10px">#</th>
+                                <th width="14%" style="font-size: 12px; padding:10px">#</th>
                                 <th width="3%" style="font-size: 12px; padding:10px">No.</th>
-                                <th width="8%" style="font-size: 12px; padding:10px">Tgl BKB</th>
+                                <th width="9%" style="font-size: 12px; padding:10px">Tgl BKB</th>
                                 <th width="17%" style="font-size: 12px; padding:10px">No. Ref BKB</th>
                                 <th width="17%" style="font-size: 12px; padding:10px">No. Ref BPB</th>
                                 <th width="10%" style="font-size: 12px; padding:10px">No Mutasi</th>
-                                <th width="10%" style="font-size: 12px; padding:10px">Bagian</th>
+                                <th width="8%" style="font-size: 12px; padding:10px">Bagian</th>
                                 <th width="15%" style="font-size: 12px; padding:10px">Keperluan</th>
                                 <th width="12%" style="font-size: 12px; padding:10px">Petugas</th>
                             </tr>

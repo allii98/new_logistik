@@ -723,7 +723,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                         if ($.trim($('#hidden_no_lpb').val()) == '') {
                               $('#lbl_lpb_status').empty();
-                              $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate PO Number</label>');
+                              $('#lbl_lpb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Generate LPB Number</label>');
                         }
                   },
 
