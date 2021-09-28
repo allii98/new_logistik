@@ -60,9 +60,15 @@ if ($po->lokasi == 'HO') {
 </head>
 
 <body>
-    <table width="100%" border="0" align="left">
+    <table width="100%" border="0" align="left" valign>
         <tr>
-            <td align="left" style="font-size:14px;font-weight:bold;"><?= $nama_pt  . '&nbsp;(' . $po->lokasi . ')' ?></td>
+            <td align="left" style="font-size:14px;font-weight:bold;" valign="top"><?= $nama_pt  . '&nbsp;(' . $po->lokasi . ')' ?></td>
+            <td rowspan="2" width="12%" align="right"><img width="5%" height="5%" src="./assets/qrcode/pp/<?= $qrcode; ?>"></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <h3 style="text-align: center;text-decoration: underline;">PERMOHONAN PEMBAYARAN</h3>
+            </td>
         </tr>
     </table>
     <!-- <table width="100%" border="0">
@@ -75,7 +81,7 @@ if ($po->lokasi == 'HO') {
             </td>
         </tr>
     </table> -->
-    <h3 style="text-align: center;text-decoration: underline;">PERMOHONAN PEMBAYARAN</h3>
+
     <!-- <hr style="text-align: center;"> -->
     <table class="singleborder" border="0" width="100%">
         <tr>

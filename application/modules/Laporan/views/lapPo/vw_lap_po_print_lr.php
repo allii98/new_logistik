@@ -42,7 +42,7 @@
     ?>
     <div style="text-align: center; ">
 
-        <table border="0" class="center" style="margin-top: -1%;">
+        <table border="0" class="center" style="margin-top: 0%;">
             <tr>
                 <td style="text-align: center;" colspan="3">
                     <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%;">REGISTER PURCHASE ORDER (PO)</h3>
@@ -59,7 +59,7 @@
                 <td><?= date("d/m/Y"); ?></td>
             </tr>
         </table>
-        <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By MIPS</small></p>
+        <!-- <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>By MIPS</small></p> -->
         <hr>
         <hr>
         <table border="0" class="center" width="100%">
@@ -109,21 +109,36 @@
                                         <td style="text-align: right;">Harga Satuan</td>
                                         <td style="text-align: right;">Total</td>
                                         <td style="text-align: right;">PPN 10%</td>
+                                        <td style="text-align: right;">PPH</td>
                                     </tr>
                                     <tr>
-                                        <td colspan="7">
+                                        <td colspan="8">
                                             <hr>
                                         </td>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $totbay = 0;
+                                    $ppn = 0;
+                                    $jml_pph = 0;
+                                    $biayalain = 0;
                                     $total = 0;
                                     $noref = "'" . $list_po->noreftxt . "'";
                                     $query = "SELECT * FROM item_po WHERE batal = '0' $lokasi  AND noref = $noref";
                                     $item_po = $this->db_logistik_pt->query($query)->result();
                                     foreach ($item_po as $list_item_po) {
                                         $total = $total + (($list_item_po->harga) * $list_item_po->qty);
+
+                                        $totbay = $list_po->totalbayar;
+                                        $dikurangi_biayalain = $totbay;
+                                        $ppn = ($list_po->ppn == "10") ? $dikurangi_biayalain * 0.1 : "0";
+                                        $jml_pph = $list_po->pph / 100;
+
+
+                                        $qty_harga = $list_item_po->qty * $list_item_po->harga;
+                                        $disc = $list_item_po->disc / 100;
+                                        $jumharga_pre = $qty_harga - ($qty_harga * $disc);
                                     ?>
                                         <tr>
                                             <td><?= $list_item_po->kodebar; ?></td>
@@ -132,19 +147,20 @@
                                             <td><?= $list_item_po->qty; ?></td>
                                             <td style="text-align: right;">Rp <?= number_format($list_item_po->harga, 2); ?></td>
                                             <td style="text-align: right;">Rp <?= number_format((($list_item_po->harga) * $list_item_po->qty), 2); ?></td>
-                                            <td style="text-align: right;">Rp 0.00</td>
+                                            <td style="text-align: right;">Rp <?= number_format($ppn, 2); ?></td>
+                                            <td style="text-align: right;">Rp <?= number_format($jml_pph, 2); ?></td>
                                         </tr>
                                     <?php } ?>
                                     <tr>
                                         <td colspan="5"></td>
-                                        <td colspan="2">
+                                        <td colspan="3">
                                             <hr>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td colspan="5"></td>
+                                        <td colspan="6"></td>
                                         <td>Total PO:</td>
-                                        <td style="text-align: right;">Rp <?= number_format($total, 2) ?></td>
+                                        <td style="text-align: right;">Rp <?= number_format($jumharga_pre + $ppn + $jml_pph, 2) ?></td>
                                     </tr>
                                 </tbody>
                             </table>

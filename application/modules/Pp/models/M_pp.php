@@ -393,7 +393,7 @@ class M_pp extends CI_Model
     {
 
         $id_pp = $this->input->post('id_pp');
-        $nopp = $this->input->post('hidden_no_po');
+        $nopo = $this->input->post('hidden_no_po');
         $tglpp = date("Y-m-d H:i:s", strtotime($this->input->post('txt_tgl_pp')));
         $tglpptxt = date("Ymd", strtotime($this->input->post('txt_tgl_pp')));
         $tglpo = date("Y-m-d H:i:s", strtotime($this->input->post('txt_tgl_po')));
@@ -455,9 +455,18 @@ class M_pp extends CI_Model
         $data_pp['grup']            = $this->input->post('hidden_grup');
         $data_pp['batal']           = "0";
 
+
         $this->db_logistik_pt->where('id', $id_pp);
-        // $this->db_logistik_pt->where('nopptxt', $nopp);
         $this->db_logistik_pt->update('pp', $data_pp);
+
+        $refpo = $this->input->post('txt_no_ref_po');
+        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp where ref_po = '$refpo'";
+        $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
+
+        $data_po['terbayar'] = $get_jumlah_sudah_bayar->kasir_bayar;
+        $this->db_logistik_pt->where('nopo', $this->input->post('hidden_no_po'));
+        $this->db_logistik_pt->where('noreftxt', $this->input->post('txt_no_ref_po'));
+        $this->db_logistik_pt->update('po', $data_po);
 
         if ($this->db_logistik_pt->affected_rows() > 0) {
             $bool_pp = TRUE;

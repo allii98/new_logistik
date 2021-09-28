@@ -54,7 +54,6 @@
     </div>
     <div style="text-align: left; padding-left: 3px; font-size: 12px;">
         <h3 style="font-size:10px;font-weight:normal;margin-bottom: 0%; ">PERIODE : <?= date_format(date_create($tanggal1), "d/m/Y") . " - " . date_format(date_create($tanggal2), "d/m/Y"); ?></h3>
-
     </div>
     <?php
     foreach ($tgl as $list_tgl) { ?>
@@ -63,7 +62,7 @@
             <thead>
                 <tr>
                     <td style="text-align: left;"><b> Tgl LPB : <?= date_format(date_create($list_tgl->tgl), 'd M Y'); ?></b></td>
-                    <!-- <td style="text-align: right;"><i>By System MIPS</i></td> -->
+                    <td style="text-align: right;"><i>By System MIPS (<?= date("d-m-Y H:i:s"); ?>)</i></td>
                 </tr>
             </thead>
         </table>

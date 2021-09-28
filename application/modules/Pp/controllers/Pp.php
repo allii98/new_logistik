@@ -285,7 +285,7 @@ class Pp extends CI_Controller
 
         $id = $this->uri->segment('4');
 
-        // $this->qrcode($no_pp, $id);
+        $this->qrcode($no_pp, $id);
 
         $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('ref_pp' => $no_pp, 'id' => $id))->row();
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $data['data_pp']->ref_po))->row();
@@ -313,11 +313,13 @@ class Pp extends CI_Controller
             // $this->db_logistik_pt->insert('po', $ins);
         }
 
+        $data['qrcode'] = 'BPB-' . $id . '.png';
+
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4',
             // 'format' => [190, 236],
-            'margin_top' => '0',
+            'margin_top' => '2',
             'margin_left' => '3',
             'margin_right' => '3',
             'orientation' => 'P'
@@ -331,14 +333,14 @@ class Pp extends CI_Controller
         $mpdf->Output();
     }
 
-    private function qrcode($no_pp, $id)
+    function qrcode($no_pp, $id)
     {
         $this->load->library('ciqrcode');
         // header("Content-Type: image/png");
 
         $config['cacheable']    = false; //boolean, the default is true
-        $config['cachedir']     = './assets/qrcode/cache/'; //string, the default is application/cache/
-        $config['errorlog']     = './assets/qrcode/errorlog/'; //string, the default is application/logs/
+        $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        $config['errorlog']     = './assets/'; //string, the default is application/logs/
         $config['imagedir']     = './assets/qrcode/pp/'; //direktori penyimpanan qr code
         $config['quality']      = true; //boolean, the default is true
         $config['size']         = '1024'; //interger, the default is 1024
@@ -346,9 +348,9 @@ class Pp extends CI_Controller
         $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
         $this->ciqrcode->initialize($config);
 
-        $image_name = $id . '_' . $no_pp . '.png'; //buat name dari qr code
+        $image_name = 'BPB-' . $id . '.png'; //buat name dari qr code
 
-        $params['data'] = site_url('Pp/cetak/' . $no_pp . '/' . $id); //data yang akan di jadikan QR CODE
+        $params['data'] = $no_pp; //data yang akan di jadikan QR CODE
         $params['level'] = 'H'; //H=High
         $params['size'] = 10;
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder

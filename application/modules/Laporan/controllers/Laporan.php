@@ -428,6 +428,7 @@ class Laporan extends CI_Controller
 			'mode' => 'utf-8',
 			'format' => 'A4',
 			'margin_top' => '2',
+
 			'orientation' => 'P'
 		]);
 		// $mpdf->SetHTMLHeader('<h3>' . $this->session->userdata('pt') . '</h3><h6>JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>');
@@ -436,9 +437,9 @@ class Laporan extends CI_Controller
 		$mpdf->Output();
 		// var_dump($query);
 
-		echo "<pre>";
-		print_r($data);
-		echo "</pre>";
+		// echo "<pre>";
+		// print_r($data);
+		// echo "</pre>";
 	}
 
 	function print_lap_spp_register()

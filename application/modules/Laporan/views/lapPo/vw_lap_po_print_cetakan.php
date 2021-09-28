@@ -132,7 +132,7 @@ $nama_pt = $this->session->userdata('nama_pt');
         <tr>
             <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
         <tr>
-            <td align="left" style="font-size:8.5px;">
+            <td align="left" style="font-size:8.5px;" valign="top">
                 <h3 style="font-size:14px;font-weight:bold;"> <?= $po->devisi ?> </h3>
                 <?= $alamat_lok ?>
             </td>
@@ -215,9 +215,12 @@ $nama_pt = $this->session->userdata('nama_pt');
             <td width="58%" style="padding:5px;">
                 Kepada YTH,<br />
                 <?= $supplier->supplier; ?><br />
-                <?= $alamat_supplier; ?><br />
-                Tlp. <?= $tlp_supplier; ?><br />
-                Fax. <?= $fax_supplier; ?><br />
+                <?php if ($this->session->userdata('status_lokasi') != 'HO') { ?>
+                <?php } else { ?>
+                    <?= $alamat_supplier; ?><br />
+                    Tlp. <?= $tlp_supplier; ?><br />
+                    Fax. <?= $fax_supplier; ?><br />
+                <?php } ?>
             </td>
             <td width="60%" style="padding:5px;">
                 <br />
@@ -261,11 +264,17 @@ $nama_pt = $this->session->userdata('nama_pt');
                     <td class="noborder2" align="left"><?= $list_item->nabar; ?></td>
                     <td class="noborder2" align="left"><?= htmlspecialchars($list_item->merek); ?></td>
                     <td class="noborder" rowspan="2" align="center">-</td>
-                    <td class="noborder" rowspan="2" align="center"><?= $list_item->qty; ?></td>
+                    <td class="noborder" rowspan="2" align="center"><?= number_format($list_item->qty, 2, ",", "."); ?></td>
                     <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
-                    <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
-                    <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($jumharga_pre, 2, ",", "."); ?></td>
+                    <?php if ($this->session->userdata('status_lokasi') != 'HO') { ?>
+                        <td class="noborder" rowspan="2" align="right"></td>
+                        <td class="noborder" rowspan="2" align="center">0</td>
+                        <td class="noborder" rowspan="2" colspan="2" align="right"></td>
+                    <?php } else { ?>
+                        <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
+                        <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
+                        <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($jumharga_pre, 2, ",", "."); ?></td>
+                    <?php } ?>
                 </tr>
                 <tr>
                     <td style="border: none;" colspan="3" rowspan="1">*<?= htmlspecialchars($list_item->ket); ?></td>
@@ -281,57 +290,111 @@ $nama_pt = $this->session->userdata('nama_pt');
     </table>
 
     <table border="1" class="singleborder" width="100%">
-        <tr>
-            <td colspan="7" width="399" rowspan="6" valign="top">
-                <b>Keterangan : </b><br />
-                <?= htmlspecialchars($po->ket); ?>
-                <!-- Nama Pemilik : <br />
-          No. Rekening : <br />
-          Uang Muka    : <br /> -->
-            </td>
-            <td colspan="2">SUB TOTAL</td>
-            <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
-        </tr>
-        <tr>
-            <td colspan="2">PPN 10%</td>
-            <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
-        </tr>
-        <tr>
-            <td colspan="2">PPH</td>
-            <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
-        </tr>
-        <tr>
-            <td colspan="2">Biaya Lainnya</td>
-            <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
-        </tr>
-        <tr>
-            <td colspan="2"><?= join(", ", $nama_bebanbpo); ?></td>
-            <td colspan="3"></td>
-        </tr>
-        <tr>
-            <td colspan="2">GRAND TOTAL</td>
-            <td colspan="3" align="right">
+        <?php if ($this->session->userdata('lokasi') != 'HO') { ?>
+            <tr>
+                <td colspan="7" width="399" rowspan="6" valign="top">
+                    <b>Keterangan : </b><br />
+                    <?= htmlspecialchars($po->ket); ?>
+                    <!-- Nama Pemilik : <br />
+              No. Rekening : <br />
+              Uang Muka    : <br /> -->
+                </td>
+                <td colspan="2">SUB TOTAL</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. </td>
+            </tr>
+            <tr>
+                <td colspan="2">PPN 10%</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. </td>
+            </tr>
+            <tr>
+                <td colspan="2">PPH</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. </td>
+            </tr>
+            <tr>
+                <td colspan="2">Biaya Lainnya</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. </td>
+            </tr>
+            <tr>
+                <td colspan="2"><?= join(", ", $nama_bebanbpo); ?></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td colspan="2">GRAND TOTAL</td>
+                <td colspan="3" align="right">
+                    <?php
+                    $isi = $po->totalbayar + $pot_ppn + $hit_pph;
+                    $hasil = round($isi);
+                    ?>
+                    <br />
+                    <?= $list_item->kurs; ?>.
+                </td>
+            </tr>
+            <tr>
                 <?php
-                $isi = $po->totalbayar + $pot_ppn + $hit_pph;
-                $hasil = round($isi);
-                ?>
-                <br />
-                <?= $list_item->kurs; ?>. <?= number_format($hasil, 2, ",", "."); ?>
-            </td>
-        </tr>
-        <tr>
-            <?php
-            $total = $po->totalbayar + $pot_ppn + $hit_pph;
-            // var_dump("iyayayay".$total);exit();
-            $jumlah = round($total);
+                $total = $po->totalbayar + $pot_ppn + $hit_pph;
+                // var_dump("iyayayay".$total);exit();
+                $jumlah = round($total);
 
-            $kur = $list_item->kurs;
-            if ($kur == "Rp") {
-                $kurs = "Rupiah";
-            }
-            ?>
-            <td colspan="7"><b>Terbilang : <?= terbilang($jumlah, $style = 3) . '&nbsp;' . $kurs ?></b></td>
-        </tr>
+                $kur = $list_item->kurs;
+                if ($kur == "Rp") {
+                    $kurs = "Rupiah";
+                }
+                ?>
+                <td colspan="7"><b>Terbilang : </b></td>
+            </tr>
+        <?php } else { ?>
+            <tr>
+                <td colspan="7" width="399" rowspan="6" valign="top">
+                    <b>Keterangan : </b><br />
+                    <?= htmlspecialchars($po->ket); ?>
+                    <!-- Nama Pemilik : <br />
+              No. Rekening : <br />
+              Uang Muka    : <br /> -->
+                </td>
+                <td colspan="2">SUB TOTAL</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
+            </tr>
+            <tr>
+                <td colspan="2">PPN 10%</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
+            </tr>
+            <tr>
+                <td colspan="2">PPH</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
+            </tr>
+            <tr>
+                <td colspan="2">Biaya Lainnya</td>
+                <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
+            </tr>
+            <tr>
+                <td colspan="2"><?= join(", ", $nama_bebanbpo); ?></td>
+                <td colspan="3"></td>
+            </tr>
+            <tr>
+                <td colspan="2">GRAND TOTAL</td>
+                <td colspan="3" align="right">
+                    <?php
+                    $isi = $po->totalbayar + $pot_ppn + $hit_pph;
+                    $hasil = round($isi);
+                    ?>
+                    <br />
+                    <?= $list_item->kurs; ?>. <?= number_format($hasil, 2, ",", "."); ?>
+                </td>
+            </tr>
+            <tr>
+                <?php
+                $total = $po->totalbayar + $pot_ppn + $hit_pph;
+                // var_dump("iyayayay".$total);exit();
+                $jumlah = round($total);
+
+                $kur = $list_item->kurs;
+                if ($kur == "Rp") {
+                    $kurs = "Rupiah";
+                }
+                ?>
+                <td colspan="7"><b>Terbilang : <?= terbilang($jumlah, $style = 3) . '&nbsp;' . $kurs ?></b></td>
+            </tr>
+        <?php } ?>
     </table>
 
     <table border="1" class="singleborder" width="100%">

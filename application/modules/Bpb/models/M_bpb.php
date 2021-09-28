@@ -200,35 +200,37 @@ class M_bpb extends CI_Model
         }
 
         $sess_lokasi = $this->session->userdata('status_lokasi');
+        $kode_devisi = $this->input->post('devisi');
+        $dig_1 = preg_replace("/[^1-9]/", "", $kode_devisi);
 
         if ($sess_lokasi == "HO") {
             $text1 = "PST";
             $text2 = "BWJ";
-            $dig_1 = "1";
+            // $dig_1 = "1";
             $dig_2 = "1";
         } else if ($sess_lokasi == "SITE") {
             $text1 = "EST";
             $text2 = "SWJ";
-            $dig_1 = "6";
-            $dig_2 = "6";
+            // $dig_1 = "6";
+            $dig_2 = "2";
         } else if ($sess_lokasi == "RO") {
             $text1 = "ROM";
             $text2 = "PKY";
-            $dig_1 = "2";
+            // $dig_1 = "2";
             $dig_2 = "2";
         } else if ($sess_lokasi == "PKS") {
             $text1 = "FAC";
             $text2 = "SWJ";
-            $dig_1 = "3";
-            $dig_2 = "3";
+            // $dig_1 = "3";
+            $dig_2 = "2";
         }
 
         $digit = $dig_1 . $dig_2;
 
         // $ym = date("ym");
-
+        $hitung_digit1_2 = strlen($digit);
         // $query_bpb = "SELECT MAX(SUBSTRING(nobpb, 5)) as max_nobpb from bpb WHERE nobpb LIKE '$ym%'";
-        $query_bpb = "SELECT MAX(SUBSTRING(nobpb, 5)) as max_nobpb from bpb WHERE nobpb LIKE '$digit%'";
+        $query_bpb = "SELECT MAX(SUBSTRING(nobpb, $hitung_digit1_2+1)) as max_nobpb from bpb WHERE nobpb LIKE '$digit%'";
         // var_dump($query_bpb);exit();
         $generate_bpb = $this->db_logistik_pt->query($query_bpb)->row();
         $noUrut_bpb = (int)($generate_bpb->max_nobpb);

@@ -9,7 +9,7 @@
                         <h4 class="header-title ml-2"><?= $title; ?></h4>
                         <div class="button-list mr-2">
                             <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="update">Update</button>
-                            <button type="button" onclick="new_bpb()" class="btn btn-xs btn-success" id="pp_baru">PP Baru</button>
+                            <button type="button" onclick="new_pp()" class="btn btn-xs btn-success" id="pp_baru">PP Baru</button>
                             <button type="button" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
                             <button type="button" onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -18,6 +18,7 @@
                     <div class="row">
                         <div class="col-lg-4 col-xl-4 col-12">
                             <input type="hidden" id="hidden_no_pp" name="hidden_no_pp">
+                            <!-- <input type="hidden" id="hidden_no_po" name="hidden_no_po"> -->
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="txt_no_ref_po" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                     Ref&nbsp;PO&nbsp;
@@ -139,7 +140,8 @@
                                 </label>
 
                                 <div class="col-9 col-xl-12">
-                                    <input id="txt_jumlah" name="txt_jumlah" class="form-control form-control-sm" required="required" type="number" placeholder="Jumlah" onkeyup="getTerbilang()">
+                                    <input id="txt_jumlah" name="txt_jumlah" class="form-control form-control-sm" required="required" type="text" placeholder="Jumlah" onkeyup="getTerbilang()">
+                                    <input type="hidden" name="terbayar_po" id="terbayar_po">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -305,6 +307,15 @@
 </style>
 
 <script>
+    function new_pp() {
+        location.h
+        ref = "<?php echo base_url('Pp/input') ?>";
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+
     function cetak() {
         var id_po = '<?php echo $this->uri->segment('3'); ?>';
         var noref = '<?php echo $this->uri->segment('4'); ?>';
@@ -314,13 +325,14 @@
         window.open('<?= base_url() ?>Pp/cetak/' + noref + '/' + id_po, '_blank');
     }
     $(document).ready(function() {
-        scanner.stop();
+        $('#txt_pajak,#txt_nilai_bpo1,#txt_nilai_bpo2').number(true);
+        $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar,#txt_jumlah').number(true);
         $(".nav-link").click(function() {
             $(".nav-link").removeClass("active");
             $(this).addClass("active");
             var jenis = $(this).attr('at');
             if (jenis != 'po') {
-                scanner.start();
+                // scanner.start();
                 $('#preview').show();
                 $(".modal-dialog").removeClass("modal-full-width");
                 $(".modal-dialog").addClass("modal-md");
@@ -332,7 +344,7 @@
                 $("#kamera2").css('display', 'block');
             } else {
                 $('#preview').hide();
-                scanner.stop();
+                // scanner.stop();
                 $(".modal-dialog").removeClass("modal-md");
                 $(".modal-dialog").addClass("modal-full-width");
                 $("#judulpo").css('display', 'block');
@@ -343,7 +355,6 @@
                 $("#kamera2").css('display', 'none');
             }
         });
-        $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar').number(true, 2);
         var id = '<?php echo $this->uri->segment('3'); ?>';
 
         $.ajax({
@@ -400,6 +411,7 @@
                 $('#txt_sudah_dibayar').val(data.sudah_bayar);
                 $('#txt_dibayar_ke').val(data.data_pp.kepada);
                 $('#txt_jumlah').val(data.data_pp.jumlah);
+                $('#jumlah').val(data.data_pp.jumlah);
                 $('#txt_terbilang').val(data.data_pp.terbilang);
                 $('#txt_keterangan').val(data.data_pp.ket);
                 $('#hidden_main_account').val(data.data_pp.main_account);
@@ -431,37 +443,37 @@
     });
 
     //untuk scan
-    let scanner = new Instascan.Scanner({
-        video: document.getElementById('preview')
-    });
-    scanner.addListener('scan', function(content) {
-        $('#preview').hide();
-        scanner.stop();
-    });
-    Instascan.Camera.getCameras().then(function(cameras) {
-        if (cameras.length > 0) {
-            scanner.start(cameras[0]);
-            $('[name="putar_camera"]').on('change', function() {
-                if ($(this).val() == 1) {
-                    if (cameras[0] != "") {
-                        scanner.start(cameras[0]);
-                    } else {
-                        alert('No Front camera found!');
-                    }
-                } else if ($(this).val() == 2) {
-                    if (cameras[1] != "") {
-                        scanner.start(cameras[1]);
-                    } else {
-                        alert('No Back camera found!');
-                    }
-                }
-            });
-        } else {
-            console.error('No cameras found.');
-        }
-    }).catch(function(e) {
-        console.error(e);
-    });
+    // let scanner = new Instascan.Scanner({
+    //     video: document.getElementById('preview')
+    // });
+    // scanner.addListener('scan', function(content) {
+    //     $('#preview').hide();
+    //     scanner.stop();
+    // });
+    // Instascan.Camera.getCameras().then(function(cameras) {
+    //     if (cameras.length > 0) {
+    //         scanner.start(cameras[0]);
+    //         $('[name="putar_camera"]').on('change', function() {
+    //             if ($(this).val() == 1) {
+    //                 if (cameras[0] != "") {
+    //                     scanner.start(cameras[0]);
+    //                 } else {
+    //                     alert('No Front camera found!');
+    //                 }
+    //             } else if ($(this).val() == 2) {
+    //                 if (cameras[1] != "") {
+    //                     scanner.start(cameras[1]);
+    //                 } else {
+    //                     alert('No Back camera found!');
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         console.error('No cameras found.');
+    //     }
+    // }).catch(function(e) {
+    //     console.error(e);
+    // });
     //end
 
     function tampilModal() {
@@ -635,6 +647,7 @@
         form_data.append('txt_keterangan', $('#txt_keterangan').val());
         form_data.append('txt_no_voucher', $('#txt_no_voucher').val());
         form_data.append('txt_tgl_voucher', $('#txt_tgl_voucher').val());
+        form_data.append('txt_sudah_dibayar', $('#txt_sudah_dibayar').val());
 
         // console.log(form_data);
 
@@ -642,7 +655,9 @@
             type: "POST",
             url: "<?php echo site_url('Pp/update_pp'); ?>",
             dataType: "JSON",
-            beforeSend: function() {},
+            beforeSend: function() {
+                $('#update').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+            },
             cache: false,
             contentType: false,
             processData: false,

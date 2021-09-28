@@ -312,7 +312,12 @@
 </style>
 <script>
     function new_pp() {
-        location.href = "<?php echo base_url('Pp/input') ?>";
+        location.h
+        ref = "<?php echo base_url('Pp/input') ?>";
+    }
+
+    function goBack() {
+        window.history.back();
     }
     $(document).ready(function() {
         // $('#preview').show();

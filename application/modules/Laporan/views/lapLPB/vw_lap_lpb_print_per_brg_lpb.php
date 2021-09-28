@@ -53,17 +53,17 @@
     <div style="text-align: center;">
         <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; "><u>REGISTER MASUK BARANG (LPB)</u></h3>
     </div>
-    <div style="text-align: left; padding-left: 3px; font-size: 12px;">
-        PERIODE : <?= date_format(date_create($tanggal1), "d/m/Y") . " - " . date_format(date_create($tanggal2), "d/m/Y"); ?>
+    <div style="text-align: left; padding-left: 3px; font-size: 10px;">
+        <h3 style="font-size:10px;font-weight:normal;margin-bottom: 0%; ">PERIODE : <?= date_format(date_create($tanggal1), "d/m/Y") . " - " . date_format(date_create($tanggal2), "d/m/Y"); ?></h3>
+
     </div>
-    <br>
     <?php
     foreach ($brg as $b) { ?>
         <table border="0" width="100%">
             <thead>
                 <tr>
                     <td style="text-align: left;"><b><?= $b->kodebar; ?> - <?= $b->nabar; ?> (<?= $b->satuan; ?>)</b></td>
-                    <!-- <td style="text-align: right;"><i>By System MIPS</i></td> -->
+                    <!-- <td style="text-align: right;"></td> -->
                 </tr>
             </thead>
         </table>
@@ -113,6 +113,7 @@
             </tbody>
         </table>
     <?php } ?>
+    <i>By System MIPS (<?= date("d-m-Y H:i:s"); ?>)</i>
 </body>
 
 </html>

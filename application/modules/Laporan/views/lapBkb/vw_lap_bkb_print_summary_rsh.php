@@ -46,7 +46,6 @@
     <div style="text-align: center;">
         <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; "><u> SUMMARY REGISTER KELUAR BARANG (BKB)</u></h3>
     </div>
-    <br>
     <?php if (empty($bt)) { ?>
 
         <table border="0" width="100%">
@@ -64,7 +63,6 @@
                 </tr>
             </thead>
         </table>
-        <br>
         <table width="100%" border="1" class="singleborder">
             <thead style="text-align: center;">
                 <tr>
@@ -95,7 +93,6 @@
 
             </tbody>
         </table>
-        <br>
         <?php } else {
         foreach ($bt as $b) { ?>
             <table border="0" width="100%">
@@ -113,7 +110,6 @@
                     </tr>
                 </thead>
             </table>
-            <br>
             <table width="100%" border="1" class="singleborder">
                 <thead style="text-align: center;">
                     <tr>
@@ -178,7 +174,6 @@
                     <?php } ?>
                 </tbody>
             </table>
-            <br>
     <?php }
     } ?>
 </body>

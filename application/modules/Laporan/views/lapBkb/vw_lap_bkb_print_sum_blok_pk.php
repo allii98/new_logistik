@@ -110,7 +110,6 @@
                     </tr>
                 </thead>
             </table>
-            <br>
             <table width="100%" class="singleborder" border="1">
                 <thead style="text-align: center;">
                     <tr>
@@ -169,7 +168,6 @@
                     <?php } ?>
                 </tbody>
             </table>
-            <br>
     <?php }
     } ?>
 </body>
