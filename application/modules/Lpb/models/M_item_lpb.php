@@ -105,6 +105,11 @@ class M_item_lpb extends CI_Model
     {
         return $this->db_logistik_pt->insert('masukitem', $data_masukitem);
     }
+
+    public function saveRegisterStok($data_register_stok)
+    {
+        return $this->db_logistik_pt->insert('register_stok', $data_register_stok);
+    }
 }
 
 /* End of file M_item_lpb.php */

@@ -664,7 +664,8 @@
                 norefpo: no_ref_po,
                 kodebar: kodebar,
                 refppo: hidden_refppo,
-                mutasi: '0'
+                mutasi: '0',
+                edit: '1'
             },
 
             success: function(data) {
@@ -857,7 +858,10 @@
 
             data: {
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                norefpo: $('#txt_ref_po').val()
+                kodebar: $('#txt_kode_barang_' + n).val(),
+                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                norefpo: $('#txt_ref_po').val(),
+                delete_stok_register: '1'
             },
 
             success: function(data) {

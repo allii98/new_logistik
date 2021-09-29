@@ -200,6 +200,18 @@ class M_lpb extends CI_Model
         return $this->db_logistik_pt->update('masukitem', $data_item_lpb);
     }
 
+    public function updateRegisterStok_edit($data_update_register_stok, $noref_lpb, $kodebar)
+    {
+        $this->db_logistik_pt->where(['noref' => $noref_lpb, 'kodebar' => $kodebar]);
+        return $this->db_logistik_pt->update('register_stok', $data_update_register_stok);
+    }
+
+    public function updateRegisterStok($data_update_register_stok, $id_register_stok)
+    {
+        $this->db_logistik_pt->where('id', $id_register_stok);
+        return $this->db_logistik_pt->update('register_stok', $data_update_register_stok);
+    }
+
     public function cancelUpdateItemLpb($id_item_lpb)
     {
         $this->db_logistik_pt->select('ASSET, qty, ket');

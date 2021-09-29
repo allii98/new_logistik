@@ -454,6 +454,7 @@ date_default_timezone_set('Asia/Jakarta');
         var td_col_6 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" rows="2" style="font-size: 12px;"></textarea>' +
             '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
+            '<input type="hidden" id="hidden_id_register_stok_' + row + '" name="hidden_id_register_stok_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '<input type="hidden" id="hidden_refppo_' + row + '" name="hidden_refppo_' + row + '">' +
             '<input type="hidden" id="hidden_sisa_qty_' + row + '" name="hidden_sisa_qty_' + row + '">' +
@@ -847,6 +848,7 @@ date_default_timezone_set('Asia/Jakarta');
                     $('#hidden_no_ref_lpb').val(data.noreflpb);
                     $('#hidden_id_lpb').val(data.id_lpb);
                     $('#hidden_id_item_lpb_' + n).val(data.id_item_lpb);
+                    $('#hidden_id_register_stok_' + n).val(data.id_register_stok);
 
                     $('#hidden_txtperiode_' + n).val(data.txtperiode);
 
@@ -923,13 +925,15 @@ date_default_timezone_set('Asia/Jakarta');
                 hidden_no_lpb: $('#hidden_no_lpb').val(),
                 hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
+                hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
                 hidden_txtperiode: $('#hidden_txtperiode_' + n).val(),
                 kode_dev: $('#devisi').val(),
                 nopo: no_po,
                 norefpo: no_ref_po,
                 kodebar: kodebar,
                 refppo: hidden_refppo,
-                mutasi: '0'
+                mutasi: '0',
+                edit: '0'
             },
 
             success: function(data) {
@@ -1148,7 +1152,9 @@ date_default_timezone_set('Asia/Jakarta');
 
             data: {
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                norefpo: $('#txt_ref_po').val()
+                hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
+                norefpo: $('#txt_ref_po').val(),
+                delete_stok_register: '0'
             },
 
             success: function(data) {

@@ -425,6 +425,38 @@ class Lpb extends CI_Controller
             'qtyditerima' => '0',
         ];
 
+        $data_register_stok = [
+            'kodebar' => $this->input->post('txt_kode_barang'),
+            'kodebartxt' => $this->input->post('txt_kode_barang'),
+            'namabar' => $this->input->post('txt_nama_brg'),
+            'grup' => $this->input->post('hidden_grup'),
+            'tgl' => date("Y-m-d H:i:s"),
+            'tgltxt' => $txttgl,
+            'potxt' => '-',
+            'ttgtxt' => $no_lpb,
+            'skbtxt' => '-',
+            'adjttgtxt' => '-',
+            'adjskbtxt' => '-',
+            'retttgtxt' => '-',
+            'retskbtxt' => '-',
+            'no_slrh' => $no_lpb,
+            'ket' => $this->input->post('txt_ket_rinci'),
+            'qty' => $this->input->post('txt_qty'),
+            'masuk_qty' => $this->input->post('txt_qty'),
+            'keluar_qty' => '0',
+            'status' => 'LPB',
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'devisi' => $data['devisi']['PT'],
+            'kode_dev' => $kode_devisi,
+            'txtperiode' => $txtperiode,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'refpo' => '-',
+            'noref' => $no_ref_lpb,
+            'id_user' => $id_user,
+            'USER' => $this->session->userdata('user'),
+        ];
+
         $sat = $this->input->post('txt_satuan');
         $grp = $this->input->post('hidden_grup');
         $quantiti = $this->input->post('txt_qty');
@@ -443,6 +475,7 @@ class Lpb extends CI_Controller
             $data_exist = NULL;
             $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
+            $data3 = $this->M_item_lpb->saveRegisterStok($data_register_stok);
 
             $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi, $data_masukitem['norefppo']);
 
@@ -450,14 +483,6 @@ class Lpb extends CI_Controller
             $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
 
             $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
-
-            $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
-            $generate_id = $this->db_logistik_pt->query($query_id)->row();
-            $id_lpb = $generate_id->id_lpb;
-
-            $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
-            $generate_id = $this->db_logistik_pt->query($query_id)->row();
-            $id_item_lpb = $generate_id->id_item_lpb;
         } else {
 
             //cek ada kodebar yg sama atau tidak pada noref ini
@@ -468,6 +493,7 @@ class Lpb extends CI_Controller
                 $data_exist = 'kodebar_exist';
                 $data = NULL;
                 $data2 = NULL;
+                $data3 = NULL;
                 $result_insert_stok_awal_harian = NULL;
                 $result_insert_stok_awal_bulanan = NULL;
                 $result_update_stok_awal = NULL;
@@ -482,6 +508,7 @@ class Lpb extends CI_Controller
                 $data_exist = NULL;
                 $data = NULL;
                 $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
+                $data3 = $this->M_item_lpb->saveRegisterStok($data_register_stok);
 
                 $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi, $data_masukitem['norefppo']);
 
@@ -489,16 +516,20 @@ class Lpb extends CI_Controller
                 $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev']);
 
                 $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
-
-                $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
-                $generate_id = $this->db_logistik_pt->query($query_id)->row();
-                $id_lpb = $generate_id->id_lpb;
-
-                $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND ttg = '$no_lpb' ";
-                $generate_id = $this->db_logistik_pt->query($query_id)->row();
-                $id_item_lpb = $generate_id->id_item_lpb;
             }
         }
+
+        $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_lpb = $generate_id->id_lpb;
+
+        $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_item_lpb = $generate_id->id_item_lpb;
+
+        $query_id = "SELECT MAX(id) as id_register_stok FROM register_stok WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_register_stok = $generate_id->id_register_stok;
 
         $data_return = [
             'insert_stok_awal_bulanan' => $result_insert_stok_awal_bulanan,
@@ -506,9 +537,11 @@ class Lpb extends CI_Controller
             'update_stok' => $result_update_stok_awal,
             'data' => $data,
             'data2' => $data2,
+            'data3' => $data3,
             'nolpb' => $no_lpb,
             'id_lpb' => $id_lpb,
             'id_item_lpb' => $id_item_lpb,
+            'id_register_stok' => $id_register_stok,
             'txtperiode' => $txtperiode,
             'noreflpb' => $no_ref_lpb,
             'data_exist' => $data_exist
@@ -750,11 +783,17 @@ class Lpb extends CI_Controller
 
     public function updateLpb()
     {
+        $id = $this->input->post('hidden_id_item_lpb');
+        $noref_lpb = $this->input->post('hidden_no_ref_lpb');
+        $id_register_stok = $this->input->post('hidden_id_register_stok');
+        $norefpo = $this->input->post('norefpo');
+        $kodebar = $this->input->post('kodebar');
+        $mutasi = $this->input->post('mutasi');
         $check_asset = $this->input->post('chk_asset');
         $txtperiode = $this->input->post('hidden_txtperiode');
         $kode_dev = $this->input->post('kode_dev');
         $refppo = $this->input->post('refppo');
-
+        $edit = $this->input->post('edit');
 
         if ($check_asset == "yes") {
             $asset = "1";
@@ -767,11 +806,12 @@ class Lpb extends CI_Controller
             'qty' => $this->input->post('txt_qty'),
             'ket' => $this->input->post('txt_ket_rinci')
         ];
-        $id = $this->input->post('hidden_id_item_lpb');
-        // $nopo = $this->input->post('nopo');
-        $norefpo = $this->input->post('norefpo');
-        $kodebar = $this->input->post('kodebar');
-        $mutasi = $this->input->post('mutasi');
+
+        $data_update_register_stok = [
+            'qty' => $this->input->post('txt_qty'),
+            'masuk_qty' => $this->input->post('txt_qty'),
+            'ket' => $this->input->post('txt_ket_rinci')
+        ];
 
         //cari harga
         if ($mutasi == '1') {
@@ -798,12 +838,19 @@ class Lpb extends CI_Controller
 
         $data_update_lpb = $this->M_lpb->updateLpb($data_item_lpb, $id);
 
+        if ($edit == '1') {
+            $data_update_register_stok = $this->M_lpb->updateRegisterStok_edit($data_update_register_stok, $noref_lpb, $kodebar);
+        } else {
+            $data_update_register_stok = $this->M_lpb->updateRegisterStok($data_update_register_stok, $id_register_stok);
+        }
+
         $data = [
             'harga_item_po' => $harga_item_po,
             'data_editStokAwalHarian' => $data_editStokAwalHarian,
             'data_editStokAwalBulananDevisi' => $data_editStokAwalBulananDevisi,
             'update_stok_awal' => $update_stok_awal,
             'data_update_lpb' => $data_update_lpb,
+            'data_update_register_stok' => $data_update_register_stok
         ];
         echo json_encode($data);
     }
@@ -1086,13 +1133,28 @@ class Lpb extends CI_Controller
     public function deleteItemLpb()
     {
         $hidden_id_item_lpb = $this->input->post('hidden_id_item_lpb');
+        $no_ref_lpb = $this->input->post('hidden_no_ref_lpb');
+        $kodebar = $this->input->post('kodebar');
+        $id_register_stok = $this->input->post('hidden_id_register_stok');
         $norefpo = $this->input->post('norefpo');
+        $delete_stok_register = $this->input->post('delete_stok_register');
 
-        $data = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
+        $delete_masukitem = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
+
+        if ($delete_stok_register == '1') {
+            $delete_regis = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $no_ref_lpb));
+        } else {
+            $delete_regis = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
+        }
 
         //update sttaus_lpb di po jadi 0
-        $this->M_lpb->update_status_lpb_po($norefpo);
+        $update_lpb_po = $this->M_lpb->update_status_lpb_po($norefpo);
 
+        $data = [
+            'delete_masukitem' => $delete_masukitem,
+            'delete_regis' => $delete_regis,
+            'update_lpb_po' => $update_lpb_po,
+        ];
         echo json_encode($data);
     }
 
