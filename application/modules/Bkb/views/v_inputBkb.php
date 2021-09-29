@@ -789,6 +789,7 @@
             '<textarea class="resizable_textarea form-control form-control-sm bg-light" style="font-size:12px;" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="2" placeholder="Keterangan" disabled></textarea>' +
             '<input type="hidden" id="id_keluarbrgitem_' + row + '" name="id_keluarbrgitem_' + row + '">' +
             '<input type="hidden" id="hidden_id_mutasi_item_' + row + '" name="hidden_id_mutasi_item_' + row + '">' +
+            '<input type="hidden" id="hidden_id_register_stok_' + row + '" name="hidden_id_register_stok_' + row + '">' +
             '</td>';
         var td_col_13 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<button class="btn btn-xs btn-success fa fa-save" id="btn_simpan_' + row + '" name="btn_simpan_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Simpan" onclick="saveRinciClick(' + row + ')"></button>' +
@@ -977,6 +978,7 @@
 
                     $('#hidden_id_mutasi').val(data.id_mutasi);
                     $('#hidden_id_mutasi_item_' + n).val(data.id_mutasi_item);
+                    $('#hidden_id_register_stok_' + n).val(data.id_register_stok);
 
                     $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
 
@@ -1255,9 +1257,11 @@
             data: {
                 'id_keluarbrgitem': $('#id_keluarbrgitem_' + n).val(),
                 'id_mutasi_item': $('#hidden_id_mutasi_item_' + n).val(),
+                'id_register_stok': $('#hidden_id_register_stok_' + n).val(),
                 'kodebar': $('#hidden_kode_barang_' + n).val(),
                 'norefbpb': $('#hidden_norefbpb').val(),
-                'mutasi': cexbox_mutasi
+                'mutasi': cexbox_mutasi,
+                'edit': '0',
             },
             success: function(data) {
 

@@ -139,6 +139,11 @@ class M_bkb extends CI_Model
         return $this->db_logistik_center->insert('tb_mutasi_item', $data);
     }
 
+    public function saveRegisterStok($data)
+    {
+        return $this->db_logistik_pt->insert('register_stok', $data);
+    }
+
     public function savedatakeluarbrgitem($data, $kodebar, $norefbpb, $no_ref_bkb)
     {
         $this->db_logistik_pt->insert('keluarbrgitem', $data);

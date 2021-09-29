@@ -177,6 +177,7 @@ class Bkb extends CI_Controller
     public function hapusItemBkb()
     {
         $id_keluarbrgitem = $this->input->post('id_keluarbrgitem');
+        $id_register_stok = $this->input->post('id_register_stok');
         $kodebar = $this->input->post('kodebar');
         $norefbpb = $this->input->post('norefbpb');
         $mutasi = $this->input->post('mutasi');
@@ -188,10 +189,16 @@ class Bkb extends CI_Controller
         //ubah status_item_bkb di bpbitem
         $this->M_bkb->update_status_item_bkb($kodebar, $norefbpb);
 
-        //ubah status_bkb di bpb
-        $this->M_bkb->update_status_bkb($norefbpb);
+        if ($edit == 1) {
+            $delete_register = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $noref_bkb));
+        } else {
+            $delete_register = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
+        }
 
-        $data = $this->db_logistik_pt->delete('keluarbrgitem', array('id' => $id_keluarbrgitem));
+        //ubah status_bkb di bpb
+        $update_bkb = $this->M_bkb->update_status_bkb($norefbpb);
+
+        $deletebkb = $this->db_logistik_pt->delete('keluarbrgitem', array('id' => $id_keluarbrgitem));
 
         if ($mutasi == 1) {
             if ($edit == 1) {
@@ -202,6 +209,12 @@ class Bkb extends CI_Controller
                 $this->db_logistik_center->delete('tb_mutasi_item', array('id' => $id_mutasi_item));
             }
         }
+
+        $data = [
+            'delete_register' => $delete_register,
+            'update_bkb' => $update_bkb,
+            'deletebkb' => $deletebkb
+        ];
 
         echo json_encode($data);
     }
@@ -540,6 +553,38 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['cetak']         = '0';
         $datakeluarbrgitem['posting']       = '0';
 
+        $data_register_stok = [
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'namabar' => $nabar,
+            'grup' => $grup_brg,
+            'tgl' => date("Y-m-d H:i:s"),
+            'tgltxt' => date("Ymd"),
+            'potxt' => '-',
+            'ttgtxt' => $skb,
+            'skbtxt' => '-',
+            'adjttgtxt' => '-',
+            'adjskbtxt' => '-',
+            'retttgtxt' => '-',
+            'retskbtxt' => '-',
+            'no_slrh' => $skb,
+            'ket' => $this->input->post('txt_ket_rinci'),
+            'qty' => $qty2,
+            'masuk_qty' => '0',
+            'keluar_qty' => $qty2,
+            'status' => 'BKB',
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'kode_dev' => $kode_dev,
+            'devisi' => $this->input->post('devisi'),
+            'txtperiode' => $txtperiode,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'refpo' => '-',
+            'noref' => $no_ref,
+            'id_user' => $id_user,
+            'USER' => $this->session->userdata('user'),
+        ];
+
         if (empty($this->input->post('hidden_no_bkb'))) {
             if ($mutasi == '1') {
                 $savedatastockkeluar_mutasi = $this->M_bkb->savedatastockkeluar_mutasi($datastockkeluar);
@@ -549,6 +594,7 @@ class Bkb extends CI_Controller
             $savedatakeluarbrgitem_mutasi = NULL;
             $savedatastockkeluar = $this->M_bkb->savedatastockkeluar($datastockkeluar);
             $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
+            $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
         } else {
             $savedatastockkeluar_mutasi = NULL;
             $savedatakeluarbrgitem_mutasi = NULL;
@@ -559,6 +605,7 @@ class Bkb extends CI_Controller
             }
 
             $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
+            $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
         }
 
         // update stockawal_bulanan_devisi
@@ -574,6 +621,10 @@ class Bkb extends CI_Controller
         $query_id = "SELECT MAX(id) as id_keluarbrgitem FROM keluarbrgitem WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_keluarbrgitem = $generate_id->id_keluarbrgitem;
+
+        $query_id = "SELECT MAX(id) as id_register_stok FROM register_stok WHERE id_user = '$id_user' AND noref = '$no_ref' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_register_stok = $generate_id->id_register_stok;
 
         if ($mutasi == 1) {
             $query_id = "SELECT MAX(id) as id_mutasi FROM tb_mutasi WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
@@ -595,12 +646,14 @@ class Bkb extends CI_Controller
             'result_update_qtykeluar' => $result_update_qtykeluar,
             'savedatastockkeluar_mutasi' => $savedatastockkeluar_mutasi,
             'savedatakeluarbrgitem_mutasi' => $savedatakeluarbrgitem_mutasi,
+            'saveregisterstok' => $saveregisterstok,
             'no_bkb' => $skb,
             'noref_bkb' => $no_ref,
             'id_stockkeluar' => $id_stockkeluar,
             'id_keluarbrgitem' => $id_keluarbrgitem,
             'id_mutasi' => $id_mutasi,
             'id_mutasi_item' => $id_mutasi_item,
+            'id_register_stok' => $id_register_stok,
             'txtperiode' => $txtperiode
         ];
 

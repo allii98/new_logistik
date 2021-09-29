@@ -431,7 +431,7 @@ class Lpb extends CI_Controller
             'namabar' => $this->input->post('txt_nama_brg'),
             'grup' => $this->input->post('hidden_grup'),
             'tgl' => date("Y-m-d H:i:s"),
-            'tgltxt' => $txttgl,
+            'tgltxt' => date("Ymd"),
             'potxt' => '-',
             'ttgtxt' => $no_lpb,
             'skbtxt' => '-',
