@@ -764,6 +764,7 @@
             '<textarea class="resizable_textarea form-control form-control-sm" style="font-size:12px;" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" rows="2" placeholder="Keterangan"></textarea>' +
             '<input type="hidden" id="hidden_id_retskbitem_' + row + '" name="hidden_id_retskbitem_' + row + '">' +
             '<input type="hidden" id="hidden_id_masukitem_' + row + '" name="hidden_id_masukitem_' + row + '">' +
+            '<input type="hidden" id="hidden_id_register_stok_' + row + '" name="hidden_id_register_stok_' + row + '">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '<input type="hidden" id="hidden_qty_sudah_retur_' + row + '" name="hidden_qty_sudah_retur_' + row + '">' +
             '</td>';
@@ -992,6 +993,7 @@
                     $('#hidden_id_masukitem_' + n).val(data.id_masukitem);
                     $('#hidden_id_retskb').val(data.id_retskb);
                     $('#hidden_id_retskbitem_' + n).val(data.id_retskbitem);
+                    $('#hidden_id_register_stok_' + n).val(data.id_register_stok);
                     $('#hidden_txtperiode_' + n).val(data.txtperiode);
 
                     $('#cancelRetur').removeAttr('disabled');
@@ -1053,6 +1055,7 @@
                 hidden_norefbkb: no_ref,
                 hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
                 hidden_id_masukitem: $('#hidden_id_masukitem_' + n).val(),
+                hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
                 hidden_kode_barang: kodebar,
                 txt_barang: $('#txt_barang_' + n).val(),
                 hidden_grup_barang: $('#hidden_grup_barang_' + n).val(),
@@ -1319,6 +1322,7 @@
             data: {
                 hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
                 hidden_id_masukitem: $('#hidden_id_masukitem_' + n).val(),
+                hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
                 delete_item_retur: '0'
             },
 

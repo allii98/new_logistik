@@ -128,6 +128,11 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->insert('masukitem', $data);
     }
 
+    public function saveRegisterStok($data)
+    {
+        return $this->db_logistik_pt->insert('register_stok', $data);
+    }
+
     public function urut_cetak($norefretur)
     {
         $this->db_logistik_pt->set('cetak', 'cetak+1', FALSE);
@@ -152,10 +157,22 @@ class M_retur extends CI_Model
         return $this->db_logistik_pt->update('masukitem', $data_masukitem);
     }
 
+    public function update_register_stok($id_register_stok, $data_register_stok)
+    {
+        $this->db_logistik_pt->where('id', $id_register_stok);
+        return $this->db_logistik_pt->update('register_stok', $data_register_stok);
+    }
+
     public function update_masukitem_edit($norefretur, $kodebar, $data_masukitem)
     {
         $this->db_logistik_pt->where(['refpo' => $norefretur, 'kodebar' => $kodebar]);
         return $this->db_logistik_pt->update('masukitem', $data_masukitem);
+    }
+
+    public function update_register_stok_edit($norefretur, $kodebar, $data_register_stok)
+    {
+        $this->db_logistik_pt->where(['noref' => $norefretur, 'kodebar' => $kodebar]);
+        return $this->db_logistik_pt->update('register_stok', $data_register_stok);
     }
 
     public function cari_harga_bkb($no_ref_bkb, $kodebar)

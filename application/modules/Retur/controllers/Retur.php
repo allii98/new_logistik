@@ -462,6 +462,39 @@ class Retur extends CI_Controller
         ];
         //-------------------------END KEBUTUHAN SAVE KE LPB----------------------/
 
+        $data_register_stok = [
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'namabar' => $nabar,
+            'grup' => $grp,
+            'tgl' => date("Y-m-d H:i:s"),
+            'tgltxt' => date("Ymd"),
+            'potxt' => '-',
+            'ttgtxt' => $noretur,
+            'skbtxt' => '-',
+            'adjttgtxt' => '-',
+            'adjskbtxt' => '-',
+            'retttgtxt' => '-',
+            'retskbtxt' => '-',
+            'no_slrh' => $noretur,
+            'ket' => $this->input->post('txt_ket_rinci'),
+            'qty' => $quantiti,
+            'masuk_qty' => $quantiti,
+            'keluar_qty' => '0',
+            'status' => 'LPB',
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'devisi' => $devisi,
+            'kode_dev' => $kode_dev,
+            'txtperiode' => $txtperiode,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'refpo' => '-',
+            'noref' => $norefretur,
+            'id_user' => $id_user,
+            'USER' => $this->session->userdata('user'),
+        ];
+
+
         $cari_kodebar_stock_awal = $this->M_retur->cari_kodebar($kodebar, $txtperiode);
 
         if (empty($this->input->post('hidden_noretur'))) {
@@ -469,6 +502,7 @@ class Retur extends CI_Controller
             $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
             $savedatastokmasuk = $this->M_retur->savedatastokmasuk($data_stokmasuk);
             $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
+            $saveregisterstok = $this->M_retur->saveRegisterStok($data_register_stok);
             $item_exist = 0;
         } else {
             //cek item jika sudah ada tidak bisa save
@@ -485,6 +519,7 @@ class Retur extends CI_Controller
                 $savedatastokmasuk = NULL;
                 $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
                 $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
+                $saveregisterstok = $this->M_retur->saveRegisterStok($data_register_stok);
             }
         }
 
@@ -527,6 +562,10 @@ class Retur extends CI_Controller
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_masukitem = $generate_id->id_masukitem;
 
+        $query_id = "SELECT MAX(id) as id_register_stok FROM register_stok WHERE id_user = '$id_user' AND noref = '$norefretur' ";
+        $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        $id_register_stok = $generate_id->id_register_stok;
+
         $data = [
             'insert_stok_awal_harian' => $result_insert_stok_awal_harian,
             'insert_stok_awal_bulanan' => $result_insert_stok_awal_bulanan,
@@ -535,6 +574,7 @@ class Retur extends CI_Controller
             'dataretskbitem' => $savedataretskbitem,
             'datastokmasuk' => $savedatastokmasuk,
             'datamasukitem' => $savedatamasukitem,
+            'saveregisterstok' => $saveregisterstok,
             'no_retur' => $noretur,
             'noref_retur' => $norefretur,
             'no_lpb' => $no_lpb,
@@ -543,6 +583,7 @@ class Retur extends CI_Controller
             'id_stokmasuk' => $id_stokmasuk,
             'id_masukitem' => $id_masukitem,
             'id_retskbitem' => $id_retskbitem,
+            'id_register_stok' => $id_register_stok,
             'txtperiode' => $txtperiode,
             'item_exist' => $item_exist
         ];
@@ -716,6 +757,7 @@ class Retur extends CI_Controller
     {
         $id_masukitem = $this->input->post('hidden_id_masukitem');
         $id_retskbitem = $this->input->post('hidden_id_retskbitem');
+        $id_register_stok = $this->input->post('hidden_id_register_stok');
         $txtperiode = $this->input->post('hidden_txtperiode');
         $kode_dev = $this->input->post('hidden_kode_dev');
         $no_ref_bkb = $this->input->post('hidden_norefbkb');
@@ -724,6 +766,12 @@ class Retur extends CI_Controller
 
         $data_masukitem = [
             'qty' => $this->input->post('txt_qty_retur'),
+            'ket' => $this->input->post('txt_ket_rinci'),
+        ];
+
+        $data_register_stok = [
+            'qty' => $this->input->post('txt_qty_retur'),
+            'masuk_qty' => $this->input->post('txt_qty_retur'),
             'ket' => $this->input->post('txt_ket_rinci'),
         ];
 
@@ -766,13 +814,16 @@ class Retur extends CI_Controller
 
         if ($edit == '1') {
             $result_update_masukitem = $this->M_retur->update_masukitem_edit($norefretur, $data_item_retur['kodebar'], $data_masukitem);
+            $result_update_register_stok = $this->M_retur->update_register_stok_edit($norefretur, $data_item_retur['kodebar'], $data_register_stok);
         } else {
             $result_update_masukitem = $this->M_retur->update_masukitem($id_masukitem, $data_masukitem);
+            $result_update_register_stok = $this->M_retur->update_register_stok($id_register_stok, $data_register_stok);
         }
 
         $output = [
             'result_update' => $result_update,
-            'result_update_masukitem' => $result_update_masukitem
+            'result_update_masukitem' => $result_update_masukitem,
+            'result_update_register_stok' => $result_update_register_stok
         ];
 
         echo json_encode($output);
@@ -937,6 +988,7 @@ class Retur extends CI_Controller
     {
         $id_retskbitem = $this->input->post('hidden_id_retskbitem');
         $id_masukitem = $this->input->post('hidden_id_masukitem');
+        $id_register_stok = $this->input->post('hidden_id_register_stok');
         $kodebar = $this->input->post('kodebar');
         $norefretur = $this->input->post('hidden_norefretur');
         $delete_item_retur = $this->input->post('delete_item_retur');
@@ -945,13 +997,16 @@ class Retur extends CI_Controller
 
         if ($delete_item_retur == '1') {
             $data1 = $this->db_logistik_pt->delete('masukitem', array('kodebar' => $kodebar, 'refpo' => $norefretur));
+            $data2 = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $norefretur));
         } else {
             $data1 = $this->db_logistik_pt->delete('masukitem', array('id' => $id_masukitem));
+            $data2 = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
         }
 
         $output = [
             'data' => $data,
             'data1' => $data1,
+            'data2' => $data2,
         ];
 
         echo json_encode($output);
