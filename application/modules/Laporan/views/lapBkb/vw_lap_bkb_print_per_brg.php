@@ -57,7 +57,7 @@
         <thead>
             <tr>
                 <td style="text-align: left;"> PERIODE : <?= date_format(date_create($tgl1), "d/m/Y") . ' - ' . date_format(date_create($tgl2), "d/m/Y"); ?></td>
-                <td style="text-align: right;"><i>By System MIPS</i></td>
+                <!-- <td style="text-align: right;"><i>By System MIPS</i></td> -->
             </tr>
         </thead>
     </table>
@@ -158,28 +158,35 @@
             </table>
     <?php }
     } ?>
+    <table width="100%" border="0">
+        <tr>
+            <td><i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i></td>
+            <td style="text-align: right; ">
+                <div style="text-align: right; ">
+                    <?php
+                    switch ($lokasi) {
+                        case '01':
+                            $posisi = 'HO';
+                            break;
+                        case '02':
+                            $posisi = 'RO';
+                            break;
+                        case '03':
+                            $posisi = 'PKS';
+                            break;
+                        default:
+                            $posisi = 'Sriwijaya Estate';
+                            break;
+                    }
+                    ?>
+                    <p><?= $posisi; ?>, <?= date("d M Y"); ?></p>
+                </div>
+            </td>
+        </tr>
+    </table>
+
+
     <br>
-    <i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
-    <div style="text-align: right; ">
-        <?php
-        switch ($lokasi) {
-            case '01':
-                $posisi = 'HO';
-                break;
-            case '02':
-                $posisi = 'RO';
-                break;
-            case '03':
-                $posisi = 'PKS';
-                break;
-            default:
-                $posisi = 'Sriwijaya Estate';
-                break;
-        }
-        ?>
-        <small><?= $posisi; ?>, <?= date("d M Y"); ?></small>
-    </div>
-    <br><br>
     <table border="0" width="100%">
         <thead>
             <?php if ($posisi !== 'Sriwijaya Estate') { ?>

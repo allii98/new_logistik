@@ -42,7 +42,7 @@
     ?>
     <div style="text-align: center; ">
 
-        <table border="0" class="center" style="margin-top: -1%;">
+        <table border="0" class="center" style="margin-top: 0%;">
             <tr>
                 <td style="text-align: center;" colspan="3">
                     <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%;">REGISTER PURCHASE ORDER LOKAL (PO)</h3>
@@ -59,7 +59,7 @@
                 <td><?= date("d/m/Y"); ?></td>
             </tr>
         </table>
-        <p align="right" style="margin-top: 0px;margin-bottom: 0px;"><small>By MIPS</small></p>
+        <!-- <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>By MIPS</small></p> -->
         <hr>
         <hr>
         <table border="0" class="center" width="100%">

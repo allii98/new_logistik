@@ -1042,7 +1042,7 @@ class Bpb extends CI_Controller
                 'mode' => 'utf-8',
                 'format' => 'A4',
                 // 'format' => [190, 236],
-                'margin_top' => '1',
+                'margin_top' => '2',
                 'margin_left' => '3',
                 'margin_right' => '3',
                 'orientation' => 'P'
@@ -1073,7 +1073,7 @@ class Bpb extends CI_Controller
                 'mode' => 'utf-8',
                 'format' => 'A4',
                 // 'format' => [190, 236],
-                'margin_top' => '1',
+                'margin_top' => '2',
                 'margin_left' => '3',
                 'margin_right' => '3',
                 'orientation' => 'P'

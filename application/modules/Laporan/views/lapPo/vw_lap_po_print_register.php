@@ -134,14 +134,14 @@
                                             <td><?= $list_item_po->nabar; ?></td>
                                             <td><?= $list_item_po->sat; ?></td>
                                             <td><?= $list_item_po->qty; ?></td>
-                                            <?php if ($this->session->userdata('status_lokasi') == "HO") { ?>
-                                                <td><?= $list_item_po->harga; ?></td>
-                                                <td><?= $list_item_po->qty * $list_item_po->harga; ?></td>
-                                                <td><?= $list_po->ppn ?></td>
+                                            <?php if ($this->session->userdata('status_lokasi') != "HO") { ?>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
                                             <?php } else { ?>
-                                                <td><?= $list_item_po->harga; ?></td>
-                                                <td><?= $list_item_po->qty * $list_item_po->harga; ?></td>
-                                                <td><?= $list_po->ppn ?></td>
+                                                <td><?= number_format($list_item_po->harga, 2); ?></td>
+                                                <td><?= number_format($list_item_po->qty * $list_item_po->harga, 2); ?></td>
+                                                <td><?= number_format($list_po->ppn, 2) ?></td>
                                             <?php } ?>
                                         </tr>
                                     <?php } ?>
@@ -156,7 +156,6 @@
                 } ?>
             </tbody>
         </table>
-        <br>
     </div>
     <i style="float: left;">printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
 

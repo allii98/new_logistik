@@ -65,15 +65,15 @@
         <table border="0" class="center" width="100%">
             <thead>
                 <tr>
-                    <td>No</td>
-                    <td>Nomor PP</td>
-                    <td>Tanggal PP</td>
-                    <td>Tanggal PO</td>
-                    <td>Nomor PO</td>
-                    <td>Nomor Voucher</td>
-                    <td>Tanggal Voucher</td>
-                    <td>Nama Supplier</td>
-                    <td>Jumlah Pembayaran</td>
+                    <th>No</th>
+                    <th>Nomor PP</th>
+                    <th>Tanggal PP</th>
+                    <th>Tanggal PO</th>
+                    <th>Nomor PO</th>
+                    <th>Nomor Voucher</th>
+                    <th>Tanggal Voucher</th>
+                    <th>Nama Supplier</th>
+                    <th>Jumlah Pembayaran</th>
                 </tr>
             </thead>
             <tbody>

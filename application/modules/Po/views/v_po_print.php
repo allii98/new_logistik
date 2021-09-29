@@ -132,7 +132,7 @@ $nama_pt = $this->session->userdata('nama_pt');
     <tr>
       <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
     <tr>
-      <td align="left" style="font-size:8.5px;">
+      <td align="left" style="font-size:8.5px;" valign="top">
         <h3 style="font-size:14px;font-weight:bold;"> <?= $po->devisi ?></h3>
         <?= $alamat_lok ?>
       </td>
@@ -215,9 +215,12 @@ $nama_pt = $this->session->userdata('nama_pt');
       <td width="58%" style="padding:5px;">
         Kepada YTH,<br />
         <?= $supplier->supplier; ?><br />
-        <?= $alamat_supplier; ?><br />
-        Tlp. <?= $tlp_supplier; ?><br />
-        Fax. <?= $fax_supplier; ?><br />
+        <?php if ($this->session->userdata('status_lokasi') != 'HO') { ?>
+        <?php } else { ?>
+          <?= $alamat_supplier; ?><br />
+          Tlp. <?= $tlp_supplier; ?><br />
+          Fax. <?= $fax_supplier; ?><br />
+        <?php } ?>
       </td>
       <td width="60%" style="padding:5px;">
         <br />
@@ -261,7 +264,7 @@ $nama_pt = $this->session->userdata('nama_pt');
           <td class="noborder2" align="left"><?= $list_item->nabar; ?></td>
           <td class="noborder2" align="left"><?= htmlspecialchars($list_item->merek); ?></td>
           <td class="noborder" rowspan="2" align="center">-</td>
-          <td class="noborder" rowspan="2" align="center"><?= $list_item->qty; ?></td>
+          <td class="noborder" rowspan="2" align="center"><?= number_format($list_item->qty, 2, ",", "."); ?></td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>
           <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
           <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
