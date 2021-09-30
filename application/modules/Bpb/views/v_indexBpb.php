@@ -420,6 +420,7 @@
 
             success: function(data) {
                 var x = data.status;
+                // var mutasi = data.mutasi;
                 // console.log(x);
 
                 if (x == true) {

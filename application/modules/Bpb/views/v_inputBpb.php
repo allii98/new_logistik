@@ -1895,10 +1895,10 @@
             // $('.set_strip_cmb').empty();
             // $('.set_strip_cmb').append(strip_cmb);
             $('.set_strip_cmb').html(strip_cmb);
-            $('#cmb_alokasi_est').addClass('form-control bg-light');
-            $('#cmb_alokasi_est').attr('disabled', '');
-            $("#cmb_alokasi_est").prop('selectedIndex', 0);
-            $('#txt_estate').text('');
+            // $('#cmb_alokasi_est').addClass('form-control bg-light');
+            // $('#cmb_alokasi_est').attr('disabled', '');
+            // $("#cmb_alokasi_est").prop('selectedIndex', 0);
+            // $('#txt_estate').text('');
             // $('#cmb_tm_tbm_'+row).html(strip_cmb);
             if ($('#cmb_bagian :selected').text() != "TEKNIK") {
                 $('#bhnbakar').addClass('form-control bg-light');
