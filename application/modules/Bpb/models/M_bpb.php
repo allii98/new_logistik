@@ -679,6 +679,20 @@ class M_bpb extends CI_Model
             $this->db_logistik_center->where('norefbpb', $norefbpb);
             $this->db_logistik_center->update('bpb_mutasi');
 
+            //update mutasi
+
+            if ($aprrove == '1') {
+                $this->db_logistik_center->set('approval_item', '1');
+            } else {
+                $this->db_logistik_center->set('approval_item', '0');
+                $this->db_logistik_center->set('batal', '1');
+                $this->db_logistik_center->set('alasan_batal', $alasan);
+            }
+            $this->db_logistik_center->where('nobpb', $nobpb);
+            $this->db_logistik_center->where('norefbpb', $norefbpb);
+            $this->db_logistik_center->where('kodebar', $kodebar);
+            $bpbitem_mutasi =  $this->db_logistik_center->update('bpbitem_mutasi');
+
 
             //approval bpb item (merubah status approval_item menjadi 1)
             if ($aprrove == '1') {
@@ -691,22 +705,15 @@ class M_bpb extends CI_Model
             $this->db_logistik_pt->where('nobpb', $nobpb);
             $this->db_logistik_pt->where('norefbpb', $norefbpb);
             $this->db_logistik_pt->where('kodebar', $kodebar);
-            return $this->db_logistik_pt->update('bpbitem');
+            $item_bpb = $this->db_logistik_pt->update('bpbitem');
 
-            //update mutasi
 
-            if ($aprrove == '1') {
-                $this->db_logistik_center->set('approval_item', '1');
-            } else {
+            $data = [
+                'bpbitem_mutasi' => $bpbitem_mutasi,
+                'item_bpb' => $item_bpb,
+            ];
 
-                $this->db_logistik_center->set('approval_item', '0');
-                $this->db_logistik_center->set('batal', '1');
-                $this->db_logistik_center->set('alasan_batal', $alasan);
-            }
-            $this->db_logistik_center->where('nobpb', $nobpb);
-            $this->db_logistik_center->where('norefbpb', $norefbpb);
-            $this->db_logistik_center->where('kodebar', $kodebar);
-            $this->db_logistik_center->update('bpbitem_mutasi');
+            return $data;
         } else {
             $this->db_logistik_pt->set('approval', '1');
             $this->db_logistik_pt->where('nobpb', $nobpb);
@@ -723,7 +730,9 @@ class M_bpb extends CI_Model
             $this->db_logistik_pt->where('nobpb', $nobpb);
             $this->db_logistik_pt->where('norefbpb', $norefbpb);
             $this->db_logistik_pt->where('kodebar', $kodebar);
-            return $this->db_logistik_pt->update('bpbitem');
+            $data = $this->db_logistik_pt->update('bpbitem');
+
+            return $data;
         }
 
 
