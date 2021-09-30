@@ -461,18 +461,9 @@ class M_bpb extends CI_Model
 
             if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
                 $this->db_logistik_center->insert('bpb_mutasi', $databpb);
-                if ($this->db_logistik_center->affected_rows() > 0) {
-                    $bool_bpb_mutasi = TRUE;
-                } else {
-                    $bool_bpb_mutasi = FALSE;
-                }
+
 
                 $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
-                if ($this->db_logistik_center->affected_rows() > 0) {
-                    $bool_bpbitem_mutasi = TRUE;
-                } else {
-                    $bool_bpbitem_mutasi = FALSE;
-                }
             }
 
             $this->db_logistik_pt->insert('approval_bpb', $data_approval_bpb);
@@ -497,7 +488,7 @@ class M_bpb extends CI_Model
             //     $bool_bpb = FALSE;
             // }
 
-            if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE && $bool_bpb_mutasi === TRUE && $bool_bpbitem_mutasi === TRUE) {
+            if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                 // if ($bool_bpb === TRUE && $bool_bpbitem === TRUE){
                 return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi);
             } else {
@@ -526,11 +517,6 @@ class M_bpb extends CI_Model
 
                 if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
                     $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
-                    if ($this->db_logistik_center->affected_rows() > 0) {
-                        $bool_bpbitem_mutasi = TRUE;
-                    } else {
-                        $bool_bpbitem_mutasi = FALSE;
-                    }
                 }
 
                 $this->db_logistik_pt->insert('approval_bpb', $data_approval_bpb);
@@ -547,7 +533,7 @@ class M_bpb extends CI_Model
                 //     $bool_bpb = FALSE;
                 // }
 
-                if ($bool_bpbitem === TRUE && $bool_approval_bpb === TRUE && $bool_bpbitem_mutasi === TRUE) {
+                if ($bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                     return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi);
                 } else {
                     return FALSE;
