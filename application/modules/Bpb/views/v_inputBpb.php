@@ -75,7 +75,7 @@
 
                                 <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm bg-light" id="bhnbakar" name="bhnbakar" disabled>
-                                        <option disabled selected>--Pilih--</option>
+                                        <option disabled value="" selected>--Pilih--</option>
                                         <option value="BBM">BBM</option>
                                         <option value="NONBBM">NON BBM</option>
                                     </select>
@@ -87,7 +87,7 @@
                                 </label>
 
                                 <div class="col-9 col-xl-12">
-                                    <select class="form-control form-control-sm bg-light" id="cmb_alokasi_est" name="cmb_alokasi_est" disabled>
+                                    <select class="form-control form-control-sm" id="cmb_alokasi_est" name="cmb_alokasi_est">
                                         <option disabled value="" selected>--Pilih--</option>
                                         <option value="03">03</option>
                                         <option value="06">06</option>
@@ -149,10 +149,21 @@
                                         <label class="custom-control-label" for="mutasi_pt" style="font-size: 12px;">Mutasi PT?</label>
                                         <input type="hidden" id="hidden_mutasi_pt">
                                     </div>
-                                    <div class="custom-control custom-checkbox ml-3 mt-0 col-3 lokalmutasi">
+                                    <div class="custom-control custom-checkbox mt-0 col-6 col-lg-1 col-xl-1 lokalmutasi">
                                         <input type="checkbox" name="mutasi_lokal" class="custom-control-input" id="mutasi_lokal" value="mutasi_lokal">
-                                        <label class="custom-control-label" for="mutasi_lokal" style="font-size: 12px;">Mutasi LOKAL?</label>
+                                        <label class="custom-control-label" for="mutasi_lokal" style="font-size: 12px;">Mutasi&nbsp;Lokal?</label>
                                         <input type="hidden" id="hidden_mutasi_lokal">
+                                    </div>
+                                    <div class="col-6 col-lg-4 col-xl-4">
+                                        <select class="form-control form-control-sm bg-light" id="cmb_pt_mutasi" style="font-size: 12px;" disabled>
+                                            <option disabled value="" selected>Pilih PT</option>
+                                            <?php
+                                            foreach ($pt as $d) : { ?>
+                                                    <option value="<?= $d['kode_pt'] ?>"><?= $d['nama_pt'] ?></option>
+                                            <?php }
+                                            endforeach;
+                                            ?>
+                                        </select>
                                     </div>
 
                                 </div>
@@ -412,6 +423,23 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false" id="modal_pt">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Pilih PT</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <select class="form-control" id="cmb_pilih_est"></select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="btn_pilih_po" onclick="pilihPTmut()">Pilih</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapus">
         <div class="modal-dialog">
@@ -527,11 +555,15 @@
         $('#mutasi_lokal').click(function() {
             if ($(this).prop("checked") == true) {
                 $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
+                $("#cmb_pt_mutasi").prop('selectedIndex', 0);
+                $("#cmb_pt_mutasi").attr('disabled', '');
+                $("#cmb_pt_mutasi").addClass('bg-light');
                 var lokal = $('.lokalmutasi').find('input[type=checkbox]').val();
                 $('#hidden_mutasi_lokal').val(lokal);
             } else if ($(this).prop("checked") == false) {
                 $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
                 $('#hidden_mutasi_lokal').val('');
+
             }
         });
 
@@ -570,11 +602,11 @@
             $('#cmb_tm_tbm_1').attr('disabled', '');
             $('#cmb_afd_unit_1').attr('disabled', '');
             $('#cmb_blok_sub_1').attr('disabled', '');
-            $('#cmb_tahun_tanam_1').attr('disabled', '');
             $('#cmb_bahan_1').attr('disabled', '');
             $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
             $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
             $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
+
         } else {
             $('#cmb_tm_tbm_1').removeAttr('disabled', '');
             $('#cmb_afd_unit_1').removeAttr('disabled', '');
@@ -582,8 +614,13 @@
             $('#cmb_tahun_tanam_1').removeAttr('disabled', '');
             $('#cmb_bahan_1').removeAttr('disabled', '');
             $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').removeClass('bg-light');
+            $('#cmb_pt_mutasi').attr('disabled', '');
+            $('#cmb_pt_mutasi').addClass('bg-light');
+            $("#cmb_pt_mutasi").prop('selectedIndex', 0);
             $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
             $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
+            // $('').attr('disabled', '');
+            $('input[type=checkbox]').prop('checked', false);
         }
     })
 
@@ -615,14 +652,21 @@
         var nama_account = dataClick[2];
         var row = $('#hidden_no_row').val();
 
-        // $('#lbl_no_acc_' + row).html(no_coa);
-        // $('#lbl_nama_acc_' + row).html(nama_account);
-        $('#txt_account_beban_' + row).val(nama_account);
+        $('#cmb_pt_mutasi').attr('disabled', '');
+        $('#cmb_pt_mutasi').addClass('bg-light');
+        $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
 
-        $('#hidden_no_acc_' + row).val(no_coa);
-        $('#hidden_nama_acc_' + row).val(nama_account);
+        if (no_coa != 100300000000000) {
 
-        $('#modalAccBeban').modal('hide');
+            $('#txt_account_beban_' + row).val(nama_account);
+
+            $('#hidden_no_acc_' + row).val(no_coa);
+            $('#hidden_nama_acc_' + row).val(nama_account);
+
+            $('#modalAccBeban').modal('hide');
+        } else {
+            console.log("BY ALI DEV");
+        }
     });
 
     $('#bhnbakar').change(function() {
@@ -670,6 +714,9 @@
             //kunci checkbox
             $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
             $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
+            $("#cmb_pt_mutasi").prop('selectedIndex', 0);
+            $("#cmb_pt_mutasi").attr('disabled', '');
+            $("#cmb_pt_mutasi").addClass('bg-light');
 
 
             if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '' && $.trim($('#cmb_alokasi_est').val()) != '') {
@@ -687,9 +734,16 @@
                     $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
                     var pt = $('.ptmutasi').find('input[type=checkbox]').val();
                     $('#hidden_mutasi_pt').val(pt);
+                    // $('#modal_pt').modal('show');
+                    $('#cmb_pt_mutasi').removeAttr('disabled');
+                    $('#cmb_pt_mutasi').removeClass('bg-light');
                 } else if ($(this).prop("checked") == false) {
                     $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
                     $('#hidden_mutasi_pt').val("");
+                    $("#cmb_pt_mutasi").prop('selectedIndex', 0);
+                    $('#cmb_pt_mutasi').attr('disabled', '');
+                    $('#cmb_pt_mutasi').addClass('bg-light');
+                    // $('#modal_pt').modal('hide');
                 }
             });
 
@@ -719,9 +773,15 @@
                     $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
                     var pt = $('.ptmutasi').find('input[type=checkbox]').val();
                     $('#hidden_mutasi_pt').val(pt);
+                    $('#cmb_pt_mutasi').removeAttr('disabled');
+                    $('#cmb_pt_mutasi').removeClass('bg-light');
                 } else if ($(this).prop("checked") == false) {
                     $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
                     $('#hidden_mutasi_pt').val("");
+                    $("#cmb_pt_mutasi").prop('selectedIndex', 0);
+                    $("#cmb_pt_mutasi").attr('disabled', '');
+                    $("#cmb_pt_mutasi").addClass('bg-light');
+
                 }
             });
             if ($.trim($('#txt_untuk_keperluan').val()) != '' && $.trim($('#devisi').val()) != '' && $.trim($('#cmb_bagian').val()) != '') {
@@ -1129,11 +1189,13 @@
         var kodebar = $('#hidden_kode_barang_' + no).val();
         var kode_dev = $('#devisi').val();
 
+
         // sum_stok_booking(kodebar, no, kode_dev);
 
         // console.log(kodebar);
 
         var v_qty = validasi_qty(sudah_booking, qty_diminta, stok_tgl_ini, no);
+
         if (v_qty === true) {
             $('#cmb_tm_tbm_' + no +
                 ',#cmb_afd_unit_' + no +
@@ -1842,6 +1904,14 @@
                 $('#bhnbakar').addClass('form-control bg-light');
                 $("#bhnbakar").prop('selectedIndex', 0);
                 $('#bhnbakar').attr('disabled', '');
+                // $("#bhnbakar").prop('selectedIndex', 0);
+                $('#bhnbakar').addClass('bg-light');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').attr('disabled', '');
+                $('#txt_jns_alat, #txt_kd_nmr, #txt_hm_km,#txt_lokasi_kerja').addClass('form-control bg-light');
+                $('#txt_jns_alat').val("");
+                $('#txt_kd_nmr').val("");
+                $('#txt_hm_km').val("");
+                $('#txt_lokasi_kerja').val("");
             } else {
                 $('#bhnbakar').removeAttr('disabled', '');
                 $('#bhnbakar').removeClass('bg-light');
@@ -2025,11 +2095,48 @@
         });
     }
 
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' ',
+            icon: 'error',
+            loader: false
+        });
+    }
+
     function pilihModalAccBeban(row) {
-        $('#modalAccBeban').modal('show');
-        $('#hidden_no_row').val(row);
-        $('#tableAccBeban').DataTable().destroy();
-        tableAccBeban(row);
+        var cmb_pt = $('#cmb_pt_mutasi').val();
+        var mut_pt = $('#hidden_mutasi_pt').val();
+        var mut_lokal = $('#hidden_mutasi_lokal').val();
+
+        if (mut_pt != "") {
+            if (!cmb_pt) {
+                // swal("Silahkan pilih PT tujan!");
+                toast('Silahkan pilih PT !');
+                $('#cmb_pt_mutasi').css({
+                    "background": "#FFCECE"
+                });
+            } else {
+                console.log("Dev BY ALI");
+                $('#modalAccBeban').modal('show');
+                $('#hidden_no_row').val(row);
+                $('#tableAccBeban').DataTable().destroy();
+                tableAccBeban(row);
+            }
+        } else if (mut_lokal != "") {
+            // console.log("Dev BY ALI");
+            $('#modalAccBeban').modal('show');
+            $('#hidden_no_row').val(row);
+            $('#tableAccBeban').DataTable().destroy();
+            tableAccBeban(row);
+        } else {
+            $('#modalAccBeban').modal('show');
+            $('#hidden_no_row').val(row);
+            $('#tableAccBeban').DataTable().destroy();
+            tableAccBeban(row);
+        }
+
     }
 
     // Start Data Table Server Side
@@ -2038,6 +2145,8 @@
     function tableAccBeban(row) {
         var mutasi_pt = $('#hidden_mutasi_pt').val();
         var mutasi_lokal = $('#hidden_mutasi_lokal').val();
+        var pt = $('#cmb_pt_mutasi').val();
+        var devisi = $('#devisi').val();
 
         var tm_tbm = $('#cmb_tm_tbm_' + row).val();
         if (tm_tbm == 'TM') {
@@ -2067,6 +2176,8 @@
                 "type": "POST",
                 "data": {
                     dt: dt,
+                    pt: pt,
+                    devisi: devisi,
                     cmb_bahan: cmb_bahan,
                     mutasi_pt: mutasi_pt,
                     mutasi_lokal: mutasi_lokal

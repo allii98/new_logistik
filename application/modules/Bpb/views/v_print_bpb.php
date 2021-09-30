@@ -6,8 +6,11 @@ $logo_pt = $this->session->userdata('logo_pt');
 $lokasi = $this->session->userdata('status_lokasi');
 $nama_pt = $this->session->userdata('nama_pt');
 $statusmutasi = $bpb->status_mutasi;
-if ($statusmutasi != 0) {
+if ($statusmutasi == 1) {
     $mutasi = "Mutasi";
+} else if ($statusmutasi == 2) {
+    $mutasi = "Mutasi Lokal";
+    # code...
 } else {
     $mutasi = "";
     # code...
@@ -51,7 +54,7 @@ if ($statusmutasi != 0) {
 <body>
     <table width="100%" border="0" align="center">
         <tr>
-            <td align="center" style="font-size:8.5px;">
+            <td align="center">
                 <h3 style="font-size:14px;font-weight:bold;"> <?= $bpb->devisi   ?> </h3>
             </td>
         </tr>
@@ -96,7 +99,9 @@ if ($statusmutasi != 0) {
                 <td><?= $listbpbitem->nabar; ?></td>
                 <td><?= $listbpbitem->satuan; ?></td>
                 <td><?= $listbpbitem->qty; ?></td>
-                <td><?= htmlspecialchars($listbpbitem->ket); ?></td>
+                <td>
+                    <p style="word-wrap:break-word;"><?= htmlspecialchars($listbpbitem->ket); ?></p>
+                </td>
             </tr>
         <?php } ?>
         <tr>

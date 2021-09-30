@@ -16,32 +16,77 @@ class M_bpb extends CI_Model
         $this->load->database();
     }
 
-    public function where_datatables($dt, $cmb_bahan, $mutasi_pt, $mutasi_lokal)
+    public function where_datatables($dt, $pt, $cmb_bahan, $mutasi_pt, $mutasi_lokal, $devisi)
     {
         // global $nopo;
         $this->dt = $dt;
+        $this->pt = $pt;
         $this->cmb_bahan = $cmb_bahan;
         $this->mutasi_pt = $mutasi_pt;
         $this->mutasi_lokal = $mutasi_lokal;
+        $this->devisi = $devisi;
         // return $nopo;
     }
 
     private function _get_datatables_query()
     {
         $grub = $this->dt;
+        $pt = $this->pt;
         $bahan = $this->cmb_bahan;
         $mutasi_pt = $this->mutasi_pt;
         $mutasi_lokal = $this->mutasi_lokal;
+        $devisi = $this->devisi;
 
 
         $this->db_mips_gl->from($this->table);
         if ($bahan != '-') {
             $this->db_mips_gl->like('noac15', $grub, 'both');
         } else if ($mutasi_pt == 'mutasi_pt') {
-            $this->db_mips_gl->where('nama', 'PSAM, PT');
-            $this->db_mips_gl->or_where('nama', 'MAPA, PT');
+            if ($pt == '02') {
+                # code...
+                $this->db_mips_gl->where('nama', 'PSAM, PT');
+            } elseif ($pt == '04') {
+                # code...
+                $this->db_mips_gl->or_where('nama', 'MAPA, PT');
+            }
         } else if ($mutasi_lokal == 'mutasi_lokal') {
-            $this->db_mips_gl->like('nama', 'HUBUNGAN INTRA COMPANY', 'both');
+            if ($devisi == '06') {
+                # code...
+                $this->db_mips_gl->where_in(
+                    'noac15',
+                    [
+                        100300000000000,
+                        100301000000000,
+                        100304000000000,
+                        100302000000000
+                    ]
+                );
+                // $this->db_mips_gl->or_like('nama', 'HUBUNGAN INTRA COMPANY EST 1 <> EST 3', 'both');
+                // $this->db_mips_gl->or_like('nama', 'HUBUNGAN INTRA COMPANY EST 1 <> PKS', 'both');
+            } else if ($devisi == '07') {
+                $this->db_mips_gl->where_in(
+                    'noac15',
+                    [
+                        100300000000000,
+                        100301000000000,
+                        100305000000000,
+                        100303000000000
+                    ]
+                );
+                # code...
+            } elseif ($devisi == '03') {
+                $this->db_mips_gl->where_in(
+                    'noac15',
+                    [
+                        100300000000000,
+                        100302000000000,
+                        100303000000000,
+                        100306000000000,
+                    ]
+                );
+                # code...
+                // $this->db_mips_gl->like('nama', 'HUBUNGAN INTRA COMPANY', 'both');
+            }
         }
         //  else {
         //     $tm = '7005';
@@ -124,6 +169,12 @@ class M_bpb extends CI_Model
             return $this->db_logistik_pt->get()->result_array();
         }
     }
+    public function cariPT()
+    {
+        $lokasi = $this->session->userdata('nama_pt');
+
+        return $this->db_logistik_center->query("SELECT kode_pt, nama_pt FROM tb_pt WHERE nama_pt != '$lokasi'")->result_array();
+    }
 
     public function get_stok($kodebar, $txtperiode, $kode_dev)
     {
@@ -201,6 +252,8 @@ class M_bpb extends CI_Model
 
         $sess_lokasi = $this->session->userdata('status_lokasi');
         $kode_devisi = $this->input->post('devisi');
+        $untuk_ket = $this->db_logistik_pt->query("SELECT PT FROM tb_devisi WHERE kodetxt='$kode_devisi'")->row();
+        $devv = $untuk_ket->PT;
         $dig_1 = preg_replace("/[^1-9]/", "", $kode_devisi);
 
         if ($sess_lokasi == "HO") {
@@ -255,12 +308,16 @@ class M_bpb extends CI_Model
         if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
             $statusmutasi = 1;
             $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+            $keterangan = $ket . "(Mutasi dari  $devv)";
         } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
             $statusmutasi = 2;
             $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+            $keterangan = $ket . "(Mutasi dari  $nama_acc)";
+            // $nama_acc
         } else {
             $norefbpb = $noref_bpb;
             $statusmutasi = 0;
+            $keterangan = $this->input->post('txt_ket_rinci');
         }
 
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
@@ -342,7 +399,7 @@ class M_bpb extends CI_Model
         $databpbitem['tglinput']      = date('Y-m-d');
         $databpbitem['jaminput']      = date('H:i:s');
         $databpbitem['periode']       = $periode;
-        $databpbitem['ket']           = $ket;
+        $databpbitem['ket']           = $keterangan;
         $databpbitem['afd']           = $afd_unit;
         $databpbitem['blok']          = $blok_sub;
         $databpbitem['tmtbm']           = $tm_tbm;

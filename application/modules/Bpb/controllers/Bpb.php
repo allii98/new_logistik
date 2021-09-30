@@ -15,6 +15,7 @@ class Bpb extends CI_Controller
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
         $this->db_mips_gl = $this->load->database('db_mips_gl', TRUE);
+        $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
         if (!$this->session->userdata('id_user')) {
@@ -97,6 +98,7 @@ class Bpb extends CI_Controller
         ];
 
         $data['devisi'] = $this->M_bpb->cariDevisi();
+        $data['pt'] = $this->M_bpb->cariPT();
 
         $this->template->load('template', 'v_inputBpb', $data);
     }
@@ -267,10 +269,12 @@ class Bpb extends CI_Controller
     public function list_acc_beban()
     {
         $dt = $this->input->post('dt');
+        $pt = $this->input->post('pt');
         $cmb_bahan = $this->input->post('cmb_bahan');
         $mutasi_pt = $this->input->post('mutasi_pt');
         $mutasi_lokal = $this->input->post('mutasi_lokal');
-        $this->M_bpb->where_datatables($dt, $cmb_bahan, $mutasi_pt, $mutasi_lokal);
+        $devisi = $this->input->post('devisi');
+        $this->M_bpb->where_datatables($dt, $pt, $cmb_bahan, $mutasi_pt, $mutasi_lokal, $devisi);
         $list = $this->M_bpb->get_datatables();
         $data = array();
         $no = $_POST['start'];
