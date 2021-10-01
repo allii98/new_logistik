@@ -51,6 +51,7 @@ class Bkb extends CI_Controller
         $data = [
             'title' => 'Bukti Keluar Barang'
         ];
+        $data['noref_bpb'] = str_replace('.', '/', $this->uri->segment('3'));
 
         $data['pt_mutasi'] = $this->db_logistik_center->get('tb_pt')->result_array();
 
@@ -298,7 +299,11 @@ class Bkb extends CI_Controller
     public function get_data_bpb_qr()
     {
         $noref = $this->input->post('noref');
-        $result = $this->M_bkb->get_data_bpb_qr($noref);
+        if (substr($noref, 8, 3) == 'MUT') {
+            $result = $this->M_bkb->get_data_bpb_qr_mut($noref);
+        } else {
+            $result = $this->M_bkb->get_data_bpb_qr($noref);
+        }
         echo json_encode($result);
     }
 

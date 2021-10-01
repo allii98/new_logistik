@@ -136,6 +136,7 @@
                                 <input type="hidden" id="alokasi_est">
                                 <input type="hidden" id="hidden_norefbpb">
                                 <input type="hidden" id="hidden_id_mutasi">
+                                <input type="hidden" id="hidden_noref_bpb" value="<?= $noref_bpb ?>">
                                 <input type="hidden" id="hidden_kode_pt_login" value="<?= $this->session->userdata('kode_pt_login'); ?>">
                                 <div class="row" style="margin-left:4px;">
                                     <h6><span id="h4_no_bkb"></span></h6>&emsp;&emsp;
@@ -403,8 +404,39 @@
         });
     }
     // qrcode
+    function modalCameraClose() {
+        if (!$('#hidden_noref_bpb').val()) {
+            scanner.stop();
+            $('#multiple').css('display', 'none');
+            // $('#select2_mutasi').next(".select2-container").show();
+        } else {
+            scanner.stop();
+            $('#multiple').css('display', 'block');
+            // $('#select2_mutasi').next(".select2-container").hide();
+        }
+    }
+
     $(document).ready(function() {
-        $('#showCamera').modal('show');
+        // $('#a_print_lpb').hide();
+        if (!$('#hidden_noref_bpb').val()) {
+            $('#showCamera').modal('show');
+            // $('#select2_mutasi').next(".select2-container").show();
+            $('#preview').show();
+            $('#multiple').css('display', 'none');
+        } else {
+            // $('#select2_mutasi').next(".select2-container").hide();
+            $('#multiple').css('display', 'block');
+            var hidden_noref_bpb = $('#hidden_noref_bpb').val();
+            $('#multiple').val(hidden_noref_bpb);
+            $('#txt_no_bpb').val(hidden_noref_bpb);
+            $('#cari_bpb').val(hidden_noref_bpb);
+            cariBpbqr(hidden_noref_bpb);
+            $('#showCamera').modal('hide');
+            $('#txt_norefbpb').html('No. Ref. BPB : ' + hidden_noref_bpb + '&emsp;&emsp;&emsp;&emsp;');
+        }
+    });
+    $(document).ready(function() {
+        // $('#showCamera').modal('show');
         $('#preview').show();
         $('#multiple').css('display', 'block');
         $('#cari_bpb').css('display', 'none');
@@ -520,7 +552,6 @@
             $('#cari_bpb').val(norefbpb);
             $('#txt_no_bpb').val(norefbpb);
             $('#txt_norefbpb').html('No. Ref. BPB : ' + norefbpb + '&emsp;&emsp;&emsp;&emsp;');
-
 
             $("#modalListBpb").modal('hide');
             cariBpbqr(norefbpb);

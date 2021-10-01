@@ -24,6 +24,7 @@ class Home extends CI_Controller
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 
         $this->load->model('M_home');
+        $this->load->model('M_bpb_mutasi');
     }
 
 
@@ -70,13 +71,34 @@ class Home extends CI_Controller
         //output dalam format JSON
         echo json_encode($output);
     }
-    // public function tes()
-    // {
-    //     $data = [
-    //         'tittle' => "Dashboard"
-    //     ];
-    //     $this->template->load('template', 'v_contohTabel', $data);
-    // }
+
+    public function get_data_bpb_mutasi()
+    {
+        $list = $this->M_bpb_mutasi->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+
+            $row = array();
+            $row[] = $no;
+            $row[] = date('d-m-Y', strtotime($field->tglbpb));
+            $row[] = $field->norefbpb;
+            $row[] = $field->bag;
+            $row[] = $field->keperluan;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_bpb_mutasi->count_all(),
+            "recordsFiltered" => $this->M_bpb_mutasi->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
 }
 
 /* End of file Home.php */

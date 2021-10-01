@@ -103,6 +103,25 @@ class M_bkb extends CI_Model
         return $d_return;
     }
 
+    public function get_data_bpb_qr_mut($noref)
+    {
+        $this->db_logistik_center->select('norefbpb, bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev, status_mutasi');
+        $this->db_logistik_center->where('norefbpb', $noref);
+        $this->db_logistik_center->from('bpb_mutasi');
+        $data_bpb = $this->db_logistik_center->get()->row_array();
+
+        $this->db_logistik_center->select('afd, blok, kodebebantxt, ketbeban, nabar, qty, qty_disetujui, satuan, kodesubtxt, ketsub, kodebar, ket, grp, status_item_bkb, approval_item, req_rev_qty_item, periode, tmtbm, thntanam');
+        $this->db_logistik_center->where('norefbpb', $noref);
+        $this->db_logistik_center->from('bpbitem_mutasi');
+        $data_item_bpb = $this->db_logistik_center->get()->result_array();
+
+        $d_return = [
+            'data_bpb' => $data_bpb,
+            'data_item_bpb' => $data_item_bpb
+        ];
+        return $d_return;
+    }
+
     // public function get_tahun_tanam($coa_material)
     // {
     //     $this->db_logistik_pt->select('thntanam, kategori');
