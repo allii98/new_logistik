@@ -131,7 +131,7 @@
                                 <input type="hidden" id="hidden_id_ppo">
                                 <input type="hidden" id="hidden_no_bkb">
                                 <input type="hidden" id="hidden_no_ref_bkb">
-                                <input type="hidden" id="hidden_kode_dev">
+                                <input type="" id="hidden_kode_dev">
                                 <input type="" id="hidden_devisi">
                                 <input type="hidden" id="alokasi_est">
                                 <input type="hidden" id="hidden_norefbpb">
@@ -627,14 +627,20 @@
 
                 $('#bagian').val(data_bpb.bag);
                 $('#alokasi_est').val(data_bpb.alokasi);
-                // $('#diberikan_kpd').val(data_bpb.user);
                 $('#utk_keperluan').val(data_bpb.keperluan);
-                $('#hidden_kode_dev').val(data_bpb.kode_dev);
-                $('#hidden_devisi').val(data_bpb.devisi);
-                $('#devisi_text').val(data_bpb.devisi);
+
+                //jika dia dari bpp mutasi maka devisi diambil dari session user login
+                if (!$('#hidden_noref_bpb').val()) {
+                    $('#hidden_kode_dev').val(data_bpb.kode_dev);
+                    $('#hidden_devisi').val(data_bpb.devisi);
+                    $('#devisi_text').val(data_bpb.devisi);
+                } else {
+                    $('#hidden_kode_dev').val(data.kode_dev);
+                    $('#hidden_devisi').val(data.devisi);
+                    $('#devisi_text').val(data.devisi);
+                }
+
                 $('#hidden_norefbpb').val(data_bpb.norefbpb);
-                // var dev = data_bpb.kode_dev + ' - ' + data_bpb.devisi;
-                // $('#devisi_span').text(dev);
 
                 if (data_bpb.bag == 'TEKNIK' && data_bpb.bhn_bakar == 'BBM') {
                     $('#fieldset_bbm').css('display', 'block');
@@ -696,7 +702,7 @@
                 $('.div_form_2').show();
 
                 //cek mutasi
-                cek_mutasi(ketsub, data_bpb.kode_dev, data_bpb.status_mutasi);
+                cek_mutasi(ketsub, data_bpb.kode_dev, data_bpb.status_mutasi, data_bpb.kode_pt_req_mutasi);
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);
@@ -704,7 +710,7 @@
         });
     }
 
-    function cek_mutasi(ketsub, kode_dev, status_mutasi) {
+    function cek_mutasi(ketsub, kode_dev, status_mutasi, kode_pt) {
 
         $('#cexbox_mutasi').removeAttr('checked', '');
         $('#cexbox_mutasi_local').removeAttr('checked', '');
@@ -721,16 +727,8 @@
             $('#cexbox_mutasi').attr('checked', '');
             $('#cexbox_mutasi').attr('disabled', '');
             $('#devisi_mutasi').removeAttr('disabled', '');
+            cari_pt_mutasi(kode_pt, kode_dev);
 
-            // baru PSAM, MAPA
-            if (ketsub == 'PSAM, PT') {
-                var kode_pt = '02';
-                cari_pt_mutasi(kode_pt);
-
-            } else if (ketsub == 'MAPA, PT') {
-                var kode_pt = '04';
-                cari_pt_mutasi(kode_pt);
-            }
         } else if (status_mutasi == 2) {
             $('#cexbox_mutasi_local').attr('checked', '');
             $('#cexbox_mutasi_local').attr('disabled', '');
@@ -797,8 +795,8 @@
             '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" disabled>' +
             // '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
             // '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
-            '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
-            '<input type="hidden" id="hidden_kodebebantxt' + row + '" name="hidden_kodebebantxt' + row + '" value="0">' +
+            '<input type="" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
+            '<input type="" id="hidden_kodebebantxt' + row + '" name="hidden_kodebebantxt' + row + '" value="0">' +
             '</td>';
         var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Barang -->' +
@@ -1182,20 +1180,12 @@
             },
             success: function(data) {
 
-                // console.log(data);
                 var html = '';
                 var i;
                 html += '<option disabled selected>Pilih Divisi</option>';
-                if (status_mutasi == 2) {
-                    //mutasi lokal selected from coa
-                    for (i = 0; i < data.length; i++) {
-                        if (data[i].kodetxt == kode_devisi_mutasi) {
-                            html += '<option value=' + data[i].kodetxt + ' selected>' + data[i].kodetxt + ' - ' + data[i].PT + '</option>';
-                        }
-                    }
-                } else {
-                    for (i = 0; i < data.length; i++) {
-                        html += '<option value=' + data[i].kodetxt + '>' + data[i].kodetxt + ' - ' + data[i].PT + '</option>';
+                for (i = 0; i < data.length; i++) {
+                    if (data[i].kodetxt == kode_devisi_mutasi) {
+                        html += '<option value=' + data[i].kodetxt + ' selected>' + data[i].kodetxt + ' - ' + data[i].PT + '</option>';
                     }
                 }
 

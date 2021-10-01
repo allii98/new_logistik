@@ -105,7 +105,7 @@ class M_bkb extends CI_Model
 
     public function get_data_bpb_qr_mut($noref)
     {
-        $this->db_logistik_center->select('norefbpb, bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev, status_mutasi');
+        $this->db_logistik_center->select('norefbpb, bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev, status_mutasi, kode_pt_req_mutasi, pt_req_mutasi');
         $this->db_logistik_center->where('norefbpb', $noref);
         $this->db_logistik_center->from('bpb_mutasi');
         $data_bpb = $this->db_logistik_center->get()->row_array();
@@ -116,6 +116,8 @@ class M_bkb extends CI_Model
         $data_item_bpb = $this->db_logistik_center->get()->result_array();
 
         $d_return = [
+            'kode_dev' => $this->session->userdata('kode_dev'),
+            'devisi' => $this->session->userdata('devisi'),
             'data_bpb' => $data_bpb,
             'data_item_bpb' => $data_item_bpb
         ];

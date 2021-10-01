@@ -59,9 +59,11 @@ class Login extends CI_Controller
             }
 
             $get_username = $this->$pt_login->get_where('user', array('username' => $username));
-            // $get_username = $this->db_logistik_center->get_where('user', array('username' => $username));
             $user = $get_username->row();
 
+            // mengambil devisi user login
+            $get_devisi = $this->$pt_login->get_where('tb_devisi', array('kodetxt' => $user->status_lokasi_site));
+            $devisi = $get_devisi->row();
 
             if ($get_username->num_rows() > 0 && password_verify($password, $user->password)) {
 
@@ -123,7 +125,8 @@ class Login extends CI_Controller
                     'pt' => $nama_pt,
                     'level' => $user->level,
                     'kode_level' => $user->kode_level,
-                    'lokasi_kebun' => $user->status_lokasi_site,
+                    'kode_dev' => $devisi->kodetxt,
+                    'devisi' => $devisi->PT,
                     'status_login' => 'oke',
                     'periode' => $periode,
                     'ym_periode' => $ym_periode,
