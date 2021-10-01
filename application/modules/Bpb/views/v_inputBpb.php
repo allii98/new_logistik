@@ -43,12 +43,12 @@
                                     Divisi
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <input type="hidden" name="hidden_devisi" id="hidden_devisi">
 
                                     <?php
                                     switch ($this->session->userdata('status_lokasi')) {
                                         case 'HO':
                                     ?>
+                                            <input type="hidden" name="hidden_devisi" id="hidden_devisi">
                                             <select class="form-control form-control-sm bg-light" id="devisi" disabled>
                                                 <option disabled selected>--Pilih--</option>
                                                 <?php
@@ -64,7 +64,8 @@
                                         case 'SITE':
                                         case 'PKS':
                                         ?>
-                                            <input type="text" name="devisi" id="devisi" value="<?= $devisi->PT; ?>" class="form-control form-control-sm bg-light" readonly>
+                                            <input type="text" name="nama_devisi" id="nama_devisi" value="<?= $devisi->PT; ?>" class="form-control form-control-sm bg-light" readonly>
+                                            <input type="hidden" name="devisi" id="devisi" value="<?= $devisi->kodetxt; ?>" >
                                     <?php
                                             break;
                                         default:
