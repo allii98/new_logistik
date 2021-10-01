@@ -44,15 +44,35 @@
                                 </label>
                                 <div class="col-9 col-xl-12">
                                     <input type="hidden" name="hidden_devisi" id="hidden_devisi">
-                                    <select class="form-control form-control-sm" id="devisi">
-                                        <option selected disabled>--Pilih--</option>
+                                    
+                                    <?php
+                                    switch ($this->session->userdata('status_lokasi')) {
+                                        case 'HO':
+                                    ?>
+                                            <select class="form-control form-control-sm bg-light" id="devisi" disabled>
+                                                <option disabled selected>--Pilih--</option>
+                                                <?php
+                                                foreach ($devisi as $d) : { ?>
+                                                        <option value="<?= $d['kodetxt'] ?>" <?php if ($this->session->userdata('lokasi_kebun') == $d['kodetxt']) echo 'selected'; ?>><?= $d['PT'] ?></option>
+                                                <?php }
+                                                endforeach;
+                                                ?>
+                                            </select>
                                         <?php
-                                        foreach ($devisi as $d) : { ?>
-                                                <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
-                                        <?php }
-                                        endforeach;
+                                            break;
+                                        case 'RO':
+                                        case 'SITE':
+                                        case 'PKS':
                                         ?>
-                                    </select>
+                                            <input type="text" name="devisi" id="devisi" value="<?= $devisi->PT; ?>" class="form-control form-control-sm bg-light" readonly>
+                                    <?php
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    ?>
+
+
                                 </div>
                             </div>
                         </div>
@@ -518,7 +538,7 @@
     }
 
     function devisi() {
-        var devisi = $("#devisi option:selected").text();
+        var devisi = $("#hidden_devisi").val();
 
         return devisi;
     }
@@ -549,6 +569,10 @@
 
 
     $(document).ready(function() {
+
+        var isi_dev = $("#devisi option:selected").text();
+        $('#hidden_devisi').val(isi_dev);
+
 
 
         //mutasi LOKASI
