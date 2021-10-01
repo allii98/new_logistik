@@ -147,7 +147,41 @@
             </div> <!-- end card-box-->
         </div> <!-- end col -->
     </div>
-
+    <div class="ml-2 mr-4" style="margin-top: -10px;">
+        <?php
+        if ($pt_login == 'MSAL') {
+            echo "<div class='external-event bg-primary text-right p-0 mt-0' data-class=bg-info'>";
+            echo "<marquee>";
+            echo "<h3 class='text-white'>PT. MULIA SAWIT AGRO LESTARI</h3>";
+            echo "</marquee>";
+            echo "</div>";
+        } elseif ($pt_login == 'MAPA') {
+            echo "<div class='external-event bg-success text-right p-0 mt-0' data-class=bg-info'>";
+            echo "<marquee>";
+            echo "<h3 class='text-white'>PT. MITRA AGRO PERSADA ABADI</h3>";
+            echo "</marquee>";
+            echo "</div>";
+        } elseif ($pt_login == 'PEAK') {
+            echo "<div class='external-event bg-warning text-right p-0 mt-0' data-class=bg-info'>";
+            echo "<marquee>";
+            echo "<h3 class='text-white'>PT. PERSADA ERA AGRO KENCANA</h3>";
+            echo "</marquee>";
+            echo "</div>";
+        } elseif ($pt_login == 'PSAM') {
+            echo "<div class='external-event bg-info text-right p-0 mt-0' data-class=bg-info'>";
+            echo "<marquee>";
+            echo "<h3 class='text-white'>PT. PERSADA SEJAHTERA AGRO MAKMUR</h3>";
+            echo "</marquee>";
+            echo "</div>";
+        } elseif ($pt_login == 'KPP') {
+            echo "<div class='external-event bg-danger text-right p-0 mt-0' data-class=bg-info'>";
+            echo "<marquee>";
+            echo "<h3 class='text-white'>PT. KERENG PANGI PERDANA</h3>";
+            echo "</marquee>";
+            echo "</div>";
+        }
+        ?>
+    </div>
     <div class="row col-12">
         <div class="col-lg-6 col-xl-6 col-12">
             <div class="card">
@@ -183,42 +217,9 @@
         <div class="col-lg-6 col-xl-6 col-12">
             <div class="card">
                 <div class="card-body">
-                    <?php
-                    if ($pt_login == 'MSAL') {
-                        echo "<div class='external-event bg-primary text-right p-0 mt-0' data-class=bg-info'>";
-                        echo "<marquee>";
-                        echo "<h3 class='text-white'>PT. MULIA SAWIT AGRO LESTARI</h3>";
-                        echo "</marquee>";
-                        echo "</div>";
-                    } elseif ($pt_login == 'MAPA') {
-                        echo "<div class='external-event bg-success text-right p-0 mt-0' data-class=bg-info'>";
-                        echo "<marquee>";
-                        echo "<h3 class='text-white'>PT. MITRA AGRO PERSADA ABADI</h3>";
-                        echo "</marquee>";
-                        echo "</div>";
-                    } elseif ($pt_login == 'PEAK') {
-                        echo "<div class='external-event bg-warning text-right p-0 mt-0' data-class=bg-info'>";
-                        echo "<marquee>";
-                        echo "<h3 class='text-white'>PT. PERSADA ERA AGRO KENCANA</h3>";
-                        echo "</marquee>";
-                        echo "</div>";
-                    } elseif ($pt_login == 'PSAM') {
-                        echo "<div class='external-event bg-info text-right p-0 mt-0' data-class=bg-info'>";
-                        echo "<marquee>";
-                        echo "<h3 class='text-white'>PT. PERSADA SEJAHTERA AGRO MAKMUR</h3>";
-                        echo "</marquee>";
-                        echo "</div>";
-                    } elseif ($pt_login == 'KPP') {
-                        echo "<div class='external-event bg-danger text-right p-0 mt-0' data-class=bg-info'>";
-                        echo "<marquee>";
-                        echo "<h3 class='text-white'>PT. KERENG PANGI PERDANA</h3>";
-                        echo "</marquee>";
-                        echo "</div>";
-                    }
-                    ?>
-                    <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small><br>
-                    <div class="row justify-content-between ml-0 mr-0 mt-2 mb-2">
-                        <h4 class="header-title mb-0">Mutasi Masuk</h4>
+                    <!-- <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small><br> -->
+                    <div class="row justify-content-between ml-0 mr-0 mb-2">
+                        <h4 class="header-title mb-0"><b>Mutasi Masuk</b></h4>
                         <!-- <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a> -->
                     </div>
 

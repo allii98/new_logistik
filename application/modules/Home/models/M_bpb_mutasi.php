@@ -18,15 +18,23 @@ class M_bpb_mutasi extends CI_Model
 
       private function _get_datatables_query()
       {
-            $kode_pt_login = $this->session->userdata('kode_pt_login');
+            $pt_login = $this->session->userdata('app_pt');
             $role_user = $this->session->userdata('user');
             $lokasi = $this->session->userdata('status_lokasi');
+
+            if ($pt_login == 'PSAM') {
+                  $pt_minta_bpb = 'PSAM, PT';
+            } elseif ($pt_login == 'MAPA') {
+                  $pt_minta_bpb = 'MAPA, PT';
+            } else {
+                  $pt_minta_bpb = '';
+            }
 
             $this->db_logistik_center->distinct();
             $this->db_logistik_center->select('bpb_mutasi.norefbpb, bpb_mutasi.tglbpb, bpb_mutasi.bag, bpb_mutasi.keperluan');
             $this->db_logistik_center->from($this->table);
             $this->db_logistik_center->join('bpbitem_mutasi', 'bpb_mutasi.norefbpb = bpbitem_mutasi.norefbpb', 'left');
-            $this->db_logistik_center->where('bpbitem_mutasi.ketsub', 'PSAM, PT');
+            $this->db_logistik_center->where('bpbitem_mutasi.ketsub', $pt_minta_bpb);
             // $this->db_logistik_center->group_by('bpb_mutasi.norefbpb');
             // $this->db_logistik_center->query("SELECT distinct bpb_mutasi.norefbpb, bpb_mutasi.tglbpb, bpb_mutasi.bag, bpb_mutasi.keperluan FROM bpb_mutasi left join bpbitem_mutasi ON bpb_mutasi.norefbpb = bpbitem_mutasi.norefbpb where bpbitem_mutasi.ketsub = 'PSAM, PT'");
 

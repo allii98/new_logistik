@@ -32,7 +32,7 @@
                                 <!-- <select class="js-data-example-ajax form-control select2 col-9 ml-2" id="select2">
                                     </select> -->
                                 <input id="cari_bpb" name="cari_bpb" class="form-control form-control-sm" type="text" onfocus="cari_bpb()" placeholder="pilih no BPB" style="font-size: 12px; margin-top: -5px;">
-                                <input style="display:none;" id="multiple" class="form-control bg-light form-control-sm" type="text" readonly style="font-size: 12px; margin-top: -5px;">
+                                <input style="display:none;" id="multiple" class="form-control bg-light form-control-sm" type="text" readonly>
                                 <input type="hidden" id="txt_no_bpb">
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                                 <input type="hidden" id="hidden_no_bkb">
                                 <input type="hidden" id="hidden_no_ref_bkb">
                                 <input type="hidden" id="hidden_kode_dev">
-                                <input type="hidden" id="hidden_devisi">
+                                <input type="" id="hidden_devisi">
                                 <input type="hidden" id="alokasi_est">
                                 <input type="hidden" id="hidden_norefbpb">
                                 <input type="hidden" id="hidden_id_mutasi">
@@ -315,6 +315,11 @@
         width: 10% !important;
     }
 
+    #multiple {
+        font-size: 12px;
+        margin-top: -5px;
+    }
+
     table#databpb td {
         padding: 3px;
         padding-left: 10px;
@@ -426,6 +431,7 @@
         } else {
             // $('#select2_mutasi').next(".select2-container").hide();
             $('#multiple').css('display', 'block');
+            $('#camera').css('display', 'none');
             var hidden_noref_bpb = $('#hidden_noref_bpb').val();
             $('#multiple').val(hidden_noref_bpb);
             $('#txt_no_bpb').val(hidden_noref_bpb);

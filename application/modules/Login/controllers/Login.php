@@ -123,7 +123,8 @@ class Login extends CI_Controller
                     'pt' => $nama_pt,
                     'level' => $user->level,
                     'kode_level' => $user->kode_level,
-                    'status_login'    => 'oke',
+                    'lokasi_kebun' => $user->status_lokasi_site,
+                    'status_login' => 'oke',
                     'periode' => $periode,
                     'ym_periode' => $ym_periode,
                     'Ymd_periode' => $Ymd_periode
