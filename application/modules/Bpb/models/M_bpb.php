@@ -457,6 +457,8 @@ class M_bpb extends CI_Model
             }
 
             if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
+                $databpb['kode_pt_req_mutasi'] = $this->session->userdata('kode_pt_login');
+                $databpb['pt_req_mutasi'] = $this->session->userdata('nama_pt');
                 $this->db_logistik_center->insert('bpb_mutasi', $databpb);
 
 
