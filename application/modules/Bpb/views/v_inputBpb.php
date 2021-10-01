@@ -44,7 +44,7 @@
                                 </label>
                                 <div class="col-9 col-xl-12">
                                     <input type="hidden" name="hidden_devisi" id="hidden_devisi">
-                                    
+
                                     <?php
                                     switch ($this->session->userdata('status_lokasi')) {
                                         case 'HO':
@@ -53,7 +53,7 @@
                                                 <option disabled selected>--Pilih--</option>
                                                 <?php
                                                 foreach ($devisi as $d) : { ?>
-                                                        <option value="<?= $d['kodetxt'] ?>" <?php if ($this->session->userdata('lokasi_kebun') == $d['kodetxt']) echo 'selected'; ?>><?= $d['PT'] ?></option>
+                                                        <option value="<?= $d['kodetxt'] ?>" <?php if ($this->session->userdata('kode_dev') == $d['kodetxt']) echo 'selected'; ?>><?= $d['PT'] ?></option>
                                                 <?php }
                                                 endforeach;
                                                 ?>

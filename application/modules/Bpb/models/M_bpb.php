@@ -155,7 +155,7 @@ class M_bpb extends CI_Model
     public function cariDevisi()
     {
         $lokasi = $this->session->userdata('status_lokasi');
-        $lokasi_kebun = $this->session->userdata('lokasi_kebun');
+        $lokasi_kebun = $this->session->userdata('kode_dev');
 
         if ($lokasi != 'HO') {
             return $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lokasi_kebun'")->row();
