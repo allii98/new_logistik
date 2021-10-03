@@ -184,22 +184,31 @@ class Bkb extends CI_Controller
         $kodebar = $this->input->post('kodebar');
         $norefbpb = $this->input->post('norefbpb');
         $mutasi = $this->input->post('mutasi');
+        $mutasi_pt = $this->input->post('mutasi_pt');
         $id_mutasi_item = $this->input->post('id_mutasi_item');
         $cmb_blok_sub = $this->input->post('cmb_blok_sub');
         $edit = $this->input->post('edit');
         $noref_bkb = $this->input->post('noref_bkb');
 
         //ubah status_item_bkb di bpbitem
-        $this->M_bkb->update_status_item_bkb($kodebar, $norefbpb);
+        $update_bpb_item = $this->M_bkb->update_status_item_bkb($kodebar, $norefbpb);
+        //ubah status_bkb di bpb
+        $update_bpb = $this->M_bkb->update_status_bkb($norefbpb);
+
+        //ubah status_item_bkb di bpbitem_mutasi dan status_bkb di bpb_mutasi
+        if ($mutasi_pt == '1') {
+            $update_bpb_item_mutasi = $this->M_bkb->update_status_item_bkb_mutasi($kodebar, $norefbpb);
+            $update_bpb_mutasi = $this->M_bkb->update_status_bkb_mutasi($norefbpb);
+        } else {
+            $update_bpb_item_mutasi = NULL;
+            $update_bpb_mutasi = NULL;
+        }
 
         if ($edit == 1) {
             $delete_register = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $noref_bkb));
         } else {
             $delete_register = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
         }
-
-        //ubah status_bkb di bpb
-        $update_bkb = $this->M_bkb->update_status_bkb($norefbpb);
 
         $deletebkb = $this->db_logistik_pt->delete('keluarbrgitem', array('id' => $id_keluarbrgitem));
 
@@ -215,7 +224,10 @@ class Bkb extends CI_Controller
 
         $data = [
             'delete_register' => $delete_register,
-            'update_bkb' => $update_bkb,
+            'update_bpb' => $update_bpb,
+            'update_bpb_item' => $update_bpb_item,
+            'update_bpb_item_mutasi' => $update_bpb_item_mutasi,
+            'update_bpb_mutasi' => $update_bpb_mutasi,
             'deletebkb' => $deletebkb
         ];
 
@@ -453,25 +465,27 @@ class Bkb extends CI_Controller
 
         // membuat noref Mutasi
         if ($mutasi == 1) {
-            if ($data['get_devisi_mutasi']['lokasi'] == 'SITE') {
-                $text1_mutasi = 'EST';
-            } elseif ($data['get_devisi_mutasi']['lokasi'] == 'RO') {
-                $text1_mutasi = 'ROM';
-            } elseif ($data['get_devisi_mutasi']['lokasi'] == 'PKS') {
-                $text1_mutasi = 'FAC';
-            } elseif ($data['get_devisi_mutasi']['lokasi'] == 'HO') {
-                $text1_mutasi = 'PST';
-            }
-            $no_ref_mutasi = $text1_mutasi . "-MUTASI/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
+            // if ($data['get_devisi_mutasi']['lokasi'] == 'SITE') {
+            //     $text1_mutasi = 'EST';
+            // } elseif ($data['get_devisi_mutasi']['lokasi'] == 'RO') {
+            //     $text1_mutasi = 'ROM';
+            // } elseif ($data['get_devisi_mutasi']['lokasi'] == 'PKS') {
+            //     $text1_mutasi = 'FAC';
+            // } elseif ($data['get_devisi_mutasi']['lokasi'] == 'HO') {
+            //     $text1_mutasi = 'PST';
+            // }
+            $no_ref_mutasi = $text1 . "-BKB/MUT/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
         }
 
         $mutasi_dari_devisi = $this->input->post('devisi');
         if ($mutasi == 1) {
             $keperluan = 'MUTASI dari BKB NO. ' . $skb . ' ' . $mutasi_dari_devisi;
             $diberikan_kpd = $data['get_devisi_mutasi']['lokasi'];
+            $ket = 'MUTASI dari BKB NO. ' . $skb . ' ' . $mutasi_dari_devisi;
         } else {
             $keperluan = $this->input->post('txt_untuk_keperluan');
             $diberikan_kpd = $this->input->post('txt_diberikan_kpd');
+            $ket = $this->input->post('txt_ket_rinci');
         }
 
         // $datastockkeluar['id']              = $id_stockkeluar;
@@ -553,7 +567,7 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['periode']       = $this->session->userdata('Ymd_periode') . " 00:00:00";
         $datakeluarbrgitem['txtperiode']    = $txtperiode;
         $datakeluarbrgitem['noadjust']      = "0";
-        $datakeluarbrgitem['ket']           = $this->input->post('txt_ket_rinci');
+        $datakeluarbrgitem['ket']           = $ket;
         $datakeluarbrgitem['kodebeban']     = $this->input->post('hidden_kodebebantxt');
         $datakeluarbrgitem['kodebebantxt']  = $this->input->post('hidden_kodebebantxt');
         $datakeluarbrgitem['ketbeban']      = $this->input->post('cmb_bahan');
@@ -942,6 +956,16 @@ class Bkb extends CI_Controller
     {
         $nama_noac = $this->input->post('nama_noac');
         $output = $this->M_bkb->get_noac_gl($nama_noac);
+
+        echo json_encode($output);
+    }
+
+    public function ubah_status_bpb_mutasi()
+    {
+        $noref_bpb = $this->input->post('no_ref_bpb');
+        $kodebar = $this->input->post('kodebar');
+
+        $output = $this->M_bkb->ubah_status_bpb_mutasi($noref_bpb, $kodebar);
 
         echo json_encode($output);
     }

@@ -102,12 +102,12 @@
                         <fieldset class="border mb-1 p-1">
                             <div class="row">
                                 <div class="custom-control custom-checkbox ml-3 mt-0 col-3 col-lg-1 col-xl-1">
-                                    <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()">
+                                    <input type="checkbox" name="cexbox_mutasi" class="custom-control-input" id="cexbox_mutasi" onclick="cekbox_mutasi()" disabled>
                                     <label class="custom-control-label" for="cexbox_mutasi" style="font-size: 12px;">Mutasi?</label>
                                     <input type="hidden" id="hidden_cekbox_mutasi" value="">
                                 </div>
                                 <div class="custom-control custom-checkbox mt-0 col-6 col-lg-1 col-xl-1">
-                                    <input type="checkbox" name="cexbox_mutasi_local" class="custom-control-input" id="cexbox_mutasi_local" onclick="cekbox_mutasi()">
+                                    <input type="checkbox" name="cexbox_mutasi_local" class="custom-control-input" id="cexbox_mutasi_local" onclick="cekbox_mutasi()" disabled>
                                     <label class="custom-control-label" for="cexbox_mutasi_local" style="font-size: 12px;">Mutasi&nbsp;Lokal?</label>
                                     <input type="hidden" id="hidden_cekbox_mutasi" value="">
                                 </div>
@@ -658,8 +658,13 @@
                     tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item, data_item_bpb[i].req_rev_qty_item);
                     // tahun_tanam(i, data_item_bpb[i].kodebebantxt);
 
-                    //sum stok all periode / qtymasuk - qtykeluar
-                    get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
+                    //sum stok all periode / qtymasuk - qtykeluar. jika dia mutasi devisi diambil dari session
+                    if (!$('#hidden_noref_bpb').val()) {
+                        get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
+                    } else {
+                        get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data.kode_dev);
+
+                    }
 
                     var tmtbm = data_item_bpb[i].tmtbm;
                     var afd = data_item_bpb[i].afd;
@@ -699,13 +704,21 @@
                     }
                     $('#txt_ket_rinci_' + i).val(ket);
 
-                    //merubah beban kepada PT yang meminta BPB
-                    ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
+                    //merubah beban kepada PT yang meminta BPB\
+                    if (!$('#hidden_noref_bpb').val()) {
+                        console.log('ini bukan mutasi');
+                    } else {
+                        ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
+                    }
                 }
                 $('.div_form_2').show();
 
                 //cek mutasi
-                cek_mutasi(ketsub, data_bpb.kode_dev, data_bpb.status_mutasi, data_bpb.kode_pt_req_mutasi);
+                if (!$('#hidden_noref_bpb').val()) {
+                    console.log('ini bukan mutasi');
+                } else {
+                    cek_mutasi(ketsub, data_bpb.kode_dev, data_bpb.status_mutasi, data_bpb.kode_pt_req_mutasi);
+                }
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);
@@ -729,13 +742,11 @@
 
             $('#cexbox_mutasi').attr('checked', '');
             $('#cexbox_mutasi').attr('disabled', '');
-            $('#devisi_mutasi').removeAttr('disabled', '');
             cari_pt_mutasi(kode_pt, kode_dev);
 
         } else if (status_mutasi == 2) {
             $('#cexbox_mutasi_local').attr('checked', '');
             $('#cexbox_mutasi_local').attr('disabled', '');
-            $('#devisi_mutasi_local').removeAttr('disabled', '');
 
             var str = ketsub.substring(23);
             console.log(str);
@@ -937,6 +948,9 @@
     // }
 
     function get_stok(i, kodebar, txtperiode, kode_dev) {
+        console.log(kodebar);
+        console.log(txtperiode);
+        console.log(kode_dev);
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/get_stok'); ?>",
@@ -964,12 +978,14 @@
 
         var hidden_kode_barang = $('#hidden_kode_barang_' + n).val();
         var kode_dev = $('#hidden_kode_dev').val();
+        var noref_bpb = $('#txt_no_bpb').val();
 
         var pt_mutasi = $('#pt_mutasi').val();
         var devisi_mutasi = $('#devisi_mutasi').val();
 
         if ($('#cexbox_mutasi').is(':checked')) {
             var cexbox_mutasi = '1';
+            var cexbox_mutasi_pt = '1';
         }
 
         if ($('#cexbox_mutasi_local').is(':checked')) {
@@ -1096,6 +1112,11 @@
                         $('#btn_hapus_' + n).css('display', 'block');
                         $('#btn_simpan_' + n).css('display', 'none');
                         $('#rev_qty_' + n).css('display', 'none');
+
+                        //jika dia mutasi ubah status bpb mutasi
+                        if (cexbox_mutasi_pt == '1') {
+                            ubah_status_bpb_mutasi(hidden_kode_barang, noref_bpb);
+                        }
                     }
                 },
                 error: function(response) {
@@ -1103,6 +1124,27 @@
                 }
             });
         }
+    }
+
+    function ubah_status_bpb_mutasi(hidden_kode_barang, noref_bpb) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bkb/ubah_status_bpb_mutasi'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'no_ref_bpb': noref_bpb,
+                'kodebar': hidden_kode_barang
+            },
+            success: function(data) {
+                console.log(data);
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
     }
 
     function cetak_bkb() {
@@ -1317,6 +1359,7 @@
 
         if ($('#cexbox_mutasi').is(':checked')) {
             var cexbox_mutasi = '1';
+            var cexbox_mutasi_pt = '1';
         } else {
             var cexbox_mutasi = '0';
         }
@@ -1343,6 +1386,7 @@
                 'kodebar': $('#hidden_kode_barang_' + n).val(),
                 'norefbpb': $('#hidden_norefbpb').val(),
                 'mutasi': cexbox_mutasi,
+                'mutasi_pt': cexbox_mutasi_pt,
                 'edit': '0',
             },
             success: function(data) {

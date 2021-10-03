@@ -379,6 +379,20 @@ class M_bkb extends CI_Model
         return $this->db_logistik_pt->update('bpb');
     }
 
+    public function update_status_item_bkb_mutasi($kodebar, $norefbpb)
+    {
+        $this->db_logistik_center->set('status_item_bkb', NULL);
+        $this->db_logistik_center->where(['kodebar' => $kodebar, 'norefbpb' => $norefbpb]);
+        $this->db_logistik_center->update('bpbitem_mutasi');
+    }
+
+    public function update_status_bkb_mutasi($norefbpb)
+    {
+        $this->db_logistik_center->set('status_bkb', 0);
+        $this->db_logistik_center->where('norefbpb', $norefbpb);
+        return $this->db_logistik_center->update('bpb_mutasi');
+    }
+
     public function cek_status_approve($noref_bkb)
     {
         $this->db_logistik_pt->select('kodebar');
@@ -399,6 +413,35 @@ class M_bkb extends CI_Model
         $this->db_mips_gl->where(['nama' => $nama_noac, 'general15' => '301005000000000']); // general15 itu kategori PT mutasi
         $this->db_mips_gl->from('noac');
         return $this->db_mips_gl->get()->row_array();
+    }
+
+    public function ubah_status_bpb_mutasi($norefbpb, $kodebar)
+    {
+        //ubah status bpbitem menjadi 1 where kodebar AND NOREF
+        $this->db_logistik_center->set('status_item_bkb', 1);
+        $this->db_logistik_center->where(['kodebar' => $kodebar, 'norefbpb' => $norefbpb]);
+        $this->db_logistik_center->update('bpbitem_mutasi');
+
+        //$count_bpbitem = count bpbitem where kodebar AND noref;
+        $this->db_logistik_center->select('norefbpb');
+        $this->db_logistik_center->where('norefbpb', $norefbpb);
+        $this->db_logistik_center->from('bpbitem_mutasi');
+        $count_bpbitem = $this->db_logistik_center->count_all_results();
+
+        //$count_keluarbrgitem = count keluarbrgitem where kodebar AND noref;
+        $this->db_logistik_pt->select('nobpb');
+        $this->db_logistik_pt->where('nobpb', $norefbpb);
+        $this->db_logistik_pt->from('keluarbrgitem');
+        $count_keluarbrgitem = $this->db_logistik_pt->count_all_results();
+
+        if ($count_bpbitem == $count_keluarbrgitem) {
+            //  update status bpb menjadi 1 where noref
+            $this->db_logistik_center->set('status_bkb', 1);
+            $this->db_logistik_center->where('norefbpb', $norefbpb);
+            return $this->db_logistik_center->update('bpb_mutasi');
+        } else {
+            return FALSE;
+        }
     }
 }
 
