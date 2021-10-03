@@ -266,6 +266,32 @@ class M_bkb extends CI_Model
         return $jumlah_nilai;
     }
 
+    public function cek_stockawal($kodebar, $txtperiode)
+    {
+        $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+        $this->db_logistik_pt->from('stockawal');
+        $stock_awal_num_rows = $this->db_logistik_pt->get()->num_rows();
+
+        $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+        $this->db_logistik_pt->from('stockawal');
+        $stock_awal = $this->db_logistik_pt->get()->row_array();
+
+        if ($stock_awal_num_rows >= 1) {
+            if ($stock_awal['saldoakhir_nilai'] == 0 or $stock_awal['saldoakhir_qty'] == 0) {
+                $result = 0;
+                return $result;
+            } else {
+                $result = 1;
+                return $result;
+            }
+        } else {
+            $result = 0;
+            return $result;
+        }
+    }
+
     public function get_data_keluarbrgitem($id_keluarbrgitem)
     {
         $this->db_logistik_pt->select('kodebar, qty2, kode_dev, txtperiode');
@@ -365,6 +391,14 @@ class M_bkb extends CI_Model
             $this->db_logistik_pt->where(['NO_REF' => $noref_bkb]);
             $this->db_logistik_pt->update('stockkeluar');
         }
+    }
+
+    public function get_noac_gl($nama_noac)
+    {
+        $this->db_mips_gl->select('noac15, nama');
+        $this->db_mips_gl->where(['nama' => $nama_noac, 'general15' => '301005000000000']); // general15 itu kategori PT mutasi
+        $this->db_mips_gl->from('noac');
+        return $this->db_mips_gl->get()->row_array();
     }
 }
 

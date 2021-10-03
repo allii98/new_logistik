@@ -4,7 +4,7 @@
         <div class="widget-rounded-circle card-box">
             <div class="row justify-content-between">
                 <h4 class="header-title" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Stock Logistik PT. <?= $this->session->userdata('app_pt'); ?></h4>
-                <!-- <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button> -->
+                <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputStockAwal()">Input Stock Awal</button>
             </div>
             <hr>
             <div class="row">
@@ -14,7 +14,7 @@
 
                         <thead class="thead-light">
                             <tr role="row">
-                                <!-- <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">#</th> -->
+                                <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">#</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">No.</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Periode</th>
                                 <th rowspan="2" class="align-middle sorting_asc" tabindex="0" aria-controls="complex-header-datatable" colspan="1" style="width: 239.4px;" aria-sort="ascending" aria-label="Name: activate to sort column descending">Kode Barang</th>
@@ -105,12 +105,12 @@
                         <div class="form-group row">
                             <label for="txt_saldo_akhir_qty" class="col-3 col-form-label">Saldo Akhir (Qty)</label>
                             <div class="col-3">
-                                <input type="text" class="form-control bg-light" id="txt_saldo_akhir_qty" name="txt_saldo_akhir_qty" placeholder="Min. Stock (Qty)" readonly value="0.00">
+                                <input type="text" class="form-control" id="txt_saldo_akhir_qty" name="txt_saldo_akhir_qty" placeholder="Min. Stock (Qty)" value="0.00">
                             </div>
 
-                            <label class="control-label col-md-2">Saldo Akhir (Qty)</label>
+                            <label class="control-label col-md-2">Saldo Akhir (Nilai)</label>
                             <div class="col-md-3">
-                                <input type="text" class="form-control bg-light" id="txt_saldo_akhir_nilai" name="txt_saldo_akhir_nilai" placeholder="Saldo Awal (Nilai)" readonly value="0.00">
+                                <input type="text" class="form-control" id="txt_saldo_akhir_nilai" name="txt_saldo_akhir_nilai" placeholder="Saldo Awal (Nilai)" value="0.00">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -129,9 +129,9 @@
                     </form>
                 </div>
                 <!-- <div class="modal-footer">
-					<button type="button" class="btn btn-success" id="btn_simpan">Simpan</button>
-					<button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
-				</div> -->
+                    <button type="button" class="btn btn-success" id="btn_simpan">Simpan</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Tutup</button>
+                </div> -->
             </div>
         </div>
     </div>
@@ -272,7 +272,7 @@
         // });
         $('#modalInputStockAwal').modal('show');
         $('#btn_simpan').hide();
-        $('#btn_ubah').hide();
+        $('#btn_ubah').show();
 
         $.ajax({
             type: "POST",

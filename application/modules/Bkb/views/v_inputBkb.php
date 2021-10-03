@@ -131,8 +131,8 @@
                                 <input type="hidden" id="hidden_id_ppo">
                                 <input type="hidden" id="hidden_no_bkb">
                                 <input type="hidden" id="hidden_no_ref_bkb">
-                                <input type="" id="hidden_kode_dev">
-                                <input type="" id="hidden_devisi">
+                                <input type="hidden" id="hidden_kode_dev">
+                                <input type="hidden" id="hidden_devisi">
                                 <input type="hidden" id="alokasi_est">
                                 <input type="hidden" id="hidden_norefbpb">
                                 <input type="hidden" id="hidden_id_mutasi">
@@ -698,6 +698,9 @@
                         $('#txt_qty_disetujui_' + i).val(qty);
                     }
                     $('#txt_ket_rinci_' + i).val(ket);
+
+                    //merubah beban kepada PT yang meminta BPB
+                    ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
                 }
                 $('.div_form_2').show();
 
@@ -767,6 +770,49 @@
         }
     }
 
+    function ubah_beban_bkb_mutasi(i, kode_pt) {
+
+        // kode PT 01 == MSAL, 02 == PSAM
+        if (kode_pt == '01') {
+            var nama_noac = 'MSAL, PT';
+        } else if (kode_pt == '02') {
+            var nama_noac = 'PSAM, PT';
+        } else if (kode_pt == '03') {
+            var nama_noac = 'PEAK, PT';
+        } else if (kode_pt == '04') {
+            var nama_noac = 'MAPA, PT';
+        } else if (kode_pt == '05') {
+            var nama_noac = 'KPP, PT';
+        } else {
+            swal('coa mutasi tidak ditemukan!');
+            $('.div_form_2').css('pointer-events', 'none');
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bkb/get_noac_gl'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                'nama_noac': nama_noac
+            },
+            success: function(data) {
+
+                $('#txt_account_beban_' + i).val('');
+                $('#hidden_no_acc_' + i).val('');
+
+                $('#txt_account_beban_' + i).val(data.nama);
+                $('#hidden_no_acc_' + i).val(data.noac15);
+
+            },
+            error: function(response) {
+                alert('ERROR! ' + response.responseText);
+            }
+        });
+
+    }
+
     function tambah_row(row, status_item_bkb, approval_item, req_rev_qty_item) {
         var tr_buka = '<tr id="tr_' + row + '">';
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
@@ -795,8 +841,8 @@
             '<input type="text" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_account_beban_' + row + '" value="-" name="txt_account_beban_' + row + '" disabled>' +
             // '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
             // '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
-            '<input type="" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
-            '<input type="" id="hidden_kodebebantxt' + row + '" name="hidden_kodebebantxt' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
+            '<input type="hidden" id="hidden_kodebebantxt' + row + '" name="hidden_kodebebantxt' + row + '" value="0">' +
             '</td>';
         var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Barang -->' +
@@ -996,55 +1042,64 @@
                 },
 
                 success: function(data) {
-                    $('#new_bkb').removeAttr('disabled');
-                    $('#camera').attr('disabled', '');
-                    $('#cancelBkb').removeAttr('disabled');
-                    $('#a_print_bkb').removeAttr('disabled');
 
-                    $('#lbl_status_simpan_' + n).empty();
+                    if (data.nilai_keluarbrgitem == '0') {
+                        swal('barang tersebut belum ada di stock awal! silahkan input!');
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_bkb_status').empty();
+                        $('#btn_simpan_' + n).css('display', 'block');
 
-                    $('#lbl_bkb_status').empty();
-                    $('#h4_no_bkb').html('No. BKB : ' + data.no_bkb);
-                    $('#hidden_no_bkb').val(data.no_bkb);
-                    $('#id_keluarbrgitem_' + n).val(data.id_keluarbrgitem);
+                    } else {
+                        $('#new_bkb').removeAttr('disabled');
+                        $('#camera').attr('disabled', '');
+                        $('#cancelBkb').removeAttr('disabled');
+                        $('#a_print_bkb').removeAttr('disabled');
 
-                    $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
-                    $('#hidden_no_ref_bkb').val(data.noref_bkb);
+                        $('#lbl_status_simpan_' + n).empty();
 
-                    $('#hidden_id_mutasi').val(data.id_mutasi);
-                    $('#hidden_id_mutasi_item_' + n).val(data.id_mutasi_item);
-                    $('#hidden_id_register_stok_' + n).val(data.id_register_stok);
+                        $('#lbl_bkb_status').empty();
+                        $('#h4_no_bkb').html('No. BKB : ' + data.no_bkb);
+                        $('#hidden_no_bkb').val(data.no_bkb);
+                        $('#id_keluarbrgitem_' + n).val(data.id_keluarbrgitem);
 
-                    $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
+                        $('#h4_no_ref_bkb').html('No. Ref. BKB : ' + data.noref_bkb);
+                        $('#hidden_no_ref_bkb').val(data.noref_bkb);
 
-                    $.toast({
-                        position: 'top-right',
-                        heading: 'Success',
-                        text: 'Berhasil Disimpan!',
-                        icon: 'success',
-                        loader: false
-                    });
+                        $('#hidden_id_mutasi').val(data.id_mutasi);
+                        $('#hidden_id_mutasi_item_' + n).val(data.id_mutasi_item);
+                        $('#hidden_id_register_stok_' + n).val(data.id_register_stok);
 
-                    console.log(data);
+                        $('.div_form_2').find('#rev_qty_' + n + '').attr('disabled', '');
 
-                    //hitung ulang stok?
-                    get_stok(n, hidden_kode_barang, data.txtperiode, kode_dev);
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Disimpan!',
+                            icon: 'success',
+                            loader: false
+                        });
 
-                    $('#hidden_id_bkb').val(data.id_stockkeluar);
+                        //hitung ulang stok?
+                        get_stok(n, hidden_kode_barang, data.txtperiode, kode_dev);
 
-                    $('#pt_mutasi').prop('disabled', true);
-                    $('#devisi_mutasi').prop('disabled', true);
-                    $('#cexbox_mutasi').attr('disabled', true);
-                    $('#tgl_bkb_txt').attr('disabled', true);
-                    $('#cari_bpb').attr('disabled', true);
-                    $('#diberikan_kpd').attr('disabled', true);
-                    $('#utk_keperluan').attr('disabled', true);
-                    $('#camera').attr('disabled', true);
+                        $('#hidden_id_bkb').val(data.id_stockkeluar);
 
-                    $('#btn_hapus_' + n).css('display', 'block');
-                    $('#btn_simpan_' + n).css('display', 'none');
-                    $('#rev_qty_' + n).css('display', 'none');
+                        $('#pt_mutasi').prop('disabled', true);
+                        $('#devisi_mutasi').prop('disabled', true);
+                        $('#cexbox_mutasi').attr('disabled', true);
+                        $('#tgl_bkb_txt').attr('disabled', true);
+                        $('#cari_bpb').attr('disabled', true);
+                        $('#diberikan_kpd').attr('disabled', true);
+                        $('#utk_keperluan').attr('disabled', true);
+                        $('#camera').attr('disabled', true);
 
+                        $('#btn_hapus_' + n).css('display', 'block');
+                        $('#btn_simpan_' + n).css('display', 'none');
+                        $('#rev_qty_' + n).css('display', 'none');
+                    }
+                },
+                error: function(response) {
+                    alert('ERROR! ' + response.responseText);
                 }
             });
         }

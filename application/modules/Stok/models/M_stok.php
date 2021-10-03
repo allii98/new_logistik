@@ -122,9 +122,10 @@ class M_stok extends CI_Model
         $data_input_stock_awal["thn"] = date("Y");
         $data_input_stock_awal["saldoakhir_qty"] = $this->input->post('txt_saldo_akhir_qty');
         $data_input_stock_awal["saldoakhir_nilai"] = $this->input->post('txt_saldo_akhir_nilai');
-        // $data_input_stock_awal["nilai_masuk"] = $this->input->post('');
         $data_input_stock_awal["QTY_MASUK"] = "0";
-        // $data_input_stock_awal["QTY_KELUAR"] = $this->input->post('');
+        $data_input_stock_awal["QTY_KELUAR"] = '0';
+        $data_input_stock_awal["nilai_masuk"] = '0';
+        $data_input_stock_awal["nilai_keluar"] = '0';
         // $data_input_stock_awal["QTY_ADJMASUK"] = $this->input->post('');
         // $data_input_stock_awal["QTY_ADJKELUAR"] = $this->input->post('');
         // $data_input_stock_awal["HARGAPORAT"] = $this->input->post('');

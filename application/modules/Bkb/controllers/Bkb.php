@@ -27,6 +27,8 @@ class Bkb extends CI_Controller
         $this->db_logistik_peak = $this->load->database('db_logistik_peak', TRUE);
         //DB kpp
         $this->db_logistik_kpp = $this->load->database('db_logistik_kpp', TRUE);
+        // DB GL
+        $this->db_mips_gl = $this->load->database('db_mips_gl', TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -440,8 +442,14 @@ class Bkb extends CI_Controller
             $data['get_devisi_mutasi'] = $this->db_logistik_kpp->get_where('tb_devisi', ['kodetxt' => $kode_devisi_mutasi])->row_array();
         }
 
-        // mendapatkan nilai rata2
-        $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);
+        //cek apakah sudah ada barang nya atau belum di stockawal
+        $cek_stockawal = $this->M_bkb->cek_stockawal($kodebar, $txtperiode);
+        if ($cek_stockawal == 1) {
+            // mendapatkan nilai rata2
+            $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);
+        } else {
+            $nilai_keluarbrgitem = '0';
+        }
 
         // membuat noref Mutasi
         if ($mutasi == 1) {
@@ -590,79 +598,88 @@ class Bkb extends CI_Controller
             'USER' => $this->session->userdata('user'),
         ];
 
-        if (empty($this->input->post('hidden_no_bkb'))) {
-            if ($mutasi == '1') {
-                $savedatastockkeluar_mutasi = $this->M_bkb->savedatastockkeluar_mutasi($datastockkeluar);
-                $savedatakeluarbrgitem_mutasi = $this->M_bkb->savedatakeluarbrgitem_mutasi($datakeluarbrgitem);
-            }
-            $savedatastockkeluar_mutasi = NULL;
-            $savedatakeluarbrgitem_mutasi = NULL;
-            $savedatastockkeluar = $this->M_bkb->savedatastockkeluar($datastockkeluar);
-            $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
-            $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
+        // jika brang belum ada di stockawal
+        if ($nilai_keluarbrgitem == '0') {
+            $data = [
+                'nilai_keluarbrgitem' => $nilai_keluarbrgitem
+            ];
+
+            echo json_encode($data);
         } else {
-            $savedatastockkeluar_mutasi = NULL;
-            $savedatakeluarbrgitem_mutasi = NULL;
-            $savedatastockkeluar = NULL;
+            if (empty($this->input->post('hidden_no_bkb'))) {
+                if ($mutasi == '1') {
+                    $savedatastockkeluar_mutasi = $this->M_bkb->savedatastockkeluar_mutasi($datastockkeluar);
+                    $savedatakeluarbrgitem_mutasi = $this->M_bkb->savedatakeluarbrgitem_mutasi($datakeluarbrgitem);
+                }
+                $savedatastockkeluar_mutasi = NULL;
+                $savedatakeluarbrgitem_mutasi = NULL;
+                $savedatastockkeluar = $this->M_bkb->savedatastockkeluar($datastockkeluar);
+                $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
+                $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
+            } else {
+                $savedatastockkeluar_mutasi = NULL;
+                $savedatakeluarbrgitem_mutasi = NULL;
+                $savedatastockkeluar = NULL;
 
-            if ($mutasi == '1') {
-                $savedatakeluarbrgitem_mutasi = $this->M_bkb->savedatakeluarbrgitem_mutasi($datakeluarbrgitem);
+                if ($mutasi == '1') {
+                    $savedatakeluarbrgitem_mutasi = $this->M_bkb->savedatakeluarbrgitem_mutasi($datakeluarbrgitem);
+                }
+
+                $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
+                $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
             }
 
-            $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
-            $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
+            // update stockawal_bulanan_devisi
+            $result_update_stockawal_bulanan_devisi = $this->M_bkb->update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev);
+
+            //update stokawal
+            $result_update_qtykeluar = $this->M_bkb->update_stockawal($kodebar, $qty2, $txtperiode);
+
+            $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+            $generate_id = $this->db_logistik_pt->query($query_id)->row();
+            $id_stockkeluar = $generate_id->id_stockkeluar;
+
+            $query_id = "SELECT MAX(id) as id_keluarbrgitem FROM keluarbrgitem WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+            $generate_id = $this->db_logistik_pt->query($query_id)->row();
+            $id_keluarbrgitem = $generate_id->id_keluarbrgitem;
+
+            $query_id = "SELECT MAX(id) as id_register_stok FROM register_stok WHERE id_user = '$id_user' AND noref = '$no_ref' ";
+            $generate_id = $this->db_logistik_pt->query($query_id)->row();
+            $id_register_stok = $generate_id->id_register_stok;
+
+            if ($mutasi == 1) {
+                $query_id = "SELECT MAX(id) as id_mutasi FROM tb_mutasi WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+                $generate_id = $this->db_logistik_center->query($query_id)->row();
+                $id_mutasi = $generate_id->id_mutasi;
+
+                $query_id = "SELECT MAX(id) as id_mutasi_item FROM tb_mutasi_item WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
+                $generate_id = $this->db_logistik_center->query($query_id)->row();
+                $id_mutasi_item = $generate_id->id_mutasi_item;
+            } else {
+                $id_mutasi = NULL;
+                $id_mutasi_item = NULL;
+            }
+
+            $data = [
+                'update_stockawal_bulanan_devisi' => $result_update_stockawal_bulanan_devisi,
+                'datastockkeluar' => $savedatastockkeluar,
+                'datakeluarbrgitem' => $savedatakeluarbrgitem,
+                'result_update_qtykeluar' => $result_update_qtykeluar,
+                'savedatastockkeluar_mutasi' => $savedatastockkeluar_mutasi,
+                'savedatakeluarbrgitem_mutasi' => $savedatakeluarbrgitem_mutasi,
+                'saveregisterstok' => $saveregisterstok,
+                'no_bkb' => $skb,
+                'noref_bkb' => $no_ref,
+                'id_stockkeluar' => $id_stockkeluar,
+                'id_keluarbrgitem' => $id_keluarbrgitem,
+                'id_mutasi' => $id_mutasi,
+                'id_mutasi_item' => $id_mutasi_item,
+                'id_register_stok' => $id_register_stok,
+                'txtperiode' => $txtperiode
+            ];
+
+            echo json_encode($data);
         }
-
-        // update stockawal_bulanan_devisi
-        $result_update_stockawal_bulanan_devisi = $this->M_bkb->update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev);
-
-        //update stokawal
-        $result_update_qtykeluar = $this->M_bkb->update_stockawal($kodebar, $qty2, $txtperiode);
-
-        $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_stockkeluar = $generate_id->id_stockkeluar;
-
-        $query_id = "SELECT MAX(id) as id_keluarbrgitem FROM keluarbrgitem WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_keluarbrgitem = $generate_id->id_keluarbrgitem;
-
-        $query_id = "SELECT MAX(id) as id_register_stok FROM register_stok WHERE id_user = '$id_user' AND noref = '$no_ref' ";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $id_register_stok = $generate_id->id_register_stok;
-
-        if ($mutasi == 1) {
-            $query_id = "SELECT MAX(id) as id_mutasi FROM tb_mutasi WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
-            $generate_id = $this->db_logistik_center->query($query_id)->row();
-            $id_mutasi = $generate_id->id_mutasi;
-
-            $query_id = "SELECT MAX(id) as id_mutasi_item FROM tb_mutasi_item WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
-            $generate_id = $this->db_logistik_center->query($query_id)->row();
-            $id_mutasi_item = $generate_id->id_mutasi_item;
-        } else {
-            $id_mutasi = NULL;
-            $id_mutasi_item = NULL;
-        }
-
-        $data = [
-            'update_stockawal_bulanan_devisi' => $result_update_stockawal_bulanan_devisi,
-            'datastockkeluar' => $savedatastockkeluar,
-            'datakeluarbrgitem' => $savedatakeluarbrgitem,
-            'result_update_qtykeluar' => $result_update_qtykeluar,
-            'savedatastockkeluar_mutasi' => $savedatastockkeluar_mutasi,
-            'savedatakeluarbrgitem_mutasi' => $savedatakeluarbrgitem_mutasi,
-            'saveregisterstok' => $saveregisterstok,
-            'no_bkb' => $skb,
-            'noref_bkb' => $no_ref,
-            'id_stockkeluar' => $id_stockkeluar,
-            'id_keluarbrgitem' => $id_keluarbrgitem,
-            'id_mutasi' => $id_mutasi,
-            'id_mutasi_item' => $id_mutasi_item,
-            'id_register_stok' => $id_register_stok,
-            'txtperiode' => $txtperiode
-        ];
-
-        echo json_encode($data);
     }
 
     function cetak()
@@ -917,6 +934,14 @@ class Bkb extends CI_Controller
         } else {
             $output = NULL;
         }
+
+        echo json_encode($output);
+    }
+
+    public function get_noac_gl()
+    {
+        $nama_noac = $this->input->post('nama_noac');
+        $output = $this->M_bkb->get_noac_gl($nama_noac);
 
         echo json_encode($output);
     }
