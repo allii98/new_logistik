@@ -19,8 +19,13 @@ class M_databpb extends CI_Model
     private function _get_datatables_query()
     {
         $periode = $this->session->userdata('ym_periode');
-        $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where(['batal !=' => 1, 'batal !=' => $periode]);
+        $kode_dev = $this->session->userdata('kode_dev');
+        $lokasi_sesi = $this->session->userdata('status_lokasi');
+        if ($lokasi_sesi != 'HO') {
+
+            $this->db_logistik_pt->from($this->table);
+            $this->db_logistik_pt->where(['batal !=' => 1, 'batal !=' => $periode, 'kode_dev' => $kode_dev]);
+        }
 
         $i = 0;
 
