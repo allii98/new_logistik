@@ -59,8 +59,8 @@
     </div>
     <table border="0" width="100%">
         <tr>
-            <td> PERIODE : <?= $periode; ?></td>
-            <td style="text-align: right;"><i>By System MIPS (<?= date("d-m-Y H:i:s"); ?>)</i></td>
+            <td style="text-align: left;"> PERIODE : <?= $periode; ?></td>
+            <td style="text-align: right;"><i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i></td>
         </tr>
     </table>
     <table class="singleborder" width="100%" border="1">
@@ -101,8 +101,6 @@
             </tr>
         </tbody>
     </table>
-    <br>
-    <i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
     <div style="text-align: right;">
         <?php
         switch ($lokasi) {
@@ -122,7 +120,7 @@
         ?>
         <small><?= $posisi; ?>, <?= date("d-m-Y"); ?></small>
     </div>
-    <br><br>
+    <br>
     <table width="100%">
         <tr>
             <td style="text-align: center;">Disetujui Oleh,<br><br><br><br><br><br>________________________</td>

@@ -56,7 +56,7 @@
             <tr>
                 <td>PERIODE</td>
                 <td>:</td>
-                <td><?= $periode; ?></td>
+                <td><?= date_format(date_create($tgl1), "d/m/Y") . ' - ' . date_format(date_create($tgl2), "d/m/Y"); ?></td>
             </tr>
             <tr>
                 <td>TANGGAL CETAK</td>
