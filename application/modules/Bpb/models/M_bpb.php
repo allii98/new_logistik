@@ -524,13 +524,8 @@ class M_bpb extends CI_Model
                     $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                     $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
                 } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
-                    $databpb['kode_pt_req_mutasi'] = $this->session->userdata('kode_pt_login');
-                    $databpb['pt_req_mutasi'] = $this->session->userdata('nama_pt');
-                    $this->db_logistik_center->insert('bpb_mutasi', $databpb);
-
                     $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                     $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
-                    # code...
                 }
 
                 $this->db_logistik_pt->insert('approval_bpb', $data_approval_bpb);
