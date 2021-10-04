@@ -963,6 +963,7 @@
 
         if ($('#cexbox_mutasi_local').is(':checked')) {
             var cexbox_mutasi = '1';
+            var cexbox_mutasi_local = '1';
         }
 
         if (cexbox_mutasi == '1' && !devisi_mutasi) {
@@ -1087,7 +1088,7 @@
                         $('#rev_qty_' + n).css('display', 'none');
 
                         //jika dia mutasi ubah status bpb mutasi
-                        if (cexbox_mutasi_pt == '1') {
+                        if (cexbox_mutasi_pt == '1' || cexbox_mutasi_local == '1') {
                             ubah_status_bpb_mutasi(hidden_kode_barang, noref_bpb);
                         }
                     }
