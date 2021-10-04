@@ -266,11 +266,11 @@ class M_bkb extends CI_Model
         return $jumlah_nilai;
     }
 
-    public function cek_stockawal($kodebar, $txtperiode)
+    public function cek_stockawal($kodebar, $txtperiode, $kode_dev)
     {
         $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        $this->db_logistik_pt->from('stockawal');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
+        $this->db_logistik_pt->from('stockawal_bulanan_devisi');
         $stock_awal_num_rows = $this->db_logistik_pt->get()->num_rows();
 
         $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai');

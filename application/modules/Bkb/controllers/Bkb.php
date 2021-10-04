@@ -455,7 +455,7 @@ class Bkb extends CI_Controller
         }
 
         //cek apakah sudah ada barang nya atau belum di stockawal
-        $cek_stockawal = $this->M_bkb->cek_stockawal($kodebar, $txtperiode);
+        $cek_stockawal = $this->M_bkb->cek_stockawal($kodebar, $txtperiode, $kode_dev);
         if ($cek_stockawal == 1) {
             // mendapatkan nilai rata2
             $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);

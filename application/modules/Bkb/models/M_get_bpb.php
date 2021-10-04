@@ -19,7 +19,7 @@ class M_get_bpb extends CI_Model
     private function _get_datatables_query()
     {
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where(['batal' => 0, 'approval' => '1', 'status_bkb' => '0']);
+        $this->db_logistik_pt->where(['batal' => 0, 'approval' => '1', 'status_bkb' => '0', 'status_mutasi' => '0']);
 
         $i = 0;
 

@@ -6,8 +6,8 @@ class M_bpb_mutasi extends CI_Model
 
       // Start Data Table Server Side
       var $table = 'bpb_mutasi'; //nama tabel dari database
-      var $column_order = array(null, 'bpb_mutasi.norefbpb', 'bpb_mutasi.tglbpb', 'bpb_mutasi.bag', 'bpb_mutasi.keperluan'); //field yang ada di table user
-      var $column_search = array('bpb_mutasi.norefbpb', 'bpb_mutasi.tglbpb', 'bpb_mutasi.bag', 'bpb_mutasi.keperluan'); //field yang diizin untuk pencarian 
+      var $column_order = array(null, 'bpb_mutasi.norefbpb', 'bpb_mutasi.tglbpb', 'bpb_mutasi.bag', 'bpb_mutasi.keperluan', 'bpb_mutasi.status_mutasi', 'bpb_mutasi.kode_dev', 'bpb_mutasi.kode_pt_req_mutasi', 'bpbitem_mutasi.ketsub'); //field yang ada di table user
+      var $column_search = array('bpb_mutasi.norefbpb', 'bpb_mutasi.tglbpb', 'bpb_mutasi.bag', 'bpb_mutasi.keperluan', 'bpb_mutasi.status_mutasi', 'bpb_mutasi.kode_dev', 'bpb_mutasi.kode_pt_req_mutasi', 'bpbitem_mutasi.ketsub'); //field yang diizin untuk pencarian 
       var $order = array('bpb_mutasi.norefbpb'  => 'DESC'); // default order 
 
       public function __construct()
@@ -18,32 +18,12 @@ class M_bpb_mutasi extends CI_Model
 
       private function _get_datatables_query()
       {
-            $pt_login = $this->session->userdata('app_pt');
-            $kode_dev = $this->session->userdata('kode_dev');
-            $lokasi = $this->session->userdata('status_lokasi');
 
-            if ($pt_login == 'PSAM') {
-                  $pt_minta_bpb = 'PSAM, PT';
-            } elseif ($pt_login == 'MAPA') {
-                  $pt_minta_bpb = 'MAPA, PT';
-            } else {
-                  $pt_minta_bpb = '';
-            }
-
-            // bpb permintaan mutasi hanya tampil di estate 1
-            if ($kode_dev == '06') {
-                  $this->db_logistik_center->distinct();
-                  $this->db_logistik_center->select('bpb_mutasi.norefbpb, bpb_mutasi.tglbpb, bpb_mutasi.bag, bpb_mutasi.keperluan');
-                  $this->db_logistik_center->from($this->table);
-                  $this->db_logistik_center->join('bpbitem_mutasi', 'bpb_mutasi.norefbpb = bpbitem_mutasi.norefbpb', 'left');
-                  $this->db_logistik_center->where(['bpbitem_mutasi.ketsub' => $pt_minta_bpb, 'bpb_mutasi.status_bkb' => '0', 'bpb_mutasi.approval' => '1']);
-            } else {
-                  $this->db_logistik_center->distinct();
-                  $this->db_logistik_center->select('bpb_mutasi.norefbpb, bpb_mutasi.tglbpb, bpb_mutasi.bag, bpb_mutasi.keperluan');
-                  $this->db_logistik_center->from($this->table);
-                  $this->db_logistik_center->join('bpbitem_mutasi', 'bpb_mutasi.norefbpb = bpbitem_mutasi.norefbpb', 'left');
-                  $this->db_logistik_center->where(['bpbitem_mutasi.ketsub' => 'HALU']);
-            }
+            $this->db_logistik_center->distinct();
+            $this->db_logistik_center->select('bpb_mutasi.norefbpb, bpb_mutasi.tglbpb, bpb_mutasi.bag, bpb_mutasi.keperluan, bpb_mutasi.status_mutasi, bpb_mutasi.kode_dev, bpb_mutasi.kode_pt_req_mutasi, bpbitem_mutasi.ketsub');
+            $this->db_logistik_center->from($this->table);
+            $this->db_logistik_center->join('bpbitem_mutasi', 'bpb_mutasi.norefbpb = bpbitem_mutasi.norefbpb', 'left');
+            $this->db_logistik_center->where(['bpb_mutasi.status_bkb' => '0', 'bpb_mutasi.approval' => '1']);
 
             // $this->db_logistik_center->group_by('bpb_mutasi.norefbpb');
             // $this->db_logistik_center->query("SELECT distinct bpb_mutasi.norefbpb, bpb_mutasi.tglbpb, bpb_mutasi.bag, bpb_mutasi.keperluan FROM bpb_mutasi left join bpbitem_mutasi ON bpb_mutasi.norefbpb = bpbitem_mutasi.norefbpb where bpbitem_mutasi.ketsub = 'PSAM, PT'");

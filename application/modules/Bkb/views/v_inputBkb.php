@@ -663,7 +663,6 @@
                         get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
                     } else {
                         get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data.kode_dev);
-
                     }
 
                     var tmtbm = data_item_bpb[i].tmtbm;
@@ -706,9 +705,11 @@
 
                     //merubah beban kepada PT yang meminta BPB\
                     if (!$('#hidden_noref_bpb').val()) {
-                        console.log('ini bukan mutasi');
+                        console.log('ini bukan mutasi PT');
                     } else {
-                        ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
+                        if (data_bpb.status_mutasi == 1) {
+                            ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
+                        }
                     }
                 }
                 $('.div_form_2').show();
@@ -748,36 +749,8 @@
             $('#cexbox_mutasi_local').attr('checked', '');
             $('#cexbox_mutasi_local').attr('disabled', '');
 
-            var str = ketsub.substring(23);
-            console.log(str);
-            if (str == 'EST 1 <> EST 2') {
-                // jika kode_dev == 06 berarti est1 > est2
-                if (kode_dev == '06') {
-                    var kode_devisi_mutasi = '07';
-                } else if (kode_dev == '07') {
-                    var kode_devisi_mutasi = '06';
-                }
-                cari_pt_mutasi(kode_pt_login, kode_devisi_mutasi, status_mutasi);
-            } else if (str == 'EST 1 <> PKS') {
-                // jika kode_dev == 06 berarti est1 > PKS
-                if (kode_dev == '06') {
-                    var kode_devisi_mutasi = '03';
-                } else if (kode_dev == '03') {
-                    var kode_devisi_mutasi = '06';
-                }
-                cari_pt_mutasi(kode_pt_login, kode_devisi_mutasi, status_mutasi);
-            } else if (str == 'EST 2 <> PKS') {
-                // jika kode_dev == 06 berarti est1 > PKS
-                if (kode_dev == '07') {
-                    var kode_devisi_mutasi = '03';
-                } else if (kode_dev == '03') {
-                    var kode_devisi_mutasi = '07';
-                }
-                cari_pt_mutasi(kode_pt_login, kode_devisi_mutasi, status_mutasi);
-            } else {
-                swal('coa mutasi lokal tersebut belum bisa digunakan!');
-                $('.div_form_2').css('pointer-events', 'none');
-            }
+            // var str = ketsub.substring(23);
+            cari_pt_mutasi(kode_pt_login, kode_dev);
         }
     }
 
@@ -1060,7 +1033,7 @@
                 success: function(data) {
 
                     if (data.nilai_keluarbrgitem == '0') {
-                        swal('barang tersebut belum ada di stock awal! silahkan input!');
+                        swal('barang tidak ada stok di divisi tersebut! silahkan input!');
                         $('#lbl_status_simpan_' + n).empty();
                         $('#lbl_bkb_status').empty();
                         $('#btn_simpan_' + n).css('display', 'block');
@@ -1234,7 +1207,7 @@
         }
     }
 
-    function cari_pt_mutasi(kode_pt, kode_devisi_mutasi, status_mutasi) {
+    function cari_pt_mutasi(kode_pt, kode_devisi_mutasi) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/cari_pt_mutasi'); ?>",
@@ -1255,7 +1228,7 @@
                 $('#pt_mutasi').html(html);
 
                 //menjalankan jquery get divisi mutasi
-                pt_mutasi(kode_pt, kode_devisi_mutasi, status_mutasi);
+                pt_mutasi(kode_pt, kode_devisi_mutasi);
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);
@@ -1263,9 +1236,10 @@
         });
     }
 
-    function pt_mutasi(kode_pt, kode_devisi_mutasi, status_mutasi) {
+    function pt_mutasi(kode_pt, kode_devisi_mutasi) {
         // var kode_pt = $('#pt_mutasi').val();
 
+        console.log(kode_devisi_mutasi + ' ni kodedev mut');
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bkb/get_devisi_mutasi'); ?>",
