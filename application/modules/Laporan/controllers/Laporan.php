@@ -329,8 +329,10 @@ class Laporan extends CI_Controller
 		// ini_set('max_execution_time', '300');
 		ini_set("pcre.backtrack_limit", "50000000");
 		$lokasii = $this->uri->segment(3);
-		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
-		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
+		$tanggal1 =  "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
+		$tanggal2 =  "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
+		$tgl1 =  $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4);
+		$tgl2 =  $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7);
 		$tahun = $this->uri->segment(9);
 		switch ($this->uri->segment(8)) {
 			case '01':
@@ -419,8 +421,8 @@ class Laporan extends CI_Controller
 		// $data['lokasi']= $this->uri->segment(3);
 		$query = "SELECT * FROM po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 $lok";
 		$data['po'] = $this->db_logistik_pt->query($query)->result();
-		$data['periode'] = $bulan . " " . $tahun;
-
+		$data['tgl1'] = $tgl1;
+		$data['tgl2'] = $tgl2;
 		$data['lokasi1'] = $lokasi1;
 		$data['lok'] = $lokasii;
 		$data['lokasi2'] = $lokasi2;
@@ -445,8 +447,8 @@ class Laporan extends CI_Controller
 	function print_lap_spp_register()
 	{
 		$lok = $this->uri->segment(3);
-		$tanggal1 = "'" . $this->uri->segment(7) . "-" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "'";
-		$tanggal2 = "'" . $this->uri->segment(10) . "-" . $this->uri->segment(9) . "-" . $this->uri->segment(8) . "'";
+		$tanggal1 = $this->uri->segment(7) . "-" . $this->uri->segment(6) . "-" . $this->uri->segment(5);
+		$tanggal2 = $this->uri->segment(10) . "-" . $this->uri->segment(9) . "-" . $this->uri->segment(8);
 		$tahun = $this->uri->segment(10);
 		switch ($this->uri->segment(9)) {
 			case '01':
@@ -534,7 +536,9 @@ class Laporan extends CI_Controller
 		}
 		$query = "SELECT * FROM ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2 $lokasii $lokasi";
 		$data['spp'] = $this->db_logistik_pt->query($query)->result();
-		$data['periode'] = $bulan . " " . $tahun;
+		// $data['periode'] = $bulan . " " . $tahun;
+		$data['tgl1'] = $tanggal1;
+		$data['tgl2'] = $tanggal2;
 		$data['lokasi1'] = $lokasi1;
 		$data['lok'] = $lok;
 		$data['lokasi2'] = $lokasi2;
@@ -660,6 +664,8 @@ class Laporan extends CI_Controller
 		$lok = $this->uri->segment(3);
 		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
+		$tgl1 = $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4);
+		$tgl2 = $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7);
 		$tahun = $this->uri->segment(9);
 		switch ($this->uri->segment(8)) {
 			case '01':
@@ -742,6 +748,8 @@ class Laporan extends CI_Controller
 		$query = "SELECT * FROM po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 AND no_refppo LIKE '%SPPI%'";
 		$data['po'] = $this->db_logistik_pt->query($query)->result();
 		$data['periode'] = $bulan . " " . $tahun;
+		$data['tgl1'] = $tgl1;
+		$data['tgl2'] = $tgl2;
 		$data['lokasi1'] = $lokasi1;
 		$data['lokasi'] = $lokasi;
 		$data['alamat'] = $lok;
@@ -762,6 +770,8 @@ class Laporan extends CI_Controller
 		$lok = $this->uri->segment(3);
 		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
+		$tgl1 = $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4);
+		$tgl2 = $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7);
 		$tahun = $this->uri->segment(9);
 		switch ($this->uri->segment(8)) {
 			case '01':
@@ -846,6 +856,8 @@ class Laporan extends CI_Controller
 		$po = $this->db_logistik_pt->query($query)->row();
 		$data['dikurangi_biayalain'] = $po->totalbayar - $po->biayalain;
 		$data['periode'] = $bulan . " " . $tahun;
+		$data['tgl1'] = $tgl1;
+		$data['tgl2'] = $tgl2;
 		$data['lokasi1'] = $lokasi1;
 		$data['lokasi'] = $lokasi;
 		$data['alamat'] = $lok;
@@ -870,6 +882,8 @@ class Laporan extends CI_Controller
 		$lok = $this->uri->segment(3);
 		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
 		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
+		$tgl1 =  $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4);
+		$tgl2 =  $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7);
 		$tahun = $this->uri->segment(9);
 		switch ($this->uri->segment(8)) {
 			case '01':
@@ -952,6 +966,8 @@ class Laporan extends CI_Controller
 		$query = "SELECT * FROM item_po WHERE batal = '0' $lokasi AND tglpo BETWEEN $tanggal1 AND $tanggal2 AND refppo LIKE '%SPPI%'";
 		$data['item_po'] = $this->db_logistik_pt->query($query)->result();
 		$data['periode'] = $bulan . " " . $tahun;
+		$data['tgl1'] = $tgl1;
+		$data['tgl2'] = $tgl2;
 		$data['lokasi1'] = $lokasi1;
 		$data['lokasi'] = $lokasi;
 		$data['alamat'] = $lok;

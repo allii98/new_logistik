@@ -52,8 +52,8 @@
     <div style="text-align: center;">
         <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; "><u>REGISTER MASUK BARANG (LPB)</u></h3>
     </div>
-    <div style="text-align: left; padding-left: 3px; font-size: 12px;">
-        <h3 style="font-size:10px;font-weight:normal;margin-bottom: 0%; ">PERIODE : <?= date_format(date_create($tanggal1), "d/m/Y") . " - " . date_format(date_create($tanggal2), "d/m/Y"); ?></h3>
+    <div style="text-align: center; padding-left: 3px; font-size: 12px;margin-top: -1%;">
+        <h3 style="font-size:10px;font-weight:normal;margin-bottom: 0%;">PERIODE : <?= date_format(date_create($tanggal1), "d/m/Y") . " - " . date_format(date_create($tanggal2), "d/m/Y"); ?></h3>
     </div>
     <?php
     foreach ($tgl as $list_tgl) { ?>
@@ -61,7 +61,7 @@
         <table border="0" width="100%">
             <thead>
                 <tr>
-                    <td style="text-align: left;"><b> Tgl LPB : <?= date_format(date_create($list_tgl->tgl), 'd M Y'); ?></b></td>
+                    <td style="text-align: left;"><b> Tanggal LPB : <?= date_format(date_create($list_tgl->tgl), 'd M Y'); ?></b></td>
                     <td style="text-align: right;"><i>By System MIPS (<?= date("d-m-Y H:i:s"); ?>)</i></td>
                 </tr>
             </thead>
@@ -111,7 +111,6 @@
         </table>
         <br>
     <?php } ?>
-    <br><br>
     <?php
     switch ($lokasi1) {
         case '01':

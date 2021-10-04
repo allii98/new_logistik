@@ -51,7 +51,7 @@
             <tr>
                 <td>PERIODE</td>
                 <td>:</td>
-                <td><?= $periode; ?></td>
+                <td><?= date_format(date_create($tgl1), "d/m/Y") . ' - ' . date_format(date_create($tgl2), "d/m/Y");  ?></td>
             </tr>
             <tr>
                 <td>TANGGAL CETAK</td>
@@ -59,7 +59,7 @@
                 <td><?= date("d/m/Y"); ?></td>
             </tr>
         </table>
-        <!-- <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>By MIPS</small></p> -->
+        <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></small></p>
         <hr>
         <hr>
         <table border="0" class="center" width="100%">
@@ -114,8 +114,6 @@
 
             </tbody>
         </table>
-        <br>
-        <i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
         <hr>
     </div>
     <!-- <h4>Total Seluruh : Rp <?= number_format($total, 2); ?></h4> -->

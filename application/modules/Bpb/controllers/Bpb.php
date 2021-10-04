@@ -1029,7 +1029,8 @@ class Bpb extends CI_Controller
         $data['id'] = $id;
         $data['bpb'] = $this->db_logistik_pt->get_where('bpb', array('id' => $id, 'nobpb' => $no_bpb))->row();
         $data['bpbitem'] = $this->db_logistik_pt->get_where('bpbitem', array('nobpb' => $no_bpb))->result();
-        $noref = $data['bpb']->norefbpb;
+        $d = $this->db_logistik_pt->get_where('bpb', array('id' => $id, 'nobpb' => $no_bpb))->row();
+        $noref = $d->norefbpb;
         $data['bpb_approval'] = $this->db_logistik_pt->get_where('approval_bpb', array('no_bpb' => $no_bpb, 'norefbpb' => $noref))->result();
 
         $this->qrcode($no_bpb, $id, $noref);

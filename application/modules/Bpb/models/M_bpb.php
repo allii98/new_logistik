@@ -48,6 +48,12 @@ class M_bpb extends CI_Model
             } elseif ($pt == '04') {
                 # code...
                 $this->db_mips_gl->or_where('nama', 'MAPA, PT');
+            } elseif ($pt == '01') {
+                # code...
+                $this->db_mips_gl->or_where('nama', 'MSAL, PT');
+            } elseif ($pt == '03') {
+                # code...
+                $this->db_mips_gl->or_where('nama', 'PEAK, PT');
             }
         } else if ($mutasi_lokal == 'mutasi_lokal') {
             if ($devisi == '06') {
@@ -308,7 +314,7 @@ class M_bpb extends CI_Model
             $keterangan = $ket . "(Mutasi dari  $devv)";
         } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
             $statusmutasi = 2;
-            $norefbpb = $text1 . "-BPB/" . "MUT-LOKAL/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+            $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
             $keterangan = $ket . "(Mutasi dari  $nama_acc)";
             // $nama_acc
         } else {

@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <h3 style="font-size:14px;font-weight:bold;margin-bottom: 0%;"><?= $devisi; ?> </h3>
+    <h2 style="font-size:14px;font-weight:bold;margin-bottom: 0%;"><?= $devisi; ?> </h2>
     <?php if ($alamat != '01') {
         echo '';
     } else {
@@ -51,7 +51,7 @@
             <tr>
                 <td>PERIODE</td>
                 <td>:</td>
-                <td><?= $periode; ?></td>
+                <td><?= date_format(date_create($tgl1), "d/m/Y") . ' - ' . date_format(date_create($tgl2), "d/m/Y"); ?></td>
             </tr>
             <tr>
                 <td>TANGGAL CETAK</td>
@@ -59,7 +59,7 @@
                 <td><?= date("d/m/Y"); ?></td>
             </tr>
         </table>
-        <!-- <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>By MIPS</small></p> -->
+        <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></small></p>
         <hr>
         <hr>
         <table border="0" class="center" width="100%">
@@ -98,9 +98,7 @@
                         <td><?= $list_po->bayar . " - " . $list_po->tempo_bayar . " Hari"; ?></td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td colspan="7">
+                        <td colspan="9">
                             <table border="0" width="100%">
                                 <thead>
                                     <tr>
@@ -169,8 +167,6 @@
                 <?php } ?>
             </tbody>
         </table>
-        <br>
-        <i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
     </div>
 </body>
 

@@ -59,7 +59,7 @@
                 <td><?= date("d/m/Y"); ?></td>
             </tr>
         </table>
-        <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>By MIPS</small></p>
+        <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></small></p>
         <hr>
         <hr>
         <table border="0" class="center" width="100%">
