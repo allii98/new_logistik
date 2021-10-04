@@ -65,7 +65,7 @@
                                         case 'PKS':
                                         ?>
                                             <input type="text" name="nama_devisi" id="nama_devisi" value="<?= $devisi->PT; ?>" class="form-control form-control-sm bg-light" readonly>
-                                            <input type="hidden" name="devisi" id="devisi" value="<?= $devisi->kodetxt; ?>" >
+                                            <input type="hidden" name="devisi" id="devisi" value="<?= $devisi->kodetxt; ?>">
                                     <?php
                                             break;
                                         default:
@@ -968,13 +968,43 @@
         var hidden_stok_tgl_ini = Number(a);
         var txt_qty_diminta = Number(b);
 
-        if (txt_qty_diminta > hidden_stok_tgl_ini) {
-            swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
-            $('#txt_qty_diminta_' + no + '').val('');
+        var mut_pt = $('#hidden_mutasi_pt').val();
+        var mut_lokal = $('#hidden_mutasi_lokal').val();
 
-        } else if (txt_qty_diminta == 0) {
-            swal('Tidak boleh 0!');
-            $('#txt_qty_diminta_' + no + '').val('');
+        if (!mut_pt) {
+            if (txt_qty_diminta > hidden_stok_tgl_ini) {
+                swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
+                $('#txt_qty_diminta_' + no + '').val('');
+
+            } else if (txt_qty_diminta == 0) {
+                swal('Tidak boleh 0!');
+                $('#txt_qty_diminta_' + no + '').val('');
+            } else {
+                if (e.keyCode == 13 && !e.shiftKey) {
+                    if ($('#hidden_proses_status_' + no).val() == 'insert') {
+                        saveRinci(no);
+                    } else if ($('#hidden_proses_status_' + no).val() == 'update') {
+                        updateRinci(no);
+                    }
+                }
+            }
+        } else if (!mut_lokal) {
+            if (txt_qty_diminta > hidden_stok_tgl_ini) {
+                swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
+                $('#txt_qty_diminta_' + no + '').val('');
+
+            } else if (txt_qty_diminta == 0) {
+                swal('Tidak boleh 0!');
+                $('#txt_qty_diminta_' + no + '').val('');
+            } else {
+                if (e.keyCode == 13 && !e.shiftKey) {
+                    if ($('#hidden_proses_status_' + no).val() == 'insert') {
+                        saveRinci(no);
+                    } else if ($('#hidden_proses_status_' + no).val() == 'update') {
+                        updateRinci(no);
+                    }
+                }
+            }
         } else {
             if (e.keyCode == 13 && !e.shiftKey) {
                 if ($('#hidden_proses_status_' + no).val() == 'insert') {
@@ -984,6 +1014,8 @@
                 }
             }
         }
+
+
 
     }
 
@@ -1171,19 +1203,48 @@
 
         var hidden_stok_tgl_ini = Number(a);
         var txt_qty_diminta = Number(b);
-        if (txt_qty_diminta > hidden_stok_tgl_ini) {
-            swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
-            $('#txt_qty_diminta_' + no + '').val('');
-        } else if (txt_qty_diminta == 0) {
-            swal('Tidak boleh 0!');
-            $('#txt_qty_diminta_' + no + '').val('');
+
+        var mut_pt = $('#hidden_mutasi_pt').val();
+        var mut_lokal = $('#hidden_mutasi_lokal').val();
+
+        if (!mut_pt) {
+            if (txt_qty_diminta > hidden_stok_tgl_ini) {
+                swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
+                $('#txt_qty_diminta_' + no + '').val('');
+            } else if (txt_qty_diminta == 0) {
+                swal('Tidak boleh 0!');
+                $('#txt_qty_diminta_' + no + '').val('');
+            } else {
+                if ($('#hidden_proses_status_' + no).val() == 'insert') {
+                    saveRinci(no);
+                } else if ($('#hidden_proses_status_' + no).val() == 'update') {
+                    updateRinci(no);
+                }
+            }
+        } else if (!mut_lokal) {
+            if (txt_qty_diminta > hidden_stok_tgl_ini) {
+                swal('Stok digudang hanya ada ' + hidden_stok_tgl_ini);
+                $('#txt_qty_diminta_' + no + '').val('');
+            } else if (txt_qty_diminta == 0) {
+                swal('Tidak boleh 0!');
+                $('#txt_qty_diminta_' + no + '').val('');
+            } else {
+                if ($('#hidden_proses_status_' + no).val() == 'insert') {
+                    saveRinci(no);
+                } else if ($('#hidden_proses_status_' + no).val() == 'update') {
+                    updateRinci(no);
+                }
+            }
         } else {
             if ($('#hidden_proses_status_' + no).val() == 'insert') {
                 saveRinci(no);
             } else if ($('#hidden_proses_status_' + no).val() == 'update') {
                 updateRinci(no);
             }
+
         }
+
+
 
 
     }
@@ -2393,7 +2454,7 @@
                     if (data == '0' || data == '0.00') {
                         swal('Tidak ada stok di gudang, silahkan lakukan pengajuan SPP');
                         $('#txt_barang_' + row).val('');
-                        $('#modalListBarang').modal('hide');
+                        // $('#modalListBarang').modal('hide');
                     } else {
                         $('#b_stok_tgl_ini_' + row).html(data);
                         $('#hidden_stok_tgl_ini_' + row).val(data);
