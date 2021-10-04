@@ -19,7 +19,7 @@ class M_home extends CI_Model
     private function _get_datatables_query()
     {
         $kode_pt_login = $this->session->userdata('kode_pt_login');
-        $role_user = $this->session->userdata('user');
+        $kode_dev = $this->session->userdata('kode_dev');
         $lokasi = $this->session->userdata('status_lokasi');
 
         if ($lokasi == 'SITE') {
@@ -34,8 +34,8 @@ class M_home extends CI_Model
         }
 
         if ($lokasi != 'HO') {
-            $this->db_logistik_center->where(['kode_pt_mutasi' => $kode_pt_login, 'status_lpb' => 0]);
-            $this->db_logistik_center->like('no_mutasi', $noref, 'both');
+            // $this->db_logistik_center->like('no_mutasi', $noref, 'both');
+            $this->db_logistik_center->where(['kode_pt_mutasi' => $kode_pt_login, 'status_lpb' => 0, 'kode_devisi_mutasi' => $kode_dev]);
             $this->db_logistik_center->from($this->table);
             # code...
         } else {
