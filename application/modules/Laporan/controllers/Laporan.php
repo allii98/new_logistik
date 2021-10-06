@@ -26,6 +26,11 @@ class Laporan extends CI_Controller
 		}
 	}
 
+	function slip()
+	{
+		$this->load->view('Laporan/lapSpp/v_spp_slip');
+	}
+
 	function list_lapbarang()
 	{
 		$list = $this->M_laporan->get_datatables();
