@@ -691,11 +691,27 @@ class Po extends CI_Controller
             $dikirim_ke_kebun = 0;
         }
 
-        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00" || $this->input->post('txt_biaya_lain') != "0" || $this->input->post('txt_biaya_lain') != "0.00") {
+
+        $disk = $this->input->post('txt_disc');
+        $biayalainnya = $this->input->post('txt_biaya_lain');
+
+        if (empty($disk)) {
+            $diskon = 0;
+        } else {
+            $diskon = $this->input->post('txt_disc');
+        }
+
+        if (empty($biayalainnya)) {
+            $biayalain = 0;
+        } else {
+            $biayalain = $this->input->post('txt_biaya_lain');
+        }
+
+        if ($diskon != "0" || $diskon != "0.00" || $biayalain != "0" || $biayalain != "0.00") {
             $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
-            $disc = $this->input->post('txt_disc') / 100;
+            $disc = $diskon / 100;
             $jumharga_pre = $qty_harga - ($qty_harga * $disc);
-            $biaya_lain = $this->input->post('txt_biaya_lain');
+            $biaya_lain = $biayalain;
             $jumharga = $jumharga_pre + $biaya_lain;
         } else {
             $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
@@ -831,7 +847,7 @@ class Po extends CI_Controller
             'noref' => $norefpo,
             'lokasi' => $this->session->userdata('status_lokasi'),
             'hargasblm' => $this->input->post('txt_harga'),
-            'disc' => $this->input->post('txt_disc'),
+            'disc' => $diskon,
             'kurs' => $this->input->post('cmb_kurs'),
             'kode_budget' => "0",
             'grup' => $this->input->post('cmb_jenis_budget'),
@@ -840,7 +856,7 @@ class Po extends CI_Controller
             'batal' => "0",
             'cek_pp' => "0",
             'KODE_BPO' => "0",
-            'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
+            'JUMLAHBPO' => $biayalain,
             'kode_bebanbpo' => Null,
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
             'konversi' => "0",
@@ -970,11 +986,26 @@ class Po extends CI_Controller
         $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
         $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
 
-        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00" || $this->input->post('txt_biaya_lain') != "0" || $this->input->post('txt_biaya_lain') != "0.00") {
+        $disk = $this->input->post('txt_disc');
+        $biayalainnya = $this->input->post('txt_biaya_lain');
+
+        if (empty($disk)) {
+            $diskon = 0;
+        } else {
+            $diskon = $this->input->post('txt_disc');
+        }
+
+        if (empty($biayalainnya)) {
+            $biayalain = 0;
+        } else {
+            $biayalain = $this->input->post('txt_biaya_lain');
+        }
+
+        if ($diskon != "0" || $diskon != "0.00" || $biayalain != "0" || $biayalain != "0.00") {
             $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
-            $disc = $this->input->post('txt_disc') / 100;
+            $disc = $diskon / 100;
             $jumharga_pre = $qty_harga - ($qty_harga * $disc);
-            $biaya_lain = $this->input->post('txt_biaya_lain');
+            $biaya_lain = $biayalain;
             $jumharga = $jumharga_pre + $biaya_lain;
         } else {
             $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
@@ -1027,7 +1058,7 @@ class Po extends CI_Controller
             'noref' => $norefpo,
             'lokasi' => $this->session->userdata('status_lokasi'),
             'hargasblm' => $this->input->post('txt_harga'),
-            'disc' => $this->input->post('txt_disc'),
+            'disc' => $diskon,
             'kurs' => $this->input->post('cmb_kurs'),
             'kode_budget' => "0",
             'grup' => $this->input->post('cmb_jenis_budget'),
@@ -1036,7 +1067,7 @@ class Po extends CI_Controller
             'batal' => "0",
             'cek_pp' => "0",
             'KODE_BPO' => "0",
-            'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
+            'JUMLAHBPO' => $biayalain,
             'kode_bebanbpo' => Null,
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
             'konversi' => "0",
@@ -1286,12 +1317,28 @@ class Po extends CI_Controller
         $norefpo = $this->input->post('hidden_no_ref_po');
         $norefppo = $this->input->post('hidden_no_ref_spp');
         $kodebar = $this->input->post('hidden_kode_brg');
+        $disk = $this->input->post('txt_disc');
+        $biayalainnya = $this->input->post('txt_biaya_lain');
 
-        if ($this->input->post('txt_disc') != "0" || $this->input->post('txt_disc') != "0.00" || $this->input->post('txt_biaya_lain') != "0" || $this->input->post('txt_biaya_lain') != "0.00") {
+        if (empty($disk)) {
+            $diskon = 0;
+        } else {
+            $diskon = $this->input->post('txt_disc');
+        }
+
+        if (empty($biayalainnya)) {
+            $biayalain = 0;
+        } else {
+            $biayalain = $this->input->post('txt_biaya_lain');
+        }
+
+
+
+        if ($diskon != "0" || $diskon != "0.00" || $biayalain != "0" || $biayalain != "0.00") {
             $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
-            $disc = $this->input->post('txt_disc') / 100;
+            $disc = $diskon / 100;
             $jumharga_pre = $qty_harga - ($qty_harga * $disc);
-            $biaya_lain = $this->input->post('txt_biaya_lain');
+            $biaya_lain = $biayalain;
             $jumharga = $jumharga_pre + $biaya_lain;
         } else {
             $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
@@ -1335,9 +1382,9 @@ class Po extends CI_Controller
             'merek' => $this->input->post('txt_merk'),
             'ket' => $this->input->post('txt_keterangan_rinci'),
             'hargasblm' => $this->input->post('txt_harga'),
-            'disc' => $this->input->post('txt_disc'),
+            'disc' => $diskon,
             'kurs' => $this->input->post('cmb_kurs'),
-            'JUMLAHBPO' => $this->input->post('txt_biaya_lain'),
+            'JUMLAHBPO' => $biayalain,
             'nama_bebanbpo' => $this->input->post('txt_keterangan_biaya_lain'),
         ];
 
