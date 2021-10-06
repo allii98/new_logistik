@@ -718,7 +718,7 @@
                                 <div class="col-4">
 
                                     <div class="form-check">
-                                        <input type="radio" id="rbt_cetakan1" value="cetakan1" name="rbt_pilihan2" class="form-check-input" >
+                                        <input type="radio" id="rbt_cetakan1" value="cetakan1" name="rbt_pilihan2" class="form-check-input">
                                         <label class="form-check-label" for="rbt_cetakan1">Cetakan</label>
                                     </div>
                                 </div>
