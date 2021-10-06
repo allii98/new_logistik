@@ -28,7 +28,21 @@ class Laporan extends CI_Controller
 
 	function slip()
 	{
-		$this->load->view('Laporan/lapSpp/v_spp_slip');
+		$noreftxt = str_replace('.', '/', $this->uri->segment(3));
+		$no_refppo = str_replace('.', '/', $this->uri->segment(4));
+		$kode_supply = $this->uri->segment(5);
+		$lokasi = $this->session->userdata('status_lokasi');
+		$query = "SELECT * FROM po WHERE noreftxt = '" . $noreftxt . "' AND no_refppo = '" . $no_refppo . "'";
+		$query2 = "SELECT * FROM pt WHERE PT LIKE '%$lokasi%'";
+		$query3 = "SELECT * FROM supplier WHERE kode = '" . $kode_supply . "'";
+		$query4 = "SELECT * FROM item_po WHERE noref = '" . $noreftxt . "' AND refppo = '" . $no_refppo . "'";
+		$data['po'] = $this->db_logistik_pt->query($query)->row();
+		$data['pt'] = $this->db_logistik_pt->query($query2)->row();
+		$data['supplier'] = $this->db_logistik->query($query3)->row();
+		$data['item_po'] = $this->db_logistik_pt->query($query4)->result();
+
+		// $mpdf->Output();
+		$this->load->view('Laporan/lapPo/v_po_slip');
 	}
 
 	function list_lapbarang()
