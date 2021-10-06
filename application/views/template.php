@@ -264,7 +264,7 @@
                                         <font face="Verdana" size="2.5">Laporan Register Stok Harian</font>
                                     </a>
                                     <a href="#" onclick="lap_rs();" class="dropdown-item"><i class="fe-check-square mr-1"></i>
-                                        <font face="Verdana" size="2.5">Laporan Rincian Stok</font>
+                                        <font face="Verdana" size="2.5">Laporan Posisi Stok</font>
                                     </a>
                                 </div>
                             </li>
@@ -1495,7 +1495,7 @@
             <div class="modal-dialog modal-md">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="modalLapRS">Laporan Rinci Stok</h4>
+                        <h4 class="modal-title" id="modalLapRS">Laporan Posisi Stok</h4>
                         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span></button>
                     </div>
                     <div class="modal-body">

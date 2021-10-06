@@ -458,7 +458,7 @@
     });
 
     function check_form_2() {
-        if ($.trim($('#diberikan_kpd').val()) != '' && $.trim($('#utk_keperluan').val()) != '' && $.trim($('#cari_bpb').val()) != '') {
+        if ($.trim($('#diberikan_kpd').val()) != '' && $.trim($('#utk_keperluan').val()) != '') {
             $('.div_form_2').show();
         } else {
             $('.div_form_2').hide();
@@ -707,6 +707,8 @@
                     if (!$('#hidden_noref_bpb').val()) {
                         console.log('ini bukan mutasi PT');
                     } else {
+                        // jika dia mutasi rev qty belum fungsi
+                        $('#rev_qty_' + i).attr('disabled', '');
                         if (data_bpb.status_mutasi == 1) {
                             ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
                         }
