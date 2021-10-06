@@ -39,7 +39,7 @@
 <body>
     <?php
     if ($kode_dev == 'Semua') {
-        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('pt') . '</h2>';
+        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $kode_stock[0]->pt . '</h2>';
     } else {
         if (empty($kode_stock[0]->devisi)) {
             echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
@@ -55,7 +55,7 @@
     }
     ?>
     <div style="text-align: center;">
-        <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Register Rincian Stock Harian Material Gudang</h3>
+        <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Register Pemakaian Stock Material Gudang</h3>
     </div>
     <br>
     <?php if (empty($kode_stock)) { ?>
@@ -89,10 +89,12 @@
             </thead>
             <tbody>
 
+
                 <tr>
                     <td style="text-align: center;">1</td>
                     <td style="text-align: center;" colspan="9">Tidak ada data</td>
                 </tr>
+
 
                 <tr>
                     <td></td>
@@ -171,9 +173,9 @@
                     $s_a =  $saldo->saldoawal_qty;
 
                     if ($kode_dev == 'Semua') {
-                        $q_stok = "SELECT * FROM register_stok WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' ORDER BY tgl ASC, ttgtxt ASC ";
+                        $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty2 AS qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb ORDER BY tgl ASC, num ASC ";
                     } else {
-                        $q_stok = "SELECT * FROM register_stok WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, ttgtxt ASC ";
+                        $q_stok = "SELECT * FROM (SELECT tgl, CONCAT('BKB ',skb) nomor, kode_dev, skb AS num, ket, qty2 AS qty FROM keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' UNION SELECT tgl, CONCAT('LPB ',ttg) nomor, kode_dev, ttg AS num, ket, qty FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND batal = '0' ) AS tb WHERE kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, num ASC ";
                     }
 
                     $q_stok = $this->db_logistik_pt->query($q_stok)->result();
@@ -187,9 +189,9 @@
                     foreach ($q_stok as $qs) { ?>
                         <?php
                         $sub_tgl1 = $sub_tgl;
-                        $sub_tgl = date_format(date_create($qs->tgl), "Y-m-d");
+                        $sub_tgl = $qs->tgl;
                         if ($no == 1) {
-                        } else if ($sub_tgl1 !== date_format(date_create($qs->tgl), "Y-m-d")) {
+                        } else if ($sub_tgl1 !== $qs->tgl) {
 
                         ?>
                             <tr>
@@ -210,24 +212,24 @@
                         <tr>
                             <td style="text-align: center;"><?= $no++; ?></td>
                             <td style="text-align: center;"><?= date_format(date_create($qs->tgl), 'd/m/Y'); ?></td>
-                            <td style="text-align: center;"><?= $qs->status . ' ' . $qs->ttgtxt; ?></td>
+                            <td style="text-align: center;"><?= $qs->nomor; ?></td>
                             <td style="text-align: left;"><?= $qs->ket; ?></td>
                             <?php
                             $saldo_akh += $s_a;
-                            if ($qs->status == 'LPB') {
-                                $sub_tot_lpb += $qs->masuk_qty;
-                                $grand_lpb += $qs->masuk_qty;
+                            if ((substr($qs->nomor, 0, 3) == 'LPB')) {
+                                $sub_tot_lpb += $qs->qty;
+                                $grand_lpb += $qs->qty;
                             ?>
-                                <td style="text-align: right;"><?= number_format($qs->masuk_qty, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format($qs->qty, 2); ?></td>
                                 <td style="text-align: right;"><?= number_format(0, 2); ?></td>
-                                <td style="text-align: right;"><?= number_format(($s_a = $s_a +  $qs->masuk_qty), 2); ?></td>
-                            <?php } else if ($qs->status == 'BKB') {
-                                $sub_tot_bkb += $qs->keluar_qty;
-                                $grand_bkb += $qs->keluar_qty;
+                                <td style="text-align: right;"><?= number_format(($s_a = $s_a +  $qs->qty), 2); ?></td>
+                            <?php } else if ((substr($qs->nomor, 0, 3) == 'BKB')) {
+                                $sub_tot_bkb += $qs->qty;
+                                $grand_bkb += $qs->qty;
                             ?>
                                 <td style="text-align: right;"><?= number_format(0, 2); ?></td>
-                                <td style="text-align: right;"><?= number_format($qs->keluar_qty, 2); ?></td>
-                                <td style="text-align: right;"><?= number_format(($s_a = $s_a -  $qs->keluar_qty), 2); ?></td>
+                                <td style="text-align: right;"><?= number_format($qs->qty, 2); ?></td>
+                                <td style="text-align: right;"><?= number_format(($s_a = $s_a -  $qs->qty), 2); ?></td>
                             <?php } ?>
                         </tr>
 
