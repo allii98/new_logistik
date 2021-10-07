@@ -745,7 +745,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalcarispp">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
-            <div class="modal-header ml-2" style="margin-bottom: -10px;">
+            <div class="modal-header" style="margin-bottom: -10px;">
                 <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
                 <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> -->
                 </button>
