@@ -100,12 +100,18 @@ class M_pp extends CI_Model
         $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph FROM po WHERE noreftxt='$noref' ")->row();
         return $data;
     }
+
     function ambilpo($id, $noref)
     {
         $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph FROM po WHERE id='$id' AND noreftxt='$noref' ")->row();
         return $data;
     }
 
+    function ambilpoqr($noref)
+    {
+        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph FROM po WHERE  noreftxt='$noref' ")->row();
+        return $data;
+    }
     function simpan_pp()
     {
         $query_id_pp = "SELECT MAX(id)+1 as id_pp FROM pp";

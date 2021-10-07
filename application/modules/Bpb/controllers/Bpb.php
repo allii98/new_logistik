@@ -392,6 +392,21 @@ class Bpb extends CI_Controller
         echo json_encode($data);
     }
 
+    function batalBPB()
+    {
+        $id_bpb = $this->input->post('idbpb');
+        // $id_bpbitem = $this->input->post('iditem');
+        $noref = $this->input->post('noref');
+        $mutasi_pt = $this->input->post('mutasi_pt');
+        if ($mutasi_pt == 'mutasi_pt') {
+            $data = $this->M_bpb->batalbpbMut($id_bpb, $noref);
+        } else {
+            $data = $this->M_bpb->batalbpb($id_bpb, $noref);
+        }
+
+        echo json_encode($data);
+    }
+
     function batal()
     {
         $id_bpb = $this->input->post('id');

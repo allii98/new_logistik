@@ -12,7 +12,7 @@
                         <div class="button-list mr-2">
 
                             <button onclick="new_bpb()" class="btn btn-xs btn-success" id="a_po_baru">BPB Baru</button>
-                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po">Batal BPB</button>
+                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batalBPB">Batal BPB</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -529,6 +529,65 @@
         });
 
     });
+
+    function batal() {
+        $('#batalBPB').attr('disabled', '');
+        var idbpb = $('#hidden_id_bpb').val();
+        var iditem = $('#hidden_id_bpb').val();
+        var noref = $('#hidden_no_ref_bpb').val();
+        var mutasi_pt = $('#hidden_mutasi_pt').val();
+
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Data bpb ini akan dihapus",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('Bpb/batalBPB'); ?>",
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        $('#batalBPB').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+                    },
+                    cache: false,
+
+                    data: {
+                        idbpb: idbpb,
+                        iditem: iditem,
+                        noref: noref,
+                        mutasi_pt: mutasi_pt,
+                    },
+                    success: function(data) {
+
+                        console.log(data);
+                        // $('#tr_' + no).remove();
+                        // alert('Data Berhasil dihapus');
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Dihapus!',
+                            icon: 'success',
+                            loader: false
+                        });
+
+                        setTimeout(function() {
+                            window.location.href = "<?php echo site_url('Bpb'); ?>";
+                        }, 1000);
+                        // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
+                        // $('.modal-success').modal('show');
+                    },
+                    error: function(request) {
+                        alert("KONEKSI TERPUTUS!");
+                    }
+                });
+            }
+        });
+    }
 
     function get_all_cmb(bahan, id, n) {
         $.ajax({

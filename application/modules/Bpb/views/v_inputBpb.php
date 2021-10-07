@@ -201,6 +201,7 @@
                             <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
                             <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
                             <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
+                            <input type="hidden" id="id_approve" name="id_approve">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-in" id="tableRinciBPB">
                                     <thead>
@@ -311,7 +312,7 @@
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                     <!-- Keterangan -->
                                                     <textarea class="form-control form-control-sm ket" id="txt_ket_rinci_1" name="txt_ket_rinci_1" rows="1" placeholder="Keterangan" onkeypress="saveRinciEnter(event,'1')"></textarea>
-                                                    <label id="lbl_status_simpan_1"></label>
+
                                                     <input type="hidden" id="hidden_id_bpbitem_1" name="hidden_id_bpbitem_1">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
@@ -320,6 +321,7 @@
                                                     <button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_1" name="btn_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update('1')"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_1" name="btn_cancel_update_1" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate('1')"></button>
                                                     <button style="display:none;" class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_1" name="btn_hapus_1" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci('1')"></button>
+                                                    <label id="lbl_status_simpan_1"></label>
                                                 </td>
                                             </form>
                                         </tr>
@@ -1123,7 +1125,7 @@
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             '<!-- Keterangan -->' +
             '<textarea class="form-control form-control-sm" rows="1" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea>' +
-            '<label id="lbl_status_simpan_' + row + '"></label>' +
+
             '<input type="hidden" id="hidden_id_bpbitem_' + row + '" name="hidden_id_bpbitem_' + row + '">' +
             '</td>';
         var td_col_12 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
@@ -1132,6 +1134,7 @@
             '<button style="display:none;" class="btn btn-xs btn-info fa fa-check" id="btn_update_' + row + '" name="btn_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Update" onclick="update(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-primary mdi mdi-close-thick mt-1" id="btn_cancel_update_' + row + '" name="btn_cancel_update_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Cancel Update" onclick="cancelUpdate(' + row + ')"></button>' +
             '<button style="display:none;" class="btn btn-xs btn-danger fa fa-trash mt-1" id="btn_hapus_' + row + '" name="btn_hapus_' + row + '" type="button" data-toggle="tooltip" data-placement="right" title="Hapus" onclick="hapusRinci(' + row + ')"></button>' +
+            '<label id="lbl_status_simpan_' + row + '"></label>' +
             '</td>';
         var form_tutup = '</form>';
         var tr_tutup = '</tr>';
@@ -1264,6 +1267,65 @@
         } else {
             updateRinci(no)
         }
+    }
+
+    function batal() {
+        $('#batalBPB').attr('disabled', '');
+        var idbpb = $('#hidden_id_bpb').val();
+        var iditem = $('#hidden_id_bpb').val();
+        var noref = $('#hidden_no_ref_bpb').val();
+        var mutasi_pt = $('#hidden_mutasi_pt').val();
+
+        Swal.fire({
+            title: 'Apakah anda yakin?',
+            text: "Data bpb ini akan dihapus",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya'
+        }).then((result) => {
+            if (result.value) {
+
+                $.ajax({
+                    type: "POST",
+                    url: "<?php echo site_url('Bpb/batalBPB'); ?>",
+                    dataType: "JSON",
+                    beforeSend: function() {
+                        $('#batalBPB').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+                    },
+                    cache: false,
+
+                    data: {
+                        idbpb: idbpb,
+                        iditem: iditem,
+                        noref: noref,
+                        mutasi_pt: mutasi_pt,
+                    },
+                    success: function(data) {
+
+                        console.log(data);
+                        // $('#tr_' + no).remove();
+                        // alert('Data Berhasil dihapus');
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Dihapus!',
+                            icon: 'success',
+                            loader: false
+                        });
+
+                        setTimeout(function() {
+                            window.location.href = "<?php echo site_url('Bpb/input'); ?>";
+                        }, 1000);
+                        // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
+                        // $('.modal-success').modal('show');
+                    },
+                    error: function(request) {
+                        alert("KONEKSI TERPUTUS!");
+                    }
+                });
+            }
+        });
     }
 
     function saveRinci(no) {

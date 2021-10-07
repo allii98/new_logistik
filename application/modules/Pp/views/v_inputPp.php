@@ -449,15 +449,20 @@
                     });
                 } else {
                     // console.log(tgl_po);
-                    var id_po = data.data.id;
-                    var tgl_po = data.data.tglpo;
-                    var no_ref_po = data.data.noreftxt;
-                    var no_po = data.data.nopo;
-                    var bayar = data.data.bayar;
-                    var kd_supply = data.data.kode_supply;
-                    var nama_supply = data.data.nama_supply;
-                    var nama_supply = data.data.nama_supply;
-
+                    var id_po = data.po.id;
+                    var tgl_po = data.tglpo;
+                    var no_ref_po = data.po.noreftxt;
+                    var no_po = data.po.nopo;
+                    var pembayaran = data.po.bayar;
+                    var kd_supply = data.po.kode_supply;
+                    var nama_supply = data.po.nama_supply;
+                    var kurs = data.kurs;
+                    var bayar = data.bayar;
+                    var saldo = data.saldo;
+                    var nilaipo = data.nilaipo;
+                    var pajak = data.pajak;
+                    var totalpo = data.totalpo;
+                    var bpo = data.bpo;
 
 
                     $('#hidden_id_po').val(id_po);
@@ -465,21 +470,24 @@
 
                     $('#txt_no_ref_po').val(no_ref_po);
                     $('#hidden_no_po').val(no_po);
-                    $('#txt_pembayaran').val(bayar);
+                    $('#txt_pembayaran').val(pembayaran);
                     $('#kd_supplier').val(kd_supply);
                     $('#txt_supplier').val(nama_supply);
                     $('#txt_dibayar_ke').val(nama_supply);
 
+                    $('#txt_nilai_po').val(nilaipo);
+                    $('#hidden_nilai_po').val(nilaipo);
+                    $('#txt_pajak').val(pajak);
+                    $('#txt_total_po').val(totalpo);
                     // var bpo = nilai_bpo.replace(/,/g, "");
-                    // $('#txt_nilai_po').val(nilai_po);
-                    // var bpo = nilai_bpo.replace(/,/g, "");
-                    // $('#txt_nilai_bpo2').val(bpo);
+                    $('#txt_nilai_bpo2').val(bpo);
                     $('#lbl_kurs').html(kurs);
                     $('#hidden_kurs').val(kurs);
 
-                    // $('#txt_sudah_dibayar').val(sudah_dibayar);
-
+                    $('#txt_sudah_dibayar').val(bayar);
                     $('#modalcariPO').modal('hide');
+
+                    hitungTotalPO();
                     // hitungTotalPO();
                 }
             },

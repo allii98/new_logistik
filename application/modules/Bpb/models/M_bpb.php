@@ -40,7 +40,7 @@ class M_bpb extends CI_Model
 
         $this->db_mips_gl->from($this->table);
         if ($bahan != '-') {
-            $this->db_mips_gl->like('noac15', $grub, 'both');
+            $this->db_mips_gl->like('noac', $grub, 'both');
         } else if ($mutasi_pt == 'mutasi_pt') {
             if ($pt == '02') {
                 # code...
@@ -53,7 +53,7 @@ class M_bpb extends CI_Model
             if ($devisi == '06') {
                 # code...
                 $this->db_mips_gl->where_in(
-                    'noac15',
+                    'noac',
                     [
                         100300000000000,
                         100301000000000,
@@ -65,7 +65,7 @@ class M_bpb extends CI_Model
                 // $this->db_mips_gl->or_like('nama', 'HUBUNGAN INTRA COMPANY EST 1 <> PKS', 'both');
             } else if ($devisi == '07') {
                 $this->db_mips_gl->where_in(
-                    'noac15',
+                    'noac',
                     [
                         100300000000000,
                         100301000000000,
@@ -76,7 +76,7 @@ class M_bpb extends CI_Model
                 # code...
             } elseif ($devisi == '03') {
                 $this->db_mips_gl->where_in(
-                    'noac15',
+                    'noac',
                     [
                         100300000000000,
                         100302000000000,
@@ -93,10 +93,10 @@ class M_bpb extends CI_Model
         //     $tbm = '2024';
         //     $landclearing = '2090';
         //     $pembibitan = '2095';
-        //     $this->db_mips_gl->like('noac15', $tm, 'match');
-        //     $this->db_mips_gl->or_like('noac15', $tbm, 'match');
-        //     $this->db_mips_gl->or_like('noac15', $landclearing, 'match');
-        //     $this->db_mips_gl->or_like('noac15', $pembibitan, 'match');
+        //     $this->db_mips_gl->like('noac', $tm, 'match');
+        //     $this->db_mips_gl->or_like('noac', $tbm, 'match');
+        //     $this->db_mips_gl->or_like('noac', $landclearing, 'match');
+        //     $this->db_mips_gl->or_like('noac', $pembibitan, 'match');
         //     # code...
         // }
 
@@ -337,11 +337,11 @@ class M_bpb extends CI_Model
             $kodebeban = NULL;
         }
         $ketbebanfix = $this->input->post('hidden_nama_bahan');
-        $noac15 = $this->input->post('hidden_no_acc');
+        $noac = $this->input->post('hidden_no_acc');
         if ($bahan == '-') {
             $ketbeban = NULL;
         } else {
-            $query_coa = "SELECT noac15, nama FROM noac WHERE noac15 = '$noac15'";
+            $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$noac'";
             $get_coa = $this->db_mips_gl->query($query_coa)->row();
             $ketbeban = $get_coa->nama;
         }
@@ -488,7 +488,7 @@ class M_bpb extends CI_Model
 
             if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                 // if ($bool_bpb === TRUE && $bool_bpbitem === TRUE){
-                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi);
+                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
             } else {
                 return FALSE;
             }
@@ -533,7 +533,7 @@ class M_bpb extends CI_Model
                 // }
 
                 if ($bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
-                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi);
+                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
                 } else {
                     return FALSE;
                 }
@@ -569,11 +569,11 @@ class M_bpb extends CI_Model
             $kodebeban = NULL;
         }
         $ketbebanfix = $this->input->post('hidden_nama_bahan');
-        $noac15 = $this->input->post('hidden_no_acc');
+        $noac = $this->input->post('hidden_no_acc');
         if ($bahan == '-') {
             $ketbeban = NULL;
         } else {
-            $query_coa = "SELECT noac15, nama FROM noac WHERE noac15 = '$noac15'";
+            $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$noac'";
             $get_coa = $this->db_mips_gl->query($query_coa)->row();
             $ketbeban = $get_coa->nama;
         }
@@ -785,6 +785,26 @@ class M_bpb extends CI_Model
         }
 
         return $data;
+    }
+
+
+    public function batalbpbMut($id_bpb,  $noref)
+    {
+        $this->db_logistik_center->delete('bpb_mutasi', array('id' => $id_bpb, 'norefbpb' => $noref));
+        $this->db_logistik_center->delete('bpbitem_mutasi', array('norefbpb' => $noref));
+        $this->db_logistik_center->delete('approval_bpb', array('norefbpb' => $noref));
+
+        $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb, 'norefbpb' => $noref));
+        $this->db_logistik_pt->delete('bpbitem', array('norefbpb' => $noref));
+        $this->db_logistik_pt->delete('approval_bpb', array('norefbpb' => $noref));
+        return TRUE;
+    }
+    public function batalbpb($id_bpb,  $noref)
+    {
+        $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb, 'norefbpb' => $noref));
+        $this->db_logistik_pt->delete('bpbitem', array('norefbpb' => $noref));
+        $this->db_logistik_pt->delete('approval_bpb', array('norefbpb' => $noref));
+        return TRUE;
     }
 }
 
