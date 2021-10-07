@@ -88,14 +88,14 @@ class M_stok extends CI_Model
         //   ["txt_saldo_akhir_nilai"]=>string(6) "200000"
         //   ["txt_keterangan_stock_awal"]=>string(14) "tes keterangan"
         // }
-        $query_id = "SELECT MAX(id)+1 as no_id FROM stockawal";
-        $generate_id = $this->db_logistik_pt->query($query_id)->row();
-        $no_id = $generate_id->no_id;
-        if (empty($no_id)) {
-            $no_id = 1;
-        } else {
-            $no_id = $generate_id->no_id;
-        }
+        // $query_id = "SELECT MAX(id)+1 as no_id FROM stockawal";
+        // $generate_id = $this->db_logistik_pt->query($query_id)->row();
+        // $no_id = $generate_id->no_id;
+        // if (empty($no_id)) {
+        //     $no_id = 1;
+        // } else {
+        //     $no_id = $generate_id->no_id;
+        // }
 
         $periode = $this->session->userdata('Ymd_periode');
         $txtperiode = $this->session->userdata('ym_periode');
@@ -106,7 +106,7 @@ class M_stok extends CI_Model
         $KODE = $this->session->userdata('kode_pt');
         $kodebar = $this->input->post('txt_kode_barang');
 
-        $data_input_stock_awal["id"] = $no_id;
+        // $data_input_stock_awal["id"] = $no_id;
         $data_input_stock_awal["pt"] = $pt;
         // $data_input_stock_awal["pt"] = $this->session->userdata('app_pt');
         $data_input_stock_awal["KODE"] = $KODE;
@@ -122,9 +122,9 @@ class M_stok extends CI_Model
         $data_input_stock_awal["thn"] = date("Y");
         $data_input_stock_awal["saldoakhir_qty"] = $this->input->post('txt_saldo_akhir_qty');
         $data_input_stock_awal["saldoakhir_nilai"] = $this->input->post('txt_saldo_akhir_nilai');
-        $data_input_stock_awal["QTY_MASUK"] = "0";
+        $data_input_stock_awal["QTY_MASUK"] = $this->input->post('txt_saldo_akhir_qty');
         $data_input_stock_awal["QTY_KELUAR"] = '0';
-        $data_input_stock_awal["nilai_masuk"] = '0';
+        $data_input_stock_awal["nilai_masuk"] = $this->input->post('txt_saldo_akhir_nilai');
         $data_input_stock_awal["nilai_keluar"] = '0';
         // $data_input_stock_awal["QTY_ADJMASUK"] = $this->input->post('');
         // $data_input_stock_awal["QTY_ADJKELUAR"] = $this->input->post('');
@@ -136,17 +136,83 @@ class M_stok extends CI_Model
         $data_input_stock_awal["ket_account"] = "-";
         $data_input_stock_awal["minstok"] = $this->input->post('txt_min_stock_qty');
 
+        $data_insert_stok_harian = [
+            'pt' => $this->session->userdata('pt'),
+            'KODE' => $this->session->userdata('kode_pt'),
+            'devisi' => $this->session->userdata('devisi'),
+            'kode_dev' => $this->session->userdata('kode_dev'),
+            'afd' => '-',
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'nabar' => $this->input->post('txt_nama_barang'),
+            'satuan' => $this->input->post('txt_satuan'),
+            'grp' => $this->input->post('txt_grup'),
+            'saldoawal_qty' => 0,
+            'saldoawal_nilai' => 0,
+            'tglinput' => date("Y-m-d H:i:s"),
+            'thn' => date("Y"),
+            'saldoakhir_qty' => $this->input->post('txt_saldo_akhir_qty'),
+            'saldoakhir_nilai' => $this->input->post('txt_saldo_akhir_nilai'),
+            'nilai_masuk' => $this->input->post('txt_saldo_akhir_nilai'),
+            'QTY_MASUK' => $this->input->post('txt_saldo_akhir_qty'),
+            'periode' => $this->session->userdata('Ymd_periode'),
+            'txtperiode' => $this->session->userdata('ym_periode'),
+            'ket' => '-',
+            'account' => '-',
+            'ket_account' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s")
+        ];
+
+        $data_insert_stok_bulanan = [
+            'pt' => $this->session->userdata('pt'),
+            'KODE' => $this->session->userdata('kode_pt'),
+            'devisi' => $this->session->userdata('devisi'),
+            'kode_dev' => $this->session->userdata('kode_dev'),
+            'afd' => '-',
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'nabar' => $this->input->post('txt_nama_barang'),
+            'satuan' => $this->input->post('txt_satuan'),
+            'grp' => $this->input->post('txt_grup'),
+            'saldoawal_qty' => 0,
+            'saldoawal_nilai' => 0,
+            'saldoakhir_qty' => $this->input->post('txt_saldo_akhir_qty'),
+            'tglinput' => date("Y-m-d H:i:s"),
+            'thn' => date("Y"),
+            'QTY_MASUK' => $this->input->post('txt_saldo_akhir_qty'),
+            'periode' => $this->session->userdata('Ymd_periode'),
+            'txtperiode' => $this->session->userdata('ym_periode'),
+            'ket' => '-',
+            'account' => '-',
+            'ket_account' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s")
+        ];
+
         if (empty($this->input->post('hidden_id'))) {
             $get_stock_awal = $this->db_logistik_pt->get_where('stockawal', array('pt' => $pt, 'KODE' => $KODE, 'kodebartxt' => $kodebar, 'txtperiode' => $txtperiode));
             if ($get_stock_awal->num_rows() > 0) {
                 return "barang_sudah_ada_di_stok_awal";
             } else {
                 $this->db_logistik_pt->insert('stockawal', $data_input_stock_awal);
-                if ($this->db_logistik_pt->affected_rows() > 0) {
-                    return TRUE;
-                } else {
-                    return FALSE;
-                }
+                // if ($this->db_logistik_pt->affected_rows() > 0) {
+                //     return TRUE;
+                // } else {
+                //     return FALSE;
+                // }
+
+                $this->db_logistik_pt->insert('stockawal_harian', $data_insert_stok_harian);
+                // if ($this->db_logistik_pt->affected_rows() > 0) {
+                //     return TRUE;
+                // } else {
+                //     return FALSE;
+                // }
+
+                $this->db_logistik_pt->insert('stockawal_bulanan_devisi', $data_insert_stok_bulanan);
+                // if ($this->db_logistik_pt->affected_rows() > 0) {
+                //     return TRUE;
+                // } else {
+                //     return FALSE;
+                // }
             }
         } else {
             $id = $this->input->post('hidden_id');

@@ -1003,6 +1003,114 @@ class Laporan extends CI_Controller
 		$mpdf->Output();
 	}
 
+	function print_lap_po_hb()
+	{
+		$lok = $this->uri->segment(3);
+		$tanggal1 = "'" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4) . "'";
+		$tanggal2 = "'" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7) . "'";
+		$tgl1 =  $this->uri->segment(6) . "-" . $this->uri->segment(5) . "-" . $this->uri->segment(4);
+		$tgl2 =  $this->uri->segment(9) . "/" . $this->uri->segment(8) . "/" . $this->uri->segment(7);
+		$tahun = $this->uri->segment(9);
+		switch ($this->uri->segment(8)) {
+			case '01':
+				$bulan = "Januari";
+				break;
+			case '02':
+				$bulan = "Februari";
+				break;
+			case '03':
+				$bulan = "Maret";
+				break;
+			case '04':
+				$bulan = "April";
+				break;
+			case '05':
+				$bulan = "Mei";
+				break;
+			case '06':
+				$bulan = "Juni";
+				break;
+			case '07':
+				$bulan = "Juli";
+				break;
+			case '08':
+				$bulan = "Agustus";
+				break;
+			case '09':
+				$bulan = "September";
+				break;
+			case '10':
+				$bulan = "Oktober";
+				break;
+			case '11':
+				$bulan = "November";
+				break;
+			case '12':
+				$bulan = "Desember";
+				break;
+			default:
+				$bulan = "";
+				break;
+		}
+		switch ($lok) {
+			case '01':
+				$lokasi = "AND lokasi = 'HO'";
+				$lokasi1 = "HO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
+			case '02':
+				$lokasi = "AND lokasi = 'RO'";
+				$lokasi1 = "RO";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
+			case '03':
+				$lokasi = "AND lokasi = 'PKS'";
+				$lokasi1 = "PKS";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
+			case '07':
+				$lokasi = "AND lokasi = 'SITE'";
+				$lokasi1 = "ESTATE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
+			case '06':
+				$lokasi = "AND lokasi = 'SITE'";
+				$lokasi1 = "ESTATE";
+				$dev = $this->db_logistik_pt->query("SELECT PT, kodetxt FROM tb_devisi WHERE kodetxt='$lok' ")->row();
+				$devisi = $dev->PT;
+				break;
+			default:
+				$lokasi = "";
+				$lokasi1 = "";
+				$devisi = $this->session->userdata('nama_pt');
+				break;
+		}
+		$query = "SELECT kodebar, nabar, sat, harga, tglpo, noref FROM item_po WHERE id IN (SELECT MAX(id) FROM item_po GROUP BY kodebar) AND noref NOT LIKE '%PO-LOKAL%'";
+		$data['item_po'] = $this->db_logistik_pt->query($query)->result();
+
+		$data['periode'] = $bulan . " " . $tahun;
+		$data['tgl1'] = $tgl1;
+		$data['tgl2'] = $tgl2;
+		$data['lokasi1'] = $lokasi1;
+		$data['lokasi'] = $lokasi;
+		$data['alamat'] = $lok;
+		$data['devisi'] = $devisi;
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			'margin_top' => '2',
+			'orientation' => 'P'
+		]);
+
+		$html = $this->load->view('lapPo/vw_lap_po_hb', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
+	}
+
 	function print_lap_pp_register()
 	{
 		$lokasi = $this->uri->segment(3);

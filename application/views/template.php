@@ -400,16 +400,22 @@
                                         <label class="form-check-label" for="rbt_cash">PO ( Cash )</label>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="form-check">
                                         <input type="radio" id="rbt_po_lokal_r" value="po_lokal_r" name="rbt_pilihan1" class="form-check-input">
                                         <label class="form-check-label" for="rbt_po_lokal_r">PO Lokal (Register)</label>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-4">
                                     <div class="form-check">
                                         <input type="radio" id="rbt_po_lokal_t" value="po_lokal_t" name="rbt_pilihan1" class="form-check-input">
                                         <label class="form-check-label" for="rbt_po_lokal_t">PO Lokal (Total PO)</label>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="form-check">
+                                        <input type="radio" id="rbt_po_hb" value="po_hb" name="rbt_pilihan1" class="form-check-input">
+                                        <label class="form-check-label" for="rbt_po_hb">Harga Barang </label>
                                     </div>
                                 </div>
                             </div>
@@ -2609,6 +2615,8 @@
                 window.open('<?= site_url("Laporan/print_lap_po_cash"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
             } else if (rbt_pilihan1 == 'po_lokal_t') {
                 window.open('<?= site_url("Laporan/print_lap_po_lokal_t"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
+            } else if (rbt_pilihan1 == 'po_hb') {
+                window.open('<?= site_url("Laporan/print_lap_po_hb"); ?>/' + cmb_company + '/' + txt_periode2 + '/' + txt_periode3);
             } else if (rbt_pilihan1 == 'cetakan') {
                 $('#modalListLapPO').modal('show');
                 $('#tableListLapPOCetakan').DataTable().destroy();
