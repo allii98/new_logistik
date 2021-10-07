@@ -168,7 +168,7 @@ class M_po extends CI_Model
     public function get_supplier()
     {
         $supplier = "SELECT kode, supplier FROM supplier ORDER BY id DESC";
-        $query = $this->db_logistik_pt->query($supplier)->result_array();
+        $query = $this->db_logistik->query($supplier)->result_array();
         return $query;
     }
 
@@ -177,7 +177,7 @@ class M_po extends CI_Model
         // $query = "SELECT id_aset,nama_aset,id_kat_non FROM tb_non_aset WHERE id_kat_non = '" . $this->input->post('id') . "'";
         $toko = $this->input->get('toko');
         $query = "SELECT id, kode, supplier FROM supplier WHERE supplier LIKE '%$toko%'";
-        $t = $this->db_logistik_pt->query($query)->result_array();
+        $t = $this->db_logistik->query($query)->result_array();
         return $t;
     }
 
