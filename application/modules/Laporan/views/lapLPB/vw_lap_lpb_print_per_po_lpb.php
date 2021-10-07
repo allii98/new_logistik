@@ -86,7 +86,7 @@
             $per_po = $this->db_logistik_pt->query($query)->result();
             foreach ($per_po as $list_per_po) {
                 $total += $list_per_po->qty;
-                $query1 = "SELECT namagrp10 FROM kodebar WHERE kodebar = '" . $list_per_po->kodebar . "'";
+                $query1 = "SELECT grp FROM kodebar WHERE kodebar = '" . $list_per_po->kodebar . "'";
                 $grp1 = $this->db_logistik->query($query1)->row();
             ?>
                 <tr>
@@ -101,7 +101,7 @@
                         if ($grp1 == NULL) {
                             echo "-";
                         } else {
-                            echo $grp1->namagrp10;
+                            echo $grp1->grp;
                         } ?>
                     </td>
                     <td><?= $list_per_po->ket; ?></td>

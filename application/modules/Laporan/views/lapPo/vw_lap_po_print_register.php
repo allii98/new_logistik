@@ -53,7 +53,7 @@
     if ($lok != '01') {
         echo '';
     } else {
-        echo '<h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+        echo '<h6 style="z-index: 0; margin-top: -10px;margin-bottom: -2%;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
     }
     ?>
 
@@ -72,7 +72,7 @@
                 <td><?= date('d/m/Y'); ?></td>
             </tr>
         </table>
-        <p align="right" style="margin-top: -2%;margin-bottom: 0px;"><small>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></small></p>
+        <p align="right" style="margin-top: -2%;margin-bottom: -1%;"><small>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></small></p>
         <table border="1" class="singleborder" width="100%">
             <thead>
                 <tr>

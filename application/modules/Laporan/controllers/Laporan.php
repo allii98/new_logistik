@@ -466,8 +466,10 @@ class Laporan extends CI_Controller
 	function print_lap_spp_register()
 	{
 		$lok = $this->uri->segment(3);
-		$tanggal1 = $this->uri->segment(7) . "-" . $this->uri->segment(6) . "-" . $this->uri->segment(5);
-		$tanggal2 = $this->uri->segment(10) . "-" . $this->uri->segment(9) . "-" . $this->uri->segment(8);
+		$tanggal1 =  "'" . $this->uri->segment(7) . "-" . $this->uri->segment(6) . "-" . $this->uri->segment(5) . "'";
+		$tanggal2 =  "'" . $this->uri->segment(10) . "/" . $this->uri->segment(9) . "/" . $this->uri->segment(8) . "'";
+		$tgl1 =   $this->uri->segment(7) . "-" . $this->uri->segment(6) . "-" . $this->uri->segment(5);
+		$tgl2 =   $this->uri->segment(10) . "-" . $this->uri->segment(9) . "-" . $this->uri->segment(8);
 		$tahun = $this->uri->segment(10);
 		switch ($this->uri->segment(9)) {
 			case '01':
@@ -556,8 +558,8 @@ class Laporan extends CI_Controller
 		$query = "SELECT * FROM ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2 $lokasii $lokasi";
 		$data['spp'] = $this->db_logistik_pt->query($query)->result();
 		// $data['periode'] = $bulan . " " . $tahun;
-		$data['tgl1'] = $tanggal1;
-		$data['tgl2'] = $tanggal2;
+		$data['tgl1'] = $tgl1;
+		$data['tgl2'] = $tgl2;
 		$data['lokasi1'] = $lokasi1;
 		$data['lok'] = $lok;
 		$data['lokasi2'] = $lokasi2;

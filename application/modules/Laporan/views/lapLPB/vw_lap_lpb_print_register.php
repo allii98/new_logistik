@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: Verdana;
-            font-size: 9px;
+            font-size: 11px;
             font-style: normal;
             font-variant: normal;
             font-weight: 300;
@@ -56,51 +56,53 @@
 
     <div style="text-align: center;">
         <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; "><u> Register Laporan Penerimaan Barang (LPB)</u></h3>
-    </div>
-    <table border="0" width="100%">
-        <tr>
-            <td style="text-align: left;"> PERIODE : <?= $periode; ?></td>
-            <td style="text-align: right;"><i>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i></td>
-        </tr>
-    </table>
-    <table class="singleborder" width="100%" border="1">
-        <thead>
+        <table border="0" class="center">
             <tr>
-                <td style="width: 7%; text-align:center; font-weight:bold;">No. LPB</td>
-                <td style="width: 7%; text-align:center; font-weight:bold;">Tanggal</td>
-                <td style="width: 7%; text-align:center; font-weight:bold;">No. PO</td>
-                <td style="width: 14%; text-align:center; font-weight:bold;">Supplier</td>
-                <td style="width: 14%; text-align:center; font-weight:bold;">Nama Barang</td>
-                <td style="width: 4%; text-align:center; font-weight:bold;">Sat</td>
-                <td style="width: 10%; text-align:center; font-weight:bold;">Qty</td>
-                <td style="width: 10%; text-align:center; font-weight:bold;">Kode Barang</td>
-                <td style="width: 15%; text-align:center; font-weight:bold;">Keterangan</td>
+                <td>PERIODE</td>
+                <td>:</td>
+                <td><?= $periode; ?></td>
             </tr>
-        </thead>
-        <tbody>
-            <?php
-            $total = 0;
-            foreach ($item_lpb as $list_item_lpb) {
-                $total += $list_item_lpb->qty;
-            ?>
+        </table>
+        <p align="right" style="margin-top: -2%;margin-bottom: 2px;"><small>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></small></p>
+        <table class="singleborder" width="100%" border="1">
+            <thead>
                 <tr>
-                    <td style="text-align:center;"><?= $list_item_lpb->ttg; ?></td>
-                    <td style="text-align:center;"><?= date_format(date_create($list_item_lpb->tglinput), "d/m/Y"); ?></td>
-                    <td style="text-align:center;"><?= $list_item_lpb->nopo; ?></td>
-                    <td style="text-align:left;"><?= $list_item_lpb->nama_supply; ?></td>
-                    <td style="text-align:left;"><?= $list_item_lpb->nabar; ?></td>
-                    <td style="text-align:center;"><?= $list_item_lpb->satuan; ?></td>
-                    <td style="text-align:right;"><?= number_format($list_item_lpb->qty, 2); ?></td>
-                    <td style="text-align:center;"><?= $list_item_lpb->kodebar; ?></td>
-                    <td style="text-align:left;"><?= $list_item_lpb->ket; ?></td>
+                    <td style="width: 7%; text-align:center; font-weight:bold;">No. LPB</td>
+                    <td style="width: 7%; text-align:center; font-weight:bold;">Tanggal</td>
+                    <td style="width: 7%; text-align:center; font-weight:bold;">No. PO</td>
+                    <td style="width: 14%; text-align:center; font-weight:bold;">Supplier</td>
+                    <td style="width: 14%; text-align:center; font-weight:bold;">Nama Barang</td>
+                    <td style="width: 4%; text-align:center; font-weight:bold;">Sat</td>
+                    <td style="width: 10%; text-align:center; font-weight:bold;">Qty</td>
+                    <td style="width: 10%; text-align:center; font-weight:bold;">Kode Barang</td>
+                    <td style="width: 15%; text-align:center; font-weight:bold;">Keterangan</td>
                 </tr>
-            <?php } ?>
+            </thead>
+            <tbody>
+                <?php
+                $total = 0;
+                foreach ($item_lpb as $list_item_lpb) {
+                    $total += $list_item_lpb->qty;
+                ?>
+                    <tr>
+                        <td style="text-align:center;"><?= $list_item_lpb->ttg; ?></td>
+                        <td style="text-align:center;"><?= date_format(date_create($list_item_lpb->tglinput), "d/m/Y"); ?></td>
+                        <td style="text-align:center;"><?= $list_item_lpb->nopo; ?></td>
+                        <td style="text-align:left;"><?= $list_item_lpb->nama_supply; ?></td>
+                        <td style="text-align:left;"><?= $list_item_lpb->nabar; ?></td>
+                        <td style="text-align:center;"><?= $list_item_lpb->satuan; ?></td>
+                        <td style="text-align:right;"><?= number_format($list_item_lpb->qty, 2); ?></td>
+                        <td style="text-align:center;"><?= $list_item_lpb->kodebar; ?></td>
+                        <td style="text-align:left;"><?= $list_item_lpb->ket; ?></td>
+                    </tr>
+                <?php } ?>
 
-            <tr>
-                <td style="text-align:center;" colspan="9">Total : <?= number_format($total, 2); ?></td>
-            </tr>
-        </tbody>
-    </table>
+                <tr>
+                    <td style="text-align:center;" colspan="9">Total : <?= number_format($total, 2); ?></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div style="text-align: right;">
         <?php
         switch ($lokasi) {

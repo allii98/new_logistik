@@ -214,9 +214,10 @@ class Bpb extends CI_Controller
 
             $nobpb = "'" . $hasil->nobpb . "'";
             $norefbpb = "'" . $hasil->norefbpb . "'";
+            $prove = "'" . $hasil->approval . "'";
 
             $approval = '<a href="javascript:;" id="a_appproval">
-                            <button class="btn btn-primary btn-xs" id="btn_approval" name="btn_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalListApproval(' . $nobpb . ',' . $norefbpb . ')"> Approval
+                            <button class="btn btn-primary btn-xs" id="btn_approval" name="btn_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalListApproval(' . $nobpb . ',' . $norefbpb . ',' .  $prove . ')"> Approval
                             </button>
                         </a>';
             if ($hasil->approval == '0') {
@@ -224,10 +225,25 @@ class Bpb extends CI_Controller
                 $ubah = '<button type="button" id="detail" data-id="' . $hasil->norefbpb . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button>
                 <a href="' . site_url('Bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update BPB" id="btn_detail_barang"></a>
                 <a href="' . site_url('Bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb"></a>';
+            } elseif ($hasil->approval == '2') {
+                $print = "";
+                $ubah = '<button type="button" id="detail" data-id="' . $hasil->norefbpb . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button>
+                <a href="' . site_url('Bpb/detail_bpb/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update BPB" id="btn_detail_barang"></a>
+                <a href="' . site_url('Bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb"></a>';
+                # code...
             } else {
-                $print = '<button type="button" id="detail" data-id="' . $hasil->norefbpb . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button>
+                $print = '<button type="button" id="detail" data-id="' . $hasil->norefbpb . '"   onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button>
                 <a href="' . site_url('Bpb/cetak/' . $hasil->nobpb . '/' . $id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_bpb"></a>';
                 $ubah = "";
+            }
+
+
+            if ($hasil->approval == '0') {
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+            } else if ($hasil->approval == '2') {
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+            } else {
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
             }
 
 
@@ -251,6 +267,7 @@ class Bpb extends CI_Controller
             // $row[] = $approval_ktu;
             // $row[] = $approval_mgr;
             // $row[] = $approval_gm;
+            $row[] = $stat;
             $row[] = $approval;
             $data[] = $row;
         }
@@ -283,7 +300,7 @@ class Bpb extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $field->noac15;
+            $row[] = $field->noac;
             $row[] = $field->nama;
             $row[] = $field->type;
             $row[] = $field->group;

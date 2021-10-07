@@ -6,9 +6,9 @@ class M_bpb extends CI_Model
 {
 
     var $table = 'noac'; //nama tabel dari database
-    var $column_order = array(null, 'NOID', 'noac15', 'nama', 'group', 'type'); //field yang ada di table user
-    var $column_search = array('noac15', 'nama', 'group', 'type'); //field yang diizin untuk pencarian 
-    var $order = array('noac15' => 'ASC'); // default order 
+    var $column_order = array(null, 'NOID', 'noac', 'nama', 'group', 'type'); //field yang ada di table user
+    var $column_search = array('noac', 'nama', 'group', 'type'); //field yang diizin untuk pencarian 
+    var $order = array('noac' => 'ASC'); // default order 
 
     public function __construct()
     {
@@ -48,12 +48,6 @@ class M_bpb extends CI_Model
             } elseif ($pt == '04') {
                 # code...
                 $this->db_mips_gl->or_where('nama', 'MAPA, PT');
-            } elseif ($pt == '01') {
-                # code...
-                $this->db_mips_gl->or_where('nama', 'MSAL, PT');
-            } elseif ($pt == '03') {
-                # code...
-                $this->db_mips_gl->or_where('nama', 'PEAK, PT');
             }
         } else if ($mutasi_lokal == 'mutasi_lokal') {
             if ($devisi == '06') {
@@ -467,16 +461,9 @@ class M_bpb extends CI_Model
                 $databpb['pt_req_mutasi'] = $this->session->userdata('nama_pt');
                 $this->db_logistik_center->insert('bpb_mutasi', $databpb);
 
-                $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
-                $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
-            } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
-                $databpb['kode_pt_req_mutasi'] = $this->session->userdata('kode_pt_login');
-                $databpb['pt_req_mutasi'] = $this->session->userdata('nama_pt');
-                $this->db_logistik_center->insert('bpb_mutasi', $databpb);
 
                 $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                 $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
-                # code...
             }
 
             $this->db_logistik_pt->insert('approval_bpb', $data_approval_bpb);
@@ -527,9 +514,6 @@ class M_bpb extends CI_Model
                 }
 
                 if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
-                    $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
-                    $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
-                } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
                     $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                     $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
                 }
@@ -631,11 +615,6 @@ class M_bpb extends CI_Model
                     $this->db_logistik_center->set($databpbitem);
                     $this->db_logistik_center->where('id', $id_bpbitem);
                     return $this->db_logistik_center->update('bpbitem_mutasi');
-                } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
-                    $this->db_logistik_center->set($databpbitem);
-                    $this->db_logistik_center->where('id', $id_bpbitem);
-                    return $this->db_logistik_center->update('bpbitem_mutasi');
-                    # code...
                 }
             }
         } else {
@@ -648,11 +627,6 @@ class M_bpb extends CI_Model
                 $this->db_logistik_center->set($databpbitem);
                 $this->db_logistik_center->where('id', $id_bpbitem);
                 return $this->db_logistik_center->update('bpbitem_mutasi');
-            } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
-                $this->db_logistik_center->set($databpbitem);
-                $this->db_logistik_center->where('id', $id_bpbitem);
-                return $this->db_logistik_center->update('bpbitem_mutasi');
-                # code...
             }
         }
     }

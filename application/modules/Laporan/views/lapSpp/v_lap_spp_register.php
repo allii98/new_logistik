@@ -47,7 +47,7 @@
     if ($lok != '01') {
         echo '';
     } else {
-        echo '<h6 style="z-index: 0; margin-top: -10px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
+        echo '<h6 style="z-index: 0; margin-top: -10px; margin-bottom: -2%;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
     }
     ?>
     <div style="text-align: center;">
@@ -64,6 +64,7 @@
                 <td><?= date('d/m/Y'); ?></td>
             </tr>
         </table>
+        <p align="right" style="margin-top: -3%;margin-bottom: 0px;"><small>printed by MIPS System <?= date('d-m-Y H:i:s'); ?></small></p>
         <table border="1" class="singleborder" width="100%">
             <thead>
                 <tr>
@@ -143,7 +144,7 @@
                                         <tbody>
                                             <?php
                                             $noref = "'" . $d->noreftxt . "'";
-                                            $query = "SELECT * FROM item_ppo WHERE noreftxt = $noref $lokasi";
+                                            $query = "SELECT kodebar, nabar, sat, qty FROM item_ppo WHERE noreftxt = $noref $lokasi";
                                             $item_ppo = $this->db_logistik_pt->query($query)->result();
                                             foreach ($item_ppo as $dt) { ?>
                                                 <tr>
@@ -164,9 +165,9 @@
                 } ?>
             </tbody>
         </table>
-        <br>
+
     </div>
-    <i style="float: left;">printed by MIPS System <?= date('d-m-Y H:i:s'); ?></i>
+
 
 </body>
 

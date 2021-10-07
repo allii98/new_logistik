@@ -34,6 +34,7 @@
                                     <th style="font-size: 12px; padding:10px">Keperluan</th>
                                     <th style="font-size: 12px; padding:10px">Tgl&nbsp;Input</th>
                                     <th style="font-size: 12px; padding:10px">Diminta&nbsp;Oleh</th>
+                                    <th style="font-size: 12px; padding:10px">Status&nbsp;BPB</th>
                                     <th style="font-size: 12px; padding:10px">Approval</th>
                                 </tr>
                             </thead>
@@ -133,11 +134,12 @@
 
                             <tbody id="tbody_list_po">
                             </tbody>
-                            <tfoot>
+                            <tfoot id="tfoot">
                                 <tr>
-                                    <th style="text-align: center; padding:15px" colspan="8"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button>
-                                        <br>
-                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" id="btn_setuju_all" onclick="no_approve()" data-placement="left" style="margin-top: 1px;">No Approve</button>
+                                    <th style="text-align: center; padding:15px;" colspan="8">
+                                        <button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button>
+                                        <!-- <br>
+                                        <button class="btn btn-sm btn-danger" data-toggle="tooltip" id="no_approve" onclick="no_approve()" data-placement="left" style="margin-top: 1px;">No Approve</button> -->
                                     </th>
                                 </tr>
                             </tfoot>
@@ -242,11 +244,13 @@
     });
     $(document).on('click', '#detail', function() {
         var id = $(this).data('id');
-        detail(id);
+        var approve = $(this).data('approve');
+        detail(id, approve);
     });
 
-    function detail(id) {
+    function detail(id, approve) {
         $('#detailBPB').modal('show');
+
         $('#detail_noref_bpb').html('<b>No. Ref. BPB : </b>' + id);
         $('#datadetailBPB').DataTable({
             "destroy": true,
@@ -272,6 +276,7 @@
 
 
         });
+
     }
 
     function validasi() {
@@ -517,7 +522,7 @@
                 "orderable": false,
             }, ],
             "columns": [{
-                    "width": "10%"
+                    "width": "12%"
                 },
                 {
                     "width": "5%"
@@ -538,7 +543,10 @@
                     "width": "10%"
                 },
                 {
-                    "width": "10%"
+                    "width": "8%"
+                },
+                {
+                    "width": "8%"
                 }
             ],
         });
@@ -581,10 +589,22 @@
 
     }
 
-    function modalListApproval(nobpb, norefbpb) {
+    function modalListApproval(nobpb, norefbpb, prove) {
         // console.log(nobpb);
-        // console.log(norefbpb);
+        console.log(prove);
         $('#modalListApproval').modal('show');
+        if (prove == 0) {
+            $('#btn_setuju_all').show();
+            $('#no_approve').show();
+        } else if (prove == 2) {
+            $('#btn_setuju_all').show();
+            $('#no_approve').show();
+
+        } else {
+            $('#btn_setuju_all').hide();
+            $('#no_approve').hide();
+
+        }
         listBPBItem(nobpb, norefbpb);
     }
 

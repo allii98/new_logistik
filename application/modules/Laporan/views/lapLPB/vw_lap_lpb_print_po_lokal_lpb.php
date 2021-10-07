@@ -86,6 +86,7 @@
                 foreach ($per_po as $list_per_po) {
                     $query1 = "SELECT harga FROM item_po WHERE kodebar = '" . $list_per_po->kodebar . "' AND noref = '" . $list_per_po->refpo . "'";
                     $grp1 = $this->db_logistik_pt->query($query1)->row();
+                    var_dump($grp1) . die();
                     $total1 += $grp1->harga;
                     $total2 += ($grp1->harga * $list_per_po->qty);
             ?>

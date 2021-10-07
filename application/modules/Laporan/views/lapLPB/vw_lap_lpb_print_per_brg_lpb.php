@@ -86,7 +86,7 @@
                 $query = "SELECT * FROM masukitem WHERE kodebar = $kodebar AND tgl BETWEEN '$tanggal1' AND '$tanggal2' AND kode_dev = '$lokasi1' AND batal = '0'";
                 $per_brg = $this->db_logistik_pt->query($query)->result();
                 foreach ($per_brg as $list_per_brg) {
-                    $query1 = "SELECT namagrp10 FROM kodebar WHERE kodebar = '" . $list_per_brg->kodebar . "'";
+                    $query1 = "SELECT grp FROM kodebar WHERE kodebar = '" . $list_per_brg->kodebar . "'";
                     $grp1 = $this->db_logistik->query($query1)->row();
                     $total += $list_per_brg->qty;
                 ?>
@@ -100,7 +100,7 @@
                             if ($grp1 == NULL) {
                                 echo "-";
                             } else {
-                                echo $grp1->namagrp10;
+                                echo $grp1->grp;
                             } ?>
                         </td>
                         <td style="text-align: center;"><?= $list_per_brg->ket; ?></td>
