@@ -48,6 +48,9 @@ class M_bpb extends CI_Model
             } elseif ($pt == '04') {
                 # code...
                 $this->db_mips_gl->or_where('nama', 'MAPA, PT');
+            } elseif ($pt == '01') {
+                # code...
+                $this->db_mips_gl->or_where('nama', 'MSAL, PT');
             }
         } else if ($mutasi_lokal == 'mutasi_lokal') {
             if ($devisi == '06') {

@@ -312,8 +312,7 @@
 </style>
 <script>
     function new_pp() {
-        location.h
-        ref = "<?php echo base_url('Pp/input') ?>";
+        location.href = "<?php echo base_url('Pp/input') ?>";
     }
 
     function goBack() {
