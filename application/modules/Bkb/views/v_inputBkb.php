@@ -489,6 +489,7 @@
         console.log(content);
         $('#preview').hide();
         cariBpbqr(content);
+        $('#txt_no_bpb').val(content);
         $('#showCamera').modal('hide');
         $('#multiple').val(content);
         scanner.stop();
@@ -789,7 +790,7 @@
                 $('#hidden_no_acc_' + i).val('');
 
                 $('#txt_account_beban_' + i).val(data.nama);
-                $('#hidden_no_acc_' + i).val(data.noac15);
+                $('#hidden_no_acc_' + i).val(data.noac);
 
             },
             error: function(response) {

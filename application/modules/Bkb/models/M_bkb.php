@@ -409,8 +409,8 @@ class M_bkb extends CI_Model
 
     public function get_noac_gl($nama_noac)
     {
-        $this->db_mips_gl->select('noac15, nama');
-        $this->db_mips_gl->where(['nama' => $nama_noac, 'general15' => '301005000000000']); // general15 itu kategori PT mutasi
+        $this->db_mips_gl->select('noac, nama');
+        $this->db_mips_gl->where(['nama' => $nama_noac, 'general' => '301005000000000']); // general15 itu kategori PT mutasi
         $this->db_mips_gl->from('noac');
         return $this->db_mips_gl->get()->row_array();
     }
