@@ -348,8 +348,10 @@ class M_bpb extends CI_Model
             $get_coa = $this->db_mips_gl->query($query_coa)->row();
             $ketbeban = $get_coa->nama;
         }
+        if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
 
-        $databpb['id']              = $id_bpb;
+            $databpb['id']              = $id_bpb;
+        }
         $databpb['nobpb']           = $nobpb;
         $databpb['norefbpb']        = $norefbpb;
         $databpb['nobkb_ro']        = $nobkb_ro;
@@ -380,7 +382,9 @@ class M_bpb extends CI_Model
         $databpb['lok_kerja']        = $lokasi_kerja;
         $databpb['status_mutasi']        = $statusmutasi;
 
-        $databpbitem['id']            = $id_bpbitem;
+        if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
+            $databpbitem['id']            = $id_bpbitem;
+        }
         $databpbitem['kodebar']       = $kodebar;
         $databpbitem['nabar']         = $nabar;
         $databpbitem['satuan']        = $satuan;
@@ -424,7 +428,9 @@ class M_bpb extends CI_Model
             $no_id_approval = "1";
         }
 
-        $data_approval_bpb['id']                = $no_id_approval;
+        if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
+            $data_approval_bpb['id']                = $no_id_approval;
+        }
         $data_approval_bpb['id_bpbitem']        = $id_bpbitem;
         $data_approval_bpb['no_bpb']            = $nobpb;
         $data_approval_bpb['norefbpb']          = $norefbpb;
@@ -467,6 +473,15 @@ class M_bpb extends CI_Model
 
                 $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                 $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
+            } else if ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
+                $databpb['kode_pt_req_mutasi'] = $this->session->userdata('kode_pt_login');
+                $databpb['pt_req_mutasi'] = $this->session->userdata('nama_pt');
+                $this->db_logistik_center->insert('bpb_mutasi', $databpb);
+
+
+                $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
+                $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
+                # code...
             }
 
             $this->db_logistik_pt->insert('approval_bpb', $data_approval_bpb);
@@ -519,6 +534,10 @@ class M_bpb extends CI_Model
                 if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
                     $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                     $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
+                } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
+                    $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
+                    $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
+                    # code...
                 }
 
                 $this->db_logistik_pt->insert('approval_bpb', $data_approval_bpb);
