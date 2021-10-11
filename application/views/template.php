@@ -2428,6 +2428,7 @@
         $(document).ready(function() {
 
             //datatables
+            $('#dabar_lap_rsh').DataTable().destroy();
             table = $('#dabar_lap_rsh').DataTable({
 
                 "processing": true,
