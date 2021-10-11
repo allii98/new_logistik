@@ -2616,7 +2616,7 @@ class Laporan extends CI_Controller
 		if ($devisi == 'Semua') {
 
 			$this->db_logistik_pt->distinct();
-			$this->db_logistik_pt->select('kodebar, nabar, pt');
+			$this->db_logistik_pt->select('kodebar, nabar, pt, satuan');
 			$this->db_logistik_pt->from('stockawal');
 			// jika kode barang di isi
 			if ($kode_stok != '') {
@@ -2630,7 +2630,7 @@ class Laporan extends CI_Controller
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		} else {
 			$this->db_logistik_pt->distinct();
-			$this->db_logistik_pt->select('kodebar, nabar, devisi');
+			$this->db_logistik_pt->select('kodebar, nabar, devisi, satuan');
 			$this->db_logistik_pt->from('stockawal_bulanan_devisi');
 			// jika kode barang di isi
 			if ($kode_stok != '') {
@@ -2712,7 +2712,7 @@ class Laporan extends CI_Controller
 		if ($devisi == 'Semua') {
 
 			$this->db_logistik_pt->distinct();
-			$this->db_logistik_pt->select('kodebar, nabar, pt');
+			$this->db_logistik_pt->select('kodebar, nabar, pt, satuan');
 			$this->db_logistik_pt->from('stockawal');
 			// jika kode barang di isi
 			if ($kode_stok != '') {
@@ -2726,7 +2726,7 @@ class Laporan extends CI_Controller
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		} else {
 			$this->db_logistik_pt->distinct();
-			$this->db_logistik_pt->select('kodebar, nabar, devisi');
+			$this->db_logistik_pt->select('kodebar, nabar, devisi, satuan');
 			$this->db_logistik_pt->from('stockawal_bulanan_devisi');
 			// jika kode barang di isi
 			if ($kode_stok != '') {

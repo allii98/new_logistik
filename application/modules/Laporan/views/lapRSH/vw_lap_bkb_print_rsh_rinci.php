@@ -157,7 +157,7 @@
                         <td style="text-align: left;"><b> <?= $ks->kodebar; ?> &nbsp; <?= $ks->nabar; ?></b></td>
                         <td style="text-align: right;">
                             <b>
-                                Saldo Sebelum Periode : <?= number_format($saldo['saldoakhir_qty'], 2); ?>
+                                Saldo Sebelum Periode : <?= number_format($saldo['saldoakhir_qty'], 2) . ' ' . $ks->satuan; ?>
                             </b>
                         </td>
                     </tr>
