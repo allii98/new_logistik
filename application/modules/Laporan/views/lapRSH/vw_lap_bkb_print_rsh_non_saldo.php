@@ -39,10 +39,10 @@
 <body>
     <?php
     if ($kode_dev == 'Semua') {
-        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $kode_stock[0]->pt . '</h2>';
+        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('pt') . '</h2>';
     } else {
         if (empty($kode_stock[0]->devisi)) {
-            echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
+            echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
         } else {
             echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $kode_stock[0]->devisi . '</h2>';
         }
@@ -79,8 +79,12 @@
         <tbody>
             <?php
             //distinct tnggal
-            $sql = "SELECT DISTINCT tgl FROM masukitem WHERE tgl BETWEEN '$p1' AND '$p2' UNION SELECT DISTINCT tgl from keluarbrgitem WHERE tgl BETWEEN '$p1' AND '$p2'";
+            $p1_frmt = date_format(date_create($p1), "Ymd");
+            $p2_frmt = date_format(date_create($p2), "Ymd");
+
+            $sql = "SELECT DISTINCT tgltxt FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND (status = 'LPB' OR status = 'BKB')";
             $result_sql = $this->db_logistik_pt->query($sql)->result();
+
             if (empty($result_sql)) { ?>
                 <tr>
                     <td style="text-align: center;">1.</td>
@@ -104,13 +108,14 @@
                         }
                         //for where grup
                         if ($grup != 'Semua') {
-                            $where_grup = "AND grp LIKE '%$grup%'";
+                            $where_grup = "AND grup LIKE '%$grup%'";
                         } else {
                             $where_grup = "";
                         }
-                        $where_nya = "WHERE tgl = '$rs->tgl' AND batal='0' $where_kodebar $where_grup";
+                        $tgl_where = $rs->tgltxt;
+                        $where_nya = "WHERE tgltxt = $tgl_where $where_kodebar $where_grup";
 
-                        $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
+                        $q_sum = "SELECT tgl, kodebar, namabar, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok $where_nya GROUP BY kodebar";
                     } else {
                         //for where kodebar
                         if ($kodebar != '') {
@@ -120,45 +125,34 @@
                         }
                         //for where grup
                         if ($grup != 'Semua') {
-                            $where_grup = "AND grp LIKE '%$grup%'";
+                            $where_grup = "AND grup LIKE '%$grup%'";
                         } else {
                             $where_grup = "";
                         }
-                        $where_nya = "WHERE tgl = '$rs->tgl' AND batal='0' AND kode_dev IN('$kode_dev','$kode_dev2') $where_kodebar $where_grup";
+                        $tgl_where = $rs->tgltxt;
+                        $where_nya = "WHERE tgltxt = $tgl_where AND kode_dev IN('$kode_dev','$kode_dev2') $where_kodebar $where_grup";
 
-                        $q_sum = "SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB LEFT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb UNION SELECT * FROM (SELECT tgl AS tgl_lpb, kodebar AS kodebar_lpb, nabar AS nabar_lpb, sum(qty) AS qty_lpb FROM masukitem $where_nya GROUP BY kodebar) AS LPB RIGHT JOIN (SELECT tgl, kodebar AS kodebar_bkb, nabar AS nabar_bkb, sum(qty2) AS qty_bkb FROM keluarbrgitem $where_nya GROUP BY kodebar) AS BKB ON LPB.kodebar_lpb = BKB.kodebar_bkb";
+                        $q_sum = "SELECT tgl, kodebar, namabar, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok $where_nya GROUP BY kodebar";
                     }
                     $jum_lpb = 0;
                     $jum_bkb = 0;
                     $no = 1;
                     $q_sum = $this->db_logistik_pt->query($q_sum)->result();
+                    // var_dump($q_sum);
+                    // die;
                     foreach ($q_sum as $qs) {
-                        $jum_lpb += $qs->qty_lpb;
-                        $jum_bkb += $qs->qty_bkb;
-                        if ($qs->kodebar_bkb == NULL) {
+                        $jum_lpb += $qs->masuk_qty;
+                        $jum_bkb += $qs->keluar_qty;
+
                 ?>
-                            <tr>
-                                <td style="text-align: center;"><?= $no++; ?></td>
-                                <td><?= date_format(date_create($rs->tgl), 'd/m/Y'); ?></td>
-                                <td><?= $qs->kodebar_lpb ?></td>
-                                <td><?= $qs->nabar_lpb ?></td>
-                                <td style="text-align: right;"><?= number_format($qs->qty_lpb, 2); ?></td>
-                                <td style="text-align: right;"><?= number_format($qs->qty_bkb, 2); ?></td>
-                            </tr>
-                        <?php
-                        } else {
-                        ?>
-                            <tr>
-                                <td style="text-align: center;"><?= $no++; ?></td>
-                                <td><?= date_format(date_create($rs->tgl), 'd/m/Y'); ?></td>
-                                <td><?= $qs->kodebar_bkb ?></td>
-                                <td><?= $qs->nabar_bkb ?></td>
-                                <td style="text-align: right;"><?= number_format($qs->qty_lpb, 2); ?></td>
-                                <td style="text-align: right;"><?= number_format($qs->qty_bkb, 2); ?></td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
+                        <tr>
+                            <td style="text-align: center;"><?= $no++; ?></td>
+                            <td><?= date_format(date_create($rs->tgltxt), 'd/m/Y'); ?></td>
+                            <td><?= $qs->kodebar ?></td>
+                            <td><?= $qs->namabar ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->masuk_qty, 2); ?></td>
+                            <td style="text-align: right;"><?= number_format($qs->keluar_qty, 2); ?></td>
+                        </tr>
 
                     <?php }
                     if ($no == 1) {
