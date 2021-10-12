@@ -2655,7 +2655,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			// 'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2751,7 +2751,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			// 'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2849,7 +2849,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			// 'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 

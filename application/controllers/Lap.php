@@ -54,16 +54,17 @@ class Lap extends CI_Controller
         // $periode = $this->input->post('periode');
         // $pilihan = $this->input->post('pilihan');
 
+
+        // $query_alamat = "SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC";
+        // $get_alamat_pt = $this->db_logistik_pt->query($query_alamat)->row();
+
+
         $pt = $this->uri->segment(3);
-
-        $query_alamat = "SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC";
-        $get_alamat_pt = $this->db_logistik_pt->query($query_alamat)->row();
-
-
         $kd_stock_1 = $this->uri->segment(4);
         $kd_stock_2 = $this->uri->segment(5);
         $pilihan = $this->uri->segment(7);
-        $namapt = $this->db_logistik_pt->query("SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC")->row();
+        $data['namapt'] = 'gege';
+        // $namapt = $this->db_logistik_pt->query("SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC")->row();
 
         $str_periode = $this->uri->segment(6);
         $periode = str_replace("_", "/", $str_periode);
@@ -79,23 +80,72 @@ class Lap extends CI_Controller
         $data['kd_stock_1'] = $kd_stock_1;
         $data['kd_stock_2'] = $kd_stock_2;
         $data['pt'] = $pt;
-        $data['namapt'] = $namapt->PT;
-        $data['alamatpt'] = $get_alamat_pt->lokasi;
+        // $data['namapt'] = $namapt->PT;
+        // $data['alamatpt'] = $get_alamat_pt->lokasi;
         $data['ym_periode'] = $ym_periode;
         $data['periode_str'] = $periode;
 
         if ($pilihan == "Rinci") {
-            if ($kd_stock_1 == "Semua") {
-                $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan FROM stockawal WHERE KODE = '$pt' AND txtperiode = '$ym_periode'";
+            // if ($kd_stock_1 == "Semua") {
+            //     $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan FROM stockawal WHERE KODE = '$pt' AND txtperiode = '$ym_periode'";
+            // } else {
+            //     $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan FROM stockawal WHERE (kodebartxt BETWEEN '$kd_stock_1' AND '$kd_stock_2') AND KODE = '$pt' AND txtperiode = '$ym_periode'";
+            // }
+            // $data['stockawal'] = $this->db_logistik_pt->query($query_stockawal)->result();
+
+            $txtperiode = $this->session->userdata('ym_periode');
+            $periode = $this->session->userdata('Ymd_periode');
+            $d_periode = date("j", strtotime($this->session->userdata('Ymd_periode')));
+            if ($d_periode >= 26) {
+                $p1 = date_format(date_create($periode), 'Y-m-') . '26';
+                $periode = date('Y-m-d', strtotime($periode . " +1 month"));
+                $p2 = date_format(date_create($periode), 'Y-m-') . '25';
             } else {
-                $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan FROM stockawal WHERE (kodebartxt BETWEEN '$kd_stock_1' AND '$kd_stock_2') AND KODE = '$pt' AND txtperiode = '$ym_periode'";
+                $periode = date('Y-m-d', strtotime($periode));
+                $p1 = date('Y-m-d', strtotime($periode . " -1 month"));
+                $p1 = date_format(date_create($p1), 'Y-m-') . '26';
+                $p2 = date_format(date_create($periode), 'Y-m-') . '25';
             }
-            $data['stockawal'] = $this->db_logistik_pt->query($query_stockawal)->result();
+            $periode = date_format(date_create($periode), 'M Y');
+
+            if ($pt == 'Semua') {
+
+                $this->db_logistik_pt->distinct();
+                $this->db_logistik_pt->select('kodebar, nabar, pt, satuan');
+                $this->db_logistik_pt->from('stockawal');
+                // jika kode barang di isi
+                if ($kd_stock_1 != 'Semua' and $kd_stock_2 != 'Semua') {
+                    if ($kd_stock_1 == $kd_stock_2) {
+                        $this->db_logistik_pt->where('kodebar', $kd_stock_1);
+                    }
+                }
+                $data['kode_stock'] = $this->db_logistik_pt->get()->result();
+            } else {
+                $this->db_logistik_pt->distinct();
+                $this->db_logistik_pt->select('kodebar, nabar, devisi, satuan');
+                $this->db_logistik_pt->from('stockawal_bulanan_devisi');
+                // jika kode barang di isi
+                if ($kd_stock_1 != 'Semua' and $kd_stock_2 != 'Semua') {
+                    if ($kd_stock_1 == $kd_stock_2) {
+                        $this->db_logistik_pt->where('kodebar', $kd_stock_1);
+                    }
+                }
+                $this->db_logistik_pt->where('kode_dev', $pt);
+                $data['kode_stock'] = $this->db_logistik_pt->get()->result();
+            }
+
+            $data['kode_dev'] = $pt;
+            $data['alamat'] = $pt;
+            $data['periode'] = $periode;
+            $data['txtperiode'] = $txtperiode;
+            $data['p1'] = $p1;
+            $data['p2'] = $p2;
+
 
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
                 'format' => [190, 236],
-                'margin_top' => '2',
+                // 'margin_top' => '2',
                 'orientation' => 'P'
             ]);
 
@@ -103,33 +153,90 @@ class Lap extends CI_Controller
             $mpdf->WriteHTML($html);
             $mpdf->Output();
         } else if ($pilihan == "Summary") {
-            $query_stockawal = "SELECT DISTINCT grp FROM stockawal WHERE KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY grp ASC";
-            $data['grp_stockawal'] = $this->db_logistik_pt->query($query_stockawal)->result();
+
+            if ($pt == 'Semua') {
+                $this->db_logistik_pt->distinct();
+                $this->db_logistik_pt->select('grp');
+                $this->db_logistik_pt->from('stockawal');
+                // jika kode barang di isi
+                if ($kd_stock_1 != 'Semua' and $kd_stock_2 != 'Semua') {
+                    if ($kd_stock_1 == $kd_stock_2) {
+                        $this->db_logistik_pt->where('kodebar', $kd_stock_1);
+                    }
+                }
+                $data['grp_stockawal'] = $this->db_logistik_pt->get()->result();
+            } else {
+                $this->db_logistik_pt->distinct();
+                $this->db_logistik_pt->select('grp, devisi');
+                $this->db_logistik_pt->from('stockawal_bulanan_devisi');
+                $this->db_logistik_pt->where('kode_dev', $pt);
+                // jika kode barang di isi
+                if ($kd_stock_1 != 'Semua' and $kd_stock_2 != 'Semua') {
+                    if ($kd_stock_1 == $kd_stock_2) {
+                        $this->db_logistik_pt->where('kodebar', $kd_stock_1);
+                    }
+                }
+                $data['grp_stockawal'] = $this->db_logistik_pt->get()->result();
+            }
 
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
                 'format' => [190, 236],
-                'margin_top' => '2',
+                // 'margin_top' => '2',
                 'orientation' => 'P'
             ]);
+
+            $txtperiode = $this->session->userdata('ym_periode');
+
+            $data['kode_dev'] = $pt;
+            $data['txtperiode'] = $txtperiode;
+            $data['alamat'] = $pt;
 
             $html = $this->load->view('lapRS/vw_lap_summary', $data, true);
             $mpdf->WriteHTML($html);
             $mpdf->Output();
         } else if ($pilihan == "Nilai_Rupiah") {
-            $query_stockawal = "SELECT DISTINCT grp FROM stockawal WHERE KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY grp ASC";
             // if($kd_stock_1 == "Semua"){
             // 	$query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, HARGAPORAT, nilai_masuk, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai FROM stockawal WHERE KODE = '$pt' AND txtperiode = '$ym_periode'";
             // }
             // else{
             // 	$query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, HARGAPORAT, nilai_masuk, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai FROM stockawal WHERE (kodebartxt BETWEEN '$kd_stock_1' AND '$kd_stock_2') AND KODE = '$pt' AND txtperiode = '$ym_periode'";
             // }
-            $data['grp_stockawal'] = $this->db_logistik_pt->query($query_stockawal)->result();
+            if ($pt == 'Semua') {
+                $this->db_logistik_pt->distinct();
+                $this->db_logistik_pt->select('grp');
+                $this->db_logistik_pt->from('stockawal');
+                // jika kode barang di isi
+                if ($kd_stock_1 != 'Semua' and $kd_stock_2 != 'Semua') {
+                    if ($kd_stock_1 == $kd_stock_2) {
+                        $this->db_logistik_pt->where('kodebar', $kd_stock_1);
+                    }
+                }
+                $data['grp_stockawal'] = $this->db_logistik_pt->get()->result();
+            } else {
+                $this->db_logistik_pt->distinct();
+                $this->db_logistik_pt->select('grp, devisi');
+                $this->db_logistik_pt->from('stockawal_bulanan_devisi');
+                $this->db_logistik_pt->where('kode_dev', $pt);
+                // jika kode barang di isi
+                if ($kd_stock_1 != 'Semua' and $kd_stock_2 != 'Semua') {
+                    if ($kd_stock_1 == $kd_stock_2) {
+                        $this->db_logistik_pt->where('kodebar', $kd_stock_1);
+                    }
+                }
+                $data['grp_stockawal'] = $this->db_logistik_pt->get()->result();
+            }
+
+            $txtperiode = $this->session->userdata('ym_periode');
+
+            $data['kode_dev'] = $pt;
+            $data['txtperiode'] = $txtperiode;
+            $data['alamat'] = $pt;
 
             $mpdf = new \Mpdf\Mpdf([
                 'mode' => 'utf-8',
                 'format' => [190, 236],
-                'margin_top' => '2',
+                // 'margin_top' => '2',
                 'orientation' => 'P'
             ]);
 
@@ -137,7 +244,6 @@ class Lap extends CI_Controller
             $mpdf->WriteHTML($html);
             $mpdf->Output();
         } else if ($pilihan == "Rupiah_Rata_-_Rata_Harian") {
-            $query_stockawal_harian = "SELECT DISTINCT grp FROM stockawal_harian WHERE KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY grp ASC";
 
             // if($kd_stock_1 == "Semua"){
             // 	$query_stockawal_harian = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, HARGAPORAT, nilai_masuk, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, tgl_transaksi, qty_masuk_per_tgl, qty_keluar_per_tgl FROM stockawal_harian WHERE KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY tgl_transaksi ASC, kodebartxt ASC";
@@ -145,8 +251,17 @@ class Lap extends CI_Controller
             // else{
             // 	$query_stockawal_harian = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, HARGAPORAT, nilai_masuk, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, tgl_transaksi, qty_masuk_per_tgl, qty_keluar_per_tgl FROM stockawal_harian WHERE (kodebartxt BETWEEN '$kd_stock_1' AND '$kd_stock_2') AND KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY tgl_transaksi ASC, kodebartxt ASC";
             // }
+            $query_stockawal_harian = "SELECT DISTINCT grp FROM stockawal_harian WHERE KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY grp ASC";
             $data['grp_stockawal_harian'] = $this->db_logistik_pt->query($query_stockawal_harian)->result();
+
             $this->load->view('lapRS/vw_lap_nilai_rupiah_harian', $data);
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => [190, 236],
+                // 'margin_top' => '2',
+                'orientation' => 'P'
+            ]);
         }
         // echo "<pre>";
         // print_r($data);

@@ -2301,7 +2301,7 @@
                         $.each(data, function(index, item) {
                             results.push({
                                 id: item.kodebartxt,
-                                text: item.kodebartxt + '-' + item.nabar
+                                text: item.kodebartxt
                             });
                         });
                         return {
@@ -2312,8 +2312,8 @@
 
             }).on('select2:select', function(evt) {
 
-                var kode = $(".select2 option:selected").text();
-                var data = $(".select2 option:selected").val();
+                var kode = $("#kd_stock_1 option:selected").text();
+                var data = $("#kd_stock_1 option:selected").val();
                 $('#cmb_kd_stock_1').val(kode);
                 // $('#cmb_kd_stock_2').val(kode);
 
@@ -2333,7 +2333,7 @@
                         $.each(data, function(index, item) {
                             results.push({
                                 id: item.kodebartxt,
-                                text: item.kodebartxt + '-' + item.nabar
+                                text: item.kodebartxt
                             });
                         });
                         return {
@@ -2344,8 +2344,8 @@
 
             }).on('select2:select', function(evt) {
 
-                var kode = $(".select2 option:selected").text();
-                var data = $(".select2 option:selected").val();
+                var kode = $("#kd_stock_2 option:selected").text();
+                var data = $("#kd_stock_2 option:selected").val();
                 // $('#cmb_kd_stock_1').val(kode);
                 $('#cmb_kd_stock_2').val(kode);
 
@@ -2365,6 +2365,13 @@
                 data: '',
                 success: function(data) {
                     $('#cmb_pt').empty();
+
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+                    if (stl == 'HO') {
+                        var opsi_pt = '<option value="Semua">SEMUA</option>';
+                        $('#cmb_pt').append(opsi_pt);
+                    }
+
                     $.each(data, function(index) {
                         var opsi_pt = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
                         $('#cmb_pt').append(opsi_pt);
