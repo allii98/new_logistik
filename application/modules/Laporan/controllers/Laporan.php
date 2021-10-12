@@ -18,6 +18,7 @@ class Laporan extends CI_Controller
 		$this->load->model('M_lapSpp_sppi');
 		$this->load->model('M_lapSpp_sppa');
 		$this->load->model('Retur_m');
+		$this->load->model('M_dabar_lap_rsh');
 
 		if (!$this->session->userdata('id_user')) {
 			$pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -2614,7 +2615,8 @@ class Laporan extends CI_Controller
 
 		if ($devisi == 'Semua') {
 
-			$this->db_logistik_pt->select('kodebar, nabar, pt');
+			$this->db_logistik_pt->distinct();
+			$this->db_logistik_pt->select('kodebar, nabar, pt, satuan');
 			$this->db_logistik_pt->from('stockawal');
 			// jika kode barang di isi
 			if ($kode_stok != '') {
@@ -2624,10 +2626,11 @@ class Laporan extends CI_Controller
 			if ($grup != 'Semua') {
 				$this->db_logistik_pt->like('grp', $grup);
 			}
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		} else {
-			$this->db_logistik_pt->select('kodebar, nabar, devisi');
+			$this->db_logistik_pt->distinct();
+			$this->db_logistik_pt->select('kodebar, nabar, devisi, satuan');
 			$this->db_logistik_pt->from('stockawal_bulanan_devisi');
 			// jika kode barang di isi
 			if ($kode_stok != '') {
@@ -2638,7 +2641,7 @@ class Laporan extends CI_Controller
 				$this->db_logistik_pt->like('grp', $grup);
 			}
 			$this->db_logistik_pt->where('kode_dev', $devisi);
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		}
 
@@ -2652,7 +2655,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			// 'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2708,7 +2711,8 @@ class Laporan extends CI_Controller
 
 		if ($devisi == 'Semua') {
 
-			$this->db_logistik_pt->select('kodebar, nabar, pt');
+			$this->db_logistik_pt->distinct();
+			$this->db_logistik_pt->select('kodebar, nabar, pt, satuan');
 			$this->db_logistik_pt->from('stockawal');
 			// jika kode barang di isi
 			if ($kode_stok != '') {
@@ -2718,10 +2722,11 @@ class Laporan extends CI_Controller
 			if ($grup != 'Semua') {
 				$this->db_logistik_pt->like('grp', $grup);
 			}
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		} else {
-			$this->db_logistik_pt->select('kodebar, nabar, devisi');
+			$this->db_logistik_pt->distinct();
+			$this->db_logistik_pt->select('kodebar, nabar, devisi, satuan');
 			$this->db_logistik_pt->from('stockawal_bulanan_devisi');
 			// jika kode barang di isi
 			if ($kode_stok != '') {
@@ -2732,7 +2737,7 @@ class Laporan extends CI_Controller
 				$this->db_logistik_pt->like('grp', $grup);
 			}
 			$this->db_logistik_pt->where('kode_dev', $devisi);
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		}
 
@@ -2746,7 +2751,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			// 'margin_top' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2802,7 +2807,7 @@ class Laporan extends CI_Controller
 		$periode = date_format(date_create($periode), 'M Y');
 
 		if ($devisi == 'Semua') {
-
+			$this->db_logistik_pt->distinct();
 			$this->db_logistik_pt->select('kodebar, nabar, pt');
 			$this->db_logistik_pt->from('stockawal');
 			// jika kode barang di isi
@@ -2813,9 +2818,10 @@ class Laporan extends CI_Controller
 			if ($grup != 'Semua') {
 				$this->db_logistik_pt->like('grp', $grup);
 			}
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		} else {
+			$this->db_logistik_pt->distinct();
 			$this->db_logistik_pt->select('kodebar, nabar, devisi');
 			$this->db_logistik_pt->from('stockawal_bulanan_devisi');
 			// jika kode barang di isi
@@ -2827,7 +2833,7 @@ class Laporan extends CI_Controller
 				$this->db_logistik_pt->like('grp', $grup);
 			}
 			$this->db_logistik_pt->where('kode_dev', $devisi);
-			$this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
 			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
 		}
 
@@ -2843,7 +2849,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			// 'margin_top' => '2',
 			'orientation' => 'P'
 		]);
 
@@ -3033,6 +3039,40 @@ class Laporan extends CI_Controller
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
 	}
+
+	//Start Data Table Server Side
+	function get_data_barang_lap_rsh()
+	{
+		$list = $this->M_dabar_lap_rsh->get_datatables();
+		$data = array();
+		$no = $_POST['start'];
+		foreach ($list as $field) {
+			$no++;
+			$row = array();
+			$row[] = '<button class="btn btn-success btn-xs" style="font-size: 11px;" id="data_barang_lap_rsh" name="data_barang_lap_rsh"
+			    data-nabar="' . $field->nabar . '" data-kodebar="' . $field->kodebar . '" data-satuan="' . $field->satuan . '"
+			    data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
+				  Pilih
+			    </button>
+			';
+			$row[] = $no;
+			$row[] = $field->kodebar;
+			$row[] = $field->nabar;
+			$row[] = $field->grp;
+
+			$data[] = $row;
+		}
+
+		$output = array(
+			"draw" => $_POST['draw'],
+			"recordsTotal" => $this->M_dabar_lap_rsh->count_all(),
+			"recordsFiltered" => $this->M_dabar_lap_rsh->count_filtered(),
+			"data" => $data,
+		);
+		//output dalam format JSON
+		echo json_encode($output);
+	}
+	//End Start Data Table Server Side
 }
 
 /* End of file Laporan.php */

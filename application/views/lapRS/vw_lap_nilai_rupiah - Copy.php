@@ -18,14 +18,6 @@
             font-weight: 400;
             line-height: 20px;
         }
-
-        th {
-            padding: 5px;
-        }
-
-        td {
-            padding: 3px;
-        }
     </style>
 </head>
 
@@ -33,29 +25,16 @@
     <table width="100%" border="0">
         <tr>
             <td colspan="2">
-                <?php
-                if ($kode_dev == 'Semua') {
-                    echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('pt') . '</h2>';
-                } else {
-                    if (empty($grp_stockawal[0]->devisi)) {
-                        echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
-                    } else {
-                        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $grp_stockawal[0]->devisi . '</h2>';
-                    }
-                }
-
-                if ($alamat != '01') {
-                    echo '';
-                } else {
-                    echo '<h6 style="z-index: 0; margin-top: 5px;">JL. Radio Dalam Raya, No. 87 A, RT 005/RW 014 Gandaria Utara, KebayoranBaru, Jakarta Selatan, DKI Jakarta Raya - 12140</h6>';
-                }
-                ?>
+                <h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;"><?= $namapt; ?></h2>
             </td>
         </tr>
         <tr>
             <td colspan="2" align="center">
-                <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Rincian (Nilai Rupiah) Pemakaian Stock Material Gudang</h3>
+                <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Rincian Pemakaian Stock Material Gudang</h3>
             </td>
+        </tr>
+        <tr>
+            <td colspan="2"><?= $namapt; ?></td>
         </tr>
         <tr>
             <?php
@@ -141,6 +120,7 @@
                 $grandtotal_sak_qty = "0";
                 $grandtotal_sak_rp = "0";
 
+                $no = 1;
                 foreach ($grp_stockawal as $list_grp) {
                     $grp = $list_grp->grp;
                 ?>
@@ -159,94 +139,65 @@
                     $sak_totalrp = "0";
                     $porat = "0";
 
-                    $kode_dev2 = (int)$kode_dev;
-                    if ($kode_dev == "Semua") {
-                        $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, nilai_masuk,nilai_keluar, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai FROM stockawal WHERE txtperiode = '$txtperiode' AND grp = '$grp'";
+                    if ($kd_stock_1 == "Semua") {
+                        $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, nilai_masuk,nilai_keluar, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai FROM stockawal WHERE KODE = '$pt' AND txtperiode = '$ym_periode' AND grp = '$grp'";
                     } else {
-                        $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, nilai_masuk,nilai_keluar, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai FROM stockawal_bulanan_devisi WHERE txtperiode = '$txtperiode' AND grp = '$grp' AND kode_dev IN('$kode_dev','$kode_dev2')";
+                        $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, nilai_masuk,nilai_keluar, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai FROM stockawal WHERE (kodebartxt BETWEEN '$kd_stock_1' AND '$kd_stock_2') AND KODE = '$pt' AND txtperiode = '$ym_periode' AND grp = '$grp'";
                     }
                     $stockawal = $this->db_logistik_pt->query($query_stockawal)->result();
-                    $no = 1;
                     foreach ($stockawal as $list_stockawal) {
-                        // $porat = $list_stockawal->saldoakhir_nilai / $list_stockawal->saldoakhir_qty;
-                        // $nilai_keluar = $list_stockawal->QTY_KELUAR * $porat;
+                        $porat = $list_stockawal->saldoakhir_nilai / $list_stockawal->saldoakhir_qty;
+                        $nilai_keluar = $list_stockawal->QTY_KELUAR * $porat;
 
-                        //mendapatkan stockawal
-                        if ($kode_dev == 'Semua') {
-                            $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebartxt = '$list_stockawal->kodebartxt' AND txtperiode < '$txtperiode'";
-                        } else {
-                            $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebartxt = '$list_stockawal->kodebartxt' AND txtperiode < '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2')";
-                        }
-                        $saldo_r = $this->db_logistik_pt->query($q_saldo)->num_rows();
-                        if ($saldo_r >= 1) {
-                            $saldo = $this->db_logistik_pt->query($q_saldo)->row_array();
-                        } else {
-                            $saldo = [
-                                'saldoakhir_qty' => '0'
-                            ];
-                        }
-
-                        //cari rupiah di stokawal
-                        $query_carirupiah = "SELECT saldoakhir_qty, saldoakhir_nilai FROM stockawal WHERE kodebar = '$list_stockawal->kodebartxt' AND txtperiode = '$txtperiode'";
-
-                        $nilai_rupiah = $this->db_logistik_pt->query($query_carirupiah)->row_array();
-                        $ratrat_nilai_rupiah = $nilai_rupiah['saldoakhir_nilai'] / $nilai_rupiah['saldoakhir_qty'];
-
-                        $saldo_awal_rupiah = round($saldo['saldoakhir_qty'], 2) * round($ratrat_nilai_rupiah, 2);
-                        $qty_masuk_rupiah = round($list_stockawal->QTY_MASUK, 2) * round($ratrat_nilai_rupiah, 2);
-                        $qty_keluar_rupiah = round($list_stockawal->QTY_KELUAR, 2) * round($ratrat_nilai_rupiah, 2);
-                        $saldo_akhir_qty = round($saldo['saldoakhir_qty'], 2) + round($list_stockawal->saldoakhir_qty, 2);
-                        $saldo_akhir_rupiah = (round($list_stockawal->saldoakhir_qty, 2) * round($ratrat_nilai_rupiah, 2)) + round($saldo_awal_rupiah, 2);
-
-                        // echo $saldo_awal_rupiah;
-                        // die;
-
+                        $KODEBAR = $list_stockawal->kodebartxt;
+                        $kdpt = $this->session->userdata('kode_pt');
+                        $ym_periode_skrg = $this->session->userdata('ym_periode');
                     ?>
                         <tr>
                             <td align="center"><?= $no; ?></td>
                             <td align="center"><?= $list_stockawal->kodebartxt; ?></td>
                             <td align="left"><?= $list_stockawal->nabar; ?></td>
                             <td align="center"><?= $list_stockawal->satuan; ?></td>
-                            <td align="right"><?= number_format($ratrat_nilai_rupiah, 2); ?></td>
-                            <td align="right"><?= number_format($saldo['saldoakhir_qty'], 2); ?></td>
-                            <td align="right"><?= number_format($saldo_awal_rupiah, 2); ?></td>
+                            <td align="right"><?= number_format($porat); ?></td>
+                            <td align="right"><?= number_format($list_stockawal->saldoawal_qty, 2); ?></td>
+                            <td align="right"><?= number_format($list_stockawal->saldoawal_nilai); ?></td>
                             <td align="right"><?= number_format($list_stockawal->QTY_MASUK, 2); ?></td>
-                            <td align="right"><?= number_format($qty_masuk_rupiah, 2); ?></td>
+                            <td align="right"><?= number_format($list_stockawal->nilai_masuk); ?></td>
                             <td align="right"><?= number_format($list_stockawal->QTY_KELUAR, 2); ?></td>
-                            <td align="right"><?= number_format($qty_keluar_rupiah, 2); ?></td>
-                            <td align="right"><?= number_format($saldo_akhir_qty, 2); ?></td>
-                            <td align="right"><?= number_format($saldo_akhir_rupiah, 2); ?></td>
+                            <td align="right"><?= number_format($list_stockawal->nilai_keluar, 2); ?></td>
+                            <td align="right"><?= number_format($list_stockawal->saldoakhir_qty, 2); ?></td>
+                            <td align="right"><?= number_format($list_stockawal->saldoakhir_nilai); ?></td>
                             <!-- <td><?php // print_r($list); 
                                         ?></td> -->
                         </tr>
                     <?php
                         // $h_porat = $h_porat + $list_stockawal->HARGAPORAT;
-                        $saw_totalqty = round($saw_totalqty, 2) + round($saldo['saldoakhir_qty'], 2);
-                        $saw_totalrp = round($saw_totalrp, 2) + round($saldo_awal_rupiah, 2);
+                        $saw_totalqty = round($saw_totalqty, 2) + round($list_stockawal->saldoawal_qty, 2);
+                        $saw_totalrp = round($saw_totalrp, 2) + round($list_stockawal->saldoawal_nilai, 2);
                         $lpb_totalqty = round($lpb_totalqty, 2) + round($list_stockawal->QTY_MASUK, 2);
-                        $lpb_totalrp = round($lpb_totalrp, 2) + round($qty_masuk_rupiah, 2);
+                        $lpb_totalrp = round($lpb_totalrp, 2) + round($list_stockawal->nilai_masuk, 2);
                         $bkb_totalqty = round($bkb_totalqty, 2) + round($list_stockawal->QTY_KELUAR, 2);
-                        $bkb_totalrp = round($bkb_totalrp, 2) + round($qty_keluar_rupiah, 2);
+                        $bkb_totalrp = round($bkb_totalrp, 2) + round($list_stockawal->nilai_keluar, 2);
                         $sak_totalqty = round($sak_totalqty, 2) + round($list_stockawal->saldoakhir_qty, 2);
-                        $sak_totalrp = round($sak_totalrp, 2) + round($saldo_akhir_rupiah, 2);
+                        $sak_totalrp = round($sak_totalrp, 2) + round($list_stockawal->saldoakhir_nilai, 2);
 
                         $no++;
                     }
                     ?>
                     <tr>
-                        <td style="background-color: lightgray;" height="10px" colspan="5">
+                        <td height="10px" colspan="5">
                             <h5 align="right" height="10">SUB TOTAL</h5>
                         </td>
                         <!-- <td height="10px"></td> -->
                         <!-- <td height="10px"></td> -->
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($saw_totalqty, 2) ?></td>
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($saw_totalrp, 2) ?></td>
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($lpb_totalqty, 2) ?></td>
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($lpb_totalrp, 2) ?></td>
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($bkb_totalqty, 2) ?></td>
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($bkb_totalrp, 2) ?></td>
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($sak_totalqty, 2) ?></td>
-                        <td style="background-color: lightgray;" height="10px" align="right"><?= number_format($sak_totalrp, 2) ?></td>
+                        <td height="10px" align="right"><?= number_format($saw_totalqty, 2) ?></td>
+                        <td height="10px" align="right"><?= number_format($saw_totalrp) ?></td>
+                        <td height="10px" align="right"><?= number_format($lpb_totalqty, 2) ?></td>
+                        <td height="10px" align="right"><?= number_format($lpb_totalrp) ?></td>
+                        <td height="10px" align="right"><?= number_format($bkb_totalqty, 2) ?></td>
+                        <td height="10px" align="right"><?= number_format($bkb_totalrp) ?></td>
+                        <td height="10px" align="right"><?= number_format($sak_totalqty, 2) ?></td>
+                        <td height="10px" align="right"><?= number_format($sak_totalrp) ?></td>
                     </tr>
                 <?php
                     $grandtotal_saw_qty = round($grandtotal_saw_qty, 2) + round($saw_totalqty, 2);

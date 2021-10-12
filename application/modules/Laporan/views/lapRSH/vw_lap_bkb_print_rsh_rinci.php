@@ -130,11 +130,22 @@
         foreach ($kode_stock as $ks) {
             $kode_dev2 = (int)$kode_dev;
             if ($kode_dev == 'Semua') {
-                $q_saldo = "SELECT saldoawal_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' ORDER BY periode DESC LIMIT 1";
+                $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
             } else {
-                $q_saldo = "SELECT saldoawal_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY periode DESC LIMIT 1";
+                $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2')";
             }
-            $saldo = $this->db_logistik_pt->query($q_saldo)->row();
+            $saldo_r = $this->db_logistik_pt->query($q_saldo)->num_rows();
+            if ($saldo_r >= 1) {
+                $saldo = $this->db_logistik_pt->query($q_saldo)->row_array();
+            } else {
+                $saldo = [
+                    'saldoakhir_qty' => '0'
+                ];
+            }
+
+            // var_dump($saldo);
+            // die;
+
         ?>
             <table border="0" width="100%">
                 <thead>
@@ -146,8 +157,7 @@
                         <td style="text-align: left;"><b> <?= $ks->kodebar; ?> &nbsp; <?= $ks->nabar; ?></b></td>
                         <td style="text-align: right;">
                             <b>
-                                Saldo Sebelum Periode : <?php if ($saldo != NULL) echo number_format($saldo->saldoawal_qty, 2) . ' ' . $saldo->satuan;
-                                                        else ''; ?>
+                                Saldo Sebelum Periode : <?= number_format($saldo['saldoakhir_qty'], 2) . ' ' . $ks->satuan; ?>
                             </b>
                         </td>
                     </tr>
@@ -168,7 +178,7 @@
                 <tbody>
                     <?php
                     $no = 1;
-                    $s_a =  $saldo->saldoawal_qty;
+                    $s_a =  $saldo['saldoakhir_qty'];
 
                     if ($kode_dev == 'Semua') {
                         $q_stok = "SELECT * FROM register_stok WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' ORDER BY tgl ASC, ttgtxt ASC ";

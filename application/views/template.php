@@ -1458,7 +1458,7 @@
                                 <font face="Verdana" size="2">Kode Stok *</font>
                             </label>
                             <div class="col-12">
-                                <input type="text" class="form-control" id="kode_stok" name="kode_stok">
+                                <input type="text" class="form-control" id="kode_stok" name="kode_stok" onclick="cari_kodebar()" placeholder="cari kode stok">
                             </div>
                         </div>
                         <div class="form-group">
@@ -1582,10 +1582,75 @@
             </div>
         </div>
 
+        <!-- modal kodebar -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListBarang_lap_rsh">
+            <div class="modal-dialog modal-full-width modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">List Barang</h4>
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" style="margin-top: -20px;">
+                        <div class="table-responsive">
+                            <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                            <table id="dabar_lap_rsh" class="table table-striped table-bordered" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th class="hastag_th">#</th>
+                                        <th class="no_th">No</th>
+                                        <th class="kodebar_th">Kode Barang</th>
+                                        <th class="nabar_th">Nama Barang</th>
+                                        <th class="grup_th">Grup</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- end lap rsh -->
 
 
         <style>
+            .hastag_th {
+                width: 5% !important;
+            }
+
+            .no_th {
+                width: 4% !important;
+            }
+
+            .kodebar_th {
+                width: 12% !important;
+            }
+
+            .nabar_th {
+                width: 39% !important;
+            }
+
+            .grup_th {
+                width: 40% !important;
+            }
+
+            table#dabar_lap_rsh td {
+                padding: 3px;
+                padding-left: 10px;
+                font-size: 12px;
+            }
+
+            table#dabar_lap_rsh th {
+                padding: 10px;
+                font-size: 12px;
+            }
+
             table#tableListLapSPP td {
                 padding: 3px;
                 padding-left: 10px;
@@ -1628,10 +1693,6 @@
                 font-size: 12px;
             }
         </style>
-
-
-
-
 
         <!-- ============================================================== -->
         <!-- Start Page Content here -->
@@ -2240,7 +2301,7 @@
                         $.each(data, function(index, item) {
                             results.push({
                                 id: item.kodebartxt,
-                                text: item.kodebartxt + '-' + item.nabar
+                                text: item.kodebartxt
                             });
                         });
                         return {
@@ -2251,8 +2312,8 @@
 
             }).on('select2:select', function(evt) {
 
-                var kode = $(".select2 option:selected").text();
-                var data = $(".select2 option:selected").val();
+                var kode = $("#kd_stock_1 option:selected").text();
+                var data = $("#kd_stock_1 option:selected").val();
                 $('#cmb_kd_stock_1').val(kode);
                 // $('#cmb_kd_stock_2').val(kode);
 
@@ -2272,7 +2333,7 @@
                         $.each(data, function(index, item) {
                             results.push({
                                 id: item.kodebartxt,
-                                text: item.kodebartxt + '-' + item.nabar
+                                text: item.kodebartxt
                             });
                         });
                         return {
@@ -2283,8 +2344,8 @@
 
             }).on('select2:select', function(evt) {
 
-                var kode = $(".select2 option:selected").text();
-                var data = $(".select2 option:selected").val();
+                var kode = $("#kd_stock_2 option:selected").text();
+                var data = $("#kd_stock_2 option:selected").val();
                 // $('#cmb_kd_stock_1').val(kode);
                 $('#cmb_kd_stock_2').val(kode);
 
@@ -2304,6 +2365,13 @@
                 data: '',
                 success: function(data) {
                     $('#cmb_pt').empty();
+
+                    var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
+                    if (stl == 'HO') {
+                        var opsi_pt = '<option value="Semua">SEMUA</option>';
+                        $('#cmb_pt').append(opsi_pt);
+                    }
+
                     $.each(data, function(index) {
                         var opsi_pt = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
                         $('#cmb_pt').append(opsi_pt);
@@ -2358,6 +2426,46 @@
             }
             console.log(cmb_devisi5, kode_stok, cmb_group_brg, rbt_pilihan9);
         }
+
+        function cari_kodebar() {
+            $('#modalListBarang_lap_rsh').modal('show');
+        }
+
+        var table;
+        $(document).ready(function() {
+
+            //datatables
+            $('#dabar_lap_rsh').DataTable().destroy();
+            table = $('#dabar_lap_rsh').DataTable({
+
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+
+                "ajax": {
+                    "url": "<?php echo site_url('Laporan/get_data_barang_lap_rsh') ?>",
+                    "type": "POST"
+                },
+
+                "columnDefs": [{
+                    "targets": [0],
+                    "orderable": false,
+                }, ],
+
+            });
+
+        });
+        // End Data Table Server Side
+
+        $(document).on('click', '#data_barang_lap_rsh', function() {
+
+            var kodebar = $(this).data('kodebar');
+
+            // Set data
+            $('#kode_stok').val(kodebar);
+            $("#modalListBarang_lap_rsh").modal('hide');
+
+        });
 
         function pilihGroupBrg() {
             $.ajax({
