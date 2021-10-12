@@ -197,7 +197,7 @@ $nama_pt = $this->session->userdata('nama_pt');
 
 
   <hr>
-  <h3 align="right" style="margin-bottom: 0px;margin-top: 0px; font-weight: normal;"><small>Jakarta, <?= date('d-m-Y') ?></small></h3>
+  <h3 align="right" style="margin-bottom: 0px;margin-top: 0px; font-weight: normal;"><small>Jakarta, <?= date('d-m-Y', strtotime($po->tglpo)); ?></small></h3>
   <h2 align="center" style="margin: 0px;margin-top: -10px;">PESANAN PEMBELIAN</h2>
   <!-- <p align="center" style="margin-top: 0px;font-size: 12px;">
     No. PP : <?= $po->noreftxt; ?> <br />
@@ -206,9 +206,21 @@ $nama_pt = $this->session->userdata('nama_pt');
   <h3 style="font-weight: normal;margin-top: -8px; margin-bottom:0px; font-size: 8; text-align: center;">
     No.&nbsp;PO&nbsp;:&nbsp;<?= $po->noreftxt; ?>
   </h3>
-  <h3 align="right" style="font-weight: normal; margin-top: -20px; margin-bottom:-1px; font-size: 8;">
-    No.&nbsp;SPP&nbsp;:&nbsp;<?= $po->no_refppo; ?>
-  </h3>
+  <table border="0" align="right" style="margin-top: -20px; margin-bottom:-1px;">
+    <?php foreach ($spp as $d) { ?>
+      <tr>
+        <td>
+          <h3 style="font-weight: normal;  word-break: break-word; font-size: 8;">
+            No.&nbsp;SPP&nbsp;:-&nbsp;<?= $d->refppo; ?>
+          </h3>
+        </td>
+      </tr>
+    <?php } ?>
+  </table>
+
+  <!-- <h3 align="right" style="font-weight: normal; margin-top: -20px; margin-bottom:-1px; word-break: break-word; font-size: 8;">
+    -&nbsp;<?= $po->no_refppo; ?>
+  </h3> -->
 
   <table border="1" class="singleborder" width="100%">
     <tr>
@@ -224,8 +236,9 @@ $nama_pt = $this->session->userdata('nama_pt');
       </td>
       <td width="60%" style="padding:5px;">
         <br />
-        Syarat Pembayaran : <br />
-        Jadwal Pengiriman : <?= $po->ket_kirim; ?> <br />
+        No. Penawaran&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?= $po->ket_acc; ?><br />
+        Syarat Pembayaran : Pembayaran <?= $po->tempo_bayar; ?> hari setelah dokumen diterima lengkap<br />
+        Jadwal Pengiriman&nbsp;&nbsp; : <?= $po->ket_kirim; ?> <br />
         Alamat Penyerahan : <?= $po->lokasikirim; ?> <br />
       </td>
     </tr>
@@ -285,41 +298,41 @@ $nama_pt = $this->session->userdata('nama_pt');
 
   <table border="1" class="singleborder" width="100%">
     <tr>
-      <td colspan="7" width="399" rowspan="6" valign="top">
+      <td colspan="7" width="400" rowspan="6" valign="top">
         <b>Keterangan : </b><br />
-        <?= htmlspecialchars($po->ket); ?>
-        <!-- Nama Pemilik : <br />
-          No. Rekening : <br />
-          Uang Muka    : <br /> -->
+        <?= htmlspecialchars($po->ket); ?><br />
+        <b>Keterangan pembayaran: </b><br />
+        Nama Pemilik&nbsp; : <?= $supplier->atasnama ?><br />
+        No. Rekening&nbsp; : <?= $supplier->norek ?><br />
       </td>
       <td colspan="2">SUB TOTAL</td>
-      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
     </tr>
     <tr>
       <td colspan="2">PPN 10%</td>
-      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $pot_ppn_format; ?></td>
     </tr>
     <tr>
       <td colspan="2">PPH</td>
-      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $hit_pph_format; ?></td>
     </tr>
     <tr>
       <td colspan="2">Biaya Lainnya</td>
-      <td colspan="3" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
+      <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
     </tr>
     <tr>
       <td colspan="2"><?= join(", ", $nama_bebanbpo); ?></td>
-      <td colspan="3"></td>
+      <td colspan="2"></td>
     </tr>
     <tr>
       <td colspan="2">GRAND TOTAL</td>
-      <td colspan="3" align="right">
+      <td colspan="2" align="right">
         <?php
         $isi = $po->totalbayar + $pot_ppn + $hit_pph;
         $hasil = round($isi);
         ?>
         <br />
-        <?= $list_item->kurs; ?>. <?= number_format($hasil, 2, ",", "."); ?>
+        <?= $list_item->kurs; ?>. <?= number_format($isi, 2, ",", "."); ?>
       </td>
     </tr>
     <tr>
@@ -333,99 +346,97 @@ $nama_pt = $this->session->userdata('nama_pt');
         $kurs = "Rupiah";
       }
       ?>
-      <td colspan="7"><b>Terbilang : <?= terbilang($jumlah, $style = 3) . '&nbsp;' . $kurs ?></b></td>
+      <td colspan="7"><b>Terbilang : <?= terbilang($total, $style = 3) . '&nbsp;' . $kurs ?></b></td>
     </tr>
   </table>
 
   <table border="1" class="singleborder" width="100%">
 
-    <tbody>
-      <?php
-      $lokasi_sesi = $this->session->userdata('status_lokasi');
-      switch ($lokasi_sesi) {
-        case 'PKS':
-        case 'SITE':
-        case 'RO':
-      ?>
-          <tr>
-            <td align="center" colspan="3" width="35%" height="50">
-              Menyetujui,<br />
-              <br />
-              <br />
-              <br />
-              <br />
-              (Supplier)
-            </td>
-            <td align="center" colspan="3" width="30%" height="50">
-              Dibuat oleh,<br />
-              <br />
-              <br />
-              <br />
-              <br />
-              (KTU)
-            </td>
-            <td align="center" colspan="5" width="30%" height="50">
-              Menyetujui,<br />
-              <br />
-              <br />
-              <br />
-              <br />
-              (G. Manager)
-            </td>
-          </tr>
-
-        <?php
-          break;
-        case 'HO':
-        ?>
-
-          <tr>
-            <td align="center" colspan="3" width="35%" height="50">
-              Menyetujui,<br />
-              <br />
-              <br />
-              <br />
-              <br />
-              (Supplier)
-            </td>
-            <td align="center" colspan="3" width="30%" height="50">
-              Dibuat oleh,<br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <?php
-              $total = $po->totalbayar;
-              if ($total > 5000000) { ?>
-                (Manager Purchasing)
-              <?php } else { ?>
-                (Purchasing)
-              <?php } ?>
-            </td>
-            <td align="center" colspan="5" width="30%" height="50">
-              Menyetujui,<br />
-              <br />
-              <br />
-              <br />
-              <br />
-              <?php
-              $total = $po->totalbayar;
-              if ($total > 5000000) { ?>
-                (Direktur Pembelian)
-              <?php } else { ?>
-                (Manager Purchasing)
-              <?php } ?>
-            </td>
-          </tr>
+    <?php
+    $lokasi_sesi = $this->session->userdata('status_lokasi');
+    switch ($lokasi_sesi) {
+      case 'PKS':
+      case 'SITE':
+      case 'RO':
+    ?>
+        <tr>
+          <td align="center" colspan="3" width="35%" height="50">
+            Menyetujui,<br />
+            <br />
+            <br />
+            <br />
+            <br />
+            (Supplier)
+          </td>
+          <td align="center" colspan="3" width="30%" height="50">
+            Dibuat oleh,<br />
+            <br />
+            <br />
+            <br />
+            <br />
+            (KTU)
+          </td>
+          <td align="center" colspan="5" width="30%" height="50">
+            Menyetujui,<br />
+            <br />
+            <br />
+            <br />
+            <br />
+            (G. Manager)
+          </td>
+        </tr>
 
       <?php
-          break;
-        default:
-          break;
-      }
+        break;
+      case 'HO':
       ?>
 
-    </tbody>
+        <tr>
+          <td align="center" colspan="3" width="35%" height="50">
+            Menyetujui,<br />
+            <br />
+            <br />
+            <br />
+            <br />
+            (Supplier)
+          </td>
+          <td align="center" colspan="3" width="30%" height="50">
+            Dibuat oleh,<br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <?php
+            $total = $po->totalbayar;
+            if ($total > 5000000) { ?>
+              (Manager Purchasing)
+            <?php } else { ?>
+              (Purchasing)
+            <?php } ?>
+          </td>
+          <td align="center" colspan="5" width="30%" height="50">
+            Menyetujui,<br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <?php
+            $total = $po->totalbayar;
+            if ($total > 5000000) { ?>
+              (Direktur Pembelian)
+            <?php } else { ?>
+              (Manager Purchasing)
+            <?php } ?>
+          </td>
+        </tr>
+
+    <?php
+        break;
+      default:
+        break;
+    }
+    ?>
+
   </table>
 
   <table border="0" width="100%">

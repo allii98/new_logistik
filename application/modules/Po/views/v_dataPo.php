@@ -31,15 +31,16 @@
 						<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped">
 							<thead>
 								<tr>
-									<th width="11%" style="font-size: 12px; padding:10px">#</th>
+									<th width="15%" style="font-size: 12px; padding:10px">#</th>
 									<th width="3%" style="font-size: 12px; padding:10px">No</th>
-									<th width="17%" style="font-size: 12px; padding:10px">No. Ref PO</th>
-									<th width="7%" style="font-size: 12px; padding:10px">Tgl. PO</th>
-									<th width="15%" style="font-size: 12px; padding:10px">No. Ref SPP</th>
-									<th width="7%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
+									<th width="15%" style="font-size: 12px; padding:10px">No. Ref PO</th>
+									<th width="8%" style="font-size: 12px; padding:10px">Tgl. PO</th>
+									<th width="13%" style="font-size: 12px; padding:10px">No. Ref SPP</th>
+									<th width="8%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
 									<th width="11%" style="font-size: 12px; padding:10px">Supplier</th>
 									<th width="15%" style="font-size: 12px; padding:10px">Keterangan</th>
 									<th width="8%" style="font-size: 12px; padding:10px">Terbayar</th>
+									<th width="8%" style="font-size: 12px; padding:10px">User</th>
 									<th width="5%" style="font-size: 12px; padding:10px">Status LPB</th>
 								</tr>
 							</thead>
@@ -100,7 +101,7 @@
 	table#tableListPO td {
 		padding: 3px;
 		padding-left: 10px;
-		font-size: 12px;
+		font-size: 11px;
 	}
 
 	table#datapo td {

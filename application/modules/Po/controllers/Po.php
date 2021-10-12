@@ -145,7 +145,8 @@ class Po extends CI_Controller
             'nopo' => $dt,
             'pph' => $po->pph,
             'ppn' => $po->ppn,
-            'sesi_sl' => $this->session->userdata('status_lokasi')
+            'sesi_sl' => $this->session->userdata('status_lokasi'),
+            'devisi' => $this->M_po->cariDevisi()
         ];
 
 
@@ -213,6 +214,7 @@ class Po extends CI_Controller
             $row[] = $d->nama_supply;
             $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . ' </p>';
             $row[] = number_format($d->terbayar, 2, ",", ".");;
+            $row[] = $d->user;
             $row[] = $lpb;
 
             $data[] = $row;
@@ -290,15 +292,18 @@ class Po extends CI_Controller
 
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $nopo, 'id' => $id))->row();
 
+        
+        
         $kode_supplier = $data['po']->kode_supply;
         $qrcode = $data['po']->qr_code;
-
+        
         // $data['supplier'] = $this->db_logistik_pt->get_where('supplier', array('kode'=>$kode_supplier))->row();
-
+        
         $query_supplier = "SELECT * FROM supplier WHERE kode = '$kode_supplier' AND account IS NOT NULL";
-        $data['supplier'] = $this->db_logistik_pt->query($query_supplier)->row();
-
+        $data['supplier'] = $this->db_logistik->query($query_supplier)->row();
+        
         $no_refpo = $data['po']->noreftxt;
+        $data['spp'] = $this->db_logistik_pt->query("SELECT DISTINCT refppo FROM item_po WHERE noref='$no_refpo'")->result();
         // $no_refspp = $data['po']->no_refppo;
         $data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('noref' => $nopo, 'noref' => $no_refpo))->result();
 
@@ -314,7 +319,7 @@ class Po extends CI_Controller
             'mode' => 'utf-8',
             'format' => 'A4',
             // 'format' => [190, 236],
-            'margin_top' => '0',
+            'margin_top' => '2',
             'margin_left' => '3',
             'margin_right' => '3',
             'orientation' => 'P'
@@ -412,6 +417,13 @@ class Po extends CI_Controller
     public function getPoo()
     {
         $data = $this->M_po->get_sup();
+        echo json_encode($data);
+    }
+
+    function cek_supplier()
+    {
+        $kode = $this->input->post('kode');
+        $data = $this->db_logistik->query("SELECT * FROM supplier WHERE kode='$kode'")->row();
         echo json_encode($data);
     }
 
@@ -786,8 +798,8 @@ class Po extends CI_Controller
             'no_refppo' => $norefspp,
             'tgl_refppo' =>  $this->input->post('hidden_tglref'),
             'tgl_reftxt' =>  date("Ymd"),
-            'tglpo' =>  date("Y-m-d  H:i:s"),
-            'tglpotxt' =>  date("Ymd"),
+            'tglpo' =>  $this->input->post('tgl_po'),
+            'tglpotxt' => date("Ymd", strtotime($this->input->post('tgl_po'))),
             'tglppo' =>  $tgl_ppo,
             'tglppotxt' =>   $tgl_ppo_txt,
             'bayar' => $this->input->post('cmb_status_bayar'),
@@ -828,8 +840,8 @@ class Po extends CI_Controller
             'refppo' => $norefspp,
             'tglppo' =>  $tgl_ppo,
             'tglppotxt' => $tgl_ppo_txt,
-            'tglpo' =>  date("Y-m-d"),
-            'tglpotxt' => date("Ymd"),
+            'tglpo' =>  $this->input->post('tgl_po'),
+            'tglpotxt' => date("Ymd", strtotime($this->input->post('tgl_po'))),
             'kodebar' => $this->input->post('hidden_kode_brg'),
             'kodebartxt' => $this->input->post('hidden_kode_brg'),
             'nabar' => $this->input->post('hidden_nama_brg'),
@@ -1039,8 +1051,8 @@ class Po extends CI_Controller
             'refppo' => $norefspp,
             'tglppo' =>  $tgl_ppo,
             'tglppotxt' =>  $tgl_ppo_txt,
-            'tglpo' =>  date("Y-m-d"),
-            'tglpotxt' => date("Ymd"),
+            'tglpo' =>  $this->input->post('tgl_po'),
+            'tglpotxt' => date("Ymd", strtotime($this->input->post('tgl_po'))),
             'kodebar' => $this->input->post('hidden_kode_brg'),
             'kodebartxt' => $this->input->post('hidden_kode_brg'),
             'nabar' => $this->input->post('hidden_nama_brg'),
@@ -1316,6 +1328,7 @@ class Po extends CI_Controller
     public function updateItem()
     {
         $no_id_item = $this->input->post('id_item');
+        $id = $this->input->post('idpo');
         $norefpo = $this->input->post('hidden_no_ref_po');
         $norefppo = $this->input->post('hidden_no_ref_spp');
         $kodebar = $this->input->post('hidden_kode_brg');
@@ -1346,11 +1359,49 @@ class Po extends CI_Controller
             $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
         }
 
-        // $tgl_ppo = date("Y-m-d", strtotime($this->input->post('hidden_tanggal')));
-        // $tgl_ppo_txt = date("Ymd", strtotime($this->input->post('hidden_tanggal')));
+        $kode_dev = $this->input->post('hidden_kode_devisi');
+        $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_dev))->row_array();
 
-        // $tgl_ref = date("Y-m-d", strtotime($this->input->post('hidden_tgl_ref')));
-        // $tgl_ref_txt = date("Ymd", strtotime($this->input->post('hidden_tgl_ref')));
+        if ($this->input->post('cmb_dikirim_ke_kebun') == 'Y') {
+            $dikirim_ke_kebun = 1;
+        } else {
+            $dikirim_ke_kebun = 0;
+        }
+
+
+
+        $poupdate = [
+            'ket_dept' => $this->input->post('hidden_departemen'),
+            'kode_dev' => $this->input->post('hidden_kode_devisi'),
+            'devisi' => $this->input->post('hidden_devisi'),
+            'nama_supply' => $this->input->post('txt_kode_supplier'),
+            'kode_supply' => $this->input->post('txt_supplier'),
+            'kode_pemesan' => $this->input->post('txt_kode_pemesan'),
+            'pemesan' => $this->input->post('txt_pemesan'),
+            'tglpo' =>  $this->input->post('tgl_po'),
+            'tglpotxt' => date("Ymd", strtotime($this->input->post('tgl_po'))),
+            'bayar' => $this->input->post('cmb_status_bayar'),
+            'tempo_bayar' => $this->input->post('txt_tempo_pembayaran'),
+            'lokasikirim' => $this->input->post('txt_lokasi_pengiriman'),
+            'tempo_kirim' => $this->input->post('txt_tempo_pengiriman'),
+            'lokasi_beli' => $this->input->post('cmb_lokasi_pembelian'),
+            'ket' => $this->input->post('txt_keterangan'),
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'ket_acc' => $this->input->post('txt_no_penawaran'),
+            'periode' => date('Y-m-d H:i:s'),
+            'periodetxt' => date('Ym'),
+            'thn' => date('Y'),
+            'tglisi' => date('Y-m-d H:i:s'),
+            'user' => $this->session->userdata('user'),
+            'pph' =>  $this->input->post('cmb_pph'),
+            'ppn' =>  $this->input->post('cmb_ppn'),
+            'totalbayar' =>  $this->input->post('txt_total_pembayaran'),
+            'ket_kirim' => $this->input->post('txt_ket_pengiriman'),
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'uangmuka' => $this->input->post('txt_uang_muka'),
+            'kirim' => $dikirim_ke_kebun,
+        ];
 
         $dataupdateitem = [
             // 'nopo' => $no_po,
@@ -1411,11 +1462,14 @@ class Po extends CI_Controller
             } else {
                 $id_ppo = $this->input->post('id_item_spp');
 
+                $updatepo = $this->M_po->updatePO($id, $poupdate);
                 $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
             }
         } else {
             $id_ppo = $this->input->post('id_item_spp');
 
+
+            $updatepo = $this->M_po->updatePO($id, $poupdate);
             $updateitem = $this->M_po->updateItem($no_id_item, $dataupdateitem);
         }
 

@@ -118,9 +118,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <select class="form-control form-control-sm supply" id="select2">
 
                                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                            <option selected disabled>Nama Supplier</option>
+                                            <option selected value="" disabled>Nama Supplier</option>
                                         <?php } else { ?>
-                                            <option disabled>Nama Supplier</option>
+                                            <option value="" disabled>Nama Supplier</option>
                                             <option selected value="0475">TOKO ( KAS )</option>
                                         <?php } ?>
                                     </select>
@@ -322,7 +322,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     <!-- <font face="Verdana" size="1.5">Ket*</font> -->
                                 </label>
                                 <div class="col-9 col-xl-12">
-                                    <textarea maxlength="250" class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off"></textarea>
+                                    <textarea maxlength="250" class="form-control form-control-sm" id="keterangan" name="keterangan" placeholder="Keterangan" autocomplite="off">-</textarea>
                                 </div>
                             </div>
                             <?php
@@ -497,7 +497,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                         <input type="hidden" class="form-control" id="qty_1" name="txt_qty" placeholder="Qty" size="8" />
                                                         <input type="hidden" class="form-control" id="qty2_1" name="txt_qty" placeholder="Qty" size="8" />
                                                         <span class="small text-muted" style="font-size: 11px;">Qty&nbsp;PO&nbsp;:&nbsp;</span><span id="qty_po_1" class="small" style="font-size: 11px;"></span><br>
-                                                        <span class="small text-muted" style="font-size: 11px;">SIsa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_1" class="small" style="font-size: 11px;"></span>
+                                                        <span class="small text-muted" style="font-size: 11px;">Sisa&nbsp;Qty&nbsp;:&nbsp;</span><span id="sisa_qty_1" class="small" style="font-size: 11px;"></span>
                                                     </td>
                                                     <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="number" class="form-control form-control-sm" id="txt_harga_1" name="txt_harga_1" onkeyup="jumlah('1')" placeholder="Harga dalam Rupiah" size="15" required /><br />
@@ -674,7 +674,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             <div class="modal-body p-4">
                 <div class="text-center">
                     <i class="dripicons-warning h1 text-warning"></i>
-                    <h4 class="mt-2">Konfirmasi Batak</h4>
+                    <h4 class="mt-2">Konfirmasi Batal</h4>
                     <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
                     <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekPO()">Hapus</button>
@@ -2262,6 +2262,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_no_penawaran: $('#no_penawaran').val(),
                     cmb_ppn: $('#ppn').val(),
                     cmb_pph: $('#pph').val(),
+                    tgl_po: $('#tgl_po').val(),
                     txt_total_pembayaran: $('#ttl_pembayaran').val(),
                     txt_ket_pengiriman: $('#ket_pengiriman').val(),
                     txt_uang_muka: $('#txt_uang_muka').val(),
@@ -2436,6 +2437,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_ket_pengiriman: $('#ket_pengiriman').val(),
                     txt_uang_muka: $('#txt_uang_muka').val(),
                     txt_no_voucher: $('#txt_no_voucher').val(),
+                    tgl_po: $('#tgl_po').val(),
                     txt_no_spp: $('#noppo' + id).val(),
                     hidden_no_ref: $('#hidden_no_ref_spp_' + id).val(),
                     hidden_kode_brg: $('#hidden_kode_brg_' + id).val(),
@@ -2545,7 +2547,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function update(id) {
 
-        console.log($('#hidden_id_po_item_' + id).val() + 'ni id asve');
+        console.log($('#hidden_id_po_item_' + id).val() + 'ini id save');
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('Po/updateItem') ?>",
@@ -2557,23 +2559,32 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             data: {
                 // hidden_id_po_item: $('#hidden_id_po_item_' + id).val(),
                 // hidden_kode_departemen: $('#hidden_kd_departemen_' + id).val(),
-                // hidden_departemen: $('#hidden_departemen_' + id).val(),
-                // cmb_jenis_budget: $('#cmb_jenis_budget_' + id).val(),
-                // txt_kode_supplier: $('#kd_supplier').val(),
-                // txt_supplier: $('#txtsupplier').val(),
-                // txt_kode_pemesan: $('#txt_kode_pemesan').val(),
-                // txt_pemesan: $('#txt_pemesan').val(),
-                // cmb_status_bayar: $('#cmb_status_bayar').val(),
+                idpo: $('#hidden_id_po').val(),
+                hidden_departemen: $('#hidden_departemen_' + id).val(),
+                hidden_devisi: $('#hidden_devisi').val(),
+                hidden_kode_devisi: $('#hidden_kode_devisi').val(),
+                tgl_po: $('#tgl_po').val(),
+                txt_kode_supplier: $('#kd_supplier').val(),
+                txt_supplier: $('#txtsupplier').val(),
+                cmb_status_bayar: $('#cmb_status_bayar').val(),
+                tmpo_pembayaran: $('#tmpo_pembayaran').val(),
+                txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
+                cmb_lokasi_pembelian: $('#lks_pembelian').val(),
+                txt_no_penawaran: $('#no_penawaran').val(),
+                txt_pemesan: $('#nama_pemesan').val(),
+                txt_kode_pemesan: $('#txt_pemesan').val(),
+                devisi: $('#devisi').val(),
+                cmb_pph: $('#pph').val(),
+                cmb_ppn: $('#ppn').val(),
+                cmb_dikirim_ke_kebun: $('#cmb_dikirim_ke_kebun').val(),
+                txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
+                cmb_lokasi_pembelian: $('#lks_pembelian').val(),
+                txt_keterangan: $('#keterangan').val(),
+                txt_total_pembayaran: $('#ttl_pembayaran').val(),
+                txt_ket_pengiriman: $('#ket_pengiriman').val(),
+                txt_uang_muka: $('#txt_uang_muka').val(),
+                txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
                 // txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
-                // txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
-                // txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
-                // cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                // txt_keterangan: $('#keterangan').val(),
-                // txt_no_penawaran: $('#no_penawaran').val(),
-                // cmb_ppn: $('#ppn').val(),
-                // txt_total_pembayaran: $('#ttl_pembayaran').val(),
-                // txt_ket_pengiriman: $('#ket_pengiriman').val(),
-                // txt_uang_muka: $('#txt_uang_muka').val(),
                 // txt_no_voucher: $('#txt_no_voucher').val(),
                 // hidden_nama_brg: $('#hidden_nama_brg_' + id).val(),
                 // hidden_satuan_brg: $('#hidden_satuan_brg_' + id).val(),
@@ -2654,6 +2665,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function ubah(id) {
         // $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
         // $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
+        $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeClass('bg-light');
+        $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeAttr('disabled', '');
+
+
         $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
         $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
         $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
@@ -2714,6 +2729,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                     // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                     // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
+
+                    $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').addClass('form-control bg-light');
+                    $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').attr('disabled', '');
+
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
@@ -2783,6 +2802,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     // $('.div_form_2').find('input,textarea,select').addClass('form-control bg-light');
                     // $('#tableRinciPO').find('input,textarea,select').attr('disabled', '');
                     // $('#tableRinciPO').find('input,textarea,select').addClass('form-control bg-light');
+
+                    $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').addClass('form-control bg-light');
+                    $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').attr('disabled', '');
 
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');

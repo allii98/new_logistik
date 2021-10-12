@@ -6,8 +6,8 @@ class M_data extends CI_Model
 {
 
     var $table = 'po'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noreftxt', 'nopo', 'no_refppo', 'tgl_refppo', 'nopotxt', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb'); //field yang ada di table supplier  
-    var $column_search = array('noreftxt', 'no_refppo', 'tglpo', 'tgl_refppo', 'nama_supply', 'ket'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'noreftxt', 'nopo', 'no_refppo', 'tgl_refppo', 'user', 'nopotxt', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb'); //field yang ada di table supplier  
+    var $column_search = array('noreftxt', 'no_refppo', 'tglpo', 'tgl_refppo', 'nama_supply', 'user', 'ket'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()
@@ -31,7 +31,7 @@ class M_data extends CI_Model
         if ($lokasi_sesi == 'HO') {
             if ($data == 'HO') {
                 $this->db_logistik_pt->from($this->table);
-                $this->db_logistik_pt->like('noreftxt', 'PST', 'both');
+                $this->db_logistik_pt->where('lokasi', $lokasi_sesi);
                 # code...
             } elseif ($data == 'SITE') {
                 $this->db_logistik_pt->from($this->table);
