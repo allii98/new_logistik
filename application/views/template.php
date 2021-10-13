@@ -45,20 +45,84 @@
 
 <body class="loading" data-layout-mode="horizontal" data-layout='{"mode": "light", "width": "fluid", "menuPosition": "fixed", "topbar": {"color": "dark"}, "showRightSidebarOnPageLoad": true}'>
 
-    <div class="container">
-        <!-- Mobile menu toggle (Horizontal Layout)-->
-        <a class="navbar-toggle nav-link" data-toggle="collapse" data-target="#topnav-menu-content">
+    <!-- <div class="container"> -->
+    <!-- Mobile menu toggle (Horizontal Layout)-->
+    <!-- <a class="navbar-toggle nav-link" data-toggle="collapse" data-target="#topnav-menu-content">
             <div class="lines">
                 <span></span>
                 <span></span>
                 <span></span>
             </div>
-        </a>
-        <!-- End mobile menu toggle-->
-    </div>
+        </a> -->
+    <!-- End mobile menu toggle-->
+    <!-- </div> -->
 
     <!-- Begin page -->
     <div id="wrapper">
+
+
+        <!-- Topbar Start -->
+        <div class="navbar-custom navbar-toggle nav-link" data-toggle="collapse" data-target="#topnav-menu-content">
+            <div class="container-fluid">
+                <ul class="list-unstyled topnav-menu float-right mb-0">
+
+                    <li class="dropdown notification-list topbar-dropdown">
+                        <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+                            <img src="<?= base_url() ?>assets/images/users/user-1.jpg" alt="user-image" class="rounded-circle mr-2">
+                            <font face="Verdana" color="white" size="2.5">Hai, <?= $this->session->userdata('user'); ?></font><i class="ml-1 mdi mdi-chevron-down"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+                            <!-- item-->
+                            <div class="dropdown-header noti-title">
+                                <h6 class="text-overflow m-0"><?= $this->session->userdata('pt'); ?></h6>
+                            </div>
+
+                            <!-- item-->
+                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <i class="fe-calendar"></i>
+                                Periode : <?= $this->session->userdata('ym_periode'); ?>
+                            </a>
+                            <a class="dropdown-item notify-item" href="<?= base_url('Login/logout') ?>">
+                                <i class="mdi mdi-logout mr-1"></i>
+                                Logout
+
+                            </a>
+                        </div>
+                    </li>
+
+                    <!-- <li class="dropdown notification-list">
+                        <a href="javascript:void(0);" class="nav-link right-bar-toggle waves-effect waves-light">
+                            <i class="fe-settings noti-icon"></i>
+                        </a>
+                    </li> -->
+
+                </ul>
+
+                <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+                    <li>
+                        <button class="button-menu-mobile waves-effect waves-light">
+                            <i class="fe-menu"></i>
+                        </button>
+                    </li>
+
+                    <li>
+                        <!-- Mobile menu toggle (Horizontal Layout)-->
+                        <a class="navbar-toggle nav-link" data-toggle="collapse" data-target="#topnav-menu-content">
+                            <div class="lines">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </a>
+                        <!-- End mobile menu toggle-->
+                    </li>
+
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+        <!-- end Topbar -->
 
         <div class="topnav shadow-lg mt-0">
             <div class="container-fluid">
