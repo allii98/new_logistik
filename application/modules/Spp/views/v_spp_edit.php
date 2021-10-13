@@ -7,6 +7,8 @@
                     <div class="row justify-content-between" style="margin-top: -10px;">
                         <h4 class="header-title ml-2">SPP <i>(Edit)</i></h4>
                         <div class="button-list mr-2">
+                            <button class="btn btn-xs btn-warning" id="data_spp_approval" onclick="data_spp_approval()">SPP Approval</button>
+                            <button class="btn btn-xs btn-info" id="data_spp" onclick="data_spp()">Data SPP</button>
                             <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()">SPP Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()">Batal SPP</button>
                             <button class="btn btn-primary btn-xs" id="a_print_spp" onclick="cetak_spp()">Cetak</button>
@@ -346,6 +348,14 @@
         var id_ppo_edit = $('#id_ppo_edit').val();
         cari_spp_edit(id_ppo_edit);
     });
+
+    function data_spp_approval() {
+        location.href = "<?php echo base_url('Spp/SppApproval') ?>";
+    }
+
+    function data_spp() {
+        location.href = "<?php echo base_url('Spp') ?>";
+    }
 
     function cari_spp_edit(id_ppo) {
         $.ajax({

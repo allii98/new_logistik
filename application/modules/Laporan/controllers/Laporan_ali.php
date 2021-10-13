@@ -9,6 +9,7 @@ class Laporan_ali extends CI_Controller
 		parent::__construct();
 		$db_pt = check_db_pt();
 		$this->db_logistik = $this->load->database('db_logistik', TRUE);
+		$this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 		$this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
 
 		$this->load->model('M_laporan');
@@ -30,7 +31,7 @@ class Laporan_ali extends CI_Controller
 	function get_kodebar()
 	{
 		// $query = "SELECT kodebartxt, nabar FROM kodebar";
-		// $data = $this->db_logistik->query($query)->result();
+		// $data = $this->db_logistik_center->query($query)->result();
 		$query = "SELECT DISTINCT kodebartxt, nabar FROM stockawal ORDER BY kodebartxt ASC";
 		$data = $this->db_logistik_pt->query($query)->result();
 		echo json_encode($data);
@@ -448,10 +449,10 @@ class Laporan_ali extends CI_Controller
 		]);
 
 		$query_grp = "SELECT DISTINCT grp FROM  kodebar ORDER BY grp ASC LIMIT 100";
-		$data['data_grp'] = $this->db_logistik->query($query_grp)->result();
+		$data['data_grp'] = $this->db_logistik_center->query($query_grp)->result();
 
 		$query = "SELECT id, kodebartxt, nabar, nopart, satuan FROM kodebar ORDER BY nabar ASC LIMIT 100";
-		$data['data_barang'] = $this->db_logistik->query($query)->result();
+		$data['data_barang'] = $this->db_logistik_center->query($query)->result();
 
 		// var_dump(json_decode($this->list_barang()));exit();
 		// $data['data_barang'] = json_decode($this->list_barang());
@@ -488,7 +489,7 @@ class Laporan_ali extends CI_Controller
 		$query4 = "SELECT * FROM item_po WHERE noref = '" . $noreftxt . "' AND refppo = '" . $no_refppo . "'";
 		$data['po'] = $this->db_logistik_pt->query($query)->row();
 		$data['pt'] = $this->db_logistik_pt->query($query2)->row();
-		$data['supply'] = $this->db_logistik->query($query3)->row();
+		$data['supply'] = $this->db_logistik_center->query($query3)->row();
 		$data['item_po'] = $this->db_logistik_pt->query($query4)->result();
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
@@ -2444,7 +2445,7 @@ class Laporan_ali extends CI_Controller
 	{
 		$query = "SELECT DISTINCT(grp) FROM kodebar ";
 
-		$data = $this->db_logistik->query($query)->result();
+		$data = $this->db_logistik_center->query($query)->result();
 		echo json_encode($data);
 	}
 

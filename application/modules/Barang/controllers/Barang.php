@@ -12,8 +12,9 @@ class Barang extends CI_Controller
         $this->load->model('M_coa');
 
         $db_pt = check_db_pt();
-        $this->db_logistik = $this->load->database('db_logistik', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl', TRUE);
+        $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
         $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -82,7 +83,7 @@ class Barang extends CI_Controller
         $id = $this->input->post('id');
         $kodebar = $this->input->post('kodebar');
 
-        $data = $this->db_logistik->get_where('kodebar', array('id' => $id, 'kodebartxt' => $kodebar))->row();
+        $data = $this->db_logistik_center->get_where('kodebar', array('id' => $id, 'kodebartxt' => $kodebar))->row();
         echo json_encode($data);
     }
 
@@ -96,10 +97,10 @@ class Barang extends CI_Controller
         $no_coa = $this->input->post('no_coa');
 
         $query = "SELECT general FROM noac where noac = '$no_coa'";
-        $data_general = $this->db_logistik->query($query)->row();
+        $data_general = $this->db_mips_gl->query($query)->row();
 
         $query = "SELECT nama FROM noac where noac = '$data_general->general'";
-        $data = $this->db_logistik->query($query)->row();
+        $data = $this->db_mips_gl->query($query)->row();
         echo json_encode($data);
     }
 
@@ -112,7 +113,7 @@ class Barang extends CI_Controller
     function get_satuan()
     {
         $query = "SELECT DISTINCT kode, satuan FROM satuan ORDER BY satuan ASC";
-        $data = $this->db_logistik->query($query)->result();
+        $data = $this->db_logistik_center->query($query)->result();
         echo json_encode($data);
     }
 }
