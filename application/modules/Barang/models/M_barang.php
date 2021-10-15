@@ -19,10 +19,10 @@ class M_barang extends CI_Model
     private function _get_datatables_query()
     {
         // $Value = ;
-        $this->db_logistik->select('id, kodebar, kodebartxt, nabar, grp, satuan');
-        $this->db_logistik->from('kodebar');
-        // $this->db_logistik->where('po', 0);
-        $this->db_logistik->order_by('id', 'desc');
+        $this->db_logistik_center->select('id, kodebar, kodebartxt, nabar, grp, satuan');
+        $this->db_logistik_center->from('kodebar');
+        // $this->db_logistik_center->where('po', 0);
+        $this->db_logistik_center->order_by('id', 'desc');
 
 
         $i = 0;
@@ -34,22 +34,22 @@ class M_barang extends CI_Model
 
                 if ($i === 0) // looping awal
                 {
-                    $this->db_logistik->group_start();
-                    $this->db_logistik->like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->group_start();
+                    $this->db_logistik_center->like($item, $_POST['search']['value']);
                 } else {
-                    $this->db_logistik->or_like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->or_like($item, $_POST['search']['value']);
                 }
                 if (count($this->column_search) - 1 == $i)
-                    $this->db_logistik->group_end();
+                    $this->db_logistik_center->group_end();
             }
             $i++;
         }
 
         if (isset($_POST['order'])) {
-            $this->db_logistik->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db_logistik_center->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } else if (isset($this->order)) {
             $order = $this->order;
-            $this->db_logistik->order_by(key($order), $order[key($order)]);
+            $this->db_logistik_center->order_by(key($order), $order[key($order)]);
         }
     }
 
@@ -57,28 +57,28 @@ class M_barang extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-            $this->db_logistik->limit($_POST['length'], $_POST['start']);
-        $query = $this->db_logistik->get();
+            $this->db_logistik_center->limit($_POST['length'], $_POST['start']);
+        $query = $this->db_logistik_center->get();
         return $query->result();
     }
 
     function count_filtered()
     {
         $this->_get_datatables_query();
-        $query = $this->db_logistik->get();
+        $query = $this->db_logistik_center->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-        $this->db_logistik->from($this->table);
-        return $this->db_logistik->count_all_results();
+        $this->db_logistik_center->from($this->table);
+        return $this->db_logistik_center->count_all_results();
     }
 
     function simpan_master_barang()
     {
         $query_id = "SELECT MAX(id)+1 as no_id FROM kodebar";
-        $generate_id = $this->db_logistik->query($query_id)->row();
+        $generate_id = $this->db_logistik_center->query($query_id)->row();
         $no_id = $generate_id->no_id;
         if (empty($no_id)) {
             $no_id = 1;
@@ -99,8 +99,8 @@ class M_barang extends CI_Model
         if (empty($this->input->post('hidden_id'))) {
             $data_master_barang["id"]         = $no_id;
 
-            $this->db_logistik->insert('kodebar', $data_master_barang);
-            if ($this->db_logistik->affected_rows() > 0) {
+            $this->db_logistik_center->insert('kodebar', $data_master_barang);
+            if ($this->db_logistik_center->affected_rows() > 0) {
                 // $bool_master_barang = TRUE;
                 return TRUE;
             } else {
@@ -112,11 +112,11 @@ class M_barang extends CI_Model
 
             $data_master_barang["id"]   = $id;
 
-            $this->db_logistik->set($data_master_barang);
-            $this->db_logistik->where('id', $id);
-            $this->db_logistik->update('kodebar');
-            // var_dump($this->db_logistik->last_query());exit();
-            if ($this->db_logistik->affected_rows() > 0) {
+            $this->db_logistik_center->set($data_master_barang);
+            $this->db_logistik_center->where('id', $id);
+            $this->db_logistik_center->update('kodebar');
+            // var_dump($this->db_logistik_center->last_query());exit();
+            if ($this->db_logistik_center->affected_rows() > 0) {
                 return TRUE;
             } else {
                 return FALSE;

@@ -130,7 +130,7 @@ class Lpb extends CI_Controller
     public function get_grup_barang()
     {
         $kodebar =  $this->input->post('kodebar');
-        $data =  $this->db_logistik->get_where('kodebar', array('kodebartxt' => $kodebar))->row();
+        $data =  $this->db_logistik_center->get_where('kodebar', array('kodebartxt' => $kodebar))->row();
         echo json_encode($data);
     }
 

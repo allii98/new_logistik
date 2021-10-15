@@ -13,10 +13,9 @@ class Spp extends CI_Controller
         $this->load->model('M_approval_spp');
 
         $db_pt = check_db_pt();
-        // $this->db_logistik = $this->load->database('db_logistik',TRUE);
-        $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
 
-        $this->db_logistik = $this->load->database('db_logistik', TRUE);
+        $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
+        $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -302,102 +301,6 @@ class Spp extends CI_Controller
 
     public function saveSppEdit()
     {
-        // $cmb_alokasi = $this->input->post("cmb_alokasi");
-
-        // $data['nama_dept'] = $this->M_spp->namaDept($this->input->post("cmb_departemen"));
-        // // var_dump($data['nama_dept']['nama']);
-        // // die;
-
-        // if ($cmb_alokasi == "HO") {
-        //     $text1 = "PST";
-        //     $text2 = "BWJ";
-        //     $dig_1 = "1";
-        // } else if ($cmb_alokasi == "SITE") {
-        //     // $text1 = $cmb_estate;
-        //     $text1 = "EST";
-        //     $text2 = "SWJ";
-        //     $dig_1 = "6";
-        // } else if ($cmb_alokasi == "RO") {
-        //     $text1 = "ROM";
-        //     $text2 = "PKY";
-        //     $dig_1 = "2";
-        // } else if ($cmb_alokasi == "PKS") {
-        //     $text1 = "FAC";
-        //     $text2 = "SWJ";
-        //     $dig_1 = "3";
-        // }
-
-        // if ($this->session->userdata('status_lokasi') == "HO") {
-        //     $dig_2 = "1";
-        // } else if ($this->session->userdata('status_lokasi') == "RO") {
-        //     $dig_2 = "2";
-        // } else if ($this->session->userdata('status_lokasi') == "PKS") {
-        //     $dig_2 = "3";
-        // } else if ($this->session->userdata('status_lokasi') == "SITE") {
-        //     $dig_2 = "6";
-        // }
-
-        // $key = $dig_1 . $dig_2;
-
-        // $query_ppo = "SELECT MAX(SUBSTRING(noppotxt, 3)) as maxspp from ppo WHERE noppotxt LIKE '$key%'";
-        // $generate_ppo = $this->db_logistik_pt->query($query_ppo)->row();
-        // $noUrut = (int)($generate_ppo->maxspp);
-        // $noUrut++;
-        // $print = sprintf("%05s", $noUrut);
-
-        // if (empty($this->input->post('hidden_no_spp'))) {
-        //     $nospp = $dig_1 . $dig_2 . $print;
-        // } else {
-        //     $nospp = $this->input->post('hidden_no_spp');
-        // }
-
-        // $tgl_trm = date("Y-m-d", strtotime($this->input->post('txt_tgl_terima')));
-
-        // $getmonth = date("m", strtotime($this->input->post('txt_tgl_ref')));
-        // $getyear = date("y", strtotime($this->input->post('txt_tgl_ref')));
-
-        // $noref = $text1 . "-" . $_POST['cmb_jenis_permohonan'] . "/" . $text2 . "/" . $getmonth . "/" . $getyear . "/" . $nospp;
-
-        // $kode_devisi    = $this->input->post('kode_dev');
-        // $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
-
-
-        // $data_ppo = [
-        //     'kpd' => 'Bagian Purchasing',
-        //     'noppo' => $nospp,
-        //     'noppotxt' => $nospp,
-        //     'jenis' => $this->input->post('cmb_jenis_permohonan'),
-        //     'tglppo' => $this->input->post('txt_tgl_spp'),
-        //     'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
-        //     'tgltrm' => $tgl_trm . date(" H:i:s"),
-        //     'kodedept' => $this->input->post('cmb_departemen'),
-        //     'namadept' => $data['nama_dept']['nama'],
-        //     'kode_dev' => $kode_devisi,
-        //     'devisi' => $data['devisi']['PT'],
-        //     'noref' => $nospp,
-        //     'noreftxt' => $noref,
-        //     'tglref' => $periode,
-        //     'ket' => $this->input->post('txt_keterangan'),
-        //     'no_acc' => 0,
-        //     'ket_acc' => "",
-        //     'pt' => $this->session->userdata('pt'),
-        //     'kodept' => $this->session->userdata('kode_pt'),
-        //     'periode' => $periode,
-        //     'periodetxt' => $periodetxt,
-        //     'thn' => $thn,
-        //     'tglisi' => date("Y-m-d H:i:s"),
-        //     'id_user' => $id_user,
-        //     'user' => $this->session->userdata('user'),
-        //     'status' => 'DALAM PROSES',
-        //     'status2' => '0',
-        //     'lokasi' => $this->session->userdata('status_lokasi'),
-        //     'po' => 0,
-        //     'kode_budget' => 0,
-        //     'grup' => 0,
-        //     'main_acct' => 0,
-        //     'nama_main' => 0,
-        // ];
-
         $periode = date("Y-m-d", strtotime($this->input->post('hidden_periode')));
         $d_periode =  date("j", strtotime($periode));
         if ($d_periode >= 26) {
