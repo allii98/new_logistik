@@ -292,65 +292,105 @@ class Po extends CI_Controller
 
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $nopo, 'id' => $id))->row();
 
-        
-        
+
+
         $kode_supplier = $data['po']->kode_supply;
         $qrcode = $data['po']->qr_code;
-        
+
         // $data['supplier'] = $this->db_logistik_pt->get_where('supplier', array('kode'=>$kode_supplier))->row();
-        
+
         $query_supplier = "SELECT * FROM supplier WHERE kode = '$kode_supplier' AND account IS NOT NULL";
         $data['supplier'] = $this->db_logistik->query($query_supplier)->row();
-        
+
         $no_refpo = $data['po']->noreftxt;
         $data['spp'] = $this->db_logistik_pt->query("SELECT DISTINCT refppo FROM item_po WHERE noref='$no_refpo'")->result();
         // $no_refspp = $data['po']->no_refppo;
         $data['item_po'] = $this->db_logistik_pt->get_where('item_po', array('noref' => $nopo, 'noref' => $no_refpo))->result();
+        $data['kodebar'] = $this->db_logistik_pt->get_where('item_po', array('noref' => $nopo, 'noref' => $no_refpo))->row();
 
-        $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE noref = '$no_refpo'";
-        $data_jum = $this->db_logistik_pt->query($query)->row();
+        $kodebarang = $data['kodebar']->kodebar;
 
-        $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE noref = '$no_refpo'";
-        $data_jum2 = $this->db_logistik_pt->query($query)->row();
+        if ($kodebarang != '102505700000002') {
+            # code...
+            $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE noref = '$no_refpo'";
+            $data_jum = $this->db_logistik_pt->query($query)->row();
 
-        $data['dikurangi_biayalain'] = $data_jum->totalbayar - $data_jum2->biayalain;
+            $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE noref = '$no_refpo'";
+            $data_jum2 = $this->db_logistik_pt->query($query)->row();
 
-        $mpdf = new \Mpdf\Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4',
-            // 'format' => [190, 236],
-            'margin_top' => '2',
-            'margin_left' => '3',
-            'margin_right' => '3',
-            'orientation' => 'P'
-        ]);
+            $data['dikurangi_biayalain'] = $data_jum->totalbayar - $data_jum2->biayalain;
 
-        // $mpdf->SetWatermarkImage('././assets/img/terbayar.png');
-        // $mpdf->showWatermarkImage = true;
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A4',
+                // 'format' => [190, 236],
+                'margin_top' => '2',
+                'margin_left' => '3',
+                'margin_right' => '3',
+                'orientation' => 'P'
+            ]);
 
-        if ($data['po']->terbayar == "1") {
-            $mpdf->SetWatermarkText('TERBAYAR');
-            $mpdf->showWatermarkText = true;
+
+            if ($data['po']->terbayar == "1") {
+                $mpdf->SetWatermarkText('TERBAYAR');
+                $mpdf->showWatermarkText = true;
+            }
+
+            if ($data['po']->terbayar == "2") {
+                $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
+                $mpdf->showWatermarkText = true;
+            }
+
+            $namapt = $data['po']->namapt;
+
+            $lokasi = $data['po']->lokasi;
+
+
+            $html = $this->load->view('v_po_print', $data, true);
+
+            $mpdf->WriteHTML($html);
+            $mpdf->Output("$no_refpo.pdf", "I");
+        } else {
+            $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE noref = '$no_refpo'";
+            $data_jum = $this->db_logistik_pt->query($query)->row();
+
+            $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE noref = '$no_refpo'";
+            $data_jum2 = $this->db_logistik_pt->query($query)->row();
+
+            $data['dikurangi_biayalain'] = $data_jum->totalbayar;
+
+            $mpdf = new \Mpdf\Mpdf([
+                'mode' => 'utf-8',
+                'format' => 'A4',
+                // 'format' => [190, 236],
+                'margin_top' => '2',
+                'margin_left' => '3',
+                'margin_right' => '3',
+                'orientation' => 'P'
+            ]);
+
+
+            if ($data['po']->terbayar == "1") {
+                $mpdf->SetWatermarkText('TERBAYAR');
+                $mpdf->showWatermarkText = true;
+            }
+
+            if ($data['po']->terbayar == "2") {
+                $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
+                $mpdf->showWatermarkText = true;
+            }
+
+            $namapt = $data['po']->namapt;
+
+            $lokasi = $data['po']->lokasi;
+
+
+            $html = $this->load->view('v_po_solar_print', $data, true);
+
+            $mpdf->WriteHTML($html);
+            $mpdf->Output("$no_refpo.pdf", "I");
+            # code...
         }
-
-        if ($data['po']->terbayar == "2") {
-            $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-            $mpdf->showWatermarkText = true;
-        }
-
-        // $namapt = $data['po']->namapt;
-        $namapt = $data['po']->namapt;
-
-        $lokasi = $data['po']->lokasi;
-
-        // $mpdf->SetHTMLHeader('<h4>PT MULIA SAWIT AGRO LESTARI</h4>');
-
-        // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
-
-        $html = $this->load->view('v_po_print', $data, true);
-
-        $mpdf->WriteHTML($html);
-        $mpdf->Output("$no_refpo.pdf", "I");
     }
 
     public function index()
@@ -508,53 +548,82 @@ class Po extends CI_Controller
         $no_ref_po = $this->input->post('no_ref_po');
         $ppn = $this->input->post('ppn');
         $pph = $this->input->post('pph');
+        $kodebar = $this->input->post('kodebar');
 
-        $po = $this->db_logistik_pt->query("SELECT ppn, pph FROM po WHERE nopo = '$no_po' AND noreftxt = '$no_ref_po'")->row();
+        if ($kodebar != '102505700000002') {
+            # code...
+            $po = $this->db_logistik_pt->query("SELECT ppn, pph FROM po WHERE nopo = '$no_po' AND noreftxt = '$no_ref_po'")->row();
 
-        $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
-        $data = $this->db_logistik_pt->query($query)->row();
+            $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
+            $data = $this->db_logistik_pt->query($query)->row();
 
-        $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
-        $data2 = $this->db_logistik_pt->query($query)->row();
+            $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
+            $data2 = $this->db_logistik_pt->query($query)->row();
 
-        $dikurangi_biayalain = $data->totalbayar - $data2->biayalain;
+            $dikurangi_biayalain = $data->totalbayar - $data2->biayalain;
 
-        if ($ppn == 10) {
-            $notif = true;
-            $jml_ppn = $ppn / 100;
-            $total_ppn = $dikurangi_biayalain * $jml_ppn;
+            if ($ppn == 10) {
+                $jml_ppn = $ppn / 100;
+                $total_ppn = $dikurangi_biayalain * $jml_ppn;
+            } else {
+                $total_ppn = 0;
+            }
+
+            if ($pph != 0) {
+                $jml_pph = $pph / 100;
+                $total_pph = $dikurangi_biayalain * $jml_pph;
+            } else {
+                $total_pph = 0;
+            }
+
+            // $totbay = $data->totalbayar + $total_ppn + $total_pph;
+            $totbay = $data->totalbayar;
+
+            $dataedit['totalbayar'] = $totbay;
+            $this->db_logistik_pt->set($dataedit);
+            $this->db_logistik_pt->where('nopotxt', $no_po);
+            $this->db_logistik_pt->where('noreftxt', $no_ref_po);
+            $this->db_logistik_pt->update('po');
+            if ($this->db_logistik_pt->affected_rows() > 0) {
+                $bool_update_po = TRUE;
+            } else {
+                $bool_update_po = FALSE;
+            }
         } else {
-            $notif = false;
+            $po = $this->db_logistik_pt->query("SELECT ppn, pph FROM po WHERE nopo = '$no_po' AND noreftxt = '$no_ref_po'")->row();
+
+            $query = "SELECT SUM(jumharga) as totalbayar FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
+            $data = $this->db_logistik_pt->query($query)->row();
+
+            $query = "SELECT SUM(JUMLAHBPO) as biayalain FROM item_po WHERE nopo = '$no_po' AND noref = '$no_ref_po'";
+            $data2 = $this->db_logistik_pt->query($query)->row();
+
+            $dikurangi_biayalain = $data->totalbayar;
+
+
+            // $totbay = $data->totalbayar + $total_ppn + $total_pph;
+            $totbay = $data->totalbayar;
+
+            $dataedit['totalbayar'] = $totbay;
+            $this->db_logistik_pt->set($dataedit);
+            $this->db_logistik_pt->where('nopotxt', $no_po);
+            $this->db_logistik_pt->where('noreftxt', $no_ref_po);
+            $this->db_logistik_pt->update('po');
+            if ($this->db_logistik_pt->affected_rows() > 0) {
+                $bool_update_po = TRUE;
+            } else {
+                $bool_update_po = FALSE;
+            }
+
             $total_ppn = 0;
-        }
-
-        if ($pph != 0) {
-            $jml_pph = $pph / 100;
-            $total_pph = $dikurangi_biayalain * $jml_pph;
-        } else {
             $total_pph = 0;
         }
-
-        // $totbay = $data->totalbayar + $total_ppn + $total_pph;
-        $totbay = $data->totalbayar;
-
-        $dataedit['totalbayar'] = $totbay;
-        $this->db_logistik_pt->set($dataedit);
-        $this->db_logistik_pt->where('nopotxt', $no_po);
-        $this->db_logistik_pt->where('noreftxt', $no_ref_po);
-        $this->db_logistik_pt->update('po');
-        if ($this->db_logistik_pt->affected_rows() > 0) {
-            $bool_update_po = TRUE;
-        } else {
-            $bool_update_po = FALSE;
-        }
-
         $output = [
-            'notif' => $notif,
             'totbay' => $totbay,
             'total_ppn' => $total_ppn,
             'total_pph' => $total_pph,
         ];
+
 
         echo json_encode($output);
     }
@@ -721,15 +790,23 @@ class Po extends CI_Controller
             $biayalain = $this->input->post('txt_biaya_lain');
         }
 
-        if ($diskon != "0" || $diskon != "0.00" || $biayalain != "0" || $biayalain != "0.00") {
-            $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
-            $disc = $diskon / 100;
-            $jumharga_pre = $qty_harga - ($qty_harga * $disc);
-            $biaya_lain = $biayalain;
-            $jumharga = $jumharga_pre + $biaya_lain;
+        if ($this->input->post('hidden_kode_brg') != '102505700000002') {
+            # code...
+            if ($diskon != "0" || $diskon != "0.00" || $biayalain != "0" || $biayalain != "0.00") {
+                $qty_harga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+                $disc = $diskon / 100;
+                $jumharga_pre = $qty_harga - ($qty_harga * $disc);
+                $biaya_lain = $biayalain;
+                $jumharga = $jumharga_pre + $biaya_lain;
+            } else {
+                $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+            }
         } else {
-            $jumharga = $this->input->post('txt_qty') * $this->input->post('txt_harga');
+            $jumharga = $this->input->post('txt_jumlah');
+            # code...
         }
+
+
 
         $pph = $this->input->post('txt_pph');
         if (empty($pph)) {

@@ -297,19 +297,24 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                             <div class="form-group row" style="margin-bottom: 1px;">
                                 <label for="pph" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    PPH*
+                                    PPH
                                     <!-- <font face="Verdana" size="1.5">PPH*</font> -->
                                 </label>
-                                <div class="col-9 col-xl-12">
-                                    <input type="number" class="form-control form-control-sm" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
+                                <div class="col-4 col-xl-12">
+                                    <input type="number" class="form-control form-control-sm" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah('1')" autocomplite="off" value="0" required>
                                 </div>
+                                <label for="tmpo_pengiriman" class="col-lg-3 col-xl-3 col-form-label" style="margin-left: -11px;margin-top: -3px; font-size: 14px;">
+                                    <b>%</b>
+                                </label>
+
+
                             </div>
                             <div class="form-group row" style="margin-bottom: 1px;">
                                 <label for="ppn" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    PPN*
+                                    PPN
                                     <!-- <font face="Verdana" size="1.5">PPN*</font> -->
                                 </label>
-                                <div class="col-9 col-xl-12">
+                                <div class="col-9 col-xl-12 ppn">
                                     <select class="form-control form-control-sm" id="ppn" name="ppn" required>
                                         <option value="0">N</option>
                                         <option value="10">Y</option>
@@ -318,7 +323,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </div>
                             <div class="form-group row" style="margin-bottom: 1px;">
                                 <label for="keterangan" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;font-size: 12px;">
-                                    Ket*
+                                    Ket
                                     <!-- <font face="Verdana" size="1.5">Ket*</font> -->
                                 </label>
                                 <div class="col-9 col-xl-12">
@@ -430,9 +435,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     Disc<span>%</span>
                                                 </th>
                                                 <th>
-                                                    Biaya&nbsp;Lainnya
+                                                    <span id="biayalain">Biaya&nbsp;Lainnya</span>
+                                                    <span id="ongkir" style="display: none;">Ongkir</span>
                                                 </th>
-                                                <th>
+                                                <th id="ketbiaya">
                                                     Ket.&nbsp;Biaya
                                                 </th>
 
@@ -519,9 +525,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     </td>
                                                     <td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <input type="number" class="form-control form-control-sm" id="txt_biaya_lain_1" name="txt_biaya_lain_11" value="0" onkeyup="jumlah('1')" placeholder="Biaya Lain" />
+                                                        <input type="number" class="form-control form-control-sm" style="display: none;" id="txt_ongkir_1" name="txt_ongkir_1" value="0" onkeyup="jumlah('1')" placeholder="Ongkir" />
 
                                                     </td>
-                                                    <td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
+                                                    <td id="txt_ketbiaya_1" width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                         <textarea class="form-control form-control-sm" maxlength="250" id="txt_keterangan_biaya_lain_1" name="txt_keterangan_biaya_lain_" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />
 
                                                     </td>
@@ -1121,6 +1128,13 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             cekJenis(jenis);
 
                             var n = 1;
+                            // if (kodebar == '102505700000002') {
+
+
+                            // } else {
+                            //     console.log('bukan solar');
+
+                            // }
                             $.each(data, function(index, value) {
 
                                 // console.log('ini yg belum di approve', value.statusaprove);
@@ -1782,9 +1796,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '</td>';
         var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
+            ' <input type="number" class="form-control form-control-sm" style="display: none;" id="txt_ongkir_' + n + '" name="txt_ongkir_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Ongkir" />' +
 
             '</td>';
-        var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_10 = '<td id="txt_ketbiaya_' + n + '" width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br/>' +
 
             '</td>'
@@ -1851,9 +1866,38 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             // }
             // console.log(id, no_spp, no_ref_spp, kodebar);
 
-            data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
+            var kaleng = rowcollection.length;
+            if (kaleng > 1 && kodebar == '102505700000002') {
+                swal('Untuk solar hanya pilih 1 item');
+            } else if (kodebar != '102505700000002') {
+                data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
+            } else {
+                gantiTabel(id, no_spp, no_ref_spp, kodebar);
+                data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
+            }
+
+
         });
 
+    }
+
+    function gantiTabel(id, no_spp, no_ref_spp, kodebar) {
+        // if (kodebar != '102505700000002') {
+        //     data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
+        // } else {
+        // }
+        $('#biayalain').hide();
+        $('#txt_biaya_lain_1').hide();
+        $('#ketbiaya').hide();
+        $('#txt_ketbiaya_1').hide();
+
+        $('#ongkir').css('display', 'block');
+        $('#txt_ongkir_1').css('display', 'block');
+
+        $('#tambah_row1').attr('disabled', '');
+        $('#getspp1').attr('disabled', '');
+
+        $("div.ppn select").val("10").change();
     }
 
     function isSelectednoRef(no_ref_spp) {
@@ -1966,6 +2010,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     // }, 2000);
 
                     // $('#txt_qty_' + n).val(data[1][0].qty);
+
+
                     n++;
                     // $('#hidden_no_table').val(n);
                 });
@@ -1983,15 +2029,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var rowCount = $("#tableRinciPO td").closest("tr").length;
         if (rowCount != 1) {
             $('#tr_' + id).remove();
-            totalBayar();
+            totalBayar(id);
         } else {
             swal('Tidak Bisa dihapus, item PO tinggal 1');
         }
     }
 
-    function totalBayar() {
+    function totalBayar(id) {
         var no_po = $('#hidden_no_po').val();
         var no_ref_po = $('#hidden_no_ref_po').val();
+        // var kodebar = $('#hidden_kode_brg_' + id).val();
 
         $.ajax({
             type: "POST",
@@ -2004,6 +2051,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 no_ref_po: $('#hidden_no_ref_po').val(),
                 ppn: $('#ppn').val(),
                 pph: $('#pph').val(),
+                kodebar: $('#hidden_kode_brg_' + id).val()
             },
             success: function(data) {
                 // console.log(data);
@@ -2108,32 +2156,92 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // console.log('nah ini', qty);
         var harga = $('#txt_harga_' + id).val();
         var diskon = $('#txt_disc_' + id).val();
-        if (diskon == '') {
-            var disc = 0;
+
+
+        var kodebar = $('#hidden_kode_brg_' + id).val();
+
+        if (kodebar == '102505700000002') {
+            hitungsolar(id);
         } else {
-            var disc = $('#txt_disc_' + id).val();
+            if (diskon == '') {
+                var disc = 0;
+            } else {
+                var disc = $('#txt_disc_' + id).val();
+            }
+
+            var biayalain = $('#txt_biaya_lain_' + id).val();
+            if (biayalain == '') {
+                var biaya_lain = 0;
+            } else {
+                var biaya_lain = $('#txt_biaya_lain_' + id).val();
+            }
+
+            // mengitung pph dan ppn if true condition
+            var hargaDisc = (parseFloat(harga) * parseFloat(disc)) / 100;
+            var hargaSetelahDisc = parseFloat(harga) - parseFloat(hargaDisc);
+
+            var qty_harga = qty * hargaSetelahDisc;
+            if (pph != 0) {
+                // var jml_pph = pph / 100;
+                // var total_pph = qty_harga * jml_pph;
+                var total_pph = 0;
+            } else {
+                var total_pph = 0;
+            }
+
+            if (ppn == 10) {
+                // var jml_ppn = ppn / 100;
+                // var total_ppn = qty_harga * jml_ppn;
+                var total_ppn = 0;
+            } else {
+                var total_ppn = 0;
+            }
+
+            var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
+
+            var tot_nilai = nilai + total_pph + total_ppn;
+            // console.log(nilai);
+
+            var jum = tot_nilai.toFixed(2);
+
+            $('#txt_jumlah_' + id).val(jum);
+            var bilangan = tot_nilai.toFixed(2);
+            var number_string = bilangan.toString(),
+                sisa = number_string.length % 3,
+                rupiah = number_string.substr(0, sisa),
+                ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            $('#jumlah_' + id).val(jum);
+            $('#hasil_jumlah_' + id).html(jum);
+            $('#hasil_jumlah_' + id).number(true, 2);
+            $('#jumlah_' + id).number(true, 2);
         }
+    }
 
-        var biayalain = $('#txt_biaya_lain_' + id).val();
-        if (biayalain == '') {
-            var biaya_lain = 0;
-        } else {
-            var biaya_lain = $('#txt_biaya_lain_' + id).val();
-        }
+    function hitungsolar(id) {
 
-        // mengitung pph dan ppn if true condition
-        var hargaDisc = (parseFloat(harga) * parseFloat(disc)) / 100;
-        var hargaSetelahDisc = parseFloat(harga) - parseFloat(hargaDisc);
+        $('#txt_qty_' + id + ',#txt_harga_' + id + ',#txt_disc_' + id + ',#txt_biaya_lain_' + id).on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
 
-        var qty_harga = qty * hargaSetelahDisc;
-        if (pph != 0) {
-            // var jml_pph = pph / 100;
-            // var total_pph = qty_harga * jml_pph;
-            var total_pph = 0;
-        } else {
-            var total_pph = 0;
-        }
+        // console.log('jumlahke', no_row)
+        var pph = $('#pph').val();
+        var ppn = $('#ppn').val();
+        var qty = $('#txt_qty_' + id).val();
+        // console.log('nah ini', qty);
+        var harga = $('#txt_harga_' + id).val();
+        var diskon = $('#txt_disc_' + id).val();
+        var ongkir = $('#txt_ongkir_' + id).val();
 
+        //menghitung harga dasar, ongkir + ppn 10%
         if (ppn == 10) {
             // var jml_ppn = ppn / 100;
             // var total_ppn = qty_harga * jml_ppn;
@@ -2141,30 +2249,47 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         } else {
             var total_ppn = 0;
         }
+        var jml_ppn = ppn / 100;
+        //harga dasar pluss ppn 10%
+        var hargaPpn = parseFloat(harga) * parseFloat(jml_ppn);
+        var hargaDasarPlusPPN = parseFloat(harga) + parseFloat(hargaPpn);
 
-        var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
+        //ongkir pluss ppn 10%
+        var ongkirPpn = parseFloat(ongkir) * parseFloat(jml_ppn);
+        var ongkirPlusPPN = parseFloat(ongkir) + parseFloat(ongkirPpn);
 
-        var tot_nilai = nilai + total_pph + total_ppn;
-        // console.log(nilai);
-
-        var jum = tot_nilai.toFixed(2);
-
-        $('#txt_jumlah_' + id).val(jum);
-        var bilangan = tot_nilai.toFixed(2);
-        var number_string = bilangan.toString(),
-            sisa = number_string.length % 3,
-            rupiah = number_string.substr(0, sisa),
-            ribuan = number_string.substr(sisa).match(/\d{3}/g);
-
-        if (ribuan) {
-            separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
+        //untuk pph diambi dari harga dasar 
+        if (pph != 0) {
+            // var jml_pph = pph / 100;
+            // var total_pph = qty_harga * jml_pph;
+            var total_pph = pph;
+        } else {
+            var total_pph = 0;
         }
+
+        var pph_tot = total_pph / 100;
+        var hargadasarpph = parseFloat(harga) * parseFloat(pph_tot);
+
+        //menjumlahkan harga+ppn ongkir+ppn harga+pph
+        var totalsolar = hargaDasarPlusPPN + ongkirPlusPPN + hargadasarpph;
+        //total solar yg sudah dijumlah x qty
+        var totsolarXqty = parseFloat(totalsolar) * parseFloat(qty);
+        //dikurangi diskon
+        if (diskon == '') {
+            var disc = 0;
+        } else {
+            var disc = $('#txt_disc_' + id).val();
+        }
+
+        var hargaDisc = (parseFloat(totsolarXqty) * parseFloat(disc)) / 100;
+        var hargaSetelahDisc = parseFloat(totsolarXqty) - parseFloat(hargaDisc);
+
+        var jum = hargaSetelahDisc.toFixed(2);
+        $('#txt_jumlah_' + id).val(jum);
         $('#jumlah_' + id).val(jum);
         $('#hasil_jumlah_' + id).html(jum);
         $('#hasil_jumlah_' + id).number(true, 2);
         $('#jumlah_' + id).number(true, 2);
-        // console.log(tot_nilai);
     }
 
 
@@ -2223,6 +2348,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     //Simpan Data
     function simpan(id) {
+        if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
+            var biaya = $('#txt_biaya_lain_' + id).val();
+        } else {
+            var biaya = $('#txt_ongkir_' + id).val();
+        }
         if (simpanBaru) {
 
             console.log('simpan pertama', id);
@@ -2280,7 +2410,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
                     txt_disc: $('#txt_disc_' + id).val(),
                     cmb_kurs: $('#cmb_kurs_' + id).val(),
-                    txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
+
+                    txt_biaya_lain: biaya,
                     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
@@ -2346,7 +2477,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         // console.log(idItem);
                         // console.log(id);
                         $('#hidden_id_po_item_' + id).val(idItem);
-                        totalBayar();
+                        totalBayar(id);
 
                         simpanBaru = false;
                     }
@@ -2451,7 +2582,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
                     txt_disc: $('#txt_disc_' + id).val(),
                     cmb_kurs: $('#cmb_kurs_' + id).val(),
-                    txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
+                    txt_biaya_lain: biaya,
                     txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                     hidden_tanggal: $('#hidden_tgl_spp_' + id).val(),
                     hidden_tglref: $('#hidden_tgl_ref_' + id).val(),
@@ -2513,7 +2644,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $('#ref_spp').val(data.refspp);
                         // $('#hidden_id_po').val(data.id_po);
                         $('#hidden_id_po_item_' + id).val(data.id_item);
-                        totalBayar();
+                        totalBayar(id);
 
                         // simpanBaru = false;
                     }
@@ -2546,7 +2677,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function update(id) {
-
+        if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
+            var biaya = $('#txt_biaya_lain_' + id).val();
+        } else {
+            var biaya = $('#txt_ongkir_' + id).val();
+        }
         console.log($('#hidden_id_po_item_' + id).val() + 'ini id save');
         $.ajax({
             type: "POST",
@@ -2603,7 +2738,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
                 txt_disc: $('#txt_disc_' + id).val(),
                 cmb_kurs: $('#cmb_kurs_' + id).val(),
-                txt_biaya_lain: $('#txt_biaya_lain_' + id).val(),
+                txt_biaya_lain: biaya,
                 txt_keterangan_biaya_lain: $('#txt_keterangan_biaya_lain_' + id).val(),
                 id_item: $('#hidden_id_po_item_' + id).val(),
                 txt_jumlah: $('#txt_jumlah_' + id).val(),
@@ -2644,7 +2779,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#btn_cancel_update_' + id).hide();
                     $('#btn_ubah_' + id).show();
                     $('#btn_hapus_' + id).show();
-                    totalBayar();
+                    totalBayar(id);
                 }
             },
             error: function(request) {
@@ -2682,6 +2817,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function cancleUpdate(id) {
         // console.log('cancelke' + id);
+        if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
+            var biaya = $('#txt_biaya_lain_' + id).val();
+        } else {
+            var biaya = $('#txt_ongkir_' + id).val();
+        }
         if (cancleUpdatePO) {
 
             $.ajax({
@@ -2714,8 +2854,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#txt_qty_' + id).val(item.qty);
                     $('#txt_harga_' + id).val(item.harga);
                     $('#txt_disc_' + id).val(item.disc);
-                    $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
-                    $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
+                    if (kodebar != '102505700000002') {
+                        $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
+                        $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
+                    } else {
+                        $('#txt_ongkir_' + id).val(item.JUMLAHBPO);
+                    }
                     $('#txt_keterangan_rinci_' + id).val(item.ket);
 
                     $('#btn_ubah_' + id).show();
@@ -2748,7 +2892,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     // $('#lbl_status_simpan_1' + id).empty();
                     // $('#lbl_status_simpan_1' + id).append('<label style="color:#6fc1ad;"><i class="fa fa-undo" style="color:#6fc1ad;"></i> Edit dibatalkan</label>');
                     jumlah(id);
-                    totalBayar();
+                    totalBayar(id);
                     cancleUpdatePO = false;
                 },
                 error: function(request) {
@@ -2786,8 +2930,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#txt_qty_' + id).val(item.qty);
                     $('#txt_harga_' + id).val(item.harga);
                     $('#txt_disc_' + id).val(item.disc);
-                    $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
-                    $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
+                    if (kodebar != '102505700000002') {
+                        $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
+                        $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
+                    } else {
+                        $('#txt_ongkir_' + id).val(item.JUMLAHBPO);
+                    }
                     $('#txt_keterangan_rinci_' + id).val(item.ket);
 
                     $('#btn_ubah_' + id).show();
@@ -2818,7 +2966,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         loader: false
                     });
                     jumlah(id);
-                    totalBayar();
+                    totalBayar(id);
                     cancleUpdatePO = false;
                 },
                 error: function(request) {
@@ -2876,7 +3024,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             success: function(data) {
                 $('#tr_' + no).remove();
-                totalBayar();
+                totalBayar(no);
                 cekdatapo(no);
             },
             error: function(request) {
@@ -2954,7 +3102,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             success: function(data) {
                 $('#tr_' + no).remove();
                 swal('Data Berhasil dihapus');
-                totalBayar();
+                totalBayar(no);
                 cekdatapo(no);
             },
             error: function(request) {
@@ -3014,11 +3162,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var jnSPP = $('#hidden_jenis_spp').val();
         var lokasi = $('#status_lokasi').val();
         var devisi = $('#devisi').val();
-        var biayalain = $('#txt_biaya_lain_' + id).val();
+        // var biayalain = $('#txt_biaya_lain_' + id).val();
+        if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
+            var biayalain = $('#txt_biaya_lain_' + id).val();
+            var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
+        } else {
+            var biayalain = $('#txt_ongkir_' + id).val();
+            var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val("ONGKIR");
+        }
         var jnbudget = $('#cmb_jenis_budget_' + id).val();
         var merk = $('#txt_merk_' + id).val();
         var hrg = $('#txt_harga_' + id).val();
-        var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
         var ketRinci = $('#txt_keterangan_rinci_' + id).val();
         var jml = $('#txt_jumlah_' + id).val();
         var getspp = $('#getspp' + id).val();
