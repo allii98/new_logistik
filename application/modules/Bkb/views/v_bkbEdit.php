@@ -7,6 +7,7 @@
                               <div class="row justify-content-between" style="margin-top: -10px;">
                                     <h4 class="header-title ml-2">BKB <i>(Edit)</i></h4>
                                     <div class="button-list mr-2">
+                                          <button class="btn btn-xs btn-info" id="data_bkb" onclick="data_bkb()">Data BKB</button>
                                           <button class="btn btn-xs btn-success" id="new_bkb" onclick="new_bkb()">BKB Baru</button>
                                           <button class="btn btn-xs btn-danger" id="cancelBkb" onclick="cancelBkb()">Batal BKB</button>
                                           <button class="btn btn-xs btn-primary" id="a_print_bkb" onclick="cetak_bkb()">Cetak</button>
@@ -234,6 +235,10 @@
 </style>
 
 <script>
+      function data_bkb() {
+            location.href = "<?php echo base_url('Bkb') ?>";
+      }
+
       function goBack() {
             window.history.back();
       }

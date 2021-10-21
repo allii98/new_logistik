@@ -7,6 +7,7 @@
                     <div class="row justify-content-between" style="margin-top: -10px;">
                         <h4 class="header-title ml-2">LPB <i>(Edit)</i></h4>
                         <div class="button-list mr-2">
+                            <button class="btn btn-xs btn-info" id="data_lpb" onclick="data_lpb()">Data LPB</button>
                             <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()">LPB Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()">Batal LPB</button>
                             <button class="btn btn-primary btn-xs" id="a_print_lpb" onclick="cetak_lpb()">Cetak</button>
@@ -257,6 +258,10 @@
     }
 </style>
 <script>
+    function data_lpb() {
+        location.href = "<?php echo base_url('Lpb') ?>";
+    }
+
     function cekLpb() {
 
         $.ajax({

@@ -6,6 +6,7 @@
                               <div class="row justify-content-between" style="margin-top: -10px;">
                                     <h4 class="header-title ml-2">Retur <b>BKB</b> <i>(Edit)</i></h4>
                                     <div class="button-list mr-2">
+                                          <button class="btn btn-xs btn-info" id="data_retur" onclick="data_retur()">Data Retur</button>
                                           <button class="btn btn-xs btn-success" id="new_bkb" onclick="new_retur()">BKB Baru</button>
                                           <button class="btn btn-xs btn-danger" id="cancelBkb" onclick="batalRetur()">Batal BKB</button>
                                           <button class="btn btn-xs btn-primary" id="a_print_bkb" onclick="cetak_retur()">Cetak</button>
@@ -106,6 +107,10 @@
 <input type="hidden" id="id_retskb" value="<?= $id_retskb ?>">
 
 <script>
+      function data_retur() {
+            location.href = "<?php echo base_url('Retur') ?>";
+      }
+
       function goBack() {
             window.history.back();
       }

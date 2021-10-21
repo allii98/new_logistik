@@ -8,6 +8,7 @@
                         <h4 class="header-title ml-2">BKB</h4>
                         <div class="button-list mr-2">
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
+                            <button class="btn btn-xs btn-info" id="data_bkb" onclick="data_bkb()">Data BKB</button>
                             <button class="btn btn-xs btn-success" id="new_bkb" onclick="new_bkb()" disabled>BKB Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelBkb" onclick="cancelBkb()" disabled>Batal BKB</button>
                             <button class="btn btn-xs btn-primary" id="a_print_bkb" onclick="cetak_bkb()" disabled>Cetak</button>
@@ -136,6 +137,7 @@
                                 <input type="hidden" id="alokasi_est">
                                 <input type="hidden" id="hidden_norefbpb">
                                 <input type="hidden" id="hidden_id_mutasi">
+                                <input type="hidden" id="kalo_dia_qrcode">
                                 <input type="hidden" id="hidden_noref_bpb" value="<?= $noref_bpb ?>">
                                 <input type="hidden" id="hidden_kode_pt_login" value="<?= $this->session->userdata('kode_pt_login'); ?>">
                                 <div class="row" style="margin-left:4px;">
@@ -346,6 +348,10 @@
     }
 </style>
 <script>
+    function data_bkb() {
+        location.href = "<?php echo base_url('Bkb') ?>";
+    }
+
     $(function() {
         $('#devisi_text').tooltip({
             title: tittle,
@@ -453,16 +459,21 @@
         cari_pt_mutasi('0');
 
         setInterval(function() {
-            check_form_2();
+            if (!$('#kalo_dia_qrcode').val()) {
+                check_form_2();
+            }
         }, 1000);
     });
 
     function check_form_2() {
-        if ($.trim($('#diberikan_kpd').val()) != '' && $.trim($('#utk_keperluan').val()) != '') {
-            $('.div_form_2').show();
+        if (!$('#kalo_dia_qrcode').val()) {
+            if ($.trim($('#diberikan_kpd').val()) != '' && $.trim($('#utk_keperluan').val()) != '') {
+                $('.div_form_2').show();
+            } else {
+                $('.div_form_2').hide();
+            }
         } else {
-            $('.div_form_2').hide();
-
+            $('.div_form_2').show();
         }
     }
 
@@ -492,6 +503,7 @@
         $('#txt_no_bpb').val(content);
         $('#showCamera').modal('hide');
         $('#multiple').val(content);
+        $('#kalo_dia_qrcode').val(content);
         scanner.stop();
     });
     Instascan.Camera.getCameras().then(function(cameras) {
@@ -626,103 +638,108 @@
 
                 console.log(data);
 
-                $('#bagian').val(data_bpb.bag);
-                $('#alokasi_est').val(data_bpb.alokasi);
-                $('#utk_keperluan').val(data_bpb.keperluan);
-
-                //jika dia dari bpp mutasi maka devisi diambil dari session user login
-                if (!$('#hidden_noref_bpb').val()) {
-                    $('#hidden_kode_dev').val(data_bpb.kode_dev);
-                    $('#hidden_devisi').val(data_bpb.devisi);
-                    $('#devisi_text').val(data_bpb.devisi);
+                if (!data_bpb || !data_item_bpb) {
+                    swal('data tidak ditemukan!');
                 } else {
-                    $('#hidden_kode_dev').val(data.kode_dev);
-                    $('#hidden_devisi').val(data.devisi);
-                    $('#devisi_text').val(data.devisi);
-                }
+                    $('#bagian').val(data_bpb.bag);
+                    $('#alokasi_est').val(data_bpb.alokasi);
+                    $('#utk_keperluan').val(data_bpb.keperluan);
 
-                $('#hidden_norefbpb').val(data_bpb.norefbpb);
-
-                if (data_bpb.bag == 'TEKNIK' && data_bpb.bhn_bakar == 'BBM') {
-                    $('#fieldset_bbm').css('display', 'block');
-                    $('#bhnbakar').val(data_bpb.bhn_bakar);
-                    $('#txt_jns_alat').val(data_bpb.jn_alat);
-                    $('#txt_kd_nmr').val(data_bpb.no_kode);
-                    $('#txt_hm_km').val(data_bpb.hm_km);
-                    $('#txt_lokasi_kerja').val(data_bpb.lok_kerja);
-                } else {
-                    $('#fieldset_bbm').css('display', 'none');
-                }
-
-                for (i = 0; i < data_item_bpb.length; i++) {
-
-                    tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item, data_item_bpb[i].req_rev_qty_item);
-                    // tahun_tanam(i, data_item_bpb[i].kodebebantxt);
-
-                    //sum stok all periode / qtymasuk - qtykeluar. jika dia mutasi devisi diambil dari session
+                    //jika dia dari bpp mutasi maka devisi diambil dari session user login
                     if (!$('#hidden_noref_bpb').val()) {
-                        get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
+                        $('#hidden_kode_dev').val(data_bpb.kode_dev);
+                        $('#hidden_devisi').val(data_bpb.devisi);
+                        $('#devisi_text').val(data_bpb.devisi);
                     } else {
-                        get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data.kode_dev);
+                        $('#hidden_kode_dev').val(data.kode_dev);
+                        $('#hidden_devisi').val(data.devisi);
+                        $('#devisi_text').val(data.devisi);
                     }
 
-                    var tmtbm = data_item_bpb[i].tmtbm;
-                    var afd = data_item_bpb[i].afd;
-                    var blok = data_item_bpb[i].blok;
-                    var thntanam = data_item_bpb[i].thntanam;
-                    var kodebebantxt = data_item_bpb[i].kodebebantxt;
-                    var kodesubtxt = data_item_bpb[i].kodesubtxt;
-                    var ketbeban = data_item_bpb[i].ketbeban;
-                    var nabar = data_item_bpb[i].nabar;
-                    var kodebar = data_item_bpb[i].kodebar;
-                    var grp = data_item_bpb[i].grp;
-                    var satuan = data_item_bpb[i].satuan;
-                    var qty = data_item_bpb[i].qty;
-                    var qty_disetujui = data_item_bpb[i].qty_disetujui;
-                    var ketsub = data_item_bpb[i].ketsub;
-                    var ket = data_item_bpb[i].ket;
+                    $('#hidden_norefbpb').val(data_bpb.norefbpb);
 
-                    // Set data
-                    $('#cmb_tm_tbm_' + i).val(tmtbm);
-                    $('#cmb_afd_unit_' + i).val(afd);
-                    $('#cmb_blok_sub_' + i).val(blok);
-                    $('#cmb_tahun_tanam_' + i).val(thntanam);
-                    $('#cmb_bahan_' + i).val(ketbeban);
-                    $('#hidden_kodebebantxt' + i).val(kodebebantxt);
-                    $('#txt_account_beban_' + i).val(ketsub);
-                    $('#hidden_no_acc_' + i).val(kodesubtxt);
-                    $('#txt_barang_' + i).val(nabar);
-                    $('#hidden_kode_barang_' + i).val(kodebar);
-                    $('#hidden_grup_barang_' + i).val(grp);
-                    $('#sat_bpb_' + i).text(satuan);
-                    $('#txt_qty_diminta_' + i).val(qty);
-                    //jika revisi qty maka tampilkan qty disetujui, jika tidak tampilkan qty
-                    if (data_item_bpb[i].req_rev_qty_item == '2') {
-                        $('#txt_qty_disetujui_' + i).val(qty_disetujui);
+                    if (data_bpb.bag == 'TEKNIK' && data_bpb.bhn_bakar == 'BBM') {
+                        $('#fieldset_bbm').css('display', 'block');
+                        $('#bhnbakar').val(data_bpb.bhn_bakar);
+                        $('#txt_jns_alat').val(data_bpb.jn_alat);
+                        $('#txt_kd_nmr').val(data_bpb.no_kode);
+                        $('#txt_hm_km').val(data_bpb.hm_km);
+                        $('#txt_lokasi_kerja').val(data_bpb.lok_kerja);
                     } else {
-                        $('#txt_qty_disetujui_' + i).val(qty);
+                        $('#fieldset_bbm').css('display', 'none');
                     }
-                    $('#txt_ket_rinci_' + i).val(ket);
 
-                    //merubah beban kepada PT yang meminta BPB\
-                    if (!$('#hidden_noref_bpb').val()) {
-                        console.log('ini bukan mutasi PT');
-                    } else {
-                        // jika dia mutasi rev qty belum fungsi
-                        $('#rev_qty_' + i).attr('disabled', '');
-                        if (data_bpb.status_mutasi == 1) {
-                            ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
+                    for (i = 0; i < data_item_bpb.length; i++) {
+
+                        tambah_row(i, data_item_bpb[i].status_item_bkb, data_item_bpb[i].approval_item, data_item_bpb[i].req_rev_qty_item);
+                        // tahun_tanam(i, data_item_bpb[i].kodebebantxt);
+
+                        //sum stok all periode / qtymasuk - qtykeluar. jika dia mutasi devisi diambil dari session
+                        if (!$('#hidden_noref_bpb').val()) {
+                            get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data_bpb.kode_dev);
+                        } else {
+                            get_stok(i, data_item_bpb[i].kodebar, data_item_bpb[i].periode, data.kode_dev);
+                        }
+
+                        var tmtbm = data_item_bpb[i].tmtbm;
+                        var afd = data_item_bpb[i].afd;
+                        var blok = data_item_bpb[i].blok;
+                        var thntanam = data_item_bpb[i].thntanam;
+                        var kodebebantxt = data_item_bpb[i].kodebebantxt;
+                        var kodesubtxt = data_item_bpb[i].kodesubtxt;
+                        var ketbeban = data_item_bpb[i].ketbeban;
+                        var nabar = data_item_bpb[i].nabar;
+                        var kodebar = data_item_bpb[i].kodebar;
+                        var grp = data_item_bpb[i].grp;
+                        var satuan = data_item_bpb[i].satuan;
+                        var qty = data_item_bpb[i].qty;
+                        var qty_disetujui = data_item_bpb[i].qty_disetujui;
+                        var ketsub = data_item_bpb[i].ketsub;
+                        var ket = data_item_bpb[i].ket;
+
+                        // Set data
+                        $('#cmb_tm_tbm_' + i).val(tmtbm);
+                        $('#cmb_afd_unit_' + i).val(afd);
+                        $('#cmb_blok_sub_' + i).val(blok);
+                        $('#cmb_tahun_tanam_' + i).val(thntanam);
+                        $('#cmb_bahan_' + i).val(ketbeban);
+                        $('#hidden_kodebebantxt' + i).val(kodebebantxt);
+                        $('#txt_account_beban_' + i).val(ketsub);
+                        $('#hidden_no_acc_' + i).val(kodesubtxt);
+                        $('#txt_barang_' + i).val(nabar);
+                        $('#hidden_kode_barang_' + i).val(kodebar);
+                        $('#hidden_grup_barang_' + i).val(grp);
+                        $('#sat_bpb_' + i).text(satuan);
+                        $('#txt_qty_diminta_' + i).val(qty);
+                        //jika revisi qty maka tampilkan qty disetujui, jika tidak tampilkan qty
+                        if (data_item_bpb[i].req_rev_qty_item == '2') {
+                            $('#txt_qty_disetujui_' + i).val(qty_disetujui);
+                        } else {
+                            $('#txt_qty_disetujui_' + i).val(qty);
+                        }
+                        $('#txt_ket_rinci_' + i).val(ket);
+
+                        //merubah beban kepada PT yang meminta BPB\
+                        if (!$('#hidden_noref_bpb').val()) {
+                            console.log('ini bukan mutasi PT');
+                        } else {
+                            // jika dia mutasi rev qty belum fungsi
+                            $('#rev_qty_' + i).attr('disabled', '');
+                            if (data_bpb.status_mutasi == 1) {
+                                ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
+                            }
                         }
                     }
-                }
-                $('.div_form_2').show();
+                    $('.div_form_2').show();
 
-                //cek mutasi
-                if (!$('#hidden_noref_bpb').val()) {
-                    console.log('ini bukan mutasi');
-                } else {
-                    cek_mutasi(ketsub, data_bpb.kode_dev, data_bpb.status_mutasi, data_bpb.kode_pt_req_mutasi);
+                    //cek mutasi
+                    if (!$('#hidden_noref_bpb').val()) {
+                        console.log('ini bukan mutasi');
+                    } else {
+                        cek_mutasi(ketsub, data_bpb.kode_dev, data_bpb.status_mutasi, data_bpb.kode_pt_req_mutasi);
+                    }
                 }
+
             },
             error: function(response) {
                 alert('ERROR! ' + response.responseText);

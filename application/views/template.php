@@ -362,6 +362,9 @@
                                     <a href="<?= base_url('Barang') ?>" class="dropdown-item"><i class="fe-codepen mr-1"></i>
                                         <font face="Verdana" size="2.5">Kode Barang</font>
                                     </a>
+                                    <a href="<?= base_url('Setup/supplier') ?>" class="dropdown-item"><i class="fe-codepen mr-1"></i>
+                                        <font face="Verdana" size="2.5">Supplier</font>
+                                    </a>
                                     <a href="<?= base_url('Stok') ?>" class="dropdown-item"><i class="fe-edit mr-1"></i>
                                         <font face="Verdana" size="2.5">Stok Awal</font>
                                     </a>

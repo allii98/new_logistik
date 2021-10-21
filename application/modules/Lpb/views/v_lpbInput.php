@@ -11,6 +11,7 @@ date_default_timezone_set('Asia/Jakarta');
                         <h4 class="header-title ml-2">LPB</h4>
                         <div class="button-list mr-2">
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
+                            <button class="btn btn-xs btn-info" id="data_lpb" onclick="data_lpb()">Data LPB</button>
                             <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()" disabled>LPB Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()" disabled>Batal LPB</button>
                             <button class="btn btn-xs btn-primary" id="a_print_lpb" onclick="cetak_lpb()" disabled>Cetak</button>
@@ -94,7 +95,7 @@ date_default_timezone_set('Asia/Jakarta');
                             <div class="form-group row mb-0">
                                 <label class="col-lg-3 col-xl-3 col-12 col-form-label mt-0" style="margin-top: -2px; font-size: 12px;">Ket</label>
                                 <div class="col-lg-9 col-xl-9 col-12">
-                                    <textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_pengiriman" name="txt_ket_pengiriman" placeholder="Keterangan" rows="2" autocomplite="off" style="font-size: 12px;"></textarea>
+                                    <textarea class="resizable_textarea form-control form-control-sm" id="txt_ket_pengiriman" name="txt_ket_pengiriman" placeholder="Keterangan" rows="2" autocomplite="off" style="font-size: 12px;">-</textarea>
                                 </div>
                             </div>
                         </div>
@@ -110,6 +111,8 @@ date_default_timezone_set('Asia/Jakarta');
                                 <input type="hidden" id="hidden_norefppo">
                                 <input type="hidden" id="hidden_kd_dept">
                                 <input type="hidden" id="hidden_ket_dept">
+                                <input type="hidden" id="kalo_dia_qrcode">
+
                             </div>
                             <div class="row mt-2 ml-0" style="margin-bottom: 4px;">
                                 <h6><span id="no_ref_po"></span></h6>
@@ -295,6 +298,10 @@ date_default_timezone_set('Asia/Jakarta');
 </style>
 
 <script>
+    function data_lpb() {
+        location.href = "<?php echo base_url('Lpb') ?>";
+    }
+
     $(document).ready(function() {
         // $('#a_print_lpb').hide();
         $('#showCamera').modal('show');
@@ -304,19 +311,25 @@ date_default_timezone_set('Asia/Jakarta');
         $('.div_form_2').hide();
         tittle();
         setInterval(function() {
-            check_form_2();
+            if (!$('#kalo_dia_qrcode').val()) {
+                check_form_2();
+            }
         }, 1000);
     });
 
     function check_form_2() {
-        if ($.trim($('#txt_no_pengantar').val()) != '' && $.trim($('#txt_lokasi_gudang').val()) != '' && $.trim($('#txt_ket_pengiriman').val()) != '') {
-            $('.div_form_2').show();
-            // $('.div_form_3').find('input,textarea,select,button').removeAttr('disabled', '');
-            // $('.div_form_3').find('input,textarea,select,button').prop('disabled', false);
+        if (!$('#kalo_dia_qrcode').val()) {
+            if ($.trim($('#txt_no_pengantar').val()) != '' && $.trim($('#txt_lokasi_gudang').val()) != '' && $.trim($('#txt_ket_pengiriman').val()) != '') {
+                $('.div_form_2').show();
+                // $('.div_form_3').find('input,textarea,select,button').removeAttr('disabled', '');
+                // $('.div_form_3').find('input,textarea,select,button').prop('disabled', false);
+            } else {
+                // $('.div_form_3').find('input,textarea,select,button').prop('disabled', true);
+                $('.div_form_2').hide();
+            }
         } else {
-            // $('.div_form_3').find('input,textarea,select,button').prop('disabled', true);
-            $('.div_form_2').hide();
-
+            console.log('masuk');
+            $('.div_form_2').show();
         }
     }
     $(function() {
@@ -549,7 +562,9 @@ date_default_timezone_set('Asia/Jakarta');
         cariPoqr(content);
         $('#showCamera').modal('hide');
         $('#multiple').val(content);
+        $('#kalo_dia_qrcode').val(content);
         scanner.stop();
+        check_form_2();
     });
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
@@ -601,56 +616,62 @@ date_default_timezone_set('Asia/Jakarta');
 
                 console.log(data_po);
 
-                $('#no_ref_po').html('No. Ref. PO : ' + data_po.noreftxt + '&emsp;&emsp;&emsp;&emsp;');
-                $('#txt_ref_po').val(data_po.noreftxt);
-                $('#txt_no_po').val(data_po.nopotxt);
-                $('#txt_tgl_po').val(formatDate(data_po.tglpo));
-                var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
-                $('#txt_kd_name_supplier').val(namesup);
-                $('#txt_kd_supplier').val(data_po.kode_supply);
-                $('#txt_supplier').val(data_po.nama_supply);
-                $('#hidden_kd_dept').val(data_po.kd_dept);
-                $('#hidden_ket_dept').val(data_po.ket_dept);
-                $('#devisi_text').val(data_po.devisi);
-                $('#devisi').val(data_po.kode_dev);
+                if (!data_po || !data_item_po) {
+                    swal('data tidak ditemukan!');
+                } else {
 
-                //dibawah ini punya SPP
-                $('#hidden_tglppo').val(data_po.tglppo);
-                $('#hidden_norefppo').val(data_po.no_refppo);
+                    $('#no_ref_po').html('No. Ref. PO : ' + data_po.noreftxt + '&emsp;&emsp;&emsp;&emsp;');
+                    $('#txt_ref_po').val(data_po.noreftxt);
+                    $('#txt_no_po').val(data_po.nopotxt);
+                    $('#txt_tgl_po').val(formatDate(data_po.tglpo));
+                    var namesup = data_po.kode_supply + ' / ' + data_po.nama_supply;
+                    $('#txt_kd_name_supplier').val(namesup);
+                    $('#txt_kd_supplier').val(data_po.kode_supply);
+                    $('#txt_supplier').val(data_po.nama_supply);
+                    $('#hidden_kd_dept').val(data_po.kd_dept);
+                    $('#hidden_ket_dept').val(data_po.ket_dept);
+                    $('#devisi_text').val(data_po.devisi);
+                    $('#devisi').val(data_po.kode_dev);
 
-                $("#modalListPo").modal('hide');
+                    //dibawah ini punya SPP
+                    $('#hidden_tglppo').val(data_po.tglppo);
+                    $('#hidden_norefppo').val(data_po.no_refppo);
 
-                for (i = 0; i < data_item_po.length; i++) {
-                    // var no = i + 1;
+                    $("#modalListPo").modal('hide');
 
-                    tambah_row(i, data_item_po[i].status_item_lpb);
-                    sumqty(data_item_po[i].kodebar, data_po.noreftxt, data_item_po[i].qty, data_item_po[i].refppo, i);
+                    for (i = 0; i < data_item_po.length; i++) {
+                        // var no = i + 1;
 
-                    var kodebar = data_item_po[i].kodebar;
-                    var nabar = data_item_po[i].nabar;
-                    var qty = data_item_po[i].qty;
-                    var sat = data_item_po[i].sat;
-                    var ket = data_item_po[i].ket;
+                        tambah_row(i, data_item_po[i].status_item_lpb);
+                        sumqty(data_item_po[i].kodebar, data_po.noreftxt, data_item_po[i].qty, data_item_po[i].refppo, i);
 
-                    //refppo dari item_po untuk sewaktu2 1 PO ada item yg sama
-                    var hidden_refppo = data_item_po[i].refppo;
+                        var kodebar = data_item_po[i].kodebar;
+                        var nabar = data_item_po[i].nabar;
+                        var qty = data_item_po[i].qty;
+                        var sat = data_item_po[i].sat;
+                        var ket = data_item_po[i].ket;
 
-                    // var sumsisa = $(this).data('sumsisa');
+                        //refppo dari item_po untuk sewaktu2 1 PO ada item yg sama
+                        var hidden_refppo = data_item_po[i].refppo;
 
-                    // Set data
-                    $('#txt_kode_barang_' + i).val(kodebar);
-                    $('#txt_nama_brg_' + i).text(nabar);
-                    $('#txt_satuan_' + i).text(sat);
-                    $('#txt_ket_rinci_' + i).text(ket);
-                    $('#qty_po_' + i).text(qty);
-                    $('#hidden_qtypo_' + i).val(qty);
-                    $('#hidden_refppo_' + i).val(hidden_refppo);
+                        // var sumsisa = $(this).data('sumsisa');
 
-                    // $('#sisa_qty_' + no).text(sumsisa);
-                    getGrupBarang(kodebar, i);
+                        // Set data
+                        $('#txt_kode_barang_' + i).val(kodebar);
+                        $('#txt_nama_brg_' + i).text(nabar);
+                        $('#txt_satuan_' + i).text(sat);
+                        $('#txt_ket_rinci_' + i).text(ket);
+                        $('#qty_po_' + i).text(qty);
+                        $('#hidden_qtypo_' + i).val(qty);
+                        $('#hidden_refppo_' + i).val(hidden_refppo);
 
-                    check_form_2();
+                        // $('#sisa_qty_' + no).text(sumsisa);
+                        getGrupBarang(kodebar, i);
+
+                        check_form_2();
+                    }
                 }
+
             },
             error: function(response) {
                 alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');

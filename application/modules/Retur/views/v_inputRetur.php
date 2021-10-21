@@ -7,6 +7,7 @@
                         <h4 class="header-title ml-2">Retur <b>BKB</b></h4>
                         <div class="button-list mr-2">
                             <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
+                            <button class="btn btn-xs btn-info" id="data_retur" onclick="data_retur()">Data Retur</button>
                             <button class="btn btn-xs btn-success" id="new_retur" onclick="new_retur()" disabled>Retur Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelRetur" onclick="batalRetur()" disabled>Batal Retur</button>
                             <button class="btn btn-xs btn-primary" id="a_print_retur" onclick="cetak_retur()" disabled>Cetak</button>
@@ -57,7 +58,7 @@
                         <div class="col-lg-2 col-12">
                             <div class="form-group">
                                 <label for="example-select" style="font-size: 12px;">Keterangan</label>
-                                <textarea class="form-control form-control-sm" rows="1" id="keterangan" style="font-size: 12px; margin-top: -5px;"></textarea>
+                                <textarea class="form-control form-control-sm" rows="1" id="keterangan" style="font-size: 12px; margin-top: -5px;">-</textarea>
                             </div>
                         </div>
                     </div>
@@ -117,6 +118,7 @@
                             <input type="hidden" id="hidden_no_lpb">
                             <input type="hidden" id="hidden_no_ref_lpb">
                             <input type="hidden" id="hidden_id_stokmasuk">
+                            <input type="hidden" id="kalo_dia_qrcode">
                             <div class="row" style="margin-left:4px;">
                                 <h6><span id="h4_no_retur"></span></h6>&emsp;&emsp;
                                 <h6><span id="h4_no_ref_retur"></span></h6>
@@ -355,6 +357,10 @@
     }
 </style>
 <script>
+    function data_retur() {
+        location.href = "<?php echo base_url('Retur') ?>";
+    }
+
     $(function() {
         $('#devisi_text').tooltip({
             title: tittle,
@@ -408,11 +414,14 @@
     });
 
     function check_form_2() {
-        if ($.trim($('#no_ba').val()) != '' && $.trim($('#cari_bkb').val()) != '' && $.trim($('#keterangan').val()) != '') {
-            $('.div_form_2').show();
+        if (!$('#kalo_dia_qrcode').val()) {
+            if ($.trim($('#no_ba').val()) != '' && $.trim($('#cari_bkb').val()) != '' && $.trim($('#keterangan').val()) != '') {
+                $('.div_form_2').show();
+            } else {
+                $('.div_form_2').hide();
+            }
         } else {
-            $('.div_form_2').hide();
-
+            $('.div_form_2').show();
         }
     }
 
@@ -441,6 +450,7 @@
         cariBkbqr(content);
         $('#showCamera').modal('hide');
         $('#multiple').val(content);
+        $('#kalo_dia_qrcode').val(content);
         scanner.stop();
     });
     Instascan.Camera.getCameras().then(function(cameras) {
@@ -1199,20 +1209,26 @@
             success: function(data) {
 
                 // Set data
-                $('#cari_bkb').val(data.NO_REF);
-                $('#hidden_norefbkb').val(data.NO_REF);
-                $('#hidden_nobkb').val(data.skb);
-                $('#hidden_nama_pt').val(data.pt);
-                $('#hidden_kode_pt').val(data.kode);
-                $('#hidden_kode_dev').val(data.kode_dev);
-                $('#hidden_devisi').val(data.devisi);
-                $('#bagian').val(data.bag);
-                var dev = data.kode_dev + ' - ' + data.devisi;
-                $('#devisi_text').val(dev);
+                console.log(data);
+                if (!data) {
+                    swal('data tidak ditemukan!');
+                } else {
 
-                caribkbitem(data.NO_REF);
+                    $('#cari_bkb').val(data.NO_REF);
+                    $('#hidden_norefbkb').val(data.NO_REF);
+                    $('#hidden_nobkb').val(data.skb);
+                    $('#hidden_nama_pt').val(data.pt);
+                    $('#hidden_kode_pt').val(data.kode);
+                    $('#hidden_kode_dev').val(data.kode_dev);
+                    $('#hidden_devisi').val(data.devisi);
+                    $('#bagian').val(data.bag);
+                    var dev = data.kode_dev + ' - ' + data.devisi;
+                    $('#devisi_text').val(dev);
 
-                $('#btn_tambah_row_1, #txt_barang_1').removeAttr('disabled', '');
+                    caribkbitem(data.NO_REF);
+
+                    $('#btn_tambah_row_1, #txt_barang_1').removeAttr('disabled', '');
+                }
 
             },
             error: function(response) {
