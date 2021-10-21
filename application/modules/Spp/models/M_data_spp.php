@@ -25,6 +25,7 @@ class M_data_spp extends CI_Model
     {
         $filter = $this->data;
         $lokasi = $this->session->userdata('status_lokasi');
+        $kode_dev = $this->session->userdata('kode_dev');
         $this->db_logistik_pt->from($this->table);
         if ($lokasi == 'HO') {
             if ($filter == 'HO') {
@@ -38,6 +39,8 @@ class M_data_spp extends CI_Model
                 $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
             }
         } else {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+
             if ($lokasi == 'SITE') {
                 $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
             } elseif ($lokasi == 'PKS') {

@@ -17,7 +17,13 @@ class M_retur extends CI_Model
 
     private function _get_datatables_query()
     {
+        $kode_dev = $this->session->userdata('kode_dev');
+        $lokasi = $this->session->userdata('status_lokasi');
+
         $this->db_logistik_pt->from($this->table);
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        }
 
         $i = 0;
 
@@ -81,8 +87,10 @@ class M_retur extends CI_Model
 
     public function get_data_bkb_qr($noref)
     {
+        $kode_dev = $this->session->userdata('kode_dev');
+
         $this->db_logistik_pt->select('NO_REF, skb, pt, kode, kode_dev, devisi, bag');
-        $this->db_logistik_pt->where('NO_REF', $noref);
+        $this->db_logistik_pt->where(['NO_REF' => $noref, 'kode_dev' => $kode_dev]);
         $this->db_logistik_pt->from('stockkeluar');
         return $this->db_logistik_pt->get()->row_array();
     }

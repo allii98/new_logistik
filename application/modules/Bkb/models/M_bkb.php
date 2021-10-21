@@ -17,9 +17,15 @@ class M_bkb extends CI_Model
 
     private function _get_datatables_query()
     {
-        $role_user = $this->session->userdata('user');
+        // $role_user = $this->session->userdata('user');
+        $lokasi = $this->session->userdata('status_lokasi');
+        $kode_dev = $this->session->userdata('kode_dev');
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        }
+
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('user', $role_user);
+        // $this->db_logistik_pt->where('user', $role_user);
         // $this->db_logistik_pt->select('id', 'tglpo', 'noreftxt', 'nopotxt', 'nama_supply', 'lokasi_beli');
         // $this->db_logistik_pt->from('po');
         // $this->db_logistik_pt->order_by('id', 'desc');
@@ -86,8 +92,10 @@ class M_bkb extends CI_Model
 
     public function get_data_bpb_qr($noref)
     {
+        $kode_dev = $this->session->userdata('kode_dev');
+
         $this->db_logistik_pt->select('norefbpb, bag, alokasi, user, keperluan, bhn_bakar, jn_alat, no_kode, hm_km, lok_kerja, devisi, kode_dev, status_mutasi');
-        $this->db_logistik_pt->where('norefbpb', $noref);
+        $this->db_logistik_pt->where(['norefbpb' => $noref, 'kode_dev' => $kode_dev]);
         $this->db_logistik_pt->from('bpb');
         $data_bpb = $this->db_logistik_pt->get()->row_array();
 

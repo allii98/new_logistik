@@ -19,6 +19,7 @@ class M_data_spp_approval extends CI_Model
     private function _get_datatables_query()
     {
         $lokasi = $this->session->userdata('status_lokasi');
+        $kode_dev = $this->session->userdata('kode_dev');
 
         $this->db_logistik_pt->from($this->table);
         if ($lokasi == 'HO') {
@@ -32,6 +33,10 @@ class M_data_spp_approval extends CI_Model
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
         }
         $this->db_logistik_pt->where(['status2 !=' => 1]);
+
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        }
 
         $i = 0;
 

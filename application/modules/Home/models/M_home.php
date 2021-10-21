@@ -100,6 +100,7 @@ class M_home extends CI_Model
     {
         $role_user = $this->session->userdata('user');
         $lokasi = $this->session->userdata('status_lokasi');
+        $kode_dev = $this->session->userdata('kode_dev');
 
         $this->db_logistik_pt->select('noreftxt');
         $this->db_logistik_pt->where('status2', '0');
@@ -112,6 +113,9 @@ class M_home extends CI_Model
             $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
         } elseif ($lokasi == 'RO') {
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+        }
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
         }
         $this->db_logistik_pt->from('ppo');
         $count_spp = $this->db_logistik_pt->count_all_results();
@@ -126,6 +130,9 @@ class M_home extends CI_Model
             $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
         } elseif ($lokasi == 'RO') {
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+        }
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
         }
         $this->db_logistik_pt->from('ppo');
         $count_spp_approved = $this->db_logistik_pt->count_all_results();
@@ -158,6 +165,9 @@ class M_home extends CI_Model
                 $this->db_logistik_pt->like('noref', 'ROM', 'both');
             }
         }
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        }
         $count_lpb = $this->db_logistik_pt->count_all_results();
 
         $this->db_logistik_pt->select('norefbpb');
@@ -172,7 +182,9 @@ class M_home extends CI_Model
 
         $this->db_logistik_pt->select('NO_REF');
         $this->db_logistik_pt->from('stockkeluar');
-        $this->db_logistik_pt->where(['user' => $role_user]);
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        }
         $count_bkb = $this->db_logistik_pt->count_all_results();
 
         $this->db_logistik_pt->select('norefbpb');

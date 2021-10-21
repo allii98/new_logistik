@@ -18,7 +18,13 @@ class M_get_bpb extends CI_Model
 
     private function _get_datatables_query()
     {
+        $kode_dev = $this->session->userdata('kode_dev');
+        $lokasi = $this->session->userdata('status_lokasi');
+
         $this->db_logistik_pt->from($this->table);
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        }
         $this->db_logistik_pt->where(['batal' => 0, 'approval' => '1', 'status_bkb' => '0', 'status_mutasi' => '0']);
 
         $i = 0;
