@@ -251,7 +251,7 @@ $nama_pt = $this->session->userdata('nama_pt');
                 } else {
                     $ppn = "0";
                 }
-                if ($po->ppn == NULL) {
+                if ($po->pph == NULL) {
                     $jml_pph = $po->pph / 100;
                 } else {
                     $jml_pph = $po->pph / 100;
@@ -316,7 +316,7 @@ $nama_pt = $this->session->userdata('nama_pt');
         </tr>
         <tr>
             <td colspan="3">Ongkir</td>
-            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumlah_biaya_lain, 2, ",", "."); ?></td>
+            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($list_item->JUMLAHBPO, 2, ",", "."); ?></td>
         </tr>
         <tr>
             <td colspan="3">PPN 10% (Ongkir)</td>
@@ -327,7 +327,7 @@ $nama_pt = $this->session->userdata('nama_pt');
             <td colspan="2" align="right">
                 <?php
                 $isi = $po->totalbayar;
-                $hasil = round($isi);
+
                 ?>
                 <br />
                 <?= $list_item->kurs; ?>. <?= number_format($isi, 2, ",", "."); ?>
@@ -337,7 +337,7 @@ $nama_pt = $this->session->userdata('nama_pt');
             <?php
             $total = $po->totalbayar;
             // var_dump("iyayayay".$total);exit();
-            $jumlah = round($total);
+
 
             $kur = $list_item->kurs;
             if ($kur == "Rp") {

@@ -342,9 +342,11 @@ class M_pp extends CI_Model
             $query_jumlah_sudah_bayar = "SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$no_ref_po'";
             $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
 
+            $sdh_bayar = $get_jumlah_sudah_bayar->jumlah;
+
 
             if ($bool_pp === TRUE && $bool_pp_history === TRUE) {
-                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba);
+                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar);
             } else {
                 return FALSE;
             }
@@ -385,10 +387,14 @@ class M_pp extends CI_Model
                 $bool_pp = FALSE;
             }
 
+            $no_ref_po = $this->input->post('txt_no_ref_po');
+            $query_jumlah_sudah_bayar = "SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$no_ref_po'";
+            $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
 
+            $sdh_bayar = $get_jumlah_sudah_bayar->jumlah;
 
             if ($bool_pp_history === TRUE && $bool_pp === TRUE) {
-                return array('status' => TRUE);
+                return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar);
             } else {
                 return FALSE;
             }
@@ -424,7 +430,7 @@ class M_pp extends CI_Model
         $jumlah = $this->input->post('txt_jumlah');
         $total_po = $this->input->post('txt_total_po');
 
-        $data_pp['id']              = $id_pp;
+        // $data_pp['id']              = $id_pp;
         $data_pp['tglpp']           = $tglpp;
         $data_pp['tglpptxt']        = $tglpptxt;
         $data_pp['tglpo']           = $tglpo;
@@ -464,28 +470,42 @@ class M_pp extends CI_Model
 
         $this->db_logistik_pt->where('id', $id_pp);
         $this->db_logistik_pt->update('pp', $data_pp);
-
-        $refpo = $this->input->post('txt_no_ref_po');
-        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp where ref_po = '$refpo'";
-        $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
-
-        $data_po['terbayar'] = $get_jumlah_sudah_bayar->kasir_bayar;
-        $this->db_logistik_pt->where('nopo', $this->input->post('hidden_no_po'));
-        $this->db_logistik_pt->where('noreftxt', $this->input->post('txt_no_ref_po'));
-        $this->db_logistik_pt->update('po', $data_po);
-
         if ($this->db_logistik_pt->affected_rows() > 0) {
             $bool_pp = TRUE;
         } else {
             $bool_pp = FALSE;
         }
 
-        if ($bool_pp === TRUE) {
-            return array('status' => TRUE);
+        $refpo = $this->input->post('txt_no_ref_po');
+        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp WHERE ref_po = '$refpo'";
+        $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
+
+        $sdh_bayar = $get_jumlah_sudah_bayar->kasir_bayar;
+
+        $data_po['terbayar'] = $get_jumlah_sudah_bayar->kasir_bayar;
+        // $this->db_logistik_pt->where('nopo', $nopo);
+        $this->db_logistik_pt->where('noreftxt', $refpo);
+        $this->db_logistik_pt->update('po', $data_po);
+        if ($this->db_logistik_pt->affected_rows() > 0) {
+            $bool_po = TRUE;
         } else {
-            return FALSE;
+            $bool_po = FALSE;
+        }
+
+        if ($bool_pp === TRUE && $bool_po === TRUE) {
+            return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar);
+        } else {
+            return array('status_po' => $bool_po, 'status_pp' => $bool_pp);;
         }
         // return $data_pp;
+    }
+
+    function cancel_update_pp()
+    {
+        $id = $this->input->post('id_pp');
+
+        $query = $this->db_logistik_pt->query("SELECT * FROM pp WHERE id='$id'")->result();
+        return $query;
     }
 }
 

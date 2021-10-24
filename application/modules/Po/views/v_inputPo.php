@@ -11,6 +11,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2">PO</h4>
                         <div class="button-list mr-2">
+                            <button class="btn btn-xs btn-info" id="data_po" onclick="data_po()">Data PO</button>
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
                             <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
@@ -624,9 +625,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                                     Disc<span>%</span>
                                                 </th>
                                                 <th>
-                                                    Biaya&nbsp;Lainnya
+                                                    <span id="biayalain">Biaya&nbsp;Lainnya</span>
+                                                    <span id="ongkir" style="display: none;">Ongkir</span>
                                                 </th>
-                                                <th>
+                                                <th id="ketbiaya">
                                                     Ket.&nbsp;Biaya
                                                 </th>
 
@@ -787,6 +789,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 </div>
+<input type="hidden" name="lokasi_user" id="lokasi_user" value="<?= $this->session->userdata('status_lokasi') ?>">
 
 <style>
     .hastag_th {
@@ -904,6 +907,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function new_po() {
         location.href = "<?php echo base_url('Po/input') ?>";
+    }
+
+    function data_po() {
+        location.href = "<?php echo base_url('Po') ?>";
     }
 
     // function ganti_spp() {
@@ -1128,17 +1135,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             cekJenis(jenis);
 
                             var n = 1;
-                            // if (kodebar == '102505700000002') {
-
-
-                            // } else {
-                            //     console.log('bukan solar');
-
-                            // }
+                            var kodebar = data[0].kodebar;
                             $.each(data, function(index, value) {
 
                                 // console.log('ini yg belum di approve', value.statusaprove);
-                                tambah_item(value.statusaprove);
+                                tambah_item(value.statusaprove, value.kodebar);
+
                                 if (value.statusaprove == '0') {
                                     $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
                                     $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
@@ -1561,11 +1563,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         $('#modalcarispp').modal('show');
     }
 
-    function tambah_item(statusaprove) {
+    function tambah_item(statusaprove, kodebar) {
 
         row++;
         // console.log("status", statusaprove);
         console.log("bariske", row);
+
         var rowCount = $('#tableItemPO tr').length;
         console.log('ini jumlah row', rowCount);
 
@@ -1639,13 +1642,32 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             '<input type="number" class="form-control form-control-sm" id="txt_disc_' + row + '" name="txt_disc_' + row + '" size="8" value="0" onkeyup="jumlah(' + row + ')" placeholder="Disc"/>' +
 
             '</td>';
-        var td_col_9 = '<td width="8%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
 
-            '</td>';
-        var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
-            '</td>'
+        if (kodebar == '102505700000002') {
+
+            var td_col_9 = '<td width="10%"  style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<input type="number" class="form-control form-control-sm" id="txt_ongkir_' + row + '" name="txt_ongkir_' + row + '" value="0" onkeyup="jumlah(' + row + ')" placeholder="Ongkir" />' +
+
+                '</td>';
+            gantiTabelSite(row);
+
+        } else {
+
+            var td_col_9 = '<td width="8%"  style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+                '</td>';
+        }
+
+        if (kodebar == '102505700000002') {
+            var td_col_10 = '<td width="10%" style="display: none;" id="txt_ketbiaya_' + row + '" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<textarea maxlength="250" class="form-control form-control-sm"   id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
+                '</td>';
+        } else {
+            var td_col_10 = '<td width="10%" id="txt_ketbiaya_' + row + '" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+                '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
+                '</td>';
+
+        }
         var td_col_11 = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="3"></textarea>' +
             // '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
@@ -1689,12 +1711,16 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 event.preventDefault();
             }
         });
+
         if (row == 1) {
             $('#btn_hapus_row_1').hide();
         } else {
             $('#btn_hapus_row_1' + row).show();
+
         }
         hitungqty(row);
+
+
         // jumlah(row);
         // input_number(row);
     }
@@ -1888,16 +1914,41 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // }
         $('#biayalain').hide();
         $('#txt_biaya_lain_1').hide();
+        $('#txt_keterangan_biaya_lain_1').hide();
         $('#ketbiaya').hide();
         $('#txt_ketbiaya_1').hide();
 
         $('#ongkir').css('display', 'block');
         $('#txt_ongkir_1').css('display', 'block');
+        if ($('#lokasi_user').val() != 'HO') {
+            console.log("BUKAN HO");
+        } else {
+            $('#tambah_row1').attr('disabled', '');
+            $('#getspp1').attr('disabled', '');
+        }
 
-        $('#tambah_row1').attr('disabled', '');
-        $('#getspp1').attr('disabled', '');
 
         $("div.ppn select").val("10").change();
+    }
+
+    function gantiTabelSite(n) {
+
+
+
+
+        $('#biayalain').hide();
+        $('#txt_keterangan_biaya_lain_' + n).hide();
+        $('#ketbiaya').hide();
+
+        $('#ongkir').css('display', 'block');
+        $('#txt_ongkir_' + n).css('display', 'block');
+        console.log(n);
+
+
+
+        $("div.ppn select").val("10").change();
+
+
     }
 
     function isSelectednoRef(no_ref_spp) {

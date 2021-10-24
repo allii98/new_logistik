@@ -8,6 +8,7 @@
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2">BPB</h4>
                         <div class="button-list mr-2">
+                            <button class="btn btn-xs btn-info" id="data_po" onclick="data_bpb()">Data BPB</button>
                             <button onclick="new_bpb()" class="btn btn-xs btn-success" id="">BPB Baru</button>
                             <button onclick="batal()" class="btn btn-xs btn-danger" id="batalBPB" disabled>Batal BPB</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
@@ -538,6 +539,10 @@
 
     function new_bpb() {
         location.href = "<?php echo base_url('Bpb/input') ?>";
+    }
+
+    function data_bpb() {
+        location.href = "<?php echo base_url('Bpb') ?>";
     }
 
     function devisi() {

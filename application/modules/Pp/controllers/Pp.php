@@ -106,9 +106,21 @@ class Pp extends CI_Controller
 
             $ref_po = $d->noreftxt;
 
+            // untuk mengambil kode dan nama barang
+            $query_kodebar = "SELECT nabar, kodebar FROM item_po WHERE noref = '$ref_po'";
+            $get_kodebar = $this->db_logistik_pt->query($query_kodebar)->row();
+            // endsum
             // untuk sum harga dan qty pada item_Po
-            $query_harga_po = "SELECT SUM(harga*qty) AS hargapo FROM item_po WHERE noref = '$ref_po'";
+            $query_harga_po = "SELECT SUM(harga) AS hargapo FROM item_po WHERE noref = '$ref_po'";
             $get_harga_po = $this->db_logistik_pt->query($query_harga_po)->row();
+            // endsum
+            // untuk sum harga dan qty pada item_Po
+            $query_qty_po = "SELECT SUM(qty) AS qty FROM item_po WHERE noref = '$ref_po'";
+            $get_qty_po = $this->db_logistik_pt->query($query_qty_po)->row();
+            // endsum
+            // untuk sum diskon
+            $query_diskon = "SELECT disc AS diskon FROM item_po WHERE noref = '$ref_po'";
+            $get_diskon = $this->db_logistik_pt->query($query_diskon)->row();
             // endsum
 
 
@@ -126,31 +138,70 @@ class Pp extends CI_Controller
             $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$d->nopotxt' AND noref = '$ref_po'";
             $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
 
-            //ppn
-            $ppn = $d->ppn;
-            if ($ppn == 10) {
-                $jml_ppn = $ppn / 100;
-                $total_ppn = $get_harga_po->hargapo * $jml_ppn;
-                $hasil = $get_harga_po->hargapo + $total_ppn;
+            if ($get_kodebar->kodebar == '102505700000002') {
+                $ppn = $d->ppn;
+                if ($ppn == 10) {
+                    $jml_ppn = "0.1";
+                } else {
+                    $jml_ppn = "0";
+                }
+                if ($d->pph == NULL) {
+                    $jml_pph = $d->pph / 100;
+                } else {
+                    $jml_pph = $d->pph / 100;
+                }
+                $hargadasarppn = $get_harga_po->hargapo * $jml_ppn;
+                $hargadasar = $get_harga_po->hargapo + $hargadasarppn;
+                $qty_harga = $get_qty_po->qty * $hargadasar;
+                $disc = $get_diskon->diskon / 100;
+                $jumharga_pre = $qty_harga - ($qty_harga * $disc);
+
+                $hargaPlusPPH = $get_harga_po->hargapo * $jml_pph;
+                $hargaPPh = $get_harga_po->hargapo +  $hargaPlusPPH;
+
+                $ongkirplusppn = $get_jumlah_bpo->jumlahbpo * $jml_ppn;
+                $ongkir = $get_jumlah_bpo->jumlahbpo +  $ongkirplusppn;
+
+                $biayalain =  $ongkir * $get_qty_po->qty;
+
+                $hasil = $d->totalbayar - $biayalain;
+                //saldo
+                $saldo =  $d->totalbayar - $get_jumlah_sudah_bayar->kasir_bayar;
             } else {
-                $hasil = $get_harga_po->hargapo;
+
+                //ppn
+                $ppn = $d->ppn;
+                if ($ppn == 10) {
+                    $jml_ppn = $ppn / 100;
+                    $total_ppn = ($d->totalbayar - $get_jumlah_bpo->jumlahbpo) * $jml_ppn;
+                    $hasil = ($d->totalbayar - $get_jumlah_bpo->jumlahbpo) + $total_ppn;
+                    // $isi = $hasil - ($hasil * $diskon);
+                } else {
+                    // $isi = $harga - ($harga * $diskon);
+                    $hasil = $d->totalbayar - $get_jumlah_bpo->jumlahbpo;
+                }
+
+                $biayalain = $get_jumlah_bpo->jumlahbpo;
+
+                //saldo
+                $saldo = ($hasil + $get_jumlah_bpo->jumlahbpo) - $get_jumlah_sudah_bayar->kasir_bayar;
             }
 
-            //saldo
-            $saldo = ($hasil + $get_jumlah_bpo->jumlahbpo) - $get_jumlah_sudah_bayar->kasir_bayar;
+
+            // $saldo = $tot - ($tot * $diskon);
 
             $row[] = $d->id;
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
             $row[] = $d->noreftxt;
             $row[] = $d->nopotxt;
-            $row[] = $d->kode_supply;
+            // $row[] = $d->kode_supply;
             $row[] = $d->nama_supply;
             $row[] = $d->bayar;
             // $row[] = number_format($get_harga_po->hargapo);
-            $row[] = number_format(round($hasil), 2, ",", ".");
-            $row[] = number_format(round($get_jumlah_bpo->jumlahbpo), 2, ",", ".");
-            $row[] = number_format(round($get_jumlah_sudah_bayar->kasir_bayar), 2, ",", ".");
-            $row[] = number_format(round($saldo), 2, ",", ".");
+            $row[] = number_format($hasil, 2, ",", ".");
+            $row[] = number_format($biayalain, 2, ",", ".");
+            $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar, 2, ",", ".");
+            $row[] = number_format($saldo, 2, ",", ".");
             $row[] = $get_kurs->kurs;
             $data[] = $row;
         }
@@ -171,9 +222,14 @@ class Pp extends CI_Controller
         $no_po = $this->input->post('nopo');
         $dt = $this->M_pp->ambilpo($id, $refpo);
 
+        $query_kodebar = "SELECT nabar, kodebar, qty FROM item_po WHERE noref = '$refpo'";
+        $get_kodebar = $this->db_logistik_pt->query($query_kodebar)->row();
+
         // untuk sum harga dan qty pada item_Po
         $query_harga_po = "SELECT SUM(harga*qty) AS hargapo FROM item_po WHERE noref = '$refpo'";
         $get_harga_po = $this->db_logistik_pt->query($query_harga_po)->row();
+        $query_harga = "SELECT SUM(harga) AS hargapo FROM item_po WHERE noref = '$refpo'";
+        $get_harga = $this->db_logistik_pt->query($query_harga)->row();
         // endsum
 
         // untuk sum jumlah bpo pada item_po
@@ -190,51 +246,116 @@ class Pp extends CI_Controller
         $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$no_po' AND noref = '$refpo'";
         $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
 
-        //ppn
-        $ppn = $dt->ppn;
-        if ($ppn == 10) {
-            $jml_ppn = $ppn / 100;
+
+        if ($get_kodebar->kodebar == '102505700000002') {
+            # code...
             //ppn
-            $hasil_ppn = $get_harga_po->hargapo * $jml_ppn;
+            $ppn = $dt->ppn;
+            if ($ppn == 10) {
+                $jml_ppn = $ppn / 100;
+                //ppn
+                $nilaidasar = $get_harga->hargapo * $get_kodebar->qty;
+                $hargadasar = $nilaidasar * $jml_ppn;
+                $hasil_ppn = $get_harga->hargapo + $hargadasar;
+                $ongkirplusqty = $get_jumlah_bpo->jumlahbpo * $get_kodebar->qty;
+                $ongkir_ppn = $ongkirplusqty * $jml_ppn;
+                $ongkir = $get_jumlah_bpo->jumlahbpo + $ongkir_ppn;
+            } else {
+                //ppn
+                $ongkir_ppn = 0;
+                $hasil_ppn = 0;
+                $ongkir = $get_jumlah_bpo->jumlahbpo;
+            }
+
+            //pph
+            $pph = $dt->pph;
+            if ($pph != 0) {
+                $jml_pph = $pph / 100;
+                $nilaidasarpph = $get_harga->hargapo * $get_kodebar->qty;
+                $hargadasarpph = $nilaidasarpph * $jml_pph;
+                $total_pph = $get_harga->hargapo + $hargadasarpph;
+            } else {
+                $total_pph = 0;
+            }
+
+            //pajak
+            // $p = $hasil_ppn + $total_pph + $ongkir_ppn;
+            $p = $hargadasar + $ongkir_ppn + $hargadasarpph;
+            // $pajak = number_format(round($p), 2, ",", ".");
+            $pajak = $p;
+            //tootal po
+            $ttlpo = $get_harga_po->hargapo + $p;
+            // $total_po = number_format($ttlpo), 2, ",", ".");
+            $total_po = $dt->totalbayar;
+            //nilai po
+            $nilai_po = $get_harga->hargapo * $get_kodebar->qty;
+            // $nilai_po = number_format($get_harga_po->hargapo), 2, ",", ".");
+            //bpo
+            $bpo = $get_jumlah_bpo->jumlahbpo * $get_kodebar->qty;
+            // $bpo = number_format($get_jumlah_bpo->jumlahbpo), 2, ",", ".");
+            //saldo
+            $sisa_saldo = ($dt->totalbayar) - $get_jumlah_sudah_bayar->kasir_bayar;
+            $saldo = $sisa_saldo;
+            // $saldo = number_format($sisa_saldo), 2, ",", ".");
+            //tglpo
+            $tglpo = date_format(date_create($dt->tglpo), 'Y/m/d');
+            //kurs
+            $kurs = $get_kurs->kurs;
+            //terbayar
+            $bayar = $get_jumlah_sudah_bayar->kasir_bayar;
+            // $bayar = number_format(round($get_jumlah_sudah_bayar->kasir_bayar), 2, ",", ".");
+            $kaleng = "GENZA KALENG";
         } else {
+            # code...
             //ppn
-            $hasil_ppn = 0;
+            $ppn = $dt->ppn;
+            if ($ppn == 10) {
+                $jml_ppn = $ppn / 100;
+                //ppn
+                $hasil_ppn = $get_harga_po->hargapo * $jml_ppn;
+            } else {
+                //ppn
+                $hasil_ppn = 0;
+            }
+
+            //pph
+            $pph = $dt->pph;
+            if ($pph != 0) {
+                $jml_pph = $pph / 100;
+                $total_pph = $get_harga_po->hargapo * $jml_pph;
+            } else {
+                $total_pph = 0;
+            }
+
+            //pajak
+            $p = $hasil_ppn + $total_pph;
+            // $pajak = number_format(round($p), 2, ",", ".");
+            $pajak = $p;
+            //tootal po
+            $ttlpo = $get_harga_po->hargapo + $p;
+            // $total_po = number_format($ttlpo), 2, ",", ".");
+            $total_po = $dt->totalbayar;
+            //nilai po
+            $nilai_po = $get_harga_po->hargapo;
+            // $nilai_po = number_format($get_harga_po->hargapo), 2, ",", ".");
+            //bpo
+            $bpo = $get_jumlah_bpo->jumlahbpo;
+            // $bpo = number_format($get_jumlah_bpo->jumlahbpo), 2, ",", ".");
+            //saldo
+            $sisa_saldo = ($dt->totalbayar) - $get_jumlah_sudah_bayar->kasir_bayar;
+            $saldo = $sisa_saldo;
+            // $saldo = number_format($sisa_saldo), 2, ",", ".");
+            //tglpo
+            $tglpo = date_format(date_create($dt->tglpo), 'Y/m/d');
+            //kurs
+            $kurs = $get_kurs->kurs;
+            //terbayar
+            $bayar = $get_jumlah_sudah_bayar->kasir_bayar;
+            // $bayar = number_format(round($get_jumlah_sudah_bayar->kasir_bayar), 2, ",", ".");
+            $kaleng = "";
         }
 
-        //pph
-        $pph = $dt->pph;
-        if ($pph != 0) {
-            $jml_pph = $pph / 100;
-            $total_pph = $get_harga_po->hargapo * $jml_pph;
-        } else {
-            $total_pph = 0;
-        }
 
-        //pajak
-        $p = $hasil_ppn + $total_pph;
-        // $pajak = number_format(round($p), 2, ",", ".");
-        $pajak = round($p);
-        //tootal po
-        $ttlpo = $get_harga_po->hargapo + $p;
-        // $total_po = number_format(round($ttlpo), 2, ",", ".");
-        $total_po = round($ttlpo);
-        //nilai po
-        $nilai_po = round($get_harga_po->hargapo);
-        // $nilai_po = number_format(round($get_harga_po->hargapo), 2, ",", ".");
-        //bpo
-        $bpo = round($get_jumlah_bpo->jumlahbpo);
-        // $bpo = number_format(round($get_jumlah_bpo->jumlahbpo), 2, ",", ".");
-        //saldo
-        $sisa_saldo = ($dt->totalbayar) - $get_jumlah_sudah_bayar->kasir_bayar;
-        $saldo = round($sisa_saldo);
-        // $saldo = number_format(round($sisa_saldo), 2, ",", ".");
-        //tglpo
-        $tglpo = date_format(date_create($dt->tglpo), 'Y/m/d');
-        //kurs
-        $kurs = $get_kurs->kurs;
-        //terbayar
-        $bayar = round($get_jumlah_sudah_bayar->kasir_bayar);
-        // $bayar = number_format(round($get_jumlah_sudah_bayar->kasir_bayar), 2, ",", ".");
 
         $data = [
             'po' => $dt,
@@ -246,6 +367,7 @@ class Pp extends CI_Controller
             'saldo' => $saldo,
             'tglpo' => $tglpo,
             'kurs' => $kurs,
+            'kaleng' => $kaleng,
         ];
 
         echo json_encode($data);
@@ -440,6 +562,12 @@ class Pp extends CI_Controller
     function update_pp()
     {
         $data = $this->M_pp->update_pp();
+        echo json_encode($data);
+    }
+
+    function cancel_update_pp()
+    {
+        $data = $this->M_pp->cancel_update_pp();
         echo json_encode($data);
     }
 

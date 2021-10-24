@@ -10,15 +10,20 @@
                         <h6 id="lbl_status_pp"></h6>
                         <div class="button-list mr-2">
                             <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
+                            <button type="button" onclick="updateData()" class="btn btn-xs btn-warning" style="display: none;" id="update_pp">Update</button>
+                            <button type="button" onclick="cancelUpdate()" class="btn btn-xs btn-primary" style="display: none;" id="cancelUpdate">Cancel</button>
+                            <button class="btn btn-xs btn-info" id="data_pp" onclick="data_pp()">Data PP</button>
                             <button type="button" onclick="new_pp()" class="btn btn-xs btn-success" id="">PP Baru</button>
-                            <!-- <button type="button" onclick="batal()" class="btn btn-xs btn-danger" id="" disabled>Batal PP</button> -->
-                            <!-- <button type="button" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button> -->
+                            <button type="button" onclick="batal()" class="btn btn-xs btn-danger" id="" disabled>Batal PP</button>
+                            <button type="button" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button type="button" onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row div_form_1">
                         <div class="col-lg-4 col-xl-4 col-12">
 
+                            <!-- <input type="text" name="status_update" id="status_update"> -->
+                            <input type="hidden" name="id_pp" id="id_pp">
                             <input type="hidden" id="hidden_no_pp" name="hidden_no_pp">
                             <input type="hidden" id="hidden_refpp" name="hidden_refpp">
                             <input type="hidden" id="hidden_id_po" name="hidden_id_po">
@@ -262,7 +267,7 @@
                                         <th style="font-size: 12px; padding:10px">Tgl</th>
                                         <th style="font-size: 12px; padding:10px">No. Ref. PO</th>
                                         <th style="font-size: 12px; padding:10px">No PO</th>
-                                        <th style="font-size: 12px; padding:10px">Kd Supplier</th>
+                                        <!-- <th style="font-size: 12px; padding:10px">Kd Supplier</th> -->
                                         <th style="font-size: 12px; padding:10px">Supplier</th>
                                         <th style="font-size: 12px; padding:10px">Bayar</th>
                                         <th style="font-size: 12px; padding:10px">Harga PO+PPN</th>
@@ -315,14 +320,18 @@
         location.href = "<?php echo base_url('Pp/input') ?>";
     }
 
+    function data_pp() {
+        location.href = "<?php echo base_url('Pp') ?>";
+    }
+
     function goBack() {
         window.history.back();
     }
     $(document).ready(function() {
         // $('#preview').show();
         // console.log('ini dia',$(this).attr('at'));
-        $('#txt_pajak,#txt_nilai_bpo1,#txt_nilai_bpo2').number(true);
-        $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar,#txt_jumlah').number(true);
+        $('#txt_pajak,#txt_nilai_bpo1,#txt_nilai_bpo2').number(true, 2);
+        $('#txt_nilai_po,#txt_total_po,#txt_sudah_dibayar,#txt_jumlah').number(true, 2);
 
         $(".nav-link").click(function() {
             $(".nav-link").removeClass("active");
@@ -505,43 +514,174 @@
 
     function saveData() {
         $('#simpan_pp').attr('disabled', '');
+        var id_pp = $('#id_pp').val();
+        if (!id_pp) {
+            var form_data = new FormData();
 
+            form_data.append('hidden_id_po', $('#hidden_id_po').val());
+            form_data.append('hidden_no_pp', $('#hidden_no_pp').val());
+            form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
+            form_data.append('hidden_no_po', $('#hidden_no_po').val());
+            form_data.append('hidden_grup', $('#hidden_grup').val());
+            form_data.append('txt_tgl_pp', $('#txt_tgl_pp').val());
+            form_data.append('txt_tgl_po', $('#txt_tgl_po').val());
+            form_data.append('txt_pembayaran', $('#txt_pembayaran').val());
+            form_data.append('kd_supplier', $('#kd_supplier').val());
+            form_data.append('txt_supplier', $('#txt_supplier').val());
+            var total_po = $('#txt_nilai_po').val();
+            // var hasil = total_po.replace(/,/g, "");
+            form_data.append('txt_nilai_po', total_po);
+            form_data.append('hidden_kurs', $('#hidden_kurs').val());
+            form_data.append('txt_pajak', $('#txt_pajak').val());
+            form_data.append('txt_nilai_bpo1', $('#txt_nilai_bpo1').val());
+            form_data.append('txt_nilai_bpo2', $('#txt_nilai_bpo2').val());
+            form_data.append('txt_total_po', $('#txt_total_po').val());
+            form_data.append('txt_dibayar_ke', $('#txt_dibayar_ke').val());
+            form_data.append('txt_jumlah', $('#txt_jumlah').val());
+            form_data.append('txt_terbilang', $('#txt_terbilang').val());
+            form_data.append('txt_keterangan', $('#txt_keterangan').val());
+            form_data.append('hidden_main_account', $('#hidden_main_account').val());
+            form_data.append('hidden_nama_account', $('#hidden_nama_account').val());
+            form_data.append('txt_no_voucher', $('#txt_no_voucher').val());
+            form_data.append('txt_tgl_voucher', $('#txt_tgl_voucher').val());
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Pp/simpan_pp'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+                    $('#simpan_pp').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+
+                data: form_data,
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status == true) {
+                        $('#a_pp_baru').show();
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Disimpan!',
+                            icon: 'success',
+                            loader: false
+                        });
+                        $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+                        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $('.spinner-border').css('display', 'none');
+                        $('#simpan_pp').hide();
+                        $('#simpan_pp').hide();
+                        $('#update_pp').show();
+                        $('#id_pp').val(data.idpp);
+                        $('#txt_sudah_dibayar').val(data.sdh_bayar);
+                        // setTimeout(function() {
+                        //     window.location.href = "<?php echo site_url('Pp'); ?>";
+                        // }, 1000);
+                    }
+
+                },
+                error: function(request) {
+                    console.log('Error Save Data : ' + request.responseText);
+
+
+                }
+            });
+        } else {
+
+            console.log('id ada');
+            var form_data = new FormData();
+
+            form_data.append('id_pp', $('#id_pp').val());
+            form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
+            form_data.append('hidden_no_po', $('#hidden_no_po').val());
+            form_data.append('hidden_grup', $('#hidden_grup').val());
+            form_data.append('txt_tgl_pp', $('#txt_tgl_pp').val());
+            form_data.append('txt_tgl_po', $('#txt_tgl_po').val());
+            form_data.append('txt_pembayaran', $('#txt_pembayaran').val());
+            form_data.append('kd_supplier', $('#kd_supplier').val());
+            form_data.append('txt_supplier', $('#txt_supplier').val());
+            form_data.append('txt_nilai_po', $('#txt_nilai_po').val());
+            form_data.append('hidden_kurs', $('#hidden_kurs').val());
+            form_data.append('txt_pajak', $('#txt_pajak').val());
+            form_data.append('txt_nilai_bpo1', $('#txt_nilai_bpo1').val());
+            form_data.append('txt_nilai_bpo2', $('#txt_nilai_bpo2').val());
+            form_data.append('txt_total_po', $('#txt_total_po').val());
+            form_data.append('txt_dibayar_ke', $('#txt_dibayar_ke').val());
+            form_data.append('txt_jumlah', $('#txt_jumlah').val());
+            form_data.append('txt_terbilang', $('#txt_terbilang').val());
+            form_data.append('txt_keterangan', $('#txt_keterangan').val());
+            form_data.append('txt_no_voucher', $('#txt_no_voucher').val());
+            form_data.append('txt_tgl_voucher', $('#txt_tgl_voucher').val());
+            form_data.append('txt_sudah_dibayar', $('#txt_sudah_dibayar').val());
+
+            // console.log(form_data);
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Pp/update_pp'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+                    $('#simpan_pp').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+                },
+                cache: false,
+                contentType: false,
+                processData: false,
+
+                data: form_data,
+                success: function(data) {
+                    console.log('status', data);
+                    if (data.status == true) {
+                        $('#a_pp_baru').show();
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Success',
+                            text: 'Berhasil Disimpan!',
+                            icon: 'success',
+                            loader: false
+                        });
+
+                        $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+                        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $('.spinner-border').css('display', 'none');
+                        $('#simpan_pp').hide();
+                        $('#cancelUpdate').hide();
+                        $('#update_pp').show();
+                        $('#id_pp').val(data.idpp);
+                        $('#txt_sudah_dibayar').val(data.sdh_bayar);
+                    }
+                },
+                error: function(request) {
+                    console.log('Error Save Data : ' + request.responseText);
+                }
+            });
+        }
+
+
+    }
+
+
+    function updateData() {
+        $('.div_form_1').find('#txt_pembayaran, #txt_pajak, #txt_nilai_bpo1, #txt_nilai_bpo2, #txt_tgl_pp, #txt_jumlah, #txt_keterangan, #txt_no_voucher').removeClass('bg-light');
+        $('.div_form_1').find('#txt_pembayaran, #txt_pajak, #txt_nilai_bpo1, #txt_nilai_bpo2, #txt_tgl_pp, #txt_jumlah, #txt_keterangan, #txt_no_voucher').removeAttr('disabled', '');
+        $('#cancelUpdate').show();
+        $('#simpan_pp').show();
+        $('#simpan_pp').removeAttr('disabled');
+        $('#update_pp').hide();
+    }
+
+    function cancelUpdate() {
 
         var form_data = new FormData();
-
-        form_data.append('hidden_id_po', $('#hidden_id_po').val());
-        form_data.append('hidden_no_pp', $('#hidden_no_pp').val());
-        form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
-        form_data.append('hidden_no_po', $('#hidden_no_po').val());
-        form_data.append('hidden_grup', $('#hidden_grup').val());
-        form_data.append('txt_tgl_pp', $('#txt_tgl_pp').val());
-        form_data.append('txt_tgl_po', $('#txt_tgl_po').val());
-        form_data.append('txt_pembayaran', $('#txt_pembayaran').val());
-        form_data.append('kd_supplier', $('#kd_supplier').val());
-        form_data.append('txt_supplier', $('#txt_supplier').val());
-        var total_po = $('#txt_nilai_po').val();
-        // var hasil = total_po.replace(/,/g, "");
-        form_data.append('txt_nilai_po', total_po);
-        form_data.append('hidden_kurs', $('#hidden_kurs').val());
-        form_data.append('txt_pajak', $('#txt_pajak').val());
-        form_data.append('txt_nilai_bpo1', $('#txt_nilai_bpo1').val());
-        form_data.append('txt_nilai_bpo2', $('#txt_nilai_bpo2').val());
-        form_data.append('txt_total_po', $('#txt_total_po').val());
-        form_data.append('txt_dibayar_ke', $('#txt_dibayar_ke').val());
-        form_data.append('txt_jumlah', $('#txt_jumlah').val());
-        form_data.append('txt_terbilang', $('#txt_terbilang').val());
-        form_data.append('txt_keterangan', $('#txt_keterangan').val());
-        form_data.append('hidden_main_account', $('#hidden_main_account').val());
-        form_data.append('hidden_nama_account', $('#hidden_nama_account').val());
-        form_data.append('txt_no_voucher', $('#txt_no_voucher').val());
-        form_data.append('txt_tgl_voucher', $('#txt_tgl_voucher').val());
+        form_data.append('id_pp', $('#id_pp').val());
 
         $.ajax({
             type: "POST",
-            url: "<?php echo site_url('Pp/simpan_pp'); ?>",
+            url: "<?php echo site_url('Pp/cancel_update_pp'); ?>",
             dataType: "JSON",
             beforeSend: function() {
-                $('#simpan_pp').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+                $('#cancelUpdate').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
             },
             cache: false,
             contentType: false,
@@ -549,31 +689,27 @@
 
             data: form_data,
             success: function(data) {
-                if (data.status == true) {
-                    $('#a_pp_baru').show();
-                    $.toast({
-                        position: 'top-right',
-                        heading: 'Success',
-                        text: 'Berhasil Disimpan!',
-                        icon: 'success',
-                        loader: false
-                    });
-
-                    setTimeout(function() {
-                        window.location.href = "<?php echo site_url('Pp'); ?>";
-                    }, 1000);
-                }
+                // console.log(data[0]);
+                $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+                $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                $('.spinner-border').css('display', 'none');
+                $('#simpan_pp').hide();
+                $('#cancelUpdate').hide();
+                $('#update_pp').show();
+                $('#id_pp').val(data[0].id);
+                $('#txt_pembayaran').val(data[0].bayar);
+                $('#txt_pajak').val(data[0].pajak);
+                $('#txt_nilai_bpo2').val(data[0].jumlah_bpo);
+                $('#txt_sudah_dibayar').val(data[0].kasir_bayar);
+                $('#txt_jumlah').val(data[0].jumlah);
+                $('#txt_keterangan').val(data[0].ket);
 
             },
             error: function(request) {
-                alert('Error Save Data : ' + request.responseText);
-
-
+                console.log('Error Save Data : ' + request.responseText);
             }
         });
     }
-
-
 
     function dataPO() {
         $('#tableDataPO').DataTable().destroy();
@@ -602,9 +738,9 @@
                 {
                     "width": "18%"
                 },
-                {
-                    "width": "3%"
-                },
+                // {
+                //     "width": "3%"
+                // },
                 {
                     "width": "8%"
                 },
@@ -704,6 +840,7 @@
                 nopo: nopo,
             },
             success: function(data) {
+                console.log(data.totalpo);
                 var id_po = data.po.id;
                 var tgl_po = data.tglpo;
                 var no_ref_po = data.po.noreftxt;
@@ -768,6 +905,7 @@
 
         $('#txt_total_po').val(total_po);
         $('#total_po').val(total_po);
+        console.log('total keseluruhan', pajak);
         $('#txt_jumlah').val(sisabayar);
         $('#jumlah').val(sisabayar);
 
