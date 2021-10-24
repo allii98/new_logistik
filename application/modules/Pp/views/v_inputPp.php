@@ -797,11 +797,12 @@
             var nilai_po = dataClick[7];
             var nilai_bpo = dataClick[8];
             var sudah_dibayar = dataClick[9];
-            var jumlah = dataClick[10];
+            var jumlah = dataClick[9];
             var kurs = dataClick[11];
 
             // $('#txt_tgl_po').val(tgl_po);
             // var tgl = tgl_po.replace("-", "/");
+            console.log('ini jumlahnya', jumlah);
             if (jumlah == "0,00") {
                 Swal.fire({
                     text: "Saldo sudah 0!",
