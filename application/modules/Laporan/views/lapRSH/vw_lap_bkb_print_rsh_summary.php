@@ -163,9 +163,9 @@
                               foreach ($result_sql as $rs) {
 
                                     if ($kode_dev == 'Semua') {
-                                          $q_sum = "SELECT tgl, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok WHERE tgl BETWEEN '$p1' AND '$p2' AND tgltxt = $rs->tgltxt AND kodebar='$ks->kodebar'";
+                                          $q_sum = "SELECT tgl, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND tgltxt = $rs->tgltxt AND kodebar='$ks->kodebar'";
                                     } else {
-                                          $q_sum = "SELECT tgl, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok WHERE tgl BETWEEN '$p1' AND '$p2' AND tgltxt = $rs->tgltxt AND kodebar='$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2')";
+                                          $q_sum = "SELECT tgl, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND tgltxt = $rs->tgltxt AND kodebar='$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2')";
                                     }
                                     $q_sum = $this->db_logistik_pt->query($q_sum)->result();
 

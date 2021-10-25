@@ -179,11 +179,13 @@
                     <?php
                     $no = 1;
                     $s_a =  $saldo['saldoakhir_qty'];
+                    $p1_frmt = date_format(date_create($p1), "Ymd");
+                    $p2_frmt = date_format(date_create($p2), "Ymd");
 
                     if ($kode_dev == 'Semua') {
-                        $q_stok = "SELECT * FROM register_stok WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' ORDER BY tgl ASC, ttgtxt ASC ";
+                        $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' ORDER BY tgl ASC, ttgtxt ASC ";
                     } else {
-                        $q_stok = "SELECT * FROM register_stok WHERE tgl BETWEEN '$p1' AND '$p2' AND kodebar = '$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, ttgtxt ASC ";
+                        $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, ttgtxt ASC ";
                     }
 
                     $q_stok = $this->db_logistik_pt->query($q_stok)->result();

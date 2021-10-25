@@ -23,7 +23,7 @@ class Setup extends CI_Controller
             $data = [
                   'tittle' => 'Data Supplier',
             ];
-            $this->template->load('template', 'v_Supplier', $data);
+            $this->template->load('template', 'v_supplier', $data);
       }
 
       //Start Data Table Server Side
