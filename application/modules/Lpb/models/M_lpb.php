@@ -122,7 +122,7 @@ class M_lpb extends CI_Model
         $kode_dev = $this->session->userdata('kode_dev');
 
         $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli, tglppo, no_refppo, kd_dept, ket_dept, devisi, kode_dev');
-        $this->db_logistik_pt->where(['noreftxt' => $noref, 'kode_dev' => $kode_dev]);
+        $this->db_logistik_pt->where(['noreftxt' => $noref]);
         $this->db_logistik_pt->from('po');
         $data_po = $this->db_logistik_pt->get()->row_array();
 
@@ -167,7 +167,7 @@ class M_lpb extends CI_Model
 
         $noref = $this->input->get('noref');
         if ($lokasi != 'HO') {
-            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' AND kirim = 1 AND kode_dev = $kode_dev ORDER BY id DESC";
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' AND kirim = 1 ORDER BY id DESC";
         } else {
             $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' ORDER BY id DESC";
         }

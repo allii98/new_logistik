@@ -1551,6 +1551,10 @@
                                 <input type="radio" value="non_saldo" id="rbt_non_saldo" name="rbt_pilihan9">
                                 <label for="rbt_non_saldo">Non Saldo </label>
                             </div>
+                            <div class="radio radio-info form-check-inline">
+                                <input type="radio" value="nilai_rupiah" id="rbt_nilai_rupiah_rsh" name="rbt_pilihan9">
+                                <label for="rbt_nilai_rupiah_rsh">Nilai Rupiah </label>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -2490,6 +2494,8 @@
                 window.open('<?= site_url("Laporan/print_lap_rsh_summary"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
             } else if (rbt_pilihan9 == 'non_saldo') {
                 window.open('<?= site_url("Laporan/print_lap_rsh_non_saldo"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
+            } else if (rbt_pilihan9 == 'nilai_rupiah') {
+                window.open('<?= site_url("Laporan/print_lap_rsh_nilai_rupiah"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
             }
             console.log(cmb_devisi5, kode_stok, cmb_group_brg, rbt_pilihan9);
         }

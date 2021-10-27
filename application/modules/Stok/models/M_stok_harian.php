@@ -6,8 +6,8 @@ class M_stok_harian extends CI_Model
 {
 
     var $table = 'stockawal_harian'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok', 'periode', 'txtperiode', 'devisi', 'nilai_masuk'); //field yang ada di table supplier  
-    var $column_search = array('id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok', 'periode', 'txtperiode', 'devisi', 'nilai_masuk'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok', 'periode', 'txtperiode', 'devisi', 'nilai_masuk', 'nilai_keluar'); //field yang ada di table supplier  
+    var $column_search = array('id', 'kodebartxt', 'nabar', 'satuan', 'grp', 'saldoawal_qty', 'QTY_MASUK', 'QTY_KELUAR', 'saldoawal_nilai', 'saldoakhir_qty', 'saldoakhir_nilai', 'ket', 'minstok', 'periode', 'txtperiode', 'devisi', 'nilai_masuk', 'nilai_keluar'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
     public function __construct()

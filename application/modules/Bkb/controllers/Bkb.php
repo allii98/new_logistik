@@ -166,12 +166,16 @@ class Bkb extends CI_Controller
         // mengembalikan stock awal bulanan
         $update_stockawal_bulanan_devisi_edit = $this->M_bkb->update_stockawal_bulanan_devisi_edit($get_data_keluarbrgitem);
 
+        // mengembalikan stock awal harian
+        $update_stockawal_harian = $this->M_bkb->update_stockawal_harian_delete($get_data_keluarbrgitem);
+
         // mengembalikan stock awal
         $update_stockawal_edit = $this->M_bkb->update_stockawal_edit($get_data_keluarbrgitem);
 
         $data_return = [
             'update_stockawal_bulanan_devisi_edit' => $update_stockawal_bulanan_devisi_edit,
             'update_stockawal_edit' => $update_stockawal_edit,
+            'update_stockawal_harian' => $update_stockawal_harian,
         ];
 
         echo json_encode($data_return);
@@ -433,6 +437,7 @@ class Bkb extends CI_Controller
         $grup_brg = $this->input->post('hidden_grup_barang');
 
         $kode_dev = $this->input->post('kode_dev');
+        $devisi = $this->input->post('devisi');
 
         $kode_devisi_mutasi = $this->input->post('kode_devisi_mutasi');
 
@@ -646,8 +651,12 @@ class Bkb extends CI_Controller
             // update stockawal_bulanan_devisi
             $result_update_stockawal_bulanan_devisi = $this->M_bkb->update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev);
 
+            // insert/update stockawal_harian
+            $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $satuan, $grup_brg, $qty2, $devisi, $kode_dev, $periode1, $txtperiode);
+
             //update stokawal
-            $result_update_qtykeluar = $this->M_bkb->update_stockawal($kodebar, $qty2, $txtperiode);
+            $result_update_qtykeluar = $this->update_stok_awal($kodebar, $txtperiode);
+            // $result_update_qtykeluar = $this->M_bkb->update_stockawal($kodebar, $qty2, $txtperiode);
 
             $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
             $generate_id = $this->db_logistik_pt->query($query_id)->row();
@@ -681,6 +690,7 @@ class Bkb extends CI_Controller
                 'result_update_qtykeluar' => $result_update_qtykeluar,
                 'savedatastockkeluar_mutasi' => $savedatastockkeluar_mutasi,
                 'savedatakeluarbrgitem_mutasi' => $savedatakeluarbrgitem_mutasi,
+                'result_insert_stok_awal_harian' => $result_insert_stok_awal_harian,
                 'saveregisterstok' => $saveregisterstok,
                 'no_bkb' => $skb,
                 'noref_bkb' => $no_ref,
@@ -694,6 +704,77 @@ class Bkb extends CI_Controller
 
             echo json_encode($data);
         }
+    }
+
+    function insert_stok_awal_harian($kodebar, $nabar, $satuan, $grup_brg, $qty2, $devisi, $kode_dev, $tgl, $txtperiode)
+    {
+
+        $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);
+
+        $data_insert_stok_harian = [
+            'pt' => $this->session->userdata('pt'),
+            'KODE' => $this->session->userdata('kode_pt'),
+            'devisi' => $devisi,
+            'kode_dev' => $kode_dev,
+            'afd' => '-',
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'nabar' => $nabar,
+            'satuan' => $satuan,
+            'grp' => $grup_brg,
+            'saldoawal_qty' => 0,
+            'saldoawal_nilai' => 0,
+            'tglinput' => date("Y-m-d H:i:s"),
+            'thn' => date("Y"),
+            'saldoakhir_qty' => $qty2,
+            'saldoakhir_nilai' => $nilai_keluarbrgitem,
+            'nilai_keluar' => $nilai_keluarbrgitem,
+            'QTY_KELUAR' => $qty2,
+            'periode' => $tgl,
+            'txtperiode' => $txtperiode,
+            'ket' => '-',
+            'account' => '-',
+            'ket_account' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s")
+        ];
+
+        $cek_stokawal_harian = $this->M_bkb->cek_stokawal_harian($kodebar, $tgl, $kode_dev);
+
+        if ($cek_stokawal_harian >= 1) {
+            //update stok awal harian
+            return $this->M_bkb->update_stockawal_harian($kodebar, $qty2, $kode_dev, $tgl, $txtperiode);
+        } else {
+            //insert stok awal harian
+            return $this->M_bkb->saveStokAwalHarian($data_insert_stok_harian);
+        }
+    }
+
+    function update_stok_awal($kodebar, $txtperiode)
+    {
+
+        //saldoakhir_nilai
+        $sum_harga_kodebar = $this->M_bkb->sum_harga_kodebar_harian($kodebar, $txtperiode);
+
+        //saldo akhir qty
+        $sum_saldo_qty_kodebar = $this->M_bkb->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
+
+        //nilai_masuk
+        $sum_nilai_keluar = $this->M_bkb->sum_nilai_keluar_harian($kodebar, $txtperiode);
+
+        //qty masuk
+        $sum_qty_kodebar = $this->M_bkb->sum_qty_kodebar_harian($kodebar, $txtperiode);
+
+        $data_update = [
+            'saldoakhir_nilai' => $sum_harga_kodebar,
+
+            'saldoakhir_qty' => $sum_saldo_qty_kodebar,
+
+            'nilai_keluar' => $sum_nilai_keluar->nilai_keluar_harian,
+
+            'QTY_KELUAR' => $sum_qty_kodebar->qty_keluar
+        ];
+
+        return $this->M_bkb->updateStokAwal($data_update, $kodebar, $txtperiode);
     }
 
     function cetak()
