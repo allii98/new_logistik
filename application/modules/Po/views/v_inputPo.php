@@ -198,11 +198,19 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                             </option>
                                             <option value="RO">RO
                                             </option>
+                                            <option value="PKS">PKS
+                                            </option>
                                             <option value="SITE">KEBUN
                                             </option>
-                                        <?php } else { ?>
-                                            <option value="RO">RO
+                                        <?php } else if ($this->session->userdata('status_lokasi') == 'RO') { ?>
+                                            <option selected="selected" value="RO">RO
                                             </option>
+                                        <?php } else if ($this->session->userdata('status_lokasi') == 'PKS') { ?>
+                                            <option selected="selected" value="PKS">PKS
+                                            </option>
+
+                                        <?php } else { ?>
+
                                             <option selected="selected" value="SITE">KEBUN
                                             </option>
                                         <?php } ?>
@@ -335,7 +343,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             switch ($lokasi_sesi) {
                                 case 'HO':
                             ?>
-                                    <div class="form-group row" style="margin-bottom: 1px;">
+                                    <div class="form-group row kirim_kebun" style="margin-bottom: 1px;">
                                         <label for="cmb_dikirim_ke_kebun" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                             Kirim&nbsp;Kebun?
                                             <!-- <font face="Verdana" size="1.5">Kirim&nbsp;Kebun?</font> -->
@@ -1043,6 +1051,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     var kode = data.kodetxt;
                     $('#hidden_devisi').val(pt);
                     $('#hidden_kode_devisi').val(kode);
+                    cek_devisi(pt, kode);
 
                 },
                 error: function(request) {
@@ -1411,6 +1420,15 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     });
 
+    function cek_devisi(pt, kode) {
+        if (kode != '01') {
+            $("div.kirim_kebun select").val("Y").change();
+        } else {
+            $("div.kirim_kebun select").val("N").change();
+
+        }
+    }
+
     function sisaQtyPO(no_ref_spp, id_item_spp, n) {
         console.log('sisa qty no ' + n);
         $.ajax({
@@ -1529,6 +1547,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "infoFiltered": ""
             }
         });
+
     }
 
     function cetak() {
@@ -1643,31 +1662,31 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             '</td>';
 
-        if (kodebar == '102505700000002') {
+        // if (kodebar == '102505700000002') {
 
-            var td_col_9 = '<td width="10%"  style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="number" class="form-control form-control-sm" id="txt_ongkir_' + row + '" name="txt_ongkir_' + row + '" value="0" onkeyup="jumlah(' + row + ')" placeholder="Ongkir" />' +
+        //     var td_col_9 = '<td width="10%"  style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        //         '<input type="number" class="form-control form-control-sm" id="txt_ongkir_' + row + '" name="txt_ongkir_' + row + '" value="0" onkeyup="jumlah(' + row + ')" placeholder="Ongkir" />' +
 
-                '</td>';
-            gantiTabelSite(row);
+        //         '</td>';
+        //     gantiTabelSite(row);
 
-        } else {
+        // } else {
 
-            var td_col_9 = '<td width="8%"  style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
-                '</td>';
-        }
+        var td_col_9 = '<td width="8%"  style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
+            '</td>';
+        // }
 
-        if (kodebar == '102505700000002') {
-            var td_col_10 = '<td width="10%" style="display: none;" id="txt_ketbiaya_' + row + '" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<textarea maxlength="250" class="form-control form-control-sm"   id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
-                '</td>';
-        } else {
-            var td_col_10 = '<td width="10%" id="txt_ketbiaya_' + row + '" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-                '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
-                '</td>';
+        // if (kodebar == '102505700000002') {
+        //     var td_col_10 = '<td width="10%" style="display: none;" id="txt_ketbiaya_' + row + '" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        //         '<textarea maxlength="250" class="form-control form-control-sm"   id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
+        //         '</td>';
+        // } else {
+        var td_col_10 = '<td width="10%" id="txt_ketbiaya_' + row + '" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+            '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" rows="3"></textarea><br />' +
+            '</td>';
 
-        }
+        // }
         var td_col_11 = '<td width="15%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea maxlength="250" class="form-control form-control-sm" id="txt_keterangan_rinci_' + row + '" name="txt_keterangan_rinci_' + row + '" size="20" placeholder="Keterangan" rows="3"></textarea>' +
             // '<h6>Jumlah : <span id="hasil_jumlah_' + row + '"></span></h6>' +
@@ -2102,7 +2121,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 no_ref_po: $('#hidden_no_ref_po').val(),
                 ppn: $('#ppn').val(),
                 pph: $('#pph').val(),
-                kodebar: $('#hidden_kode_brg_' + id).val()
+                kodebar: $('#hidden_kode_brg_' + id).val(),
+                lokasi: $('#status_lokasi').val()
             },
             success: function(data) {
                 // console.log(data);
@@ -2210,8 +2230,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
         var kodebar = $('#hidden_kode_brg_' + id).val();
+        var lokasi = $('#status_lokasi').val();
 
-        if (kodebar == '102505700000002') {
+        if (kodebar == '102505700000002' && lokasi == 'HO') {
             hitungsolar(id);
         } else {
             if (diskon == '') {
@@ -2292,55 +2313,60 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var diskon = $('#txt_disc_' + id).val();
         var ongkir = $('#txt_ongkir_' + id).val();
 
-        //menghitung harga dasar, ongkir + ppn 10%
-        if (ppn == 10) {
-            // var jml_ppn = ppn / 100;
-            // var total_ppn = qty_harga * jml_ppn;
-            var total_ppn = 0;
-        } else {
-            var total_ppn = 0;
-        }
-        var jml_ppn = ppn / 100;
-        //harga dasar pluss ppn 10%
-        var hargaPpn = parseFloat(harga) * parseFloat(jml_ppn);
-        var hargaDasarPlusPPN = parseFloat(harga) + parseFloat(hargaPpn);
+        var hargaDisc = (parseFloat(harga) * parseFloat(diskon)) / 100;
+        var hargaSetelahDisc = parseFloat(harga) - parseFloat(hargaDisc);
 
-        //ongkir pluss ppn 10%
-        var ongkirPpn = parseFloat(ongkir) * parseFloat(jml_ppn);
-        var ongkirPlusPPN = parseFloat(ongkir) + parseFloat(ongkirPpn);
+        var hargaPlusOngkir = hargaSetelahDisc + parseFloat(ongkir);
 
-        //untuk pph diambi dari harga dasar 
-        if (pph != 0) {
-            // var jml_pph = pph / 100;
-            // var total_pph = qty_harga * jml_pph;
-            var total_pph = pph;
-        } else {
-            var total_pph = 0;
-        }
+        var nilai = parseFloat(hargaPlusOngkir) * parseFloat(qty);
+        var jum = nilai.toFixed(2);
 
-        var pph_tot = total_pph / 100;
-        var hargadasarpph = parseFloat(harga) * parseFloat(pph_tot);
-
-        //menjumlahkan harga+ppn ongkir+ppn harga+pph
-        var totalsolar = hargaDasarPlusPPN + ongkirPlusPPN + hargadasarpph;
-        //total solar yg sudah dijumlah x qty
-        var totsolarXqty = parseFloat(totalsolar) * parseFloat(qty);
-        //dikurangi diskon
-        if (diskon == '') {
-            var disc = 0;
-        } else {
-            var disc = $('#txt_disc_' + id).val();
-        }
-
-        var hargaDisc = (parseFloat(totsolarXqty) * parseFloat(disc)) / 100;
-        var hargaSetelahDisc = parseFloat(totsolarXqty) - parseFloat(hargaDisc);
-
-        var jum = hargaSetelahDisc.toFixed(2);
         $('#txt_jumlah_' + id).val(jum);
+
         $('#jumlah_' + id).val(jum);
         $('#hasil_jumlah_' + id).html(jum);
         $('#hasil_jumlah_' + id).number(true, 2);
         $('#jumlah_' + id).number(true, 2);
+
+        // var hargaPpn = parseFloat(harga) * parseFloat(jml_ppn);
+        // var hargaDasarPlusPPN = parseFloat(harga) + parseFloat(hargaPpn);
+
+        // //ongkir pluss ppn 10%
+        // var ongkirPpn = parseFloat(ongkir) * parseFloat(jml_ppn);
+        // var ongkirPlusPPN = parseFloat(ongkir) + parseFloat(ongkirPpn);
+
+        // //untuk pph diambi dari harga dasar 
+        // if (pph != 0) {
+        //     // var jml_pph = pph / 100;
+        //     // var total_pph = qty_harga * jml_pph;
+        //     var total_pph = pph;
+        // } else {
+        //     var total_pph = 0;
+        // }
+
+        // var pph_tot = total_pph / 100;
+        // var hargadasarpph = parseFloat(harga) * parseFloat(pph_tot);
+
+        // //menjumlahkan harga+ppn ongkir+ppn harga+pph
+        // var totalsolar = hargaDasarPlusPPN + ongkirPlusPPN + hargadasarpph;
+        // //total solar yg sudah dijumlah x qty
+        // var totsolarXqty = parseFloat(totalsolar) * parseFloat(qty);
+        // //dikurangi diskon
+        // if (diskon == '') {
+        //     var disc = 0;
+        // } else {
+        //     var disc = $('#txt_disc_' + id).val();
+        // }
+
+        // var hargaDisc = (parseFloat(totsolarXqty) * parseFloat(disc)) / 100;
+        // var hargaSetelahDisc = parseFloat(totsolarXqty) - parseFloat(hargaDisc);
+
+        // var jum = hargaSetelahDisc.toFixed(2);
+        // $('#txt_jumlah_' + id).val(jum);
+        // $('#jumlah_' + id).val(jum);
+        // $('#hasil_jumlah_' + id).html(jum);
+        // $('#hasil_jumlah_' + id).number(true, 2);
+        // $('#jumlah_' + id).number(true, 2);
     }
 
 
@@ -2401,6 +2427,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function simpan(id) {
         if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
             var biaya = $('#txt_biaya_lain_' + id).val();
+        } else if ($('#hidden_kode_brg_' + id).val() == '102505700000002' && $('#status_lokasi').val() != 'HO') {
+            var biaya = $('#txt_biaya_lain_' + id).val();
+
         } else {
             var biaya = $('#txt_ongkir_' + id).val();
         }
@@ -2730,6 +2759,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     function update(id) {
         if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
             var biaya = $('#txt_biaya_lain_' + id).val();
+        } else if ($('#hidden_kode_brg_' + id).val() == '102505700000002' && $('#status_lokasi').val() != 'HO') {
+            var biaya = $('#txt_biaya_lain_' + id).val();
+
         } else {
             var biaya = $('#txt_ongkir_' + id).val();
         }
@@ -2870,6 +2902,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // console.log('cancelke' + id);
         if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
             var biaya = $('#txt_biaya_lain_' + id).val();
+        } else if ($('#hidden_kode_brg_' + id).val() == '102505700000002' && $('#status_lokasi').val() != 'HO') {
+            var biaya = $('#txt_biaya_lain_' + id).val();
+
         } else {
             var biaya = $('#txt_ongkir_' + id).val();
         }
@@ -2905,9 +2940,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#txt_qty_' + id).val(item.qty);
                     $('#txt_harga_' + id).val(item.harga);
                     $('#txt_disc_' + id).val(item.disc);
+
                     if (kodebar != '102505700000002') {
                         $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
                         $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
+                    } else if (kodebar == '102505700000002' && $('#status_lokasi').val() != 'HO') {
+                        $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
+                        $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
+
                     } else {
                         $('#txt_ongkir_' + id).val(item.JUMLAHBPO);
                     }
@@ -2981,7 +3021,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $('#txt_qty_' + id).val(item.qty);
                     $('#txt_harga_' + id).val(item.harga);
                     $('#txt_disc_' + id).val(item.disc);
+
                     if (kodebar != '102505700000002') {
+                        $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
+                        $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
+                    } else if (kodebar == '102505700000002' && $('#status_lokasi').val() != 'HO') {
                         $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
                         $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
                     } else {
@@ -3217,6 +3261,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         if ($('#hidden_kode_brg_' + id).val() != '102505700000002') {
             var biayalain = $('#txt_biaya_lain_' + id).val();
             var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
+        } else if ($('#hidden_kode_brg_' + id).val() == '102505700000002' && $('#status_lokasi').val() != 'HO') {
+            var biayalain = $('#txt_biaya_lain_' + id).val();
+            var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val();
+
         } else {
             var biayalain = $('#txt_ongkir_' + id).val();
             var ketBiaya = $('#txt_keterangan_biaya_lain_' + id).val("ONGKIR");

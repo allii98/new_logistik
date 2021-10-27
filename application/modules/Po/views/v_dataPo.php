@@ -13,10 +13,10 @@
 								</div>
 								<div class="col-10">
 									<select class="form-control form-control-sm" id="filter" name="filter">
-										<option value="SEMUA">TAMPILKAN SEMUA</option>
-										<option value="HO" selected>HO</option>
+										<option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+										<option value="HO">HO</option>
 										<option value="PKS">PKS</option>
-										<option value="SITE">SITE</option>
+										<option value="SITE">KEBUN</option>
 										<option value="RO">RO</option>
 									</select>
 								</div>
@@ -115,9 +115,13 @@
 	// $(document).ready(function() {
 	// 	$('#tableListPO').DataTable();
 	// });
+	// $(function() {
+	// 	$("#tableListPO [type='search']").attr('autofocus');
+	// });
+
 
 	$(document).ready(function() {
-
+		// filter();
 		$(document).on('click', '#detail', function() {
 			var id = $(this).data('id');
 			detailPO(id);
@@ -138,14 +142,14 @@
 		});
 
 		//datatables
-		var data = "HO";
+		var data = "SEMUA";
 		dataPO(data);
 	});
 
 	function filter() {
 		$('#filter').change(function() {
 			var data = this.value;
-			console.log(data);
+			console.log('ini data nya', data);
 			dataPO(data);
 
 		});

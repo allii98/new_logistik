@@ -6,7 +6,7 @@ class M_pp extends CI_Model
 {
 
     var $table = 'po'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'tglpo', 'nopotxt', 'noreftxt', 'kode_supply', 'nama_supply', 'totalbayar', 'bayar', 'grup', 'terbayar', 'ppn'); //field yang ada di table supplier  
+    var $column_order = array(null, 'id', 'tglpo', 'nopotxt', 'noreftxt', 'kode_supply', 'nama_supply', 'totalbayar', 'bayar', 'grup', 'terbayar', 'ppn', 'jenis_spp'); //field yang ada di table supplier  
     var $column_search = array('noreftxt', 'nopotxt', 'nama_supply', 'tglpo'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 
@@ -346,7 +346,7 @@ class M_pp extends CI_Model
 
 
             if ($bool_pp === TRUE && $bool_pp_history === TRUE) {
-                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar);
+                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp);
             } else {
                 return FALSE;
             }
@@ -394,7 +394,7 @@ class M_pp extends CI_Model
             $sdh_bayar = $get_jumlah_sudah_bayar->jumlah;
 
             if ($bool_pp_history === TRUE && $bool_pp === TRUE) {
-                return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar);
+                return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp);
             } else {
                 return FALSE;
             }

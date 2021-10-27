@@ -141,11 +141,11 @@
                                 </label>
                                 <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm" id="cmb_status_bayar" name="cmb_status_bayar">
-                                        <option value="Cash">
-                                            <font face="Verdana" size="1.5">Cash</font>
+                                        <option <?= $select->bayar == "Cash" ? "selected" : "" ?> value="Cash">
+                                            Cash
                                         </option>
-                                        <option value="Kredit">
-                                            <font face="Verdana" size="1.5">Kredit</font>
+                                        <option <?= $select->bayar == "Kredit" ? "selected" : "" ?> value="Kredit">
+                                            Kredit
                                         </option>
                                     </select>
                                 </div>
@@ -198,15 +198,21 @@
                                         <option disabled>-Pilih-
                                         </option>
                                         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
-                                            <option value="HO">HO
+                                            <option <?= $select->lokasi_beli == "HO" ? "selected" : "" ?> value="HO">HO
                                             </option>
-                                            <option value="RO">RO
+                                            <option <?= $select->lokasi_beli == "RO" ? "selected" : "" ?> value="RO">RO
                                             </option>
-                                            <option value="SITE">KEBUN
+                                            <option <?= $select->lokasi_beli == "PKS" ? "selected" : "" ?> value="PKS">PKS
+                                            </option>
+                                            <option <?= $select->lokasi_beli == "SITE" ? "selected" : "" ?> value="SITE">KEBUN
+                                            </option>
+                                        <?php } else if ($this->session->userdata('status_lokasi') == 'RO') { ?>
+                                            <option selected="selected" value="RO">RO
+                                            </option>
+                                        <?php } else if ($this->session->userdata('status_lokasi') == 'PKS') { ?>
+                                            <option selected="selected" value="PKS">PKS
                                             </option>
                                         <?php } else { ?>
-                                            <option value="RO">RO
-                                            </option>
                                             <option selected="selected" value="SITE">KEBUN
                                             </option>
                                         <?php } ?>
@@ -250,7 +256,7 @@
                                                 <option selected disabled>Pilih</option>
                                                 <?php
                                                 foreach ($devisi as $d) : { ?>
-                                                        <option value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
+                                                        <option <?= $d['kodetxt'] == $select->kode_dev ? "selected" : "" ?> value="<?= $d['kodetxt'] ?>"><?= $d['PT'] ?></option>
                                                 <?php }
                                                 endforeach;
                                                 ?>
@@ -302,12 +308,17 @@
 
                             <div class="form-group row" style="margin-bottom: 1px;">
                                 <label for="pph" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    PPH*
+                                    PPH
                                     <!-- <font face="Verdana" size="1.5">PPH*</font> -->
                                 </label>
-                                <div class="col-9 col-xl-12">
-                                    <input type="number" class="form-control form-control-sm" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah()" autocomplite="off" value="0" required>
+                                <div class="col-4 col-xl-12">
+                                    <input type="number" class="form-control form-control-sm" id="pph" name="pph" placeholder="PPH" onkeyup="jumlah('1')" autocomplite="off" value="0" required>
                                 </div>
+                                <label for="tmpo_pengiriman" class="col-lg-3 col-xl-3 col-form-label" style="margin-left: -11px;margin-top: -3px; font-size: 14px;">
+                                    <b>%</b>
+                                </label>
+
+
                             </div>
                             <div class="form-group row" style="margin-bottom: 1px;">
                                 <label for="ppn" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
@@ -316,8 +327,8 @@
                                 </label>
                                 <div class="col-9 col-xl-12">
                                     <select class="form-control form-control-sm" id="ppn" name="ppn" required>
-                                        <option value="0">N</option>
-                                        <option value="10">Y</option>
+                                        <option <?= $select->ppn == '0' ? "selected" : "" ?> value="0">N</option>
+                                        <option <?= $select->ppn == '10' ? "selected" : "" ?> value="10">Y</option>
                                     </select>
                                 </div>
                             </div>
@@ -341,8 +352,8 @@
                                         </label>
                                         <div class="col-9 col-xl-12">
                                             <select class="form-control form-control-sm" id="cmb_dikirim_ke_kebun" name="cmb_dikirim_ke_kebun" required>
-                                                <option value="Y" selected>Y</option>
-                                                <option value="N">N</option>
+                                                <option <?= $select->kirim == '1' ? "selected" : "" ?> value="Y">Y</option>
+                                                <option <?= $select->kirim == '0' ? "selected" : "" ?> value="N">N</option>
                                             </select>
                                         </div>
                                     </div>
@@ -440,9 +451,10 @@
                                                     Disc <span>%</span>
                                                 </th>
                                                 <th>
-                                                    Biaya Lainnya
+                                                    <span id="biayalain">Biaya&nbsp;Lainnya</span>
+                                                    <span id="ongkir" style="display: none;">Ongkir</span>
                                                 </th>
-                                                <th>
+                                                <th id="ketbiaya">
                                                     Ket.&nbsp;Biaya
                                                 </th>
 
@@ -834,6 +846,30 @@
                 break;
             }
         }
+    }
+
+    function gantiTabel() {
+        // if (kodebar != '102505700000002') {
+        //     data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
+        // } else {
+        // }
+        $('#biayalain').hide();
+        $('#txt_biaya_lain_0').hide();
+        $('#txt_keterangan_biaya_lain_0').hide();
+        $('#ketbiaya').hide();
+        $('#txt_ketbiaya_0').hide();
+
+        $('#ongkir').css('display', 'block');
+        $('#txt_ongkir_0').css('display', 'block');
+        if ($('#status_lokasi').val() != 'HO') {
+            console.log("BUKAN HO");
+        } else {
+            $('#btn_tambah_row_0').attr('disabled', '');
+            $('#getspp1').attr('disabled', '');
+        }
+
+
+        $("div.ppn select").val("10").change();
     }
 
     $(document).ready(function() {
@@ -1539,6 +1575,9 @@
     }
 
 
+
+
+
     $(document).on('click', '#data_spp', function() {
         var id = $(this).data('id');
         var noreftxt = $(this).data('noreftxt');
@@ -2108,21 +2147,21 @@
 
                 cekJenis(data.po.jenis_spp);
                 selectedsupply(data.po.kode_supply, data.po.nama_supply);
-                selectedsdhbayar(data.po.bayar);
+                // selectedsdhbayar(data.po.bayar);
                 $('#tmpo_pembayaran').val(data.po.tempo_bayar);
                 $('#tmpo_pengiriman').val(data.po.tempo_kirim);
                 $('#lks_pengiriman').val(data.po.lokasikirim);
-                selectedlokbeli(data.po.lokasi_beli);
+                // selectedlokbeli(data.po.lokasi_beli);
                 $('#no_penawaran').val(data.po.ket_acc);
                 $('#txt_pemesan').val(data.po.user);
                 $('#hidden_devisi').val(data.po.devisi);
                 $('#hidden_kode_devisi').val(data.po.kode_dev);
-                selecteddevisi(data.po.kode_dev, data.po.devisi);
+                // selecteddevisi(data.po.kode_dev, data.po.devisi);
                 $('#ket_pengiriman').val(data.po.ket_kirim);
                 $('#pph').val(data.po.pph);
-                selectedppn(data.po.ppn);
+                // selectedppn(data.po.ppn);
                 $('#keterangan').val(data.po.ket);
-                selectedkirim(data.po.kirim);
+                // selectedkirim(data.po.kirim);
                 $('#ttl_pembayaran').val(data.po.totalbayar);
                 $('#total_pembayaran').val(data.po.totalbayar);
                 $('#total_pembayaran').number(true, 2);
@@ -2173,6 +2212,15 @@
                     var sat = item_po[i].sat;
                     var norefppo = item_po[i].refppo;
 
+                    if (kodebar == '102505700000002' && data.po.lokasi == 'HO') {
+                        gantiTabel();
+                        console.log("solar");
+                        $('#txt_ongkir_' + i).val(jml_bpo);
+                    } else {
+                        $('#txt_biaya_lain_' + i).val(jml_bpo);
+                        console.log("bukan solar");
+                    }
+
                     // Set data
 
                     $('#getspp' + i).val(refppo);
@@ -2190,7 +2238,6 @@
                     $('#txt_merk_' + i).val(merk);
                     $('#cmb_kurs_' + i).val(kurs);
                     $('#txt_disc_' + i).val(disc);
-                    $('#txt_biaya_lain_' + i).val(jml_bpo);
                     $('#txt_keterangan_biaya_lain_' + i).val(nama_bebanbpo);
                     $('#txt_harga_' + i).val(harga);
                     $('#txt_jumlah_' + i).val(jumharga);
@@ -2229,10 +2276,10 @@
                     $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
 
 
-                    $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #jumlah_' + i + ',#txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
-                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #jumlah_' + i + ', #txt_jumlah_' + i + ',  #txt_keterangan_rinci_' + i).addClass('bg-light');
-                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
-                    $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
+                    $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ',#txt_ongkir_' + i + ', #jumlah_' + i + ',#txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).addClass('bg-light');
+                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ',#txt_ongkir_' + i + ', #jumlah_' + i + ', #txt_jumlah_' + i + ',  #txt_keterangan_rinci_' + i).addClass('bg-light');
+                    $('.div_form_3').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_ongkir_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
+                    $('.div_form_2').find('#getspp' + i + ',#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ' ,#txt_harga_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ', #txt_qty_' + i + ', #txt_biaya_lain_' + i + ', #txt_ongkir_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).attr('disabled', '');
                 }
                 totalBayar();
             },
@@ -2259,8 +2306,14 @@
                     id_po_item: $('#hidden_id_po_item_' + id).val(),
                 },
                 success: function(data) {
-                    console.log(data);
-                    // var po = data.data_po;
+                    // console.log(data);
+                    var po = data.data_po;
+                    //header
+                    // var tgl = new Date(po.tglpo);
+                    // console.log(tgl);
+                    $('#tgl_po').val(po.tglpo);
+                    //end header
+
                     var item = data.data_item_po;
 
                     $('#cmb_jenis_budget_' + id).val(item.grup);
@@ -2269,6 +2322,7 @@
                     $('#txt_qty_' + id).val(item.qty);
                     $('#txt_disc_' + id).val(item.disc);
                     $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
+                    $('#txt_ongkir_' + id).val(item.JUMLAHBPO);
                     $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
                     $('#txt_keterangan_rinci_' + id).val(item.ket);
 
@@ -2318,30 +2372,39 @@
                     $('#lbl_status_simpan_' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Cancel Update</label>');
                 },
                 data: {
-                    id_po: $('#hidden_no_ref_po_').val(),
+                    id_po: $('#hidden_no_ref_po_' + id).val(),
                     id_po_item: $('#hidden_id_po_item_' + id).val(),
                 },
                 success: function(data) {
+                    console.log(data);
                     // var po = data.data_po;
                     var item = data.data_item_po;
 
                     $('#cmb_jenis_budget_' + id).val(item.grup);
                     $('#txt_merk_' + id).val(item.merek);
                     $('#txt_harga_' + id).val(item.harga);
+                    $('#txt_qty_' + id).val(item.qty);
                     $('#txt_disc_' + id).val(item.disc);
                     $('#txt_biaya_lain_' + id).val(item.JUMLAHBPO);
+                    $('#txt_ongkir_' + id).val(item.JUMLAHBPO);
                     $('#txt_keterangan_biaya_lain_' + id).val(item.nama_bebanbpo);
                     $('#txt_keterangan_rinci_' + id).val(item.ket);
 
                     $('#btn_ubah_' + id).show();
                     $('#btn_update_' + id).hide();
                     $('#btn_cancel_update_' + id).hide();
+                    $('#lbl_status_simpan_' + id).empty();
+                    $('#btn_hapus_' + id).show();
+
+
+                    $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').addClass('form-control bg-light');
+                    $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').attr('disabled', '');
+
 
                     $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                     $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');
 
-                    $('#lbl_status_simpan_' + id).empty();
-                    $('#btn_hapus_' + id).show();
+
                     $.toast({
                         position: 'top-right',
                         heading: 'Success',
@@ -2467,7 +2530,7 @@
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + row + '" name="txt_biaya_lain_' + row + '" size="15" value="0" onkeyup="jumlah(' + row + ')" placeholder="Biaya Lain"/>' +
             '</td>';
-        var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_10 = '<td id="txt_ketbiaya_' + row + '" width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea class="form-control form-control-sm" id="txt_keterangan_biaya_lain_' + row + '" name="txt_keterangan_biaya_lain_' + row + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + row + ')" rows="3"></textarea><br />' +
             '</td>'
         var td_col_11 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -2690,9 +2753,9 @@
             '</td>';
         var td_col_9 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
-
+            '<input type="number" class="form-control form-control-sm" style="display: none;" id="txt_ongkir_' + n + '" name="txt_ongkir_' + n + '" value="0" onkeyup="jumlah(' + n + ')" placeholder="Ongkir" />' +
             '</td>';
-        var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_10 = '<td id="txt_ketbiaya_' + n + '" width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea rows="3" class="resizable_textarea form-control form-control-sm" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
 
             '</td>'
@@ -2820,7 +2883,7 @@
             '<input type="number" class="form-control form-control-sm" id="txt_biaya_lain_' + n + '" name="txt_biaya_lain_' + n + '" size="15" value="0" onkeyup="jumlah(' + n + ')" placeholder="Biaya Lain"/>' +
 
             '</td>';
-        var td_col_10 = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
+        var td_col_10 = '<td id="txt_ketbiaya_' + n + '" width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<textarea rows="3" class="resizable_textarea form-control form-control-sm" id="txt_keterangan_biaya_lain_' + n + '" name="txt_keterangan_biaya_lain_' + n + '" size="26" placeholder="Keterangan Biaya" onkeypress="saveRinciEnter(event,' + n + ')"></textarea><br />' +
 
             '</td>'
@@ -2964,65 +3027,147 @@
         // console.log(qty)
         var harga = $('#txt_harga_' + id).val();
         var diskon = $('#txt_disc_' + id).val();
-        if (diskon == '') {
-            var disc = 0;
+
+        var kodebar = $('#hidden_kode_brg_' + id).val();
+        var lokasi = $('#status_lokasi').val();
+        if (kodebar == '102505700000002' && lokasi == 'HO') {
+            hitungsolar(id);
         } else {
-            var disc = $('#txt_disc_' + id).val();
+            if (diskon == '') {
+                var disc = 0;
+            } else {
+                var disc = $('#txt_disc_' + id).val();
+            }
+            var biayalain = $('#txt_biaya_lain_' + id).val();
+            if (biayalain == '') {
+                var biaya_lain = 0;
+            } else {
+                var biaya_lain = $('#txt_biaya_lain_' + id).val();
+            }
+
+            // mengitung pph dan ppn if true condition
+            // var hargaDisc = (parseFloat(harga) * parseInt(disc)) / 100;
+            // var hargaSetelahDisc = parseFloat(harga) - parseInt(hargaDisc);
+
+            var hargaDisc = (parseFloat(harga) * parseFloat(disc)) / 100;
+            var hargaSetelahDisc = parseFloat(harga) - parseFloat(hargaDisc);
+
+            var qty_harga = qty * hargaSetelahDisc;
+            if (pph != 0) {
+                // var jml_pph = pph / 100;
+                // var total_pph = qty_harga * jml_pph;
+                var total_pph = 0;
+            } else {
+                var total_pph = 0;
+            }
+
+            if (ppn == 10) {
+                // var jml_ppn = ppn / 100;
+                // var total_ppn = qty_harga * jml_ppn;
+                var total_ppn = 0;
+            } else {
+                var total_ppn = 0;
+            }
+
+            var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
+
+            var tot_nilai = nilai + total_pph + total_ppn;
+
+            var jum = tot_nilai.toFixed(2);
+
+            console.log('ini jumlahnya', jum);
+            $('#txt_jumlah_' + id).val(jum);
+            var bilangan = tot_nilai.toFixed(2);
+            var number_string = bilangan.toString(),
+                sisa = number_string.length % 3,
+                rupiah = number_string.substr(0, sisa),
+                ribuan = number_string.substr(sisa).match(/\d{3}/g);
+
+            if (ribuan) {
+                separator = sisa ? '.' : '';
+                rupiah += separator + ribuan.join('.');
+            }
+            $('#jumlah_' + id).val(jum);
+            $('#hasil_jumlah_' + id).html(jum);
+            $('#hasil_jumlah_' + id).number(true, 2);
+            $('#jumlah_' + id).number(true, 2);
         }
 
-        var biayalain = $('#txt_biaya_lain_' + id).val();
-        if (biayalain == '') {
-            var biaya_lain = 0;
-        } else {
-            var biaya_lain = $('#txt_biaya_lain_' + id).val();
-        }
+    }
 
-        // mengitung pph dan ppn if true condition
-        // var hargaDisc = (parseFloat(harga) * parseInt(disc)) / 100;
-        // var hargaSetelahDisc = parseFloat(harga) - parseInt(hargaDisc);
+    function hitungsolar(id) {
 
-        var hargaDisc = (parseFloat(harga) * parseFloat(disc)) / 100;
+        $('#txt_qty_' + id + ',#txt_harga_' + id + ',#txt_disc_' + id + ',#txt_biaya_lain_' + id).on("keypress keyup blur", function(event) {
+            //this.value = this.value.replace(/[^0-9\.]/g,'');
+            $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
+            if ((event.which != 46 || $(this).val().indexOf('.') != -1) && (event.which < 48 || event.which > 57)) {
+                event.preventDefault();
+            }
+        });
+
+        // console.log('jumlahke', no_row)
+        var pph = $('#pph').val();
+        var ppn = $('#ppn').val();
+        var qty = $('#txt_qty_' + id).val();
+        // console.log('nah ini', qty);
+        var harga = $('#txt_harga_' + id).val();
+        var diskon = $('#txt_disc_' + id).val();
+        var ongkir = $('#txt_ongkir_' + id).val();
+
+        var hargaDisc = (parseFloat(harga) * parseFloat(diskon)) / 100;
         var hargaSetelahDisc = parseFloat(harga) - parseFloat(hargaDisc);
 
-        var qty_harga = qty * hargaSetelahDisc;
-        if (pph != 0) {
-            // var jml_pph = pph / 100;
-            // var total_pph = qty_harga * jml_pph;
-            var total_pph = 0;
-        } else {
-            var total_pph = 0;
-        }
+        var hargaPlusOngkir = hargaSetelahDisc + parseFloat(ongkir);
 
-        if (ppn == 10) {
-            // var jml_ppn = ppn / 100;
-            // var total_ppn = qty_harga * jml_ppn;
-            var total_ppn = 0;
-        } else {
-            var total_ppn = 0;
-        }
+        var nilai = parseFloat(hargaPlusOngkir) * parseFloat(qty);
+        var jum = nilai.toFixed(2);
 
-        var nilai = (parseFloat(qty) * parseFloat(hargaSetelahDisc)) + parseFloat(biaya_lain);
-
-        var tot_nilai = nilai + total_pph + total_ppn;
-
-        var jum = tot_nilai.toFixed(2);
-
-        console.log('ini jumlahnya', jum);
         $('#txt_jumlah_' + id).val(jum);
-        var bilangan = tot_nilai.toFixed(2);
-        var number_string = bilangan.toString(),
-            sisa = number_string.length % 3,
-            rupiah = number_string.substr(0, sisa),
-            ribuan = number_string.substr(sisa).match(/\d{3}/g);
 
-        if (ribuan) {
-            separator = sisa ? '.' : '';
-            rupiah += separator + ribuan.join('.');
-        }
         $('#jumlah_' + id).val(jum);
         $('#hasil_jumlah_' + id).html(jum);
         $('#hasil_jumlah_' + id).number(true, 2);
         $('#jumlah_' + id).number(true, 2);
+
+        // var hargaPpn = parseFloat(harga) * parseFloat(jml_ppn);
+        // var hargaDasarPlusPPN = parseFloat(harga) + parseFloat(hargaPpn);
+
+        // //ongkir pluss ppn 10%
+        // var ongkirPpn = parseFloat(ongkir) * parseFloat(jml_ppn);
+        // var ongkirPlusPPN = parseFloat(ongkir) + parseFloat(ongkirPpn);
+
+        // //untuk pph diambi dari harga dasar 
+        // if (pph != 0) {
+        //     // var jml_pph = pph / 100;
+        //     // var total_pph = qty_harga * jml_pph;
+        //     var total_pph = pph;
+        // } else {
+        //     var total_pph = 0;
+        // }
+
+        // var pph_tot = total_pph / 100;
+        // var hargadasarpph = parseFloat(harga) * parseFloat(pph_tot);
+
+        // //menjumlahkan harga+ppn ongkir+ppn harga+pph
+        // var totalsolar = hargaDasarPlusPPN + ongkirPlusPPN + hargadasarpph;
+        // //total solar yg sudah dijumlah x qty
+        // var totsolarXqty = parseFloat(totalsolar) * parseFloat(qty);
+        // //dikurangi diskon
+        // if (diskon == '') {
+        //     var disc = 0;
+        // } else {
+        //     var disc = $('#txt_disc_' + id).val();
+        // }
+
+        // var hargaDisc = (parseFloat(totsolarXqty) * parseFloat(disc)) / 100;
+        // var hargaSetelahDisc = parseFloat(totsolarXqty) - parseFloat(hargaDisc);
+
+        // var jum = hargaSetelahDisc.toFixed(2);
+        // $('#txt_jumlah_' + id).val(jum);
+        // $('#jumlah_' + id).val(jum);
+        // $('#hasil_jumlah_' + id).html(jum);
+        // $('#hasil_jumlah_' + id).number(true, 2);
+        // $('#jumlah_' + id).number(true, 2);
     }
 
     function saveRinciEnter(e, no) {
@@ -3041,10 +3186,10 @@
         $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeAttr('disabled', '');
 
 
-        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
-        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
-        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
-        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ',#txt_ongkir_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
+        $('.div_form_2').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ',#txt_ongkir_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ',  #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ',#txt_ongkir_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeClass('bg-light');
+        $('.div_form_3').find('#cmb_jenis_budget_' + i + ',#txt_merk_' + i + ',#txt_qty_' + i + ', #cmb_kurs_' + i + ', #txt_disc_' + i + ', #txt_keterangan_biaya_lain_' + i + ',#txt_harga_' + i + ', #txt_biaya_lain_' + i + ',#txt_ongkir_' + i + ', #txt_jumlah_' + i + ', #txt_keterangan_rinci_' + i).removeAttr('disabled', '');
 
         $('#btn_ubah_' + i).hide();
         $('#btn_hapus_' + i).hide();
@@ -3292,10 +3437,10 @@
                         cekdataspp();
                         // sum_qty(noppo, id);
 
-                        $('.div_form_2').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ',#txt_qty_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).addClass('bg-light');
-                        $('.div_form_3').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ',#txt_qty_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).addClass('bg-light');
-                        $('.div_form_3').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_qty_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).attr('disabled', '');
-                        $('.div_form_2').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_qty_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).attr('disabled', '');
+                        $('.div_form_2').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ',#txt_qty_' + id + ', #txt_biaya_lain_' + id + ',#txt_ongkir_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).addClass('bg-light');
+                        $('.div_form_3').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ',#txt_qty_' + id + ', #txt_biaya_lain_' + id + ',#txt_ongkir_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).addClass('bg-light');
+                        $('.div_form_3').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_qty_' + id + ', #txt_biaya_lain_' + id + ',#txt_ongkir_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).attr('disabled', '');
+                        $('.div_form_2').find('#getspp' + id + ',#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_qty_' + id + ', #txt_biaya_lain_' + id + ',#txt_ongkir_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id).attr('disabled', '');
 
                         $('#tr_' + id).find('input,textarea,select').attr('disabled', '');
                         $('#tr_' + id).find('input,textarea,select').addClass('form-control bg-light');

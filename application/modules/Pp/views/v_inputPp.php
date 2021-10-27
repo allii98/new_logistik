@@ -9,12 +9,12 @@
                         <h4 class="header-title ml-2"><?= $title; ?></h4>
                         <h6 id="lbl_status_pp"></h6>
                         <div class="button-list mr-2">
-                            <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
-                            <button type="button" onclick="updateData()" class="btn btn-xs btn-warning" style="display: none;" id="update_pp">Update</button>
-                            <button type="button" onclick="cancelUpdate()" class="btn btn-xs btn-primary" style="display: none;" id="cancelUpdate">Cancel</button>
+                            <!-- <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button> -->
+                            <!-- <button type="button" onclick="updateData()" class="btn btn-xs btn-warning" style="display: none;" id="update_pp">Update</button>
+                            <button type="button" onclick="cancelUpdate()" class="btn btn-xs btn-primary" style="display: none;" id="cancelUpdate">Cancel</button> -->
                             <button class="btn btn-xs btn-info" id="data_pp" onclick="data_pp()">Data PP</button>
                             <button type="button" onclick="new_pp()" class="btn btn-xs btn-success" id="">PP Baru</button>
-                            <button type="button" onclick="batal()" class="btn btn-xs btn-danger" id="" disabled>Batal PP</button>
+                            <button type="button" onclick="batal()" class="btn btn-xs btn-danger" id="batalpp" disabled>Batal PP</button>
                             <button type="button" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button type="button" onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -220,6 +220,13 @@
                                     <input type="text" class="form-control form-control-sm bg-light" id="txt_tgl_voucher" name="txt_tgl_voucher" readonly placeholder="Tanggal">
                                 </div>
                             </div>
+                            <br>
+                            <br>
+                            <div class="button-list" style="float: right; margin-top: 15px;">
+                                <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
+                                <button type="button" onclick="updateData()" class="btn btn-xs btn-warning" style="display: none;" id="update_pp">Update</button>
+                                <button type="button" onclick="cancelUpdate()" class="btn btn-xs btn-primary" style="display: none;" id="cancelUpdate">Cancel</button>
+                            </div>
                         </div>
                     </div>
                     <!-- </form> -->
@@ -289,6 +296,29 @@
                 <!-- <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
                 </div> -->
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalKonfirmasiHapus">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                        <h4 class="mt-2">Konfirmasi Hapus</h4>
+                        <input type="hidden" id="idpp" name="idpp">
+                        <input type="hidden" id="nopp" name="nopp">
+                        <input type="hidden" id="ref_po" name="ref_po">
+                        <input type="hidden" id="jumlahbatal" name="jumlahbatal">
+                        <input type="hidden" id="nopo" name="nopo">
+                        <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
+                        <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Hapus</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -512,6 +542,63 @@
         }
     });
 
+    function batal() {
+        // alert("Dalam proses perbaikan")
+
+        var id = $('#id_pp').val();
+        var nopp = $('#hidden_no_pp').val();
+        var jumlah = $('#txt_jumlah').val();
+        var nopo = $('#hidden_no_po').val();
+        console.log(jumlah);
+
+        $('#idpp').val(id);
+        $('#nopp').val(nopp);
+        // $('#ref_po').val(ref_po);
+        $('#jumlahbatal').val(jumlah);
+        $('#nopo').val(nopo);
+        $('#modalKonfirmasiHapus').modal('show');
+    }
+
+    function hapusPP() {
+        // listPP();
+
+        $('#modalKonfirmasiHapus').modal('hide');
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Pp/deletePP') ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {
+                id_pp: $('#id_pp').val(),
+                nopp: $('#nopp').val(),
+                // ref_po: $('#ref_po').val(),
+                jumlah: $('#jumlah').val(),
+                nopo: $('#nopo').val(),
+            },
+            success: function(data) {
+                console.log(data)
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Dihapus',
+                    text: 'Berhasil Dihapus!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                location.reload();
+            }
+        });
+    }
+
+    function cetak() {
+        var id_pp = $('#id_pp').val();
+        var noref = $('#hidden_refpp').val();
+
+        var noref_rpc = noref.replaceAll('/', '.');
+
+        window.open('cetak/' + noref_rpc + '/' + id_pp, '_blank');
+    }
+
     function saveData() {
         $('#simpan_pp').attr('disabled', '');
         var id_pp = $('#id_pp').val();
@@ -575,7 +662,12 @@
                         $('#simpan_pp').hide();
                         $('#update_pp').show();
                         $('#id_pp').val(data.idpp);
+                        $('#hidden_refpp').val(data.norefpp);
+                        $('#hidden_no_pp').val(data.nopp);
                         $('#txt_sudah_dibayar').val(data.sdh_bayar);
+                        $('#batalpp').removeAttr('disabled');
+                        $('#cetak').removeAttr('disabled');
+
                         // setTimeout(function() {
                         //     window.location.href = "<?php echo site_url('Pp'); ?>";
                         // }, 1000);
@@ -649,7 +741,11 @@
                         $('#cancelUpdate').hide();
                         $('#update_pp').show();
                         $('#id_pp').val(data.idpp);
+                        $('#hidden_refpp').val(data.norefpp);
+                        $('#hidden_no_pp').val(data.nopp);
                         $('#txt_sudah_dibayar').val(data.sdh_bayar);
+                        $('#batalpp').removeAttr('disabled');
+                        $('#cetak').removeAttr('disabled');
                     }
                 },
                 error: function(request) {

@@ -138,7 +138,7 @@ class Pp extends CI_Controller
             $query_kurs = "SELECT DISTINCT kurs FROM item_po WHERE nopo = '$d->nopotxt' AND noref = '$ref_po'";
             $get_kurs = $this->db_logistik_pt->query($query_kurs)->row();
 
-            if ($get_kodebar->kodebar == '102505700000002') {
+            if ($get_kodebar->kodebar == '102505700000002' && $d->jenis_spp == 'SPP') {
                 $ppn = $d->ppn;
                 if ($ppn == 10) {
                     $jml_ppn = "0.1";

@@ -31,22 +31,26 @@ class M_data extends CI_Model
         if ($lokasi_sesi == 'HO') {
             if ($data == 'HO') {
                 $this->db_logistik_pt->from($this->table);
-                $this->db_logistik_pt->where('lokasi', $lokasi_sesi);
+                $this->db_logistik_pt->like('noreftxt', 'PST', 'both');
                 # code...
             } elseif ($data == 'SITE') {
                 $this->db_logistik_pt->from($this->table);
                 $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
                 # code...
             } elseif ($data == 'PKS') {
                 $this->db_logistik_pt->from($this->table);
                 $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
                 # code...
             } elseif ($data == 'RO') {
                 $this->db_logistik_pt->from($this->table);
                 $this->db_logistik_pt->like('noreftxt', 'RO', 'both');
+                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
                 # code...
             } else {
                 $this->db_logistik_pt->from($this->table);
+                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
             }
         } else {
             # code...

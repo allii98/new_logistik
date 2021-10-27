@@ -243,6 +243,8 @@ $nama_pt = $this->session->userdata('nama_pt');
             $ongkir = 0;
             $hargaPlusPPH = 0;
             $hargaPPh = 0;
+            $hargaongkir = 0;
+            $ppntotal = 0;
             $nama_bebanbpo = array();
             foreach ($item_po as $list_item) {
                 //harga dasar plus ppn 10% ( untuk mengambil total harga)
@@ -256,13 +258,18 @@ $nama_pt = $this->session->userdata('nama_pt');
                 } else {
                     $jml_pph = $po->pph / 100;
                 }
-                $hargadasarppn = $list_item->harga * $ppn;
-                $hargadasar = $list_item->harga + $hargadasarppn;
-                $qty_harga = $list_item->qty * $hargadasar;
+
+                $hargaongkir = $list_item->harga + $list_item->JUMLAHBPO;
+                $qty_harga = $list_item->qty * $hargaongkir;
+                $harga_item = $list_item->qty * $list_item->harga;
                 $disc = $list_item->disc / 100;
+                $jumharga_item = $harga_item - ($harga_item * $disc);
                 $jumharga_pre = $qty_harga - ($qty_harga * $disc);
 
-                $hargaPlusPPH = $list_item->harga * $jml_pph;
+                $ppntotal = $jumharga_pre * $ppn;
+
+                $hargaPlusPPH = $harga_item * $jml_pph;
+                $pph = $hargaPlusPPH;
                 $hargaPPh = $list_item->harga +  $hargaPlusPPH;
                 //done harga dasar
             ?>
@@ -274,9 +281,20 @@ $nama_pt = $this->session->userdata('nama_pt');
                     <td class="noborder" rowspan="2" align="center">-</td>
                     <td class="noborder" rowspan="2" align="center"><?= number_format($list_item->qty, 2, ",", "."); ?></td>
                     <td class="noborder" rowspan="2" align="center"><?= $list_item->sat; ?></td>
-                    <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
-                    <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
-                    <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($jumharga_pre, 2, ",", "."); ?></td>
+                    <?php if ($this->session->userdata('status_lokasi') != 'HO' && $po->jenis_spp != 'SPPI') { ?>
+                        <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;</td>
+                        <td class="noborder" rowspan="2" align="center"></td>
+                        <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;</td>
+                    <?php } else if ($this->session->userdata('status_lokasi') != 'HO' && $po->jenis_spp == 'SPPI') { ?>
+
+                        <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
+                        <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
+                        <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($jumharga_item, 2, ",", "."); ?></td>
+                    <?php } else { ?>
+                        <td class="noborder" rowspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($list_item->harga, 2, ",", "."); ?></td>
+                        <td class="noborder" rowspan="2" align="center"><?= $list_item->disc; ?></td>
+                        <td class="noborder" rowspan="2" colspan="2" align="right"><?= $list_item->kurs; ?>&nbsp;<?= number_format($jumharga_item, 2, ",", "."); ?></td>
+                    <?php } ?>
                 </tr>
                 <tr>
                     <td style="border: none;" colspan="3" rowspan="1">*<?= htmlspecialchars($list_item->ket); ?></td>
@@ -287,7 +305,9 @@ $nama_pt = $this->session->userdata('nama_pt');
                 $jum_totbay += $jumharga_pre;
                 //untuk mengambil ppn ongkir
                 $ongkirppn = $list_item->JUMLAHBPO * $ppn;
+                $ppnOngkir = $ongkirppn * $list_item->qty;
                 $jumlah_biaya_lain = $list_item->JUMLAHBPO + $ongkirppn;
+                $ongkirqty = $list_item->JUMLAHBPO * $list_item->qty;
                 $no++;
             }
             ?>
@@ -296,56 +316,68 @@ $nama_pt = $this->session->userdata('nama_pt');
 
     <table border="1" class="singleborder" width="100%">
         <tr>
-            <td colspan="7" width="400px" rowspan="6" valign="top">
+            <td colspan="8" width="448px" rowspan="8" valign="top">
                 <b>Keterangan : </b><br />
                 <?= htmlspecialchars($po->ket); ?><br />
                 <b>Keterangan pembayaran: </b><br />
                 Nama Pemilik&nbsp; : <?= $supplier->atasnama ?><br />
                 No. Rekening&nbsp; : <?= $supplier->norek ?><br />
             </td>
-            <td colspan="3">SUB TOTAL</td>
-            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jum_totbay, 2, ",", "."); ?></td>
+            <td colspan="3">Biaya Lainnya (<?= join(", ", $nama_bebanbpo); ?>)</td>
+            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($ongkirqty, 2, ",", "."); ?></td>
+
         </tr>
         <tr>
-            <td colspan="3">PPN 10% (Harga dasar)</td>
-            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $hargadasarppn; ?></td>
+            <td colspan="3">SUB TOTAL</td>
+            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($jumharga_item + $ongkirqty, 2, ",", "."); ?></td>
+        </tr>
+        <tr>
+            <td colspan="3">PPN <?= $po->ppn ?>%</td>
+            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($ppntotal, 2, ",", "."); ?></td>
+
         </tr>
         <tr>
             <td colspan="3">PPH (<?= $po->pph ?>%)</td>
-            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= $hargaPlusPPH; ?></td>
+            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($pph, 2, ",", "."); ?></td>
         </tr>
-        <tr>
-            <td colspan="3">Ongkir</td>
-            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($list_item->JUMLAHBPO, 2, ",", "."); ?></td>
-        </tr>
-        <tr>
-            <td colspan="3">PPN 10% (Ongkir)</td>
-            <td colspan="2" align="right"><?= $list_item->kurs; ?>. <?= number_format($ongkirppn, 2, ",", "."); ?></td>
-        </tr>
+
+        <!-- <tr>
+            <td colspan="3"></td>
+            <td colspan="2"></td>
+        </tr> -->
+
+        <!-- <tr>
+            <td colspan="3"></td>
+            <td colspan="2" align="right"></td>
+        </tr> -->
         <tr>
             <td colspan="3">GRAND TOTAL</td>
             <td colspan="2" align="right">
                 <?php
-                $isi = $po->totalbayar;
+                $isi = $jumharga_item + $ppntotal + $pph + $ongkirqty;
 
                 ?>
                 <br />
                 <?= $list_item->kurs; ?>. <?= number_format($isi, 2, ",", "."); ?>
             </td>
         </tr>
+
+    </table>
+    <table border="1" class="singleborder" width="100%">
+        <?php
+        $total = $jumharga_item + $ppntotal + $pph + $ongkirqty;
+        // var_dump("iyayayay".$total);exit();
+
+
+        $kur = $list_item->kurs;
+        if ($kur == "Rp") {
+            $kurs = "Rupiah";
+        }
+        ?>
         <tr>
-            <?php
-            $total = $po->totalbayar;
-            // var_dump("iyayayay".$total);exit();
-
-
-            $kur = $list_item->kurs;
-            if ($kur == "Rp") {
-                $kurs = "Rupiah";
-            }
-            ?>
             <td colspan="10"><b>Terbilang : <?= terbilang($total, $style = 3) . '&nbsp;' . $kurs ?></b></td>
         </tr>
+
     </table>
 
     <table border="1" class="singleborder" width="100%">
@@ -358,7 +390,7 @@ $nama_pt = $this->session->userdata('nama_pt');
             case 'RO':
         ?>
                 <tr>
-                    <td align="center" colspan="5" width="40%" height="50">
+                    <td align="center" width="98px" colspan="5" height="50">
                         Menyetujui,<br />
                         <br />
                         <br />
@@ -366,7 +398,7 @@ $nama_pt = $this->session->userdata('nama_pt');
                         <br />
                         (Supplier)
                     </td>
-                    <td align="center" colspan="5" width="30%" height="50">
+                    <td align="center" colspan="5" height="50">
                         Dibuat oleh,<br />
                         <br />
                         <br />
@@ -374,7 +406,7 @@ $nama_pt = $this->session->userdata('nama_pt');
                         <br />
                         (KTU)
                     </td>
-                    <td align="center" colspan="5" width="30%" height="50">
+                    <td align="center" colspan="5" height="50">
                         Menyetujui,<br />
                         <br />
                         <br />
@@ -390,7 +422,7 @@ $nama_pt = $this->session->userdata('nama_pt');
             ?>
 
                 <tr>
-                    <td align="center" colspan="5" width="40%" height="50">
+                    <td align="center" width="100px" colspan="5" height="50">
                         Menyetujui,<br />
                         <br />
                         <br />
@@ -398,7 +430,7 @@ $nama_pt = $this->session->userdata('nama_pt');
                         <br />
                         (Supplier)
                     </td>
-                    <td align="center" colspan="5" width="30%" height="50">
+                    <td align="center" colspan="5" height="50">
                         Dibuat oleh,<br />
                         <br />
                         <br />
@@ -412,7 +444,7 @@ $nama_pt = $this->session->userdata('nama_pt');
                             (Purchasing)
                         <?php } ?>
                     </td>
-                    <td align="center" colspan="5" width="30%" height="50">
+                    <td align="center" colspan="5" height="50">
                         Menyetujui,<br />
                         <br />
                         <br />
