@@ -24,22 +24,26 @@ class M_pp extends CI_Model
         $this->db_logistik_pt->from($this->table);
         if ($lokasi_sesi == 'HO') {
             $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
+            $this->db_logistik_pt->where('terbayar !=', '1');
         } else {
             # code...
             if ($lokasi_sesi == 'SITE') {
                 $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
+                $this->db_logistik_pt->where('terbayar !=', '1');
                 # code...
             } else if ($lokasi_sesi == 'PKS') {
                 $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
+                $this->db_logistik_pt->where('terbayar !=', '1');
                 # code...
             } else if ($lokasi_sesi == 'RO') {
                 $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
+                $this->db_logistik_pt->where('terbayar !=', '1');
                 # code...
             }
         }
@@ -103,13 +107,13 @@ class M_pp extends CI_Model
 
     function ambilpo($id, $noref)
     {
-        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph FROM po WHERE id='$id' AND noreftxt='$noref' ")->row();
+        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph, jenis_spp FROM po WHERE id='$id' AND noreftxt='$noref' ")->row();
         return $data;
     }
 
     function ambilpoqr($noref)
     {
-        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph FROM po WHERE  noreftxt='$noref' ")->row();
+        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph, jenis_spp FROM po WHERE  noreftxt='$noref' ")->row();
         return $data;
     }
     function simpan_pp()
@@ -189,6 +193,9 @@ class M_pp extends CI_Model
         }
 
         $jumlah = $this->input->post('txt_jumlah');
+        $jum = $this->input->post('jumlah');
+        $jumlahplus = $this->input->post('jumlahplus');
+
         $total_po = $this->input->post('txt_total_po');
 
         $data_pp['id']              = $id_pp;
@@ -242,17 +249,14 @@ class M_pp extends CI_Model
         $noref_po = $this->input->post('txt_no_ref_po');
         $ambilpo = $this->db_logistik_pt->query("SELECT terbayar FROM po WHERE id='$id_po' AND noreftxt='$noref_po'")->row();
         $hasil = $ambilpo->terbayar;
-        if ($hasil != 0) {
-            $tot_terbayar = $hasil + $jumlah;
-        } else {
-            $tot_terbayar = $jumlah;
-        }
-        $data_po['terbayar'] = $tot_terbayar;
 
+        $tot_terbayar = 1;
 
-        $this->db_logistik_pt->where('id', $this->input->post('hidden_id_po'));
-        $this->db_logistik_pt->where('noreftxt', $this->input->post('txt_no_ref_po'));
-        $this->db_logistik_pt->update('po', $data_po);
+        // if ($hasil != 0) {
+        // } else {
+        //     $tot_terbayar = $jumlah;
+        // }
+
 
         $query_id_logistik_caba = "SELECT max(id)+1 as new_id FROM pp_logistik";
         $data_logistik_caba = $this->db_caba->query($query_id_logistik_caba)->row();
@@ -339,14 +343,14 @@ class M_pp extends CI_Model
             }
 
             $no_ref_po = $this->input->post('txt_no_ref_po');
-            $query_jumlah_sudah_bayar = "SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$no_ref_po'";
+            $query_jumlah_sudah_bayar = "SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$no_ref_po' AND batal <> 1";
             $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
 
             $sdh_bayar = $get_jumlah_sudah_bayar->jumlah;
 
 
             if ($bool_pp === TRUE && $bool_pp_history === TRUE) {
-                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp);
+                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp, 'norefpo' => $no_ref_po);
             } else {
                 return FALSE;
             }
@@ -388,13 +392,13 @@ class M_pp extends CI_Model
             }
 
             $no_ref_po = $this->input->post('txt_no_ref_po');
-            $query_jumlah_sudah_bayar = "SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$no_ref_po'";
+            $query_jumlah_sudah_bayar = "SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$no_ref_po' AND batal <> 1";
             $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
 
             $sdh_bayar = $get_jumlah_sudah_bayar->jumlah;
 
             if ($bool_pp_history === TRUE && $bool_pp === TRUE) {
-                return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp);
+                return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp, 'norefpo' => $no_ref_po);
             } else {
                 return FALSE;
             }
@@ -477,27 +481,50 @@ class M_pp extends CI_Model
         }
 
         $refpo = $this->input->post('txt_no_ref_po');
-        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp WHERE ref_po = '$refpo'";
+        $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp WHERE ref_po = '$refpo' AND batal <> 1";
         $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
 
         $sdh_bayar = $get_jumlah_sudah_bayar->kasir_bayar;
 
-        $data_po['terbayar'] = $get_jumlah_sudah_bayar->kasir_bayar;
-        // $this->db_logistik_pt->where('nopo', $nopo);
-        $this->db_logistik_pt->where('noreftxt', $refpo);
-        $this->db_logistik_pt->update('po', $data_po);
-        if ($this->db_logistik_pt->affected_rows() > 0) {
-            $bool_po = TRUE;
-        } else {
-            $bool_po = FALSE;
-        }
 
-        if ($bool_pp === TRUE && $bool_po === TRUE) {
-            return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar);
+        if ($bool_pp === TRUE) {
+            return array('status' => TRUE, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpo' => $refpo);
         } else {
-            return array('status_po' => $bool_po, 'status_pp' => $bool_pp);;
+            return array('status_pp' => $bool_pp);;
         }
         // return $data_pp;
+    }
+
+    function updatePO($refpo, $data_po)
+    {
+        $this->db_logistik_pt->where('noreftxt', $refpo);
+        $this->db_logistik_pt->update('po', $data_po);
+        return TRUE;
+    }
+
+    function update_terbayar_po()
+    {
+        $id = $this->input->post('id_po');
+        $data = array('terbayar' => $this->input->post('terbayar'));
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->update('po', $data);
+        return TRUE;
+    }
+    function update_batal_pp()
+    {
+        $id = $this->input->post('id_pp');
+        $data = array('batal' => 1);
+        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->update('pp', $data);
+        return TRUE;
+    }
+    function batal_pp_log()
+    {
+        $refpp = $this->input->post('refpp');
+        $data = array('batal' => 1);
+        $this->db_caba->where('ref_pp', $refpp);
+        $this->db_caba->update('pp_logistik', $data);
+        return TRUE;
     }
 
     function cancel_update_pp()

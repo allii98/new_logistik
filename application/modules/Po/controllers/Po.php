@@ -215,7 +215,7 @@ class Po extends CI_Controller
             $row[] = date_format(date_create($d->tgl_refppo), 'd-m-Y');
             $row[] = $d->nama_supply;
             $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . ' </p>';
-            $row[] = number_format($d->terbayar, 2, ",", ".");;
+            // $row[] = number_format($d->terbayar, 2, ",", ".");;
             $row[] = $d->user;
             $row[] = $lpb;
 

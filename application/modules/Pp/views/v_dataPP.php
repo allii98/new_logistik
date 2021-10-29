@@ -55,15 +55,15 @@
             <div class="modal-body p-4">
                 <div class="text-center">
                     <i class="dripicons-warning h1 text-warning"></i>
-                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <h4 class="mt-2">Konfirmasi Batal</h4>
                     <input type="hidden" id="id_pp" name="id_pp">
                     <input type="hidden" id="nopp" name="nopp">
                     <input type="hidden" id="ref_po" name="ref_po">
                     <input type="hidden" id="jumlah" name="jumlah">
                     <input type="hidden" id="nopo" name="nopo">
-                    <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
-                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Hapus</button>
-                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                    <p class="mt-3">Apakah anda yakin ingin membatalkan pp ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Batalkan</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -170,7 +170,7 @@
                 $.toast({
                     position: 'top-right',
                     heading: 'Dihapus',
-                    text: 'Berhasil Dihapus!',
+                    text: 'Berhasil Dibatalkan!',
                     icon: 'success',
                     loader: false
                 });
