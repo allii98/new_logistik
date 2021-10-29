@@ -3044,6 +3044,8 @@ class Laporan extends CI_Controller
 			'mode' => 'utf-8',
 			'format' => [190, 236],
 			// 'margin_top' => '2',
+			'margin_left' => '2',
+			'margin_right' => '2',
 			'orientation' => 'L'
 		]);
 

@@ -1624,7 +1624,7 @@
                                 <font face="Verdana" size="2">Periode *</font>
                             </label>
                             <div class="col-12">
-                                <input type="text" class="form-control" id="periode_rs" name="periode_rs">
+                                <input type="date" class="form-control" id="periode_rs" name="periode_rs" value="<?= $this->session->userdata('Ymd_periode') ?>">
                             </div>
                         </div>
 
@@ -2331,16 +2331,16 @@
             $('#modalLapRS').modal('show');
             getPT();
             getKodebar();
-            $('#periode_rs').daterangepicker({
-                singleDatePicker: !0,
-                singleClasses: "picker_1"
-                // singleDatePicker: true,
-                // showDropdowns: true,
-                // minYear: 1901,
-                // maxYear: parseInt(moment().format('YYYY'),10)
-            }, function(start, end, label) {
-                // start.format('YYYY-MM-DD')
-            });
+            // $('#periode_rs').daterangepicker({
+            //     singleDatePicker: !0,
+            //     singleClasses: "picker_1"
+            //     // singleDatePicker: true,
+            //     // showDropdowns: true,
+            //     // minYear: 1901,
+            //     // maxYear: parseInt(moment().format('YYYY'),10)
+            // }, function(start, end, label) {
+            //     // start.format('YYYY-MM-DD')
+            // });
         }
 
         function printStock() {
@@ -2446,11 +2446,10 @@
                     $('#cmb_pt').empty();
 
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
-                    if (stl == 'HO') {
-                        var opsi_pt = '<option value="Semua">SEMUA</option>';
-                        $('#cmb_pt').append(opsi_pt);
-                    }
-
+                    // if (stl == 'HO') {
+                    // }
+                    var opsi_pt = '<option value="Semua">Gabungan</option>';
+                    $('#cmb_pt').append(opsi_pt);
                     $.each(data, function(index) {
                         var opsi_pt = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
                         $('#cmb_pt').append(opsi_pt);

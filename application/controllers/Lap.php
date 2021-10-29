@@ -48,64 +48,36 @@ class Lap extends CI_Controller
 
     public function print_stock()
     {
-        // $pt = $this->input->post('pt');
-        // $kd_stock_1 = $this->input->post('kd_stock_1');
-        // $kd_stock_2 = $this->input->post('kd_stock_2');
-        // $periode = $this->input->post('periode');
-        // $pilihan = $this->input->post('pilihan');
-
-
-        // $query_alamat = "SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC";
-        // $get_alamat_pt = $this->db_logistik_pt->query($query_alamat)->row();
-
-
         $pt = $this->uri->segment(3);
         $kd_stock_1 = $this->uri->segment(4);
         $kd_stock_2 = $this->uri->segment(5);
         $pilihan = $this->uri->segment(7);
-        $data['namapt'] = 'gege';
-        // $namapt = $this->db_logistik_pt->query("SELECT PT, kodetxt,lokasi FROM tb_devisi WHERE kodetxt = '$pt' ORDER BY kodetxt ASC")->row();
 
-        $str_periode = $this->uri->segment(6);
-        $periode = str_replace("_", "/", $str_periode);
+        $periode = $this->uri->segment(6);
 
         $d_periode =  date("j", strtotime($periode));
 
         if ($d_periode >= 26) {
-            $ym_periode = date('Ym', strtotime($periode . " +1 month"));
+            $txtperiode = date('Ym', strtotime($periode . " +1 month"));
+            $p1 = date_format(date_create($periode), 'Y-m-') . '26';
+            $periode = date('Y-m-d', strtotime($periode . " +1 month"));
+            $p2 = date_format(date_create($periode), 'Y-m-') . '25';
         } else {
-            $ym_periode = date('Ym', strtotime($periode));
+            $txtperiode = date('Ym', strtotime($periode));
+            $periode = date('Y-m-d', strtotime($periode));
+            $p1 = date('Y-m-d', strtotime($periode . " -1 month"));
+            $p1 = date_format(date_create($p1), 'Y-m-') . '26';
+            $p2 = date_format(date_create($periode), 'Y-m-') . '25';
         }
 
         $data['kd_stock_1'] = $kd_stock_1;
         $data['kd_stock_2'] = $kd_stock_2;
         $data['pt'] = $pt;
-        // $data['namapt'] = $namapt->PT;
-        // $data['alamatpt'] = $get_alamat_pt->lokasi;
-        $data['ym_periode'] = $ym_periode;
+        $data['ym_periode'] = $txtperiode;
         $data['periode_str'] = $periode;
 
         if ($pilihan == "Rinci") {
-            // if ($kd_stock_1 == "Semua") {
-            //     $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan FROM stockawal WHERE KODE = '$pt' AND txtperiode = '$ym_periode'";
-            // } else {
-            //     $query_stockawal = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan FROM stockawal WHERE (kodebartxt BETWEEN '$kd_stock_1' AND '$kd_stock_2') AND KODE = '$pt' AND txtperiode = '$ym_periode'";
-            // }
-            // $data['stockawal'] = $this->db_logistik_pt->query($query_stockawal)->result();
 
-            $txtperiode = $this->session->userdata('ym_periode');
-            $periode = $this->session->userdata('Ymd_periode');
-            $d_periode = date("j", strtotime($this->session->userdata('Ymd_periode')));
-            if ($d_periode >= 26) {
-                $p1 = date_format(date_create($periode), 'Y-m-') . '26';
-                $periode = date('Y-m-d', strtotime($periode . " +1 month"));
-                $p2 = date_format(date_create($periode), 'Y-m-') . '25';
-            } else {
-                $periode = date('Y-m-d', strtotime($periode));
-                $p1 = date('Y-m-d', strtotime($periode . " -1 month"));
-                $p1 = date_format(date_create($p1), 'Y-m-') . '26';
-                $p2 = date_format(date_create($periode), 'Y-m-') . '25';
-            }
             $periode = date_format(date_create($periode), 'M Y');
 
             if ($pt == 'Semua') {
@@ -251,7 +223,7 @@ class Lap extends CI_Controller
             // else{
             // 	$query_stockawal_harian = "SELECT kodebartxt, nabar, saldoawal_qty, saldoawal_nilai, KODE, txtperiode, satuan, HARGAPORAT, nilai_masuk, QTY_MASUK, QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, tgl_transaksi, qty_masuk_per_tgl, qty_keluar_per_tgl FROM stockawal_harian WHERE (kodebartxt BETWEEN '$kd_stock_1' AND '$kd_stock_2') AND KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY tgl_transaksi ASC, kodebartxt ASC";
             // }
-            $query_stockawal_harian = "SELECT DISTINCT grp FROM stockawal_harian WHERE KODE = '$pt' AND txtperiode = '$ym_periode' ORDER BY grp ASC";
+            $query_stockawal_harian = "SELECT DISTINCT grp FROM stockawal_harian WHERE KODE = '$pt' AND txtperiode = '$txtperiode' ORDER BY grp ASC";
             $data['grp_stockawal_harian'] = $this->db_logistik_pt->query($query_stockawal_harian)->result();
 
             $this->load->view('lapRS/vw_lap_nilai_rupiah_harian', $data);

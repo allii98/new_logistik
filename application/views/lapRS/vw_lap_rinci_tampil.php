@@ -39,7 +39,7 @@
 <body>
     <?php
     if ($kode_dev == 'Semua') {
-        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('pt') . '</h2>';
+        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('nama_pt') . '</h2>';
     } else {
         if (empty($kode_stock[0]->devisi)) {
             echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
@@ -183,9 +183,9 @@
                     $p2_frmt = date_format(date_create($p2), "Ymd");
 
                     if ($kode_dev == 'Semua') {
-                        $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' ORDER BY tgl ASC, ttgtxt ASC ";
+                        $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' ORDER BY tgltxt ASC, masuk_qty DESC";
                     } else {
-                        $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgl ASC, ttgtxt ASC ";
+                        $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgltxt ASC, masuk_qty DESC";
                     }
 
                     $q_stok = $this->db_logistik_pt->query($q_stok)->result();

@@ -39,7 +39,7 @@
 <body>
     <?php
     if ($kode_dev == 'Semua') {
-        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('pt') . '</h2>';
+        echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('nama_pt') . '</h2>';
     } else {
         if (empty($kode_stock[0]->devisi)) {
             echo '<h2 style="margin-bottom: 0;">Tidak ada stok barang di divisi tersebut!</h2>';
