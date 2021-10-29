@@ -60,6 +60,7 @@ if ($po->lokasi == 'HO') {
 </head>
 
 <body>
+    <!-- <watermarkimage src="././assets/img/batal.png" alpha="0.4" size="200,250" /> -->
     <table width="100%" border="0" align="left" valign>
         <tr>
             <td align="left" style="font-size:14px;font-weight:bold;" valign="top"><?= $nama_pt  . '&nbsp;(' . $po->lokasi . ')' ?></td>
@@ -88,7 +89,7 @@ if ($po->lokasi == 'HO') {
             <td width="13%">Nomor PP</td>
             <td width="2%">:</td>
             <td align="left"><?= $data_pp->ref_pp; ?></td>
-            <td width="25%" style="text-align: right;">Tanggal : <?= date("d-m-Y"); ?></td>
+            <td width="25%" style="text-align: right;">Tanggal : <?= date('d-m-Y', strtotime($data_pp->tglpp)); ?></td>
         </tr>
         <tr class="notopborder">
             <td>Nomor Order</td>

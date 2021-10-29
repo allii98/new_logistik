@@ -39,7 +39,7 @@
 									<th width="8%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
 									<th width="11%" style="font-size: 12px; padding:10px">Supplier</th>
 									<th width="15%" style="font-size: 12px; padding:10px">Keterangan</th>
-									<th width="8%" style="font-size: 12px; padding:10px">Terbayar</th>
+									<!-- <th width="8%" style="font-size: 12px; padding:10px">Terbayar</th> -->
 									<th width="8%" style="font-size: 12px; padding:10px">User</th>
 									<th width="5%" style="font-size: 12px; padding:10px">Status LPB</th>
 								</tr>

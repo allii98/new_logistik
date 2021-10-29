@@ -83,6 +83,7 @@
                                 </label>
                                 <div class="col-9 col-xl-12">
                                     <input type="text" placeholder="" class="form-control form-control-sm" value="0" id="txt_pajak" name="txt_pajak" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="hidden" name="hidden_pajak" id="hidden_pajak">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -91,9 +92,11 @@
                                 </label>
                                 <div class="col-4" style="padding-right: 0.01em;">
                                     <input type="text" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo1" name="txt_nilai_bpo1" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="hidden" name="hidden_bpo1" id="hidden_bpo1">
                                 </div>
                                 <div class="col-5 col-xl-12">
                                     <input type="text" placeholder="" class="form-control form-control-sm" value="0" id="txt_nilai_bpo2" name="txt_nilai_bpo2" onkeyup="hitungTotalPO()" required="required">
+                                    <input type="hidden" name="hidden_bpo2" id="hidden_bpo2">
                                 </div>
                             </div>
 
@@ -106,6 +109,7 @@
                                 </label>
                                 <div class="col-9 col-xl-12">
                                     <input id="txt_total_po" name="txt_total_po" class="form-control form-control-sm bg-light" required="required" type="text" placeholder="Total PO" readonly="">
+                                    <input type="hidden" name="tot_po" id="tot_po">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -149,6 +153,7 @@
                                 <div class="col-9 col-xl-12">
                                     <input id="txt_jumlah" name="txt_jumlah" class="form-control form-control-sm" required="required" type="text" placeholder="Jumlah" onkeyup="getTerbilang()">
                                     <input type="hidden" name="jumlah" id="jumlah">
+                                    <input type="hidden" name="jumlahplus" id="jumlahplus">
                                 </div>
                             </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
@@ -308,15 +313,15 @@
                 <div class="modal-body p-4">
                     <div class="text-center">
                         <i class="dripicons-warning h1 text-warning"></i>
-                        <h4 class="mt-2">Konfirmasi Hapus</h4>
+                        <h4 class="mt-2">Konfirmasi Batal</h4>
                         <input type="hidden" id="idpp" name="idpp">
                         <input type="hidden" id="nopp" name="nopp">
                         <input type="hidden" id="ref_po" name="ref_po">
                         <input type="hidden" id="jumlahbatal" name="jumlahbatal">
                         <input type="hidden" id="nopo" name="nopo">
-                        <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
-                        <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Hapus</button>
-                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                        <p class="mt-3">Apakah anda yakin ingin membatalkan data ini ???</p>
+                        <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Batalkan</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -419,11 +424,12 @@
     });
 
     scanner.addListener('scan', function(content) {
-        console.log(content);
+        // console.log(content);
         $('#preview').hide();
         cariPoqr(content);
         $('#modalcariPO').modal('hide');
         scanner.stop();
+
     });
 
     Instascan.Camera.getCameras().then(function(cameras) {
@@ -470,64 +476,53 @@
                 refpo: noref,
             },
             success: function(data) {
+
                 // console.log(data);
                 var jumlah = data.saldo;
-                if (jumlah == 0) {
-                    // swal('Saldo sudah 0!');
-                    Swal.fire({
-                        text: "Saldo sudah 0!",
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'OK'
-                    }).then((result) => {
-                        if (result.value) {
-                            tampilModal();
-                            scanner.start();
-                        }
-                    });
-                } else {
-                    // console.log(tgl_po);
-                    var id_po = data.po.id;
-                    var tgl_po = data.tglpo;
-                    var no_ref_po = data.po.noreftxt;
-                    var no_po = data.po.nopo;
-                    var pembayaran = data.po.bayar;
-                    var kd_supply = data.po.kode_supply;
-                    var nama_supply = data.po.nama_supply;
-                    var kurs = data.kurs;
-                    var bayar = data.bayar;
-                    var saldo = data.saldo;
-                    var nilaipo = data.nilaipo;
-                    var pajak = data.pajak;
-                    var totalpo = data.totalpo;
-                    var bpo = data.bpo;
+                var id_po = data.po.id;
+                var tgl_po = data.tglpo;
+                var no_ref_po = data.po.noreftxt;
+                var no_po = data.po.nopo;
+                var pembayaran = data.po.bayar;
+                var kd_supply = data.po.kode_supply;
+                var nama_supply = data.po.nama_supply;
+                var kurs = data.kurs;
+                var bayar = data.bayar;
+                var saldo = data.saldo;
+                var nilaipo = data.nilaipo;
+                var pajak = data.pajak;
+                var totalpo = data.totalpo;
+                var tot = data.totalpo;
+                var bpo = data.bpo;
 
 
-                    $('#hidden_id_po').val(id_po);
-                    $('#txt_tgl_po').val(tgl_po);
+                $('#hidden_id_po').val(id_po);
+                $('#txt_tgl_po').val(tgl_po);
 
-                    $('#txt_no_ref_po').val(no_ref_po);
-                    $('#hidden_no_po').val(no_po);
-                    $('#txt_pembayaran').val(pembayaran);
-                    $('#kd_supplier').val(kd_supply);
-                    $('#txt_supplier').val(nama_supply);
-                    $('#txt_dibayar_ke').val(nama_supply);
+                $('#txt_no_ref_po').val(no_ref_po);
+                $('#hidden_no_po').val(no_po);
+                $('#txt_pembayaran').val(pembayaran);
+                $('#kd_supplier').val(kd_supply);
+                $('#txt_supplier').val(nama_supply);
+                $('#txt_dibayar_ke').val(nama_supply);
 
-                    $('#txt_nilai_po').val(nilaipo);
-                    $('#hidden_nilai_po').val(nilaipo);
-                    $('#txt_pajak').val(pajak);
-                    $('#txt_total_po').val(totalpo);
-                    // var bpo = nilai_bpo.replace(/,/g, "");
-                    $('#txt_nilai_bpo2').val(bpo);
-                    $('#lbl_kurs').html(kurs);
-                    $('#hidden_kurs').val(kurs);
+                $('#txt_nilai_po').val(nilaipo);
+                $('#hidden_nilai_po').val(nilaipo);
+                $('#txt_pajak').val(pajak);
+                $('#hidden_pajak').val(pajak);
+                $('#txt_total_po').val(totalpo);
+                $('#tot_po').val(tot);
+                // var bpo = nilai_bpo.replace(/,/g, "");
+                $('#txt_nilai_bpo2').val(bpo);
+                $('#hidden_bpo2').val(bpo)
+                $('#lbl_kurs').html(kurs);
+                $('#hidden_kurs').val(kurs);
 
-                    $('#txt_sudah_dibayar').val(bayar);
-                    $('#modalcariPO').modal('hide');
+                $('#txt_sudah_dibayar').val(bayar);
+                $('#modalcariPO').modal('hide');
+                sum_pp_bayar(no_ref_po)
+                hitungTotalPO();
 
-                    hitungTotalPO();
-                    // hitungTotalPO();
-                }
             },
             error: function(request) {
                 console.log(request.responseText);
@@ -571,7 +566,7 @@
             data: {
                 id_pp: $('#id_pp').val(),
                 nopp: $('#nopp').val(),
-                // ref_po: $('#ref_po').val(),
+                refpp: $('#hidden_refpp').val(),
                 jumlah: $('#jumlah').val(),
                 nopo: $('#nopo').val(),
             },
@@ -580,7 +575,7 @@
                 $.toast({
                     position: 'top-right',
                     heading: 'Dihapus',
-                    text: 'Berhasil Dihapus!',
+                    text: 'Berhasil Dibatalkan!',
                     icon: 'success',
                     loader: false
                 });
@@ -625,6 +620,8 @@
             form_data.append('txt_total_po', $('#txt_total_po').val());
             form_data.append('txt_dibayar_ke', $('#txt_dibayar_ke').val());
             form_data.append('txt_jumlah', $('#txt_jumlah').val());
+            form_data.append('jumlah', $('#jumlah').val());
+            form_data.append('jumlahplus', $('#jumlahplus').val());
             form_data.append('txt_terbilang', $('#txt_terbilang').val());
             form_data.append('txt_keterangan', $('#txt_keterangan').val());
             form_data.append('hidden_main_account', $('#hidden_main_account').val());
@@ -667,7 +664,8 @@
                         $('#txt_sudah_dibayar').val(data.sdh_bayar);
                         $('#batalpp').removeAttr('disabled');
                         $('#cetak').removeAttr('disabled');
-
+                        var norefpo = data.norefpo;
+                        sum_pp_bayar(norefpo)
                         // setTimeout(function() {
                         //     window.location.href = "<?php echo site_url('Pp'); ?>";
                         // }, 1000);
@@ -702,6 +700,8 @@
             form_data.append('txt_total_po', $('#txt_total_po').val());
             form_data.append('txt_dibayar_ke', $('#txt_dibayar_ke').val());
             form_data.append('txt_jumlah', $('#txt_jumlah').val());
+            form_data.append('jumlah', $('#jumlah').val());
+            form_data.append('jumlahplus', $('#jumlahplus').val());
             form_data.append('txt_terbilang', $('#txt_terbilang').val());
             form_data.append('txt_keterangan', $('#txt_keterangan').val());
             form_data.append('txt_no_voucher', $('#txt_no_voucher').val());
@@ -741,11 +741,33 @@
                         $('#cancelUpdate').hide();
                         $('#update_pp').show();
                         $('#id_pp').val(data.idpp);
-                        $('#hidden_refpp').val(data.norefpp);
-                        $('#hidden_no_pp').val(data.nopp);
                         $('#txt_sudah_dibayar').val(data.sdh_bayar);
                         $('#batalpp').removeAttr('disabled');
                         $('#cetak').removeAttr('disabled');
+                        var norefpo = data.norefpo;
+                        sum_pp_bayar(norefpo);
+                        cancelUpdate();
+                    } else {
+                        $.toast({
+                            position: 'top-right',
+                            heading: 'Failed!',
+                            text: 'Gagal Disimpan!',
+                            icon: 'error',
+                            loader: false
+                        });
+                        $('.div_form_1').find('input,textarea,select').attr('disabled', '');
+                        $('.div_form_1').find('input,textarea,select').addClass('form-control bg-light');
+                        $('.spinner-border').css('display', 'none');
+                        $('#simpan_pp').hide();
+                        $('#cancelUpdate').hide();
+                        $('#update_pp').show();
+                        $('#id_pp').val(data.idpp);
+                        $('#txt_sudah_dibayar').val(data.sdh_bayar);
+                        $('#batalpp').removeAttr('disabled');
+                        $('#cetak').removeAttr('disabled');
+                        var norefpo = data.norefpo;
+                        sum_pp_bayar(norefpo);
+                        cancelUpdate();
                     }
                 },
                 error: function(request) {
@@ -799,6 +821,10 @@
                 $('#txt_sudah_dibayar').val(data[0].kasir_bayar);
                 $('#txt_jumlah').val(data[0].jumlah);
                 $('#txt_keterangan').val(data[0].ket);
+                $('#hidden_refpp').val(data[0].ref_pp);
+                $('#hidden_no_pp').val(data[0].nopp);
+                var norefpo = data[0].ref_po;
+                sum_pp_bayar(norefpo);
 
             },
             error: function(request) {
@@ -951,6 +977,7 @@
                 var nilaipo = data.nilaipo;
                 var pajak = data.pajak;
                 var totalpo = data.totalpo;
+                var tot = data.totalpo;
                 var bpo = data.bpo;
 
 
@@ -967,14 +994,19 @@
                 $('#txt_nilai_po').val(nilaipo);
                 $('#hidden_nilai_po').val(nilaipo);
                 $('#txt_pajak').val(pajak);
+                $('#hidden_pajak').val(pajak);
                 $('#txt_total_po').val(totalpo);
+                $('#tot_po').val(tot);
                 // var bpo = nilai_bpo.replace(/,/g, "");
                 $('#txt_nilai_bpo2').val(bpo);
+                $('#hidden_bpo2').val(bpo);
                 $('#lbl_kurs').html(kurs);
                 $('#hidden_kurs').val(kurs);
 
                 $('#txt_sudah_dibayar').val(bayar);
                 $('#modalcariPO').modal('hide');
+
+                sum_pp_bayar(no_ref_po)
 
                 hitungTotalPO();
                 // setTimeout(function() {
@@ -999,12 +1031,47 @@
 
         var total_po = parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
         var sisabayar = (parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2)) - parseFloat(sudah_dibayar);
+        var tot_po = parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
+        var data = parseFloat(nilai_po) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
+        var data2 = parseFloat(data) * 2 / 100;
+        // console.log('Dua persen dari nilai po + biayalain', data2);
+        var hargaplus = parseFloat(tot_po) + parseFloat(data2);
+        var jum = $('#jumlah').val();
+
+        var jml = $('#txt_jumlah').val();
+        $('#jumlahplus').val(hargaplus);
+        // var id_pp = $('#id_pp').val();
+        // if (!id_pp) {
+        //     if (jml > hargaplus) {
+        //         $('#txt_pajak').val($('#hidden_pajak').val());
+        //         $('#txt_nilai_bpo1').val($('#hidden_bpo1').val());
+        //         $('#txt_nilai_bpo2').val($('#hidden_bpo2').val());
+        //         $('#txt_jumlah').val(sisabayar);
+        //     }
+        // } else {
+        //     if (jml > nilaitot) {
+        //         $('#txt_pajak').val($('#hidden_pajak').val());
+        //         $('#txt_nilai_bpo1').val($('#hidden_bpo1').val());
+        //         $('#txt_nilai_bpo2').val($('#hidden_bpo2').val());
+        //         $('#txt_jumlah').val(sisabayar);
+        //     } else {
+        //         console.log("OKE SIP");
+        //     }
+
+        // }
+        // // plusduapersen(hargaplus);
+        // if (sisabayar > hargaplus) {
+        //     console.log("OPS melebihi batas");
+        // } else {
+        //     console.log("TIDAK melebihi batas");
+        // }
 
         $('#txt_total_po').val(total_po);
+        $('#tot_po').val(total_po);
         $('#total_po').val(total_po);
-        console.log('total keseluruhan', pajak);
+        // console.log('total keseluruhan', pajak);
         $('#txt_jumlah').val(sisabayar);
-        $('#jumlah').val(sisabayar);
+        $('#jumlahplus').val(hargaplus);
 
         var kurs = $('#hidden_kurs').val();
 
@@ -1024,11 +1091,15 @@
             var kur = ' Ringgit';
         }
 
+        // $('#txt_terbilang').val(terbilang(hargaplus) + kur);
         $('#txt_terbilang').val(terbilang(sisabayar) + kur);
 
     }
 
-
+    // function plusduapersen(hargaplus) {
+    //     var harga = hargaplus;
+    //     return harga;
+    // }
 
     function getTerbilang() {
         var nilai_po = $('#txt_nilai_po').val();
@@ -1036,27 +1107,53 @@
         var nilai_bpo1 = $('#txt_nilai_bpo1').val();
         var nilai_bpo2 = $('#txt_nilai_bpo2').val();
         var sudah_dibayar = $('#txt_sudah_dibayar').val();
+        var txt_total_po = $('#txt_total_po').val();
 
         var total_po = parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
         // var total_po = addCommas(nStr);
         var sisabayar = (parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2)) - parseFloat(sudah_dibayar);
-
+        var tot_po = parseFloat(nilai_po) + parseFloat(pajak) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
+        var data = parseFloat(nilai_po) + parseFloat(nilai_bpo1) + parseFloat(nilai_bpo2);
+        var data2 = parseFloat(data) * 2 / 100;
+        var nilaitot = parseFloat(txt_total_po) + parseFloat(data2);
+        // console.log('Dua persen dari nilai po + biayalain', data2);
+        var hargaplus = parseFloat(tot_po) + parseFloat(data2);
+        var jum = $('#jumlah').val();
         // var sisa = addCommas(sisabayar);
 
         var jml = $('#txt_jumlah').val();
+        $('#jumlahplus').val(hargaplus);
         // var d = jml.split('.').join("");
         // // console.log("jumlah ", d);
         if (jml < 0) {
             $('#txt_jumlah').val(sisabayar);
-            // console.log(sisabayar);
-            // $('#jumlah').val(sisabayar); 
+            // console.log(hargaplus);
+            // $('#jumlah').val(hargaplus); 
             // $('#txt_terbilang').val('');
         }
-        if (jml > sisabayar) {
-            $('#txt_jumlah').val(sisabayar);
-            // console.log(sisabayar);  
-            $('#jumlah').val(sisabayar);
+
+        var id_pp = $('#id_pp').val();
+        if (!id_pp) {
+            if (jml > hargaplus) {
+                $('#txt_jumlah').val(sisabayar);
+                // console.log(hargaplus);  
+                // $('#jumlah').val();
+                // $('#txt_terbilang').val('');
+            }
+        } else {
+
+
+            if (jml > nilaitot) {
+
+                $('#txt_jumlah').val(sisabayar);
+            } else {
+                console.log("OKE SIP");
+            }
+            // console.log(hargaplus);  
+
             // $('#txt_terbilang').val('');
+
+
         }
 
         var kurs = $('#hidden_kurs').val();
@@ -1080,8 +1177,135 @@
         $('#txt_terbilang').val(terbilang($('#txt_jumlah').val()) + kur);
     }
 
-    function tes(data) {
-        $('#jumlah').val(data);
+    function sum_pp_bayar(noref) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Pp/sum_total_bayar') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {},
+
+            data: {
+                noref: noref
+            },
+
+            success: function(data) {
+                // console.log(data);
+                var tot = data.totalbayar;
+                $('#jumlah').val(tot);
+                validasipo(tot);
+            },
+            error: function(request) {
+                alert("KONEKSI TERPUTUS!");
+            }
+        });
+    }
+
+    function validasipo(tot) {
+        var id_po = $('#hidden_id_po').val();
+        var nilaipo = $('#tot_po').val();
+        var jumlahbayar = $('#txt_jumlah').val();
+        var jumlahplus = $('#jumlahplus').val();
+        var jumlah = tot;
+
+        if (parseFloat(jumlah) == parseFloat(nilaipo)) {
+            console.log('1. update terbayar PO jadi 1');
+            var terbayar = 1;
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Pp/update_terbayar_po') ?>",
+                dataType: "JSON",
+
+                beforeSend: function() {},
+
+                data: {
+                    id_po: id_po,
+                    terbayar: terbayar
+                },
+
+                success: function(data) {
+                    console.log(data);
+
+                },
+                error: function(request) {
+                    alert("KONEKSI TERPUTUS!");
+                }
+            });
+        } else if (parseFloat(jumlah) > parseFloat(nilaipo)) {
+            console.log('2. update terbayar PO jadi 1');
+            var terbayar = 1;
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Pp/update_terbayar_po') ?>",
+                dataType: "JSON",
+
+                beforeSend: function() {},
+
+                data: {
+                    id_po: id_po,
+                    terbayar: terbayar
+                },
+
+                success: function(data) {
+                    console.log(data);
+
+                },
+                error: function(request) {
+                    alert("KONEKSI TERPUTUS!");
+                }
+            });
+        } else if (jumlah == jumlahplus) {
+            console.log('3. update terbayar PO jadi 1');
+            var terbayar = 1;
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Pp/update_terbayar_po') ?>",
+                dataType: "JSON",
+
+                beforeSend: function() {},
+
+                data: {
+                    id_po: id_po,
+                    terbayar: terbayar
+                },
+
+                success: function(data) {
+                    console.log(data);
+
+                },
+                error: function(request) {
+                    alert("KONEKSI TERPUTUS!");
+                }
+            });
+        } else {
+            console.log('4. update terbayar PO jadi 0');
+            var terbayar = 0;
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Pp/update_terbayar_po') ?>",
+                dataType: "JSON",
+
+                beforeSend: function() {},
+
+                data: {
+                    id_po: id_po,
+                    terbayar: terbayar
+                },
+
+                success: function(data) {
+                    console.log(data);
+
+                },
+                error: function(request) {
+                    alert("KONEKSI TERPUTUS!");
+                }
+            });
+        }
     }
 
     function addCommas(nStr) {
