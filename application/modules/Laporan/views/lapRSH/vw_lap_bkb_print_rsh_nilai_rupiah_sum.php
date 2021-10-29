@@ -107,7 +107,7 @@
             foreach ($kode_stock as $ks) {
                   $kode_dev2 = (int)$kode_dev;
                   if ($kode_dev == 'Semua') {
-                        $q_saldo = "SELECT SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
+                        $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
                   } else {
                         $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2')";
                   }
@@ -118,6 +118,25 @@
                         $saldo = [
                               'saldoakhir_qty' => '0'
                         ];
+                  }
+
+                  //mencari rata2 di stockawal harian
+                  $sql_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal_harian WHERE txtperiode < '$txtperiode' AND kodebar = '$ks->kodebar'";
+
+                  $stockawal_harian = $this->db_logistik_pt->query($sql_rata2)->num_rows();
+                  if ($stockawal_harian >= 1) {
+                        $data_stockawal_harian = $this->db_logistik_pt->query($sql_rata2)->row_array();
+                  } else {
+                        $data_stockawal_harian = [
+                              'saldoakhir_nilai' => 0,
+                              'saldoakhir_qty' => 0
+                        ];
+                  }
+
+                  if ($data_stockawal_harian['saldoakhir_nilai'] == NULL || $data_stockawal_harian['saldoakhir_qty'] == NULL) {
+                        $rata2_harga_head = 0;
+                  } else {
+                        $rata2_harga_head = $data_stockawal_harian['saldoakhir_nilai'] / $data_stockawal_harian['saldoakhir_qty'];
                   }
             ?>
                   <table border="0" width="100%">
@@ -130,7 +149,10 @@
                                     <td style="text-align: left;"><b> <?= $ks->kodebar; ?> &nbsp; <?= $ks->nabar; ?></b></td>
                                     <td style="text-align: right;">
                                           <b>
-                                                Saldo Sebelum Periode : <?= number_format($saldo['saldoakhir_qty'], 2) . ' ' . $ks->satuan; ?>
+                                                Saldo Sebelum Periode (QTY) : <?= number_format($saldo['saldoakhir_qty'], 2) . ' ' . $ks->satuan; ?>
+                                          </b>
+                                          <b>
+                                                | (Rp) : <?= number_format($saldo['saldoakhir_qty'] * $rata2_harga_head, 2); ?>
                                           </b>
                                     </td>
                               </tr>
@@ -139,64 +161,88 @@
                   <table width="100%" class="singleborder" border="1">
                         <thead style="text-align: center;">
                               <tr>
-                                    <td>No</td>
-                                    <td>Tgl</td>
-                                    <td>Qty Masuk</td>
-                                    <td>Qty Keluar</td>
-                                    <td>Saldo</td>
-                                    <td>Keterangan</td>
+                                    <td rowspan="2" style="text-align: center; width: 2%;">No</td>
+                                    <td rowspan="2" style="text-align: center; width: 5%;">Tgl</td>
+                                    <td colspan="2" style="text-align: center; width: 26%;">LPB</td>
+                                    <td colspan="2" style="text-align: center; width: 26%;">BKB</td>
+                                    <td rowspan="2" style="text-align: center; width: 10%;">Harga Rata-rata</td>
+                                    <td colspan="2" style="text-align: center; width: 26%;">Saldo</td>
+                                    <td rowspan="2" style="text-align: center; width: 5%;">Keterangan</td>
+                              </tr>
+                              <tr>
+                                    <th style="width: 7.5%;">&emsp;Qty</th>
+                                    <th style="width: 7.5%;">&emsp;Rupiah</th>
+                                    <th style="width: 7.5%;">&emsp;Qty</th>
+                                    <th style="width: 7.5%;">&emsp;Rupiah</th>
+                                    <th style="width: 7.5%;">&emsp;Qty</th>
+                                    <th style="width: 7.5%;">&emsp;Rupiah</th>
                               </tr>
                         </thead>
                         <tbody>
                               <?php
-                              //distinct tnggal
-                              $p1_frmt = date_format(date_create($p1), "Ymd");
-                              $p2_frmt = date_format(date_create($p2), "Ymd");
-
-                              $sql = "SELECT DISTINCT tgltxt FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND (status = 'LPB' OR status = 'BKB')";
-                              $result_sql = $this->db_logistik_pt->query($sql)->result();
+                              if ($kode_dev == 'Semua') {
+                                    $q_sum = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, QTY_MASUK, QTY_KELUAR, periode, ket FROM stockawal_harian WHERE periode BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' GROUP BY periode ORDER BY periode ASC";
+                              } else {
+                                    $q_sum = "SELECT ket, tgl, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND tgltxt = $rs->tgltxt AND kodebar='$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2')";
+                              }
+                              $q_sum = $this->db_logistik_pt->query($q_sum)->result();
 
                               $no = 1;
                               $gt_lpb = 0;
+                              $gt_lpb_qty = 0;
                               $gt_bkb = 0;
+                              $gt_bkb_qty = 0;
                               $s_a = $saldo['saldoakhir_qty'];
-                              foreach ($result_sql as $rs) {
-
-                                    if ($kode_dev == 'Semua') {
-                                          $q_sum = "SELECT tgl, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND tgltxt = $rs->tgltxt AND kodebar='$ks->kodebar'";
+                              $s_a_qty = $saldo['saldoakhir_qty'];
+                              foreach ($q_sum as $qs) {
+                                    if ($qs->saldoakhir_nilai == NULL || $qs->saldoakhir_qty == NULL) {
+                                          $rata2_harga = 0;
                                     } else {
-                                          $q_sum = "SELECT tgl, status, SUM(masuk_qty) AS masuk_qty, SUM(keluar_qty) AS keluar_qty FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND tgltxt = $rs->tgltxt AND kodebar='$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2')";
+                                          $rata2_harga = $qs->saldoakhir_nilai / $qs->saldoakhir_qty;
                                     }
-                                    $q_sum = $this->db_logistik_pt->query($q_sum)->result();
 
-                                    foreach ($q_sum as $qs) {
-                                          $s_a = $s_a + $qs->masuk_qty - $qs->keluar_qty;
-                                          $gt_lpb += $qs->masuk_qty;
-                                          $gt_bkb += $qs->keluar_qty;
+                                    $s_a = $s_a + ($qs->QTY_MASUK * $rata2_harga) - ($qs->QTY_KELUAR * $rata2_harga);
+                                    $s_a_qty = $s_a_qty + $qs->QTY_MASUK - $qs->QTY_KELUAR;
+                                    $gt_lpb += $qs->QTY_MASUK * $rata2_harga;
+                                    $gt_lpb_qty += $qs->QTY_MASUK;
+                                    $gt_bkb += $qs->QTY_KELUAR * $rata2_harga;
+                                    $gt_bkb_qty += $qs->QTY_KELUAR;
 
-                                          if ($qs->masuk_qty == 0 and $qs->keluar_qty == 0) {
-                                          } else {
+                                    if ($qs->QTY_MASUK == 0 and $qs->QTY_KELUAR == 0) {
+                                    } else {
                               ?>
-                                                <tr>
-                                                      <td style="text-align: center;"><?= $no++; ?></td>
-                                                      <td style="text-align: center;"><?= date_format(date_create($qs->tgl), 'd/m/Y'); ?></td>
-                                                      <td style="text-align: right;"><?= number_format($qs->masuk_qty, 2); ?></td>
-                                                      <td style="text-align: right;"><?= number_format($qs->keluar_qty, 2); ?></td>
-                                                      <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
-                                                      <td></td>
-                                                </tr>
-                                          <?php } ?>
+                                          <tr>
+                                                <td style="text-align: center;"><?= $no++; ?></td>
+                                                <td style="text-align: center;"><?= date_format(date_create($qs->periode), 'd/m/Y'); ?></td>
+                                                <td style="text-align: right;"><?= number_format($qs->QTY_MASUK, 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format($qs->QTY_MASUK * $rata2_harga, 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format($qs->QTY_KELUAR, 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format($qs->QTY_KELUAR * $rata2_harga, 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format($rata2_harga, 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format(($s_a_qty), 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format(($s_a * $rata2_harga), 2); ?></td>
+                                                <td style="text-align: left;"><?= $qs->ket; ?></td>
+                                          </tr>
                                     <?php } ?>
                               <?php } ?>
                               <tr>
                                     <td style="text-align: center;" colspan="2"><b>GRAND TOTAL</b></td>
+                                    <td style="text-align: right;"><b><?= number_format($gt_lpb_qty, 2); ?></b></td>
                                     <td style="text-align: right;"><b><?= number_format($gt_lpb, 2); ?></b></td>
+                                    <td style="text-align: right;"><b><?= number_format($gt_bkb_qty, 2); ?></b></td>
                                     <td style="text-align: right;"><b><?= number_format($gt_bkb, 2); ?></b></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="4"></td>
                               </tr>
                               <tr>
-                                    <td style="text-align: center;" colspan="6"><b>Saldo : <?= number_format($s_a, 2); ?></b></td>
+                                    <?php
+                                    if ($rata2_harga_head == 0) {
+                                          $saldo_akhirnya = $s_a;
+                                    } else {
+                                          $saldo_akhirnya = $s_a * $rata2_harga_head;
+                                    }
+
+                                    echo '<td style="text-align: center;" colspan="10"><b>SALDO AKHIR | QTY : ' . number_format($s_a_qty, 2) . '&emsp;&emsp; Nilai(RP) :' . number_format($saldo_akhirnya, 2) . '</b></td>';
+                                    ?>
                               </tr>
                         </tbody>
                   </table>

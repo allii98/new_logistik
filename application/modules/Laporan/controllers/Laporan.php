@@ -2946,6 +2946,8 @@ class Laporan extends CI_Controller
 			'mode' => 'utf-8',
 			'format' => [190, 236],
 			// 'margin_top' => '2',
+			'margin_left' => '2',
+			'margin_right' => '2',
 			'orientation' => 'L'
 		]);
 
@@ -2957,6 +2959,97 @@ class Laporan extends CI_Controller
 		// echo "<pre>";
 		// print_r($data);
 		// echo "</pre>";
+	}
+
+	function print_lap_rsh_nilai_rupiah_sum()
+	{
+		ini_set('pcre.backtrack_limit', '50000000');
+		// $lokasi = $this->uri->segment(3);
+		// if ($lokasi == '01') {
+		// 	$posisi = 'HO';
+		// } else if ($lokasi == '02') {
+		// 	$posisi = 'RO';
+		// } else if ($lokasi == '03') {
+		// 	$posisi = 'PKS';
+		// } else if ($lokasi == '06') {
+		// 	$posisi = 'ESTATE1';
+		// } else if ($lokasi == '07') {
+		// 	$posisi = 'ESTATE2';
+		// }
+		// $bagian = $this->uri->segment(4);
+		// if ($bagian == 'Semua') {
+		// 	$q_bag = "";
+		// } else {
+		// 	$q_bag = "AND a.grp = '$bagian'";
+		// }
+		$grup = urldecode($this->uri->segment(4));
+		$devisi = $this->uri->segment(3);
+		$kode_stok = $this->uri->segment(5);
+
+		$txtperiode = $this->session->userdata('ym_periode');
+		$periode = $this->session->userdata('Ymd_periode');
+		$d_periode = date("j", strtotime($this->session->userdata('Ymd_periode')));
+		if ($d_periode >= 26) {
+			$p1 = date_format(date_create($periode), 'Y-m-') . '26';
+			$periode = date('Y-m-d', strtotime($periode . " +1 month"));
+			$p2 = date_format(date_create($periode), 'Y-m-') . '25';
+		} else {
+			$periode = date('Y-m-d', strtotime($periode));
+			$p1 = date('Y-m-d', strtotime($periode . " -1 month"));
+			$p1 = date_format(date_create($p1), 'Y-m-') . '26';
+			$p2 = date_format(date_create($periode), 'Y-m-') . '25';
+		}
+		$periode = date_format(date_create($periode), 'M Y');
+
+		if ($devisi == 'Semua') {
+
+			$this->db_logistik_pt->distinct();
+			$this->db_logistik_pt->select('kodebar, nabar, pt, satuan');
+			$this->db_logistik_pt->from('stockawal');
+			// jika kode barang di isi
+			if ($kode_stok != '') {
+				$this->db_logistik_pt->where('kodebar', $kode_stok);
+			}
+			// jika grp brg dipilih
+			if ($grup != 'Semua') {
+				$this->db_logistik_pt->like('grp', $grup);
+			}
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
+		} else {
+			$this->db_logistik_pt->distinct();
+			$this->db_logistik_pt->select('kodebar, nabar, devisi, satuan');
+			$this->db_logistik_pt->from('stockawal_bulanan_devisi');
+			// jika kode barang di isi
+			if ($kode_stok != '') {
+				$this->db_logistik_pt->where('kodebar', $kode_stok);
+			}
+			// jika grp brg dipilih
+			if ($grup != 'Semua') {
+				$this->db_logistik_pt->like('grp', $grup);
+			}
+			$this->db_logistik_pt->where('kode_dev', $devisi);
+			// $this->db_logistik_pt->where(['periode >=' => $p1, 'periode' <= $p2]);
+			$data['kode_stock'] = $this->db_logistik_pt->get()->result();
+		}
+
+		$data['kode_dev'] = $devisi;
+		$data['alamat'] = $devisi;
+		$data['periode'] = $periode;
+		$data['txtperiode'] = $txtperiode;
+		$data['p1'] = $p1;
+		$data['p2'] = $p2;
+
+		$mpdf = new \Mpdf\Mpdf([
+			'mode' => 'utf-8',
+			'format' => [190, 236],
+			// 'margin_top' => '2',
+			'orientation' => 'L'
+		]);
+
+		$html = $this->load->view('lapRSH/vw_lap_bkb_print_rsh_nilai_rupiah_sum', $data, true);
+		$mpdf->WriteHTML($html);
+		$mpdf->Output();
 	}
 
 	function list_group_brg()

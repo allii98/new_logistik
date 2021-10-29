@@ -1538,22 +1538,30 @@
                             </div>
                         </div>
 
-                        <div class="form-group">&nbsp;&nbsp;&nbsp;
-                            <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="rinci_rsh" id="rbt_rinci_rsh" name="rbt_pilihan9" checked>
-                                <label for="rbt_rinci_rsh"> Rinci </label>
+                        <div class="form-group ml-3">
+                            <div class="row col-12">
+                                <div class="radio radio-info form-check-inline col-3">
+                                    <input type="radio" value="rinci_rsh" id="rbt_rinci_rsh" name="rbt_pilihan9" checked>
+                                    <label for="rbt_rinci_rsh">Rinci </label>
+                                </div>
+                                <div class="radio radio-info form-check-inline col-3">
+                                    <input type="radio" value="summary_rsh" id="summary_rsh" name="rbt_pilihan9">
+                                    <label for="summary_rsh">Summary </label>
+                                </div>
+                                <div class="radio radio-info form-check-inline col-3">
+                                    <input type="radio" value="non_saldo" id="rbt_non_saldo" name="rbt_pilihan9">
+                                    <label for="rbt_non_saldo">Non Saldo </label>
+                                </div>
                             </div>
-                            <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="summary_rsh" id="summary_rsh" name="rbt_pilihan9">
-                                <label for="summary_rsh">Summary </label>
-                            </div>
-                            <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="non_saldo" id="rbt_non_saldo" name="rbt_pilihan9">
-                                <label for="rbt_non_saldo">Non Saldo </label>
-                            </div>
-                            <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="nilai_rupiah" id="rbt_nilai_rupiah_rsh" name="rbt_pilihan9">
-                                <label for="rbt_nilai_rupiah_rsh">Nilai Rupiah </label>
+                            <div class="row col-12 mt-1">
+                                <div class="radio radio-info form-check-inline col-5">
+                                    <input type="radio" value="nilai_rupiah" id="rbt_nilai_rupiah_rsh" name="rbt_pilihan9">
+                                    <label for="rbt_nilai_rupiah_rsh">Nilai Rupiah (Rinci) </label>
+                                </div>
+                                <div class="radio radio-info form-check-inline col-6">
+                                    <input type="radio" value="nilai_rupiah_sum" id="rbt_nilai_rupiah_sum_rsh" name="rbt_pilihan9">
+                                    <label for="rbt_nilai_rupiah_sum_rsh">Nilai Rupiah (Summary)</label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2465,12 +2473,11 @@
                 success: function(data) {
                     $('#devisi_rsh').empty();
                     var stl = '<?= $this->session->userdata('status_lokasi'); ?>';
-                    if (stl == 'HO') {
-                        var opsi_cmb_all = '<option value="Semua">SEMUA</option>';
-                        $('#devisi_rsh').append(opsi_cmb_all);
-                    }
+                    // if (stl == 'HO') {
+                    // }
 
-
+                    var opsi_cmb_all = '<option value="Semua">Gabungan</option>';
+                    $('#devisi_rsh').append(opsi_cmb_all);
                     $.each(data, function(index) {
                         var opsi_cmb_devisi = '<option value="' + data[index].kodetxt + '">' + data[index].PT + '</option>';
                         $('#devisi_rsh').append(opsi_cmb_devisi);
@@ -2496,6 +2503,8 @@
                 window.open('<?= site_url("Laporan/print_lap_rsh_non_saldo"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
             } else if (rbt_pilihan9 == 'nilai_rupiah') {
                 window.open('<?= site_url("Laporan/print_lap_rsh_nilai_rupiah"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
+            } else if (rbt_pilihan9 == 'nilai_rupiah_sum') {
+                window.open('<?= site_url("Laporan/print_lap_rsh_nilai_rupiah_sum"); ?>/' + cmb_devisi5 + '/' + cmb_group_brg + '/' + kode_stok);
             }
             console.log(cmb_devisi5, kode_stok, cmb_group_brg, rbt_pilihan9);
         }
