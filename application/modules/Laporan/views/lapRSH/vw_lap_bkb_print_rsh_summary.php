@@ -107,7 +107,7 @@
             foreach ($kode_stock as $ks) {
                   $kode_dev2 = (int)$kode_dev;
                   if ($kode_dev == 'Semua') {
-                        $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
+                        $q_saldo = "SELECT SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
                   } else {
                         $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2')";
                   }
