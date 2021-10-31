@@ -190,18 +190,28 @@ class Po extends CI_Controller
             } else {
                 if ($d->terbayar != 0) {
                     $aksi = '
-                <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
                 <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-primary btn-xs fa fa-print" title="Cetak">
                 </a>
                 ';
                 } else {
-
-                    $aksi = '
-                    <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
-                    <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
-                    <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
-                    </a>
-                    ';
+                    if ($d->batal != 0) {
+                        # code...
+                        $aksi = '
+                       
+                        <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                        <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
+                        </a>
+                        ';
+                    } else {
+                        $aksi = '
+                        <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
+                        <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                        <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
+                        </a>
+                        ';
+                        # code...
+                    }
                 }
                 $lpb = '';
             }
@@ -333,16 +343,25 @@ class Po extends CI_Controller
             ]);
 
 
-            if ($data['po']->terbayar == "1") {
-                $mpdf->SetWatermarkText('TERBAYAR');
-                $mpdf->showWatermarkText = true;
-            }
+            // if ($data['po']->terbayar == "1") {
+            //     $mpdf->SetWatermarkText('TERBAYAR');
+            //     $mpdf->showWatermarkText = true;
+            // }
 
-            if ($data['po']->terbayar == "2") {
-                $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-                $mpdf->showWatermarkText = true;
+            // if ($data['po']->terbayar == "2") {
+            //     $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
+            //     $mpdf->showWatermarkText = true;
+            // }
+            if ($data['po']->batal == 1) {
+                # code...
+                $mpdf->SetWatermarkImage(
+                    '././assets/img/batal.png',
+                    0.3,
+                    '',
+                    array(25, 10)
+                );
+                $mpdf->showWatermarkImage = true;
             }
-
             $namapt = $data['po']->namapt;
 
             $lokasi = $data['po']->lokasi;
@@ -372,20 +391,29 @@ class Po extends CI_Controller
             ]);
 
 
-            if ($data['po']->terbayar == "1") {
-                $mpdf->SetWatermarkText('TERBAYAR');
-                $mpdf->showWatermarkText = true;
-            }
+            // if ($data['po']->terbayar == "1") {
+            //     $mpdf->SetWatermarkText('TERBAYAR');
+            //     $mpdf->showWatermarkText = true;
+            // }
 
-            if ($data['po']->terbayar == "2") {
-                $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-                $mpdf->showWatermarkText = true;
-            }
+            // if ($data['po']->terbayar == "2") {
+            //     $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
+            //     $mpdf->showWatermarkText = true;
+            // }
 
             $namapt = $data['po']->namapt;
 
             $lokasi = $data['po']->lokasi;
-
+            if ($data['po']->batal == 1) {
+                # code...
+                $mpdf->SetWatermarkImage(
+                    '././assets/img/batal.png',
+                    0.3,
+                    '',
+                    array(25, 10)
+                );
+                $mpdf->showWatermarkImage = true;
+            }
 
             $html = $this->load->view('v_po_print', $data, true);
 
@@ -411,21 +439,30 @@ class Po extends CI_Controller
             ]);
 
 
-            if ($data['po']->terbayar == "1") {
-                $mpdf->SetWatermarkText('TERBAYAR');
-                $mpdf->showWatermarkText = true;
-            }
+            // if ($data['po']->terbayar == "1") {
+            //     $mpdf->SetWatermarkText('TERBAYAR');
+            //     $mpdf->showWatermarkText = true;
+            // }
 
-            if ($data['po']->terbayar == "2") {
-                $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-                $mpdf->showWatermarkText = true;
-            }
+            // if ($data['po']->terbayar == "2") {
+            //     $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
+            //     $mpdf->showWatermarkText = true;
+            // }
 
             $namapt = $data['po']->namapt;
 
             $lokasi = $data['po']->lokasi;
 
-
+            if ($data['po']->batal == 1) {
+                # code...
+                $mpdf->SetWatermarkImage(
+                    '././assets/img/batal.png',
+                    0.3,
+                    '',
+                    array(25, 10)
+                );
+                $mpdf->showWatermarkImage = true;
+            }
             $html = $this->load->view('v_po_solar_print', $data, true);
 
             $mpdf->WriteHTML($html);
@@ -516,6 +553,7 @@ class Po extends CI_Controller
         $data = $this->M_po->get_id($id, $noreftxt);
         echo json_encode($data);
     }
+
     public function getitem()
     {
         $data = $this->M_po->get_itemppo();
@@ -1399,6 +1437,34 @@ class Po extends CI_Controller
         $refspp = $this->input->post('refspp');
         $data =  $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $refspp))->num_rows();
 
+        echo json_encode($data);
+    }
+
+    function konfirbatal()
+    {
+        $noref_po = $this->input->post('noref_po');
+        $id_ppo = $this->input->post('id_item');
+        $refspp = $this->input->post('hidden_no_ref_spp');
+        $qty = $this->input->post('qty');
+
+        $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
+        $qty2 = $cek->qty2;
+        $isi = $qty2 - $qty;
+
+        $data_ppo2 =  array(
+            'po' => 0
+        );
+        $data = $this->M_po->updatePPO2($refspp, $data_ppo2);
+
+        $data_ppo =  array(
+            'qty2' => $isi,
+            'po' => 0
+        );
+        $this->M_po->updatePPO($id_ppo, $data_ppo);
+
+
+
+        $data =  $this->M_po->konfirbatal($noref_po);
         echo json_encode($data);
     }
 

@@ -138,6 +138,13 @@ class M_po extends CI_Model
         return $data_return;
     }
 
+    public function konfirbatal($noref_po)
+    {
+        $data = array('batal' => 1);
+        $this->db_logistik_pt->where('noreftxt', $noref_po);
+        $this->db_logistik_pt->update('po', $data);
+        return TRUE;
+    }
     public function updatePPO2($refspp, $data_ppo)
     {
         $this->db_logistik_pt->where('noreftxt', $refspp);

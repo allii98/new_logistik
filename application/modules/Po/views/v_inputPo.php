@@ -694,8 +694,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     <h4 class="mt-2">Konfirmasi Batal</h4>
                     <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
-                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekPO()">Hapus</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekbatal()">Batalkan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -759,39 +759,58 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 </div>
 
 
-<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalcarispp">
-    <div class="modal-dialog modal-full-width">
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="fullWidthModalLabel" aria-hidden="true" id="modalcarispp">
+    <div class="modal-dialog modal-md">
         <div class="modal-content">
-            <div class="modal-header" style="margin-bottom: -10px;">
-                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
-                <!-- <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> -->
-                </button>
+            <div class="modal-header">
+                <ul class="nav nav-tabs nav-bordered">
+                    <li class="nav-item">
+                        <a href="#scanqr" at="qr" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                            Scan QRcode
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#home" at="po" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                            SPP
+                        </a>
+                    </li>
+
+
+                </ul>
+                <label class="btn btn-info active btn-xs ml-4" id="kamera1" style="display: block;">
+                    <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Back Camera
+
+                </label>
+                <label class="btn btn-secondary btn-xs" id="kamera2" style="display: block;">
+                    <input type="radio" name="putar_camera" value="2" autocomplete="off"> Front Camera
+                </label>
             </div>
-            <div class="modal-body" style="margin-top: -20px;">
-                <div class="table-responsive">
-                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                    <table id="dataspp" class="table table-striped table-bordered" width="100%">
-                        <thead>
-                            <tr>
-
-                                <th class="hastag_th">#</th>
-                                <th class="no_th">NO</th>
-                                <th class="tgl_th">Tanggal</th>
-                                <th class="ref_th">Ref.&nbsp;SPP</th>
-                                <th class="dept_th">Departemen</th>
-                                <th class="ket_th">Ket</th>
-
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+            <div class="modal-body">
+                <div id="camera" style="display: block;">
+                    <video id="preview" width="100%"></video>
                 </div>
+                <div id="listspp" style="display: none;">
+                    <div class="table-responsive">
+                        <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                        <table id="dataspp" class="table table-striped table-bordered" width="100%">
+                            <thead>
+                                <tr>
 
+                                    <th class="hastag_th">#</th>
+                                    <th class="no_th">NO</th>
+                                    <th class="tgl_th">Tanggal</th>
+                                    <th class="ref_th">Ref.&nbsp;SPP</th>
+                                    <th class="dept_th">Departemen</th>
+                                    <th class="ket_th">Ket</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <!-- <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-            </div> -->
         </div>
     </div>
 </div>
@@ -932,6 +951,65 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         $('#modalKonfirmasibatalPO').modal('show');
     }
 
+    function cekbatal() {
+        var refspp = $('#refspp').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/cekDataPo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                refspp: refspp,
+            },
+            success: function(data) {
+
+                for (var i = 1; i <= data; i++) {
+
+                    konfirbatal(i);
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Gagal Menghapus PO');
+            }
+        });
+    }
+
+    function konfirbatal(no) {
+        var noref_po = $('#hidden_no_ref_po').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/konfirbatal'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                id_item: $('#id_item_' + no).val(),
+                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                qty: $('#txt_qty_' + no).val(),
+                noref_po: noref_po
+            },
+            success: function(data) {
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Dihapus',
+                    text: 'Berhasil Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Gagal batal PO');
+            }
+        });
+    }
+
     function batal_aksi() {
         var noref_po = $('#hidden_no_ref_po').val();
         var refspp = $('#refspp').val();
@@ -1025,6 +1103,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 
+
         $('.div_form_2').hide();
         $('.div_form_3').hide();
         setInterval(function() {
@@ -1109,12 +1188,72 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         var lokasi = $('#lokasi').val();
 
         switch (lokasi) {
-            case 'HO':
-
-                break;
             case 'RO':
             case 'SITE':
             case 'PKS':
+                //untuk scan
+                let scanner = new Instascan.Scanner({
+                    video: document.getElementById('preview')
+                });
+
+                scanner.addListener('scan', function(content) {
+                    console.log(content);
+                    $('#preview').hide();
+                    carisppqr(content);
+                    $('#modalcarispp').modal('hide');
+                    scanner.stop();
+
+                });
+
+                Instascan.Camera.getCameras().then(function(cameras) {
+                    if (cameras.length > 0) {
+                        scanner.start(cameras[0]);
+                        $('[name="putar_camera"]').on('change', function() {
+                            if ($(this).val() == 1) {
+                                if (cameras[0] != "") {
+                                    scanner.start(cameras[0]);
+                                } else {
+                                    alert('No Front camera found!');
+                                }
+                            } else if ($(this).val() == 2) {
+                                if (cameras[1] != "") {
+                                    scanner.start(cameras[1]);
+                                } else {
+                                    alert('No Back camera found!');
+                                }
+                            }
+                        });
+                    } else {
+                        console.error('No cameras found.');
+                    }
+                }).catch(function(e) {
+                    console.error(e);
+                });
+                //end
+                $(".nav-link").click(function() {
+                    $(".nav-link").removeClass("active");
+                    $(this).addClass("active");
+                    var jenis = $(this).attr('at');
+                    if (jenis != 'po') {
+                        $(".modal-dialog").removeClass("modal-full-width");
+                        $(".modal-dialog").addClass("modal-md");
+                        $("#judulpo").css('display', 'none');
+                        $("#judulqr").css('display', 'block');
+                        $("#listspp").css('display', 'none');
+                        $("#camera").css('display', 'block');
+                        $("#kamera1").css('display', 'block');
+                        $("#kamera2").css('display', 'block');
+                    } else {
+                        $(".modal-dialog").removeClass("modal-md");
+                        $(".modal-dialog").addClass("modal-full-width");
+                        $("#judulpo").css('display', 'block');
+                        $("#judulqr").css('display', 'none');
+                        $("#camera").css('display', 'none');
+                        $("#listspp").css('display', 'block');
+                        $("#kamera1").css('display', 'none');
+                        $("#kamera2").css('display', 'none');
+                    }
+                });
 
                 $(document).on('click', '#data_spp', function() {
                     var id = $(this).data('id');
@@ -1213,6 +1352,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                 $('#hidden_tgl_ref_' + n).val(tglref);
                                 n++;
                             });
+                            scanner.stop();
                             $('#modalcarispp').modal('hide');
                         },
                         error: function(request) {
@@ -1419,6 +1559,105 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
 
     });
+
+    function carisppqr(noref) {
+        $.ajax({
+            type: 'post',
+            url: '<?= site_url('Po/getid'); ?>',
+            data: {
+                noreftxt: noref,
+            },
+            success: function(response) {
+                $('.div_form_3').show();
+                $('.div_form_1').find('#sppSITE').attr('disabled', '');
+                // console.log(response);
+                data = JSON.parse(response);
+                $('#h4_no_spp').html('No. SPP : ' + data[0].noppo);
+                $('#h4_no_ref_spp').html('No. Ref SPP : ' + data[0].noreftxt);
+                $('#devisi').val(data[0].devisi);
+                $('#hidden_kode_devisi').val(data[0].kode_dev);
+                $('#hidden_devisi').val(data[0].devisi);
+                $('#jenis_spp').val(data[0].devisi);
+
+                cekJenis(data[0].jenis);
+
+                var n = 1;
+                var kodebar = data[0].kodebar;
+                $.each(data, function(index, value) {
+
+                    // console.log('ini yg belum di approve', value.statusaprove);
+                    tambah_item(value.statusaprove, value.kodebar);
+
+                    if (value.statusaprove == '0') {
+                        $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
+                        $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
+                    }
+
+                    var idppo = value.id;
+                    var idspp = value.id_spp;
+                    var opsi = value.noreftxt;
+                    var tglref = value.tglref;
+                    var kodedept = value.kodedept;
+                    var namadept = value.namadept;
+                    var tglppo = value.tglppo;
+                    var kodept = value.kodept;
+                    var pt = value.pt;
+                    var noppo = value.noppo;
+                    var kodebar = value.kodebar;
+                    var nabar = value.nabar;
+                    var sat = value.sat;
+                    // var tglref = value.tglref;
+                    var qty = value.qty;
+                    var qty2 = value.qty2;
+                    var ket_item_spp = value.ket_item_spp;
+
+                    var qtysum = qty - qty2;
+                    var b = qty - qty2;
+                    // console.log('ini qty nya', qtysum);
+                    if (qty2 != null) {
+                        $('#sisa_qty_' + n).text(b);
+                        $('#qty_po_' + n).text(qty2);
+                    } else {
+                        var j = 0;
+                        $('#qty_po_' + n).text(j);
+                        $('#sisa_qty_' + n).text(qty);
+
+                    }
+
+                    $('#id_ppo' + n).val(idppo);
+                    $('#id_item_' + n).val(idppo);
+                    $('#hidden_no_ref_spp_' + n).val(opsi);
+                    $('#refspp').val(opsi);
+                    $('#idspp').val(idspp);
+                    // $('#hidden_tgl_hidden' + n).val(tglref);
+                    $('#hidden_kd_departemen_' + n).val(kodedept);
+                    $('#hidden_departemen_' + n).val(namadept);
+                    $('#hidden_tgl_spp_' + n).val(tglppo);
+                    $('#hidden_kd_pt_' + n).val(kodept);
+                    $('#hidden_nama_pt_' + n).val(pt);
+                    $('#noppo' + n).val(noppo);
+                    $('#hidden_kode_brg_' + n).val(kodebar);
+                    $('#kode_brg_' + n).text(kodebar);
+                    $('#hidden_nama_brg_' + n).val(nabar);
+                    $('#nama_brg_' + n).text(nabar);
+                    $('#hidden_satuan_brg_' + n).val(sat);
+                    $('#txt_qty_' + n).val(qtysum);
+                    $('#getspp' + n).val(opsi);
+                    $('#txt_keterangan_rinci_' + n).val(ket_item_spp);
+                    $('#qty_' + n).val(qty);
+                    $('#qty2_' + n).val(qty2);
+
+
+                    $('#hidden_tgl_ref_' + n).val(tglref);
+                    n++;
+                });
+                $('#modalcarispp').modal('hide');
+            },
+            error: function(request) {
+                alert("KONEKSI TERPUTUS!");
+            }
+        });
+    }
 
     function cek_devisi(pt, kode) {
         if (kode != '01') {

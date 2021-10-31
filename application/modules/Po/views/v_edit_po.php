@@ -736,8 +736,8 @@
                     <h4 class="mt-2">Konfirmasi Batal</h4>
                     <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin membatalkan PO ini ???</p>
-                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekPO()">Hapus</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekbatal()">Batalkan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -808,6 +808,7 @@
         });
         return isSelected;
     }
+
 
     function jenisPO() {
         var jenis_po = $('#cmb_pilih_jenis_po').val();
@@ -1233,6 +1234,65 @@
 
     function batal() {
         $('#modalKonfirmasibatalPO').modal('show');
+    }
+
+    function cekbatal() {
+        var refspp = $('#refspp').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/cekDataPo'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                refspp: refspp,
+            },
+            success: function(data) {
+
+                for (var i = 1; i <= data; i++) {
+
+                    konfirbatal(i);
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Gagal Menghapus PO');
+            }
+        });
+    }
+
+    function konfirbatal(no) {
+        var noref_po = $('#hidden_no_ref_po').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/konfirbatal'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
+                id_item: $('#id_item_' + no).val(),
+                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
+                qty: $('#txt_qty_' + no).val(),
+                noref_po: noref_po
+            },
+            success: function(data) {
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Dihapus',
+                    text: 'Berhasil Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Gagal batal PO');
+            }
+        });
     }
 
     function batal_aksi() {

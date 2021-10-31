@@ -31,9 +31,9 @@
 						<table id="tableListPO" class="table w-100 dataTable no-footer table-bordered table-striped">
 							<thead>
 								<tr>
-									<th width="15%" style="font-size: 12px; padding:10px">#</th>
+									<th width="12%" style="font-size: 12px; padding:10px">#</th>
 									<th width="3%" style="font-size: 12px; padding:10px">No</th>
-									<th width="15%" style="font-size: 12px; padding:10px">No. Ref PO</th>
+									<th width="18%" style="font-size: 12px; padding:10px">No. Ref PO</th>
 									<th width="8%" style="font-size: 12px; padding:10px">Tgl. PO</th>
 									<th width="13%" style="font-size: 12px; padding:10px">No. Ref SPP</th>
 									<th width="8%" style="font-size: 12px; padding:10px">Tgl. SPP</th>
@@ -124,7 +124,8 @@
 		// filter();
 		$(document).on('click', '#detail', function() {
 			var id = $(this).data('id');
-			detailPO(id);
+			var batal = $(this).data('batal');
+			detailPO(id, batal);
 		});
 		$(document).on('click', '#edit', function() {
 			var id = $(this).data('id');
@@ -199,9 +200,15 @@
 	}
 
 
-	function detailPO(id) {
+	function detailPO(id, batal) {
 		$('#detailpo').modal('show');
-		$('#detail_noref_po').html('<b>No. Ref. PO : </b>' + id);
+		if (batal != 0) {
+
+			$('#detail_noref_po').html('<b>No. Ref. PO : </b>' + id + ' <span class="badge badge-danger">Dibatalkan</span>');
+		} else {
+			$('#detail_noref_po').html('<b>No. Ref. PO : </b>' + id);
+
+		}
 		$('#datapo').DataTable({
 			"destroy": true,
 			"processing": true,

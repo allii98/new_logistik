@@ -113,7 +113,7 @@ class M_pp extends CI_Model
 
     function ambilpoqr($noref)
     {
-        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph, jenis_spp FROM po WHERE  noreftxt='$noref' ")->row();
+        $data = $this->db_logistik_pt->query("SELECT id, tglpo, nopo,noreftxt, nopotxt, kode_supply, nama_supply, bayar, totalbayar, ppn, pph, jenis_spp, terbayar FROM po WHERE  noreftxt='$noref' ")->row();
         return $data;
     }
     function simpan_pp()

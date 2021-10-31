@@ -470,6 +470,17 @@ class Spp extends CI_Controller
 
         echo json_encode($data);
     }
+    //new batal spp
+    public function batalSpp()
+    {
+        $noref_ppo = $this->input->post('noref_ppo');
+
+        $data = $this->M_spp->batalSpp($noref_ppo);
+
+        echo json_encode($data);
+    }
+
+    //end batal spp
 
     public function sppApproval()
     {
@@ -490,6 +501,9 @@ class Spp extends CI_Controller
                 $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
             } elseif ($field->status2 == 2) {
                 $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+            } else if ($field->status2 == 5) {
+                # code...
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-danger">DIBATALKAN</span></h5>';
             } else {
                 $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
             }
@@ -507,15 +521,26 @@ class Spp extends CI_Controller
                         </button>
                         <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
             } else {
-                $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
-                data-id_ppo="' . $field->id . '"
-                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false" style="padding-right:8px;">
-                </button>
-                <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
-                data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
-                data-toggle="tooltip" data-placement="top" title="Pilih" style="padding-right:8px;">
-                </button>
-                <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
+                if ($field->status2 == 5) {
+                    # code...
+                    $aks = '
+                    <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
+                    data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
+                    data-toggle="tooltip" data-placement="top" title="Pilih" style="padding-right:8px;">
+                    </button>
+                    <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
+                } else {
+                    $aks = '<button class="btn btn-xs btn-warning fa fa-edit" id="edit_spp" name="edit_spp"
+                    data-id_ppo="' . $field->id . '"
+                    data-toggle="tooltip" data-placement="top" title="detail" onClick="return false" style="padding-right:8px;">
+                    </button>
+                    <button class="btn btn-success btn-xs fa fa-eye" id="detail_spp_approval" name="detail_spp_approval"
+                    data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
+                    data-toggle="tooltip" data-placement="top" title="Pilih" style="padding-right:8px;">
+                    </button>
+                    <a href="' . site_url('Spp/cetak/' . $field->noppotxt . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_spp"></a>';
+                    # code...
+                }
             }
             $row = array();
             $row[] = $aks;
@@ -681,6 +706,17 @@ class Spp extends CI_Controller
         //                     <hr style="width:100%;">
         //                     ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+        if ($data['ppo']->status2 == 5) {
+            # code...
+            $mpdf->SetWatermarkImage(
+                '././assets/img/batal.png',
+                0.3,
+                '',
+                array(25, 5)
+            );
+            $mpdf->showWatermarkImage = true;
+        }
 
         $html = $this->load->view('v_spp_print', $data, true);
 

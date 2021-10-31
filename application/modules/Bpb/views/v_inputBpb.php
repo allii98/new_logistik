@@ -1283,7 +1283,7 @@
 
         Swal.fire({
             title: 'Apakah anda yakin?',
-            text: "Data bpb ini akan dihapus",
+            text: "Data bpb ini akan dibatalkan",
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
@@ -1314,7 +1314,7 @@
                         $.toast({
                             position: 'top-right',
                             heading: 'Success',
-                            text: 'Berhasil Dihapus!',
+                            text: 'Berhasil Dibatalkan!',
                             icon: 'success',
                             loader: false
                         });
