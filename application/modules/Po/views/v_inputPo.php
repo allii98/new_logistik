@@ -993,7 +993,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             success: function(data) {
                 $.toast({
                     position: 'top-right',
-                    heading: 'Dihapus',
+                    heading: 'Dibatalkan',
                     text: 'Berhasil Dibatalkan!',
                     icon: 'success',
                     loader: false
@@ -1099,8 +1099,20 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
     }
 
-    $(document).ready(function() {
 
+    function process() {
+        // var textareaText = $('#myTextArea').val();
+        // $('#output1').html(textareaText);
+
+        // textareaText = textareaText.replace(/\r?\n/g, '<br />');
+        // $('#output2').html(textareaText);
+
+        var text = input.val().replace(/\n/gi, "<br>");
+        console.log(text);
+    }
+
+    $(document).ready(function() {
+        // var input = document.getElementById("keterangan");
 
 
 
@@ -2707,7 +2719,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
                     txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
                     cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                    txt_keterangan: $('#keterangan').val(),
+                    txt_keterangan: $('#keterangan').val().replace(/\n/gi, "<br>"),
                     txt_no_penawaran: $('#no_penawaran').val(),
                     cmb_ppn: $('#ppn').val(),
                     cmb_pph: $('#pph').val(),
@@ -2726,7 +2738,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_kodept: $('#hidden_kd_pt_' + id).val(),
                     hidden_namapt: $('#hidden_nama_pt_' + id).val(),
                     txt_merk: $('#txt_merk_' + id).val(),
-                    txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
+                    txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val().replace(/\n/gi, "<br>"),
                     txt_disc: $('#txt_disc_' + id).val(),
                     cmb_kurs: $('#cmb_kurs_' + id).val(),
 
@@ -2880,7 +2892,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     txt_lokasi_pengiriman: $('#lks_pengiriman').val(),
                     txt_tempo_pengiriman: $('#tmpo_pengiriman').val(),
                     cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                    txt_keterangan: $('#keterangan').val(),
+                    txt_keterangan: $('#keterangan').val().replace(/\n/gi, "<br>"),
                     txt_no_penawaran: $('#no_penawaran').val(),
                     cmb_ppn: $('#ppn').val(),
                     txt_total_pembayaran: $('#ttl_pembayaran').val(),
@@ -2898,7 +2910,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     hidden_kodept: $('#hidden_kd_pt_' + id).val(),
                     hidden_namapt: $('#hidden_nama_pt_' + id).val(),
                     txt_merk: $('#txt_merk_' + id).val(),
-                    txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
+                    txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val().replace(/\n/gi, "<br>"),
                     txt_disc: $('#txt_disc_' + id).val(),
                     cmb_kurs: $('#cmb_kurs_' + id).val(),
                     txt_biaya_lain: biaya,
@@ -3036,7 +3048,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 cmb_dikirim_ke_kebun: $('#cmb_dikirim_ke_kebun').val(),
                 txt_tempo_pembayaran: $('#tmpo_pembayaran').val(),
                 cmb_lokasi_pembelian: $('#lks_pembelian').val(),
-                txt_keterangan: $('#keterangan').val(),
+                txt_keterangan: $('#keterangan').val().replace(/\n/gi, "<br>"),
                 txt_total_pembayaran: $('#ttl_pembayaran').val(),
                 txt_ket_pengiriman: $('#ket_pengiriman').val(),
                 txt_uang_muka: $('#txt_uang_muka').val(),
@@ -3057,7 +3069,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 txt_qty: $('#txt_qty_' + id).val(),
                 txt_harga: $('#txt_harga_' + id).val(),
                 txt_merk: $('#txt_merk_' + id).val(),
-                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val(),
+                txt_keterangan_rinci: $('#txt_keterangan_rinci_' + id).val().replace(/\n/gi, "<br>"),
                 txt_disc: $('#txt_disc_' + id).val(),
                 cmb_kurs: $('#cmb_kurs_' + id).val(),
                 txt_biaya_lain: biaya,

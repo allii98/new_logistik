@@ -29,7 +29,7 @@ class M_brg extends CI_Model
         $txtperiode = $this->session->userdata('ym_periode');
 
         $this->db_logistik_pt->from('stockawal');
-        $this->db_logistik_pt->where('txtperiode', $txtperiode);
+        // $this->db_logistik_pt->where('txtperiode', $txtperiode);
         $this->db_logistik_pt->order_by('id', 'desc');
 
 

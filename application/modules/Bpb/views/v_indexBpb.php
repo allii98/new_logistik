@@ -244,14 +244,19 @@
     });
     $(document).on('click', '#detail', function() {
         var id = $(this).data('id');
-        var approve = $(this).data('approve');
-        detail(id, approve);
+        var batal = $(this).data('batal');
+        detail(id, batal);
     });
 
-    function detail(id, approve) {
+    function detail(id, batal) {
         $('#detailBPB').modal('show');
+        if (batal != 0) {
 
-        $('#detail_noref_bpb').html('<b>No. Ref. BPB : </b>' + id);
+            $('#detail_noref_bpb').html('<b>No. Ref. BPB : </b>' + id + ' <span class="badge badge-danger">Dibatalkan</span>');
+        } else {
+
+            $('#detail_noref_bpb').html('<b>No. Ref. BPB : </b>' + id);
+        }
         $('#datadetailBPB').DataTable({
             "destroy": true,
             "processing": true,

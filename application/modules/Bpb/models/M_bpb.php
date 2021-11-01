@@ -812,20 +812,46 @@ class M_bpb extends CI_Model
 
     public function batalbpbMut($id_bpb,  $noref)
     {
-        $this->db_logistik_center->delete('bpb_mutasi', array('id' => $id_bpb, 'norefbpb' => $noref));
-        $this->db_logistik_center->delete('bpbitem_mutasi', array('norefbpb' => $noref));
-        $this->db_logistik_center->delete('approval_bpb', array('norefbpb' => $noref));
+        //old batal mutasi
+        // $this->db_logistik_center->delete('bpb_mutasi', array('id' => $id_bpb, 'norefbpb' => $noref));
+        // $this->db_logistik_center->delete('bpbitem_mutasi', array('norefbpb' => $noref));
+        // $this->db_logistik_center->delete('approval_bpb', array('norefbpb' => $noref));
 
-        $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb, 'norefbpb' => $noref));
-        $this->db_logistik_pt->delete('bpbitem', array('norefbpb' => $noref));
-        $this->db_logistik_pt->delete('approval_bpb', array('norefbpb' => $noref));
+        // $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb, 'norefbpb' => $noref));
+        // $this->db_logistik_pt->delete('bpbitem', array('norefbpb' => $noref));
+        // $this->db_logistik_pt->delete('approval_bpb', array('norefbpb' => $noref));
+
+        //new batal bpb mutasi
+        $data = array('batal' => 1);
+        $this->db_logistik_center->where(['norefbpb' => $noref]);
+        $this->db_logistik_center->update('bpbitem_mutasi', $data);
+
+        $this->db_logistik_center->where(['norefbpb' => $noref]);
+        $this->db_logistik_center->update('bpb_mutasi', $data);
+
+        $this->db_logistik_pt->where(['id' => $id_bpb, 'norefbpb' => $noref]);
+        $this->db_logistik_pt->update('bpb', $data);
+
+        $this->db_logistik_pt->where(['norefbpb' => $noref]);
+        $this->db_logistik_pt->update('bpbitem', $data);
+
+
         return TRUE;
     }
     public function batalbpb($id_bpb,  $noref)
     {
-        $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb, 'norefbpb' => $noref));
-        $this->db_logistik_pt->delete('bpbitem', array('norefbpb' => $noref));
-        $this->db_logistik_pt->delete('approval_bpb', array('norefbpb' => $noref));
+        //old batal bpb
+        // $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb, 'norefbpb' => $noref));
+        // $this->db_logistik_pt->delete('bpbitem', array('norefbpb' => $noref));
+        // $this->db_logistik_pt->delete('approval_bpb', array('norefbpb' => $noref));
+
+        //new batal bpb
+        $data = array('batal' => 1);
+        $this->db_logistik_pt->where(['id' => $id_bpb, 'norefbpb' => $noref]);
+        $this->db_logistik_pt->update('bpb', $data);
+
+        $this->db_logistik_pt->where(['norefbpb' => $noref]);
+        $this->db_logistik_pt->update('bpbitem', $data);
         return TRUE;
     }
 }

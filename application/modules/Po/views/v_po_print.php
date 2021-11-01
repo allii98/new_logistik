@@ -298,7 +298,8 @@ $nama_pt = $this->session->userdata('nama_pt');
           <?php } ?>
         </tr>
         <tr>
-          <td style="border: none;" colspan="3" rowspan="1">*<?= htmlspecialchars($list_item->ket); ?></td>
+          <td style="border: none;" colspan="3" rowspan="1">*<?= $list_item->ket; ?></td>
+          <!-- <td style="border: none;" colspan="3" rowspan="1">*<?= htmlspecialchars($list_item->ket); ?></td> -->
         </tr>
       <?php
         array_push($nama_bebanbpo, $list_item->nama_bebanbpo);
@@ -314,7 +315,8 @@ $nama_pt = $this->session->userdata('nama_pt');
     <tr>
       <td colspan="8" width="448px" rowspan="8" valign="top">
         <b>Keterangan : </b><br />
-        <?= htmlspecialchars($po->ket); ?><br />
+        <?= $po->ket; ?><br />
+        <!-- <?= htmlspecialchars($po->ket); ?><br /> -->
         <b>Keterangan pembayaran: </b><br />
         Nama Pemilik&nbsp; : <?= $supplier->atasnama ?><br />
         No. Rekening&nbsp; : <?= $supplier->norek ?><br />
