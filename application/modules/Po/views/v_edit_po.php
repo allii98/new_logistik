@@ -8,7 +8,7 @@
                         <div class="button-list mr-2">
 
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
-                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
+                            <button onclick="alasanbatal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -744,6 +744,22 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Alasan Batal</h4>
+                    <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                    <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" id="hidden_nopo_edit" value="<?= $nopo ?>">
 <input type="hidden" id="hidden_noref_tambah">
 <input type="hidden" id="isi_edit">
@@ -1232,8 +1248,31 @@
         window.open('<?= base_url() ?>Po/cetak/' + noref_rpc + '/' + id_po, '_blank');
     }
 
+
     function batal() {
         $('#modalKonfirmasibatalPO').modal('show');
+    }
+
+    function alasanbatal() {
+
+        $('#alasanbatal').modal('show');
+    }
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            cekbatal();
+        }
     }
 
     function cekbatal() {
@@ -1245,11 +1284,12 @@
             beforeSend: function() {},
 
             data: {
-                refspp: refspp,
+                refspp: refspp
             },
             success: function(data) {
 
-                for (var i = 1; i <= data; i++) {
+                // console.log('inni gess', data.length);
+                for (i = 0; i < data.length; i++) {
 
                     konfirbatal(i);
                 }
@@ -1261,7 +1301,23 @@
     }
 
     function konfirbatal(no) {
+        // console.log('ini nomernya', no);
         var noref_po = $('#hidden_no_ref_po').val();
+        var hidden_id_po_item = $('#hidden_id_po_item_' + no).val();
+        var iditemspp = $('#id_item_' + no).val();
+        var ref_spp = $('#hidden_no_ref_spp_' + no).val();
+        var qty = $('#txt_qty_' + no).val();
+        var alasan = $('#alasan').val();
+
+        // console.table({
+        //     'ref_po': noref_po,
+        //     'id_item_po': hidden_id_po_item,
+        //     'id_item_spp': iditemspp,
+        //     'ref_spp': ref_spp,
+        //     'qty': qty,
+        //     'alasan': alasan
+        // });
+
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/konfirbatal'); ?>",
@@ -1269,13 +1325,15 @@
             beforeSend: function() {},
 
             data: {
-                hidden_id_po_item: $('#hidden_id_po_item_' + no).val(),
-                id_item: $('#id_item_' + no).val(),
-                hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
-                qty: $('#txt_qty_' + no).val(),
-                noref_po: noref_po
+                noref_po: noref_po,
+                hidden_id_po_item: hidden_id_po_item,
+                id_item: iditemspp,
+                hidden_no_ref_spp: ref_spp,
+                qty: qty,
+                alasan: alasan
             },
             success: function(data) {
+                $('#alasanbatal').modal('hide');
                 $.toast({
                     position: 'top-right',
                     heading: 'Dihapus',
@@ -1283,9 +1341,9 @@
                     icon: 'success',
                     loader: false
                 });
-
+                $('#tr_' + id).remove();
                 setTimeout(function() {
-                    location.reload();
+                    window.location.href = "<?php echo site_url('Po'); ?>";
                 }, 1000);
 
             },

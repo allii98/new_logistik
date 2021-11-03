@@ -182,7 +182,7 @@ class Po extends CI_Controller
 
             if ($d->sudah_lpb == 1) {
                 $aksi = '
-                <button type="button" id="detail" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
                 <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-primary btn-xs fa fa-print" title="Cetak">
                 </a>
                 ';
@@ -224,7 +224,7 @@ class Po extends CI_Controller
             $row[] = $d->no_refppo;
             $row[] = date_format(date_create($d->tgl_refppo), 'd-m-Y');
             $row[] = $d->nama_supply;
-            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($d->ket) . ' </p>';
+            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->ket . ' </p>';
             // $row[] = number_format($d->terbayar, 2, ",", ".");;
             $row[] = $d->user;
             $row[] = $lpb;
@@ -1435,7 +1435,7 @@ class Po extends CI_Controller
     function cekDataPo()
     {
         $refspp = $this->input->post('refspp');
-        $data =  $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $refspp))->num_rows();
+        $data =  $this->db_logistik_pt->get_where('item_ppo', array('noreftxt' => $refspp))->result_array();
 
         echo json_encode($data);
     }
@@ -1446,6 +1446,7 @@ class Po extends CI_Controller
         $id_ppo = $this->input->post('id_item');
         $refspp = $this->input->post('hidden_no_ref_spp');
         $qty = $this->input->post('qty');
+        $alasan = $this->input->post('alasan');
 
         $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
         $qty2 = $cek->qty2;
@@ -1464,7 +1465,7 @@ class Po extends CI_Controller
 
 
 
-        $data =  $this->M_po->konfirbatal($noref_po);
+        $data =  $this->M_po->konfirbatal($noref_po, $alasan);
         echo json_encode($data);
     }
 

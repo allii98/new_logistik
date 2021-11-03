@@ -32,7 +32,7 @@ class M_data_spp_approval extends CI_Model
         } elseif ($lokasi == 'RO') {
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
         }
-        $this->db_logistik_pt->where(['status2 !=' => 1]);
+        $this->db_logistik_pt->where_in('status2', array(0, 2));
 
         if ($lokasi != 'HO') {
             $this->db_logistik_pt->where('kode_dev', $kode_dev);

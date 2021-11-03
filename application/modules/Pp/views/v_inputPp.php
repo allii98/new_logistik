@@ -163,17 +163,19 @@
                                     <textarea class="form-control form-control-sm bg-light" id="txt_terbilang" name="txt_terbilang" placeholder="Terbilang" rows="3" required="required" readonly=""></textarea>
                                 </div>
                             </div>
-                            <div class="form-group row" style="margin-bottom: 2px;">
-                                <label for="txt_keterangan" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    Keterangan
-                                </label>
-                                <div class="col-9 col-xl-12">
-                                    <input id="txt_keterangan" name="txt_keterangan" class="form-control form-control-sm" required="required" type="text" placeholder="Keterangan" autocomplete="off">
-                                </div>
-                            </div>
+
                         </div>
 
                         <div class="col-lg-4 col-xl-4 col-12">
+                            <div class="form-group row" style="margin-bottom: 2px;">
+                                <label for="txt_keterangan" class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                    Keterangan
+                                </label>
+                                <div class="col-8 col-xl-12">
+                                    <textarea class="form-control form-control-sm" id="txt_keterangan" name="txt_keterangan" placeholder="Keterangan" rows="2" required="required"></textarea>
+                                    <!-- <input id="txt_keterangan" name="txt_keterangan" rows="3" class="form-control form-control-sm" required="required" type="text" placeholder="Keterangan" autocomplete="off"> -->
+                                </div>
+                            </div>
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="lbl_kode_budget" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                     Kode Budget&nbsp;
@@ -224,8 +226,7 @@
                                     <input type="text" class="form-control form-control-sm bg-light" id="txt_tgl_voucher" name="txt_tgl_voucher" readonly placeholder="Tanggal">
                                 </div>
                             </div>
-                            <br>
-                            <br>
+
                             <div class="button-list" style="float: right; margin-top: 15px;">
                                 <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
                                 <button type="button" onclick="updateData()" class="btn btn-xs btn-warning" style="display: none;" id="update_pp">Update</button>
@@ -281,7 +282,7 @@
                                 <thead>
                                     <tr>
                                         <th style="font-size: 12px; padding:10px">id</th>
-                                        <th width="10%" style="font-size: 12px; padding:10px">Tgl</th>
+                                        <th style="font-size: 12px; padding:10px">Tanggal</th>
                                         <th style="font-size: 12px; padding:10px">No. Ref. PO</th>
                                         <th style="font-size: 12px; padding:10px">No PO</th>
                                         <th style="font-size: 12px; padding:10px">Supplier</th>
@@ -352,6 +353,10 @@
     }
 </style>
 <script>
+    function data_pp() {
+        location.href = "<?php echo base_url('Pp') ?>";
+    }
+
     function new_pp() {
         location.href = "<?php echo base_url('Pp/input') ?>";
     }
@@ -421,8 +426,10 @@
 
     //untuk scan
     let scanner = new Instascan.Scanner({
-        video: document.getElementById('preview')
-    });
+        video: document.getElementById('preview'),
+        scanPeriod: 4,
+        mirror: false
+    })
 
     scanner.addListener('scan', function(content) {
         // console.log(content);
@@ -435,17 +442,17 @@
 
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
-            scanner.start(cameras[0]);
+            scanner.start(cameras[1]);
             $('[name="putar_camera"]').on('change', function() {
                 if ($(this).val() == 1) {
                     if (cameras[0] != "") {
-                        scanner.start(cameras[0]);
+                        scanner.start(cameras[1]);
                     } else {
                         alert('No Front camera found!');
                     }
                 } else if ($(this).val() == 2) {
                     if (cameras[1] != "") {
-                        scanner.start(cameras[1]);
+                        scanner.start(cameras[0]);
                     } else {
                         alert('No Back camera found!');
                     }

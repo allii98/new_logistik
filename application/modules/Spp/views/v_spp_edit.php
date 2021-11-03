@@ -10,7 +10,7 @@
                             <button class="btn btn-xs btn-warning" id="data_spp_approval" onclick="data_spp_approval()">SPP Approval</button>
                             <button class="btn btn-xs btn-info" id="data_spp" onclick="data_spp()">Data SPP</button>
                             <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()">SPP Baru</button>
-                            <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="hapusSpp()">Batal SPP</button>
+                            <button class="btn btn-xs btn-danger" id="cancelSpp" onclick="batalSppmodal()">Batal SPP</button>
                             <button class="btn btn-primary btn-xs" id="a_print_spp" onclick="cetak_spp()">Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -290,6 +290,22 @@
                     <p class="mt-3">Apakah Anda yakin ingin menghapus SPP ini ???</p>
                     <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteSpp()">Hapus</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiBatalSpp">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Konfirmasi Hapus</h4>
+                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                    <p class="mt-3">Apakah Anda yakin ingin membatalkan SPP ini ???</p>
+                    <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="batalAksi()">Batalkan</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -1152,6 +1168,55 @@
         // $('#tr_'+n).remove();
         // }
     }
+
+    //batal spp
+    function batalSppmodal(n) {
+        $('#modalKonfirmasiBatalSpp').modal('show');
+    }
+
+    function batalAksi() {
+        // console.log(n);
+
+        var n = $('#hidden_no_delete').val();
+        var noref_ppo = $('#hidden_no_ref_ppo').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Spp/batalSpp') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_delete_spp').empty();
+                $('#lbl_status_delete_spp').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses batalkan SPP..</label');
+            },
+
+            data: {
+                noref_ppo: noref_ppo
+            },
+
+            success: function(data) {
+                console.log(data);
+                $('#lbl_status_delete_spp').empty();
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Dihapus',
+                    text: 'Berhasil Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
+
+                setTimeout(function() {
+                    window.location.href = "<?php echo site_url('Spp'); ?>";
+                }, 1000);
+            },
+            error: function(response) {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_delete_spp').empty();
+                alert('KONEKSI TERPUTUS! Gagal Membatalkan SPP!');
+            }
+        });
+    }
+    //end batal spp
 
     function hapusSpp(n) {
 

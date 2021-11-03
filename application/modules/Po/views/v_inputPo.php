@@ -13,7 +13,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         <div class="button-list mr-2">
                             <button class="btn btn-xs btn-info" id="data_po" onclick="data_po()">Data PO</button>
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
-                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal PO</button>
+                            <button onclick="alasanbatal()" class="btn btn-xs btn-danger" id="batal_po" disabled>Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -702,6 +702,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     </div>
 </div>
 
+
+
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp">
     <div class="modal-dialog modal-full-width">
         <div class="modal-content">
@@ -809,6 +811,22 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Alasan Batal</h4>
+                    <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                    <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -947,8 +965,32 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     //     // $('#tr_' + id).remove();
     // }
 
+
+
     function batal() {
         $('#modalKonfirmasibatalPO').modal('show');
+    }
+
+    function alasanbatal() {
+
+        $('#alasanbatal').modal('show');
+    }
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            cekbatal();
+        }
     }
 
     function cekbatal() {
@@ -964,7 +1006,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
             success: function(data) {
 
-                for (var i = 1; i <= data; i++) {
+                for (var i = 1; i <= data.length; i++) {
 
                     konfirbatal(i);
                 }
@@ -977,6 +1019,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function konfirbatal(no) {
         var noref_po = $('#hidden_no_ref_po').val();
+        var alasan = $('#alasan').val();
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/konfirbatal'); ?>",
@@ -988,7 +1031,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 id_item: $('#id_item_' + no).val(),
                 hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
                 qty: $('#txt_qty_' + no).val(),
-                noref_po: noref_po
+                noref_po: noref_po,
+                alasan: alasan,
             },
             success: function(data) {
                 $.toast({
@@ -1798,7 +1842,11 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 "infoFiltered": ""
             }
         });
+        focus();
+    }
 
+    function focus() {
+        $("div.dataTables_filter input").focus();
     }
 
     function cetak() {

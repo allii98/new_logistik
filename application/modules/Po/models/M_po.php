@@ -138,9 +138,9 @@ class M_po extends CI_Model
         return $data_return;
     }
 
-    public function konfirbatal($noref_po)
+    public function konfirbatal($noref_po, $alasan)
     {
-        $data = array('batal' => 1);
+        $data = array('batal' => 1, 'alasan_batal' => $alasan);
         $this->db_logistik_pt->where('noreftxt', $noref_po);
         $this->db_logistik_pt->update('po', $data);
         return TRUE;
@@ -317,10 +317,10 @@ class M_po extends CI_Model
         $this->db_logistik_pt->where('noreftxt', $nopo);
         $po = $this->db_logistik_pt->get()->row_array();
 
-        $this->db_logistik_pt->select('*');
-        $this->db_logistik_pt->from('item_po');
-        $this->db_logistik_pt->where('noref', $nopo);
-        $item_po = $this->db_logistik_pt->get()->result_array();
+        // $this->db_logistik_pt->select('*');
+        // $this->db_logistik_pt->from('item_po');
+        // $this->db_logistik_pt->where('noref', $nopo);
+        // $item_po = $this->db_logistik_pt->get()->result_array();
 
         $item_po = $this->db_logistik_pt->query("SELECT p.*, s.qty2 FROM item_po p LEFT JOIN item_ppo s ON p.id_item_spp=s.id WHERE p.noref='$nopo'")->result_array();
 

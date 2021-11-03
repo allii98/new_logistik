@@ -647,12 +647,13 @@ class Pp extends CI_Controller
         $data_pp = $this->db_logistik_pt->get_where('pp', array('id' => $id_pp))->row();
 
         $ref_po = $data_pp->ref_po;
+        $data_po = $this->db_logistik_pt->get_where('po', array('noreftxt' => $ref_po))->row();
 
         $query_jumlah_sudah_bayar = "SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$ref_po'";
         // var_dump("SELECT SUM(jumlah) AS jumlah FROM pp where ref_po = '$ref_po'");exit();
         $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
         // var_dump($get_jumlah_sudah_bayar->jumlah);exit();
-        echo json_encode(array('data_pp' => $data_pp, 'sudah_bayar' => $get_jumlah_sudah_bayar->jumlah));
+        echo json_encode(array('data_pp' => $data_pp, 'sudah_bayar' => $get_jumlah_sudah_bayar->jumlah, 'data_po' => $data_po));
     }
 
     function update_pp()

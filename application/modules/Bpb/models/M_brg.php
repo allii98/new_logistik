@@ -6,9 +6,9 @@ class M_brg extends CI_Model
 {
 
     var $table = 'stockawal'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'kodebar', 'nabar', 'grp', 'satuan', 'txtperiode'); //field yang ada di table supplier  
+    var $column_order = array(null,  'kodebar', 'nabar', 'grp', 'satuan', 'txtperiode'); //field yang ada di table supplier  
     var $column_search = array('kodebar', 'nabar', 'grp', 'satuan', 'txtperiode'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'DESC'); // default order 
+    var $order = array('kodebar' => 'DESC'); // default order 
 
     public function __construct()
     {
@@ -16,21 +16,23 @@ class M_brg extends CI_Model
         $this->load->database();
     }
 
-    public function where_datatables($kodedev)
-    {
-        $this->kodedev = $kodedev;
-        // return $nopo;
-    }
+    // public function where_datatables($kodedev)
+    // {
+    //     $this->kodedev = $kodedev;
+    //     // return $nopo;
+    // }
 
     private function _get_datatables_query()
     {
         // $Value = ;
-        $kodedev = $this->kodedev;
+
         $txtperiode = $this->session->userdata('ym_periode');
 
-        $this->db_logistik_pt->from('stockawal');
+        $this->db_logistik_pt->distinct();
+        $this->db_logistik_pt->select('kodebar, nabar, grp, satuan, txtperiode');
+        $this->db_logistik_pt->from($this->table);
         // $this->db_logistik_pt->where('txtperiode', $txtperiode);
-        $this->db_logistik_pt->order_by('id', 'desc');
+        $this->db_logistik_pt->group_by('kodebar');
 
 
         $i = 0;

@@ -525,8 +525,8 @@ class Bpb extends CI_Controller
 
     function list_barang()
     {
-        $kodedev = $this->input->post('kode_dev');
-        $this->M_brg->where_datatables($kodedev);
+        // $kodedev = $this->input->post('kode_dev');
+        // $this->M_brg->where_datatables($kodedev);
         $list = $this->M_brg->get_datatables();
         $data = array();
         $no = $_POST['start'];
