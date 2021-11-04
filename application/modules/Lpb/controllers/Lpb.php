@@ -425,13 +425,23 @@ class Lpb extends CI_Controller
             'qtyditerima' => '0',
         ];
 
+        $quantiti = $this->input->post('txt_qty');
+
+        // mencari harga PO untuk di input
+        if ($mutasi == '1') {
+            $harga_item_po = $this->M_lpb->cari_harga_mutasi($no_ref_po, $kodebar);
+        } else {
+            $result_harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar, $noref_ppo);
+            $harga_item_po = $result_harga_item_po['harga'];
+        }
+
         $data_register_stok = [
             'kodebar' => $this->input->post('txt_kode_barang'),
             'kodebartxt' => $this->input->post('txt_kode_barang'),
             'namabar' => $this->input->post('txt_nama_brg'),
             'grup' => $this->input->post('hidden_grup'),
-            'tgl' => date("Y-m-d H:i:s"),
-            'tgltxt' => date("Ymd"),
+            'tgl' => $periode,
+            'tgltxt' => date("Ymd", strtotime($periode)),
             'potxt' => '-',
             'ttgtxt' => $no_lpb,
             'skbtxt' => '-',
@@ -441,7 +451,9 @@ class Lpb extends CI_Controller
             'retskbtxt' => '-',
             'no_slrh' => $no_lpb,
             'ket' => $this->input->post('txt_ket_rinci'),
+            'harga' => $harga_item_po,
             'qty' => $this->input->post('txt_qty'),
+            'masuk_qty' => $this->input->post('txt_qty'),
             'masuk_qty' => $this->input->post('txt_qty'),
             'keluar_qty' => '0',
             'status' => 'LPB',
@@ -459,7 +471,6 @@ class Lpb extends CI_Controller
 
         $sat = $this->input->post('txt_satuan');
         $grp = $this->input->post('hidden_grup');
-        $quantiti = $this->input->post('txt_qty');
 
         $cari_kodebar_stock_awal = $this->M_lpb->cari_kodebar($kodebar, $txtperiode);
 

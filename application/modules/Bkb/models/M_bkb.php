@@ -262,16 +262,30 @@ class M_bkb extends CI_Model
 
     public function get_rata2_nilai($kodebar, $qty2, $txtperiode)
     {
-        $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode <=' => $txtperiode]);
-        $this->db_logistik_pt->from('stockawal');
-        $stock_awal = $this->db_logistik_pt->get()->row_array();
+        // $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai');
+        // $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode <=' => $txtperiode]);
+        // $this->db_logistik_pt->from('stockawal');
+        // $stock_awal = $this->db_logistik_pt->get()->row_array();
+
+        $sql_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal_harian WHERE txtperiode <= '$txtperiode' AND kodebar = '$kodebar'";
+        $stock_awal = $this->db_logistik_pt->query($sql_rata2)->row_array();
 
         $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
 
         $jumlah_nilai =  $qty2 * $rata2;
 
         return $jumlah_nilai;
+    }
+
+    public function get_rata2_nilai_untuk_register($kodebar, $txtperiode)
+    {
+
+        $sql_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal_harian WHERE txtperiode <= '$txtperiode' AND kodebar = '$kodebar'";
+        $stock_awal = $this->db_logistik_pt->query($sql_rata2)->row_array();
+
+        $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
+
+        return $rata2;
     }
 
     public function cek_stockawal($kodebar, $txtperiode, $kode_dev)
@@ -594,6 +608,19 @@ class M_bkb extends CI_Model
     public function saveStokAwalHarian($data)
     {
         return $this->db_logistik_pt->insert('stockawal_harian', $data);
+    }
+
+    public function cek_stok_awal_bulanan_devisi($kodebar, $txtperiode, $kode_dev)
+    {
+        $this->db_logistik_pt->select('kodebar');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
+        $this->db_logistik_pt->from('stockawal_bulanan_devisi');
+        return $this->db_logistik_pt->get()->num_rows();
+    }
+
+    public function saveStokAwalBulananDevisi($data)
+    {
+        return $this->db_logistik_pt->insert('stockawal_bulanan_devisi', $data);
     }
 }
 

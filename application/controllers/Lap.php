@@ -158,8 +158,6 @@ class Lap extends CI_Controller
                 'orientation' => 'P'
             ]);
 
-            $txtperiode = $this->session->userdata('ym_periode');
-
             $data['kode_dev'] = $pt;
             $data['txtperiode'] = $txtperiode;
             $data['alamat'] = $pt;
@@ -198,8 +196,6 @@ class Lap extends CI_Controller
                 }
                 $data['grp_stockawal'] = $this->db_logistik_pt->get()->result();
             }
-
-            $txtperiode = $this->session->userdata('ym_periode');
 
             $data['kode_dev'] = $pt;
             $data['txtperiode'] = $txtperiode;

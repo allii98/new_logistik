@@ -465,7 +465,8 @@ class Bkb extends CI_Controller
             // mendapatkan nilai rata2
             $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);
         } else {
-            $nilai_keluarbrgitem = '0';
+            //insert stokc awal dan dapatkan rata2 nya
+            $nilai_keluarbrgitem = $this->insert_stokawal($kodebar, $nabar, $satuan, $grup_brg, $qty2, $txtperiode);
         }
 
         // membuat noref Mutasi
@@ -585,13 +586,15 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['cetak']         = '0';
         $datakeluarbrgitem['posting']       = '0';
 
+        $nilai_keluarbrgitem_untuk_register = $this->M_bkb->get_rata2_nilai_untuk_register($kodebar, $txtperiode);
+
         $data_register_stok = [
             'kodebar' => $kodebar,
             'kodebartxt' => $kodebar,
             'namabar' => $nabar,
             'grup' => $grup_brg,
-            'tgl' => date("Y-m-d H:i:s"),
-            'tgltxt' => date("Ymd"),
+            'tgl' => $periode1,
+            'tgltxt' => date("Ymd", strtotime($periode1)),
             'potxt' => '-',
             'ttgtxt' => $skb,
             'skbtxt' => '-',
@@ -601,6 +604,7 @@ class Bkb extends CI_Controller
             'retskbtxt' => '-',
             'no_slrh' => $skb,
             'ket' => $this->input->post('txt_ket_rinci'),
+            'harga' => $nilai_keluarbrgitem_untuk_register,
             'qty' => $qty2,
             'masuk_qty' => '0',
             'keluar_qty' => $qty2,
@@ -648,8 +652,8 @@ class Bkb extends CI_Controller
                 $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
             }
 
-            // update stockawal_bulanan_devisi
-            $result_update_stockawal_bulanan_devisi = $this->M_bkb->update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev);
+            // insert/update stockawal_bulanan_devisi
+            $result_insert_stok_awal_bulanan = $this->insert_stok_awal_bulanan_devisi($kodebar, $nabar, $satuan, $grup_brg, $qty2, $devisi, $kode_dev);
 
             // insert/update stockawal_harian
             $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $satuan, $grup_brg, $qty2, $devisi, $kode_dev, $periode1, $txtperiode);
@@ -684,7 +688,7 @@ class Bkb extends CI_Controller
             }
 
             $data = [
-                'update_stockawal_bulanan_devisi' => $result_update_stockawal_bulanan_devisi,
+                'result_insert_stok_awal_bulanan' => $result_insert_stok_awal_bulanan,
                 'datastockkeluar' => $savedatastockkeluar,
                 'datakeluarbrgitem' => $savedatakeluarbrgitem,
                 'result_update_qtykeluar' => $result_update_qtykeluar,
@@ -704,6 +708,85 @@ class Bkb extends CI_Controller
 
             echo json_encode($data);
         }
+    }
+
+    function insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $qty2, $devisi, $kode_dev)
+    {
+        $data_insert_stok_bulanan = [
+            'pt' => $this->session->userdata('pt'),
+            'KODE' => $this->session->userdata('kode_pt'),
+            'devisi' => $devisi,
+            'kode_dev' => $kode_dev,
+            'afd' => '-',
+            'kodebar' => $kodebar,
+            'kodebartxt' => $kodebar,
+            'nabar' => $nabar,
+            'satuan' => $sat,
+            'grp' => $grp,
+            'saldoawal_qty' => 0,
+            'saldoawal_nilai' => 0,
+            'saldoakhir_qty' => $qty2,
+            'tglinput' => date("Y-m-d H:i:s"),
+            'thn' => date("Y"),
+            'QTY_MASUK' => $qty2,
+            'periode' => $this->session->userdata('Ymd_periode'),
+            'txtperiode' => $this->session->userdata('ym_periode'),
+            'ket' => '-',
+            'account' => '-',
+            'ket_account' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s")
+        ];
+
+        $cek_stokawal_bulanan_devisi = $this->M_bkb->cek_stok_awal_bulanan_devisi($kodebar, $data_insert_stok_bulanan['txtperiode'], $kode_dev);
+
+        if ($cek_stokawal_bulanan_devisi >= 1) {
+            //update stok awal bulanan devisi
+            return $this->M_bkb->update_stockawal_bulanan_devisi($kodebar, $qty2, $data_insert_stok_bulanan['txtperiode'], $kode_dev);
+        } else {
+            //insert stok awal bulanan devisi
+            return $this->M_bkb->saveStokAwalBulananDevisi($data_insert_stok_bulanan);
+        }
+    }
+
+    function insert_stokawal($kodebar, $nabar, $satuan, $grp, $qty2, $txtperiode)
+    {
+
+        $nilai_keluarbrgitem = $this->M_bkb->get_rata2_nilai($kodebar, $qty2, $txtperiode);
+
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+
+        $pt = $this->session->userdata('pt');
+        $KODE = $this->session->userdata('kode_pt');
+
+        $data_input_stock_awal["pt"] = $pt;
+        $data_input_stock_awal["KODE"] = $KODE;
+        $data_input_stock_awal["afd"] = "-";
+        $data_input_stock_awal["kodebar"] = $kodebar;
+        $data_input_stock_awal["kodebartxt"] = $kodebar;
+        $data_input_stock_awal["nabar"] = $nabar;
+        $data_input_stock_awal["satuan"] = $satuan;
+        $data_input_stock_awal["grp"] = $grp;
+        $data_input_stock_awal["saldoawal_qty"] = 0;
+        $data_input_stock_awal["saldoawal_nilai"] = 0;
+        $data_input_stock_awal["tglinput"] = date("Y-m-d H:i:s");
+        $data_input_stock_awal["thn"] = date("Y");
+        $data_input_stock_awal["saldoakhir_qty"] = $qty2;
+        $data_input_stock_awal["saldoakhir_nilai"] = $nilai_keluarbrgitem;
+        $data_input_stock_awal["nilai_masuk"] = 0;
+        $data_input_stock_awal["nilai_keluar"] = 0;
+        $data_input_stock_awal["QTY_MASUK"] = "0";
+        $data_input_stock_awal["QTY_KELUAR"] = $qty2;
+        $data_input_stock_awal["HARGARAT"] = "0";
+        $data_input_stock_awal["periode"] = $periode;
+        $data_input_stock_awal["txtperiode"] = $txtperiode;
+        $data_input_stock_awal["account"] = "-";
+        $data_input_stock_awal["ket_account"] = "-";
+
+        $this->db_logistik_pt->insert('stockawal', $data_input_stock_awal);
+
+        // mengembalikan nilai harga rata2 * qty
+        return $nilai_keluarbrgitem;
     }
 
     function insert_stok_awal_harian($kodebar, $nabar, $satuan, $grup_brg, $qty2, $devisi, $kode_dev, $tgl, $txtperiode)

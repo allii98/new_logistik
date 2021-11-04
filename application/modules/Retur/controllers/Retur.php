@@ -462,13 +462,15 @@ class Retur extends CI_Controller
         ];
         //-------------------------END KEBUTUHAN SAVE KE LPB----------------------/
 
+        $harga_item_bkb = $this->M_retur->cari_harga_bkb($norefbkb, $kodebar);
+
         $data_register_stok = [
             'kodebar' => $kodebar,
             'kodebartxt' => $kodebar,
             'namabar' => $nabar,
             'grup' => $grp,
-            'tgl' => date("Y-m-d H:i:s"),
-            'tgltxt' => date("Ymd"),
+            'tgl' => $periode1,
+            'tgltxt' => date("Ymd", strtotime($periode1)),
             'potxt' => '-',
             'ttgtxt' => $noretur,
             'skbtxt' => '-',
@@ -478,6 +480,7 @@ class Retur extends CI_Controller
             'retskbtxt' => '-',
             'no_slrh' => $noretur,
             'ket' => $this->input->post('txt_ket_rinci'),
+            'harga' => $harga_item_bkb,
             'qty' => $quantiti,
             'masuk_qty' => $quantiti,
             'keluar_qty' => '0',
