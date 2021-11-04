@@ -185,10 +185,17 @@
 
             var noref = $(this).data('noref');
             var mutasi = $(this).data('mutasi');
+            var batal = $(this).data('batal');
             // console.log(noref + 'ninoref');
 
             $("#modalListItemLpb").modal('show');
-            $('#detail_noref_lpb').html('<b>No. Ref. LPB : </b>' + noref);
+            if (batal != 1) {
+
+                $('#detail_noref_lpb').html('<b>No. Ref. LPB : </b>' + noref);
+            } else {
+
+                $('#detail_noref_lpb').html('<b>No. Ref. LPB : </b>' + noref + ' <span class="badge badge-danger">Dibatalkan</span>');
+            }
             tampil_detail_lpb(noref, mutasi);
         });
     });

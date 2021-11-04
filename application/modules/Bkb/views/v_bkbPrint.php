@@ -176,5 +176,8 @@
     </table>
     <small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small><br />
     <small><i>Cetakan ke - <?= $urut['cetak'] ?></i></small><br>
-    <small>By MIPS LOGISTIK</small>
+    <small>By MIPS LOGISTIK</small><br>
+    <?php if ($stockkeluar->batal == 1) { ?>
+        <small style="color: crimson;">Alasan batal : <?= $stockkeluar->alasan_batal; ?></small>
+    <?php } ?>
 </body>

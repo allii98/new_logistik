@@ -232,10 +232,17 @@
 
             var noref = $(this).data('noref');
             var id = $(this).data('id');
+            var batal = $(this).data('batal');
             // console.log(noref + 'ninoref');
 
             $("#modal-detail-bkb").modal('show');
-            $('#detail_noref_bkb').html('<b>No. Ref. BKB : </b>' + noref);
+            if (batal != 1) {
+
+                $('#detail_noref_bkb').html('<b>No. Ref. BKB : </b>' + noref);
+            } else {
+                $('#detail_noref_bkb').html('<b>No. Ref. BKB : </b>' + noref + ' <span class="badge badge-danger">Dibatalkan</span>');
+
+            }
             detail_bkb(id);
         });
     });
