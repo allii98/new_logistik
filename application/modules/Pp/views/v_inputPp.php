@@ -11,7 +11,7 @@
                         <div class="button-list mr-2">
                             <button class="btn btn-xs btn-info" id="data_pp" onclick="data_pp()">Data PP</button>
                             <button type="button" onclick="new_pp()" class="btn btn-xs btn-success" id="">PP Baru</button>
-                            <button type="button" onclick="batal()" class="btn btn-xs btn-danger" id="batalpp" disabled>Batal PP</button>
+                            <button type="button" onclick="alasanbatal()" class="btn btn-xs btn-danger" id="batalpp" disabled>Batal PP</button>
                             <button type="button" class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button type="button" onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -244,7 +244,7 @@
     </div>
 
     <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="fullWidthModalLabel" aria-hidden="true" id="modalcariPO">
-        <div class="modal-dialog modal-md">
+        <div class="modal-dialog modal-md input-pp">
             <div class="modal-content">
                 <div class="modal-header">
                     <ul class="nav nav-tabs nav-bordered">
@@ -261,13 +261,14 @@
 
 
                     </ul>
-                    <label class="btn btn-info active btn-xs ml-4" id="kamera1" style="display: block;">
-                        <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Back Camera
+                    <label class="btn btn-secondary btn-xs ml-4" id="kamera2" style="display: block;">
+                        <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Front Camera
+                    </label>
+                    <label class="btn btn-info active btn-xs " id="kamera1" style="display: block;">
+                        <input type="radio" name="putar_camera" value="2" autocomplete="off"> Back Camera
 
                     </label>
-                    <label class="btn btn-secondary btn-xs" id="kamera2" style="display: block;">
-                        <input type="radio" name="putar_camera" value="2" autocomplete="off"> Front Camera
-                    </label>
+
                 </div>
                 <div class="modal-body">
 
@@ -309,29 +310,26 @@
 
 
 
-    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalKonfirmasiHapus">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body p-4">
-                    <div class="text-center">
-                        <i class="dripicons-warning h1 text-warning"></i>
-                        <h4 class="mt-2">Konfirmasi Batal</h4>
-                        <input type="hidden" id="idpp" name="idpp">
-                        <input type="hidden" id="nopp" name="nopp">
-                        <input type="hidden" id="ref_po" name="ref_po">
-                        <input type="hidden" id="jumlahbatal" name="jumlahbatal">
-                        <input type="hidden" id="nopo" name="nopo">
-                        <p class="mt-3">Apakah anda yakin ingin membatalkan data ini ???</p>
-                        <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="hapusPP()">Batalkan</button>
-                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
-                    </div>
+
+
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Alasan Batal</h4>
+                    <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                    <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
+
 <style>
     table#tableDataPO td {
         padding: 3px;
@@ -379,8 +377,8 @@
             $(this).addClass("active");
             var jenis = $(this).attr('at');
             if (jenis != 'po') {
-                $(".modal-dialog").removeClass("modal-full-width");
-                $(".modal-dialog").addClass("modal-md");
+                $(".input-pp").removeClass("modal-full-width");
+                $(".input-pp").addClass("modal-md");
                 $("#judulpo").css('display', 'none');
                 $("#judulqr").css('display', 'block');
                 $("#listpo").css('display', 'none');
@@ -388,8 +386,8 @@
                 $("#kamera1").css('display', 'block');
                 $("#kamera2").css('display', 'block');
             } else {
-                $(".modal-dialog").removeClass("modal-md");
-                $(".modal-dialog").addClass("modal-full-width");
+                $(".input-pp").removeClass("modal-md");
+                $(".input-pp").addClass("modal-full-width");
                 $("#judulpo").css('display', 'block');
                 $("#judulqr").css('display', 'none');
                 $("#camera").css('display', 'none');
@@ -426,10 +424,8 @@
 
     //untuk scan
     let scanner = new Instascan.Scanner({
-        video: document.getElementById('preview'),
-        scanPeriod: 4,
-        mirror: false
-    })
+        video: document.getElementById('preview')
+    });
 
     scanner.addListener('scan', function(content) {
         // console.log(content);
@@ -442,17 +438,17 @@
 
     Instascan.Camera.getCameras().then(function(cameras) {
         if (cameras.length > 0) {
-            scanner.start(cameras[1]);
+            scanner.start(cameras[0]);
             $('[name="putar_camera"]').on('change', function() {
                 if ($(this).val() == 1) {
                     if (cameras[0] != "") {
-                        scanner.start(cameras[1]);
+                        scanner.start(cameras[0]);
                     } else {
                         alert('No Front camera found!');
                     }
                 } else if ($(this).val() == 2) {
                     if (cameras[1] != "") {
-                        scanner.start(cameras[0]);
+                        scanner.start(cameras[1]);
                     } else {
                         alert('No Back camera found!');
                     }
@@ -569,10 +565,33 @@
         }
     });
 
+    function alasanbatal() {
+
+        $('#alasanbatal').modal('show');
+    }
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            hapusPP();
+        }
+    }
+
     function batal() {
         // alert("Dalam proses perbaikan")
 
         var id = $('#id_pp').val();
+        var alasan = $('#alasan').val();
         var nopp = $('#hidden_no_pp').val();
         var jumlah = $('#txt_jumlah').val();
         var nopo = $('#hidden_no_po').val();
@@ -588,8 +607,8 @@
 
     function hapusPP() {
         // listPP();
-
-        $('#modalKonfirmasiHapus').modal('hide');
+        $('#alasanbatal').modal('hide');
+        var alasan = $('#alasan').val();
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('Pp/deletePP') ?>",
@@ -601,9 +620,10 @@
                 refpp: $('#hidden_refpp').val(),
                 jumlah: $('#jumlah').val(),
                 nopo: $('#nopo').val(),
+                alasan: $('#alasan').val(),
             },
             success: function(data) {
-                console.log(data)
+                // console.log(data)
                 $.toast({
                     position: 'top-right',
                     heading: 'Dihapus',
@@ -612,7 +632,9 @@
                     loader: false
                 });
 
-                location.reload();
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
             }
         });
     }
@@ -718,6 +740,7 @@
 
             form_data.append('id_pp', $('#id_pp').val());
             form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
+            form_data.append('hidden_refpp', $('#hidden_refpp').val());
             form_data.append('hidden_no_po', $('#hidden_no_po').val());
             form_data.append('hidden_grup', $('#hidden_grup').val());
             form_data.append('txt_tgl_pp', $('#txt_tgl_pp').val());
@@ -1240,6 +1263,7 @@
 
     function validasipo(tot) {
         var id_po = $('#hidden_id_po').val();
+        var no_pp = $('#hidden_no_pp').val();
         var nilaipo = $('#tot_po').val();
         var jumlahbayar = $('#txt_jumlah').val();
         var jumlahplus = $('#jumlahplus').val();
@@ -1258,7 +1282,8 @@
 
                 data: {
                     id_po: id_po,
-                    terbayar: terbayar
+                    terbayar: terbayar,
+                    no_pp: no_pp,
                 },
 
                 success: function(data) {
@@ -1282,7 +1307,8 @@
 
                 data: {
                     id_po: id_po,
-                    terbayar: terbayar
+                    terbayar: terbayar,
+                    no_pp: no_pp,
                 },
 
                 success: function(data) {
@@ -1306,7 +1332,8 @@
 
                 data: {
                     id_po: id_po,
-                    terbayar: terbayar
+                    terbayar: terbayar,
+                    no_pp: no_pp,
                 },
 
                 success: function(data) {
@@ -1330,7 +1357,8 @@
 
                 data: {
                     id_po: id_po,
-                    terbayar: terbayar
+                    terbayar: terbayar,
+                    no_pp: no_pp,
                 },
 
                 success: function(data) {

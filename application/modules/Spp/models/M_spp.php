@@ -196,9 +196,9 @@ class M_spp extends CI_Model
     }
 
     //new batal spp
-    public function batalSpp($noref_ppo)
+    public function batalSpp($noref_ppo, $alasan)
     {
-        $data = array('status' => 'BATAL', 'status2' => 5);
+        $data = array('status' => 'BATAL', 'status2' => 5, 'nama_main' => $alasan);
         $this->db_logistik_pt->where('noreftxt', $noref_ppo);
         $this->db_logistik_pt->update('ppo', $data);
         return TRUE;

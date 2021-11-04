@@ -281,6 +281,22 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Alasan Batal</h4>
+                    <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                    <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <style>
     .hastag_th {
         width: 5% !important;
@@ -1087,7 +1103,24 @@
 
     //batal spp
     function batalSppmodal(n) {
-        $('#modalKonfirmasiBatalSpp').modal('show');
+        $('#alasanbatal').modal('show');
+    }
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            batalAksi();
+        }
     }
 
     function batalAksi() {
@@ -1095,6 +1128,7 @@
 
         var n = $('#hidden_no_delete').val();
         var noref_ppo = $('#hidden_no_ref_ppo').val();
+        var alasan = $('#alasan').val();
 
         $.ajax({
             type: "POST",
@@ -1107,13 +1141,22 @@
             },
 
             data: {
-                noref_ppo: noref_ppo
+                noref_ppo: noref_ppo,
+                alasan: alasan
             },
 
             success: function(data) {
-                console.log(data);
-
-                location.reload();
+                $('#alasanbatal').modal('hide');
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Dihapus',
+                    text: 'Berhasil Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
             },
             error: function(response) {
                 $('#lbl_status_simpan_' + n).empty();

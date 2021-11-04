@@ -204,12 +204,23 @@ class Po extends CI_Controller
                         </a>
                         ';
                     } else {
-                        $aksi = '
-                        <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
-                        <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
-                        <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
-                        </a>
-                        ';
+                        if ($d->nopp != NULL) {
+                            # code...
+                            $aksi = '
+                            <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                            <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
+                            </a>
+                            ';
+                        } else {
+                            # code...
+                            $aksi = '
+                            <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
+                            <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
+                            <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
+                            </a>
+                            ';
+                        }
+
                         # code...
                     }
                 }

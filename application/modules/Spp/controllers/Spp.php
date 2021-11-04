@@ -474,8 +474,9 @@ class Spp extends CI_Controller
     public function batalSpp()
     {
         $noref_ppo = $this->input->post('noref_ppo');
+        $alasan = $this->input->post('alasan');
 
-        $data = $this->M_spp->batalSpp($noref_ppo);
+        $data = $this->M_spp->batalSpp($noref_ppo, $alasan);
 
         echo json_encode($data);
     }

@@ -10,7 +10,7 @@
                         <div class="button-list mr-2">
                             <button class="btn btn-xs btn-info" id="data_po" onclick="data_bpb()">Data BPB</button>
                             <button onclick="new_bpb()" class="btn btn-xs btn-success" id="">BPB Baru</button>
-                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batalBPB" disabled>Batal BPB</button>
+                            <button onclick="alasanbatal()" class="btn btn-xs btn-danger" id="batalBPB" disabled>Batal BPB</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()" disabled>Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -476,6 +476,22 @@
                         <p class="mt-3">Apakah Anda yakin ingin menghapus data ini ???</p>
                         <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="deleteData()">Hapus</button>
                         <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Batal</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                        <h4 class="mt-2">Alasan Batal</h4>
+                        <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                        <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -1274,63 +1290,86 @@
         }
     }
 
+    function alasanbatal() {
+
+        $('#alasanbatal').modal('show');
+    }
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            batal();
+        }
+    }
+
     function batal() {
         $('#batalBPB').attr('disabled', '');
         var idbpb = $('#hidden_id_bpb').val();
-        var iditem = $('#hidden_id_bpb').val();
         var noref = $('#hidden_no_ref_bpb').val();
         var mutasi_pt = $('#hidden_mutasi_pt').val();
+        var alasan = $('#alasan').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/batalBPB'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {
+                $('#batalBPB').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+            },
+            cache: false,
 
-        Swal.fire({
-            title: 'Apakah anda yakin?',
-            text: "Data bpb ini akan dibatalkan",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya'
-        }).then((result) => {
-            if (result.value) {
+            data: {
+                idbpb: idbpb,
+                noref: noref,
+                mutasi_pt: mutasi_pt,
+                alasan: alasan,
+            },
+            success: function(data) {
 
-                $.ajax({
-                    type: "POST",
-                    url: "<?php echo site_url('Bpb/batalBPB'); ?>",
-                    dataType: "JSON",
-                    beforeSend: function() {
-                        $('#batalBPB').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
-                    },
-                    cache: false,
-
-                    data: {
-                        idbpb: idbpb,
-                        iditem: iditem,
-                        noref: noref,
-                        mutasi_pt: mutasi_pt,
-                    },
-                    success: function(data) {
-
-                        console.log(data);
-                        // $('#tr_' + no).remove();
-                        // alert('Data Berhasil dihapus');
-                        $.toast({
-                            position: 'top-right',
-                            heading: 'Success',
-                            text: 'Berhasil Dibatalkan!',
-                            icon: 'success',
-                            loader: false
-                        });
-
-                        setTimeout(function() {
-                            window.location.href = "<?php echo site_url('Bpb/input'); ?>";
-                        }, 1000);
-                        // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
-                        // $('.modal-success').modal('show');
-                    },
-                    error: function(request) {
-                        alert("KONEKSI TERPUTUS!");
-                    }
+                console.log(data);
+                // $('#tr_' + no).remove();
+                // alert('Data Berhasil dihapus');
+                $('#alasanbatal').modal('hide');
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Success',
+                    text: 'Berhasil Dibatalkan!',
+                    icon: 'success',
+                    loader: false
                 });
+
+                setTimeout(function() {
+                    window.location.href = "<?php echo site_url('Bpb/input'); ?>";
+                }, 1000);
+                // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
+                // $('.modal-success').modal('show');
+            },
+            error: function(request) {
+                alert("KONEKSI TERPUTUS!");
             }
         });
+        // Swal.fire({
+        //     title: 'Apakah anda yakin?',
+        //     text: "Data bpb ini akan dibatalkan",
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Ya'
+        // }).then((result) => {
+        //     if (result.value) {
+
+
+        //     }
+        // });
     }
 
     function saveRinci(no) {

@@ -9,6 +9,7 @@ class Pp extends CI_Controller
         parent::__construct();
         $this->load->model('M_pp');
         $this->load->model('M_dataPP');
+        $this->load->model('M_detail');
 
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
@@ -39,16 +40,26 @@ class Pp extends CI_Controller
 
             if ($hasil->batal == 1) {
                 $row[] = '
-                <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>';
+                <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                <a href="javascript:;" id="a_delete_pp">
+                <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
+                </button>
+            </a>
+                ';
                 # code...
             } else {
-                $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $noref) . '" class="btn btn-info fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
+                $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $noref) . '" class="btn btn-warning fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
     
                 <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
                 <a href="javascript:;" id="a_delete_pp">
-                    <button class="btn btn-warning fa fa-undo btn-xs" id="btn_delete_pp" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp . ','  . $hasil->jumlah . ',' . $hasil->nopotxt . ')">
+                    <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                     </button>
                 </a>';
+
+                //     <a href="javascript:;" id="a_delete_pp">
+                //     <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp . ','  . $hasil->jumlah . ',' . $hasil->nopotxt . ')">
+                //     </button>
+                // </a>
                 # code...
             }
 
@@ -71,6 +82,48 @@ class Pp extends CI_Controller
         );
         //output dalam format JSON
         echo json_encode($output);
+    }
+
+    function detail_pp()
+    {
+        $id = $this->input->post('id');
+        $this->M_detail->where_datatables($id);
+        $list = $this->M_detail->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $hasil) {
+            $no++;
+
+            $row   = array();
+            // sum kasir bayar pada tabel pp
+            $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp where ref_po = '$hasil->ref_po' AND batal <> 1";
+            $get_jumlah_sudah_bayar = $this->db_logistik_pt->query($query_jumlah_sudah_bayar)->row();
+            // endsum
+
+            $row[] = $no . ".";
+            $row[] = $hasil->ref_po;
+            $row[] = $hasil->bayar;
+            $row[] = number_format($hasil->total_po, 2, ",", ".");
+            $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar, 2, ",", ".");
+            $row[] = number_format($hasil->kasir_bayar, 2, ",", ".");
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_detail->count_all(),
+            "recordsFiltered" => $this->M_detail->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function ambilnorefPP()
+    {
+        $id = $this->input->post('id');
+        $data = $this->db_logistik_pt->query("SELECT ref_pp FROM pp WHERE id='$id'")->row();
+        echo json_encode($data);
     }
 
     public function index()
@@ -607,7 +660,7 @@ class Pp extends CI_Controller
                 '././assets/img/batal.png',
                 0.3,
                 '',
-                array(25, 10)
+                array(25, 5)
             );
             $mpdf->showWatermarkImage = true;
         }
@@ -679,9 +732,18 @@ class Pp extends CI_Controller
         $hasil = 0;
 
 
-        $data_po['terbayar'] = $hasil;
+        $cekdatapp = $this->db_logistik_pt->query("SELECT * FROM pp WHERE nopo='$nopo' AND batal <> 1")->num_rows();
+        if ($cekdatapp > 1) {
+            $data_po['terbayar'] = $hasil;
+            # code...
+        } else {
+            $data_po['terbayar'] = $hasil;
+            $data_po['nopp'] = NULL;
+            # code...
+        }
         $this->db_logistik_pt->where('nopo', $nopo);
         $this->db_logistik_pt->update('po', $data_po);
+
         // $this->db_logistik_pt->where('noreftxt', $ref_po);
 
         $pp_logistik = $this->M_pp->batal_pp_log();

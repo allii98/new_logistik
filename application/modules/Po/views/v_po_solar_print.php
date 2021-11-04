@@ -485,9 +485,11 @@ $nama_pt = $this->session->userdata('nama_pt');
         <tr>
             <td style="color: crimson;" colspan="2">Revisi :</td>
         </tr>
-        <tr>
-            <td style="color: crimson;" colspan="2">Alasan batal :</td>
-        </tr>
+        <?php if ($po->alasan_batal != NULL) { ?>
+            <tr>
+                <td style="color: crimson;" colspan="2">Alasan batal : <?= $po->alasan_batal; ?></td>
+            </tr>
+        <?php } ?>
     </table>
 
 </body>

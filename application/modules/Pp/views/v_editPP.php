@@ -303,7 +303,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalKonfirmasiHapus">
+    <!-- <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-hidden="true" id="modalKonfirmasiHapus">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body p-4">
@@ -322,7 +322,30 @@
                 </div>
             </div>
         </div>
+    </div> -->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                        <h4 class="mt-2">Alasan Batal</h4>
+                        <input type="hidden" id="idpp" name="idpp">
+                        <input type="hidden" id="nopp" name="nopp">
+                        <input type="hidden" id="ref_po" name="ref_po">
+                        <input type="hidden" id="jumlahbatal" name="jumlahbatal">
+                        <input type="hidden" id="nopo" name="nopo">
+                        <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                        <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 
 
 </div>
@@ -383,13 +406,31 @@
         // $('#ref_po').val(ref_po);
         $('#jumlahbatal').val(jumlah);
         $('#nopo').val(nopo);
-        $('#modalKonfirmasiHapus').modal('show');
+        $('#alasanbatal').modal('show');
     }
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            hapusPP();
+        }
+    }
+
 
     function hapusPP() {
         // listPP();
 
-        $('#modalKonfirmasiHapus').modal('hide');
+        $('#alasanbatal').modal('hide');
         $.ajax({
             type: "POST",
             url: "<?php echo base_url('Pp/deletePP') ?>",
@@ -401,6 +442,7 @@
                 refpp: $('#hidden_refpp').val(),
                 jumlah: $('#jumlah').val(),
                 nopo: $('#nopo').val(),
+                alasan: $('#alasan').val(),
             },
             success: function(data) {
                 console.log(data)

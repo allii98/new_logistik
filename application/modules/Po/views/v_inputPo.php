@@ -713,18 +713,18 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 </button>
             </div>
             <!-- <div class="sub-header mb-1" style="margin-top: -15px;">
-                <div class="form-group">
-                    <div class="col-3">
-                        <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
-                            <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
-                            <option value="PKS">PKS</option>
-                            <option value="SITE">SITE</option>
-                            <option value="RO">RO</option>
-                            <option value="HO">HO</option>
-                        </select>
+                    <div class="form-group">
+                        <div class="col-3">
+                            <select class="form-control" id="cmb_filter_alokasi" name="cmb_filter_alokasi">
+                                <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+                                <option value="PKS">PKS</option>
+                                <option value="SITE">SITE</option>
+                                <option value="RO">RO</option>
+                                <option value="HO">HO</option>
+                            </select>
+                        </div>
                     </div>
-                </div>
-            </div> -->
+                </div> -->
             <div class="modal-body">
                 <div class="table-responsive" style="margin-top: -20px;">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
@@ -762,7 +762,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
 <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="fullWidthModalLabel" aria-hidden="true" id="modalcarispp">
-    <div class="modal-dialog modal-md">
+    <div class="modal-dialog modal-md input-pp-site">
         <div class="modal-content">
             <div class="modal-header">
                 <ul class="nav nav-tabs nav-bordered">
@@ -1035,14 +1035,14 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 alasan: alasan,
             },
             success: function(data) {
+                $('#alasanbatal').modal('hide');
                 $.toast({
                     position: 'top-right',
-                    heading: 'Dibatalkan',
+                    heading: 'Dihapus',
                     text: 'Berhasil Dibatalkan!',
                     icon: 'success',
                     loader: false
                 });
-
                 setTimeout(function() {
                     location.reload();
                 }, 1000);
@@ -1263,17 +1263,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                 Instascan.Camera.getCameras().then(function(cameras) {
                     if (cameras.length > 0) {
-                        scanner.start(cameras[0]);
+                        scanner.start(cameras[1]);
                         $('[name="putar_camera"]').on('change', function() {
                             if ($(this).val() == 1) {
                                 if (cameras[0] != "") {
-                                    scanner.start(cameras[0]);
+                                    scanner.start(cameras[1]);
                                 } else {
                                     alert('No Front camera found!');
                                 }
                             } else if ($(this).val() == 2) {
                                 if (cameras[1] != "") {
-                                    scanner.start(cameras[1]);
+                                    scanner.start(cameras[0]);
                                 } else {
                                     alert('No Back camera found!');
                                 }
@@ -1291,8 +1291,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     $(this).addClass("active");
                     var jenis = $(this).attr('at');
                     if (jenis != 'po') {
-                        $(".modal-dialog").removeClass("modal-full-width");
-                        $(".modal-dialog").addClass("modal-md");
+                        $(".input-pp-site").removeClass("modal-full-width");
+                        $(".input-pp-site").addClass("modal-md");
                         $("#judulpo").css('display', 'none');
                         $("#judulqr").css('display', 'block');
                         $("#listspp").css('display', 'none');
@@ -1300,8 +1300,8 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $("#kamera1").css('display', 'block');
                         $("#kamera2").css('display', 'block');
                     } else {
-                        $(".modal-dialog").removeClass("modal-md");
-                        $(".modal-dialog").addClass("modal-full-width");
+                        $(".input-pp-site").removeClass("modal-md");
+                        $(".input-pp-site").addClass("modal-full-width");
                         $("#judulpo").css('display', 'block');
                         $("#judulqr").css('display', 'none');
                         $("#camera").css('display', 'none');

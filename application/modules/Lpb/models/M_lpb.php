@@ -658,10 +658,17 @@ class M_lpb extends CI_Model
     public function cek_data_masukitem($noreflpb)
     {
         $this->db_logistik_pt->select('noref');
-        $this->db_logistik_pt->where(['noref' => $noreflpb]);
+        $this->db_logistik_pt->where(['noref' => $noreflpb, 'BATAL' => 0]);
         $this->db_logistik_pt->from('masukitem');
         return $this->db_logistik_pt->get()->num_rows();
     }
+    // public function cek_batal_masukitem($noreflpb)
+    // {
+    //     $this->db_logistik_pt->select('noref');
+    //     $this->db_logistik_pt->where(['noref' => $noreflpb, 'BATAL' => 0]);
+    //     $this->db_logistik_pt->from('masukitem');
+    //     return $this->db_logistik_pt->get()->num_rows();
+    // }
 
     public function update_status_lpb_po($norefpo)
     {
@@ -675,6 +682,20 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->set('sudah_lpb', 0);
         $this->db_logistik_pt->where('noreftxt', $no_ref_po);
         return $this->db_logistik_pt->update('po');
+    }
+    public function updateItembatal($hidden_id_item_lpb, $isibatal)
+    {
+        $this->db_logistik_pt->where('id', $hidden_id_item_lpb);
+        $this->db_logistik_pt->update('masukitem',  $isibatal);
+
+        return TRUE;
+    }
+    public function updatebatal($noreflpb, $isibatal)
+    {
+        $this->db_logistik_pt->where('noref', $noreflpb);
+        $this->db_logistik_pt->update('stokmasuk',  $isibatal);
+
+        return TRUE;
     }
 }
 

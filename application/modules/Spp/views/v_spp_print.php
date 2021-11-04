@@ -334,5 +334,8 @@ $logo_pt = $this->session->userdata('logo_pt');
     </table>
     <small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small><br>
     <small><i>Cetakan ke - <?= $urut['main_acct'] ?></i></small><br>
-    <small>Abu-abu : Dalam proses</small>
+    <small>Abu-abu : Dalam proses</small><br>
+    <?php if ($ppo->status2 == 5) { ?>
+        <small style="color: crimson;">Alasan batal : <?= $ppo->nama_main; ?></small>
+    <?php } ?>
 </body>

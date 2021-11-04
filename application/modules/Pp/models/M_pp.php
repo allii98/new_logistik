@@ -472,6 +472,46 @@ class M_pp extends CI_Model
         $data_pp['batal']           = "0";
 
 
+        $data_pplogistikdicaba['tglpp']             = $tglpp;
+        $data_pplogistikdicaba['tglpptxt']          = $tglpptxt;
+        $data_pplogistikdicaba['tglpo']             = $tglpo;
+        $data_pplogistikdicaba['tglpotxt']          = $tglpotxt;
+        $data_pplogistikdicaba['kode_supply']       = $this->input->post('kd_supplier');
+        $data_pplogistikdicaba['kode_supplytxt']    = $this->input->post('kd_supplier');
+        $data_pplogistikdicaba['nama_supply']       = $this->input->post('txt_supplier');
+        $data_pplogistikdicaba['kepada']            = $this->input->post('txt_dibayar_ke');
+        $data_pplogistikdicaba['bayar']             = $this->input->post('txt_pembayaran');
+        $data_pplogistikdicaba['jumlah']            = $jumlah;
+        $data_pplogistikdicaba['PAJAK']             = $this->input->post('txt_pajak');
+        $data_pplogistikdicaba['COA_PAJAK']         = NULL;
+        $data_pplogistikdicaba['jumlahpo']          = $this->input->post('txt_nilai_po');
+        $data_pplogistikdicaba['HARGAPO']           = $this->input->post('txt_nilai_po');
+        $data_pplogistikdicaba['terbilang']         = $this->input->post('txt_terbilang');
+        $data_pplogistikdicaba['ket']               = $this->input->post('txt_keterangan');
+        // $data_pplogistikdicaba['pt']                = $this->session->userdata('app_pt')." ".$this->session->userdata('status_lokasi');
+        $data_pplogistikdicaba['pt']                = $this->session->userdata('pt');
+        $data_pplogistikdicaba['kodept']            = $this->session->userdata('kode_pt');
+        $data_pplogistikdicaba['periode']           = $periode . " 00:00:00";
+        $data_pplogistikdicaba['txtperiode']        = $txtperiode;
+        $data_pplogistikdicaba['user']              = $this->session->userdata('user');
+        $data_pplogistikdicaba['tglisi']            = date("Y-m-d H:i:s");
+        $data_pplogistikdicaba['status_vou']        = "0";
+        // $data_pplogistikdicaba['status_vou']        = "1";
+        $data_pplogistikdicaba['no_vou']            = $no_vou;
+        $data_pplogistikdicaba['no_voutxt']         = $no_vou;
+        $data_pplogistikdicaba['tgl_vou']           = $tgl_vou;
+        $data_pplogistikdicaba['tgl_voutxt']        = $tgl_voutxt;
+        $data_pplogistikdicaba['TGL_BAYAR_REAL']    = NULL;
+        $data_pplogistikdicaba['kode_budget']       = "0";
+        $data_pplogistikdicaba['grup']              = $this->input->post('hidden_grup');
+        $data_pplogistikdicaba['main_account']      = $this->input->post('hidden_main_account');
+        $data_pplogistikdicaba['nama_account']      = $this->input->post('hidden_nama_account');
+        $data_pplogistikdicaba['jum_bpo']           = $this->input->post('txt_nilai_bpo2');
+        $data_pplogistikdicaba['kode_bpo']          = $this->input->post('txt_nilai_bpo1');
+        $data_pplogistikdicaba['ket_bpo']           = "Biaya atas PO:" . $this->input->post('txt_no_ref_po');
+        $data_pplogistikdicaba['batal']             = "0";
+
+
         $this->db_logistik_pt->where('id', $id_pp);
         $this->db_logistik_pt->update('pp', $data_pp);
         if ($this->db_logistik_pt->affected_rows() > 0) {
@@ -479,6 +519,10 @@ class M_pp extends CI_Model
         } else {
             $bool_pp = FALSE;
         }
+
+        $this->db_caba->set($data_pplogistikdicaba);
+        $this->db_caba->where('ref_pp', $this->input->post('hidden_refpp'));
+        $this->db_caba->update('pp_logistik');
 
         $refpo = $this->input->post('txt_no_ref_po');
         $query_jumlah_sudah_bayar = "SELECT SUM(kasir_bayar) AS kasir_bayar FROM pp WHERE ref_po = '$refpo' AND batal <> 1";
@@ -505,7 +549,8 @@ class M_pp extends CI_Model
     function update_terbayar_po()
     {
         $id = $this->input->post('id_po');
-        $data = array('terbayar' => $this->input->post('terbayar'));
+        $nopp = $this->input->post('no_pp');
+        $data = array('terbayar' => $this->input->post('terbayar'), 'nopp' => $nopp);
         $this->db_logistik_pt->where('id', $id);
         $this->db_logistik_pt->update('po', $data);
         return TRUE;
@@ -513,7 +558,8 @@ class M_pp extends CI_Model
     function update_batal_pp()
     {
         $id = $this->input->post('id_pp');
-        $data = array('batal' => 1);
+        $alasan = $this->input->post('alasan');
+        $data = array('batal' => 1, 'alasan_batal' => $alasan);
         $this->db_logistik_pt->where('id', $id);
         $this->db_logistik_pt->update('pp', $data);
         return TRUE;

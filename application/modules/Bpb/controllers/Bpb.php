@@ -437,13 +437,13 @@ class Bpb extends CI_Controller
     function batalBPB()
     {
         $id_bpb = $this->input->post('idbpb');
-        // $id_bpbitem = $this->input->post('iditem');
+        $alasan = $this->input->post('alasan');
         $noref = $this->input->post('noref');
         $mutasi_pt = $this->input->post('mutasi_pt');
         if ($mutasi_pt == 'mutasi_pt') {
-            $data = $this->M_bpb->batalbpbMut($id_bpb, $noref);
+            $data = $this->M_bpb->batalbpbMut($id_bpb, $noref, $alasan);
         } else {
-            $data = $this->M_bpb->batalbpb($id_bpb, $noref);
+            $data = $this->M_bpb->batalbpb($id_bpb, $noref, $alasan);
         }
 
         echo json_encode($data);
@@ -586,7 +586,7 @@ class Bpb extends CI_Controller
 
         $kode_dev = $this->input->post('kode_dev');
 
-        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id' AND kode_dev='$kode_dev'";
+        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id' AND kode_dev='$kode_dev' AND batal <> 1 ";
         $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id' AND kode_dev='$kode_dev'";
         $get_booking = $this->db_logistik_pt->query($query_booking)->row();
         $get_booking2 = $this->db_logistik_pt->query($query_booking2)->row();
