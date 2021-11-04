@@ -218,4 +218,7 @@ $logo_pt = $this->session->userdata('logo_pt');
     <small><i>Tgl Cetak <?= date("d/m/Y H:i:s"); ?> - Client <?= $this->input->ip_address(); ?> <?= $this->platform->agent(); ?></i></small><br />
     <small><i>Cetakan ke - <?= $urut['cetak'] ?></i></small><br>
     <small>By MIPS LOGISTIK</small>
+    <?php if ($stokmasuk->BATAL == 1) { ?>
+        <small style="color: crimson;">Alasan batal : <?= $stokmasuk->alasan_batal; ?></small>
+    <?php } ?>
 </body>
