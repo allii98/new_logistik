@@ -38,13 +38,6 @@
 
 <body>
       <?php
-      // $sql_sum_reg = "SELECT register_stok.masuk_qty AS asup, register_stok.harga, sub1.masuk_qty FROM register_stok,(SELECT SUM(masuk_qty) AS masuk_qty FROM register_stok WHERE tgltxt <= '20211104' AND txtperiode = '202111' AND kodebar = '102505760000097' AND status = 'LPB') sub1 WHERE tgltxt <= '20211104' AND txtperiode = '202111' AND kodebar = '102505760000097' AND status = 'LPB'";
-
-      // $r_sum_reg = $this->db_logistik_pt->query($sql_sum_reg)->row_array();
-
-      // var_dump($r_sum_reg['asup']);
-      // die;
-
 
       if ($kode_dev == 'Semua') {
             echo '<h2 style="font-size:14px;font-weight:bold;margin-bottom: 0;">' . $this->session->userdata('nama_pt') . '</h2>';
@@ -128,19 +121,20 @@
                                     <td rowspan="2" style="text-align: center; width: 2%;">No</td>
                                     <td rowspan="2" style="text-align: center; width: 5%;">Tgl</td>
                                     <td rowspan="2" style="text-align: center; width: 6%;">Nomor</td>
-                                    <td rowspan="2" style="text-align: center; width: 15%;">Keterangan</td>
-                                    <td colspan="2" style="text-align: center; width: 20%;">LPB</td>
+                                    <td rowspan="2" style="text-align: center; width: 12%;">Keterangan</td>
+                                    <td colspan="3" style="text-align: center; width: 25%;">LPB</td>
                                     <td colspan="2" style="text-align: center; width: 20%;">BKB</td>
-                                    <td rowspan="2" style="text-align: center; width: 10%;">Harga Rata-rata</td>
+                                    <td rowspan="2" style="text-align: center; width: 8%;">Harga Rata-rata</td>
                                     <td colspan="2" style="text-align: center; width: 22%;">Saldo</td>
                               </tr>
                               <tr>
-                                    <th style="width: 7.5%;">&emsp;Qty</th>
-                                    <th style="width: 7.5%;">&emsp;Rupiah</th>
-                                    <th style="width: 7.5%;">&emsp;Qty</th>
-                                    <th style="width: 7.5%;">&emsp;Rupiah</th>
-                                    <th style="width: 7.5%;">&emsp;Qty</th>
-                                    <th style="width: 7.5%;">&emsp;Rupiah</th>
+                                    <th style="width: 7.5%;">Qty</th>
+                                    <th style="width: 7.5%;">Harga</th>
+                                    <th style="width: 7.5%;">Total Harga</th>
+                                    <th style="width: 7.5%;">Qty</th>
+                                    <th style="width: 7.5%;">Total Harga</th>
+                                    <th style="width: 7.5%;">Qty</th>
+                                    <th style="width: 7.5%;">Rupiah</th>
                               </tr>
 
                         </thead>
@@ -180,39 +174,6 @@
                                     $sub_tgl1 = $sub_tgl;
                                     $sub_tgl = date_format(date_create($qs->tgl), "Y-m-d");
 
-                                    //mencari rata2 di stockawal harian periode ini
-                                    // $sql_rata2 = "SELECT saldoakhir_nilai, saldoakhir_qty FROM stockawal WHERE txtperiode < '$txtperiode' AND kodebar = '$ks->kodebar'";
-
-                                    // $stockawal_harian = $this->db_logistik_pt->query($sql_rata2)->num_rows();
-                                    // if ($stockawal_harian >= 1) {
-                                    //       $data_stockawal_harian = $this->db_logistik_pt->query($sql_rata2)->row_array();
-                                    // } else {
-                                    //       $data_stockawal_harian = [
-                                    //             'saldoakhir_nilai' => 0,
-                                    //             'saldoakhir_qty' => 0
-                                    //       ];
-                                    // }
-
-                                    // $sql_rata2_harian = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal_harian WHERE periode <= '$sub_tgl' AND txtperiode = '$txtperiode' AND kodebar = '$ks->kodebar'";
-
-                                    // $stockawal_rata2_harian = $this->db_logistik_pt->query($sql_rata2_harian)->num_rows();
-                                    // if ($stockawal_rata2_harian >= 1) {
-                                    //       $stockawal_rata2_harian = $this->db_logistik_pt->query($sql_rata2_harian)->row_array();
-                                    // } else {
-                                    //       $stockawal_rata2_harian = [
-                                    //             'saldoakhir_nilai' => 0,
-                                    //             'saldoakhir_qty' => 0
-                                    //       ];
-                                    // }
-
-                                    // if ($stockawal_rata2_harian['saldoakhir_nilai'] == NULL || $stockawal_rata2_harian['saldoakhir_qty'] == NULL) {
-                                    //       $rata2_harga = 0;
-                                    // } else {
-                                    //       $akumulasi_nilai = $data_stockawal_harian['saldoakhir_nilai'] + $stockawal_rata2_harian['saldoakhir_nilai'];
-                                    //       $akumulasi_qty = $data_stockawal_harian['saldoakhir_qty'] + $stockawal_rata2_harian['saldoakhir_qty'];
-                                    //       $rata2_harga =  $akumulasi_nilai / $akumulasi_qty;
-                                    // }
-
                                     if ($no == 1) {
                                     } else if ($sub_tgl1 !== date_format(date_create($qs->tgl), "Y-m-d")) {
 
@@ -223,6 +184,7 @@
                                                 <td></td>
                                                 <td style="background-color: lightgray;"><b>SUB TOTAL</b></td>
                                                 <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_lpb_qty, 2); ?></b></td>
+                                                <td></td>
                                                 <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_lpb, 2); ?></b></td>
                                                 <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_bkb_qty, 2); ?></b></td>
                                                 <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_bkb, 2); ?></b></td>
@@ -265,6 +227,7 @@
 
                                           ?>
                                                 <td style="text-align: right;"><?= number_format($qs->masuk_qty, 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format($qs->harga, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format($qs->masuk_qty * $qs->harga, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format(0, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format(0, 2); ?></td>
@@ -274,12 +237,6 @@
                                           <?php } else if ($qs->status == 'BKB') {
 
                                                 $tgl_frmt = date_format(date_create($qs->tgl), "Ymd");
-
-                                                // $sql_sum_reg = "SELECT register_stok.masuk_qty AS qty_masuk_ni, register_stok.harga, sub1.masuk_qty FROM register_stok,(SELECT SUM(masuk_qty) AS masuk_qty FROM register_stok WHERE tgltxt <= '$tgl_frmt' AND txtperiode = '$txtperiode' AND kodebar = '$ks->kodebar' AND status = 'LPB') sub1 WHERE tgltxt <= '$tgl_frmt' AND txtperiode = '$txtperiode' AND kodebar = '$ks->kodebar' AND status = 'LPB'";
-
-                                                // $sum_masuk_nilai = $r_sum_reg['qty_masuk_ni'] * $r_sum_reg['harga'];
-
-                                                // $akumulasi_nilai_bkb = $saldo['saldoakhir_nilai'] + $sum_masuk_nilai;
 
                                                 if ($kode_dev == 'Semua') {
                                                       $sql_sum_reg = "SELECT SUM(masuk_qty) AS masuk_qty FROM register_stok WHERE tgltxt <= '$tgl_frmt' AND txtperiode = '$txtperiode' AND kodebar = '$ks->kodebar' AND status = 'LPB'";
@@ -299,12 +256,12 @@
                                                       $hasil_rata2_bkb = $hasil_rata2;
                                                 }
 
-
                                                 $sub_tot_bkb_qty += $qs->keluar_qty;
                                                 $sub_tot_bkb += $qs->keluar_qty * $qs->harga;
                                                 $grand_bkb_qty += $qs->keluar_qty;
                                                 $grand_bkb += $qs->keluar_qty * $qs->harga;
                                           ?>
+                                                <td style="text-align: right;"><?= number_format(0, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format(0, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format(0, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format($qs->keluar_qty, 2); ?></td>
@@ -320,6 +277,7 @@
                                     <td colspan="3"></td>
                                     <td style="background-color: lightgray;"><b>SUB TOTAL</b></td>
                                     <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_lpb_qty, 2); ?></b></td>
+                                    <td></td>
                                     <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_lpb, 2); ?></b></td>
                                     <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_bkb_qty, 2); ?></b></td>
                                     <td style="background-color: lightgray; text-align: right"><b><?= number_format($sub_tot_bkb, 2); ?></b></td>
@@ -330,6 +288,7 @@
                                     <td colspan="3"></td>
                                     <td style="text-align: center;"><b>GRAND TOTAL</b></td>
                                     <td style="text-align: right;"><b><?= number_format($grand_lpb_qty, 2); ?></b></td>
+                                    <td></td>
                                     <td style="text-align: right;"><b><?= number_format($grand_lpb, 2); ?></b></td>
                                     <td style="text-align: right;"><b><?= number_format($grand_bkb_qty, 2); ?></b></td>
                                     <td style="text-align: right;"><b><?= number_format($grand_bkb, 2); ?></b></td>
@@ -339,11 +298,13 @@
                                     <td colspan="4" style="text-align: right; padding-right:5px;">
                                           <b>SALDO AKHIR</b>
                                     </td>
-                                    <td colspan="2" style="padding-left:5px;">
+                                    <td colspan="5" style="padding-left:5px;">
+                                          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                                           <b>QTY &nbsp;:&nbsp;<?= number_format($s_a_qty, 2); ?></b>
-                                    </td>
-                                    <td colspan="2" style="padding-left:5px;">
+                                          &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
                                           <b>Nilai(Rp) &nbsp;:&nbsp;<?= number_format($s_a, 2); ?></b>
+                                    </td>
+                                    <td colspan="3" style="padding-left:5px;">
                                     </td>
                               </tr>
                         </tbody>

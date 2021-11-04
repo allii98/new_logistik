@@ -1168,38 +1168,6 @@ class Lpb extends CI_Controller
         ];
         echo json_encode($data);
     }
-    public function batalItemLpb()
-    {
-        $hidden_id_item_lpb = $this->input->post('hidden_id_item_lpb');
-        $no_ref_lpb = $this->input->post('hidden_no_ref_lpb');
-        $kodebar = $this->input->post('kodebar');
-        $id_register_stok = $this->input->post('hidden_id_register_stok');
-        $norefpo = $this->input->post('norefpo');
-        $delete_stok_register = $this->input->post('delete_stok_register');
-        $alasan = $this->input->post('alasan');
-        $isibatal = array(
-            'BATAL' => 1,
-            'alasan_batal' => $alasan
-        );
-        // $delete_masukitem = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
-        $delete_masukitem = $this->M_lpb->updateItembatal($hidden_id_item_lpb, $isibatal);
-
-        if ($delete_stok_register == '1') {
-            $delete_regis = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $no_ref_lpb));
-        } else {
-            $delete_regis = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
-        }
-
-        //update sttaus_lpb di po jadi 0
-        $update_lpb_po = $this->M_lpb->update_status_lpb_po($norefpo);
-
-        $data = [
-            'delete_masukitem' => $delete_masukitem,
-            'delete_regis' => $delete_regis,
-            'update_lpb_po' => $update_lpb_po,
-        ];
-        echo json_encode($data);
-    }
 
     public function cek_data_masukitem()
     {
@@ -1209,14 +1177,6 @@ class Lpb extends CI_Controller
 
         echo json_encode($output);
     }
-    // public function cek_batal_masukitem()
-    // {
-    //     $noreflpb = $this->input->post('noreflpb');
-
-    //     $output = $this->M_lpb->cek_batal_masukitem($noreflpb);
-
-    //     echo json_encode($output);
-    // }
 
     public function deleteLpb()
     {
@@ -1227,24 +1187,6 @@ class Lpb extends CI_Controller
         $this->M_lpb->update_sudah_lpb_po($norefpo);
 
         $data = $this->db_logistik_pt->delete('stokmasuk', array('noref' => $noreflpb));
-
-        echo json_encode($data);
-    }
-    public function batalLpb()
-    {
-        $noreflpb = $this->input->post('noreflpb');
-        $norefpo = $this->input->post('norefpo');
-        $alasan = $this->input->post('alasan');
-
-        //update sudah_lpb di po jadi 0
-        $this->M_lpb->update_sudah_lpb_po($norefpo);
-
-        $isibatal = array(
-            'BATAL' => 1,
-            'alasan_batal' => $alasan
-        );
-        // $data = $this->db_logistik_pt->delete('stokmasuk', array('noref' => $noreflpb));
-        $data = $this->M_lpb->updatebatal($noreflpb, $isibatal);
 
         echo json_encode($data);
     }
