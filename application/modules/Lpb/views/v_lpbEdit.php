@@ -1094,7 +1094,7 @@
                 $('#alasanbatal').modal('hide');
                 $.toast({
                     position: 'top-right',
-                    heading: 'Dihapus',
+                    heading: 'Dibatalkan',
                     text: 'Berhasil Dibatalkan!',
                     icon: 'success',
                     loader: false

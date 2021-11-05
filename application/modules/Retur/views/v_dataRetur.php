@@ -166,10 +166,17 @@
 
                   var noref_bkb = $(this).data('norefretur');
                   var id_retskb = $(this).data('id_retskb');
+                  var batal = $(this).data('batal');
                   // console.log(nabar);
 
                   $("#modalListItemBkb").modal('show');
-                  $('#detail_noref_retur').html('<b>No. Ref. Retur : </b>' + noref_bkb);
+                  if (batal != 1) {
+
+                        $('#detail_noref_retur').html('<b>No. Ref. Retur : </b>' + noref_bkb);
+                  } else {
+                        $('#detail_noref_retur').html('<b>No. Ref. Retur : </b>' + noref_bkb + ' <span class="badge badge-danger">Dibatalkan</span>');
+
+                  }
                   approval_retur(id_retskb);
             });
       });

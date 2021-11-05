@@ -90,7 +90,7 @@ class M_retur extends CI_Model
         $kode_dev = $this->session->userdata('kode_dev');
 
         $this->db_logistik_pt->select('NO_REF, skb, pt, kode, kode_dev, devisi, bag');
-        $this->db_logistik_pt->where(['NO_REF' => $noref, 'kode_dev' => $kode_dev]);
+        $this->db_logistik_pt->where(['NO_REF' => $noref, 'kode_dev' => $kode_dev, 'batal' => 0]);
         $this->db_logistik_pt->from('stockkeluar');
         return $this->db_logistik_pt->get()->row_array();
     }
@@ -467,6 +467,7 @@ class M_retur extends CI_Model
         $this->db_logistik_pt->select('norefretur');
         $this->db_logistik_pt->from('ret_skbitem');
         $this->db_logistik_pt->where('norefretur', $norefretur);
+        $this->db_logistik_pt->where('batal !=', 1);
         return $this->db_logistik_pt->get()->num_rows();
     }
 
@@ -475,6 +476,7 @@ class M_retur extends CI_Model
         $this->db_logistik_pt->select('norefretur');
         $this->db_logistik_pt->from('ret_skbitem');
         $this->db_logistik_pt->where('norefretur', $norefretur);
+        $this->db_logistik_pt->where('batal !=', 1);
         return $this->db_logistik_pt->get()->num_rows();
     }
 
@@ -511,6 +513,22 @@ class M_retur extends CI_Model
         $this->db_logistik_pt->from('keluarbrgitem');
         $this->db_logistik_pt->where(['NO_REF' => $norefbkb, 'kodebar' => $kodebar]);
         return $this->db_logistik_pt->get()->row_array();
+    }
+
+    public function updateBatalitem($id_retskbitem, $isi_batal)
+    {
+        $this->db_logistik_pt->where('id', $id_retskbitem);
+        $this->db_logistik_pt->update('ret_skbitem',  $isi_batal);
+
+        return TRUE;
+    }
+    public function updateBatal($norefretur, $isi_batal)
+    {
+        // $this->db_logistik_pt->delete('retskb', array('norefretur' => $norefretur));
+        $this->db_logistik_pt->where('norefretur', $norefretur);
+        $this->db_logistik_pt->update('retskb',  $isi_batal);
+
+        return TRUE;
     }
 
     // public function update_stockawal_bulanan_devisi($kodebar, $qty2, $txtperiode, $kode_dev)

@@ -248,7 +248,6 @@
                 <div class="text-center">
                     <i class="dripicons-warning h1 text-warning"></i>
                     <h4 class="mt-2">Konfirmasi Hapus</h4>
-                    <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
                     <p class="mt-3">Apakah Anda yakin ingin menghapus Retur ini ???</p>
                     <button type="button" class="btn btn-warning my-2" data-dismiss="modal" id="btn_delete" onclick="cekRetur()">Hapus</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
@@ -257,6 +256,23 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body p-4">
+                <div class="text-center">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                    <h4 class="mt-2">Alasan Batal</h4>
+                    <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                    <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                    <button type="button" class="btn btn-default btn_close" onclick="closemodal()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="status_batal" id="status_batal">
 
 <style>
     input::-webkit-outer-spin-button,
@@ -1288,6 +1304,7 @@
             dataType: "JSON",
 
             beforeSend: function() {
+                $('#alasanbatal').modal('hide');
                 $('#lbl_status_simpan_' + n).empty();
                 $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
             },
@@ -1314,14 +1331,71 @@
 
             success: function(data) {
 
-                deleteData(n);
+                var status = $('#status_batal').val();
+                if (status != 1) {
+                    deleteData(n);
 
+                } else {
+                    batalData(n);
+
+                }
             },
             error: function(request) {
                 alert(request.responseText);
             }
         });
     }
+
+    function batalData(n) {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/batalItemRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_status_simpan_' + n).empty();
+                $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+            },
+
+            data: {
+                hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
+                hidden_id_masukitem: $('#hidden_id_masukitem_' + n).val(),
+                hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
+                delete_item_retur: '0',
+                alasan: $('#alasan').val()
+            },
+
+            success: function(data) {
+                console.log(data);
+
+                // $.toast({
+                //     position: 'top-right',
+                //     heading: 'Success',
+                //     text: 'Berhasil DiHapus!',
+                //     icon: 'success',
+                //     loader: false
+                // });
+
+                // $('#tr_' + n).css('display', 'none');
+                // $('#txt_barang_' + n).empty();
+                // $('#hidden_kode_barang_' + n).empty();
+                // $('#hidden_grup_barang_' + n).empty();
+                // $('#txt_qty_bkb_' + n).empty();
+                // $('#hidden_satuan_brg_' + n).empty();
+                // $('#sat_' + n).empty();
+                // $('#cmb_afd_unit_' + n).empty();
+                // $('#cmb_blok_sub_' + n).empty();
+                // $('#txt_account_beban_' + n).empty();
+                // $('#hidden_kodebeban_' + n).empty();
+                // $('#txt_sub_beban_' + n).empty();
+                // $('#hidden_kodesub_' + n).empty();
+
+                cekReturItem(n);
+
+            }
+        });
+    };
 
     function deleteData(n) {
 
@@ -1375,7 +1449,32 @@
 
     // proses hapus retur
     function batalRetur() {
-        $('#modalKonfirmasiHapusRetur').modal('show');
+        // $('#modalKonfirmasiHapusRetur').modal('show');
+        $('#alasanbatal').modal('show');
+        var batal = $('#status_batal').val("1");
+    }
+
+    function closemodal() {
+
+        $('#alasanbatal').modal('hide');
+        var batal = $('#status_batal').val("0");
+    }
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            cekRetur();
+        }
     }
 
     function cekReturItem(n) {
@@ -1400,11 +1499,52 @@
                 $('#lbl_bkb_status').empty();
 
                 if (data == 0) {
-                    hapusRetur();
+                    var status = $('#status_batal').val();
+                    if (status != 1) {
+                        hapusRetur();
+                    } else {
+                        batalDataRetur();
+                    }
                 } else {
                     $('#tr_' + n).remove();
                     $('#lbl_status_simpan_' + n).empty();
                 }
+            }
+        });
+    }
+
+    function batalDataRetur() {
+
+        var norefretur = $('#hidden_norefretur').val();
+        var no_ref_lpb = $('#hidden_no_ref_lpb').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Retur/batalRetur') ?>",
+            dataType: "JSON",
+
+            beforeSend: function() {
+                $('#lbl_bkb_status').empty();
+                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Hapus Retur</label>');
+            },
+
+            data: {
+                norefretur: norefretur,
+                alasan: $('#alasan').val()
+            },
+
+            success: function(data) {
+                // $('#alasanbatal').modal('hide');
+                $.toast({
+                    position: 'top-right',
+                    heading: 'Dibatalkan',
+                    text: 'Berhasil Dibatalkan!',
+                    icon: 'success',
+                    loader: false
+                });
+                setTimeout(function() {
+                    location.reload();
+                }, 100);
             }
         });
     }

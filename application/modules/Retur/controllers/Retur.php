@@ -85,15 +85,26 @@ class Retur extends CI_Controller
                 </button>
                 <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
             } else {
-                $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
-                data-id_retskb="' . $field->id . '" data-norefretur="' . $field->norefretur . '"
-                data-toggle="tooltip" data-placement="top" title="detail">
-                </button>
-                <button class="btn btn-xs btn-warning fa fa-edit" id="edit_retur" name="edit_retur"
-                data-id_retskb="' . $field->id . '" 
-                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                </button>
-                <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                if ($field->batal == 1) {
+                    # code...
+                    $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
+                    data-id_retskb="' . $field->id . '" data-norefretur="' . $field->norefretur . '" data-batal="' . $field->batal . '"
+                    data-toggle="tooltip" data-placement="top" title="detail">
+                    </button>
+                   
+                    <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                } else {
+                    $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
+                    data-id_retskb="' . $field->id . '" data-norefretur="' . $field->norefretur . '" data-batal="' . $field->batal . '"
+                    data-toggle="tooltip" data-placement="top" title="detail">
+                    </button>
+                    <button class="btn btn-xs btn-warning fa fa-edit" id="edit_retur" name="edit_retur"
+                    data-id_retskb="' . $field->id . '" 
+                    data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                    </button>
+                    <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
+                    # code...
+                }
             }
 
             $no++;
@@ -854,6 +865,16 @@ class Retur extends CI_Controller
             'orientation' => 'P'
         ]);
 
+        if ($data['retskb']->batal == 1) {
+            # code...
+            $mpdf->SetWatermarkImage(
+                '././assets/img/batal.png',
+                0.3,
+                '',
+                array(25, 5)
+            );
+            $mpdf->showWatermarkImage = true;
+        }
         // $lokasibuatlpb = substr($noref, 0, 3);
         // switch ($lokasibuatlpb) {
         //     case 'LPB': // HO
@@ -974,6 +995,37 @@ class Retur extends CI_Controller
         echo json_encode($output);
     }
 
+    public function batalItemRetur()
+    {
+        $id_retskbitem = $this->input->post('hidden_id_retskbitem');
+        $id_masukitem = $this->input->post('hidden_id_masukitem');
+        $id_register_stok = $this->input->post('hidden_id_register_stok');
+        $kodebar = $this->input->post('kodebar');
+        $norefretur = $this->input->post('hidden_norefretur');
+        $delete_item_retur = $this->input->post('delete_item_retur');
+        $alasan = $this->input->post('alasan');
+
+        $isi_batal = array('batal' => 1, 'alasan_batal' => $alasan);
+
+        // $data = $this->db_logistik_pt->delete('ret_skbitem', array('id' => $id_retskbitem));
+        $data = $this->M_retur->updateBatalitem($id_retskbitem, $isi_batal);
+
+        if ($delete_item_retur == '1') {
+            $data1 = $this->db_logistik_pt->delete('masukitem', array('kodebar' => $kodebar, 'refpo' => $norefretur));
+            $data2 = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $norefretur));
+        } else {
+            $data1 = $this->db_logistik_pt->delete('masukitem', array('id' => $id_masukitem));
+            $data2 = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
+        }
+
+        $output = [
+            'data' => $data,
+            'data1' => $data1,
+            'data2' => $data2,
+        ];
+
+        echo json_encode($output);
+    }
     public function deleteItemRetur()
     {
         $id_retskbitem = $this->input->post('hidden_id_retskbitem');
@@ -1020,6 +1072,23 @@ class Retur extends CI_Controller
         echo json_encode($data);
     }
 
+    public function batalRetur()
+    {
+        $norefretur = $this->input->post('norefretur');
+        $alasan = $this->input->post('alasan');
+
+        $isi_batal = array('batal' => 1, 'alasan_batal' => $alasan);
+
+        $data = $this->M_retur->updateBatal($norefretur, $isi_batal);
+        $data1 = $this->M_retur->deleteStokMasuk($norefretur);
+
+        $output = [
+            'data' => $data,
+            'data1' => $data1
+        ];
+
+        echo json_encode($output);
+    }
     public function deleteRetur()
     {
         $norefretur = $this->input->post('norefretur');

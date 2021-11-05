@@ -25,6 +25,7 @@ class M_get_bkb extends CI_Model
         if ($lokasi != 'HO') {
             $this->db_logistik_pt->where('kode_dev', $kode_dev);
         }
+        $this->db_logistik_pt->where('batal !=', 1);
         $this->db_logistik_pt->where('mutasi', NULL);
 
         $i = 0;
