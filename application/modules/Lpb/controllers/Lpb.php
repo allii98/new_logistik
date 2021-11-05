@@ -97,47 +97,6 @@ class Lpb extends CI_Controller
         echo json_encode($output);
     }
 
-    // public function get_data_item_po()
-    // {
-    //     $nopo = $this->input->post('nopo');
-    //     $this->M_item_lpb->where_datatables($nopo);
-    //     $list = $this->M_item_lpb->get_datatables();
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $field) {
-
-    //         $sumqty = $this->M_item_lpb->sumqty($field->kodebar, $field->nopo);
-    //         $sumsisa = $field->qty - $sumqty->qty_lpb;
-    //         $no++;
-    //         $row = array();
-    //         $row[] = '<button class="btn btn-success btn-xs" id="pilih_item_po" name="pilih_item_po"
-    //                     data-kodebar="' . $field->kodebar . '" data-nabar="' . $field->nabar . '"
-    //                     data-qty="' . $field->qty . '" data-sat="' . $field->sat . '"
-    //                     data-ket="' . $field->ket . '" data-sumsisa="' . $sumsisa . '"
-    //                     data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">Pilih
-    //                     </button>';
-    //         $row[] = $no;
-    //         $row[] = $field->kodebar;
-    //         $row[] = $field->nabar;
-    //         $row[] = $field->qty;
-    //         $row[] = $sumqty->qty_lpb;
-    //         $row[] = $sumsisa;
-    //         $row[] = $field->sat;
-    //         $row[] = $field->ket;
-
-    //         $data[] = $row;
-    //     }
-
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "recordsTotal" => $this->M_item_lpb->count_all(),
-    //         "recordsFiltered" => $this->M_item_lpb->count_filtered(),
-    //         "data" => $data,
-    //     );
-    //     //output dalam format JSON
-    //     echo json_encode($output);
-    // }
-
     public function get_grup_barang()
     {
         $kodebar =  $this->input->post('kodebar');
@@ -706,20 +665,20 @@ class Lpb extends CI_Controller
 
     function update_stok_awal($kodebar, $txtperiode)
     {
-        //saldo akhir qty
-        $sum_saldo_qty_kodebar = $this->M_lpb->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
-
-        //qty masuk
-        $sum_qty_kodebar = $this->M_lpb->sum_qty_kodebar_harian($kodebar, $txtperiode);
-
         //saldoakhir_nilai
         $sum_harga_kodebar = $this->M_lpb->sum_harga_kodebar_harian($kodebar, $txtperiode);
+
+        //saldo akhir qty
+        $sum_saldo_qty_kodebar = $this->M_lpb->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
 
         //nilai_masuk
         $sum_nilai_masuk = $this->M_lpb->sum_nilai_masuk_harian($kodebar, $txtperiode);
 
+        //qty masuk
+        $sum_qty_kodebar = $this->M_lpb->sum_qty_kodebar_harian($kodebar, $txtperiode);
+
         $data_update = [
-            'saldoakhir_nilai' => $sum_harga_kodebar->saldoakhir_nilai,
+            'saldoakhir_nilai' => $sum_harga_kodebar,
 
             'saldoakhir_qty' => $sum_saldo_qty_kodebar,
 
@@ -780,14 +739,6 @@ class Lpb extends CI_Controller
         $data = $this->M_lpb->get_nopo();
         echo json_encode($data);
     }
-
-    // public function get_data_after_save()
-    // {
-    //     $nopotxt = $this->input->post('nopotxt');
-    //     $no_lpb = $this->input->post('no_lpb');
-    //     $result = $this->M_lpb->get_data_after_save($nopotxt, $no_lpb);
-    //     echo json_encode($result);
-    // }
 
     public function updateLpb()
     {
@@ -858,26 +809,11 @@ class Lpb extends CI_Controller
             'data_editStokAwalBulananDevisi' => $data_editStokAwalBulananDevisi,
             'update_stok_awal' => $update_stok_awal,
             'data_update_lpb' => $data_update_lpb,
-            'data_update_register_stok' => $data_update_register_stok
+            'data_update_register_stok' => $data_update_register_stok,
+            'periode' => $periode,
         ];
         echo json_encode($data);
     }
-
-    // public function test()
-    // {
-    //     //kalo angka nya sama muncul error dah
-    //     $kodebar = '102505360000036';
-    //     $periode = '2021-05-27 00:00:00';
-    //     $qty_masukitem = '50';
-    //     $qty_input = '50';
-    //     $harga = '10000';
-    //     $kode_dev = '6';
-
-    //     $test = $this->M_lpb->editStokAwalHarian($kodebar, $periode, $qty_masukitem, $qty_input, $harga, $kode_dev);
-
-    //     // echo $test;
-    //     var_dump($test);
-    // }
 
     public function cancelUpdateItemLpb()
     {
@@ -956,16 +892,6 @@ class Lpb extends CI_Controller
         echo json_encode($data);
     }
 
-    // public function cariQtyPo()
-    // {
-    //     $refpo = $this->input->post('refpo');
-    //     $kodebar = $this->input->post('kodebar');
-
-    //     $data = $this->M_lpb->cariQtyPo($refpo, $kodebar);
-
-    //     echo json_encode($data);
-    // }
-
     public function sum_qty_edit()
     {
         $kodebar = $this->input->post('kodebar');
@@ -974,24 +900,6 @@ class Lpb extends CI_Controller
         $result = $this->M_lpb->sumqty_edit($kodebar, $refpo, $norefppo);
         echo json_encode($result);
     }
-
-    // public function getQtyPo($kodebar, $noref)
-    // {
-    //     // $kodebar = $this->input->post('kodebar');
-    //     // $nopo = $this->input->post('nopo');
-
-    //     return $this->M_lpb->getQtyPo($kodebar, $noref);
-    // }
-
-    // public function getSisaLpb()
-    // {
-    //     $qty_po = $this->input->post('qty_po');
-    //     $kodebar = $this->input->post('kodebar');
-    //     $no_lpb = $this->input->post('no_lpb');
-
-    //     $result = $this->M_lpb->getSisaLpb($qty_po, $kodebar, $no_lpb);
-    //     echo json_encode($result);
-    // }
 
     function cetak()
     {

@@ -267,7 +267,7 @@ class M_bkb extends CI_Model
         // $this->db_logistik_pt->from('stockawal');
         // $stock_awal = $this->db_logistik_pt->get()->row_array();
 
-        $sql_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal_harian WHERE txtperiode <= '$txtperiode' AND kodebar = '$kodebar'";
+        $sql_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal WHERE txtperiode <= '$txtperiode' AND kodebar = '$kodebar'";
         $stock_awal = $this->db_logistik_pt->query($sql_rata2)->row_array();
 
         $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];

@@ -728,21 +728,20 @@ class Retur extends CI_Controller
 
     function update_stok_awal($kodebar, $txtperiode)
     {
+        //saldoakhir_nilai
+        $sum_harga_kodebar = $this->M_retur->sum_harga_kodebar_harian($kodebar, $txtperiode);
 
         //saldo akhir qty
         $sum_saldo_qty_kodebar = $this->M_retur->sum_saldo_qty_kodebar_harian($kodebar, $txtperiode);
 
-        //qty masuk
-        $sum_qty_kodebar = $this->M_retur->sum_qty_kodebar_harian($kodebar, $txtperiode);
-
-        //saldoakhir_nilai
-        $sum_harga_kodebar = $this->M_retur->sum_harga_kodebar_harian($kodebar, $txtperiode);
-
         //nilai_masuk
         $sum_nilai_masuk = $this->M_retur->sum_nilai_masuk_harian($kodebar, $txtperiode);
 
+        //qty masuk
+        $sum_qty_kodebar = $this->M_retur->sum_qty_kodebar_harian($kodebar, $txtperiode);
+
         $data_update = [
-            'saldoakhir_nilai' => $sum_harga_kodebar->saldoakhir_nilai,
+            'saldoakhir_nilai' => $sum_harga_kodebar,
 
             'saldoakhir_qty' => $sum_saldo_qty_kodebar,
 

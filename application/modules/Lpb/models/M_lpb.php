@@ -175,29 +175,6 @@ class M_lpb extends CI_Model
         return $this->db_logistik_pt->query($query)->result_array();
     }
 
-    // public function get_data_after_save($nopotxt, $no_lpb)
-    // {
-
-    //     $this->db_logistik_pt->select('kodebar, nabar, qty, sat, ket, nopotxt');
-    //     $this->db_logistik_pt->where('nopotxt', $nopotxt);
-    //     $this->db_logistik_pt->from('item_po');
-    //     $this->db_logistik_pt->order_by('nopotxt', 'ASC');
-    //     $data_item_po = $this->db_logistik_pt->get()->result_array();
-
-    //     $this->db_logistik_pt->select('kodebar, ASSET, nabar, satuan, grp, qty, ket');
-    //     $this->db_logistik_pt->where('nopotxt', $nopotxt);
-    //     $this->db_logistik_pt->where('ttg', $no_lpb);
-    //     $this->db_logistik_pt->order_by('nopotxt', 'ASC');
-    //     $this->db_logistik_pt->from('masukitem');
-    //     $data_item_lpb = $this->db_logistik_pt->get()->result_array();
-
-    //     $d_return = [
-    //         'data_item_po' => $data_item_po,
-    //         'data_item_lpb' => $data_item_lpb
-    //     ];
-    //     return $d_return;
-    // }
-
     public function updateLpb($data_item_lpb, $id)
     {
         $this->db_logistik_pt->where('id', $id);
@@ -224,14 +201,6 @@ class M_lpb extends CI_Model
         return $this->db_logistik_pt->get()->row_array();
     }
 
-    // public function get_detail_item_lpb($no_lpb)
-    // {
-    //     $this->db_logistik_pt->select('kodebar, nabar, satuan, grp, ket, qty, nopo');
-    //     $this->db_logistik_pt->from('masukitem');
-    //     $this->db_logistik_pt->where('ttg', $no_lpb);
-    //     return $this->db_logistik_pt->get()->result_array();
-    // }
-
     public function cari_lpb_edit($id_stokmasuk)
     {
         $this->db_logistik_pt->select('id, nopo, refpo, nama_supply, kode_supply, tgl, lokasi_gudang, no_pengtr, noref, ttgtxt, ket, kode_dev');
@@ -251,14 +220,6 @@ class M_lpb extends CI_Model
         return $data;
     }
 
-    // public function cariQtyPo($refpo, $kodebar)
-    // {
-    //     $this->db_logistik_pt->select('qty');
-    //     $this->db_logistik_pt->where(['noref' => $refpo, 'kodebar' => $kodebar]);
-    //     $this->db_logistik_pt->from('item_po');
-    //     return $this->db_logistik_pt->get()->row_array();
-    // }
-
     public function sumqty_edit($kodebar, $refpo, $norefppo)
     {
         $this->db_logistik_pt->select('qty');
@@ -275,22 +236,6 @@ class M_lpb extends CI_Model
         return $result;
     }
 
-    // public function getQtyPo($kodebar, $noref)
-    // {
-    //     $this->db_logistik_pt->select('qty');
-    //     $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noref' => $noref]);
-    //     $this->db_logistik_pt->from('item_po');
-    //     return $this->db_logistik_pt->get()->row_array();
-    // }
-
-    // public function getQtyMutasi($kodebar, $noref)
-    // {
-    //     $this->db_logistik_center->select('qty2');
-    //     $this->db_logistik_center->where(['kodebar' => $kodebar, 'NO_REF' => $noref]);
-    //     $this->db_logistik_center->from('tb_mutasi_item');
-    //     return $this->db_logistik_center->get()->row_array();
-    // }
-
     public function get_sisa_lpb($kodebar, $refpo, $norefppo)
     {
         $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
@@ -298,17 +243,6 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->from('masukitem');
         return $this->db_logistik_pt->get()->row();
     }
-
-    // public function getSisaLpb($qty_po, $kodebar, $no_lpb)
-    // {
-    //     $this->db_logistik_pt->select_sum('qty', 'qty_lpb');
-    //     $this->db_logistik_pt->where(['BATAL !=' => 1, 'kodebar' => $kodebar, 'ttg' => $no_lpb]);
-    //     $this->db_logistik_pt->from('masukitem');
-    //     $sumqty_lpb = $this->db_logistik_pt->get()->row();
-
-    //     $result = $qty_po - $sumqty_lpb->qty_lpb;
-    //     return $result;
-    // }
 
     public function cari_harga_po($no_ref_po, $kodebar, $norefppo)
     {
@@ -375,18 +309,19 @@ class M_lpb extends CI_Model
 
     public function sum_harga_kodebar_harian($kodebar, $txtperiode)
     {
-        $this->db_logistik_pt->select_sum('saldoakhir_nilai', 'saldoakhir_nilai');
+        $this->db_logistik_pt->select_sum('nilai_masuk', 'nilai_masuk');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal_harian');
-        return $this->db_logistik_pt->get()->row();
+        $return_saldo_awal_harian = $this->db_logistik_pt->get()->row();
 
-        // $this->db_logistik_pt->select_sum('nilai_keluar', 'nilaikeluar');
-        // $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        // $this->db_logistik_pt->from('stockawal');
-        // $return_nilaikeluar_stockawal =  $this->db_logistik_pt->get()->row();
-        // $sum_saldo_nilai_stockawal = $return_saldo_awal_harian->saldo_awal_harian - $return_nilaikeluar_stockawal->nilaikeluar;
+        $this->db_logistik_pt->select_sum('nilai_keluar', 'nilai_keluar');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+        $this->db_logistik_pt->from('stockawal_harian');
+        $return_nilaikeluar_stockawal =  $this->db_logistik_pt->get()->row();
 
-        // return $return_saldo_awal_harian;
+        $sum_saldo_nilai_stockawal = $return_saldo_awal_harian->nilai_masuk - $return_nilaikeluar_stockawal->nilai_keluar;
+
+        return $sum_saldo_nilai_stockawal;
     }
 
     public function sum_nilai_masuk_harian($kodebar, $txtperiode)
@@ -454,21 +389,6 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->set('QTY_MASUK', $total_harian);
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
         return $this->db_logistik_pt->update('stockawal_harian');
-
-        //stok awal
-        // $this->db_logistik_pt->select('QTY_MASUK, saldoakhir_nilai');
-        // $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        // $this->db_logistik_pt->from('stockawal');
-        // $stok_awal = $this->db_logistik_pt->get()->row();
-
-        // $update_qty_stok_awal = $stok_awal->QTY_MASUK + $qty;
-
-        // $update_harga_stok_awal = $stok_awal->saldoakhir_nilai + $harga_stok_awal;
-
-        // $this->db_logistik_pt->set('QTY_MASUK', $update_qty_stok_awal);
-        // $this->db_logistik_pt->set('saldoakhir_nilai', $update_harga_stok_awal);
-        // $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode]);
-        // $this->db_logistik_pt->update('stockawal');
     }
 
     public function cari_periode_barang($id)
@@ -481,82 +401,60 @@ class M_lpb extends CI_Model
 
     public function editStokAwalHarian($kodebar, $periode, $qty_masukitem, $qty_input, $harga, $kode_dev)
     {
-        $this->db_logistik_pt->select_sum('QTY_MASUK', 'qtymasuk');
+        $this->db_logistik_pt->select('QTY_MASUK, saldoakhir_qty, saldoakhir_nilai, nilai_masuk');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
         $this->db_logistik_pt->from('stockawal_harian');
-        $sum_harian = $this->db_logistik_pt->get()->row();
-
-        $this->db_logistik_pt->select_sum('saldoakhir_qty', 'saldoakhir_qty');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
-        $this->db_logistik_pt->from('stockawal_harian');
-        $sum_saldoakhir_qty = $this->db_logistik_pt->get()->row();
-
-        // $this->db_logistik_pt->select_sum('nilai_masuk', 'nilaimasuk');
-        // $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
-        // $this->db_logistik_pt->from('stockawal_harian');
-        // $sum_nilai_masuk = $this->db_logistik_pt->get()->row();
+        $data_stockawal_harian = $this->db_logistik_pt->get()->row_array();
 
         //jika qty masukitem > dari qty yang di input saat edit, maka QTY_MASUK - hasil pengurangan (qty masukitem - qty input) 
         if ($qty_masukitem > $qty_input) {
             $kurangin_awal = $qty_masukitem - $qty_input;
-            $total_stok_harian = $sum_harian->qtymasuk - $kurangin_awal;
-            $total_saldoakhir_qty = $sum_saldoakhir_qty->saldoakhir_qty - $kurangin_awal;
+            $qty_edit_dikali_kurawal = $kurangin_awal * $harga;
+            $total_qty_masuk = $data_stockawal_harian['QTY_MASUK'] - $kurangin_awal;
+            $total_saldoakhir_qty = $data_stockawal_harian['saldoakhir_qty'] - $kurangin_awal;
+            $total_saldoakhir_nilai = $data_stockawal_harian['saldoakhir_nilai'] - $qty_edit_dikali_kurawal;
+            $total_nilai_masuk = $data_stockawal_harian['nilai_masuk'] - $qty_edit_dikali_kurawal;
         } elseif ($qty_masukitem < $qty_input) {
             $kurangin_awal = $qty_input - $qty_masukitem;
-            $total_stok_harian = $sum_harian->qtymasuk + $kurangin_awal;
-            $total_saldoakhir_qty = $sum_saldoakhir_qty->saldoakhir_qty + $kurangin_awal;
+            $qty_edit_dikali_kurawal = $kurangin_awal * $harga;
+            $total_qty_masuk = $data_stockawal_harian['QTY_MASUK'] + $kurangin_awal;
+            $total_saldoakhir_qty = $data_stockawal_harian['saldoakhir_qty'] + $kurangin_awal;
+            $total_saldoakhir_nilai = $data_stockawal_harian['saldoakhir_nilai'] + $qty_edit_dikali_kurawal;
+            $total_nilai_masuk = $data_stockawal_harian['nilai_masuk'] + $qty_edit_dikali_kurawal;
         } else {
-            $total_stok_harian = $sum_harian->qtymasuk;
-            $total_saldoakhir_qty = $sum_saldoakhir_qty->saldoakhir_qty;
+            $total_qty_masuk = $data_stockawal_harian['QTY_MASUK'];
+            $total_saldoakhir_qty = $data_stockawal_harian['saldoakhir_qty'];
+            $total_saldoakhir_nilai = $data_stockawal_harian['saldoakhir_nilai'];
+            $total_nilai_masuk = $data_stockawal_harian['nilai_masuk'];
         }
-        // $total_harian = $sum_harian->qtymasuk + $qty;
-
-        $total_harga = $harga * $total_stok_harian;
-        $total_nilai_masuk = $harga * $total_stok_harian;
 
         // return $total_harga;
-
         $this->db_logistik_pt->set('saldoakhir_qty', $total_saldoakhir_qty);
-        $this->db_logistik_pt->set('QTY_MASUK', $total_stok_harian);
-        $this->db_logistik_pt->set('saldoakhir_nilai', $total_harga);
+        $this->db_logistik_pt->set('saldoakhir_nilai', $total_saldoakhir_nilai);
+        $this->db_logistik_pt->set('QTY_MASUK', $total_qty_masuk);
         $this->db_logistik_pt->set('nilai_masuk', $total_nilai_masuk);
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
         return $this->db_logistik_pt->update('stockawal_harian');
-
-        // $result = [
-        //     'kodebar' => $kodebar,
-        //     'periode' => $periode,
-        //     'qty_masukitem' => $qty_masukitem,
-        //     'qty_input' => $qty_input,
-        //     'harga' => $harga,
-        //     'kode_dev' => $kode_dev,
-        // ];
-        // return $result;
     }
 
     public function editStokAwalBulananDevisi($kodebar, $txtperiode, $qty_masukitem, $qty_input, $kode_dev)
     {
-        $this->db_logistik_pt->select_sum('QTY_MASUK', 'qtymasuk');
+        $this->db_logistik_pt->select('QTY_MASUK, saldoakhir_qty');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
         $this->db_logistik_pt->from('stockawal_bulanan_devisi');
-        $sum_qty_masuk = $this->db_logistik_pt->get()->row();
-
-        $this->db_logistik_pt->select_sum('saldoakhir_qty', 'saldoakhir_qty');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
-        $this->db_logistik_pt->from('stockawal_bulanan_devisi');
-        $sum_saldoakhir_qty = $this->db_logistik_pt->get()->row();
+        $data_stockawal_bulanan_devisi = $this->db_logistik_pt->get()->row_array();
 
         if ($qty_masukitem > $qty_input) {
             $kurangin_awal = $qty_masukitem - $qty_input;
-            $total_qty_masuk = $sum_qty_masuk->qtymasuk - $kurangin_awal;
-            $total_saldoakhir_qty = $sum_saldoakhir_qty->saldoakhir_qty - $kurangin_awal;
+            $total_qty_masuk = $data_stockawal_bulanan_devisi['QTY_MASUK'] - $kurangin_awal;
+            $total_saldoakhir_qty = $data_stockawal_bulanan_devisi['saldoakhir_qty'] - $kurangin_awal;
         } elseif ($qty_masukitem < $qty_input) {
             $kurangin_awal = $qty_input - $qty_masukitem;
-            $total_qty_masuk = $sum_qty_masuk->qtymasuk + $kurangin_awal;
-            $total_saldoakhir_qty = $sum_saldoakhir_qty->saldoakhir_qty + $kurangin_awal;
+            $total_qty_masuk = $data_stockawal_bulanan_devisi['QTY_MASUK'] + $kurangin_awal;
+            $total_saldoakhir_qty = $data_stockawal_bulanan_devisi['saldoakhir_qty'] + $kurangin_awal;
         } else {
-            $total_qty_masuk = $sum_qty_masuk->qtymasuk;
-            $total_saldoakhir_qty = $sum_saldoakhir_qty->saldoakhir_qty;
+            $total_qty_masuk = $data_stockawal_bulanan_devisi['QTY_MASUK'];
+            $total_saldoakhir_qty = $data_stockawal_bulanan_devisi['saldoakhir_qty'];
         }
 
         $this->db_logistik_pt->set('saldoakhir_qty', $total_saldoakhir_qty);
@@ -663,13 +561,6 @@ class M_lpb extends CI_Model
         $this->db_logistik_pt->from('masukitem');
         return $this->db_logistik_pt->get()->num_rows();
     }
-    // public function cek_batal_masukitem($noreflpb)
-    // {
-    //     $this->db_logistik_pt->select('noref');
-    //     $this->db_logistik_pt->where(['noref' => $noreflpb, 'BATAL' => 0]);
-    //     $this->db_logistik_pt->from('masukitem');
-    //     return $this->db_logistik_pt->get()->num_rows();
-    // }
 
     public function update_status_lpb_po($norefpo)
     {
