@@ -80,11 +80,8 @@
             <?php } else {
             foreach ($kode_stock as $ks) {
                   $kode_dev2 = (int)$kode_dev;
-                  if ($kode_dev == 'Semua') {
-                        $q_saldo = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_harian WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
-                  } else {
-                        $q_saldo = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_harian WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2')";
-                  }
+                  // $txtperiodeminus = $txtperiode - 1;
+                  $q_saldo = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
                   $saldo_r = $this->db_logistik_pt->query($q_saldo)->num_rows();
                   if ($saldo_r >= 1) {
                         $saldo = $this->db_logistik_pt->query($q_saldo)->row_array();
@@ -146,11 +143,7 @@
                               $p1_frmt = date_format(date_create($p1), "Ymd");
                               $p2_frmt = date_format(date_create($p2), "Ymd");
 
-                              if ($kode_dev == 'Semua') {
-                                    $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' ORDER BY tgltxt ASC, status DESC, ttgtxt ASC";
-                              } else {
-                                    $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2') ORDER BY tgltxt ASC, status DESC, ttgtxt ASC";
-                              }
+                              $q_stok = "SELECT * FROM register_stok WHERE tgltxt BETWEEN '$p1_frmt' AND '$p2_frmt' AND kodebar = '$ks->kodebar' ORDER BY tgltxt ASC, status DESC, ttgtxt ASC";
 
                               $q_stok = $this->db_logistik_pt->query($q_stok)->result();
 
@@ -238,11 +231,7 @@
 
                                                 $tgl_frmt = date_format(date_create($qs->tgl), "Ymd");
 
-                                                if ($kode_dev == 'Semua') {
-                                                      $sql_sum_reg = "SELECT SUM(masuk_qty) AS masuk_qty FROM register_stok WHERE tgltxt <= '$tgl_frmt' AND txtperiode = '$txtperiode' AND kodebar = '$ks->kodebar' AND status = 'LPB'";
-                                                } else {
-                                                      $sql_sum_reg = "SELECT SUM(masuk_qty) AS masuk_qty FROM register_stok WHERE tgltxt <= '$tgl_frmt' AND txtperiode = '$txtperiode' AND kodebar = '$ks->kodebar' AND status = 'LPB' AND kode_dev IN('$kode_dev','$kode_dev2')";
-                                                }
+                                                $sql_sum_reg = "SELECT SUM(masuk_qty) AS masuk_qty FROM register_stok WHERE tgltxt <= '$tgl_frmt' AND txtperiode = '$txtperiode' AND kodebar = '$ks->kodebar' AND status = 'LPB'";
 
                                                 $r_sum_reg = $this->db_logistik_pt->query($sql_sum_reg)->row_array();
 
