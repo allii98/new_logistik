@@ -485,7 +485,7 @@ $nama_pt = $this->session->userdata('nama_pt');
         <tr>
             <td style="color: crimson;" colspan="2">Revisi :</td>
         </tr>
-        <?php if ($po->alasan_batal != NULL) { ?>
+        <?php if ($po->batal != 0) { ?>
             <tr>
                 <td style="color: crimson;" colspan="2">Alasan batal : <?= $po->alasan_batal; ?></td>
             </tr>
