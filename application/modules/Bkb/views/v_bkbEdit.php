@@ -225,6 +225,22 @@
       </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+      <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-body p-4">
+                        <div class="text-center">
+                              <i class="dripicons-warning h1 text-warning"></i>
+                              <h4 class="mt-2">Alasan Batal</h4>
+                              <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                              <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                              <button type="button" class="btn btn-default btn_close" onclick="closemodal()">Cancel</button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+<input type="hidden" name="status_batal" id="status_batal">
 <input type="hidden" id="noref_bkb_edit" value="<?= $noref_bkb_edit ?>">
 <style>
       table#tableRinciBKB th {
@@ -249,7 +265,34 @@
 
       function cancelBkb(n) {
 
-            $('#modalKonfirmasiHapusBkb').modal('show');
+            // $('#modalKonfirmasiHapusBkb').modal('show');
+            $('#alasanbatal').modal('show');
+            var batal = $('#status_batal').val("1");
+      }
+
+      function closemodal() {
+
+            // $('#modalKonfirmasiHapusLpb').modal('show');
+            $('#alasanbatal').modal('hide');
+            var batal = $('#status_batal').val("0");
+      }
+
+      function validasibatal() {
+            var alasan = $('#alasan').val();
+
+            if (!alasan) {
+                  $.toast({
+                        position: 'top-right',
+                        text: 'Silahkan Isi Alasan!',
+                        icon: 'error',
+                        loader: false
+                  });
+                  $('#alasan').css({
+                        "background": "#FFCECE"
+                  });
+            } else {
+                  cekBkb();
+            }
       }
 
       function cekBkb() {
@@ -532,7 +575,60 @@
                   },
                   success: function(data) {
 
-                        hapusItemBkb(n);
+                        var status = $('#status_batal').val();
+                        if (status != 1) {
+                              hapusItemBkb(n);
+
+                        } else {
+                              batalitem(n);
+
+                        }
+
+                  },
+                  error: function(response) {
+                        alert('ERROR! ' + response.responseText);
+                  }
+            });
+      }
+
+      function batalitem(n) {
+
+            if ($('#cexbox_mutasi').is(':checked')) {
+                  var cexbox_mutasi = '1';
+                  var cexbox_mutasi_pt = '1';
+            } else {
+                  var cexbox_mutasi = '0';
+            }
+
+            if ($('#cexbox_mutasi_local').is(':checked')) {
+                  var cexbox_mutasi = '1';
+            } else {
+                  var cexbox_mutasi = '0';
+            }
+
+            $.ajax({
+                  type: "POST",
+                  url: "<?php echo site_url('Bkb/batalItemBkb'); ?>",
+                  dataType: "JSON",
+                  beforeSend: function() {
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>');
+                  },
+
+                  data: {
+                        'id_keluarbrgitem': $('#id_keluarbrgitem_' + n).val(),
+                        'id_mutasi_item': $('#hidden_id_mutasi_item_' + n).val(),
+                        'id_register_stok': $('#hidden_id_register_stok_' + n).val(),
+                        'kodebar': $('#hidden_kode_barang_' + n).val(),
+                        'norefbpb': $('#hidden_norefbpb').val(),
+                        'mutasi': cexbox_mutasi,
+                        'mutasi_pt': cexbox_mutasi_pt,
+                        'edit': '0',
+                        'alasan': $('#alasan').val()
+                  },
+                  success: function(data) {
+
+                        cekDataBkbItem(n);
 
                   },
                   error: function(response) {
@@ -587,11 +683,66 @@
                   success: function(data) {
 
                         if (data == 0) {
-                              hapusBkb(n);
+                              var status = $('#status_batal').val();
+                              if (status != 1) {
+                                    hapusBkb(n);
+                              } else {
+                                    batalBkb(n);
+                              }
                         } else {
                               $('#tr_' + n).remove();
                               $('#lbl_status_simpan_' + n).empty();
                         }
+                  },
+                  error: function(response) {
+                        alert('ERROR! ' + response.responseText);
+                  }
+            });
+      }
+
+      function batalBkb(n) {
+
+            if ($('#cexbox_mutasi').is(':checked')) {
+                  var cexbox_mutasi = '1';
+            } else {
+                  var cexbox_mutasi = '0';
+            }
+
+            if ($('#cexbox_mutasi_local').is(':checked')) {
+                  var cexbox_mutasi = '1';
+            } else {
+                  var cexbox_mutasi = '0';
+            }
+
+            $.ajax({
+                  type: "POST",
+                  url: "<?php echo site_url('Bkb/batalBkb'); ?>",
+                  dataType: "JSON",
+                  beforeSend: function() {
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_status_simpan_' + n).append('<label style="font-size:12px;"><i class="fa fa-spinner fa-spin mt-1" style="font-size:24px;color:#f0ad4e;"></i>Hapus data BKB</label>');
+                  },
+
+                  data: {
+                        'noref_bkb': $('#hidden_no_ref_bkb').val(),
+                        'id_mutasi': $('#hidden_id_mutasi').val(),
+                        'mutasi': cexbox_mutasi,
+                        'alasan': $('#alasan').val()
+                  },
+                  success: function(data) {
+
+                        $('#alasanbatal').modal('hide');
+                        $.toast({
+                              position: 'top-right',
+                              heading: 'Dihapus',
+                              text: 'Berhasil Dibatalkan!',
+                              icon: 'success',
+                              loader: false
+                        });
+                        setTimeout(function() {
+                              location.href = "<?php echo base_url('Bkb') ?>";
+                        }, 1000);
+
                   },
                   error: function(response) {
                         alert('ERROR! ' + response.responseText);

@@ -62,14 +62,14 @@ class Lpb extends CI_Controller
                             data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                             </button>
                             <button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
-                            data-noref="' . $field->noref . '" data-mutasi="' . $field->jenis_lpb . '"
+                            data-noref="' . $field->noref . '" data-mutasi="' . $field->jenis_lpb . '" data-batal="' . $field->BATAL . '"
                             data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                             </button>
                             <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
             } else {
                 # code...
                 $row[] = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_lpb" name="detail_lpb"
-                                        data-noref="' . $field->noref . '" data-mutasi="' . $field->jenis_lpb . '"
+                                        data-noref="' . $field->noref . '" data-mutasi="' . $field->jenis_lpb . '" data-batal="' . $field->BATAL . '"
                                         data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
                                         </button>
                                         <a href="' . site_url('Lpb/cetak/' . $field->ttg . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
@@ -1103,7 +1103,10 @@ class Lpb extends CI_Controller
             );
             $mpdf->showWatermarkImage = true;
         }
-        if (substr($data['stokmasuk']->refpo, 4, 6) == "MUTASI") {
+
+
+
+        if (substr($data['stokmasuk']->noref, 8, 3) == "MUT") {
             $html = $this->load->view('v_lpbPrint_mutasi', $data, true);
         } else {
             $html = $this->load->view('v_lpbPrint', $data, true);
@@ -1146,6 +1149,61 @@ class Lpb extends CI_Controller
 
         echo json_encode($output);
     }
+
+    //GENZA JANGAN DI HAPUS YA
+    public function batalLpb()
+    {
+        $noreflpb = $this->input->post('noreflpb');
+        $norefpo = $this->input->post('norefpo');
+        $alasan = $this->input->post('alasan');
+
+        //update sudah_lpb di po jadi 0
+        $this->M_lpb->update_sudah_lpb_po($norefpo);
+
+        $isibatal = array(
+            'BATAL' => 1,
+            'alasan_batal' => $alasan
+        );
+        // $data = $this->db_logistik_pt->delete('stokmasuk', array('noref' => $noreflpb));
+        $data = $this->M_lpb->updatebatal($noreflpb, $isibatal);
+
+        echo json_encode($data);
+    }
+
+
+    public function batalItemLpb()
+    {
+        $hidden_id_item_lpb = $this->input->post('hidden_id_item_lpb');
+        $no_ref_lpb = $this->input->post('hidden_no_ref_lpb');
+        $kodebar = $this->input->post('kodebar');
+        $id_register_stok = $this->input->post('hidden_id_register_stok');
+        $norefpo = $this->input->post('norefpo');
+        $delete_stok_register = $this->input->post('delete_stok_register');
+        $alasan = $this->input->post('alasan');
+        $isibatal = array(
+            'BATAL' => 1,
+            'alasan_batal' => $alasan
+        );
+        // $delete_masukitem = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
+        $delete_masukitem = $this->M_lpb->updateItembatal($hidden_id_item_lpb, $isibatal);
+
+        if ($delete_stok_register == '1') {
+            $delete_regis = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $no_ref_lpb));
+        } else {
+            $delete_regis = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
+        }
+
+        //update sttaus_lpb di po jadi 0
+        $update_lpb_po = $this->M_lpb->update_status_lpb_po($norefpo);
+
+        $data = [
+            'delete_masukitem' => $delete_masukitem,
+            'delete_regis' => $delete_regis,
+            'update_lpb_po' => $update_lpb_po,
+        ];
+        echo json_encode($data);
+    }
+    //END
 
     public function deleteItemLpb()
     {

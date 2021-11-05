@@ -83,15 +83,26 @@ class Bkb extends CI_Controller
                 </button>
                 <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
             } else {
-                $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
-                data-noref="' . $field->NO_REF . '" data-id="' . $field->id . '" 
-                data-toggle="tooltip" data-placement="top" title="detail">
-                </button>
-                <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
-                data-id="' . $field->id . '"
-                data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
-                </button>
-                <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
+                if ($field->batal == 1) {
+                    # code...
+                    $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
+                    data-noref="' . $field->NO_REF . '" data-id="' . $field->id . '" data-batal="' . $field->batal . '"
+                    data-toggle="tooltip" data-placement="top" title="detail">
+                    </button>
+                    
+                    <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
+                } else {
+                    # code...
+                    $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="detail_bkb" name="detail_bkb"
+                    data-noref="' . $field->NO_REF . '" data-id="' . $field->id . '" data-batal="' . $field->batal . '"
+                    data-toggle="tooltip" data-placement="top" title="detail">
+                    </button>
+                    <button class="btn btn-xs btn-warning fa fa-edit" id="edit_bkb" name="edit_bkb"
+                    data-id="' . $field->id . '"
+                    data-toggle="tooltip" data-placement="top" title="detail" onClick="return false">
+                    </button>
+                    <a href="' . site_url('Bkb/cetak/' . $field->SKBTXT . '/' . $field->id) . '" target="_blank" class="btn btn-primary btn-xs fa fa-print" id="a_print_lpb"></a>';
+                }
             }
 
             $row = array();
@@ -181,6 +192,68 @@ class Bkb extends CI_Controller
         echo json_encode($data_return);
     }
 
+    public function batalItemBkb()
+    {
+        $id_keluarbrgitem = $this->input->post('id_keluarbrgitem');
+        $id_register_stok = $this->input->post('id_register_stok');
+        $kodebar = $this->input->post('kodebar');
+        $norefbpb = $this->input->post('norefbpb');
+        $mutasi = $this->input->post('mutasi');
+        $mutasi_pt = $this->input->post('mutasi_pt');
+        $id_mutasi_item = $this->input->post('id_mutasi_item');
+        $cmb_blok_sub = $this->input->post('cmb_blok_sub');
+        $edit = $this->input->post('edit');
+        $noref_bkb = $this->input->post('noref_bkb');
+        $alasan = $this->input->post('alasan');
+
+        //ubah status_item_bkb di bpbitem
+        $update_bpb_item = $this->M_bkb->update_status_item_bkb($kodebar, $norefbpb);
+        //ubah status_bkb di bpb
+        $update_bpb = $this->M_bkb->update_status_bkb($norefbpb);
+
+        //ubah status_item_bkb di bpbitem_mutasi dan status_bkb di bpb_mutasi
+        if ($mutasi_pt == '1') {
+            $update_bpb_item_mutasi = $this->M_bkb->update_status_item_bkb_mutasi($kodebar, $norefbpb);
+            $update_bpb_mutasi = $this->M_bkb->update_status_bkb_mutasi($norefbpb);
+        } else {
+            $update_bpb_item_mutasi = NULL;
+            $update_bpb_mutasi = NULL;
+        }
+
+        if ($edit == 1) {
+            $delete_register = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $noref_bkb));
+        } else {
+            $delete_register = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
+        }
+
+        $isibatal = array(
+            'batal' => 1,
+            'alasan_batal' => $alasan
+        );
+        // $deletebkb = $this->db_logistik_pt->delete('keluarbrgitem', array('id' => $id_keluarbrgitem));
+        $deletebkb = $this->M_bkb->updatebatalitem($id_keluarbrgitem, $isibatal);
+
+        if ($mutasi == 1) {
+            if ($edit == 1) {
+                //jika dihapus nya lewat data BKB
+                $this->db_logistik_center->where(['kodebar' => $kodebar, 'blok' => $cmb_blok_sub, 'NO_REF' => $noref_bkb]);
+                $this->db_logistik_center->delete('tb_mutasi_item');
+            } else {
+                $this->db_logistik_center->delete('tb_mutasi_item', array('id' => $id_mutasi_item));
+            }
+        }
+
+        $data = [
+            'delete_register' => $delete_register,
+            'update_bpb' => $update_bpb,
+            'update_bpb_item' => $update_bpb_item,
+            'update_bpb_item_mutasi' => $update_bpb_item_mutasi,
+            'update_bpb_mutasi' => $update_bpb_mutasi,
+            'deletebkb' => $deletebkb
+        ];
+
+        echo json_encode($data);
+    }
     public function hapusItemBkb()
     {
         $id_keluarbrgitem = $this->input->post('id_keluarbrgitem');
@@ -267,6 +340,30 @@ class Bkb extends CI_Controller
         $edit = $this->input->post('edit');
 
         $data = $this->db_logistik_pt->delete('stockkeluar', array('NO_REF' => $noref_bkb));
+
+        if ($mutasi == 1) {
+            if ($edit == 1) {
+                $this->db_logistik_center->delete('tb_mutasi', array('NO_REF' => $noref_bkb));
+            } else {
+                $this->db_logistik_center->delete('tb_mutasi', array('id' => $id_mutasi));
+            }
+        }
+
+        echo json_encode($data);
+    }
+    public function batalBkb()
+    {
+        $noref_bkb = $this->input->post('noref_bkb');
+        $mutasi = $this->input->post('mutasi');
+        $id_mutasi = $this->input->post('id_mutasi');
+        $edit = $this->input->post('edit');
+        $alasan = $this->input->post('alasan');
+        $isibatal = array(
+            'batal' => 1,
+            'alasan_batal' => $alasan
+        );
+        // $data = $this->db_logistik_pt->delete('stockkeluar', array('NO_REF' => $noref_bkb));
+        $data = $this->M_bkb->updatebatal($noref_bkb, $isibatal);
 
         if ($mutasi == 1) {
             if ($edit == 1) {
@@ -873,6 +970,7 @@ class Bkb extends CI_Controller
         $data['urut'] = $this->M_bkb->urut_cetak($data['stockkeluar']->NO_REF);
 
         $noref = $data['stockkeluar']->NO_REF;
+        $batal = $data['stockkeluar']->batal;
         $this->qrcode($no_bkb, $id, $noref);
 
         // var_dump($data['po']);exit();
@@ -927,6 +1025,17 @@ class Bkb extends CI_Controller
         //                     <hr style="width:100%;margin:0px;">
         //                     ');
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
+
+        if ($batal == 1) {
+            # code...
+            $mpdf->SetWatermarkImage(
+                '././assets/img/batal.png',
+                0.3,
+                '',
+                array(25, 10)
+            );
+            $mpdf->showWatermarkImage = true;
+        }
 
         if ($data['stockkeluar']->mutasi == 1) {
             $html = $this->load->view('v_bkbPrint_mutasi', $data, true);

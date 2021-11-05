@@ -414,7 +414,7 @@ class M_bkb extends CI_Model
     public function cekDataBkbItem($noref_bkb)
     {
         $this->db_logistik_pt->select('kodebar');
-        $this->db_logistik_pt->where(['NO_REF' => $noref_bkb]);
+        $this->db_logistik_pt->where(['NO_REF' => $noref_bkb, 'batal' => 0]);
         $this->db_logistik_pt->from('keluarbrgitem');
         return $this->db_logistik_pt->get()->num_rows();
     }
@@ -621,6 +621,21 @@ class M_bkb extends CI_Model
     public function saveStokAwalBulananDevisi($data)
     {
         return $this->db_logistik_pt->insert('stockawal_bulanan_devisi', $data);
+    }
+
+    public function updatebatalitem($id_keluarbrgitem, $isibatal)
+    {
+        $this->db_logistik_pt->where('id', $id_keluarbrgitem);
+        $this->db_logistik_pt->update('keluarbrgitem',  $isibatal);
+
+        return TRUE;
+    }
+    public function updatebatal($noref_bkb, $isibatal)
+    {
+        $this->db_logistik_pt->where('NO_REF', $noref_bkb);
+        $this->db_logistik_pt->update('stockkeluar',  $isibatal);
+
+        return TRUE;
     }
 }
 

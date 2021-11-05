@@ -277,6 +277,23 @@ date_default_timezone_set('Asia/Jakarta');
       </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+      <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-body p-4">
+                        <div class="text-center">
+                              <i class="dripicons-warning h1 text-warning"></i>
+                              <h4 class="mt-2">Alasan Batal</h4>
+                              <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                              <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                              <button type="button" class="btn btn-default btn_close" onclick="closemodal()">Cancel</button>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+<input type="hidden" name="status_batal" id="status_batal">
+
 <style>
       .select2-container {
             white-space: nowrap;
@@ -312,8 +329,36 @@ date_default_timezone_set('Asia/Jakarta');
 
       function cancelLpb(n) {
 
-            $('#modalKonfirmasiHapusLpb').modal('show');
+            // $('#modalKonfirmasiHapusLpb').modal('show');
+            $('#alasanbatal').modal('show');
+            var batal = $('#status_batal').val("1");
       }
+
+      function closemodal() {
+
+            // $('#modalKonfirmasiHapusLpb').modal('show');
+            $('#alasanbatal').modal('hide');
+            var batal = $('#status_batal').val("0");
+      }
+
+      function validasibatal() {
+            var alasan = $('#alasan').val();
+
+            if (!alasan) {
+                  $.toast({
+                        position: 'top-right',
+                        text: 'Silahkan Isi Alasan!',
+                        icon: 'error',
+                        loader: false
+                  });
+                  $('#alasan').css({
+                        "background": "#FFCECE"
+                  });
+            } else {
+                  cekLpb();
+            }
+      }
+
 
       function goBack() {
             window.history.back();
@@ -1049,12 +1094,60 @@ date_default_timezone_set('Asia/Jakarta');
 
                         sisaQtyPO(no_ref_po, kodebar, n);
 
-                        deleteData(n);
+                        // deleteData(n);
+
+                        var status = $('#status_batal').val();
+                        if (status != 1) {
+                              deleteData(n);
+
+                        } else {
+                              batalData(n);
+
+                        }
 
                   },
                   error: function(response) {
                         $('#lbl_status_simpan_' + n).empty();
                         alert('KONEKSI TERPUTUS! Gagal Update Data!');
+                  }
+            });
+      };
+
+      function batalData(n) {
+
+            $.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url('Lpb/batalItemLpb') ?>",
+                  dataType: "JSON",
+
+                  beforeSend: function() {
+                        $('#lbl_status_simpan_' + n).empty();
+                        $('#lbl_status_simpan_' + n).append('<i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>');
+                  },
+
+                  data: {
+                        hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
+                        hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
+                        norefpo: $('#txt_ref_po').val(),
+                        delete_stok_register: '0',
+                        alasan: $('#alasan').val()
+                  },
+
+                  success: function(data) {
+
+                        $('#chk_asset_' + n).prop('checked', false);
+                        $('#txt_qty_' + n).val('');
+                        $('#txt_ket_rinci_' + n).val('');
+
+                        //cek di masukitem jika data == 0 hapus stokmasuk
+                        cek_data_masukitem(n);
+                        // if (n == 1) {
+                        //     hapusLpb();
+                        // }
+                  },
+                  error: function(response) {
+                        $('#lbl_status_simpan_' + n).empty();
+                        alert('KONEKSI TERPUTUS! Gagal Delete Data!');
                   }
             });
       };
@@ -1124,7 +1217,12 @@ date_default_timezone_set('Asia/Jakarta');
                   success: function(data) {
                         // jika data masukitem == 0 maka hapus stokmasuk
                         if (data == 0) {
-                              hapusLpb();
+                              var status = $('#status_batal').val();
+                              if (status != 1) {
+                                    hapusLpb();
+                              } else {
+                                    batalLpb();
+                              }
                         } else {
                               $('#lbl_status_simpan_' + n).empty();
 
@@ -1139,6 +1237,48 @@ date_default_timezone_set('Asia/Jakarta');
                   error: function(response) {
                         $('#lbl_bkb_status').empty();
                         alert('KONEKSI TERPUTUS! Gagal Cek Data Masuk Item!');
+                  }
+            });
+      }
+
+      function batalLpb() {
+
+            var noreflpb = $('#hidden_no_ref_lpb').val();
+            var no_ref_po = $('#txt_ref_po').val();
+
+            $.ajax({
+                  type: "POST",
+                  url: "<?php echo base_url('Lpb/batalLpb') ?>",
+                  dataType: "JSON",
+
+                  beforeSend: function() {
+                        $('#lbl_bkb_status').empty();
+                        $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Hapus LPB</label>');
+                  },
+
+                  data: {
+                        noreflpb: noreflpb,
+                        norefpo: no_ref_po,
+                        alasan: $('#alasan').val()
+                  },
+
+                  success: function(data) {
+                        // console.log(data);
+                        $('#alasanbatal').modal('hide');
+                        $.toast({
+                              position: 'top-right',
+                              heading: 'Dihapus',
+                              text: 'Berhasil Dibatalkan!',
+                              icon: 'success',
+                              loader: false
+                        });
+                        setTimeout(function() {
+                              location.reload();
+                        }, 1000);
+                  },
+                  error: function(response) {
+                        $('#lbl_bkb_status').empty();
+                        alert('KONEKSI TERPUTUS! Gagal Hapus LPB!');
                   }
             });
       }
