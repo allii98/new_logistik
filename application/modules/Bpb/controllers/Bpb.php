@@ -586,8 +586,8 @@ class Bpb extends CI_Controller
 
         $kode_dev = $this->input->post('kode_dev');
 
-        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id' AND kode_dev='$kode_dev' AND batal <> 1 ";
-        $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id' AND kode_dev='$kode_dev'";
+        $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id' AND kode_dev='$kode_dev' AND batal <> 1";
+        $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id' AND kode_dev='$kode_dev' AND batal <> 1";
         $get_booking = $this->db_logistik_pt->query($query_booking)->row();
         $get_booking2 = $this->db_logistik_pt->query($query_booking2)->row();
 

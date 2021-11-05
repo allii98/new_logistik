@@ -619,14 +619,14 @@
                 nopp: $('#nopp').val(),
                 refpp: $('#hidden_refpp').val(),
                 jumlah: $('#jumlah').val(),
-                nopo: $('#nopo').val(),
+                nopo: $('#hidden_no_po').val(),
                 alasan: $('#alasan').val(),
             },
             success: function(data) {
                 // console.log(data)
                 $.toast({
                     position: 'top-right',
-                    heading: 'Dihapus',
+                    heading: 'Dibatalkan',
                     text: 'Berhasil Dibatalkan!',
                     icon: 'success',
                     loader: false

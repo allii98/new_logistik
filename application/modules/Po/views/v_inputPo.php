@@ -779,12 +779,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
 
                 </ul>
-                <label class="btn btn-info active btn-xs ml-4" id="kamera1" style="display: block;">
-                    <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Back Camera
-
+                <label class="btn btn-secondary btn-xs ml-4" id="kamera2" style="display: block;">
+                    <input type="radio" name="putar_camera" value="1" autocomplete="off" checked> Front Camera
                 </label>
-                <label class="btn btn-secondary btn-xs" id="kamera2" style="display: block;">
-                    <input type="radio" name="putar_camera" value="2" autocomplete="off"> Front Camera
+                <label class="btn btn-info active btn-xs " id="kamera1" style="display: block;">
+                    <input type="radio" name="putar_camera" value="2" autocomplete="off"> Back Camera
+
                 </label>
             </div>
             <div class="modal-body">
@@ -1263,17 +1263,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                 Instascan.Camera.getCameras().then(function(cameras) {
                     if (cameras.length > 0) {
-                        scanner.start(cameras[1]);
+                        scanner.start(cameras[0]);
                         $('[name="putar_camera"]').on('change', function() {
                             if ($(this).val() == 1) {
                                 if (cameras[0] != "") {
-                                    scanner.start(cameras[1]);
+                                    scanner.start(cameras[0]);
                                 } else {
                                     alert('No Front camera found!');
                                 }
                             } else if ($(this).val() == 2) {
                                 if (cameras[1] != "") {
-                                    scanner.start(cameras[0]);
+                                    scanner.start(cameras[1]);
                                 } else {
                                     alert('No Back camera found!');
                                 }

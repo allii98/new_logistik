@@ -6,7 +6,7 @@
                     <div class="row justify-content-between">
                         <h4 class="header-title ml-2">PO <i>(Edit)</i></h4>
                         <div class="button-list mr-2">
-
+                            <button class="btn btn-xs btn-info" id="data_po" onclick="data_po()">Data PO</button>
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
                             <button onclick="alasanbatal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
@@ -1237,6 +1237,10 @@
         location.href = "<?php echo base_url('Po/input') ?>";
     }
 
+    function data_po() {
+        location.href = "<?php echo base_url('Po') ?>";
+    }
+
     function cetak() {
         var id_po = $('#id_po').val();
         var nopo = $('#hidden_no_po').val();
@@ -1336,12 +1340,12 @@
                 $('#alasanbatal').modal('hide');
                 $.toast({
                     position: 'top-right',
-                    heading: 'Dihapus',
+                    heading: 'Dibatalkan',
                     text: 'Berhasil Dibatalkan!',
                     icon: 'success',
                     loader: false
                 });
-                $('#tr_' + id).remove();
+                $('#tr_' + no).remove();
                 setTimeout(function() {
                     window.location.href = "<?php echo site_url('Po'); ?>";
                 }, 1000);

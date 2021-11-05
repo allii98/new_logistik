@@ -723,35 +723,15 @@ class Pp extends CI_Controller
 
     function deletePP()
     {
-        $id_pp = $this->input->post('id_pp');
-        $nopp = $this->input->post('nopp');
-        // $ref_po = str_replace('.', '/', $this->input->post('ref_po'));
-        $jumlah = $this->input->post('jumlah');
-        $nopo = $this->input->post('nopo');
-        // $hasil = $po->terbayar - $jumlah;
-        $hasil = 0;
 
-
-        $cekdatapp = $this->db_logistik_pt->query("SELECT * FROM pp WHERE nopo='$nopo' AND batal <> 1")->num_rows();
-        if ($cekdatapp > 1) {
-            $data_po['terbayar'] = $hasil;
-            # code...
-        } else {
-            $data_po['terbayar'] = $hasil;
-            $data_po['nopp'] = NULL;
-            # code...
-        }
-        $this->db_logistik_pt->where('nopo', $nopo);
-        $this->db_logistik_pt->update('po', $data_po);
-
-        // $this->db_logistik_pt->where('noreftxt', $ref_po);
-
+        $po = $this->M_pp->update_po_ter();
         $pp_logistik = $this->M_pp->batal_pp_log();
         $pp = $this->M_pp->update_batal_pp();
 
         $data = [
             'pp_logistik' => $pp_logistik,
-            'pp' => $pp
+            'pp' => $pp,
+            'po' => $po,
         ];
 
         echo json_encode($data);
