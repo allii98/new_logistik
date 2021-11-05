@@ -350,18 +350,19 @@ class M_lpb extends CI_Model
 
     public function sum_saldo_qty_kodebar_harian($kodebar, $txtperiode)
     {
-        $this->db_logistik_pt->select_sum('saldoakhir_qty', 'saldoakhir_qty');
+        $this->db_logistik_pt->select_sum('QTY_MASUK', 'qty_masuk');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal_harian');
-        return $this->db_logistik_pt->get()->row();
+        $return_saldo_qty_harian =  $this->db_logistik_pt->get()->row();
 
-        // $this->db_logistik_pt->select_sum('QTY_KELUAR', 'qty_keluar');
-        // $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        // $this->db_logistik_pt->from('stockawal');
-        // $return_saldo_qty_stockawal =  $this->db_logistik_pt->get()->row();
-        // $sum_saldo_qty_stockawal = $return_saldo_qty_harian->saldo_qty_harian - $return_saldo_qty_stockawal->qty_keluar;
+        $this->db_logistik_pt->select_sum('QTY_KELUAR', 'qty_keluar');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+        $this->db_logistik_pt->from('stockawal_harian');
+        $return_saldo_qty_stockawal =  $this->db_logistik_pt->get()->row();
 
-        // return $return_saldo_qty_harian;
+        $sum_saldo_qty_stockawal = $return_saldo_qty_harian->qty_masuk - $return_saldo_qty_stockawal->qty_keluar;
+
+        return $sum_saldo_qty_stockawal;
     }
 
     public function sum_qty_kodebar_harian($kodebar, $txtperiode)

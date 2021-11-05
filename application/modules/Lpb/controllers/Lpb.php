@@ -721,7 +721,7 @@ class Lpb extends CI_Controller
         $data_update = [
             'saldoakhir_nilai' => $sum_harga_kodebar->saldoakhir_nilai,
 
-            'saldoakhir_qty' => $sum_saldo_qty_kodebar->saldoakhir_qty,
+            'saldoakhir_qty' => $sum_saldo_qty_kodebar,
 
             'nilai_masuk' => $sum_nilai_masuk->nilai_masuk_harian,
 
