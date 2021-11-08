@@ -106,37 +106,15 @@
             <?php } else {
             foreach ($kode_stock as $ks) {
                   $kode_dev2 = (int)$kode_dev;
-                  if ($kode_dev == 'Semua') {
-                        $q_saldo = "SELECT SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
-                  } else {
-                        $q_saldo = "SELECT saldoakhir_qty, satuan FROM stockawal_bulanan_devisi WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode' AND kode_dev IN('$kode_dev','$kode_dev2')";
-                  }
+                  $q_saldo = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal WHERE kodebar = '$ks->kodebar' AND txtperiode < '$txtperiode'";
                   $saldo_r = $this->db_logistik_pt->query($q_saldo)->num_rows();
                   if ($saldo_r >= 1) {
                         $saldo = $this->db_logistik_pt->query($q_saldo)->row_array();
                   } else {
                         $saldo = [
-                              'saldoakhir_qty' => '0'
+                              'saldoakhir_qty' => '0',
+                              'saldoakhir_nilai' => '0'
                         ];
-                  }
-
-                  //mencari rata2 di stockawal harian
-                  $sql_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal_harian WHERE txtperiode < '$txtperiode' AND kodebar = '$ks->kodebar'";
-
-                  $stockawal_harian = $this->db_logistik_pt->query($sql_rata2)->num_rows();
-                  if ($stockawal_harian >= 1) {
-                        $data_stockawal_harian = $this->db_logistik_pt->query($sql_rata2)->row_array();
-                  } else {
-                        $data_stockawal_harian = [
-                              'saldoakhir_nilai' => 0,
-                              'saldoakhir_qty' => 0
-                        ];
-                  }
-
-                  if ($data_stockawal_harian['saldoakhir_nilai'] == NULL || $data_stockawal_harian['saldoakhir_qty'] == NULL) {
-                        $rata2_harga_head = 0;
-                  } else {
-                        $rata2_harga_head = $data_stockawal_harian['saldoakhir_nilai'] / $data_stockawal_harian['saldoakhir_qty'];
                   }
             ?>
                   <table border="0" width="100%">
@@ -152,7 +130,7 @@
                                                 Saldo Sebelum Periode (QTY) : <?= number_format($saldo['saldoakhir_qty'], 2) . ' ' . $ks->satuan; ?>
                                           </b>
                                           <b>
-                                                | (Rp) : <?= number_format($saldo['saldoakhir_qty'] * $rata2_harga_head, 2); ?>
+                                                | (Rp) : <?= number_format($saldo['saldoakhir_nilai'], 2); ?>
                                           </b>
                                     </td>
                               </tr>
@@ -192,13 +170,28 @@
                               $gt_lpb_qty = 0;
                               $gt_bkb = 0;
                               $gt_bkb_qty = 0;
-                              $s_a = $saldo['saldoakhir_qty'] * $rata2_harga_head;
+                              $s_a = $saldo['saldoakhir_nilai'];
                               $s_a_qty = $saldo['saldoakhir_qty'];
                               foreach ($q_sum as $qs) {
-                                    if ($qs->saldoakhir_nilai == NULL || $qs->saldoakhir_qty == NULL) {
+
+                                    $q_saldo = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_harian WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND periode <= '$qs->periode'";
+                                    $saldo_r = $this->db_logistik_pt->query($q_saldo)->num_rows();
+                                    if ($saldo_r >= 1) {
+                                          $saldo_bottom = $this->db_logistik_pt->query($q_saldo)->row_array();
+                                    } else {
+                                          $saldo_bottom = [
+                                                'saldoakhir_qty' => '0',
+                                                'saldoakhir_nilai' => '0'
+                                          ];
+                                    }
+
+                                    $akumulasi_nilai = $saldo['saldoakhir_nilai'] + $saldo_bottom['saldoakhir_nilai'];
+                                    $akumulasi_qty = $saldo['saldoakhir_qty'] + $saldo_bottom['saldoakhir_qty'];
+
+                                    if ($saldo_bottom['saldoakhir_nilai'] == NULL || $saldo_bottom['saldoakhir_qty'] == NULL) {
                                           $rata2_harga = 0;
                                     } else {
-                                          $rata2_harga = $qs->saldoakhir_nilai / $qs->saldoakhir_qty;
+                                          $rata2_harga = $akumulasi_nilai / $akumulasi_qty;
                                     }
 
                                     $s_a = $s_a + ($qs->QTY_MASUK * $rata2_harga) - ($qs->QTY_KELUAR * $rata2_harga);
