@@ -136,13 +136,13 @@ class Login extends CI_Controller
                     ));
                     redirect('Home');
                 } else {
-                    $this->session->set_flashdata("pesan", "<div class=\"alert alert-danger\" id=\"alert\"><i class=\"glyphicon glyphicon-remove\"></i> Password Salah!</div>");
+                    $this->session->set_flashdata("pesan", "<div class=\"alert alert-danger\" id=\"alert\"><i class=\"mdi mdi-alert-outline me-2\"></i> Password Salah!</div>");
                     redirect('Login');
                     # code...
                 }
             } else {
                 // echo "username atau password salah";
-                $this->session->set_flashdata("pesan", "<div class=\"alert alert-danger\" id=\"alert\"><i class=\"glyphicon glyphicon-remove\"></i>Username tidak ditemukan</div>");
+                $this->session->set_flashdata("pesan", "<div class=\"alert alert-danger\" id=\"alert\"><i class=\"mdi mdi-alert-outline me-2\"></i> Username tidak ditemukan</div>");
                 redirect('Login');
             }
         }
