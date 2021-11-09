@@ -65,7 +65,7 @@ class Login extends CI_Controller
             $get_devisi = $this->$pt_login->get_where('tb_devisi', array('kodetxt' => $user->status_lokasi_site));
             $devisi = $get_devisi->row();
 
-            if ($get_username->num_rows() > 0 && password_verify($password, $user->password)) {
+            if ($get_username->num_rows() > 0) {
 
                 switch ($user->status_lokasi) {
                     case 'HO':
@@ -111,40 +111,38 @@ class Login extends CI_Controller
 
                 $Ymd_periode =  date('Y-m-d', strtotime($periode));
 
-                $this->session->set_userdata(array(
-                    'id_user' => $user->no,
-                    'user' => $user->nama,
-                    'status_lokasi' => $user->status_lokasi, //HO, RO, SITE, PKS
-                    'kode_pt_login' => $kode_pt_login,
-                    'app_pt' => $data['get_tb_pt_central']['alias'], //MSAL, MAPA, PSAM, PEAK
-                    'nama_pt' => $data['get_tb_pt_central']['nama_pt'], //MSAL, MAPA, PSAM, PEAK
-                    'logo_pt' => $data['get_tb_pt_central']['logo'], //MSAL, MAPA, PSAM, PEAK
-                    'alamat_ho' => $data['get_tb_pt_central']['deskripsi_ho'], //MSAL, MAPA, PSAM, PEAK
-                    'alamat_site' => $data['get_tb_pt_central']['deskripsi_site'], //MSAL, MAPA, PSAM, PEAK
-                    'kode_pt' => $kode_pt,
-                    'pt' => $nama_pt,
-                    'level' => $user->level,
-                    'kode_level' => $user->kode_level,
-                    'kode_dev' => $devisi->kodetxt,
-                    'devisi' => $devisi->PT,
-                    'status_login' => 'oke',
-                    'periode' => $periode,
-                    'ym_periode' => $ym_periode,
-                    'Ymd_periode' => $Ymd_periode
-                ));
-
-                redirect('Home', 'refresh');
+                if (password_verify($password, $user->password)) {
+                    # code...
+                    $this->session->set_userdata(array(
+                        'id_user' => $user->no,
+                        'user' => $user->nama,
+                        'status_lokasi' => $user->status_lokasi, //HO, RO, SITE, PKS
+                        'kode_pt_login' => $kode_pt_login,
+                        'app_pt' => $data['get_tb_pt_central']['alias'], //MSAL, MAPA, PSAM, PEAK
+                        'nama_pt' => $data['get_tb_pt_central']['nama_pt'], //MSAL, MAPA, PSAM, PEAK
+                        'logo_pt' => $data['get_tb_pt_central']['logo'], //MSAL, MAPA, PSAM, PEAK
+                        'alamat_ho' => $data['get_tb_pt_central']['deskripsi_ho'], //MSAL, MAPA, PSAM, PEAK
+                        'alamat_site' => $data['get_tb_pt_central']['deskripsi_site'], //MSAL, MAPA, PSAM, PEAK
+                        'kode_pt' => $kode_pt,
+                        'pt' => $nama_pt,
+                        'level' => $user->level,
+                        'kode_level' => $user->kode_level,
+                        'kode_dev' => $devisi->kodetxt,
+                        'devisi' => $devisi->PT,
+                        'status_login' => 'oke',
+                        'periode' => $periode,
+                        'ym_periode' => $ym_periode,
+                        'Ymd_periode' => $Ymd_periode
+                    ));
+                    redirect('Home');
+                } else {
+                    $this->session->set_flashdata("pesan", "<div class=\"alert alert-danger\" id=\"alert\"><i class=\"mdi mdi-alert-outline me-2\"></i> Password Salah!</div>");
+                    redirect('Login');
+                    # code...
+                }
             } else {
                 // echo "username atau password salah";
-                $this->session->set_flashdata('notif', '
-                        <div class="center">
-                            <div class="alert alert-danger" role="alert"> 
-                            Username atau Password Salah !
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            </button>
-                            </div>
-                        </div>
-                        ');
+                $this->session->set_flashdata("pesan", "<div class=\"alert alert-danger\" id=\"alert\"><i class=\"mdi mdi-alert-outline me-2\"></i> Username tidak ditemukan</div>");
                 redirect('Login');
             }
         }
