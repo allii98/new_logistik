@@ -161,6 +161,7 @@
                               $grand_lpb = 0;
                               $grand_bkb_qty = 0;
                               $grand_bkb = 0;
+                              $hasil_rata2 = 0;
                               foreach ($q_stok as $qs) { ?>
                                     <?php
 
@@ -242,7 +243,11 @@
                                                 if ($sub_tgl1 !== date_format(date_create($qs->tgl), "Y-m-d")) {
                                                       $hasil_rata2_bkb = $akumulasi_nilai_bkb / $akumulasi_qty_bkb;
                                                 } else {
-                                                      $hasil_rata2_bkb = $hasil_rata2;
+                                                      if ($hasil_rata2 == 0) {
+                                                            $hasil_rata2_bkb = $akumulasi_nilai_bkb / $akumulasi_qty_bkb;
+                                                      } else {
+                                                            $hasil_rata2_bkb = $hasil_rata2;
+                                                      }
                                                 }
 
                                                 $sub_tot_bkb_qty += $qs->keluar_qty;
