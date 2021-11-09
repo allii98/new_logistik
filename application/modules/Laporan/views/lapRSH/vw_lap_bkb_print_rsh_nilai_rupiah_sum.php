@@ -158,11 +158,8 @@
                         </thead>
                         <tbody>
                               <?php
-                              if ($kode_dev == 'Semua') {
-                                    $q_sum = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, SUM(QTY_MASUK) AS QTY_MASUK, SUM(QTY_KELUAR) AS QTY_KELUAR, periode, ket FROM stockawal_harian WHERE periode BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' GROUP BY periode ORDER BY periode ASC";
-                              } else {
-                                    $q_sum = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, SUM(QTY_MASUK) AS QTY_MASUK, SUM(QTY_KELUAR) AS QTY_KELUAR, periode, ket FROM stockawal_harian WHERE periode BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' AND kode_dev IN('$kode_dev','$kode_dev2') GROUP BY periode ORDER BY periode ASC";
-                              }
+                              $q_sum = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, SUM(QTY_MASUK) AS QTY_MASUK, SUM(QTY_KELUAR) AS QTY_KELUAR, periode, ket FROM stockawal_harian WHERE periode BETWEEN '$p1' AND '$p2' AND kodebar='$ks->kodebar' GROUP BY periode ORDER BY periode ASC";
+
                               $q_sum = $this->db_logistik_pt->query($q_sum)->result();
 
                               $no = 1;
@@ -174,7 +171,8 @@
                               $s_a_qty = $saldo['saldoakhir_qty'];
                               foreach ($q_sum as $qs) {
 
-                                    $q_saldo = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_harian WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND periode <= '$qs->periode'";
+                                    //ini untuk harga
+                                    $q_saldo = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_harian WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND periode = '$qs->periode'";
                                     $saldo_r = $this->db_logistik_pt->query($q_saldo)->num_rows();
                                     if ($saldo_r >= 1) {
                                           $saldo_bottom = $this->db_logistik_pt->query($q_saldo)->row_array();
@@ -194,6 +192,27 @@
                                           $rata2_harga = $akumulasi_nilai / $akumulasi_qty;
                                     }
 
+                                    // ini untuk rata2
+                                    $q_saldo_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty, satuan FROM stockawal_harian WHERE kodebar = '$ks->kodebar' AND txtperiode = '$txtperiode' AND periode <= '$qs->periode'";
+                                    $saldo_rata = $this->db_logistik_pt->query($q_saldo_rata2)->num_rows();
+                                    if ($saldo_rata >= 1) {
+                                          $saldo_bottom_rata2 = $this->db_logistik_pt->query($q_saldo_rata2)->row_array();
+                                    } else {
+                                          $saldo_bottom_rata2 = [
+                                                'saldoakhir_qty' => '0',
+                                                'saldoakhir_nilai' => '0'
+                                          ];
+                                    }
+
+                                    $akumulasi_nilai_rata2 = $saldo['saldoakhir_nilai'] + $saldo_bottom_rata2['saldoakhir_nilai'];
+                                    $akumulasi_qty_rata2 = $saldo['saldoakhir_qty'] + $saldo_bottom_rata2['saldoakhir_qty'];
+
+                                    if ($saldo_bottom_rata2['saldoakhir_nilai'] == NULL || $saldo_bottom_rata2['saldoakhir_qty'] == NULL) {
+                                          $rata2_harga_rata2 = 0;
+                                    } else {
+                                          $rata2_harga_rata2 = $akumulasi_nilai_rata2 / $akumulasi_qty_rata2;
+                                    }
+
                                     $s_a = $s_a + ($qs->QTY_MASUK * $rata2_harga) - ($qs->QTY_KELUAR * $rata2_harga);
                                     $s_a_qty = $s_a_qty + $qs->QTY_MASUK - $qs->QTY_KELUAR;
                                     $gt_lpb += $qs->QTY_MASUK * $rata2_harga;
@@ -211,7 +230,7 @@
                                                 <td style="text-align: right;"><?= number_format($qs->QTY_MASUK * $rata2_harga, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format($qs->QTY_KELUAR, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format($qs->QTY_KELUAR * $rata2_harga, 2); ?></td>
-                                                <td style="text-align: right;"><?= number_format($rata2_harga, 2); ?></td>
+                                                <td style="text-align: right;"><?= number_format($rata2_harga_rata2, 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format(($s_a_qty), 2); ?></td>
                                                 <td style="text-align: right;"><?= number_format(($s_a), 2); ?></td>
                                                 <td style="text-align: left;"><?= $qs->ket; ?></td>
