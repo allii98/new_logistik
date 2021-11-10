@@ -178,13 +178,14 @@ class M_bpb extends CI_Model
 
     public function get_stok($kodebar, $txtperiode, $kode_dev)
     {
-        $this->db_logistik_pt->select('saldoawal_qty, QTY_MASUK, QTY_KELUAR');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode, 'kode_dev' => $kode_dev]);
-        $this->db_logistik_pt->from('stockawal_bulanan_devisi');
-        $stock_awal = $this->db_logistik_pt->get()->row_array();
+        $txtperiode = $this->session->userdata('ym_periode');
 
-        $tambah_saldo = $stock_awal['saldoawal_qty'] + $stock_awal['QTY_MASUK'];
-        $stok = $tambah_saldo - $stock_awal['QTY_KELUAR'];
+        $sql_sum_stok = "SELECT SUM(QTY_MASUK) AS qty_masuk, SUM(QTY_KELUAR) AS qty_keluar FROM stockawal_bulanan_devisi WHERE txtperiode <= '$txtperiode' AND kodebar = '$kodebar' AND kode_dev = '$kode_dev'";
+
+        $stock_awal = $this->db_logistik_pt->query($sql_sum_stok)->row_array();
+
+        $stok = $stock_awal['qty_masuk'] - $stock_awal['qty_keluar'];
+
         return $stok;
     }
 
