@@ -55,7 +55,7 @@
       }
       ?>
       <div style="text-align: center;">
-            <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Summary Stock Harian Material Gudang</h3>
+            <h3 style="font-size:11px;font-weight:bold;margin-bottom: 0%; ">Summary (Nilai Rupiah) Stock Harian Material Gudang</h3>
       </div>
       <?php if (empty($kode_stock)) { ?>
             <table border="0" width="100%">
@@ -183,13 +183,10 @@
                                           ];
                                     }
 
-                                    $akumulasi_nilai = $saldo['saldoakhir_nilai'] + $saldo_bottom['saldoakhir_nilai'];
-                                    $akumulasi_qty = $saldo['saldoakhir_qty'] + $saldo_bottom['saldoakhir_qty'];
-
                                     if ($saldo_bottom['saldoakhir_nilai'] == NULL || $saldo_bottom['saldoakhir_qty'] == NULL) {
                                           $rata2_harga = 0;
                                     } else {
-                                          $rata2_harga = $akumulasi_nilai / $akumulasi_qty;
+                                          $rata2_harga = $saldo_bottom['saldoakhir_nilai'] / $saldo_bottom['saldoakhir_qty'];
                                     }
 
                                     // ini untuk rata2
