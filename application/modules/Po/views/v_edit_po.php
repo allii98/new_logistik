@@ -8,7 +8,7 @@
                         <div class="button-list mr-2">
                             <button class="btn btn-xs btn-info" id="data_po" onclick="data_po()">Data PO</button>
                             <button onclick="new_po()" class="btn btn-xs btn-success" id="a_po_baru">PO Baru</button>
-                            <button onclick="alasanbatal()" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
+                            <button data-toggle="modal" data-target="#alasanbatal" class="btn btn-xs btn-danger" id="batal_po">Batal PO</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -744,21 +744,46 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" id="alasanbatal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-body p-4">
-                <div class="text-center">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-1">
                     <i class="dripicons-warning h1 text-warning"></i>
-                    <h4 class="mt-2">Alasan Batal</h4>
-                    <textarea class="form-control" id="alasan" rows="4" required></textarea>
-                    <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
-                    <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
                 </div>
+
+                <form class="parsley-examples" action="#" novalidate>
+                    <div class="mb-1">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="pw" class="form-control" placeholder="Masukkan password">
+                            <div class="input-group-text" data-password="false">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                        <ul class="parsley-errors-list filled" id="pw_validasi" style="display: none;">
+                            <li class="parsley-required" id="text-pw">Password tidak boleh kosong!</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="alasan" class="form-label">Alasan</label>
+                        <textarea class="form-control" id="alasan" rows="2" placeholder="Alasan batal..." required></textarea>
+                        <ul class="parsley-errors-list filled" id="alasan_validasi" style="display: none;">
+                            <li class="parsley-required">Alasan tidak boleh kosong!</li>
+                        </ul>
+                    </div>
+                    <div class="mb-0 text-center">
+                        <button type="button" class="btn btn-warning my-2" id="btn_batal" onclick="validasibatal()">Batalkan</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<input type="hidden" name="password" id="password" value="<?= $this->session->userdata('pw') ?>">
 
 <input type="hidden" id="hidden_nopo_edit" value="<?= $nopo ?>">
 <input type="hidden" id="hidden_noref_tambah">
@@ -890,6 +915,11 @@
     }
 
     $(document).ready(function() {
+        $('#alasanbatal').on('shown.bs.modal', function() {
+            $('#pw').focus();
+        })
+
+
         var no_nopo_edit = $('#hidden_nopo_edit').val();
         cari_po_edit(no_nopo_edit);
         isi_edit();
@@ -1257,25 +1287,33 @@
         $('#modalKonfirmasibatalPO').modal('show');
     }
 
-    function alasanbatal() {
-
-        $('#alasanbatal').modal('show');
-    }
 
     function validasibatal() {
-        var alasan = $('#alasan').val();
-        if (!alasan) {
-            $.toast({
-                position: 'top-right',
-                text: 'Silahkan Isi Alasan!',
-                icon: 'error',
-                loader: false
-            });
-            $('#alasan').css({
-                "background": "#FFCECE"
-            });
+        var password = $('#pw').val();
+        var pw_session = $('#password').val();
+        var pw = $('#pw').val().length;
+        var alasan = $('#alasan').val().length;
+        if (pw == 0) {
+            $('#pw').addClass('parsley-error');
+            $('#pw_validasi').css('display', 'block');
+            $('#text-pw').html('Password tidak boleh kosong!');
+        } else if (alasan == 0) {
+            $('#alasan').addClass('parsley-error');
+            $('#alasan_validasi').css('display', 'block');
         } else {
-            cekbatal();
+            $('#pw').removeClass('parsley-error');
+            $('#pw_validasi').css('display', 'none');
+
+            $('#alasan').removeClass('parsley-error');
+            $('#alasan_validasi').css('display', 'none');
+
+            if (password == pw_session) {
+                cekbatal();
+            } else {
+                $('#pw').addClass('parsley-error');
+                $('#pw_validasi').css('display', 'block');
+                $('#text-pw').html('Password Salah!');
+            }
         }
     }
 
@@ -1285,7 +1323,9 @@
             type: "POST",
             url: "<?php echo site_url('Po/cekDataPo'); ?>",
             dataType: "JSON",
-            beforeSend: function() {},
+            beforeSend: function() {
+                $('#btn_batal').append('&nbsp;<span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>');
+            },
 
             data: {
                 refspp: refspp
@@ -1337,6 +1377,7 @@
                 alasan: alasan
             },
             success: function(data) {
+                $('.spinner-border').css('display', 'none');
                 $('#alasanbatal').modal('hide');
                 $.toast({
                     position: 'top-right',

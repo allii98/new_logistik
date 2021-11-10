@@ -136,11 +136,74 @@
     }
 </style>
 <script>
-    var table;
     $(document).ready(function() {
+        $(document).on('click', '#detail_spp_approval', function() {
 
-        //datatables
-        table = $('#datasppapproval').DataTable({
+            $("#modal-spp-approval").modal('show');
+
+            var id_ppo = $(this).data('id_ppo');
+            var noref_spp = $(this).data('noref_spp');
+
+            $('#hidden_id_ppo').val(id_ppo);
+            $('#hidden_noref_spp').val(noref_spp);
+            $('#detail_noref_spp').html('<b>No. Ref. SPP : </b>' + noref_spp);
+
+            $('#spp_approval').DataTable().destroy();
+            $('#spp_approval').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "order": [],
+                "select": true,
+
+                "ajax": {
+                    "url": "<?php echo site_url('Spp/get_detail_approval') ?>",
+                    "type": "POST",
+                    "data": {
+                        id_ppo: id_ppo
+                    }
+                },
+                "columnDefs ": [{
+                    "targets": [0],
+                    "orderable": false,
+
+                }, ],
+                "dom": 'Bfrtip',
+                "buttons": [{
+                        "text": "Select All",
+                        "action": function() {
+                            $('#spp_approval').DataTable().rows().select();
+                        }
+                    },
+                    {
+                        "text": "Unselect All",
+                        "action": function() {
+                            $('#spp_approval').DataTable().rows().deselect();
+                        }
+                    }
+                ],
+                "lengthMenu": [
+                    [5, 10, 15, -1],
+                    [10, 15, 20, 25]
+                ],
+                "aoColumnDefs": [{
+                    "bSearchable": false,
+                    "bVisible": false,
+                    "aTargets": [1]
+                }, ],
+                "language": {
+                    "infoFiltered": ""
+                },
+                "pageLength": 10,
+            });
+        });
+
+        listApproval();
+    });
+
+
+    function listApproval() {
+        $('#datasppapproval').DataTable().destroy();
+        $('#datasppapproval').DataTable({
 
             "fixedColumns": true,
             "fixedHeader": true,
@@ -165,7 +228,12 @@
             },
         });
 
-    });
+        var rel = setInterval(function() {
+            $('#datasppapproval').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
+    }
+
 
     // $(document).ready(function() {
     //     $(document).on('click', '#detail_spp_approval', function() {
@@ -258,67 +326,7 @@
         });
     }
 
-    $(document).ready(function() {
-        $(document).on('click', '#detail_spp_approval', function() {
 
-            $("#modal-spp-approval").modal('show');
-
-            var id_ppo = $(this).data('id_ppo');
-            var noref_spp = $(this).data('noref_spp');
-
-            $('#hidden_id_ppo').val(id_ppo);
-            $('#hidden_noref_spp').val(noref_spp);
-            $('#detail_noref_spp').html('<b>No. Ref. SPP : </b>' + noref_spp);
-
-            $('#spp_approval').DataTable().destroy();
-            $('#spp_approval').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-                "select": true,
-
-                "ajax": {
-                    "url": "<?php echo site_url('Spp/get_detail_approval') ?>",
-                    "type": "POST",
-                    "data": {
-                        id_ppo: id_ppo
-                    }
-                },
-                "columnDefs ": [{
-                    "targets": [0],
-                    "orderable": false,
-
-                }, ],
-                "dom": 'Bfrtip',
-                "buttons": [{
-                        "text": "Select All",
-                        "action": function() {
-                            $('#spp_approval').DataTable().rows().select();
-                        }
-                    },
-                    {
-                        "text": "Unselect All",
-                        "action": function() {
-                            $('#spp_approval').DataTable().rows().deselect();
-                        }
-                    }
-                ],
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [10, 15, 20, 25]
-                ],
-                "aoColumnDefs": [{
-                    "bSearchable": false,
-                    "bVisible": false,
-                    "aTargets": [1]
-                }, ],
-                "language": {
-                    "infoFiltered": ""
-                },
-                "pageLength": 10,
-            });
-        });
-    });
 
     function approve_barang() {
         var rowcollection = $('#spp_approval').DataTable().rows({

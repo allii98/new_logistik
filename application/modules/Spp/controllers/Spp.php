@@ -650,6 +650,15 @@ class Spp extends CI_Controller
         echo json_encode($result);
     }
 
+    function update_alasan()
+    {
+        $noref_ppo = $this->input->post('noref_ppo');
+        $alasan_edit = $this->input->post('alasan');
+        $result = $this->M_spp->update_alasan($noref_ppo, $alasan_edit);
+
+        echo json_encode($result);
+    }
+
     function cetak()
     {
         $nospp = $this->uri->segment('3');

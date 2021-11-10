@@ -172,6 +172,10 @@
 				}
 			},
 
+			"initComplete": function(settings, json) {
+				$("div.dataTables_filter input").focus();
+			},
+
 			"columnDefs": [{
 				"targets": [0],
 				"orderable": false,

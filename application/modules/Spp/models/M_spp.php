@@ -203,6 +203,14 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->update('ppo', $data);
         return TRUE;
     }
+
+    function update_alasan($noref_ppo, $alasan)
+    {
+        $data = array('nama_main' => $alasan);
+        $this->db_logistik_pt->where('noreftxt', $noref_ppo);
+        $this->db_logistik_pt->update('ppo', $data);
+        return TRUE;
+    }
     //end new batal spp
 
     public function cari_item_spp($kodebar, $noreftxt)

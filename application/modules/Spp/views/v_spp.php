@@ -164,8 +164,7 @@
 
     function dataSppFilter(data) {
         $('#dataspp').DataTable().destroy();
-
-        table = $('#dataspp').DataTable({
+        $('#dataspp').DataTable({
 
             "fixedColumns": true,
             "fixedHeader": true,
@@ -182,6 +181,10 @@
                 "data": {
                     data: data
                 }
+            },
+
+            "initComplete": function(settings, json) {
+                $("div.dataTables_filter input").focus();
             },
 
             "columnDefs": [{

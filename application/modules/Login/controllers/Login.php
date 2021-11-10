@@ -132,7 +132,8 @@ class Login extends CI_Controller
                         'status_login' => 'oke',
                         'periode' => $periode,
                         'ym_periode' => $ym_periode,
-                        'Ymd_periode' => $Ymd_periode
+                        'Ymd_periode' => $Ymd_periode,
+                        'pw' => $data['get_tb_pt_central']['alias'] . date('mdY')
                     ));
                     redirect('Home');
                 } else {
