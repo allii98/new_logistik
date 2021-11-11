@@ -343,8 +343,8 @@
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-repeat mr-1"></i>
                                         <font face="Verdana" size="2.5">Hitung Ulang Stok</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-send mr-1"></i>
-                                        <font face="Verdana" size="2.5">Transfer Transaksi ke GL</font>
+                                    <a href="#" onclick="tflpbbkbtogl()" class="dropdown-item"><i class="fe-send mr-1"></i>
+                                        <font face="Verdana" size="2.5">Transfer Transaksi LPB & BKB ke GL</font>
                                     </a>
                                     <a href="widgets.html" class="dropdown-item"><i class="fe-book mr-1"></i>
                                         <font face="Verdana" size="2.5">Tutup Buku</font>
@@ -1697,6 +1697,24 @@
 
         <!-- end lap rsh -->
 
+        <!-- modal transfer to GL -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiTfToGl">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body p-4">
+                        <div class="text-center">
+                            <i class="dripicons-warning h1 text-warning"></i>
+                            <h4 class="mt-2">Konfirmasi Transfer</h4>
+                            <!-- <input type="hidden" id="hidden_no_delete" name="hidden_no_delete"> -->
+                            <p class="mt-3">Apakah Anda yakin akan transfer transaksi LPB & BKB ke GL ?</p>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-success my-2" data-dismiss="modal" id="btn_delete" onclick="transferToGl()">Transfer ke GL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal transfer to GL -->
 
         <style>
             .hastag_th {
@@ -4103,10 +4121,28 @@
             } else {
                 swal('Jangan ada field yang kosong!~');
             }
-
-
-
             console.log(cmb_devisi2, noref_po, txt_periode8, txt_periode9, rbt_pilihan4);
+        }
+
+        function tflpbbkbtogl() {
+            $('#modalKonfirmasiTfToGl').modal('show');
+        }
+
+        function transferToGl() {
+            $.ajax({
+                url: "<?= site_url('Posting/transfer_to_gl'); ?>",
+                type: "POST",
+                dataType: "JSON",
+                beforeSend: function() {
+
+                },
+                success: function(result) {
+
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
         }
     </script>
 </body>
