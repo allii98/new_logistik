@@ -921,6 +921,9 @@ date_default_timezone_set('Asia/Jakarta');
 
                     //update PO menjadi 1 (sudah LPB) agar PO tersebut tidak bisa di edit
                     updatePoAfterLpb(no_ref_po);
+
+                    // notif2 jika ada function gagal
+                    notiferor(data);
                 }
             },
             error: function(response) {
@@ -930,6 +933,36 @@ date_default_timezone_set('Asia/Jakarta');
                 alert('KONEKSI TERPUTUS! Gagal Save Data!');
             }
         });
+    }
+
+    function notiferor(data) {
+        if (data.insert_stok_awal_bulanan == 0) {
+            alert('insert_stok_awal_bulanan GAGAL!');
+        }
+
+        if (data.insert_stok_harian == 0) {
+            alert('insert_stok_harian GAGAL!');
+        }
+
+        if (data.update_stok == 0) {
+            alert('update_stok GAGAL!');
+        }
+
+        if (data.insert_lpb_to_entry_gl_dr == 0) {
+            alert('insert_lpb_to_entry_gl_dr GAGAL!');
+        }
+
+        if (data.insert_lpb_to_entry_gl_cr == 0) {
+            alert('insert_lpb_to_entry_gl_cr GAGAL!');
+        }
+
+        if (data.insert_to_gl_header == 0) {
+            alert('insert_to_gl_header GAGAL!');
+        }
+
+        if (data.insert_register_stok == 0) {
+            alert('insert_register_stok GAGAL!');
+        }
     }
 
     function ubahRinci(n) {
@@ -1022,6 +1055,8 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
                 $('#btn_cancel_update_' + n).css('display', 'none');
+
+                notiferrorupdate(data);
             },
             error: function(response) {
                 $('#btn_update_' + n).css('display', 'block');
@@ -1030,6 +1065,27 @@ date_default_timezone_set('Asia/Jakarta');
             }
         });
     };
+
+    function notiferrorupdate(data) {
+        if (data.data_editStokAwalHarian == 0) {
+            alert('data_editStokAwalHarian GAGAL!');
+        }
+        if (data.data_editStokAwalBulananDevisi == 0) {
+            alert('data_editStokAwalBulananDevisi GAGAL!');
+        }
+        if (data.update_stok_awal == 0) {
+            alert('update_stok_awal GAGAL!');
+        }
+        if (data.data_update_lpb == 0) {
+            alert('data_update_lpb GAGAL!');
+        }
+        if (data.data_update_register_stok == 0) {
+            alert('data_update_register_stok GAGAL!');
+        }
+        if (data.data_edit_gl == 0) {
+            alert('data_edit_gl GAGAL!');
+        }
+    }
 
     function cancelUpdate(n) {
         $.ajax({
@@ -1267,6 +1323,8 @@ date_default_timezone_set('Asia/Jakarta');
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
                 hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
                 norefpo: $('#txt_ref_po').val(),
+                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                kodebar: $('#txt_kode_barang_' + n).val(),
                 delete_stok_register: '0',
             },
 
@@ -1290,6 +1348,8 @@ date_default_timezone_set('Asia/Jakarta');
                 // if (n == 1) {
                 //     hapusLpb();
                 // }
+
+                notiferrordeleteitem(data);
             },
             error: function(response) {
                 $('#lbl_status_simpan_' + n).empty();
@@ -1297,6 +1357,21 @@ date_default_timezone_set('Asia/Jakarta');
             }
         });
     };
+
+    function notiferrordeleteitem(data) {
+        if (data.delete_masukitem == 0) {
+            alert('delete_masukitem GAGAL!');
+        }
+        if (data.delete_regis == 0) {
+            alert('delete_regis GAGAL!');
+        }
+        if (data.update_lpb_po == 0) {
+            alert('update_lpb_po GAGAL!');
+        }
+        if (data.delete_gl == 0) {
+            alert('delete_gl GAGAL!');
+        }
+    }
 
     function cek_data_masukitem(n) {
         var noreflpb = $('#hidden_no_ref_lpb').val();
@@ -1366,6 +1441,8 @@ date_default_timezone_set('Asia/Jakarta');
             success: function(data) {
                 console.log(data);
 
+                notiferrordeletelpb(data);
+
                 location.reload();
             },
             error: function(response) {
@@ -1373,6 +1450,15 @@ date_default_timezone_set('Asia/Jakarta');
                 alert('KONEKSI TERPUTUS! Gagal Hapus LPB!');
             }
         });
+    }
+
+    function notiferrordeletelpb(data) {
+        if (data.delete_stokmasuk == 0) {
+            alert('delete_stokmasuk GAGAL!');
+        }
+        if (data.delete_header_entry == 0) {
+            alert('delete_header_entry GAGAL!');
+        }
     }
 
     function batalLpb() {

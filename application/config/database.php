@@ -227,12 +227,12 @@ $db['db_logistik_kpp'] = array(
 	'save_queries' => TRUE
 );
 
-$db['db_mips_gl'] = array(
+$db['db_mips_gl_msal'] = array(
 	'dsn'	=> '',
 	'hostname' => '192.168.1.237',
 	'username' => 'mis',
 	'password' => 'msaljkt@88',
-	'database' => 'db_mips_gl_msal',
+	'database' => 'dev_db_mips_gl_msal',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
