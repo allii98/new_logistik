@@ -11,6 +11,7 @@ class Retur extends CI_Controller
         $this->load->model('M_cari_bkbitem');
         $this->load->model('M_get_bkb');
         $this->load->model('M_approval_retur');
+        $this->load->model('M_retur_gl');
 
         $db_pt = check_db_pt();
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
@@ -18,6 +19,9 @@ class Retur extends CI_Controller
 
         // DB logistik CENTER
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
+
+        // DB GL
+        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
 
         //DB MSAL
         $this->db_logistik_msal = $this->load->database('db_logistik_msal', TRUE);
@@ -508,7 +512,6 @@ class Retur extends CI_Controller
             'USER' => $this->session->userdata('user'),
         ];
 
-
         $cari_kodebar_stock_awal = $this->M_retur->cari_kodebar($kodebar, $txtperiode);
 
         if (empty($this->input->post('hidden_noretur'))) {
@@ -518,6 +521,11 @@ class Retur extends CI_Controller
             $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
             $saveregisterstok = $this->M_retur->saveRegisterStok($data_register_stok);
             $item_exist = 0;
+
+            // insert to GL
+            $result_insert_to_gl_header = $this->insert_lpb_to_header_entry_gl($noretur, $kode_dev, $norefretur);
+            $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($noretur, $harga_item_bkb, $quantiti, $kode_dev, $kodebar, $norefretur, $nabar, $norefbkb);
+            $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_to_entry_gl_cr($noretur, $harga_item_bkb, $quantiti, $kode_dev, $kodebar, $norefretur, $nabar, $norefbkb, $data_retskbitem['kodesub'], $data_retskbitem['ketsub']);
         } else {
             //cek item jika sudah ada tidak bisa save
             $cek_barang_exist = $this->M_retur->cek_barang_exist($kodebar, $norefretur);
@@ -527,6 +535,9 @@ class Retur extends CI_Controller
                 $savedataretskbitem = NULL;
                 $savedatastokmasuk = NULL;
                 $savedatamasukitem = NULL;
+                $result_insert_to_gl_header = NULL;
+                $result_insert_lpb_to_entry_gl_dr = NULL;
+                $result_insert_lpb_to_entry_gl_cr = NULL;
             } else {
                 $item_exist = 0;
                 $savedataretskb = NULL;
@@ -534,6 +545,11 @@ class Retur extends CI_Controller
                 $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
                 $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
                 $saveregisterstok = $this->M_retur->saveRegisterStok($data_register_stok);
+
+                // insert to GL
+                $result_insert_to_gl_header = NULL;
+                $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($noretur, $harga_item_bkb, $quantiti, $kode_dev, $kodebar, $norefretur, $nabar, $norefbkb);
+                $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_to_entry_gl_cr($noretur, $harga_item_bkb, $quantiti, $kode_dev, $kodebar, $norefretur, $nabar, $norefbkb, $data_retskbitem['kodesub'], $data_retskbitem['ketsub']);
             }
         }
 
@@ -589,6 +605,9 @@ class Retur extends CI_Controller
             'datastokmasuk' => $savedatastokmasuk,
             'datamasukitem' => $savedatamasukitem,
             'saveregisterstok' => $saveregisterstok,
+            'result_insert_to_gl_header' => $result_insert_to_gl_header,
+            'result_insert_lpb_to_entry_gl_dr' => $result_insert_lpb_to_entry_gl_dr,
+            'result_insert_lpb_to_entry_gl_cr' => $result_insert_lpb_to_entry_gl_cr,
             'no_retur' => $noretur,
             'noref_retur' => $norefretur,
             'no_lpb' => $no_lpb,
@@ -603,6 +622,127 @@ class Retur extends CI_Controller
         ];
 
         echo json_encode($data);
+    }
+
+    function insert_lpb_to_header_entry_gl($no_lpb, $kode_dev, $no_ref_lpb)
+    {
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+        $status_lokasi = $this->session->userdata('status_lokasi');
+        $user = $this->session->userdata('user');
+
+        //var untuk save ke header entry
+        $header_entry["date"] = date("Y-m-d");
+        $header_entry["periode"] = $periode;
+        $header_entry["ref"] = 'LPB-' . $no_lpb;
+        $header_entry["totaldr"] = 0;
+        $header_entry["totalcr"] = 0;
+        $header_entry["periodetxt"] = $txtperiode;
+        $header_entry["modul"] = 'LOGISTIK';
+        $header_entry["lokasi"] = $status_lokasi;
+        $header_entry["SBU"] = $kode_dev;
+        $header_entry["USER"] = $user;
+        $header_entry["noref"] = $no_ref_lpb;
+
+        return $this->M_retur_gl->insert_lpb_to_header_entry_gl($header_entry);
+    }
+
+    function insert_lpb_to_entry_gl_dr($no_lpb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_lpb, $nabar, $no_ref_po)
+    {
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+        $status_lokasi = $this->session->userdata('status_lokasi');
+        $user = $this->session->userdata('user');
+
+        $totharga = $harga_item_po * $quantiti;
+
+        $data_noac_gl = $this->M_retur_gl->get_data_noac_gl($kodebar);
+
+        //var untuk save ke entry
+        $entry["date"] = date("Y-m-d");
+        $entry["sbu"] = $kode_dev;
+        $entry["noac"] = $kodebar;
+        $entry["desc"] = '';
+        $entry["group"] = $data_noac_gl['group'];
+        $entry["type"] = $data_noac_gl['type'];
+        $entry["level"] = $data_noac_gl['level'];
+        $entry["general"] = $data_noac_gl['general'];
+        $entry["dc"] = 'D';
+        $entry["dr"] = $totharga;
+        $entry["cr"] = 0;
+        $entry["periode"] = $periode;
+        $entry["converse"] = 0;
+        $entry["ref"] = 'LPB-' . $no_lpb;
+        $entry["noref"] = $no_ref_lpb;
+        $entry["descac"] = $nabar;
+        $entry["ket"] = 'Persediaan No.PO:' . $no_ref_po;
+        $entry["begindr"] = 0;
+        $entry["begincr"] = 0;
+        $entry["kurs"] = '';
+        $entry["kursrate"] = '';
+        $entry["tglkurs"] = '';
+        $entry["periodetxt"] = $txtperiode;
+        $entry["module"] = 'LOGISTIK';
+        $entry["lokasi"] = $status_lokasi;
+        $entry["POST"] = 0;
+        $entry["tglinput"] = date("Y-m-d H:i:s");
+        $entry["USER"] = $user;
+        $entry["kodebar"] = $kodebar;
+
+        if ($data_noac_gl != NULL) {
+            return $this->M_retur_gl->insert_lpb_to_entry_gl_dr($entry, $entry["noref"]);
+        } else {
+            return 0;
+        }
+    }
+
+    function insert_lpb_to_entry_gl_cr($no_lpb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_lpb, $nabar, $no_ref_po, $kodesub, $ketsub)
+    {
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+        $status_lokasi = $this->session->userdata('status_lokasi');
+        $user = $this->session->userdata('user');
+
+        $totharga = $harga_item_po * $quantiti;
+
+        $data_noac_gl = $this->M_retur_gl->get_data_noac_beban($kodesub);
+
+        //var untuk save ke entry
+        $entry["date"] = date("Y-m-d");
+        $entry["sbu"] = $kode_dev;
+        $entry["noac"] = $data_noac_gl['noac'];
+        $entry["desc"] = '';
+        $entry["group"] = $data_noac_gl['group'];
+        $entry["type"] = $data_noac_gl['type'];
+        $entry["level"] = $data_noac_gl['level'];
+        $entry["general"] = $data_noac_gl['general'];
+        $entry["dc"] = 'C';
+        $entry["dr"] = 0;
+        $entry["cr"] = $totharga;
+        $entry["periode"] = $periode;
+        $entry["converse"] = 0;
+        $entry["ref"] = 'LPB-' . $no_lpb;
+        $entry["noref"] = $no_ref_lpb;
+        $entry["descac"] = $ketsub;
+        $entry["ket"] = 'Hutang Supplier No.PO:' . $no_ref_po . '/' . $nabar;
+        $entry["begindr"] = 0;
+        $entry["begincr"] = 0;
+        $entry["kurs"] = '';
+        $entry["kursrate"] = '';
+        $entry["tglkurs"] = '';
+        $entry["periodetxt"] = $txtperiode;
+        $entry["module"] = 'LOGISTIK';
+        $entry["lokasi"] = $status_lokasi;
+        $entry["POST"] = 0;
+        $entry["tglinput"] = date("Y-m-d H:i:s");
+        $entry["USER"] = $user;
+        $entry["kodebar"] = $kodebar;
+
+        if ($data_noac_gl != NULL) {
+            return $this->M_retur_gl->insert_lpb_to_entry_gl_cr($entry, $entry["noref"]);
+        } else {
+            return 0;
+        }
     }
 
     function insert_stokawal($kodebar, $nabar, $satuan, $grp, $no_ref_bkb, $qty)
@@ -803,12 +943,17 @@ class Retur extends CI_Controller
 
         //update stok awal harian
         if ($periode['qty'] != $data_item_retur['qty']) {
-            $this->M_retur->editStokAwalHarian($data_item_retur['kodebar'], $periode['periode'], $periode['qty'], $data_item_retur['qty'], $harga_item_bkb, $kode_dev);
-            $this->M_retur->editStokAwalBulananDevisi($data_item_retur['kodebar'], $periode['txtperiode'], $periode['qty'], $data_item_retur['qty'], $kode_dev);
+            $data_editStokAwalHarian = $this->M_retur->editStokAwalHarian($data_item_retur['kodebar'], $periode['periode'], $periode['qty'], $data_item_retur['qty'], $harga_item_bkb, $kode_dev);
+            $data_editStokAwalBulananDevisi = $this->M_retur->editStokAwalBulananDevisi($data_item_retur['kodebar'], $periode['txtperiode'], $periode['qty'], $data_item_retur['qty'], $kode_dev);
+            $data_edit_gl = $this->M_retur_gl->edit_gl($data_item_retur['kodebar'], $harga_item_bkb, $data_item_retur['qty'], $norefretur);
+        } else {
+            $data_editStokAwalHarian = 'no edit';
+            $data_editStokAwalBulananDevisi = 'no edit';
+            $data_edit_gl = 'no edit';
         }
 
         //update stok awal
-        $this->update_stok_awal($data_item_retur['kodebar'], $txtperiode);
+        $update_stockawal = $this->update_stok_awal($data_item_retur['kodebar'], $txtperiode);
 
         $result_update = $this->M_retur->update_retur($id_retskbitem, $data_item_retur);
 
@@ -821,9 +966,13 @@ class Retur extends CI_Controller
         }
 
         $output = [
-            'result_update' => $result_update,
-            'result_update_masukitem' => $result_update_masukitem,
-            'result_update_register_stok' => $result_update_register_stok
+            'update' => $result_update,
+            'update_masukitem' => $result_update_masukitem,
+            'update_register_stok' => $result_update_register_stok,
+            'editStokAwalHarian' => $data_editStokAwalHarian,
+            'editStokAwalBulananDevisi' => $data_editStokAwalBulananDevisi,
+            'edit_gl' => $data_edit_gl,
+            'update_stockawal' => $update_stockawal
         ];
 
         echo json_encode($output);
@@ -1034,20 +1183,24 @@ class Retur extends CI_Controller
         $norefretur = $this->input->post('hidden_norefretur');
         $delete_item_retur = $this->input->post('delete_item_retur');
 
-        $data = $this->db_logistik_pt->delete('ret_skbitem', array('id' => $id_retskbitem));
+        $ret_skbitem = $this->db_logistik_pt->delete('ret_skbitem', array('id' => $id_retskbitem));
 
         if ($delete_item_retur == '1') {
-            $data1 = $this->db_logistik_pt->delete('masukitem', array('kodebar' => $kodebar, 'refpo' => $norefretur));
-            $data2 = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $norefretur));
+            $masukitem = $this->db_logistik_pt->delete('masukitem', array('kodebar' => $kodebar, 'refpo' => $norefretur));
+            $register_stok = $this->db_logistik_pt->delete('register_stok', array('kodebar' => $kodebar, 'noref' => $norefretur));
         } else {
-            $data1 = $this->db_logistik_pt->delete('masukitem', array('id' => $id_masukitem));
-            $data2 = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
+            $masukitem = $this->db_logistik_pt->delete('masukitem', array('id' => $id_masukitem));
+            $register_stok = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
         }
 
+        //delete ke GL
+        $delete_gl = $this->db_mips_gl->delete('entry', array('kodebar' => $kodebar, 'noref' => $norefretur));
+
         $output = [
-            'data' => $data,
-            'data1' => $data1,
-            'data2' => $data2,
+            'ret_skbitem' => $ret_skbitem,
+            'masukitem' => $masukitem,
+            'register_stok' => $register_stok,
+            'delete_gl' => $delete_gl
         ];
 
         echo json_encode($output);
@@ -1092,12 +1245,14 @@ class Retur extends CI_Controller
     {
         $norefretur = $this->input->post('norefretur');
 
-        $data = $this->M_retur->deleteRetur($norefretur);
-        $data1 = $this->M_retur->deleteStokMasuk($norefretur);
+        $deleteretur = $this->M_retur->deleteRetur($norefretur);
+        $deletestokmasuk = $this->M_retur->deleteStokMasuk($norefretur);
+        $delete_header_entry = $this->db_mips_gl->delete('header_entry', array('noref' => $norefretur));
 
         $output = [
-            'data' => $data,
-            'data1' => $data1
+            'deleteretur' => $deleteretur,
+            'deletestokmasuk' => $deletestokmasuk,
+            'delete_header_entry' => $delete_header_entry
         ];
 
         echo json_encode($output);

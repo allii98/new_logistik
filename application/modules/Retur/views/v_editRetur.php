@@ -488,12 +488,39 @@
 
                         get_qty_retur(n, no_ref, kodebar);
 
+                        notiferrorupdate(data);
+
+
                   },
                   error: function(request) {
                         alert(request.responseText);
                   }
             });
       };
+
+      function notiferrorupdate(data) {
+            if (data.update == 0) {
+                  alert('update GAGAL!');
+            }
+            if (data.update_masukitem == 0) {
+                  alert('update_masukitem GAGAL!');
+            }
+            if (data.update_register_stok == 0) {
+                  alert('update_register_stok GAGAL!');
+            }
+            if (data.editStokAwalHarian == 0) {
+                  alert('editStokAwalHarian GAGAL!');
+            }
+            if (data.editStokAwalBulananDevisi == 0) {
+                  alert('editStokAwalBulananDevisi GAGAL!');
+            }
+            if (data.edit_gl == 0) {
+                  alert('edit_gl GAGAL!');
+            }
+            if (data.update_stockawal == 0) {
+                  alert('update_stockawal GAGAL!');
+            }
+      }
 
       // cancel update
       function cancelUpdate(n) {
@@ -653,6 +680,8 @@
                         hidden_kodesub: $('#hidden_kodesub_' + n).val(),
                         txt_qty_retur: 0,
                         txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                        hidden_norefretur: $('#hidden_norefretur').val(),
+
                   },
 
                   success: function(data) {
@@ -770,9 +799,26 @@
                         $('#hidden_kodesub_' + n).empty();
 
                         cekReturItem(n);
+
+                        notiferrordeleteitem(data)
                   }
             });
       };
+
+      function notiferrordeleteitem(data) {
+            if (data.ret_skbitem == 0) {
+                  alert('ret_skbitem GAGAL!');
+            }
+            if (data.masukitem == 0) {
+                  alert('masukitem GAGAL!');
+            }
+            if (data.register_stok == 0) {
+                  alert('register_stok GAGAL!');
+            }
+            if (data.delete_gl == 0) {
+                  alert('delete_gl GAGAL!');
+            }
+      }
 
       // proses hapus retur
       function batalRetur() {
@@ -899,9 +945,23 @@
                   success: function(data) {
                         console.log(data);
 
+                        notiferrordeletelpb(data);
+
                         window.location = "<?= base_url('Retur') ?>";
                   }
             });
+      }
+
+      function notiferrordeletelpb(data) {
+            if (data.deleteretur == 0) {
+                  alert('deleteretur GAGAL!');
+            }
+            if (data.deletestokmasuk == 0) {
+                  alert('deletestokmasuk GAGAL!');
+            }
+            if (data.delete_header_entry == 0) {
+                  alert('delete_header_entry GAGAL!');
+            }
       }
 
       function cetak_retur() {

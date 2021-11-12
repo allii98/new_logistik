@@ -1027,6 +1027,8 @@
                     get_stok(n, kodebar, data.txtperiode, kode_dev);
 
                     get_qty_retur(n, no_ref, kodebar);
+
+                    notiferor(data);
                 }
 
             },
@@ -1034,6 +1036,52 @@
                 alert(request.responseText);
             }
         });
+    }
+
+    function notiferor(data) {
+        if (data.insert_stok_awal_harian == 0) {
+            alert('insert_stok_awal_harian GAGAL!');
+        }
+
+        if (data.insert_stok_awal_bulanan == 0) {
+            alert('insert_stok_awal_bulanan GAGAL!');
+        }
+
+        if (data.update_stok_awal == 0) {
+            alert('update_stok_awal GAGAL!');
+        }
+
+        if (data.dataretskb == 0) {
+            alert('dataretskb GAGAL!');
+        }
+
+        if (data.dataretskbitem == 0) {
+            alert('dataretskbitem GAGAL!');
+        }
+
+        if (data.datastokmasuk == 0) {
+            alert('datastokmasuk GAGAL!');
+        }
+
+        if (data.datamasukitem == 0) {
+            alert('datamasukitem GAGAL!');
+        }
+
+        if (data.saveregisterstok == 0) {
+            alert('saveregisterstok GAGAL!');
+        }
+
+        if (data.result_insert_to_gl_header == 0) {
+            alert('result_insert_to_gl_header GAGAL!');
+        }
+
+        if (data.result_insert_lpb_to_entry_gl_dr == 0) {
+            alert('result_insert_lpb_to_entry_gl_dr GAGAL!');
+        }
+
+        if (data.result_insert_lpb_to_entry_gl_cr == 0) {
+            alert('result_insert_lpb_to_entry_gl_cr GAGAL!');
+        }
     }
 
     function ubahRinci(n) {
@@ -1094,6 +1142,7 @@
                 hidden_kodesub: $('#hidden_kodesub_' + n).val(),
                 txt_qty_retur: $('#txt_qty_retur_' + n).val(),
                 txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                hidden_norefretur: $('#hidden_norefretur').val(),
                 edit: '0'
             },
 
@@ -1121,12 +1170,38 @@
 
                 get_qty_retur(n, no_ref, kodebar);
 
+                notiferrorupdate(data);
+
             },
             error: function(request) {
                 alert(request.responseText);
             }
         });
     };
+
+    function notiferrorupdate(data) {
+        if (data.update == 0) {
+            alert('update GAGAL!');
+        }
+        if (data.update_masukitem == 0) {
+            alert('update_masukitem GAGAL!');
+        }
+        if (data.update_register_stok == 0) {
+            alert('update_register_stok GAGAL!');
+        }
+        if (data.editStokAwalHarian == 0) {
+            alert('editStokAwalHarian GAGAL!');
+        }
+        if (data.editStokAwalBulananDevisi == 0) {
+            alert('editStokAwalBulananDevisi GAGAL!');
+        }
+        if (data.edit_gl == 0) {
+            alert('edit_gl GAGAL!');
+        }
+        if (data.update_stockawal == 0) {
+            alert('update_stockawal GAGAL!');
+        }
+    }
 
     // cancel update
     function cancelUpdate(n) {
@@ -1327,10 +1402,12 @@
                 hidden_kodesub: $('#hidden_kodesub_' + n).val(),
                 txt_qty_retur: 0,
                 txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                hidden_norefretur: $('#hidden_norefretur').val(),
             },
 
             success: function(data) {
 
+                console.log(data);
                 var status = $('#status_batal').val();
                 if (status != 1) {
                     deleteData(n);
@@ -1413,6 +1490,8 @@
                 hidden_id_retskbitem: $('#hidden_id_retskbitem_' + n).val(),
                 hidden_id_masukitem: $('#hidden_id_masukitem_' + n).val(),
                 hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
+                hidden_norefretur: $('#hidden_norefretur').val(),
+                kodebar: $('#hidden_kode_barang_' + n).val(),
                 delete_item_retur: '0'
             },
 
@@ -1443,9 +1522,26 @@
 
                 cekReturItem(n);
 
+                notiferrordeleteitem(data)
+
             }
         });
     };
+
+    function notiferrordeleteitem(data) {
+        if (data.ret_skbitem == 0) {
+            alert('ret_skbitem GAGAL!');
+        }
+        if (data.masukitem == 0) {
+            alert('masukitem GAGAL!');
+        }
+        if (data.register_stok == 0) {
+            alert('register_stok GAGAL!');
+        }
+        if (data.delete_gl == 0) {
+            alert('delete_gl GAGAL!');
+        }
+    }
 
     // proses hapus retur
     function batalRetur() {
@@ -1571,9 +1667,23 @@
             success: function(data) {
                 console.log(data);
 
+                notiferrordeletelpb(data);
+
                 location.reload();
             }
         });
+    }
+
+    function notiferrordeletelpb(data) {
+        if (data.deleteretur == 0) {
+            alert('deleteretur GAGAL!');
+        }
+        if (data.deletestokmasuk == 0) {
+            alert('deletestokmasuk GAGAL!');
+        }
+        if (data.delete_header_entry == 0) {
+            alert('delete_header_entry GAGAL!');
+        }
     }
 
     function cetak_retur() {

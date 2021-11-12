@@ -28,7 +28,7 @@ class Bkb extends CI_Controller
         //DB kpp
         $this->db_logistik_kpp = $this->load->database('db_logistik_kpp', TRUE);
         // DB GL
-        $this->db_mips_gl = $this->load->database('db_mips_gl', TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
