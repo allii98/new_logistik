@@ -184,10 +184,13 @@ class Bkb extends CI_Controller
         // mengembalikan stock awal
         $update_stockawal_edit = $this->M_bkb->update_stockawal_edit($get_data_keluarbrgitem);
 
+        $data_edit_gl = $this->M_bkb_gl->edit_gl($get_data_keluarbrgitem);
+
         $data_return = [
             'update_stockawal_bulanan_devisi_edit' => $update_stockawal_bulanan_devisi_edit,
             'update_stockawal_edit' => $update_stockawal_edit,
             'update_stockawal_harian' => $update_stockawal_harian,
+            'data_edit_gl' => $data_edit_gl,
         ];
 
         echo json_encode($data_return);
@@ -300,13 +303,17 @@ class Bkb extends CI_Controller
             }
         }
 
+        //delete ke GL
+        $delete_gl = $this->db_mips_gl->delete('entry', array('kodebar' => $kodebar, 'noref' => $noref_bkb));
+
         $data = [
             'delete_register' => $delete_register,
             'update_bpb' => $update_bpb,
             'update_bpb_item' => $update_bpb_item,
             'update_bpb_item_mutasi' => $update_bpb_item_mutasi,
             'update_bpb_mutasi' => $update_bpb_mutasi,
-            'deletebkb' => $deletebkb
+            'deletebkb' => $deletebkb,
+            'delete_gl' => $delete_gl
         ];
 
         echo json_encode($data);
@@ -340,15 +347,25 @@ class Bkb extends CI_Controller
         $id_mutasi = $this->input->post('id_mutasi');
         $edit = $this->input->post('edit');
 
-        $data = $this->db_logistik_pt->delete('stockkeluar', array('NO_REF' => $noref_bkb));
+        $delete_stockkeluar = $this->db_logistik_pt->delete('stockkeluar', array('NO_REF' => $noref_bkb));
+
+        $delete_header_entry = $this->db_mips_gl->delete('header_entry', array('noref' => $noref_bkb));
 
         if ($mutasi == 1) {
             if ($edit == 1) {
-                $this->db_logistik_center->delete('tb_mutasi', array('NO_REF' => $noref_bkb));
+                $delete_mutasi = $this->db_logistik_center->delete('tb_mutasi', array('NO_REF' => $noref_bkb));
             } else {
-                $this->db_logistik_center->delete('tb_mutasi', array('id' => $id_mutasi));
+                $delete_mutasi = $this->db_logistik_center->delete('tb_mutasi', array('id' => $id_mutasi));
             }
+        } else {
+            $delete_mutasi = NULL;
         }
+
+        $data = [
+            'delete_stockkeluar' => $delete_stockkeluar,
+            'delete_header_entry' => $delete_header_entry,
+            'delete_mutasi' => $delete_mutasi,
+        ];
 
         echo json_encode($data);
     }

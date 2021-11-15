@@ -660,11 +660,37 @@
 
                         cekDataBkbItem(n);
 
+                        notiferrordeleteitem(data);
+
                   },
                   error: function(response) {
                         alert('ERROR! ' + response.responseText);
                   }
             });
+      }
+
+      function notiferrordeleteitem(data) {
+            if (data.delete_register == 0) {
+                  alert('delete_register GAGAL!');
+            }
+            if (data.update_bpb == 0) {
+                  alert('update_bpb GAGAL!');
+            }
+            if (data.update_bpb_item == 0) {
+                  alert('update_bpb_item GAGAL!');
+            }
+            if (data.update_bpb_item_mutasi == 0) {
+                  alert('update_bpb_item_mutasi GAGAL!');
+            }
+            if (data.update_bpb_mutasi == 0) {
+                  alert('update_bpb_mutasi GAGAL!');
+            }
+            if (data.deletebkb == 0) {
+                  alert('deletebkb GAGAL!');
+            }
+            if (data.delete_gl == 0) {
+                  alert('delete_gl GAGAL!');
+            }
       }
 
       function cekDataBkbItem(n) {
@@ -767,6 +793,8 @@
                   },
                   success: function(data) {
 
+                        notiferrordeletebkb(data);
+
                         location.href = "<?php echo base_url('Bkb') ?>";
 
                   },
@@ -774,6 +802,18 @@
                         alert('ERROR! ' + response.responseText);
                   }
             });
+      }
+
+      function notiferrordeletebkb(data) {
+            if (data.delete_stockkeluar == 0) {
+                  alert('delete_stockkeluar GAGAL!');
+            }
+            if (data.delete_header_entry == 0) {
+                  alert('delete_header_entry GAGAL!');
+            }
+            if (data.delete_mutasi == 0) {
+                  alert('delete_mutasi GAGAL!');
+            }
       }
 
       function cetak_bkb() {

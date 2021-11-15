@@ -202,32 +202,32 @@ class M_bkb extends CI_Model
         }
     }
 
-    public function update_stockawal($kodebar, $qty2, $txtperiode)
-    {
-        $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, nilai_keluar');
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        $this->db_logistik_pt->from('stockawal');
-        $stock_awal = $this->db_logistik_pt->get()->row_array();
+    // public function update_stockawal($kodebar, $qty2, $txtperiode)
+    // {
+    //     $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, nilai_keluar');
+    //     $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+    //     $this->db_logistik_pt->from('stockawal');
+    //     $stock_awal = $this->db_logistik_pt->get()->row_array();
 
-        $jumlah = $stock_awal['QTY_KELUAR'] + $qty2;
+    //     $jumlah = $stock_awal['QTY_KELUAR'] + $qty2;
 
-        $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
+    //     $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
 
-        $tambah_nilai_keluar = $rata2 * $qty2;
+    //     $tambah_nilai_keluar = $rata2 * $qty2;
 
-        $nilai_keluar = $stock_awal['nilai_keluar'] + $tambah_nilai_keluar;
+    //     $nilai_keluar = $stock_awal['nilai_keluar'] + $tambah_nilai_keluar;
 
-        $kurangin_saldoakhir_nilai = $stock_awal['saldoakhir_nilai'] - $tambah_nilai_keluar;
+    //     $kurangin_saldoakhir_nilai = $stock_awal['saldoakhir_nilai'] - $tambah_nilai_keluar;
 
-        $saldoakhir_qty = $stock_awal['saldoakhir_qty'] - $qty2;
+    //     $saldoakhir_qty = $stock_awal['saldoakhir_qty'] - $qty2;
 
-        $this->db_logistik_pt->set('saldoakhir_qty', $saldoakhir_qty);
-        $this->db_logistik_pt->set('saldoakhir_nilai', $kurangin_saldoakhir_nilai);
-        $this->db_logistik_pt->set('nilai_keluar', $nilai_keluar);
-        $this->db_logistik_pt->set('QTY_KELUAR', $jumlah);
-        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
-        return $this->db_logistik_pt->update('stockawal');
-    }
+    //     $this->db_logistik_pt->set('saldoakhir_qty', $saldoakhir_qty);
+    //     $this->db_logistik_pt->set('saldoakhir_nilai', $kurangin_saldoakhir_nilai);
+    //     $this->db_logistik_pt->set('nilai_keluar', $nilai_keluar);
+    //     $this->db_logistik_pt->set('QTY_KELUAR', $jumlah);
+    //     $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
+    //     return $this->db_logistik_pt->update('stockawal');
+    // }
 
     public function urut_cetak($no_ref_bkb)
     {
@@ -314,7 +314,7 @@ class M_bkb extends CI_Model
 
     public function get_data_keluarbrgitem($id_keluarbrgitem)
     {
-        $this->db_logistik_pt->select('kodebar, qty2, kode_dev, txtperiode, periode');
+        $this->db_logistik_pt->select('kodebar, qty2, kode_dev, txtperiode, periode, nilai_item, NO_REF');
         $this->db_logistik_pt->where(['id' => $id_keluarbrgitem]);
         $this->db_logistik_pt->from('keluarbrgitem');
         return $this->db_logistik_pt->get()->row_array();
@@ -347,32 +347,25 @@ class M_bkb extends CI_Model
         $kodebar = $get_data_keluarbrgitem['kodebar'];
         $qty2 = $get_data_keluarbrgitem['qty2'];
         $txtperiode = $get_data_keluarbrgitem['txtperiode'];
+        $nilai_item = $get_data_keluarbrgitem['nilai_item'];
 
         $this->db_logistik_pt->select('QTY_KELUAR, saldoakhir_qty, saldoakhir_nilai, nilai_keluar, nilai_masuk, nilai_keluar, QTY_MASUK, QTY_KELUAR');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         $this->db_logistik_pt->from('stockawal');
         $stock_awal = $this->db_logistik_pt->get()->row_array();
 
-        $jumlah = $stock_awal['QTY_KELUAR'] - $qty2;
+        $qty_keluar = $stock_awal['QTY_KELUAR'] - $qty2;
 
-        if ($stock_awal['saldoakhir_nilai'] == 0 and $stock_awal['saldoakhir_qty'] == 0) {
-            $rata2 = $stock_awal['nilai_keluar'] / $stock_awal['QTY_KELUAR'];
-        } else {
-            $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
-        }
+        $nilai_keluar = $stock_awal['nilai_keluar'] - $nilai_item;
 
-        $kurangin_nilai_keluar = $rata2 * $qty2;
-
-        $nilai_keluar = $stock_awal['nilai_keluar'] - $kurangin_nilai_keluar;
-
-        $kurangin_saldoakhir_nilai = $stock_awal['saldoakhir_nilai'] + $kurangin_nilai_keluar;
+        $kurangin_saldoakhir_nilai = $stock_awal['saldoakhir_nilai'] + $nilai_item;
 
         $saldoakhir_qty = $stock_awal['saldoakhir_qty'] + $qty2;
 
         $this->db_logistik_pt->set('saldoakhir_qty', $saldoakhir_qty);
         $this->db_logistik_pt->set('saldoakhir_nilai', $kurangin_saldoakhir_nilai);
         $this->db_logistik_pt->set('nilai_keluar', $nilai_keluar);
-        $this->db_logistik_pt->set('QTY_KELUAR', $jumlah);
+        $this->db_logistik_pt->set('QTY_KELUAR', $qty_keluar);
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'txtperiode' => $txtperiode]);
         return $this->db_logistik_pt->update('stockawal');
     }
@@ -384,9 +377,7 @@ class M_bkb extends CI_Model
         $txtperiode = $get_data_keluarbrgitem['txtperiode'];
         $periode = $get_data_keluarbrgitem['periode'];
         $kode_dev = $get_data_keluarbrgitem['kode_dev'];
-
-        //mencari harga rata2
-        $harga_stok_awal = $this->get_rata2_nilai($kodebar, $qty2, $txtperiode);
+        $nilai_item = $get_data_keluarbrgitem['nilai_item'];
 
         $this->db_logistik_pt->select('saldoakhir_qty, saldoakhir_nilai, nilai_keluar, QTY_KELUAR');
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'periode' => $periode, 'kode_dev' => $kode_dev]);
@@ -395,9 +386,9 @@ class M_bkb extends CI_Model
 
         $qty_keluar = $stock_awal_harian['QTY_KELUAR'] - $qty2;
 
-        $nilai_keluar = $stock_awal_harian['nilai_keluar'] - $harga_stok_awal;
+        $nilai_keluar = $stock_awal_harian['nilai_keluar'] - $nilai_item;
 
-        $kurangin_saldoakhir_nilai = $stock_awal_harian['saldoakhir_nilai'] + $harga_stok_awal;
+        $kurangin_saldoakhir_nilai = $stock_awal_harian['saldoakhir_nilai'] + $nilai_item;
 
         $saldoakhir_qty = $stock_awal_harian['saldoakhir_qty'] + $qty2;
 
@@ -421,7 +412,7 @@ class M_bkb extends CI_Model
     {
         $this->db_logistik_pt->set('status_item_bkb', NULL);
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'norefbpb' => $norefbpb]);
-        $this->db_logistik_pt->update('bpbitem');
+        return $this->db_logistik_pt->update('bpbitem');
     }
 
     public function update_status_bkb($norefbpb)
@@ -435,7 +426,7 @@ class M_bkb extends CI_Model
     {
         $this->db_logistik_center->set('status_item_bkb', NULL);
         $this->db_logistik_center->where(['kodebar' => $kodebar, 'norefbpb' => $norefbpb]);
-        $this->db_logistik_center->update('bpbitem_mutasi');
+        return $this->db_logistik_center->update('bpbitem_mutasi');
     }
 
     public function update_status_bkb_mutasi($norefbpb)
@@ -455,7 +446,7 @@ class M_bkb extends CI_Model
         if ($result == 0) {
             $this->db_logistik_pt->set('approval', '1');
             $this->db_logistik_pt->where(['NO_REF' => $noref_bkb]);
-            $this->db_logistik_pt->update('stockkeluar');
+            return $this->db_logistik_pt->update('stockkeluar');
         }
     }
 
@@ -491,8 +482,6 @@ class M_bkb extends CI_Model
             $this->db_logistik_center->set('status_bkb', 1);
             $this->db_logistik_center->where('norefbpb', $norefbpb);
             return $this->db_logistik_center->update('bpb_mutasi');
-        } else {
-            return FALSE;
         }
     }
 
@@ -624,16 +613,12 @@ class M_bkb extends CI_Model
     public function updatebatalitem($id_keluarbrgitem, $isibatal)
     {
         $this->db_logistik_pt->where('id', $id_keluarbrgitem);
-        $this->db_logistik_pt->update('keluarbrgitem',  $isibatal);
-
-        return TRUE;
+        return $this->db_logistik_pt->update('keluarbrgitem',  $isibatal);
     }
     public function updatebatal($noref_bkb, $isibatal)
     {
         $this->db_logistik_pt->where('NO_REF', $noref_bkb);
-        $this->db_logistik_pt->update('stockkeluar',  $isibatal);
-
-        return TRUE;
+        return $this->db_logistik_pt->update('stockkeluar',  $isibatal);
     }
 }
 
