@@ -1096,7 +1096,7 @@
                 },
 
                 success: function(data) {
-
+                    console.log(data);
                     if (data.nilai_keluarbrgitem == '0') {
                         swal('barang tidak ada stok di divisi tersebut! silahkan input!');
                         $('#lbl_status_simpan_' + n).empty();
@@ -1155,12 +1155,60 @@
                         if (cexbox_mutasi_pt == '1' || cexbox_mutasi_local == '1') {
                             ubah_status_bpb_mutasi(hidden_kode_barang, noref_bpb);
                         }
+
+                        notiferor(data);
                     }
                 },
                 error: function(response) {
                     alert('ERROR! ' + response.responseText);
                 }
             });
+        }
+    }
+
+    function notiferor(data) {
+        if (data.result_insert_stok_awal_bulanan == 0) {
+            alert('result_insert_stok_awal_bulanan GAGAL!');
+        }
+
+        if (data.datastockkeluar == 0) {
+            alert('datastockkeluar GAGAL!');
+        }
+
+        if (data.datakeluarbrgitem == 0) {
+            alert('datakeluarbrgitem GAGAL!');
+        }
+
+        if (data.result_update_qtykeluar == 0) {
+            alert('result_update_qtykeluar GAGAL!');
+        }
+
+        if (data.savedatastockkeluar_mutasi == 0) {
+            alert('savedatastockkeluar_mutasi GAGAL!');
+        }
+
+        if (data.savedatakeluarbrgitem_mutasi == 0) {
+            alert('savedatakeluarbrgitem_mutasi GAGAL!');
+        }
+
+        if (data.result_insert_stok_awal_harian == 0) {
+            alert('result_insert_stok_awal_harian GAGAL!');
+        }
+
+        if (data.saveregisterstok == 0) {
+            alert('saveregisterstok GAGAL!');
+        }
+
+        if (data.insert_to_gl_header == 0) {
+            alert('insert_to_gl_header GAGAL!');
+        }
+
+        if (data.insert_bkb_to_entry_gl_cr == 0) {
+            alert('insert_bkb_to_entry_gl_cr GAGAL!');
+        }
+
+        if (data.insert_bkb_to_entry_gl_dr == 0) {
+            alert('insert_bkb_to_entry_gl_dr GAGAL!');
         }
     }
 

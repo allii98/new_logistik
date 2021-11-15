@@ -199,8 +199,6 @@ class M_bkb extends CI_Model
             $this->db_logistik_pt->set('status_bkb', 1);
             $this->db_logistik_pt->where('norefbpb', $norefbpb);
             return $this->db_logistik_pt->update('bpb');
-        } else {
-            return FALSE;
         }
     }
 

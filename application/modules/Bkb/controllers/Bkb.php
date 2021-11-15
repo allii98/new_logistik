@@ -8,6 +8,7 @@ class Bkb extends CI_Controller
     {
         parent::__construct();
         $this->load->model('M_bkb');
+        $this->load->model('M_bkb_gl');
         $this->load->model('M_approval_bkb');
         $this->load->model('M_approval_rev_qty');
         $this->load->model('M_get_bpb');
@@ -736,6 +737,11 @@ class Bkb extends CI_Controller
                 $savedatastockkeluar = $this->M_bkb->savedatastockkeluar($datastockkeluar);
                 $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
                 $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
+
+                // insert to GL
+                $result_insert_to_gl_header = $this->insert_bkb_to_header_entry_gl($skb, $kode_dev, $no_ref);
+                $result_insert_bkb_to_entry_gl_cr = $this->insert_bkb_to_entry_gl_cr($skb, $nilai_keluarbrgitem_untuk_register, $qty2, $kode_dev, $kodebar, $no_ref, $nabar, $nobpb, $ket);
+                $result_insert_bkb_to_entry_gl_dr = $this->insert_bkb_to_entry_gl_dr($skb, $nilai_keluarbrgitem_untuk_register, $qty2, $kode_dev, $kodebar, $no_ref, $nabar, $nobpb, $datakeluarbrgitem['kodesub'], $datakeluarbrgitem['ketsub'], $ket);
             } else {
                 $savedatastockkeluar_mutasi = NULL;
                 $savedatakeluarbrgitem_mutasi = NULL;
@@ -747,6 +753,11 @@ class Bkb extends CI_Controller
 
                 $savedatakeluarbrgitem = $this->M_bkb->savedatakeluarbrgitem($datakeluarbrgitem, $kodebar, $nobpb, $no_ref);
                 $saveregisterstok = $this->M_bkb->saveRegisterStok($data_register_stok);
+
+                // insert to GL
+                $result_insert_to_gl_header = NULL;
+                $result_insert_bkb_to_entry_gl_cr = $this->insert_bkb_to_entry_gl_cr($skb, $nilai_keluarbrgitem_untuk_register, $qty2, $kode_dev, $kodebar, $no_ref, $nabar, $nobpb, $ket);
+                $result_insert_bkb_to_entry_gl_dr = $this->insert_bkb_to_entry_gl_dr($skb, $nilai_keluarbrgitem_untuk_register, $qty2, $kode_dev, $kodebar, $no_ref, $nabar, $nobpb, $datakeluarbrgitem['kodesub'], $datakeluarbrgitem['ketsub'], $ket);
             }
 
             // insert/update stockawal_bulanan_devisi
@@ -757,7 +768,6 @@ class Bkb extends CI_Controller
 
             //update stokawal
             $result_update_qtykeluar = $this->update_stok_awal($kodebar, $txtperiode);
-            // $result_update_qtykeluar = $this->M_bkb->update_stockawal($kodebar, $qty2, $txtperiode);
 
             $query_id = "SELECT MAX(id) as id_stockkeluar FROM stockkeluar WHERE id_user = '$id_user' AND NO_REF = '$no_ref' ";
             $generate_id = $this->db_logistik_pt->query($query_id)->row();
@@ -800,10 +810,134 @@ class Bkb extends CI_Controller
                 'id_mutasi' => $id_mutasi,
                 'id_mutasi_item' => $id_mutasi_item,
                 'id_register_stok' => $id_register_stok,
-                'txtperiode' => $txtperiode
+                'txtperiode' => $txtperiode,
+                'insert_to_gl_header' => $result_insert_to_gl_header,
+                'insert_bkb_to_entry_gl_cr' => $result_insert_bkb_to_entry_gl_cr,
+                'insert_bkb_to_entry_gl_dr' => $result_insert_bkb_to_entry_gl_dr
             ];
 
             echo json_encode($data);
+        }
+    }
+
+    function insert_bkb_to_header_entry_gl($no_bkb, $kode_dev, $no_ref_bkb)
+    {
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+        $status_lokasi = $this->session->userdata('status_lokasi');
+        $user = $this->session->userdata('user');
+
+        //var untuk save ke header entry
+        $header_entry["date"] = date("Y-m-d");
+        $header_entry["periode"] = $periode;
+        $header_entry["ref"] = 'BKB-' . $no_bkb;
+        $header_entry["totaldr"] = 0;
+        $header_entry["totalcr"] = 0;
+        $header_entry["periodetxt"] = $txtperiode;
+        $header_entry["modul"] = 'LOGISTIK';
+        $header_entry["lokasi"] = $status_lokasi;
+        $header_entry["SBU"] = $kode_dev;
+        $header_entry["USER"] = $user;
+        $header_entry["noref"] = $no_ref_bkb;
+
+        return $this->M_bkb_gl->insert_bkb_to_header_entry_gl($header_entry);
+    }
+
+    function insert_bkb_to_entry_gl_cr($no_bkb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_bkb, $nabar, $no_ref_po, $ket)
+    {
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+        $status_lokasi = $this->session->userdata('status_lokasi');
+        $user = $this->session->userdata('user');
+
+        $totharga = $harga_item_po * $quantiti;
+
+        $data_noac_gl = $this->M_bkb_gl->get_data_noac_gl($kodebar);
+
+        //var untuk save ke entry
+        $entry["date"] = date("Y-m-d");
+        $entry["sbu"] = $kode_dev;
+        $entry["noac"] = $kodebar;
+        $entry["desc"] = '';
+        $entry["group"] = $data_noac_gl['group'];
+        $entry["type"] = $data_noac_gl['type'];
+        $entry["level"] = $data_noac_gl['level'];
+        $entry["general"] = $data_noac_gl['general'];
+        $entry["dc"] = 'C';
+        $entry["dr"] = 0;
+        $entry["cr"] = $totharga;
+        $entry["periode"] = $periode;
+        $entry["converse"] = 0;
+        $entry["ref"] = 'BKB-' . $no_bkb;
+        $entry["noref"] = $no_ref_bkb;
+        $entry["descac"] = $nabar;
+        $entry["ket"] = 'BKB:' . $nabar . '(' . $quantiti . '/' . $totharga . ')/' . $ket;
+        $entry["begindr"] = 0;
+        $entry["begincr"] = 0;
+        $entry["kurs"] = '';
+        $entry["kursrate"] = '';
+        $entry["tglkurs"] = '';
+        $entry["periodetxt"] = $txtperiode;
+        $entry["module"] = 'LOGISTIK';
+        $entry["lokasi"] = $status_lokasi;
+        $entry["POST"] = 0;
+        $entry["tglinput"] = date("Y-m-d H:i:s");
+        $entry["USER"] = $user;
+        $entry["kodebar"] = $kodebar;
+
+        if ($data_noac_gl != NULL) {
+            return $this->M_bkb_gl->insert_bkb_to_entry_gl_cr($entry, $entry["noref"]);
+        } else {
+            return 0;
+        }
+    }
+
+    function insert_bkb_to_entry_gl_dr($no_bkb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_bkb, $nabar, $no_ref_po, $kodesub, $ketsub, $ket)
+    {
+        $periode = $this->session->userdata('Ymd_periode');
+        $txtperiode = $this->session->userdata('ym_periode');
+        $status_lokasi = $this->session->userdata('status_lokasi');
+        $user = $this->session->userdata('user');
+
+        $totharga = $harga_item_po * $quantiti;
+
+        $data_noac_gl = $this->M_bkb_gl->get_data_noac_beban($kodesub);
+
+        //var untuk save ke entry
+        $entry["date"] = date("Y-m-d");
+        $entry["sbu"] = $kode_dev;
+        $entry["noac"] = $data_noac_gl['noac'];
+        $entry["desc"] = '';
+        $entry["group"] = $data_noac_gl['group'];
+        $entry["type"] = $data_noac_gl['type'];
+        $entry["level"] = $data_noac_gl['level'];
+        $entry["general"] = $data_noac_gl['general'];
+        $entry["dc"] = 'D';
+        $entry["dr"] = $totharga;
+        $entry["cr"] = 0;
+        $entry["periode"] = $periode;
+        $entry["converse"] = 0;
+        $entry["ref"] = 'BKB-' . $no_bkb;
+        $entry["noref"] = $no_ref_bkb;
+        $entry["descac"] = $ketsub;
+        $entry["ket"] = 'BKB:' . $nabar . '(' . $quantiti . '/' . $totharga . ')/' . $ket;
+        $entry["begindr"] = 0;
+        $entry["begincr"] = 0;
+        $entry["kurs"] = '';
+        $entry["kursrate"] = '';
+        $entry["tglkurs"] = '';
+        $entry["periodetxt"] = $txtperiode;
+        $entry["module"] = 'LOGISTIK';
+        $entry["lokasi"] = $status_lokasi;
+        $entry["POST"] = 0;
+        $entry["tglinput"] = date("Y-m-d H:i:s");
+        $entry["USER"] = $user;
+        $entry["kodebar"] = $kodebar;
+
+        if ($data_noac_gl != NULL) {
+            return $this->M_bkb_gl->insert_bkb_to_entry_gl_dr($entry, $entry["noref"]);
+        } else {
+            return 0;
         }
     }
 
