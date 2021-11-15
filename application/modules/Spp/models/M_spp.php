@@ -148,10 +148,18 @@ class M_spp extends CI_Model
     {
         return $this->db_logistik_pt->insert('ppo', $data_ppo);
     }
+    public function saveSppHistori($data_ppo_histori)
+    {
+        return $this->db_logistik_pt->insert('ppo_history', $data_ppo_histori);
+    }
 
     public function saveSpp2($data_item_ppo)
     {
         return $this->db_logistik_pt->insert('item_ppo', $data_item_ppo);
+    }
+    public function saveSpp3($data_item_ppo)
+    {
+        return $this->db_logistik_pt->insert('item_ppo_history', $data_item_ppo);
     }
 
     public function cancelUpdateItemSpp($id_item_ppo, $id_ppo)

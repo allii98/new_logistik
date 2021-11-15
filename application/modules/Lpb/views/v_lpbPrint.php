@@ -220,5 +220,7 @@ $logo_pt = $this->session->userdata('logo_pt');
     <small>By MIPS LOGISTIK</small><br>
     <?php if ($stokmasuk->BATAL == 1) { ?>
         <small style="color: crimson;">Alasan batal : <?= $stokmasuk->alasan_batal; ?></small>
+    <?php } else { ?>
+        <small style="color: crimson;">Revisi : <?= $stokmasuk->alasan_batal; ?></small>
     <?php } ?>
 </body>

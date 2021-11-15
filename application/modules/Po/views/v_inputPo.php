@@ -841,6 +841,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
                     <div class="mb-2">
                         <label for="alasan" class="form-label">Alasan</label>
+                        <input type="hidden" name="stat_batal" id="stat_batal" value="0">
                         <textarea class="form-control" id="alasan" rows="2" placeholder="Alasan batal..." required></textarea>
                         <ul class="parsley-errors-list filled" id="alasan_validasi" style="display: none;">
                             <li class="parsley-required">Alasan tidak boleh kosong!</li>
@@ -856,7 +857,52 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" id="alasanedit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-1">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                </div>
+
+
+
+                <form class="parsley-examples" action="#" novalidate>
+                    <div class="mb-1">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="pass" class="form-control" placeholder="Masukkan password">
+                            <div class="input-group-text" data-password="false">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                        <ul class="parsley-errors-list filled" id="pwvalidasi" style="display: none;">
+                            <li class="parsley-required" id="textpw"></li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-2">
+                        <input type="hidden" name="no_baris" id="no_baris">
+                        <label for="alasan_edit" class="form-label">Alasan</label>
+                        <textarea class="form-control" id="alasan_edit" rows="2" placeholder="Alasan edit..." required></textarea>
+                        <ul class="parsley-errors-list filled" id="alasan_valid" style="display: none;">
+                            <li class="parsley-required">Alasan tidak boleh kosong!</li>
+                        </ul>
+                    </div>
+                    <div class="mb-0 text-center">
+                        <button type="button" class="btn btn-warning my-2" id="bt_update" onclick="validasiedit()">Update</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" name="password" id="password" value="<?= $this->session->userdata('pw') ?>">
+
 
 </div>
 <input type="hidden" name="lokasi_user" id="lokasi_user" value="<?= $this->session->userdata('status_lokasi') ?>">
@@ -996,8 +1042,6 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         $('#modalKonfirmasibatalPO').modal('show');
     }
 
-
-
     function validasibatal() {
         var password = $('#pw').val();
         var pw_session = $('#password').val();
@@ -1018,7 +1062,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             $('#alasan_validasi').css('display', 'none');
 
             if (password == pw_session) {
-                cekbatal();
+                var no = $('#stat_batal').val();
+                if (no == 0) {
+                    cekbatal();
+                } else {
+                    konfirbatal(no)
+                }
             } else {
                 $('#pw').addClass('parsley-error');
                 $('#pw_validasi').css('display', 'block');
@@ -1028,7 +1077,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
     function cekbatal() {
-        var refspp = $('#refspp').val();
+        var refpo = $('#hidden_no_ref_po').val();
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/cekDataPo'); ?>",
@@ -1038,17 +1087,17 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             },
 
             data: {
-                refspp: refspp,
+                refpo: refpo,
             },
             success: function(data) {
 
-                for (var i = 1; i <= data.length; i++) {
+                for (var i = 1; i <= data; i++) {
 
-                    konfirbatal(i);
+                    konfirbatal(i)
                 }
             },
             error: function(response) {
-                alert('KONEKSI TERPUTUS! Gagal Menghapus PO');
+                alert('KONEKSI TERPUTUS! Gagal BATAL PO');
             }
         });
     }
@@ -3228,22 +3277,91 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
     }
 
+    function validasiedit() {
+
+        var password = $('#pass').val();
+        var pw_session = $('#password').val();
+        var pw = $('#pass').val().length;
+        var alasan = $('#alasan_edit').val().length;
+        if (pw == 0) {
+            $('#pass').addClass('parsley-error');
+            $('#pwvalidasi').css('display', 'block');
+            $('#textpw').html('Password tidak boleh kosong!');
+        } else if (alasan == 0) {
+            $('#alasan_edit').addClass('parsley-error');
+            $('#alasan_valid').css('display', 'block');
+        } else {
+            $('#pass').removeClass('parsley-error');
+            $('#pwvalidasi').css('display', 'none');
+
+            $('#alasan_edit').removeClass('parsley-error');
+            $('#alasan_valid').css('display', 'none');
+
+            if (password == pw_session) {
+                var n = $('#no_baris').val();
+                update_alasan(n);
+            } else {
+                $('#pass').addClass('parsley-error');
+                $('#pwvalidasi').css('display', 'block');
+                $('#textpw').html('Password Salah!');
+            }
+        }
+    }
+
+    function update_alasan(id) {
+        var noref_ppo = $('#hidden_no_ref_po').val();
+        var alasan_edit = $('#alasan_edit').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Po/update_alasan') ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {
+                noref_ppo: noref_ppo,
+                alasan: alasan_edit
+            },
+            success: function(data) {
+                $('#alasanedit').modal('hide');
+                $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeClass('bg-light');
+                $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeAttr('disabled', '');
+
+
+                $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
+                $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
+                $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
+                $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
+
+                $('#btn_ubah_' + id).hide();
+                $('#btn_hapus_' + id).hide();
+                $('#btn_update_' + id).show();
+                $('#btn_cancel_update_' + id).show();
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS!');
+            }
+        });
+    }
+
     function ubah(id) {
-        // $('#tr_' + id).find('input,textarea,select').removeAttr('disabled', '');
-        // $('#tr_' + id).find('input,textarea,select').removeClass('bg-light');
-        $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeClass('bg-light');
-        $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeAttr('disabled', '');
+        $('#alasanedit').modal('show');
+        $('#no_baris').val(n);
+        $('#pass').val('');
+        $('#alasan_edit').val('');
+
+        // $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeClass('bg-light');
+        // $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeAttr('disabled', '');
 
 
-        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
-        $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
-        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
-        $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
+        // $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
+        // $('.div_form_2').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
+        // $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ',  #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeClass('bg-light');
+        // $('.div_form_3').find('#cmb_jenis_budget_' + id + ',#txt_merk_' + id + ' ,#txt_harga_' + id + ', #cmb_kurs_' + id + ', #txt_disc_' + id + ', #txt_keterangan_biaya_lain_' + id + ', #txt_biaya_lain_' + id + ', #txt_jumlah_' + id + ', #txt_keterangan_rinci_' + id + ', #txt_qty_' + id).removeAttr('disabled', '');
 
-        $('#btn_ubah_' + id).hide();
-        $('#btn_hapus_' + id).hide();
-        $('#btn_update_' + id).show();
-        $('#btn_cancel_update_' + id).show();
+        // $('#btn_ubah_' + id).hide();
+        // $('#btn_hapus_' + id).hide();
+        // $('#btn_update_' + id).show();
+        // $('#btn_cancel_update_' + id).show();
     }
 
     function cancleUpdate(id) {
@@ -3477,19 +3595,71 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         });
     }
 
-    function hapusRinci(no) {
-        $('#hidden_no_delete').val(no);
-        Swal.fire({
-            text: "Yakin akan menghapus Data ini?",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya Hapus!'
-        }).then((result) => {
-            if (result.value) {
-                deleteData(no);
+    function hapusRinci(n) {
+        var ref_po = $('#hidden_no_ref_po').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/hitungIsiItem'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                ref_po: ref_po
+            },
+            success: function(data) {
+                hapusRinciNew(n, data);
+                // console.log(data);
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! ');
             }
         });
+        // $('#hidden_no_delete').val(n);
+        // Swal.fire({
+        //     text: "Yakin akan menghapus Data ini?",
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Ya Hapus!'
+        // }).then((result) => {
+        //     if (result.value) {
+        //         deleteData(n);
+        //     }
+        // })
+    }
+
+    function hapusRinciNew(n, data) {
+        if (data != 1) {
+
+            $('#hidden_no_delete').val(n);
+            Swal.fire({
+                text: "Yakin akan menghapus Data ini?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Hapus!'
+            }).then((result) => {
+                if (result.value) {
+                    deleteData(n);
+                }
+            })
+        } else {
+
+            Swal.fire({
+                text: "Item tinggal 1 apakah akan dibatalkan?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Batalkan!'
+            }).then((result) => {
+                if (result.value) {
+                    // deleteData(n);
+                    $('#alasanbatal').modal('show');
+                    $('#stat_batal').val(n);
+                }
+            })
+
+        }
     }
 
 
@@ -3533,7 +3703,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
             dataType: "JSON",
             beforeSend: function() {
                 $('#lbl_status_simpan_' + no).empty();
-                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses Hapus Item</label>');
+                $('#lbl_status_simpan_' + no).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
             },
 
             data: {
@@ -3541,6 +3711,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 id_item: $('#id_item_' + no).val(),
                 hidden_no_ref_spp: $('#hidden_no_ref_spp_' + no).val(),
                 qty: $('#txt_qty_' + no).val(),
+
             },
             success: function(data) {
                 $('#tr_' + no).remove();

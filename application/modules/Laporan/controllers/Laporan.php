@@ -92,6 +92,16 @@ class Laporan extends CI_Controller
 			'margin_right' => '5',
 			'orientation' => 'P'
 		]);
+		if ($data['ppo']->status2 == 5) {
+			# code...
+			$mpdf->SetWatermarkImage(
+				'././assets/img/batal.png',
+				0.3,
+				'',
+				array(25, 5)
+			);
+			$mpdf->showWatermarkImage = true;
+		}
 		$html = $this->load->view('lapSpp/v_lap_spp_print', $data, true);
 		$mpdf->WriteHTML($html);
 		$mpdf->Output();
@@ -120,6 +130,16 @@ class Laporan extends CI_Controller
 			$noref = "'" . $hasil->noreftxt . "'";
 			$noref = str_replace("/", ".", $noref);
 			$tgl = date_create($hasil->tglppo);
+			if ($hasil->status2 == 1) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
+			} elseif ($hasil->status2 == 2) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+			} else if ($hasil->status2 == 5) {
+				# code...
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-danger">DIBATALKAN</span></h5>';
+			} else {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+			}
 
 			$row   = array();
 
@@ -127,6 +147,8 @@ class Laporan extends CI_Controller
 			$row[] = date_format($tgl, 'd/m/Y');
 			$row[] = $hasil->namadept;
 			$row[] = $hasil->noreftxt;
+			$row[] = $stat;
+			$row[] = $hasil->user;
 			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
 
 			$data[] = $row;
@@ -165,12 +187,25 @@ class Laporan extends CI_Controller
 			$noref = str_replace("/", ".", $noref);
 			$tgl = date_create($hasil->tglppo);
 
+			if ($hasil->status2 == 1) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
+			} elseif ($hasil->status2 == 2) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+			} else if ($hasil->status2 == 5) {
+				# code...
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-danger">DIBATALKAN</span></h5>';
+			} else {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+			}
+
 			$row   = array();
 
 			$row[] =  $no . ".";
 			$row[] = date_format($tgl, 'd/m/Y');
 			$row[] = $hasil->namadept;
 			$row[] = $hasil->noreftxt;
+			$row[] = $stat;
+			$row[] = $hasil->user;
 			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
 
 			$data[] = $row;
@@ -209,6 +244,16 @@ class Laporan extends CI_Controller
 			$noref = "'" . $hasil->noreftxt . "'";
 			$noref = str_replace("/", ".", $noref);
 			$tgl = date_create($hasil->tglppo);
+			if ($hasil->status2 == 1) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
+			} elseif ($hasil->status2 == 2) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+			} else if ($hasil->status2 == 5) {
+				# code...
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-danger">DIBATALKAN</span></h5>';
+			} else {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+			}
 
 			$row   = array();
 
@@ -216,6 +261,8 @@ class Laporan extends CI_Controller
 			$row[] = date_format($tgl, 'd/m/Y');
 			$row[] = $hasil->namadept;
 			$row[] = $hasil->noreftxt;
+			$row[] = $stat;
+			$row[] = $hasil->user;
 			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
 
 			$data[] = $row;
@@ -254,6 +301,16 @@ class Laporan extends CI_Controller
 			$noref = "'" . $hasil->noreftxt . "'";
 			$noref = str_replace("/", ".", $noref);
 			$tgl = date_create($hasil->tglppo);
+			if ($hasil->status2 == 1) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
+			} elseif ($hasil->status2 == 2) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+			} else if ($hasil->status2 == 5) {
+				# code...
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-danger">DIBATALKAN</span></h5>';
+			} else {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+			}
 
 			$row   = array();
 
@@ -261,6 +318,8 @@ class Laporan extends CI_Controller
 			$row[] = date_format($tgl, 'd/m/Y');
 			$row[] = $hasil->namadept;
 			$row[] = $hasil->noreftxt;
+			$row[] = $stat;
+			$row[] = $hasil->user;
 			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
 
 			$data[] = $row;
@@ -299,6 +358,16 @@ class Laporan extends CI_Controller
 			$noref = "'" . $hasil->noreftxt . "'";
 			$noref = str_replace("/", ".", $noref);
 			$tgl = date_create($hasil->tglppo);
+			if ($hasil->status2 == 1) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Approved</span></h5>';
+			} elseif ($hasil->status2 == 2) {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+			} else if ($hasil->status2 == 5) {
+				# code...
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-danger">DIBATALKAN</span></h5>';
+			} else {
+				$stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+			}
 
 			$row   = array();
 
@@ -306,6 +375,8 @@ class Laporan extends CI_Controller
 			$row[] = date_format($tgl, 'd/m/Y');
 			$row[] = $hasil->namadept;
 			$row[] = $hasil->noreftxt;
+			$row[] = $stat;
+			$row[] = $hasil->user;
 			$row[] = '<button class="btn btn-xs btn-success fa fa-print" id="btn_print" target="_blank" name="btn_print" type="button" data-toggle="tooltip" data-placement="right" title="Print" onclick="printClick(' . $noref . ')"></button>';
 
 			$data[] = $row;
@@ -557,7 +628,7 @@ class Laporan extends CI_Controller
 				$lokasi2 = "";
 				break;
 		}
-		$query = "SELECT * FROM ppo WHERE tglppo BETWEEN $tanggal1 AND $tanggal2 $lokasii $lokasi";
+		$query = "SELECT * FROM ppo WHERE status2 <> 5 AND tglppo BETWEEN $tanggal1 AND $tanggal2 $lokasii $lokasi ";
 		$data['spp'] = $this->db_logistik_pt->query($query)->result();
 		// $data['periode'] = $bulan . " " . $tahun;
 		$data['tgl1'] = $tgl1;

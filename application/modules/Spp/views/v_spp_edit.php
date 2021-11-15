@@ -353,6 +353,50 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" id="alasanedit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-1">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                </div>
+
+
+
+                <form class="parsley-examples" action="#" novalidate>
+                    <div class="mb-1">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="pass" class="form-control" placeholder="Masukkan password">
+                            <div class="input-group-text" data-password="false">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                        <ul class="parsley-errors-list filled" id="pwvalidasi" style="display: none;">
+                            <li class="parsley-required" id="textpw"></li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-2">
+                        <input type="hidden" name="no_baris" id="no_baris">
+                        <label for="alasan_edit" class="form-label">Alasan</label>
+                        <textarea class="form-control" id="alasan_edit" rows="2" placeholder="Alasan edit..." required></textarea>
+                        <ul class="parsley-errors-list filled" id="alasan_valid" style="display: none;">
+                            <li class="parsley-required">Alasan tidak boleh kosong!</li>
+                        </ul>
+                    </div>
+                    <div class="mb-0 text-center">
+                        <button type="button" class="btn btn-warning my-2" id="bt_update" onclick="validasiedit()">Update</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" name="password" id="password" value="<?= $this->session->userdata('pw') ?>">
 
 <input type="hidden" id="id_ppo_edit" value="<?= $id_ppo_edit ?>">
@@ -732,23 +776,80 @@
     }
 
     function ubahRinci(n) {
-
+        $('#alasanedit').modal('show');
+        $('#no_baris').val(n);
+        $('#pass').val('');
+        $('#alasan_edit').val('');
         // var n = $('#hidden_no_row').val();
 
         // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
         // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeAttr('disabled');
 
-        $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeClass('bg-light');
-        $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeAttr('disabled');
 
-        $('#btn_simpan_' + n).css('display', 'none');
-        $('#btn_hapus_' + n).css('display', 'none');
-        $('#btn_ubah_' + n).css('display', 'none');
-        $('#btn_update_' + n).css('display', 'block');
-        $('#btn_cancel_update_' + n).css('display', 'block');
-
-        $("#status_sukses").remove();
     };
+
+    function validasiedit() {
+
+        var password = $('#pass').val();
+        var pw_session = $('#password').val();
+        var pw = $('#pass').val().length;
+        var alasan = $('#alasan_edit').val().length;
+        if (pw == 0) {
+            $('#pass').addClass('parsley-error');
+            $('#pwvalidasi').css('display', 'block');
+            $('#textpw').html('Password tidak boleh kosong!');
+        } else if (alasan == 0) {
+            $('#alasan_edit').addClass('parsley-error');
+            $('#alasan_valid').css('display', 'block');
+        } else {
+            $('#pass').removeClass('parsley-error');
+            $('#pwvalidasi').css('display', 'none');
+
+            $('#alasan_edit').removeClass('parsley-error');
+            $('#alasan_valid').css('display', 'none');
+
+            if (password == pw_session) {
+                var n = $('#no_baris').val();
+                update_alasan(n);
+            } else {
+                $('#pass').addClass('parsley-error');
+                $('#pwvalidasi').css('display', 'block');
+                $('#textpw').html('Password Salah!');
+            }
+        }
+    }
+
+    function update_alasan(n) {
+        var noref_ppo = $('#hidden_no_ref_ppo').val();
+        var alasan_edit = $('#alasan_edit').val();
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Spp/update_alasan') ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {
+                noref_ppo: noref_ppo,
+                alasan: alasan_edit
+            },
+            success: function(data) {
+                $('#alasanedit').modal('hide');
+                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeClass('bg-light');
+                $('.div_form_2').find('#nakobar_' + n + ', #txt_qty_' + n + ', #txt_keterangan_rinci_' + n + '').removeAttr('disabled');
+
+                $('#btn_simpan_' + n).css('display', 'none');
+                $('#btn_hapus_' + n).css('display', 'none');
+                $('#btn_ubah_' + n).css('display', 'none');
+                $('#btn_update_' + n).css('display', 'block');
+                $('#btn_cancel_update_' + n).css('display', 'block');
+
+                $("#status_sukses").remove();
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS!');
+            }
+        });
+    }
 
     // cancel update
     function cancelUpdate(n) {
@@ -923,18 +1024,56 @@
     };
 
     function hapusRinci(n) {
-        $('#hidden_no_delete').val(n);
-        Swal.fire({
-            text: "Yakin akan menghapus Data ini?",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya Hapus!'
-        }).then((result) => {
-            if (result.value) {
-                deleteData(n);
+        var noref_ppo = $('#hidden_no_ref_ppo').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Spp/hitungIsiItem'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                noref_ppo: noref_ppo
+            },
+            success: function(data) {
+                hapusRinciNew(n, data)
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
-        })
+        });
+    }
+
+    function hapusRinciNew(n, data) {
+        if (data != 1) {
+
+            $('#hidden_no_delete').val(n);
+            Swal.fire({
+                text: "Yakin akan menghapus Data ini?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Hapus!'
+            }).then((result) => {
+                if (result.value) {
+                    deleteData(n);
+                }
+            })
+        } else {
+            $('#hidden_no_delete').val(n);
+            Swal.fire({
+                text: "Item tinggal 1 apakah akan dibatalkan?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Batalkan!'
+            }).then((result) => {
+                if (result.value) {
+                    // deleteData(n);
+                    $('#alasanbatal').modal('show');
+                }
+            })
+
+        }
     }
 
     function deleteSpp() {

@@ -337,5 +337,11 @@ $logo_pt = $this->session->userdata('logo_pt');
     <small>Abu-abu : Dalam proses</small><br>
     <?php if ($ppo->status2 == 5) { ?>
         <small style="color: crimson;">Alasan batal : <?= $ppo->nama_main; ?></small>
+    <?php } else { ?>
+        <?php if ($ppo->nama_main == 0) { ?>
+            <small style="color: crimson;">Revisi : -</small>
+        <?php } else { ?>
+            <small style="color: crimson;">Revisi : <?= $ppo->nama_main; ?></small>
+        <?php } ?>
     <?php } ?>
 </body>

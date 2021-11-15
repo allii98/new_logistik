@@ -100,6 +100,13 @@ class Spp extends CI_Controller
         echo json_encode($data);
     }
 
+    function hitungIsiItem()
+    {
+        $noref = $this->input->post('noref_ppo');
+        $data = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$noref'")->num_rows();
+        echo json_encode($data);
+    }
+
     public function saveSpp()
     {
         $id_user = $this->session->userdata('id_user');
@@ -160,14 +167,14 @@ class Spp extends CI_Controller
 
         $noref = $text1 . "-" . $_POST['cmb_jenis_permohonan'] . "/" . $text2 . "/" . $getmonth . "/" . $getyear . "/" . $nospp;
 
-        $periode = date("Y-m-d", strtotime($this->input->post('txt_tgl_ref')));
+        $periode = date("Y-m-d", strtotime($this->session->userdata('Ymd_periode')));
         $d_periode =  date("j", strtotime($periode));
         if ($d_periode >= 26) {
-            $periodetxt = date("Ym", strtotime($this->input->post('txt_tgl_ref') . " +1 month"));
+            $periodetxt = date("Ym", strtotime($this->session->userdata('Ymd_periode') . " +1 month"));
         } else {
-            $periodetxt = date("Ym", strtotime($this->input->post('txt_tgl_ref')));
+            $periodetxt = date("Ym", strtotime($this->session->userdata('Ymd_periode')));
         }
-        $thn = date("Y", strtotime($this->input->post('txt_tgl_ref')));
+        $thn = date("Y", strtotime($this->session->userdata('Ymd_periode')));
 
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
@@ -205,6 +212,46 @@ class Spp extends CI_Controller
             'grup' => 0,
             'main_acct' => 0,
             'nama_main' => 0,
+        ];
+
+        $data_ppo_histori = [
+            'kpd' => 'Bagian Purchasing',
+            'noppo' => $nospp,
+            'noppotxt' => $nospp,
+            'jenis' => $this->input->post('cmb_jenis_permohonan'),
+            'tglppo' => $this->input->post('txt_tgl_spp'),
+            'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
+            'tgltrm' => $tgl_trm . date(" H:i:s"),
+            'kodedept' => $this->input->post('cmb_departemen'),
+            'namadept' => $data['nama_dept']['nama'],
+
+            'noref' => $nospp,
+            'noreftxt' => $noref,
+            'tglref' => $periode,
+            'ket' => $this->input->post('txt_keterangan'),
+            'no_acc' => 0,
+            'ket_acc' => "",
+            'pt' => $this->session->userdata('pt'),
+            'kodept' => $this->session->userdata('kode_pt'),
+            'periode' => $periode,
+            'periodetxt' => $periodetxt,
+            'thn' => $thn,
+            'tglisi' => date("Y-m-d H:i:s"),
+            'user' => $this->session->userdata('user'),
+            'status' => 'DALAM PROSES',
+            'status2' => '0',
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => 0,
+            'kode_budget' => 0,
+            'grup' => 0,
+            'main_acct' => 0,
+            'nama_main' => 0,
+            'keterangan_transaksi' => 'INPUT SPP',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
         ];
 
         $data_item_ppo = [
@@ -249,6 +296,50 @@ class Spp extends CI_Controller
             'nama_main' => "",
         ];
 
+        $data_item_ppo_histori = [
+            'noppo' => $nospp,
+            'noppotxt' => $nospp,
+            'tglppo' => $this->input->post('txt_tgl_spp'),
+            'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
+            'kodedept' => $this->input->post('cmb_departemen'),
+            'namadept' => $data['nama_dept']['nama'],
+            'noref' => $nospp,
+            'noreftxt' => $noref,
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'qty2' => NULL,
+            'stok' => $this->input->post('hidden_stok'),
+            'harga' => "0",
+            'jumharga' => "0",
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'periode' => $periode,
+            'periodetxt' => $periodetxt,
+            'thn' => $thn,
+            'ket' => $this->input->post('txt_keterangan_rinci'),
+            'tglisi' => date("Y-m-d H:i:s"),
+            'user' => $this->session->userdata('user'),
+            'status' => 'DALAM PROSES',
+            'status2' => '0',
+            'ada_penawar' => '-',
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => "0",
+            'saldo_po' => "0",
+            'kode_budget' => "0",
+            'grup' => "0",
+            'main_acct' => "0",
+            'nama_main' => "",
+            'keterangan_transaksi' => "INPUT SPP",
+            'log' => "-",
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' =>  $this->platform->agent(),
+        ];
+
         //cek koneksi
         $con = $this->db_logistik_pt;
 
@@ -259,7 +350,9 @@ class Spp extends CI_Controller
         } else {
             if (empty($this->input->post('hidden_no_spp'))) {
                 $data = $this->M_spp->saveSpp($data_ppo);
+                $data_histori = $this->M_spp->saveSppHistori($data_ppo_histori);
                 $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+                $data_item_histori = $this->M_spp->saveSpp3($data_item_ppo_histori);
                 $item_exist = 0;
             } else {
 
@@ -271,6 +364,7 @@ class Spp extends CI_Controller
                     $data2 = NULL;
                 } else {
                     $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+                    $data_item_histori = $this->M_spp->saveSpp3($data_item_ppo_histori);
                     $item_exist = 0;
                     $data = NULL;
                 }
@@ -351,6 +445,49 @@ class Spp extends CI_Controller
             'main_acct' => "0",
             'nama_main' => "",
         ];
+        $data_item_ppo_histori = [
+            'noppo' => $nospp,
+            'noppotxt' => $nospp,
+            'tglppo' => $this->input->post('hidden_tglppo'),
+            'tglppotxt' => date("Ymd", strtotime($this->input->post('hidden_tglppo'))),
+            'kodedept' => $this->input->post('hidden_kodedept'),
+            'namadept' => $this->input->post('hidden_namadept'),
+            'noref' => $nospp,
+            'noreftxt' => $noref,
+            'kodebar' => $this->input->post('hidden_kode_brg'),
+            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'nabar' => $this->input->post('hidden_nama_brg'),
+            'sat' => $this->input->post('hidden_satuan_brg'),
+            'qty' => $this->input->post('txt_qty'),
+            'qty2' => NULL,
+            'stok' => $this->input->post('hidden_stok'),
+            'harga' => "0",
+            'jumharga' => "0",
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'periode' => $periode,
+            'periodetxt' => $periodetxt,
+            'thn' => $thn,
+            'ket' => $this->input->post('txt_keterangan_rinci'),
+            'tglisi' => date("Y-m-d H:i:s"),
+            'user' => $this->session->userdata('user'),
+            'status' => 'DALAM PROSES',
+            'status2' => '0',
+            'ada_penawar' => '-',
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => "0",
+            'saldo_po' => "0",
+            'kode_budget' => "0",
+            'grup' => "0",
+            'main_acct' => "0",
+            'nama_main' => "",
+            'keterangan_transaksi' => "UPDATE SPP",
+            'log' => "-",
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' =>  $this->platform->agent(),
+        ];
 
         $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $data_item_ppo['noreftxt']);
 
@@ -360,6 +497,7 @@ class Spp extends CI_Controller
             $data2 = NULL;
         } else {
             $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+            $data_item_histori = $this->M_spp->saveSpp3($data_item_ppo_histori);
             $item_exist = 0;
             $data = NULL;
         }
@@ -405,6 +543,7 @@ class Spp extends CI_Controller
 
         $id_ppo = $this->input->post('hidden_id_ppo');
         $id_item_ppo = $this->input->post('hidden_id_item_ppo');
+        $cek = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE id='$id_item_ppo'")->row();
 
         // $data_ppo = [
         //     'jenis' => $this->input->post('cmb_jenis_permohonan'),
@@ -425,6 +564,49 @@ class Spp extends CI_Controller
             'stok' => $this->input->post('hidden_stok'),
             'ket' => $this->input->post('txt_keterangan_rinci'),
         ];
+        $data_item_ppo_histori = [
+            'noppo' => $cek->noppo,
+            'noppotxt' => $cek->noppotxt,
+            'tglppo' => $cek->tglppo,
+            'tglppotxt' => $cek->tglppotxt,
+            'kodedept' => $cek->kodedept,
+            'namadept' => $cek->namadept,
+            'noref' => $cek->noref,
+            'noreftxt' => $cek->noreftxt,
+            'kodebar' => $cek->kodebar,
+            'kodebartxt' => $cek->kodebartxt,
+            'nabar' => $cek->nabar,
+            'sat' => $cek->sat,
+            'qty' => $cek->qty,
+            'qty2' => NULL,
+            'stok' => $cek->STOK,
+            'harga' => "0",
+            'jumharga' => "0",
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'periode' => $cek->periode,
+            'periodetxt' => $cek->periodetxt,
+            'thn' => $cek->thn,
+            'ket' => $cek->ket,
+            'tglisi' => $cek->tglisi,
+            'user' => $this->session->userdata('user'),
+            'status' => $cek->status,
+            'status2' => $cek->status2,
+            'ada_penawar' => '-',
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => "0",
+            'saldo_po' => "0",
+            'kode_budget' => "0",
+            'grup' => "0",
+            'main_acct' => "0",
+            'nama_main' => "-",
+            'keterangan_transaksi' => "UPDATE SPP",
+            'log' => "-",
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' =>  $this->platform->agent(),
+        ];
 
         // $data = $this->M_spp->updateSpp($id_ppo, $data_ppo);
 
@@ -438,9 +620,11 @@ class Spp extends CI_Controller
             } else {
                 $item_exist = NULL;
                 $data2 = $this->M_spp->updateSpp2($id_item_ppo, $data_item_ppo);
+                $data_item_histori = $this->M_spp->saveSpp3($data_item_ppo_histori);
             }
         } else {
             $data2 = $this->M_spp->updateSpp2($id_item_ppo, $data_item_ppo);
+            $data_item_histori = $this->M_spp->saveSpp3($data_item_ppo_histori);
             $item_exist = NULL;
         }
 
@@ -456,6 +640,52 @@ class Spp extends CI_Controller
     {
         $id_ppo = $this->input->post('hidden_id_ppo');
         $id_ppo_item = $this->input->post('hidden_id_item_ppo');
+        $cek = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE id='$id_ppo_item'")->row();
+
+        $data_item_ppo_histori = [
+            'noppo' => $cek->noppo,
+            'noppotxt' => $cek->noppotxt,
+            'tglppo' => $cek->tglppo,
+            'tglppotxt' => $cek->tglppotxt,
+            'kodedept' => $cek->kodedept,
+            'namadept' => $cek->namadept,
+            'noref' => $cek->noref,
+            'noreftxt' => $cek->noreftxt,
+            'kodebar' => $cek->kodebar,
+            'kodebartxt' => $cek->kodebartxt,
+            'nabar' => $cek->nabar,
+            'sat' => $cek->sat,
+            'qty' => $cek->qty,
+            'qty2' => NULL,
+            'stok' => $cek->STOK,
+            'harga' => "0",
+            'jumharga' => "0",
+            'kodept' => $this->session->userdata('kode_pt'),
+            'namapt' => $this->session->userdata('pt'),
+            'periode' => $cek->periode,
+            'periodetxt' => $cek->periodetxt,
+            'thn' => $cek->thn,
+            'ket' => $cek->ket,
+            'tglisi' => $cek->tglisi,
+            'user' => $this->session->userdata('user'),
+            'status' => $cek->status,
+            'status2' => $cek->status2,
+            'ada_penawar' => '-',
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => "0",
+            'saldo_po' => "0",
+            'kode_budget' => "0",
+            'grup' => "0",
+            'main_acct' => "0",
+            'nama_main' => "-",
+            'keterangan_transaksi' => "DELETE SPP",
+            'log' => "-",
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' =>  $this->platform->agent(),
+        ];
+        $data_item_histori = $this->M_spp->saveSpp3($data_item_ppo_histori);
 
         $data = $this->db_logistik_pt->delete('item_ppo', array('id' => $id_ppo_item));
 
@@ -465,6 +695,48 @@ class Spp extends CI_Controller
     public function deleteSpp()
     {
         $noref_ppo = $this->input->post('noref_ppo');
+        $cek = $this->db_logistik_pt->query("SELECT * FROM ppo WHERE noreftxt='$noref_ppo'")->row();
+
+        $data_ppo_histori = [
+            'kpd' => 'Bagian Purchasing',
+            'noppo' => $cek->noppo,
+            'noppotxt' => $cek->noppotxt,
+            'jenis' => $cek->jenis,
+            'tglppo' => $cek->tglppo,
+            'tglppotxt' => $cek->tglppotxt,
+            'tgltrm' => $cek->tgltrm,
+            'kodedept' => $cek->kodedept,
+            'namadept' => $cek->namadept,
+
+            'noref' => $cek->noref,
+            'noreftxt' => $cek->noreftxt,
+            'tglref' => $cek->tglref,
+            'ket' => $cek->ket,
+            'no_acc' => 0,
+            'ket_acc' => "",
+            'pt' => $this->session->userdata('pt'),
+            'kodept' => $this->session->userdata('kode_pt'),
+            'periode' => $cek->periode,
+            'periodetxt' => $cek->periodetxt,
+            'thn' => $cek->thn,
+            'tglisi' => $cek->tglisi,
+            'user' => $this->session->userdata('user'),
+            'status' => $cek->status,
+            'status2' => $cek->status2,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => 0,
+            'kode_budget' => 0,
+            'grup' => 0,
+            'main_acct' => 0,
+            'nama_main' => 0,
+            'keterangan_transaksi' => 'DELETE SPP',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+        $data_histori = $this->M_spp->saveSppHistori($data_ppo_histori);
 
         $data = $this->M_spp->deleteSpp($noref_ppo);
 
@@ -475,6 +747,49 @@ class Spp extends CI_Controller
     {
         $noref_ppo = $this->input->post('noref_ppo');
         $alasan = $this->input->post('alasan');
+
+        $cek = $this->db_logistik_pt->query("SELECT * FROM ppo WHERE noreftxt='$noref_ppo'")->row();
+
+        $data_ppo_histori = [
+            'kpd' => 'Bagian Purchasing',
+            'noppo' => $cek->noppo,
+            'noppotxt' => $cek->noppotxt,
+            'jenis' => $cek->jenis,
+            'tglppo' => $cek->tglppo,
+            'tglppotxt' => $cek->tglppotxt,
+            'tgltrm' => $cek->tgltrm,
+            'kodedept' => $cek->kodedept,
+            'namadept' => $cek->namadept,
+
+            'noref' => $cek->noref,
+            'noreftxt' => $cek->noreftxt,
+            'tglref' => $cek->tglref,
+            'ket' => $cek->ket,
+            'no_acc' => 0,
+            'ket_acc' => "",
+            'pt' => $this->session->userdata('pt'),
+            'kodept' => $this->session->userdata('kode_pt'),
+            'periode' => $cek->periode,
+            'periodetxt' => $cek->periodetxt,
+            'thn' => $cek->thn,
+            'tglisi' => $cek->tglisi,
+            'user' => $this->session->userdata('user'),
+            'status' => $cek->status,
+            'status2' => $cek->status2,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'po' => 0,
+            'kode_budget' => 0,
+            'grup' => 0,
+            'main_acct' => 0,
+            'nama_main' => 0,
+            'keterangan_transaksi' => 'BATAL SPP',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+        $data_histori = $this->M_spp->saveSppHistori($data_ppo_histori);
 
         $data = $this->M_spp->batalSpp($noref_ppo, $alasan);
 

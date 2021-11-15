@@ -771,6 +771,8 @@
 
         $('#alasanedit').modal('show');
         $('#no_baris').val(n);
+        $('#pass').val('');
+        $('#alasan_edit').val('');
         // var n = $('#hidden_no_row').val();
 
         // $('.div_form_1').find('#devisi, #cmb_jenis_permohonan, #cmb_alokasi, #txt_tgl_terima, #cmb_departemen, #txt_keterangan').removeClass('bg-light');
@@ -1010,18 +1012,56 @@
     };
 
     function hapusRinci(n) {
-        $('#hidden_no_delete').val(n);
-        Swal.fire({
-            text: "Yakin akan menghapus Data ini?",
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Ya Hapus!'
-        }).then((result) => {
-            if (result.value) {
-                deleteData(n);
+        var noref_ppo = $('#hidden_no_ref_ppo').val();
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Spp/hitungIsiItem'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+
+            data: {
+                noref_ppo: noref_ppo
+            },
+            success: function(data) {
+                hapusRinciNew(n, data)
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS! Silahkan Refresh Halaman!');
             }
-        })
+        });
+    }
+
+    function hapusRinciNew(n, data) {
+        if (data != 1) {
+
+            $('#hidden_no_delete').val(n);
+            Swal.fire({
+                text: "Yakin akan menghapus Data ini?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Hapus!'
+            }).then((result) => {
+                if (result.value) {
+                    deleteData(n);
+                }
+            })
+        } else {
+            $('#hidden_no_delete').val(n);
+            Swal.fire({
+                text: "Item tinggal 1 apakah akan dibatalkan?",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya Batalkan!'
+            }).then((result) => {
+                if (result.value) {
+                    // deleteData(n);
+                    $('#alasanbatal').modal('show');
+                }
+            })
+
+        }
     }
 
     function deleteSpp() {

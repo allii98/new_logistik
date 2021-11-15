@@ -39,6 +39,13 @@ class Lpb extends CI_Controller
         $this->template->load('template', 'v_lpbIndex', $data);
     }
 
+    function hitungIsiItem()
+    {
+        $noref = $this->input->post('ref_lpb');
+        $data = $this->db_logistik_pt->query("SELECT * FROM masukitem WHERE noref='$noref'")->num_rows();
+        echo json_encode($data);
+    }
+
     public function input()
     {
         $data['title'] = 'Laporan Penerimaan Barang';
@@ -354,6 +361,45 @@ class Lpb extends CI_Controller
             'approval_ktu' => '1',
             'flag_lpb' => '1'
         ];
+        $data_stokmasuk_histori = [
+            'tgl' => $tgl_terima,
+            'nopo' => $no_po,
+            'nopotxt' => $no_po,
+            'LOKAL' => $po_lokal,
+            'ASSET' => '0',
+            'kode_supply' => $this->input->post('txt_kd_supplier'),
+            'nama_supply' => $this->input->post('txt_supplier'),
+            'ttg' => $no_lpb,
+            'ttgtxt' => $no_lpb,
+            'no_pengtr' => $this->input->post('txt_no_pengantar'),
+            'lokasi_gudang' => $this->input->post('txt_lokasi_gudang'),
+            'ket' => $this->input->post('txt_ket_pengiriman'),
+            'tglinput' => date("Y-m-d H:i:s"),
+            'txttgl' => $txttgl,
+            'thn' => $thn,
+            'periode1' => $periode,
+            'periode2' => NULL,
+            'txtperiode1' => $txtperiode,
+            'txtperiode2' => NULL,
+            'pt' => $this->session->userdata('pt'),
+            'kode' => $kodept,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+
+            'refpo' => $no_ref_po,
+            'noref' => $no_ref_lpb,
+            'BATAL' => '0',
+            'alasan_batal' => '0',
+            'USER' => $this->session->userdata('user'),
+            'cetak' => '0',
+            'posting' => '0',
+            'keterangan_transaksi' => 'INPUT LPB',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+
 
         $data_masukitem = [
             'kdpt' => $this->session->userdata('kode_pt'),
@@ -397,6 +443,48 @@ class Lpb extends CI_Controller
             'posting' => '0',
             'qtyditerima' => '0',
         ];
+        $data_masukitem_histori = [
+            'kdpt' => $this->session->userdata('kode_pt'),
+            'nopo' => $no_po,
+            'nopotxt' => $no_po,
+            'LOKAL' => $po_lokal,
+            'ASSET' => $asset,
+            'pt' => $this->session->userdata('pt'),
+            'afd' => '-',
+            'kodebar' => $this->input->post('txt_kode_barang'),
+            'kodebartxt' => $this->input->post('txt_kode_barang'),
+            'nabar' => $this->input->post('txt_nama_brg'),
+            'satuan' => $this->input->post('txt_satuan'),
+            'grp' => $this->input->post('hidden_grup'),
+            'qty' => $this->input->post('txt_qty'),
+            'tgl' => $tgl_terima,
+            'ttg' => $no_lpb,
+            'ttgtxt' => $no_lpb,
+            'tglinput' => date("Y-m-d H:i:s"),
+            'txttgl' => $txttgl,
+            'thn' => $thn,
+            'periode' => $periode,
+            'txtperiode' => $txtperiode,
+            'noadjust' => '0',
+            'ket' => $this->input->post('txt_ket_rinci'),
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'refpo' => $no_ref_po,
+            'noref' => $no_ref_lpb,
+            'BATAL' => '0',
+            'alasan_batal' => '0',
+            'kurs' => $kurs,
+            'konversi' => $konversi,
+            'USER' => $this->session->userdata('user'),
+            'cetak' => '0',
+            'posting' => '0',
+            'keterangan_transaksi' => 'INPUT ITEM LPB',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+
 
         $quantiti = $this->input->post('txt_qty');
 
@@ -460,6 +548,8 @@ class Lpb extends CI_Controller
             $data = $this->M_item_lpb->saveLpb($data_stokmasuk);
             $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
             $data3 = $this->M_item_lpb->saveRegisterStok($data_register_stok);
+            $data4 =  $this->db_logistik_pt->insert('stokmasuk_history', $data_stokmasuk_histori);
+            $data5 =  $this->db_logistik_pt->insert('masukitem_history', $data_masukitem_histori);
 
             $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi, $data_masukitem['norefppo']);
 
@@ -501,6 +591,7 @@ class Lpb extends CI_Controller
                 $data = NULL;
                 $data2 = $this->M_item_lpb->saveLpb2($data_masukitem);
                 $data3 = $this->M_item_lpb->saveRegisterStok($data_register_stok);
+                $data4 = $this->db_logistik_pt->insert('masukitem_history', $data_masukitem_histori);
 
                 $result_insert_stok_awal_harian = $this->insert_stok_awal_harian($kodebar, $nabar, $sat, $grp, $no_ref_po, $quantiti, $data_stokmasuk['devisi'], $data_stokmasuk['kode_dev'], $mutasi, $data_masukitem['norefppo']);
 
@@ -935,6 +1026,52 @@ class Lpb extends CI_Controller
         }
 
         //update stok awal
+
+        //insert histori
+        $get_lpb = $this->db_logistik_pt->get_where('masukitem', array('id' => $id))->row();
+        $data_masukitem_histori = [
+            'kdpt' => $this->session->userdata('kode_pt'),
+            'nopo' => $get_lpb->nopo,
+            'nopotxt' => $get_lpb->nopotxt,
+            'LOKAL' => $get_lpb->LOKAL,
+            'ASSET' => $get_lpb->ASSET,
+            'pt' => $this->session->userdata('pt'),
+            'afd' => '-',
+            'kodebar' => $get_lpb->kodebar,
+            'kodebartxt' => $get_lpb->kodebartxt,
+            'nabar' => $get_lpb->nabar,
+            'satuan' => $get_lpb->satuan,
+            'grp' => $get_lpb->grp,
+            'qty' => $get_lpb->qty,
+            'tgl' => $get_lpb->tgl,
+            'ttg' => $get_lpb->ttg,
+            'ttgtxt' => $get_lpb->ttgtxt,
+            'tglinput' => $get_lpb->tglinput,
+            'txttgl' => $get_lpb->txttgl,
+            'thn' => $get_lpb->thn,
+            'periode' => $get_lpb->periode,
+            'txtperiode' => $get_lpb->txtperiode,
+            'noadjust' => $get_lpb->noadjust,
+            'ket' => $get_lpb->ket,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'refpo' => $get_lpb->refpo,
+            'noref' => $get_lpb->noref,
+            'BATAL' => $get_lpb->BATAL,
+            'alasan_batal' => $get_lpb->alasan_batal,
+            'kurs' => $get_lpb->kurs,
+            'konversi' => $get_lpb->konversi,
+            'USER' => $this->session->userdata('user'),
+            'cetak' => $get_lpb->cetak,
+            'posting' => $get_lpb->posting,
+            'keterangan_transaksi' => 'UPDATE ITEM LPB',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+        $this->db_logistik_pt->insert('masukitem_history', $data_masukitem_histori);
+        //endss
         $update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
 
         $data_update_lpb = $this->M_lpb->updateLpb($data_item_lpb, $id);
@@ -1042,6 +1179,18 @@ class Lpb extends CI_Controller
         $norefppo = $this->input->post('norefppo');
         $result = $this->M_lpb->sumqty_edit($kodebar, $refpo, $norefppo);
         echo json_encode($result);
+    }
+
+    function update_alasan()
+    {
+        $reflpb = $this->input->post('noref_lpb');
+        $alasan_edit = $this->input->post('alasan');
+
+        $isiedit = array(
+            'alasan_batal' => $alasan_edit
+        );
+        $data = $this->M_lpb->update_alasan($reflpb, $isiedit);
+        echo json_encode($data);
     }
 
     function cetak()
@@ -1211,6 +1360,49 @@ class Lpb extends CI_Controller
         //update sudah_lpb di po jadi 0
         $this->M_lpb->update_sudah_lpb_po($norefpo);
 
+        //insert histori
+        $get_lpb = $this->db_logistik_pt->get_where('stokmasuk', array('noref' => $noreflpb))->row();
+        $data_stokmasuk_histori = [
+            'tgl' => $get_lpb->tgl,
+            'nopo' => $get_lpb->nopo,
+            'nopotxt' => $get_lpb->nopotxt,
+            'LOKAL' => $get_lpb->LOKAL,
+            'ASSET' => $get_lpb->ASSET,
+            'kode_supply' => $get_lpb->kode_supply,
+            'nama_supply' => $get_lpb->nama_supply,
+            'ttg' => $get_lpb->ttg,
+            'ttgtxt' => $get_lpb->ttgtxt,
+            'no_pengtr' => $get_lpb->no_pengtr,
+            'lokasi_gudang' => $get_lpb->lokasi_gudang,
+            'ket' => $get_lpb->ket,
+            'tglinput' => $get_lpb->tglinput,
+            'txttgl' => $get_lpb->txttgl,
+            'thn' => $get_lpb->thn,
+            'periode1' => $get_lpb->periode1,
+            'periode2' => $get_lpb->periode2,
+            'txtperiode1' => $get_lpb->txtperiode1,
+            'txtperiode2' => $get_lpb->txtperiode2,
+            'pt' => $this->session->userdata('pt'),
+            'kode' => $get_lpb->kode,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+
+            'refpo' => $get_lpb->refpo,
+            'noref' => $get_lpb->noref,
+            'BATAL' => $get_lpb->BATAL,
+            'alasan_batal' => $get_lpb->alasan_batal,
+            'USER' => $this->session->userdata('user'),
+            'cetak' => $get_lpb->cetak,
+            'posting' => $get_lpb->posting,
+            'keterangan_transaksi' => 'BATAL LPB',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+
+        $data4 =  $this->db_logistik_pt->insert('stokmasuk_history', $data_stokmasuk_histori);
+
         $isibatal = array(
             'BATAL' => 1,
             'alasan_batal' => $alasan
@@ -1231,6 +1423,53 @@ class Lpb extends CI_Controller
         $norefpo = $this->input->post('norefpo');
         $delete_stok_register = $this->input->post('delete_stok_register');
         $alasan = $this->input->post('alasan');
+
+        //insert histori
+        $get_lpb = $this->db_logistik_pt->get_where('masukitem', array('id' => $hidden_id_item_lpb))->row();
+        $data_masukitem_histori = [
+            'kdpt' => $this->session->userdata('kode_pt'),
+            'nopo' => $get_lpb->nopo,
+            'nopotxt' => $get_lpb->nopotxt,
+            'LOKAL' => $get_lpb->LOKAL,
+            'ASSET' => $get_lpb->ASSET,
+            'pt' => $this->session->userdata('pt'),
+            'afd' => '-',
+            'kodebar' => $get_lpb->kodebar,
+            'kodebartxt' => $get_lpb->kodebartxt,
+            'nabar' => $get_lpb->nabar,
+            'satuan' => $get_lpb->satuan,
+            'grp' => $get_lpb->grp,
+            'qty' => $get_lpb->qty,
+            'tgl' => $get_lpb->tgl,
+            'ttg' => $get_lpb->ttg,
+            'ttgtxt' => $get_lpb->ttgtxt,
+            'tglinput' => $get_lpb->tglinput,
+            'txttgl' => $get_lpb->txttgl,
+            'thn' => $get_lpb->thn,
+            'periode' => $get_lpb->periode,
+            'txtperiode' => $get_lpb->txtperiode,
+            'noadjust' => $get_lpb->noadjust,
+            'ket' => $get_lpb->ket,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'refpo' => $get_lpb->refpo,
+            'noref' => $get_lpb->noref,
+            'BATAL' => $get_lpb->BATAL,
+            'alasan_batal' => $get_lpb->alasan_batal,
+            'kurs' => $get_lpb->kurs,
+            'konversi' => $get_lpb->konversi,
+            'USER' => $this->session->userdata('user'),
+            'cetak' => $get_lpb->cetak,
+            'posting' => $get_lpb->posting,
+            'keterangan_transaksi' => 'BATAL ITEM LPB',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+        $this->db_logistik_pt->insert('masukitem_history', $data_masukitem_histori);
+        //endss
+
         $isibatal = array(
             'BATAL' => 1,
             'alasan_batal' => $alasan
@@ -1264,6 +1503,53 @@ class Lpb extends CI_Controller
         $id_register_stok = $this->input->post('hidden_id_register_stok');
         $norefpo = $this->input->post('norefpo');
         $delete_stok_register = $this->input->post('delete_stok_register');
+
+
+        //insert histori
+        $get_lpb = $this->db_logistik_pt->get_where('masukitem', array('id' => $hidden_id_item_lpb))->row();
+        $data_masukitem_histori = [
+            'kdpt' => $this->session->userdata('kode_pt'),
+            'nopo' => $get_lpb->nopo,
+            'nopotxt' => $get_lpb->nopotxt,
+            'LOKAL' => $get_lpb->LOKAL,
+            'ASSET' => $get_lpb->ASSET,
+            'pt' => $this->session->userdata('pt'),
+            'afd' => '-',
+            'kodebar' => $get_lpb->kodebar,
+            'kodebartxt' => $get_lpb->kodebartxt,
+            'nabar' => $get_lpb->nabar,
+            'satuan' => $get_lpb->satuan,
+            'grp' => $get_lpb->grp,
+            'qty' => $get_lpb->qty,
+            'tgl' => $get_lpb->tgl,
+            'ttg' => $get_lpb->ttg,
+            'ttgtxt' => $get_lpb->ttgtxt,
+            'tglinput' => $get_lpb->tglinput,
+            'txttgl' => $get_lpb->txttgl,
+            'thn' => $get_lpb->thn,
+            'periode' => $get_lpb->periode,
+            'txtperiode' => $get_lpb->txtperiode,
+            'noadjust' => $get_lpb->noadjust,
+            'ket' => $get_lpb->ket,
+            'lokasi' => $this->session->userdata('status_lokasi'),
+            'refpo' => $get_lpb->refpo,
+            'noref' => $get_lpb->noref,
+            'BATAL' => $get_lpb->BATAL,
+            'alasan_batal' => $get_lpb->alasan_batal,
+            'kurs' => $get_lpb->kurs,
+            'konversi' => $get_lpb->konversi,
+            'USER' => $this->session->userdata('user'),
+            'cetak' => $get_lpb->cetak,
+            'posting' => $get_lpb->posting,
+            'keterangan_transaksi' => 'DELETE ITEM LPB',
+            'log' => '-',
+            'tgl_transaksi' => date("Y-m-d H:i:s"),
+            'user_transaksi' => $this->session->userdata('user'),
+            'client_ip' => $this->input->ip_address(),
+            'client_platform' => $this->platform->agent(),
+        ];
+        $this->db_logistik_pt->insert('masukitem_history', $data_masukitem_histori);
+        //endss
 
         $delete_masukitem = $this->db_logistik_pt->delete('masukitem', array('id' => $hidden_id_item_lpb));
 

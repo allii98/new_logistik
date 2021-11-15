@@ -589,6 +589,13 @@ class M_lpb extends CI_Model
 
         return TRUE;
     }
+    public function update_alasan($reflpb, $isiedit)
+    {
+        $this->db_logistik_pt->where('noref', $reflpb);
+        $this->db_logistik_pt->update('stokmasuk',  $isiedit);
+
+        return TRUE;
+    }
 }
 
 /* End of file ModelName.php */

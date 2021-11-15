@@ -653,6 +653,8 @@
                                             <th style="width: 10% !important;font-size: 12px; padding:10px">Tgl</th>
                                             <th style="width: 10% !important;font-size: 12px; padding:10px">Dept</th>
                                             <th style="width: 30% !important;font-size: 12px; padding:10px">Noref</th>
+                                            <th style="width: 8% !important;font-size: 12px; padding:10px">Status SPP</th>
+                                            <th style="width: 10% !important;font-size: 12px; padding:10px">User Input</th>
                                             <th style="width: 3% !important;font-size: 12px; padding:10px">Opsi</th>
 
                                         </tr>
@@ -672,44 +674,7 @@
         </div>
         <!-- end data spp -->
 
-        <!-- data po -->
-        <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="">
-            <div class="modal-dialog modal-lg modal-dialog-scrollable">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">List PO</h4>
-                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
 
-                        <div class="col-12">
-                            <div class="table-responsive">
-                                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
-                                <table id="tableListLapSPP" class="table table-striped table-bordered table-in" width="100%">
-                                    <thead>
-                                        <tr>
-                                            <th style="width: 5% !important; font-size: 12px; padding:10px">No</th>
-                                            <th style="width: 5% !important; font-size: 12px; padding:10px">Tanggal</th>
-                                            <th style="width: 25% !important; font-size: 12px; padding:10px">Noref PO</th>
-                                            <th style="width: 25% !important; font-size: 12px; padding:10px">Noref SPP</th>
-                                            <th style="width: 25% !important; font-size: 12px; padding:10px">Supplier</th>
-                                            <th style="width: 3% !important; font-size: 12px; padding:10px">Opsi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end data po -->
 
         <!-- data listPo -->
         <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListLapPO">
@@ -2922,6 +2887,10 @@
                         "error": function(request) {
                             console.log(request.responseText);
                         }
+                    },
+
+                    "initComplete": function(settings, json) {
+                        $("div.dataTables_filter input").focus();
                     },
                     "columnDefs ": [{
                         "targets": [0],
