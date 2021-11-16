@@ -67,7 +67,7 @@ if ($statusmutasi != 0) {
             <td align="left" valign="top" style="font-size:8.5px;">
                 <h3 style="font-size:14px;font-weight:bold;"> <?= $bpb->devisi ?> </h3>
             </td>
-            <td rowspan="2" align="right"><img width="6%" height="6%" style="padding-right:8px" src="./assets/qrcode/bpb/<?= $id . "_" . $no_bpb   ?>.png"></td>
+            <td rowspan="2" align="right"><img width="7%" height="7%" style="padding-right:8px" src="./assets/qrcode/bpb/<?= $id . "_" . $no_bpb   ?>.png"></td>
         </tr>
         <tr>
 

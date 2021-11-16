@@ -63,7 +63,7 @@ if ($statusmutasi == 1) {
     <hr style="width:100%;margin:0px;">
     <table border="0" width="90%">
         <tr>
-            <td rowspan="2" width="12%"><img width="5%" height="5%" src="./assets/qrcode/bpb/<?php echo $id . "_" . $no_bpb; ?>.png"></td>
+            <td rowspan="2" width="12%"><img width="7%" height="7%" src="./assets/qrcode/bpb/<?php echo $id . "_" . $no_bpb; ?>.png"></td>
             <td align="center" valign="bottom">
                 <h2 align="center" style="margin: 0px;padding: 0px; font-size: 12px;">Bon Permintaan Barang <?= $mutasi; ?></h2>
             </td>
