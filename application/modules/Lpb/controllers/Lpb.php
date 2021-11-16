@@ -558,10 +558,17 @@ class Lpb extends CI_Controller
 
             $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
 
-            // insert to GL
-            $result_insert_to_gl_header = $this->insert_lpb_to_header_entry_gl($no_lpb, $data_stokmasuk['kode_dev'], $no_ref_lpb);
-            $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po);
-            $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_to_entry_gl_cr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po, $data_stokmasuk['kode_supply'], $data_stokmasuk['nama_supply']);
+            // untuk insert GL mutasi di bypass dulu
+            if ($mutasi != '1') {
+                // insert to GL
+                $result_insert_to_gl_header = $this->insert_lpb_to_header_entry_gl($no_lpb, $data_stokmasuk['kode_dev'], $no_ref_lpb);
+                $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po);
+                $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_to_entry_gl_cr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po, $data_stokmasuk['kode_supply'], $data_stokmasuk['nama_supply']);
+            } else {
+                $result_insert_to_gl_header = NULL;
+                $result_insert_lpb_to_entry_gl_dr = NULL;
+                $result_insert_lpb_to_entry_gl_cr = NULL;
+            }
         } else {
 
             //cek ada kodebar yg sama atau tidak pada noref ini
@@ -600,10 +607,17 @@ class Lpb extends CI_Controller
 
                 $result_update_stok_awal = $this->update_stok_awal($kodebar, $txtperiode);
 
-                // insert to GL
-                $result_insert_to_gl_header = NULL;
-                $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po);
-                $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_to_entry_gl_cr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po, $data_stokmasuk['kode_supply'], $data_stokmasuk['nama_supply']);
+                // untuk insert GL mutasi di bypass dulu
+                if ($mutasi != '1') {
+                    // insert to GL
+                    $result_insert_to_gl_header = NULL;
+                    $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po);
+                    $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_to_entry_gl_cr($no_lpb, $harga_item_po, $quantiti, $data_stokmasuk['kode_dev'], $kodebar, $no_ref_lpb, $nabar, $no_ref_po, $data_stokmasuk['kode_supply'], $data_stokmasuk['nama_supply']);
+                } else {
+                    $result_insert_to_gl_header = NULL;
+                    $result_insert_lpb_to_entry_gl_dr = NULL;
+                    $result_insert_lpb_to_entry_gl_cr = NULL;
+                }
             }
         }
 

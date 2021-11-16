@@ -1010,8 +1010,24 @@
         });
     }
 
-    // saat hitung stock awal harian gunakan where devisi!
+    //validasi qty
     function saveRinciClick(n) {
+        var stok = $('#stok_' + n).text();
+        var qty_disetujui = $('#txt_qty_disetujui_' + n).val();
+
+        var a = Number(stok);
+        var b = Number(qty_disetujui);
+
+        if (a < b) {
+            swal('QTY BKB melebihi stok yang ada!');
+        } else {
+            saveRinciClick_simpan(n);
+        }
+
+    }
+
+    // saat hitung stock awal harian gunakan where devisi!
+    function saveRinciClick_simpan(n) {
 
         var hidden_kode_barang = $('#hidden_kode_barang_' + n).val();
         var kode_dev = $('#hidden_kode_dev').val();

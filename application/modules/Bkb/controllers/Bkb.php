@@ -277,7 +277,7 @@ class Bkb extends CI_Controller
         $update_bpb = $this->M_bkb->update_status_bkb($norefbpb);
 
         //ubah status_item_bkb di bpbitem_mutasi dan status_bkb di bpb_mutasi
-        if ($mutasi_pt == '1') {
+        if ($mutasi_pt == '1' or $mutasi == '1') {
             $update_bpb_item_mutasi = $this->M_bkb->update_status_item_bkb_mutasi($kodebar, $norefbpb);
             $update_bpb_mutasi = $this->M_bkb->update_status_bkb_mutasi($norefbpb);
         } else {
