@@ -22,7 +22,7 @@ class Lpb extends CI_Controller
 
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 
-        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl_msal', TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
