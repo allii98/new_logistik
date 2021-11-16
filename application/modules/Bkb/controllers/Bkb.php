@@ -595,7 +595,9 @@ class Bkb extends CI_Controller
             // } elseif ($data['get_devisi_mutasi']['lokasi'] == 'HO') {
             //     $text1_mutasi = 'PST';
             // }
-            $no_ref_mutasi = $text1 . "-BKB/MUT/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
+
+            $kode_pt_login = $this->session->userdata('kode_pt_login');
+            $no_ref_mutasi = $text1 . "-BKB/MUT/" . $kode_pt_login . "/" . $text2 . "/" . $format_m_y . "/" . $skb; //EST-BKB/SWJ/06/15/001159 atau //EST-BKB/SWJ/10/18/71722
         }
 
         $mutasi_dari_devisi = $this->input->post('devisi');

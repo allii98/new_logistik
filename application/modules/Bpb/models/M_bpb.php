@@ -313,13 +313,15 @@ class M_bpb extends CI_Model
             $noref_bpb = $this->input->post('hidden_no_ref_bpb');
         }
 
+        $kode_pt_login = $this->session->userdata('kode_pt_login');
+
         if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
             $statusmutasi = 1;
-            $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+            $norefbpb = $text1 . "-BPB/" . "MUT/" . $kode_pt_login . "/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
             $keterangan = $ket . "(Mutasi dari  $devv)";
         } elseif ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
             $statusmutasi = 2;
-            $norefbpb = $text1 . "-BPB/" . "MUT/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
+            $norefbpb = $text1 . "-BPB/" . "MUT/" . $kode_pt_login . "/" . $text2 . "/" . $format_m_y . "/" . $nobpb; //EST-BPB/SWJ/06/15/001159 atau //EST-BPB/SWJ/10/18/71722
             $keterangan = $ket . "(Mutasi dari  $nama_acc)";
             // $nama_acc
         } else {
