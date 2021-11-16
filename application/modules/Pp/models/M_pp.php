@@ -24,7 +24,7 @@ class M_pp extends CI_Model
         $this->db_logistik_pt->from($this->table);
         if ($lokasi_sesi == 'HO') {
             $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
-            $this->db_logistik_pt->where('terbayar !=', '1');
+            // $this->db_logistik_pt->where('terbayar !=', '1');
             $this->db_logistik_pt->where('batal !=', '1');
         } else {
             # code...
@@ -32,21 +32,21 @@ class M_pp extends CI_Model
                 $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
-                $this->db_logistik_pt->where('terbayar !=', '1');
+                // $this->db_logistik_pt->where('terbayar !=', '1');
                 $this->db_logistik_pt->where('batal !=', '1');
                 # code...
             } else if ($lokasi_sesi == 'PKS') {
                 $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
-                $this->db_logistik_pt->where('terbayar !=', '1');
+                // $this->db_logistik_pt->where('terbayar !=', '1');
                 $this->db_logistik_pt->where('batal !=', '1');
                 # code...
             } else if ($lokasi_sesi == 'RO') {
                 $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
-                $this->db_logistik_pt->where('terbayar !=', '1');
+                // $this->db_logistik_pt->where('terbayar !=', '1');
                 $this->db_logistik_pt->where('batal !=', '1');
                 # code...
             }
