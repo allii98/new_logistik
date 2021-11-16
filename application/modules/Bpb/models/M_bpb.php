@@ -224,7 +224,6 @@ class M_bpb extends CI_Model
         $qty            = $this->input->post('txt_qty_diminta');
         $ket            = $this->input->post('txt_ket_rinci');
         // $no_bpb         = $this->input->post('hidden_no_bpb');
-        $id_bpb         = $this->input->post('hidden_id_bpb');
         $sess_lokasi    = $this->session->userdata('status_lokasi');
         // $sess_periode   = $this->session->userdata('periode');
         $periode        = $this->session->userdata('ym_periode');
@@ -238,25 +237,6 @@ class M_bpb extends CI_Model
         $hm_km        = $this->input->post('hm_km');
         $lokasi_kerja       = $this->input->post('lokasi_kerja');
 
-        // $user = $this->session->userdata('user');
-        // $ip = $this->input->ip_address();
-        // $platform = $this->platform->agent();
-
-        $query_id_bpb = "SELECT MAX(id)+1 as id_bpb FROM bpb";
-        $generate_id_bpb = $this->db_logistik_pt->query($query_id_bpb)->row();
-        $id_bpb = $generate_id_bpb->id_bpb;
-        if (empty($id_bpb)) {
-            $id_bpb = 1;
-        }
-        // var_dump($id_bpb);
-        // exit();
-
-        $query_id_bpbitem = "SELECT MAX(id)+1 as id_bpbitem FROM bpbitem";
-        $generate_id_bpbitem = $this->db_logistik_pt->query($query_id_bpbitem)->row();
-        $id_bpbitem = $generate_id_bpbitem->id_bpbitem;
-        if (empty($id_bpbitem)) {
-            $id_bpbitem = 1;
-        }
 
         $sess_lokasi = $this->session->userdata('status_lokasi');
         $kode_devisi = $this->input->post('devisi');
@@ -358,10 +338,10 @@ class M_bpb extends CI_Model
             $get_coa = $this->db_mips_gl->query($query_coa)->row();
             $ketbeban = $get_coa->nama;
         }
-        if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
+        // if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
 
-            $databpb['id']              = $id_bpb;
-        }
+        //     $databpb['id']              = $id_bpb;
+        // }
         $databpb['nobpb']           = $nobpb;
         $databpb['norefbpb']        = $norefbpb;
         $databpb['nobkb_ro']        = $nobkb_ro;
@@ -392,9 +372,9 @@ class M_bpb extends CI_Model
         $databpb['lok_kerja']        = $lokasi_kerja;
         $databpb['status_mutasi']        = $statusmutasi;
 
-        if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
-            $databpbitem['id']            = $id_bpbitem;
-        }
+        // if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
+        //     $databpbitem['id']            = $id_bpbitem;
+        // }
         $databpbitem['kodebar']       = $kodebar;
         $databpbitem['nabar']         = $nabar;
         $databpbitem['satuan']        = $satuan;
@@ -438,26 +418,10 @@ class M_bpb extends CI_Model
             $no_id_approval = "1";
         }
 
-        if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
-            $data_approval_bpb['id']                = $no_id_approval;
-        }
-        $data_approval_bpb['id_bpbitem']        = $id_bpbitem;
-        $data_approval_bpb['no_bpb']            = $nobpb;
-        $data_approval_bpb['norefbpb']          = $norefbpb;
-        $data_approval_bpb['kodebar']           = $kodebar;
-        $data_approval_bpb['nabar']             = $nabar;
-        $data_approval_bpb['qty_diminta']       = $qty;
-        // $data_approval_bpb['qty_disetujui'] = "0";
-        $data_approval_bpb['status_ktu']        = "0";
-        $data_approval_bpb['tgl_ktu']           = NULL;
-        $data_approval_bpb['ket_ktu']           = NULL;
-        // $data_approval_bpb['status_mgr']        = "0";
-        // $data_approval_bpb['tgl_mgr']           = NULL;
-        // $data_approval_bpb['ket_mgr']           = NULL;
-        $data_approval_bpb['status_gm']         = "0";
-        $data_approval_bpb['tgl_gm']            = NULL;
-        $data_approval_bpb['ket_gm']            = NULL;
-        $data_approval_bpb['flag_req_rev_qty']  = "0";
+        // if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
+        //     $data_approval_bpb['id']                = $no_id_approval;
+        // }
+
 
         if (empty($this->input->post('hidden_no_bpb'))) {
 
@@ -474,6 +438,26 @@ class M_bpb extends CI_Model
             } else {
                 $bool_bpbitem = FALSE;
             }
+
+            $ambil_bpb =  $this->db_logistik_pt->query("SELECT id FROM bpb WHERE norefbpb='$norefbpb'")->row();
+            $ambil_item =  $this->db_logistik_pt->query("SELECT id FROM bpbitem WHERE norefbpb='$norefbpb' AND kodebar='$kodebar'")->row();
+            $data_approval_bpb['id_bpbitem']        = $ambil_item->id;
+            $data_approval_bpb['no_bpb']            = $nobpb;
+            $data_approval_bpb['norefbpb']          = $norefbpb;
+            $data_approval_bpb['kodebar']           = $kodebar;
+            $data_approval_bpb['nabar']             = $nabar;
+            $data_approval_bpb['qty_diminta']       = $qty;
+            // $data_approval_bpb['qty_disetujui'] = "0";
+            $data_approval_bpb['status_ktu']        = "0";
+            $data_approval_bpb['tgl_ktu']           = NULL;
+            $data_approval_bpb['ket_ktu']           = NULL;
+            // $data_approval_bpb['status_mgr']        = "0";
+            // $data_approval_bpb['tgl_mgr']           = NULL;
+            // $data_approval_bpb['ket_mgr']           = NULL;
+            $data_approval_bpb['status_gm']         = "0";
+            $data_approval_bpb['tgl_gm']            = NULL;
+            $data_approval_bpb['ket_gm']            = NULL;
+            $data_approval_bpb['flag_req_rev_qty']  = "0";
 
             if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
                 $databpb['kode_pt_req_mutasi'] = $this->session->userdata('kode_pt_login');
@@ -500,23 +484,11 @@ class M_bpb extends CI_Model
             } else {
                 $bool_approval_bpb = FALSE;
             }
-            // $this->db_logistik_pt->insert('bpb_booking', $databpb);
-            // if ($this->db_logistik_pt->affected_rows() > 0) {
-            //     $bool_bpb = TRUE;
-            // } else {
-            //     $bool_bpb = FALSE;
-            // }
 
-            // $this->db_logistik_pt->insert('bpbitem_booking', $databpbitem);
-            // if ($this->db_logistik_pt->affected_rows() > 0) {
-            //     $bool_bpb = TRUE;
-            // } else {
-            //     $bool_bpb = FALSE;
-            // }
 
             if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                 // if ($bool_bpb === TRUE && $bool_bpbitem === TRUE){
-                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
+                return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $ambil_bpb->id, 'id_bpbitem' => $ambil_item->id, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
             } else {
                 return FALSE;
             }
@@ -541,6 +513,27 @@ class M_bpb extends CI_Model
                     $bool_bpbitem = FALSE;
                 }
 
+
+                $ambil_bpb =  $this->db_logistik_pt->query("SELECT id FROM bpb WHERE norefbpb='$norefbpb'")->row();
+                $ambil_item =  $this->db_logistik_pt->query("SELECT id FROM bpbitem WHERE norefbpb='$norefbpb' AND kodebar='$kodebar'")->row();
+                $data_approval_bpb['id_bpbitem']        = $ambil_item->id;
+                $data_approval_bpb['no_bpb']            = $nobpb;
+                $data_approval_bpb['norefbpb']          = $norefbpb;
+                $data_approval_bpb['kodebar']           = $kodebar;
+                $data_approval_bpb['nabar']             = $nabar;
+                $data_approval_bpb['qty_diminta']       = $qty;
+                // $data_approval_bpb['qty_disetujui'] = "0";
+                $data_approval_bpb['status_ktu']        = "0";
+                $data_approval_bpb['tgl_ktu']           = NULL;
+                $data_approval_bpb['ket_ktu']           = NULL;
+                // $data_approval_bpb['status_mgr']        = "0";
+                // $data_approval_bpb['tgl_mgr']           = NULL;
+                // $data_approval_bpb['ket_mgr']           = NULL;
+                $data_approval_bpb['status_gm']         = "0";
+                $data_approval_bpb['tgl_gm']            = NULL;
+                $data_approval_bpb['ket_gm']            = NULL;
+                $data_approval_bpb['flag_req_rev_qty']  = "0";
+
                 if ($this->input->post('hidden_mutasi_pt') == 'mutasi_pt') {
                     $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                     $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
@@ -557,15 +550,9 @@ class M_bpb extends CI_Model
                     $bool_approval_bpb = FALSE;
                 }
 
-                // $this->db_logistik_pt->insert('bpbitem_booking', $databpbitem);
-                // if ($this->db_logistik_pt->affected_rows() > 0) {
-                //     $bool_bpb = TRUE;
-                // } else {
-                //     $bool_bpb = FALSE;
-                // }
 
                 if ($bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
-                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $id_bpb, 'id_bpbitem' => $id_bpbitem, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
+                    return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $ambil_bpb->id, 'id_bpbitem' => $ambil_item->id, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
                 } else {
                     return FALSE;
                 }
