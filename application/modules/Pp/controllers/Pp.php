@@ -246,6 +246,14 @@ class Pp extends CI_Controller
 
                 //saldo
                 $saldo = ($hasil + $get_jumlah_bpo->jumlahbpo) - $get_jumlah_sudah_bayar->kasir_bayar;
+
+                if ($saldo < 0) {
+                    # code...
+                    $sisa = 0;
+                } else {
+                    # code...
+                    $sisa = $saldo;
+                }
             }
 
 
@@ -262,7 +270,7 @@ class Pp extends CI_Controller
             $row[] = number_format($hasil, 2, ",", ".");
             $row[] = number_format($biayalain, 2, ",", ".");
             $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar, 2, ",", ".");
-            $row[] = number_format($saldo, 2, ",", ".");
+            $row[] = number_format($sisa, 2, ",", ".");
             $row[] = $get_kurs->kurs;
             $data[] = $row;
         }
