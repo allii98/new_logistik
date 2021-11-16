@@ -47,7 +47,7 @@
       <table width="100%" border="0" align="center">
             <tr>
                   <td align="left" style="font-size:14px;font-weight:bold;"><?= $stockkeluar->devisi; ?></td>
-                  <td width="6%"><img width="5%" height="5%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
+                  <td width="6%"><img width="7%" height="7%" src="./assets/qrcode/bkb/<?php echo $id . "_" . $no_bkb; ?>.png"></td>
             </tr>
       </table>
       <?php
