@@ -14,7 +14,7 @@ class Bpb extends CI_Controller
         $this->load->model('M_detail');
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
-        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl_msal', TRUE);
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);

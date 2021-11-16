@@ -51,10 +51,17 @@ class M_bpb extends CI_Model
             } elseif ($pt == '01') {
                 # code...
                 $this->db_mips_gl->or_where('nama', 'MSAL, PT');
+            } elseif ($pt == '03') {
+                # code...
+                $this->db_mips_gl->or_where('nama', 'PEAK, PT');
+            } elseif ($pt == '05') {
+                # code...
+                $this->db_mips_gl->or_where('nama', 'KPP, PT');
             }
         } else if ($mutasi_lokal == 'mutasi_lokal') {
             if ($devisi == '06') {
                 # code...
+                //kalo nambah kebun berarti yang dibawah ini ditambahkan manual
                 $this->db_mips_gl->where_in(
                     'noac',
                     [

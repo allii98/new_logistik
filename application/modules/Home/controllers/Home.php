@@ -87,6 +87,10 @@ class Home extends CI_Controller
             $pt_minta_bpb = 'MAPA, PT';
         } elseif ($pt_login == 'MSAL') {
             $pt_minta_bpb = 'MSAL, PT';
+        } elseif ($pt_login == 'PEAK') {
+            $pt_minta_bpb = 'PEAK, PT';
+        } elseif ($pt_login == 'KPP') {
+            $pt_minta_bpb = 'KPP, PT';
         } else {
             $pt_minta_bpb = '';
         }
