@@ -1954,7 +1954,34 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var noref_rpc = noref.replaceAll('/', '.');
 
-        window.open('cetak/' + noref_rpc + '/' + id_po, '_blank');
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Po/cek_cetak') ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {
+                id_po: id_po
+            },
+            success: function(data) {
+                var jumlah = data.jml_cetak;
+                if (jumlah >= 3) {
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Failed!',
+                        text: 'Sudah melebihi 3 kali cetakan',
+                        icon: 'error',
+                        loader: false
+                    });
+                } else {
+
+                    window.open('cetak/' + noref_rpc + '/' + id_po, '_blank');
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS!');
+            }
+        });
+
     }
 
     function isSelected(selectedNoppo) {

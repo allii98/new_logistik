@@ -35,6 +35,13 @@ class Po extends CI_Controller
         echo json_encode($data);
     }
 
+    function cek_cetak()
+    {
+        $id = $this->input->post('id_po');
+        $data = $this->db_logistik_pt->query("SELECT jml_cetak FROM po WHERE id='$id'")->row();
+        echo json_encode($data);
+    }
+
     function sum_sisa_qty_spp()
     {
         $norefspp = $this->input->post('no_ref_spp');
@@ -198,8 +205,8 @@ class Po extends CI_Controller
                 if ($d->terbayar != 0) {
                     $aksi = '
                 <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
-                <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" type="button" id="cetak" class="btn btn-primary btn-xs fa fa-print" title="Cetak">
-                </a>
+                <button type="button" id="cetak" data-id="' . $d->id . '" data-noref="' . $noref . '"  onClick="return false" class="btn btn-primary btn-xs fa fa-print" title="Cetak" ></button> 
+              
                 ';
                 } else {
                     if ($d->batal != 0) {
@@ -207,24 +214,21 @@ class Po extends CI_Controller
                         $aksi = '
                        
                         <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
-                        <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
-                        </a>
+                        <button type="button" id="cetak" data-id="' . $d->id . '" data-noref="' . $noref . '"  onClick="return false" class="btn btn-primary btn-xs fa fa-print" title="Cetak" ></button>
                         ';
                     } else {
                         if ($d->nopp != NULL) {
                             # code...
                             $aksi = '
                             <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
-                            <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
-                            </a>
+                            <button type="button" id="cetak" data-id="' . $d->id . '" data-noref="' . $noref . '"  onClick="return false" class="btn btn-primary btn-xs fa fa-print" title="Cetak" ></button>
                             ';
                         } else {
                             # code...
                             $aksi = '
                             <button type="button" id="edit" data-id="' . $d->noreftxt . '"  onClick="return false" class="btn btn-warning btn-xs fa fa-edit title="Edit" style="padding-right:8px;"></button>
                             <button type="button" id="detail" data-id="' . $d->noreftxt . '" data-batal="' . $d->batal . '"  onClick="return false" class="btn btn-success btn-xs fa fa-eye" title="Detail" style="padding-right:8px;"></button> 
-                            <a href="' . base_url('Po/cetak/' . $noref . '/' . $d->id) . '" target="_blank" id="cetak" class="btn btn-primary btn-xs fa fa-print"  title="Cetak">
-                            </a>
+                            <button type="button" id="cetak" data-id="' . $d->id . '" data-noref="' . $noref . '"  onClick="return false" class="btn btn-primary btn-xs fa fa-print" title="Cetak" ></button>
                             ';
                         }
 

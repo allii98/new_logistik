@@ -122,6 +122,11 @@
 
 	$(document).ready(function() {
 		// filter();
+		$(document).on('click', '#cetak', function() {
+			var id = $(this).data('id');
+			var noref = $(this).data('noref');
+			cetak(id, noref);
+		});
 		$(document).on('click', '#detail', function() {
 			var id = $(this).data('id');
 			var batal = $(this).data('batal');
@@ -146,6 +151,39 @@
 		var data = "SEMUA";
 		dataPO(data);
 	});
+
+	function cetak(id, noref) {
+
+
+		$.ajax({
+			type: "POST",
+			url: "<?php echo base_url('Po/cek_cetak') ?>",
+			dataType: "JSON",
+			beforeSend: function() {},
+			data: {
+				id_po: id
+			},
+			success: function(data) {
+				var jumlah = data.jml_cetak;
+				if (jumlah >= 3) {
+					$.toast({
+						position: 'top-right',
+						heading: 'Failed!',
+						text: 'Sudah melebihi 3 kali cetakan',
+						icon: 'error',
+						loader: false
+					});
+				} else {
+
+					window.open('Po/cetak/' + noref + '/' + id, '_blank');
+				}
+			},
+			error: function(response) {
+				alert('KONEKSI TERPUTUS!');
+			}
+		});
+
+	}
 
 	function filter() {
 		$('#filter').change(function() {

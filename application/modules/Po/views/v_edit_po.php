@@ -1316,15 +1316,42 @@
         location.href = "<?php echo base_url('Po') ?>";
     }
 
+
+
     function cetak() {
-        var id_po = $('#id_po').val();
+        var id_po = $('#hidden_id_po').val();
         var nopo = $('#hidden_no_po').val();
         var noref = $('#hidden_nopo_edit').val();
 
         var noref_rpc = noref.replaceAll('/', '.');
 
-        // window.open('Po/cetak/' + noref_rpc + '/' + id_po, '_blank');
-        window.open('<?= base_url() ?>Po/cetak/' + noref_rpc + '/' + id_po, '_blank');
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Po/cek_cetak') ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {
+                id_po: id_po
+            },
+            success: function(data) {
+                var jumlah = data.jml_cetak;
+                if (jumlah >= 3) {
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Failed!',
+                        text: 'Sudah melebihi 3 kali cetakan',
+                        icon: 'error',
+                        loader: false
+                    });
+                } else {
+                    window.open('<?= base_url() ?>Po/cetak/' + noref_rpc + '/' + id_po, '_blank');
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS!');
+            }
+        });
+
     }
 
 
