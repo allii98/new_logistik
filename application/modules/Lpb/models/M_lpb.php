@@ -167,9 +167,9 @@ class M_lpb extends CI_Model
 
         $noref = $this->input->get('noref');
         if ($lokasi != 'HO') {
-            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' AND kirim = 1 ORDER BY id DESC";
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' AND kirim = 1 AND batal != 1 ORDER BY id DESC";
         } else {
-            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' ORDER BY id DESC";
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' AND batal != 1 ORDER BY id DESC";
         }
 
         return $this->db_logistik_pt->query($query)->result_array();
