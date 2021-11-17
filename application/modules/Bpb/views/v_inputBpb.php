@@ -1811,6 +1811,8 @@
 
         var kodebar = $('#hidden_kode_barang_' + no).val();
         var kode_dev = $('#devisi').val();
+        // var hidden_mutasi_pt = $('#hidden_mutasi_pt').val();
+        // console.log('HELLO MUTASI NYA ADALAH', hidden_mutasi_pt);
 
         form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
@@ -1829,6 +1831,9 @@
 
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
         form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
+
+        form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
+        form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
 
         $.ajax({
             type: "POST",
@@ -1888,7 +1893,7 @@
 
     function ubahRinci(no) {
         var data = $('#hidden_bagian').val();
-        if (data != 1 && data != 2) {
+        if (data != 1 || data != 2) {
             $('#cmb_tm_tbm_' + no).attr('disabled', '');
             $('#cmb_afd_unit_' + no).attr('disabled', '');
             $('#cmb_blok_sub_' + no).attr('disabled', '');
@@ -1913,8 +1918,8 @@
             $('#cmb_tahun_tanam_' + no).removeClass('bg-light');
             $('#cmb_bahan_' + no).removeClass('bg-light');
         }
-        $('#tr_' + no).find('input,textarea,select').removeAttr('disabled', '');
-        $('#tr_' + no).find('input,textarea,select').removeClass('bg-light');
+        $('#tr_' + no).find('#txt_account_beban_' + no + ',#txt_barang_' + no + ',#txt_qty_diminta_' + no + ',#txt_ket_rinci_' + no).removeAttr('disabled', '');
+        $('#tr_' + no).find('#txt_account_beban_' + no + ',#txt_barang_' + no + ',#txt_qty_diminta_' + no + ',#txt_ket_rinci_' + no).removeClass('bg-light');
 
         $('#lbl_status_simpan_' + no).empty();
         $('#btn_ubah_' + no).css('display', 'none');
