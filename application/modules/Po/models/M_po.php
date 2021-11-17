@@ -199,7 +199,7 @@ class M_po extends CI_Model
 
     public function get_id($idspp, $noreftxt)
     {
-        $query = "SELECT p.*,p.id as id_spp,i.*,i.status2 as statusaprove, i.ket as ket_item_spp FROM ppo p LEFT JOIN item_ppo i ON p.noreftxt = i.noreftxt WHERE i.noreftxt='$noreftxt' AND i.po = '0'";
+        $query = "SELECT p.*,p.id as id_spp,i.*,i.status2 as statusaprove, i.ket as ket_item_spp FROM ppo p LEFT JOIN item_ppo i ON p.noreftxt = i.noreftxt WHERE i.noreftxt='$noreftxt' AND i.po = '0' AND i.jenis != 'SPP'";
         $data = $this->db_logistik_pt->query($query)->result_array();
         return $data;
     }

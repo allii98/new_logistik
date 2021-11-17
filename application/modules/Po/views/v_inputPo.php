@@ -1721,90 +1721,109 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 noreftxt: noref,
             },
             success: function(response) {
-                $('.div_form_3').show();
-                $('.div_form_1').find('#sppSITE').attr('disabled', '');
                 // console.log(response);
                 data = JSON.parse(response);
-                $('#h4_no_spp').html('No. SPP : ' + data[0].noppo);
-                $('#h4_no_ref_spp').html('No. Ref SPP : ' + data[0].noreftxt);
-                $('#devisi').val(data[0].devisi);
-                $('#hidden_kode_devisi').val(data[0].kode_dev);
-                $('#hidden_devisi').val(data[0].devisi);
-                $('#jenis_spp').val(data[0].devisi);
+                if (data == '') {
 
-                cekJenis(data[0].jenis);
+                    Swal.fire({
+                        text: "Data tidak ditemukkan",
+                        showCancelButton: false,
+                        confirmButtonColor: '#6495ED',
+                        confirmButtonText: 'Oke'
+                    }).then((result) => {
+                        if (result.value) {
+                            // deleteData(n);
+                            location.reload();
+                        }
+                    })
 
-                var n = 1;
-                var kodebar = data[0].kodebar;
-                $.each(data, function(index, value) {
+                } else {
 
-                    // console.log('ini yg belum di approve', value.statusaprove);
-                    tambah_item(value.statusaprove, value.kodebar);
+                    $('.div_form_3').show();
+                    $('.div_form_1').find('#sppSITE').attr('disabled', '');
+                    // console.log(response);
 
-                    if (value.statusaprove == '0') {
-                        $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
-                        $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
-                    }
+                    $('#h4_no_spp').html('No. SPP : ' + data[0].noppo);
+                    $('#h4_no_ref_spp').html('No. Ref SPP : ' + data[0].noreftxt);
+                    $('#devisi').val(data[0].devisi);
+                    $('#hidden_kode_devisi').val(data[0].kode_dev);
+                    $('#hidden_devisi').val(data[0].devisi);
+                    $('#jenis_spp').val(data[0].devisi);
 
-                    var idppo = value.id;
-                    var idspp = value.id_spp;
-                    var opsi = value.noreftxt;
-                    var tglref = value.tglref;
-                    var kodedept = value.kodedept;
-                    var namadept = value.namadept;
-                    var tglppo = value.tglppo;
-                    var kodept = value.kodept;
-                    var pt = value.pt;
-                    var noppo = value.noppo;
-                    var kodebar = value.kodebar;
-                    var nabar = value.nabar;
-                    var sat = value.sat;
-                    // var tglref = value.tglref;
-                    var qty = value.qty;
-                    var qty2 = value.qty2;
-                    var ket_item_spp = value.ket_item_spp;
+                    cekJenis(data[0].jenis);
 
-                    var qtysum = qty - qty2;
-                    var b = qty - qty2;
-                    // console.log('ini qty nya', qtysum);
-                    if (qty2 != null) {
-                        $('#sisa_qty_' + n).text(b);
-                        $('#qty_po_' + n).text(qty2);
-                    } else {
-                        var j = 0;
-                        $('#qty_po_' + n).text(j);
-                        $('#sisa_qty_' + n).text(qty);
+                    var n = 1;
+                    var kodebar = data[0].kodebar;
+                    $.each(data, function(index, value) {
 
-                    }
+                        // console.log('ini yg belum di approve', value.statusaprove);
+                        tambah_item(value.statusaprove, value.kodebar);
 
-                    $('#id_ppo' + n).val(idppo);
-                    $('#id_item_' + n).val(idppo);
-                    $('#hidden_no_ref_spp_' + n).val(opsi);
-                    $('#refspp').val(opsi);
-                    $('#idspp').val(idspp);
-                    // $('#hidden_tgl_hidden' + n).val(tglref);
-                    $('#hidden_kd_departemen_' + n).val(kodedept);
-                    $('#hidden_departemen_' + n).val(namadept);
-                    $('#hidden_tgl_spp_' + n).val(tglppo);
-                    $('#hidden_kd_pt_' + n).val(kodept);
-                    $('#hidden_nama_pt_' + n).val(pt);
-                    $('#noppo' + n).val(noppo);
-                    $('#hidden_kode_brg_' + n).val(kodebar);
-                    $('#kode_brg_' + n).text(kodebar);
-                    $('#hidden_nama_brg_' + n).val(nabar);
-                    $('#nama_brg_' + n).text(nabar);
-                    $('#hidden_satuan_brg_' + n).val(sat);
-                    $('#txt_qty_' + n).val(qtysum);
-                    $('#getspp' + n).val(opsi);
-                    $('#txt_keterangan_rinci_' + n).val(ket_item_spp);
-                    $('#qty_' + n).val(qty);
-                    $('#qty2_' + n).val(qty2);
+                        if (value.statusaprove == '0') {
+                            $('#tr_' + n).find('input,textarea,select').attr('disabled', '');
+                            $('#tr_' + n).find('input,textarea,select').addClass('form-control bg-light');
+                        }
+
+                        var idppo = value.id;
+                        var idspp = value.id_spp;
+                        var opsi = value.noreftxt;
+                        var tglref = value.tglref;
+                        var kodedept = value.kodedept;
+                        var namadept = value.namadept;
+                        var tglppo = value.tglppo;
+                        var kodept = value.kodept;
+                        var pt = value.pt;
+                        var noppo = value.noppo;
+                        var kodebar = value.kodebar;
+                        var nabar = value.nabar;
+                        var sat = value.sat;
+                        // var tglref = value.tglref;
+                        var qty = value.qty;
+                        var qty2 = value.qty2;
+                        var ket_item_spp = value.ket_item_spp;
+
+                        var qtysum = qty - qty2;
+                        var b = qty - qty2;
+                        // console.log('ini qty nya', qtysum);
+                        if (qty2 != null) {
+                            $('#sisa_qty_' + n).text(b);
+                            $('#qty_po_' + n).text(qty2);
+                        } else {
+                            var j = 0;
+                            $('#qty_po_' + n).text(j);
+                            $('#sisa_qty_' + n).text(qty);
+
+                        }
+
+                        $('#id_ppo' + n).val(idppo);
+                        $('#id_item_' + n).val(idppo);
+                        $('#hidden_no_ref_spp_' + n).val(opsi);
+                        $('#refspp').val(opsi);
+                        $('#idspp').val(idspp);
+                        // $('#hidden_tgl_hidden' + n).val(tglref);
+                        $('#hidden_kd_departemen_' + n).val(kodedept);
+                        $('#hidden_departemen_' + n).val(namadept);
+                        $('#hidden_tgl_spp_' + n).val(tglppo);
+                        $('#hidden_kd_pt_' + n).val(kodept);
+                        $('#hidden_nama_pt_' + n).val(pt);
+                        $('#noppo' + n).val(noppo);
+                        $('#hidden_kode_brg_' + n).val(kodebar);
+                        $('#kode_brg_' + n).text(kodebar);
+                        $('#hidden_nama_brg_' + n).val(nabar);
+                        $('#nama_brg_' + n).text(nabar);
+                        $('#hidden_satuan_brg_' + n).val(sat);
+                        $('#txt_qty_' + n).val(qtysum);
+                        $('#getspp' + n).val(opsi);
+                        $('#txt_keterangan_rinci_' + n).val(ket_item_spp);
+                        $('#qty_' + n).val(qty);
+                        $('#qty2_' + n).val(qty2);
 
 
-                    $('#hidden_tgl_ref_' + n).val(tglref);
-                    n++;
-                });
-                $('#modalcarispp').modal('hide');
+                        $('#hidden_tgl_ref_' + n).val(tglref);
+                        n++;
+                    });
+                    $('#modalcarispp').modal('hide');
+                }
             },
             error: function(request) {
                 alert("KONEKSI TERPUTUS!");
