@@ -10,7 +10,7 @@ date_default_timezone_set('Asia/Jakarta');
                               <div class="row justify-content-between" style="margin-top: -10px;">
                                     <h4 class="header-title ml-2">LPB <b>MUTASI</b></h4>
                                     <div class="button-list mr-2">
-                                          <button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>
+                                          <!--<button class="qrcode-reader mdi mdi-camera btn btn-xs btn-primary ml-1" id="camera" type="button" onclick="showCamera()"></button>-->
                                           <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()" disabled>LPB Baru</button>
                                           <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()" disabled>Batal LPB</button>
                                           <button class="btn btn-xs btn-primary" id="a_print_lpb" onclick="cetak_lpb()" disabled>Cetak</button>
