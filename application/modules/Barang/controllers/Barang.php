@@ -13,7 +13,7 @@ class Barang extends CI_Controller
 
         $db_pt = check_db_pt();
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
-        $this->db_mips_gl = $this->load->database('db_mips_gl', TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl_msal', TRUE);
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
         $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
         if (!$this->session->userdata('id_user')) {
