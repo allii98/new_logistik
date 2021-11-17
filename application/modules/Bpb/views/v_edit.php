@@ -12,7 +12,7 @@
                         <div class="button-list mr-2">
 
                             <button onclick="new_bpb()" class="btn btn-xs btn-success" id="a_po_baru">BPB Baru</button>
-                            <button onclick="batal()" class="btn btn-xs btn-danger" id="batalBPB">Batal BPB</button>
+                            <button onclick="alasanbatal()" class="btn btn-xs btn-danger" id="batalBPB">Batal BPB</button>
                             <button class="btn btn-xs btn-primary" id="cetak" onclick="cetak()">Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -135,6 +135,9 @@
                     <hr style="margin-top: -15px;">
                     <div class="row div_form_2" style="margin-top: -25px;">
                         <div class="sub-header" style="margin-top: -15px; margin-bottom: -25px;">
+                            <input type="hidden" id="hidden_bagian">
+                            <input type="hidden" id="hidden_mutasi_pt">
+                            <input type="hidden" id="hidden_mutasi_lokal">
                             <input type="hidden" id="hidden_no_bpb" name="hidden_no_bpb">
                             <input type="hidden" id="hidden_no_ref_bpb" name="hidden_no_ref_bpb">
                             <input type="hidden" id="hidden_id_bpb" name="hidden_id_bpb">
@@ -300,6 +303,22 @@
         </div>
     </div>
 
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                        <h4 class="mt-2">Alasan Batal</h4>
+                        <textarea class="form-control" id="alasan" rows="4" required></textarea>
+                        <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <style>
@@ -328,6 +347,11 @@
         location.href = "<?php echo base_url('Bpb/input') ?>";
     }
 
+    function alasanbatal() {
+
+        $('#alasanbatal').modal('show');
+    }
+
     function cetak() {
         var no_bpb = $('#hidden_no_bpb').val();
         var id_bpb = $('#hidden_id_bpb').val();
@@ -335,6 +359,10 @@
 
         window.open('<?= base_url() ?>Bpb/cetak/' + no_bpb + '/' + id_bpb, '_blank');
         // window.open('cetak/' + no_bpb + '/' + id_bpb, '_blank');
+    }
+
+    function goBack() {
+        window.history.back();
     }
     $(document).ready(function() {
         var id = <?php echo $this->uri->segment(4) ?>;
@@ -365,13 +393,22 @@
                 $('#hidden_no_ref_bpb').val(data.data_bpb.norefbpb);
                 $('#hidden_id_bpb').val(data.data_bpb.id);
                 $('#hidden_no_bpb').val(data.data_bpb.nobpb);
-
                 $('#hidden_no_table').val(1);
+                var mutasi = data.data_bpb.status_mutasi;
+
+                if (mutasi == 1) {
+                    $('#hidden_mutasi_pt').val('mutasi_pt');
+                } else if (mutasi == 2) {
+                    $('#hidden_mutasi_lokal').val('mutasi_lokal');
+
+                }
+
+                $('#hidden_bagian').val(data.data_bpb.bag);
 
                 var i = 0;
 
                 $.each(data.data_bpbitem, function(index) {
-                    // console.log(data);
+                    console.log(data);
                     // var n = 1+index;
                     var n = $('#hidden_no_table').val();
 
@@ -402,6 +439,10 @@
                         '<!-- BLOK/SUB -->' +
                         '<select class="form-control form-control-sm set_strip_cmb" id="cmb_blok_sub_' + n + '" name="cmb_blok_sub_' + n + '" onchange="cmb_tahun_tanam(' + n + ')">' +
                         '<option value="-">-</option>' +
+                        '<option value="TM" style="font-size: 12px;">TM</option>' +
+                        '<option value="TBM" style="font-size: 12px;">TBM</option>' +
+                        '<option value="LANDCLEARING" style="font-size: 12px;">LANDCLEARING</option>' +
+                        '<option value="PEMBIBITAN" style="font-size: 12px;">PEMBIBITAN</option>' +
                         '</select>' +
                         '</td>';
                     var td_col_5 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
@@ -466,6 +507,9 @@
 
                     $('#tbody_rincian').append(tr_buka + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
 
+                    var tm_tbm = '<option value="' + data.data_bpbitem[index].tmtbm + '">' + data.data_bpbitem[index].tmtbm + '</option>';
+                    $('#cmb_tm_tbm_' + n).empty();
+                    $('#cmb_tm_tbm_' + n).append(tm_tbm);
                     var opsi_afd = '<option value="' + data.data_bpbitem[index].afd + '">' + data.data_bpbitem[index].afd + '</option>';
                     $('#cmb_afd_unit_' + n).empty();
                     $('#cmb_afd_unit_' + n).append(opsi_afd);
@@ -473,10 +517,38 @@
                     var opsi_cmb_blok_sub = '<option value="' + data.data_bpbitem[index].blok + '">' + data.data_bpbitem[index].blok + '</option>';
                     $('#cmb_blok_sub_' + n).empty();
                     $('#cmb_blok_sub_' + n).append(opsi_cmb_blok_sub);
+                    if (data.data_bpbitem[index].thntanam == null) {
 
-                    var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].ketbeban + ' - ' + data.data_bpbitem[index].kodebebantxt + '</option>';
-                    $('#cmb_bahan_' + n).empty();
-                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+                        var cmb_tahun_tanam = '<option value="-">' + ' -' + '</option>';
+                        $('#cmb_tahun_tanam_' + n).empty();
+                        $('#cmb_tahun_tanam_' + n).append(cmb_tahun_tanam);
+                    } else {
+                        // console.log("OKE");
+
+                        var cmb_tahun_tanam = '<option value="' + data.data_bpbitem[index].thntanam + '">' + data.data_bpbitem[index].thntanam + '</option>';
+                        $('#cmb_tahun_tanam_' + n).empty();
+                        $('#cmb_tahun_tanam_' + n).append(cmb_tahun_tanam);
+                    }
+
+                    if (data.data_bpbitem[index].kodebebantxt == null) {
+
+                        var opsi_cmb_bahan = '<option value="-">' + '-' + '</option>';
+                        $('#cmb_bahan_' + n).empty();
+                        $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+                    } else {
+
+                        var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].kodebebantxt + '</option>';
+                        $('#cmb_bahan_' + n).empty();
+                        $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+                    }
+                    // if (data.data_bpbitem[index].kodebebantxt == '') {
+
+                    // } else {
+                    //     var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].ketbeban + ' - ' + data.data_bpbitem[index].kodebebantxt + '</option>';
+                    //     $('#cmb_bahan_' + n).empty();
+                    //     $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+
+                    // }
 
                     // $('#cmb_afd_unit_' + n).val(data.data_bpbitem[index].afd);
                     // $('#cmb_blok_sub_' + n).val(data.data_bpbitem[index].blok);
@@ -506,7 +578,7 @@
 
                     sum_stok(data.data_bpbitem[index].kodebar, n, data.data_bpbitem[index].kode_dev);
 
-                    get_all_cmb(data.data_bpbitem[index].kodebebantxt, data.data_bpbitem[index].id, n);
+                    // get_all_cmb(data.data_bpbitem[index].kodebebantxt, data.data_bpbitem[index].id, n);
                     sum_stok_booking(data.data_bpbitem[index].kodebar, n, data.data_bpbitem[index].kode_dev);
                     // console.log('id nya gaes', data.data_bpbitem[index].id);
                     n++;
@@ -529,6 +601,23 @@
         });
 
     });
+
+    function validasibatal() {
+        var alasan = $('#alasan').val();
+        if (!alasan) {
+            $.toast({
+                position: 'top-right',
+                text: 'Silahkan Isi Alasan!',
+                icon: 'error',
+                loader: false
+            });
+            $('#alasan').css({
+                "background": "#FFCECE"
+            });
+        } else {
+            batal();
+        }
+    }
 
     function batal() {
         $('#batalBPB').attr('disabled', '');
@@ -606,7 +695,8 @@
             success: function(data) {
                 console.log("ini datanya", data);
 
-                if (data.data == null) {
+                if (data.tmtbm == '' || data.thntanam == '' || data.kodebebantxt == '') {
+                    // console.log('oke jaaa');
                     var opsi_tm_tbm_ = '<option value="' + '-' + '">' + '-' + '</option>';
                     $('#cmb_tm_tbm_' + n).append(opsi_tm_tbm_);
 
@@ -623,12 +713,20 @@
                     $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
                 } else {
 
-                    $('#cmb_tm_tbm_' + n).val(data.bpbitem.tmtbm);
+                    var opsi_tm_tbm_ = '<option value="' + data.tmtbm + '">' + data.tmtbm + '</option>';
+                    $('#cmb_tm_tbm_' + n).val(opsi_tm_tbm_);
                     // $('#cmb_tahun_tanam_' + n).val(data.thn_tanam);
 
-                    var opsi_cmb_thn_tanam = '<option value="' + data.bpbitem.thntanam + '">' + data.bpbitem.thntanam + '</option>';
+                    var opsi_cmb_thn_tanam = '<option value="' + data.thntanam + '">' + data.thntanam + '</option>';
                     $('#cmb_tahun_tanam_' + n).empty();
                     $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
+                    var opsi_cmb_bahan = '<option value="' + data.kodebebantxt + '">' + data.kodebebantxt + '</option>';
+                    $('#cmb_bahan_' + n).empty();
+                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+
+                    var opsi_cmb_bahan = '<option value="' + data.kodebebantxt + '">' + data.ketbeban + ' - ' + data.kodebebantxt + '</option>';
+                    $('#cmb_bahan_' + n).empty();
+                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
                 }
 
             },
@@ -675,7 +773,7 @@
             data: form_data,
             success: function(data) {
 
-                get_all_cmb(data.data_bpbitem.kodebebantxt, no);
+                // get_all_cmb(data.data_bpbitem.kodebebantxt, no);
                 sum_stok(data.data_bpbitem.kodebar, no, kode_dev);
                 sum_stok_booking(data.data_bpbitem.kodebar, no, kode_dev);
 
@@ -843,6 +941,9 @@
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
         form_data.append('hidden_no_ref_bpb', $('#hidden_no_ref_bpb').val());
 
+        form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
+        form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
+
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bpb/ubah_rinci_bpb'); ?>",
@@ -902,9 +1003,19 @@
     }
 
     function ubahRinci(no) {
-        $('#tr_' + no).find('input,textarea,select').removeAttr('disabled', '');
-        $('#tr_' + no).find('input,textarea,select').removeClass('bg-light');
+        var data = $('#hidden_bagian').val();
+        // if (data == "TANAMAN" || data == "TANAMAN UMUM") {
+        //     // console.log('oke masuk');
 
+        //     $('#tr_' + no).find('#cmb_tm_tbm_' + no + ',#cmb_afd_unit_' + no + ',#cmb_blok_sub_' + no + ',#cmb_blok_sub_' + no + ',#cmb_tahun_tanam_' + no + ',#cmb_bahan_' + no + ',#txt_account_beban_' + no + ',#txt_barang_' + no + ',#txt_qty_diminta_' + no + ',#txt_ket_rinci_' + no).removeAttr('disabled', '');
+        //     $('#tr_' + no).find('#cmb_tm_tbm_' + no + ',#cmb_afd_unit_' + no + ',#cmb_blok_sub_' + no + ',#cmb_blok_sub_' + no + ',#cmb_tahun_tanam_' + no + ',#cmb_bahan_' + no + ',#txt_account_beban_' + no + ',#txt_barang_' + no + ',#txt_qty_diminta_' + no + ',#txt_ket_rinci_' + no).removeClass('bg-light');
+        // } else {
+
+
+        // }
+
+        $('#tr_' + no).find('#txt_barang_' + no + ',#txt_qty_diminta_' + no + ',#txt_ket_rinci_' + no).removeAttr('disabled', '');
+        $('#tr_' + no).find('#txt_barang_' + no + ',#txt_qty_diminta_' + no + ',#txt_ket_rinci_' + no).removeClass('bg-light');
         // $('#txt_qty_diminta_' + no + ', #txt_ket_rinci_' + no + '').removeAttr('disabled', '');
         // $('#txt_qty_diminta_' + no + ', #txt_ket_rinci_' + no + '').removeClass('bg-light');
 

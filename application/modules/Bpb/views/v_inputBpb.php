@@ -891,6 +891,8 @@
             var form_data = new FormData();
 
             form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+            form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
+            form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
 
             $.ajax({
                 type: "POST",
@@ -947,6 +949,8 @@
         // form_data.append('hidden_id_po',$('#hidden_id_po_'+no).val());
         form_data.append('hidden_id_bpb', $('#hidden_id_bpb').val());
         form_data.append('hidden_id_bpbitem', $('#hidden_id_bpbitem_' + no).val());
+        form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
+        form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
 
         $.ajax({
             type: "POST",

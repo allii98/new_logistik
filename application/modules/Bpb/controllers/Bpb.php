@@ -40,7 +40,7 @@ class Bpb extends CI_Controller
     {
         $id = $this->input->post('id');
         $bahan = $this->input->post('bahan');
-        $bpbitem = $this->db_logistik_pt->query("SELECT tmtbm, thntanam FROM bpbitem WHERE id='$id'")->row();
+        $bpbitem = $this->db_logistik_pt->query("SELECT tmtbm, thntanam, ketbeban,kodebebantxt FROM bpbitem WHERE id='$id'")->row();
         // $isi = substr($bahan, 0, 4);
         // $thun = substr($bahan, 6, 4);
 
@@ -64,11 +64,7 @@ class Bpb extends CI_Controller
         // } else {
         //     $tahun = '-';
         // }
-        $d = [
-            'data' => $bahan,
-            // 'thun' => $tahun,
-            'bpbitem' => $bpbitem
-        ];
+        $d = $bpbitem;
         // $query = "SELECT * FROM tahun_tanam WHERE coa_material = '$bahan' ORDER BY thn_tanam ASC";
         // $data = $this->db_logistik_pt->query($query)->row();
         echo json_encode($d);
@@ -404,6 +400,16 @@ class Bpb extends CI_Controller
     {
 
         $id_bpbitem = $this->input->post('hidden_id_bpbitem');
+        $mut_pt = $this->input->post('hidden_mutasi_pt');
+        $mut_lok = $this->input->post('hidden_mutasi_lokal');
+
+        if ($mut_pt == 'mutasi_pt' || $mut_lok == 'mutasi_lokal') {
+            # code...
+            $noref = $this->db_logistik_pt->query("SELECT norefbpb FROM bpbitem WHERE id='$id_bpbitem'")->row();
+            $data_delete_center = $this->db_logistik_center->delete('bpbitem_mutasi', array('norefbpb' => $noref->norefbpb));
+            $data_delete_approval_center = $this->db_logistik_center->delete('approval_bpb', array('id_bpbitem' => $id_bpbitem));
+        }
+
 
         $data_delete = $this->db_logistik_pt->delete('bpbitem', array('id' => $id_bpbitem));
         $data_delete_approval = $this->db_logistik_pt->delete('approval_bpb', array('id_bpbitem' => $id_bpbitem));
@@ -421,10 +427,22 @@ class Bpb extends CI_Controller
 
         $id_bpb = $this->input->post('hidden_id_bpb');
         $id_bpbitem = $this->input->post('hidden_id_bpbitem');
+        $mut_pt = $this->input->post('hidden_mutasi_pt');
+        $mut_lok = $this->input->post('hidden_mutasi_lokal');
+
+        if ($mut_pt == 'mutasi_pt' || $mut_lok == 'mutasi_lokal') {
+            # code...
+            $noref = $this->db_logistik_pt->query("SELECT norefbpb FROM bpbitem WHERE id='$id_bpbitem'")->row();
+            $data_delete_center = $this->db_logistik_center->delete('bpbitem_mutasi', array('norefbpb' => $noref->norefbpb));
+            $data_delete_approval_center = $this->db_logistik_center->delete('approval_bpb', array('id_bpbitem' => $id_bpbitem));
+            $data_bpb_center = $this->db_logistik_center->delete('bpb_mutasi', array('norefbpb' => $noref->norefbpb));
+        }
+
 
         $data_bpb = $this->db_logistik_pt->delete('bpb', array('id' => $id_bpb));
         $data_delete = $this->db_logistik_pt->delete('bpbitem', array('id' => $id_bpbitem));
         $data_delete_approval = $this->db_logistik_pt->delete('approval_bpb', array('id_bpbitem' => $id_bpbitem));
+
 
         if ($data_delete === TRUE && $data_bpb === TRUE && $data_delete_approval === TRUE) {
             $data = TRUE;
