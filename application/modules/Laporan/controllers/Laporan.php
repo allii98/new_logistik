@@ -718,7 +718,17 @@ class Laporan extends CI_Controller
 
 	function cari_bagian()
 	{
-		$query = "SELECT kode, nama FROM dept ORDER BY kode ASC";
+		$lokasi = $this->session->userdata('status_lokasi');
+		if ($lokasi == 'PKS') {
+			# code...
+			$query = "SELECT kode, nama FROM dept WHERE kode NOT IN ('1', '2') ORDER BY kode ASC";
+		} else if ($lokasi == 'SITE') {
+			$query = "SELECT kode, nama FROM dept WHERE kode NOT IN ('3') ORDER BY kode ASC";
+			# code...
+		} else {
+			$query = "SELECT kode, nama FROM dept  ORDER BY kode ASC";
+		}
+
 		$data = $this->db_logistik_pt->query($query)->result();
 		echo json_encode($data);
 	}
@@ -1711,7 +1721,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			'margin_top' => '4',
 			'orientation' => 'L'
 		]);
 
@@ -2326,7 +2336,7 @@ class Laporan extends CI_Controller
 		$mpdf = new \Mpdf\Mpdf([
 			'mode' => 'utf-8',
 			'format' => [190, 236],
-			'margin_top' => '2',
+			'margin_top' => '4',
 			'orientation' => 'L'
 		]);
 

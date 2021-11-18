@@ -461,24 +461,28 @@
                                         <label class="form-check-label" for="rbt_cetakan">Cetakan</label>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_cash" value="cash" name="rbt_pilihan1" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_cash">PO ( Cash )</label>
+                                <?php if ($this->session->userdata('status_lokasi') != 'HO') { ?>
+
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_po_lokal_r" value="po_lokal_r" name="rbt_pilihan1" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_po_lokal_r">PO Lokal (Register)</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_po_lokal_r" value="po_lokal_r" name="rbt_pilihan1" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_po_lokal_r">PO Lokal (Register)</label>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_po_lokal_t" value="po_lokal_t" name="rbt_pilihan1" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_po_lokal_t">PO Lokal (Total PO)</label>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_po_lokal_t" value="po_lokal_t" name="rbt_pilihan1" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_po_lokal_t">PO Lokal (Total PO)</label>
+                                <?php } else { ?>
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_cash" value="cash" name="rbt_pilihan1" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_cash">PO ( Cash )</label>
+                                        </div>
                                     </div>
-                                </div>
+                                <?php } ?>
                                 <div class="col-4">
                                     <div class="form-check">
                                         <input type="radio" id="rbt_po_hb" value="po_hb" name="rbt_pilihan1" class="form-check-input">
@@ -750,7 +754,7 @@
 
                                     <div class="form-check">
                                         <input type="radio" id="rbt_register1" value="register1" name="rbt_pilihan2" class="form-check-input" checked>
-                                        <label class="form-check-label" for="rbt_register1">Register PO</label>
+                                        <label class="form-check-label" for="rbt_register1">Register PP</label>
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -1156,16 +1160,7 @@
                                     </div> -->
                                 </div>
 
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_mutasi_pt" value="mutasi_pt" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_mutasi_pt">Mutasi Antar PT</label>
-                                    </div>
-                                    <!-- <div class="radio radio-info form-check-inline">
-                                        <input type="radio" value="mutasi_pt" id="rbt_mutasi_pt" name="rbt_pilihan7">
-                                        <label for="rbt_mutasi_pt">Mutasi Antar PT</label>
-                                    </div> -->
-                                </div>
+
 
                                 <div class="col-sm-4">
                                     <div class="form-check">
@@ -1179,95 +1174,109 @@
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-check">
-                                        <input type="radio" id="rbt_per_bgn_grp_brg" value="per_bgn_grp_brg" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_per_bgn_grp_brg">Per Bagian Group</label>
+                                        <input type="radio" id="rbt_mutasi_pt" value="mutasi_pt" name="rbt_pilihan7" class="form-check-input">
+                                        <label class="form-check-label" for="rbt_mutasi_pt">Mutasi Antar PT</label>
                                     </div>
                                     <!-- <div class="radio radio-info form-check-inline">
+                                        <input type="radio" value="mutasi_pt" id="rbt_mutasi_pt" name="rbt_pilihan7">
+                                        <label for="rbt_mutasi_pt">Mutasi Antar PT</label>
+                                    </div> -->
+                                </div>
+                                <?php if ($this->session->userdata('status_lokasi') != 'PKS') { ?>
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_per_bgn_grp_brg" value="per_bgn_grp_brg" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_per_bgn_grp_brg">Per Bagian Group</label>
+                                        </div>
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="per_bgn_grp_brg" id="rbt_per_bgn_grp_brg" name="rbt_pilihan7">
                                         <label for="rbt_per_bgn_grp_brg">Per Bagian Group</label>
                                     </div> -->
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_per_bgn_rinci_tgl" value="per_bgn_rinci_tgl" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_per_bgn_rinci_tgl">Per Bagian Rinci Tgl</label>
                                     </div>
+                                    <div class="col-sm-5">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_per_bgn_rinci_tgl" value="per_bgn_rinci_tgl" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_per_bgn_rinci_tgl">Per Bagian Rinci Tgl</label>
+                                        </div>
 
-                                    <!-- <div class="radio radio-info form-check-inline">
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="per_tgl_bkb" id="rbt_per_tgl_bkb" name="rbt_pilihan7">
                                         <label for="rbt_per_tgl_bkb">Per Tanggal</label>
                                     </div> -->
-                                </div>
+                                    </div>
+                                <?php } ?>
 
                             </div>
-                            <div class="row" id="tanaman">
-                                <div class="col-md-6">
-                                    <label class="col-6 col-form-label">Nominal RP</label>
-                                </div>
-                                <div class="col-md-6" style="margin-bottom: -3%;">
-                                    <hr>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_per_kerja" value="per_kerja" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_per_kerja">Per Pekerjaan (Tanaman)</label>
+                            <?php if ($this->session->userdata('status_lokasi') != 'PKS') { ?>
+                                <div class="row" id="tanaman">
+                                    <div class="col-md-6">
+                                        <label class="col-6 col-form-label">Nominal RP</label>
                                     </div>
-                                    <!-- <div class="radio radio-info form-check-inline">
+                                    <div class="col-md-6" style="margin-bottom: -3%;">
+                                        <hr>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_per_kerja" value="per_kerja" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_per_kerja">Per Pekerjaan (Tanaman)</label>
+                                        </div>
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="per_kerja" id="rbt_per_kerja" name="rbt_pilihan7">
                                         <label for="rbt_per_kerja">Per Pekerjaan (Tanaman)</label>
                                     </div> -->
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_per_bgn_grp_brg_n" value="per_bgn_grp_brg_n" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_per_bgn_grp_brg_n">Per Bagian Group Barang</label>
                                     </div>
-                                    <!-- <div class="radio radio-info form-check-inline">
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_per_bgn_grp_brg_n" value="per_bgn_grp_brg_n" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_per_bgn_grp_brg_n">Per Bagian Group Barang</label>
+                                        </div>
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="per_bgn_grp_brg_n" id="rbt_per_bgn_grp_brg_n" name="rbt_pilihan7">
                                         <label for="rbt_per_bgn_grp_brg_n">Per Bagian Group Barang</label>
                                     </div> -->
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_per_kerja1" value="per_kerja1" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_per_kerja1">Per Pekerjaan</label>
                                     </div>
-                                    <!-- <div class="radio radio-info form-check-inline">
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_per_kerja1" value="per_kerja1" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_per_kerja1">Per Pekerjaan</label>
+                                        </div>
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="per_kerja1" id="rbt_per_kerja1" name="rbt_pilihan7">
                                         <label for="rbt_per_kerja1">Per Pekerjaan</label>
                                     </div> -->
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_summary_rsh" value="summary_rsh" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_summary_rsh">Summary</label>
                                     </div>
-                                    <!-- <div class="radio radio-info form-check-inline">
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_summary_rsh" value="summary_rsh" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_summary_rsh">Summary</label>
+                                        </div>
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="summary_rsh" id="rbt_summary_rsh" name="rbt_pilihan7">
                                         <label for="rbt_summary_rsh">Summary</label>
                                     </div> -->
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_sum_blok_ub" value="sum_blok_ub" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_sum_blok_ub">Sum Blok Unit Barang</label>
                                     </div>
-                                    <!-- <div class="radio radio-info form-check-inline">
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_sum_blok_ub" value="sum_blok_ub" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_sum_blok_ub">Sum Blok Unit Barang</label>
+                                        </div>
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="sum_blok_ub" id="rbt_sum_blok_ub" name="rbt_pilihan7">
                                         <label for="rbt_sum_blok_ub">Sum Blok Unit Barang</label>
                                     </div> -->
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="form-check">
-                                        <input type="radio" id="rbt_sum_blok_pk" value="sum_blok_pk" name="rbt_pilihan7" class="form-check-input">
-                                        <label class="form-check-label" for="rbt_sum_blok_pk">Sum Blok Pekerjaan</label>
                                     </div>
-                                    <!-- <div class="radio radio-info form-check-inline">
+                                    <div class="col-sm-4">
+                                        <div class="form-check">
+                                            <input type="radio" id="rbt_sum_blok_pk" value="sum_blok_pk" name="rbt_pilihan7" class="form-check-input">
+                                            <label class="form-check-label" for="rbt_sum_blok_pk">Sum Blok Pekerjaan</label>
+                                        </div>
+                                        <!-- <div class="radio radio-info form-check-inline">
                                         <input type="radio" value="sum_blok_pk" id="rbt_sum_blok_pk" name="rbt_pilihan7">
                                         <label for="rbt_sum_blok_pk">Sum Blok Pekerjaan</label>
                                     </div> -->
+                                    </div>
                                 </div>
-                            </div>
+                            <?php } ?>
                         </div>
 
                     </div>
