@@ -227,6 +227,13 @@ class Pp extends CI_Controller
                 $hasil = $qty_harga;
                 //saldo
                 $saldo =  ($hasil + $biayalain + $hargaPlusPPH) - $get_jumlah_sudah_bayar->kasir_bayar;
+                if ($saldo < 0) {
+                    # code...
+                    $sisa = 0;
+                } else {
+                    # code...
+                    $sisa = $saldo;
+                }
             } else {
 
                 //ppn
