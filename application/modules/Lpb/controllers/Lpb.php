@@ -1406,6 +1406,8 @@ class Lpb extends CI_Controller
 
         $data4 =  $this->db_logistik_pt->insert('stokmasuk_history', $data_stokmasuk_histori);
 
+        $delete_header_entry = $this->db_mips_gl->delete('header_entry', array('noref' => $noreflpb));
+
         $isibatal = array(
             'BATAL' => 1,
             'alasan_batal' => $alasan
@@ -1486,6 +1488,9 @@ class Lpb extends CI_Controller
             $delete_regis = $this->db_logistik_pt->delete('register_stok', array('id' => $id_register_stok));
         }
 
+        //delete ke GL
+        $delete_gl = $this->db_mips_gl->delete('entry', array('kodebar' => $kodebar, 'noref' => $no_ref_lpb));
+
         //update sttaus_lpb di po jadi 0
         $update_lpb_po = $this->M_lpb->update_status_lpb_po($norefpo);
 
@@ -1493,6 +1498,7 @@ class Lpb extends CI_Controller
             'delete_masukitem' => $delete_masukitem,
             'delete_regis' => $delete_regis,
             'update_lpb_po' => $update_lpb_po,
+            'delete_gl' => $delete_gl
         ];
         echo json_encode($data);
     }

@@ -924,7 +924,9 @@
                 hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
                 norefpo: $('#txt_ref_po').val(),
                 delete_stok_register: '0',
-                alasan: $('#alasan').val()
+                alasan: $('#alasan').val(),
+                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                kodebar: $('#txt_kode_barang_' + n).val(),
             },
 
             success: function(data) {
