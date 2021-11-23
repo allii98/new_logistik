@@ -539,6 +539,8 @@
         -moz-appearance: textfield;
         /* Firefox */
     }
+
+    
 </style>
 
 <script>
@@ -2384,6 +2386,9 @@
                     mutasi_lokal: mutasi_lokal
                 }
             },
+            "initComplete": function(settings, json) {
+                $("div.dataTables_filter input").focus();
+            },
 
             "columnDefs": [{
                 "targets": [0],
@@ -2438,6 +2443,9 @@
                 //     // data: data,
                 //     kode_dev: kode_dev,
                 // }
+            },
+            "initComplete": function(settings, json) {
+                $("div.dataTables_filter input").focus();
             },
             "columnDefs ": [{
                 "targets": [0],
