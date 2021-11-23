@@ -253,11 +253,13 @@
     table#tabel_mutasi td {
         padding: 10px;
         font-size: 12px;
+        cursor:pointer;
     }
 
     table#tabel_bpb_mutasi td {
         padding: 10px;
         font-size: 12px;
+        cursor:pointer;
     }
 </style>
 
@@ -297,6 +299,21 @@
             "language": {
                 "infoFiltered": ""
             },
+            "drawCallback": function(settings) {
+                $('#tabel_mutasi tr').each(function() {
+                    var Cell = $(this).find('td');
+
+                    Cell.parent().on('mouseover', Cell, function() {
+                        Cell.parent().css('background-color', '#26b99a');
+                        Cell.parent().css('color', '#ffffff');
+
+                        Cell.parent().bind("mouseout", function() {
+                            Cell.parent().css('background-color', '');
+                            Cell.parent().css('color', '#73879c');
+                        });
+                    });
+                });
+            },
 
         });
 
@@ -321,6 +338,21 @@
             }, ],
             "language": {
                 "infoFiltered": ""
+            },
+            "drawCallback": function(settings) {
+                $('#tabel_bpb_mutasi tr').each(function() {
+                    var Cell = $(this).find('td');
+
+                    Cell.parent().on('mouseover', Cell, function() {
+                        Cell.parent().css('background-color', '#26b99a');
+                        Cell.parent().css('color', '#ffffff');
+
+                        Cell.parent().bind("mouseout", function() {
+                            Cell.parent().css('background-color', '');
+                            Cell.parent().css('color', '#73879c');
+                        });
+                    });
+                });
             },
 
         });
