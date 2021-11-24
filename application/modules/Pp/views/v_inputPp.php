@@ -172,7 +172,7 @@
                                     Keterangan
                                 </label>
                                 <div class="col-8 col-xl-12">
-                                    <textarea class="form-control form-control-sm" id="txt_keterangan" name="txt_keterangan" placeholder="Keterangan" rows="2" required="required"></textarea>
+                                    <textarea class="form-control form-control-sm" id="txt_keterangan" name="txt_keterangan" placeholder="Keterangan" rows="2"></textarea>
                                     <!-- <input id="txt_keterangan" name="txt_keterangan" rows="3" class="form-control form-control-sm" required="required" type="text" placeholder="Keterangan" autocomplete="off"> -->
                                 </div>
                             </div>
@@ -335,6 +335,7 @@
         padding: 3px;
         padding-left: 10px;
         font-size: 11px;
+        cursor: pointer;
     }
 
     input::-webkit-outer-spin-button,
@@ -646,6 +647,10 @@
         var noref_rpc = noref.replaceAll('/', '.');
 
         window.open('cetak/' + noref_rpc + '/' + id_pp, '_blank');
+    }
+
+    function saveRinciEnter(e) {
+        saveData();
     }
 
     function saveData() {

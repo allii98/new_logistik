@@ -325,7 +325,7 @@ class M_pp extends CI_Model
                 $bool_pp = FALSE;
             }
 
-            $data_pp['keterangan_transaksi'] = "INSERT";
+            $data_pp['keterangan_transaksi'] = "INPUT PP";
             $data_pp['log'] = $this->session->userdata('user') . " membuat PP baru $nopp";
             $data_pp['tgl_transaksi'] = date('Y-m-d H:i:s');
             $data_pp['user_transaksi'] = $this->session->userdata('user');
@@ -438,6 +438,8 @@ class M_pp extends CI_Model
         $jumlah = $this->input->post('txt_jumlah');
         $total_po = $this->input->post('txt_total_po');
 
+
+
         // $data_pp['id']              = $id_pp;
         $data_pp['tglpp']           = $tglpp;
         $data_pp['tglpptxt']        = $tglpptxt;
@@ -524,6 +526,60 @@ class M_pp extends CI_Model
             $bool_pp = FALSE;
         }
 
+        $pp = $this->db_logistik_pt->query("SELECT * FROM pp WHERE id='$id_pp'")->row();
+        $pp_histori['id']              = $id_pp;
+        $pp_histori['nopp']            = $pp->nopp;
+        $pp_histori['nopptxt']         = $pp->nopptxt;
+        $pp_histori['nopo']            = $pp->nopo;
+        $pp_histori['nopotxt']         = $pp->nopotxt;
+        $pp_histori['tglpp']           = $pp->tglpp;
+        $pp_histori['tglpptxt']        = $pp->tglpptxt;
+        $pp_histori['tglpo']           = $pp->tglpo;
+        $pp_histori['tglpotxt']        = $pp->tglpotxt;
+        $pp_histori['ref_pp']          = $pp->ref_pp;
+        $pp_histori['ref_po']          = $this->input->post('txt_no_ref_po');
+        $pp_histori['kode_supply']     = $this->input->post('kd_supplier');
+        $pp_histori['kode_supplytxt']  = $this->input->post('kd_supplier');
+        $pp_histori['nama_supply']     = $this->input->post('txt_supplier');
+        $pp_histori['kepada']          = $this->input->post('txt_dibayar_ke');
+        $pp_histori['bayar']           = $this->input->post('txt_pembayaran');
+        $pp_histori['KURS']            = $this->input->post('hidden_kurs');
+        $pp_histori['jumlah']          = $jumlah;
+        $pp_histori['pajak']           = $this->input->post('txt_pajak');
+        $pp_histori['jumlahpo']        = $this->input->post('txt_nilai_po');
+        $pp_histori['KODE_BPO']        = $this->input->post('txt_nilai_bpo1');
+        $pp_histori['jumlah_bpo']      = $this->input->post('txt_nilai_bpo2');
+        $pp_histori['total_po']        = $total_po;
+        $pp_histori['terbilang']       = $this->input->post('txt_terbilang');
+        $pp_histori['ket']             = $this->input->post('txt_keterangan');
+        $pp_histori['pt']              = $this->session->userdata('pt');
+        $pp_histori['kodept']          = $this->session->userdata('kode_pt');
+        $pp_histori['periode']         = $periode . " 00:00:00";
+        $pp_histori['txtperiode']      = $txtperiode;
+        $pp_histori['user']            = $this->session->userdata('user');
+        $pp_histori['tglisi']          = date("Y-m-d H:i:s");
+        $pp_histori['status_vou']      = "0";
+        // $pp_histori['status_vou']      = "1";
+        $pp_histori['no_vou']          = $no_vou;
+        $pp_histori['no_voutxt']       = $no_vou;
+        $pp_histori['tgl_vou']         = $tgl_vou;
+        $pp_histori['tgl_voutxt']      = $tgl_voutxt;
+        $pp_histori['tgl_bayar_real']  = NULL;
+        $pp_histori['kasir_bayar']     = $this->input->post('txt_jumlah');
+        $pp_histori['kode_budget']     = "0";
+        $pp_histori['grup']            = $this->input->post('hidden_grup');
+        $pp_histori['main_account']    = $this->input->post('hidden_main_account');
+        $pp_histori['nama_account']    = $this->input->post('hidden_nama_account');
+        $pp_histori['batal']           = "0";
+        $pp_histori['keterangan_transaksi'] = "UPDATE PP";
+        $pp_histori['log'] = $this->session->userdata('user') . " mengubah PP $pp->nopp";
+        $pp_histori['tgl_transaksi'] = date('Y-m-d H:i:s');
+        $pp_histori['user_transaksi'] = $this->session->userdata('user');
+        $pp_histori['client_ip'] = $this->input->ip_address();
+        $pp_histori['client_platform'] = $this->platform->agent();
+        $this->db_logistik_pt->insert('pp_history', $pp_histori);
+
+
         $this->db_caba->set($data_pplogistikdicaba);
         $this->db_caba->where('ref_pp', $this->input->post('hidden_refpp'));
         $this->db_caba->update('pp_logistik');
@@ -563,6 +619,61 @@ class M_pp extends CI_Model
     {
         $id = $this->input->post('id_pp');
         $alasan = $this->input->post('alasan');
+
+        $pp = $this->db_logistik_pt->query("SELECT * FROM pp WHERE id='$id'")->row();
+        $pp_histori['id']              = $id;
+        $pp_histori['nopp']            = $pp->nopp;
+        $pp_histori['nopptxt']         = $pp->nopptxt;
+        $pp_histori['nopo']            = $pp->nopo;
+        $pp_histori['nopotxt']         = $pp->nopotxt;
+        $pp_histori['tglpp']           = $pp->tglpp;
+        $pp_histori['tglpptxt']        = $pp->tglpptxt;
+        $pp_histori['tglpo']           = $pp->tglpo;
+        $pp_histori['tglpotxt']        = $pp->tglpotxt;
+        $pp_histori['ref_pp']          = $pp->ref_pp;
+        $pp_histori['ref_po']          = $pp->ref_po;
+        $pp_histori['kode_supply']     = $pp->kode_supply;
+        $pp_histori['kode_supplytxt']  = $pp->kode_supplytxt;
+        $pp_histori['nama_supply']     = $pp->nama_supply;
+        $pp_histori['kepada']          = $pp->kepada;
+        $pp_histori['bayar']           = $pp->bayar;
+        $pp_histori['KURS']            = $pp->KURS;
+        $pp_histori['jumlah']          = $pp->jumlah;
+        $pp_histori['pajak']           = $pp->pajak;
+        $pp_histori['jumlahpo']        = $pp->jumlahpo;
+        $pp_histori['KODE_BPO']        = $pp->KODE_BPO;
+        $pp_histori['jumlah_bpo']      = $pp->jumlah_bpo;
+        $pp_histori['total_po']        = $pp->total_po;
+        $pp_histori['terbilang']       = $pp->terbilang;
+        $pp_histori['ket']             = $pp->ket;
+        $pp_histori['pt']              = $this->session->userdata('pt');
+        $pp_histori['kodept']          = $this->session->userdata('kode_pt');
+        $pp_histori['periode']         = $pp->periode . " 00:00:00";
+        $pp_histori['txtperiode']      = $pp->txtperiode;
+        $pp_histori['user']            = $this->session->userdata('user');
+        $pp_histori['tglisi']          = date("Y-m-d H:i:s");
+        $pp_histori['status_vou']      = "0";
+        // $pp_histori['status_vou']      = "1";
+        $pp_histori['no_vou']          = $pp->no_vou;
+        $pp_histori['no_voutxt']       = $pp->no_voutxt;
+        $pp_histori['tgl_vou']         = $pp->tgl_vou;
+        $pp_histori['tgl_voutxt']      = $pp->tgl_voutxt;
+        $pp_histori['tgl_bayar_real']  = NULL;
+        $pp_histori['kasir_bayar']     = $pp->kasir_bayar;
+        $pp_histori['kode_budget']     = "0";
+        $pp_histori['grup']            = $pp->grup;
+        $pp_histori['main_account']    = $pp->main_account;
+        $pp_histori['nama_account']    = $pp->nama_account;
+        $pp_histori['batal']           = "0";
+        $pp_histori['keterangan_transaksi'] = "BATAL PP";
+        $pp_histori['log'] = $this->session->userdata('user') . " membatalkan PP $pp->nopp";
+        $pp_histori['tgl_transaksi'] = date('Y-m-d H:i:s');
+        $pp_histori['user_transaksi'] = $this->session->userdata('user');
+        $pp_histori['client_ip'] = $this->input->ip_address();
+        $pp_histori['client_platform'] = $this->platform->agent();
+        $this->db_logistik_pt->insert('pp_history', $pp_histori);
+
+
         $data = array('batal' => 1, 'alasan_batal' => $alasan);
         $this->db_logistik_pt->where('id', $id);
         $this->db_logistik_pt->update('pp', $data);
