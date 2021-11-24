@@ -333,6 +333,81 @@ class Retur extends CI_Controller
         $data_retskbitem['id_user']         = $id_user;
         $data_retskbitem['user']            = $this->session->userdata('user');
 
+
+        //histori
+        $data_retskb_histori['noretur']         = $noretur;
+        $data_retskb_histori['norefretur']      = $norefretur;
+        $data_retskb_histori['tgl']             = $tgl;
+        $data_retskb_histori['nobkb']           = $nobkb;
+        $data_retskb_histori['norefbkb']        = $norefbkb;
+        $data_retskb_histori['tglinput']        = date("Y-m-d H:i:s");
+        $data_retskb_histori['txttgl']          = $txttgl;
+        $data_retskb_histori['thn']             = $thn;
+        $data_retskb_histori['periode1']        = $periode1;
+        $data_retskb_histori['periode2']        = NULL;
+        $data_retskb_histori['txtperiode1']     = $txtperiode;
+        $data_retskb_histori['txtperiode2']     = NULL;
+        $data_retskb_histori['pt']              = $this->input->post('hidden_nama_pt');
+        $data_retskb_histori['kode']            = $this->input->post('hidden_kode_pt');
+        $data_retskb_histori['devisi']          = $devisi;
+        $data_retskb_histori['kode_dev']        = $kode_dev;
+        $data_retskb_histori['no_ba']           = str_replace(' ', '', $no_ba);
+        $data_retskb_histori['keterangan']      = $this->input->post('keterangan');
+        $data_retskb_histori['bag']             = $this->input->post('bagian');
+        $data_retskb_histori['batal']           = "0";
+        $data_retskb_histori['alasan_batal']    = NULL;
+        $data_retskb_histori['id_user']         = $id_user;
+        $data_retskb_histori['user']            = $this->session->userdata('user');
+        $data_retskb_histori['cetak']           = "0";
+        $data_retskb_histori['keterangan_transaksi']  = "INPUT RETUR";
+        $data_retskb_histori['log']  =  $this->session->userdata('user') . " membuat RETUR baru $nobkb";
+        $data_retskb_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
+        $data_retskb_histori['user_transaksi']  = $this->session->userdata('user');
+        $data_retskb_histori['client_ip']  = $this->input->ip_address();
+        $data_retskb_histori['client_platform']  = $this->platform->agent();
+
+
+        $data_retskbitem_histori['noretur']         = $noretur;
+        $data_retskbitem_histori['norefretur']      = $norefretur;
+        $data_retskbitem_histori['kodebar']         = $kodebar;
+        $data_retskbitem_histori['kodebartxt']      = $this->input->post('hidden_kode_barang');
+        $data_retskbitem_histori['nabar']           = $nabar;
+        $data_retskbitem_histori['satuan']          = $sat;
+        $data_retskbitem_histori['grp']             = $grp;
+        $data_retskbitem_histori['kodept']          = $this->input->post('hidden_kode_pt');
+        $data_retskbitem_histori['pt']              = $this->input->post('hidden_nama_pt');
+        $data_retskbitem_histori['tmtbm']           = $this->input->post('cmb_tm_tbm');
+        $data_retskbitem_histori['afd']             = $this->input->post('cmb_afd_unit');
+        $data_retskbitem_histori['blok']            = $this->input->post('cmb_blok_sub');
+        $data_retskbitem_histori['thntanam']        = $this->input->post('cmb_tahun_tanam');
+        $data_retskbitem_histori['qty']             = $quantiti;
+        $data_retskbitem_histori['tgl']             = $tgl;
+        $data_retskbitem_histori['nobkb']           = $nobkb;
+        $data_retskbitem_histori['norefbkb']        = $norefbkb;
+        $data_retskbitem_histori['tglinput']        = date("Y-m-d H:i:s");
+        $data_retskbitem_histori['txttgl']          = $txttgl;
+        $data_retskbitem_histori['thn']             = $thn;
+        $data_retskbitem_histori['periode']         = $this->session->userdata('Ymd_periode');
+        $data_retskbitem_histori['txtperiode']      = $txtperiode;
+        $data_retskbitem_histori['ket']             = $this->input->post('txt_ket_rinci');
+        $data_retskbitem_histori['kodebeban']       = $this->input->post('hidden_kodebeban');
+        $data_retskbitem_histori['kodebebantxt']    = $this->input->post('hidden_kodebeban');
+        $data_retskbitem_histori['ketbeban']        = $this->input->post('txt_account_beban');
+        $data_retskbitem_histori['kodesub']         = $this->input->post('hidden_kodesub');
+        $data_retskbitem_histori['kodesubtxt']      = $this->input->post('hidden_kodesub');
+        $data_retskbitem_histori['ketsub']          = $this->input->post('txt_sub_beban');
+        $data_retskbitem_histori['batal']           = "0";
+        $data_retskbitem_histori['alasan_batal']    = NULL;
+        $data_retskbitem_histori['id_user']         = $id_user;
+        $data_retskbitem_histori['user']            = $this->session->userdata('user');
+        $data_retskbitem_histori['keterangan_transaksi']  = "INPUT ITEM RETUR";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " membuat RETUR baru $noretur";
+        $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
+        $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
+        $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
+        $data_retskbitem_histori['client_platform']  = $this->platform->agent();
+        //end
+
         //-------------------------KEBUTUHAN SAVE KE LPB----------------------/
         $lokasibuatpo = substr($norefbkb, 0, 3);
         switch ($lokasibuatpo) {
@@ -475,6 +550,8 @@ class Retur extends CI_Controller
             'posting' => '0',
             'qtyditerima' => '0',
         ];
+
+
         //-------------------------END KEBUTUHAN SAVE KE LPB----------------------/
 
         $harga_item_bkb = $this->M_retur->cari_harga_bkb($norefbkb, $kodebar);
@@ -512,6 +589,7 @@ class Retur extends CI_Controller
             'USER' => $this->session->userdata('user'),
         ];
 
+
         $cari_kodebar_stock_awal = $this->M_retur->cari_kodebar($kodebar, $txtperiode);
 
         if (empty($this->input->post('hidden_noretur'))) {
@@ -520,6 +598,9 @@ class Retur extends CI_Controller
             $savedatastokmasuk = $this->M_retur->savedatastokmasuk($data_stokmasuk);
             $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
             $saveregisterstok = $this->M_retur->saveRegisterStok($data_register_stok);
+
+            $savehistoriretskb = $this->M_retur->savehistoriretskb($data_retskb_histori);
+            $savehistoriretskbitem = $this->M_retur->savehistoriretskbitem($data_retskbitem_histori);
             $item_exist = 0;
 
             // insert to GL
@@ -545,6 +626,9 @@ class Retur extends CI_Controller
                 $savedataretskbitem = $this->M_retur->savedataretskbitem($data_retskbitem);
                 $savedatamasukitem = $this->M_retur->savedatamasukitem($data_masukitem);
                 $saveregisterstok = $this->M_retur->saveRegisterStok($data_register_stok);
+
+                $savehistoriretskbitem = $this->M_retur->savehistoriretskbitem($data_retskbitem_histori);
+
 
                 // insert to GL
                 $result_insert_to_gl_header = NULL;
@@ -904,6 +988,49 @@ class Retur extends CI_Controller
         $edit = $this->input->post('edit');
         $norefretur = $this->input->post('hidden_norefretur');
 
+        $skb_item = $this->db_logistik_pt->query("SELECT * FROM ret_skbitem WHERE id='$id_retskbitem'")->row();
+
+        $data_retskbitem_histori['noretur']         = $skb_item->noretur;
+        $data_retskbitem_histori['norefretur']      = $skb_item->norefretur;
+        $data_retskbitem_histori['kodebar']         = $this->input->post('hidden_kode_barang');
+        $data_retskbitem_histori['kodebartxt']      = $this->input->post('hidden_kode_barang');
+        $data_retskbitem_histori['nabar']           = $this->input->post('txt_barang');
+        $data_retskbitem_histori['satuan']          = $this->input->post('hidden_satuan_brg');
+        $data_retskbitem_histori['grp']             = $this->input->post('hidden_grup_barang');
+        $data_retskbitem_histori['kodept']          = $skb_item->kodept;
+        $data_retskbitem_histori['pt']              = $skb_item->pt;
+        $data_retskbitem_histori['tmtbm']           = $this->input->post('cmb_tm_tbm');
+        $data_retskbitem_histori['afd']             = $this->input->post('cmb_afd_unit');
+        $data_retskbitem_histori['blok']            = $this->input->post('cmb_blok_sub');
+        $data_retskbitem_histori['thntanam']        = $this->input->post('cmb_tahun_tanam');
+        $data_retskbitem_histori['qty']             = $this->input->post('txt_qty_retur');
+        $data_retskbitem_histori['tgl']             = $skb_item->tgl;
+        $data_retskbitem_histori['nobkb']           = $skb_item->nobkb;
+        $data_retskbitem_histori['norefbkb']        = $skb_item->norefbkb;
+        $data_retskbitem_histori['tglinput']        = $skb_item->tglinput;
+        $data_retskbitem_histori['txttgl']          = $skb_item->txttgl;
+        $data_retskbitem_histori['thn']             = $skb_item->thn;
+        $data_retskbitem_histori['periode']         = $this->session->userdata('Ymd_periode');
+        $data_retskbitem_histori['txtperiode']      = $skb_item->txtperiode;
+        $data_retskbitem_histori['ket']             = $this->input->post('txt_ket_rinci');
+        $data_retskbitem_histori['kodebeban']       = $this->input->post('hidden_kodebeban');
+        $data_retskbitem_histori['kodebebantxt']    = $this->input->post('hidden_kodebeban');
+        $data_retskbitem_histori['ketbeban']        = $this->input->post('txt_account_beban');
+        $data_retskbitem_histori['kodesub']         = $this->input->post('hidden_kodesub');
+        $data_retskbitem_histori['kodesubtxt']      = $this->input->post('hidden_kodesub');
+        $data_retskbitem_histori['ketsub']          = $this->input->post('txt_sub_beban');
+        $data_retskbitem_histori['batal']           = "0";
+        $data_retskbitem_histori['alasan_batal']    = NULL;
+        $data_retskbitem_histori['id_user']         = $skb_item->id_user;
+        $data_retskbitem_histori['user']            = $this->session->userdata('user');
+        $data_retskbitem_histori['keterangan_transaksi']  = "UPDATE ITEM RETUR";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " mengubah ITEM RETUR $skb_item->noretur";
+        $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
+        $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
+        $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
+        $data_retskbitem_histori['client_platform']  = $this->platform->agent();
+        $savehistoriretskbitem = $this->M_retur->savehistoriretskbitem($data_retskbitem_histori);
+
         $data_masukitem = [
             'qty' => $this->input->post('txt_qty_retur'),
             'ket' => $this->input->post('txt_ket_rinci'),
@@ -1153,8 +1280,49 @@ class Retur extends CI_Controller
         $delete_item_retur = $this->input->post('delete_item_retur');
         $alasan = $this->input->post('alasan');
 
-        $isi_batal = array('batal' => 1, 'alasan_batal' => $alasan);
+        $skb_item = $this->db_logistik_pt->query("SELECT * FROM ret_skbitem WHERE id='$id_retskbitem'")->row();
+        $data_retskbitem_histori['noretur']         = $skb_item->noretur;
+        $data_retskbitem_histori['norefretur']      = $skb_item->norefretur;
+        $data_retskbitem_histori['kodebar']         = $skb_item->kodebar;
+        $data_retskbitem_histori['kodebartxt']      = $skb_item->kodebartxt;
+        $data_retskbitem_histori['nabar']           = $skb_item->nabar;
+        $data_retskbitem_histori['satuan']          = $skb_item->satuan;
+        $data_retskbitem_histori['grp']             = $skb_item->grp;
+        $data_retskbitem_histori['kodept']          = $skb_item->kodept;
+        $data_retskbitem_histori['pt']              = $skb_item->pt;
+        $data_retskbitem_histori['tmtbm']           = $skb_item->tmtbm;
+        $data_retskbitem_histori['afd']             = $skb_item->afd;
+        $data_retskbitem_histori['blok']            = $skb_item->blok;
+        $data_retskbitem_histori['thntanam']        = $skb_item->thntanam;
+        $data_retskbitem_histori['qty']             = $skb_item->qty;
+        $data_retskbitem_histori['tgl']             = $skb_item->tgl;
+        $data_retskbitem_histori['nobkb']           = $skb_item->nobkb;
+        $data_retskbitem_histori['norefbkb']        = $skb_item->norefbkb;
+        $data_retskbitem_histori['tglinput']        = $skb_item->tglinput;
+        $data_retskbitem_histori['txttgl']          = $skb_item->txttgl;
+        $data_retskbitem_histori['thn']             = $skb_item->thn;
+        $data_retskbitem_histori['periode']         = $skb_item->periode;
+        $data_retskbitem_histori['txtperiode']      = $skb_item->txtperiode;
+        $data_retskbitem_histori['ket']             = $skb_item->ket;
+        $data_retskbitem_histori['kodebeban']       = $skb_item->kodebeban;
+        $data_retskbitem_histori['kodebebantxt']    = $skb_item->kodebebantxt;
+        $data_retskbitem_histori['ketbeban']        = $skb_item->ketbeban;
+        $data_retskbitem_histori['kodesub']         = $skb_item->kodesub;
+        $data_retskbitem_histori['kodesubtxt']      = $skb_item->kodesubtxt;
+        $data_retskbitem_histori['ketsub']          = $skb_item->ketsub;
+        $data_retskbitem_histori['batal']           = "0";
+        $data_retskbitem_histori['alasan_batal']    = NULL;
+        $data_retskbitem_histori['id_user']         = $skb_item->id_user;
+        $data_retskbitem_histori['user']            = $this->session->userdata('user');
+        $data_retskbitem_histori['keterangan_transaksi']  = "BATAL ITEM RETUR";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " membatalkan RETUR $skb_item->noretur";
+        $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
+        $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
+        $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
+        $data_retskbitem_histori['client_platform']  = $this->platform->agent();
+        $savehistoriretskbitem = $this->M_retur->savehistoriretskbitem($data_retskbitem_histori);
 
+        $isi_batal = array('batal' => 1, 'alasan_batal' => $alasan);
         // $data = $this->db_logistik_pt->delete('ret_skbitem', array('id' => $id_retskbitem));
         $data = $this->M_retur->updateBatalitem($id_retskbitem, $isi_batal);
 
@@ -1182,6 +1350,48 @@ class Retur extends CI_Controller
         $kodebar = $this->input->post('kodebar');
         $norefretur = $this->input->post('hidden_norefretur');
         $delete_item_retur = $this->input->post('delete_item_retur');
+
+        $skb_item = $this->db_logistik_pt->query("SELECT * FROM ret_skbitem WHERE id='$id_retskbitem'")->row();
+        $data_retskbitem_histori['noretur']         = $skb_item->noretur;
+        $data_retskbitem_histori['norefretur']      = $skb_item->norefretur;
+        $data_retskbitem_histori['kodebar']         = $skb_item->kodebar;
+        $data_retskbitem_histori['kodebartxt']      = $skb_item->kodebartxt;
+        $data_retskbitem_histori['nabar']           = $skb_item->nabar;
+        $data_retskbitem_histori['satuan']          = $skb_item->satuan;
+        $data_retskbitem_histori['grp']             = $skb_item->grp;
+        $data_retskbitem_histori['kodept']          = $skb_item->kodept;
+        $data_retskbitem_histori['pt']              = $skb_item->pt;
+        $data_retskbitem_histori['tmtbm']           = $skb_item->tmtbm;
+        $data_retskbitem_histori['afd']             = $skb_item->afd;
+        $data_retskbitem_histori['blok']            = $skb_item->blok;
+        $data_retskbitem_histori['thntanam']        = $skb_item->thntanam;
+        $data_retskbitem_histori['qty']             = $skb_item->qty;
+        $data_retskbitem_histori['tgl']             = $skb_item->tgl;
+        $data_retskbitem_histori['nobkb']           = $skb_item->nobkb;
+        $data_retskbitem_histori['norefbkb']        = $skb_item->norefbkb;
+        $data_retskbitem_histori['tglinput']        = $skb_item->tglinput;
+        $data_retskbitem_histori['txttgl']          = $skb_item->txttgl;
+        $data_retskbitem_histori['thn']             = $skb_item->thn;
+        $data_retskbitem_histori['periode']         = $skb_item->periode;
+        $data_retskbitem_histori['txtperiode']      = $skb_item->txtperiode;
+        $data_retskbitem_histori['ket']             = $skb_item->ket;
+        $data_retskbitem_histori['kodebeban']       = $skb_item->kodebeban;
+        $data_retskbitem_histori['kodebebantxt']    = $skb_item->kodebebantxt;
+        $data_retskbitem_histori['ketbeban']        = $skb_item->ketbeban;
+        $data_retskbitem_histori['kodesub']         = $skb_item->kodesub;
+        $data_retskbitem_histori['kodesubtxt']      = $skb_item->kodesubtxt;
+        $data_retskbitem_histori['ketsub']          = $skb_item->ketsub;
+        $data_retskbitem_histori['batal']           = "0";
+        $data_retskbitem_histori['alasan_batal']    = NULL;
+        $data_retskbitem_histori['id_user']         = $skb_item->id_user;
+        $data_retskbitem_histori['user']            = $this->session->userdata('user');
+        $data_retskbitem_histori['keterangan_transaksi']  = "DELETE ITEM RETUR";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " menghapus ITEM RETUR $skb_item->noretur";
+        $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
+        $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
+        $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
+        $data_retskbitem_histori['client_platform']  = $this->platform->agent();
+        $savehistoriretskbitem = $this->M_retur->savehistoriretskbitem($data_retskbitem_histori);
 
         $ret_skbitem = $this->db_logistik_pt->delete('ret_skbitem', array('id' => $id_retskbitem));
 
@@ -1229,6 +1439,39 @@ class Retur extends CI_Controller
         $norefretur = $this->input->post('norefretur');
         $alasan = $this->input->post('alasan');
 
+        $ret_skb = $this->db_logistik_pt->query("SELECT * FROM retskb WHERE norefretur='$norefretur'")->row();
+        $data_retskb_histori['noretur']         = $ret_skb->noretur;
+        $data_retskb_histori['norefretur']      = $ret_skb->norefretur;
+        $data_retskb_histori['tgl']             = $ret_skb->tgl;
+        $data_retskb_histori['nobkb']           = $ret_skb->nobkb;
+        $data_retskb_histori['norefbkb']        = $ret_skb->norefbkb;
+        $data_retskb_histori['tglinput']        = $ret_skb->tglinput;
+        $data_retskb_histori['txttgl']          = $ret_skb->txttgl;
+        $data_retskb_histori['thn']             = $ret_skb->thn;
+        $data_retskb_histori['periode1']        = $ret_skb->periode1;
+        $data_retskb_histori['periode2']        = NULL;
+        $data_retskb_histori['txtperiode1']     = $ret_skb->txtperiode1;
+        $data_retskb_histori['txtperiode2']     = NULL;
+        $data_retskb_histori['pt']              = $ret_skb->pt;
+        $data_retskb_histori['kode']            = $ret_skb->kode;
+        $data_retskb_histori['devisi']          = $ret_skb->devisi;
+        $data_retskb_histori['kode_dev']        = $ret_skb->kode_dev;
+        $data_retskb_histori['no_ba']           = $ret_skb->no_ba;
+        $data_retskb_histori['keterangan']      = $ret_skb->keterangan;
+        $data_retskb_histori['bag']             = $ret_skb->bag;
+        $data_retskb_histori['batal']           = "1";
+        $data_retskb_histori['alasan_batal']    = $alasan;
+        $data_retskb_histori['id_user']         = $ret_skb->id_user;
+        $data_retskb_histori['user']            = $this->session->userdata('user');
+        $data_retskb_histori['cetak']           = $ret_skb->cetak;
+        $data_retskb_histori['keterangan_transaksi']  = "BATAL RETUR";
+        $data_retskb_histori['log']  = $this->session->userdata('user') . " membatalkan RETUR $ret_skb->noretur";
+        $data_retskb_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
+        $data_retskb_histori['user_transaksi']  = $this->session->userdata('user');
+        $data_retskb_histori['client_ip']  = $this->input->ip_address();
+        $data_retskb_histori['client_platform']  = $this->platform->agent();
+        $this->M_retur->savehistoriretskb($data_retskb_histori);
+
         $isi_batal = array('batal' => 1, 'alasan_batal' => $alasan);
 
         $data = $this->M_retur->updateBatal($norefretur, $isi_batal);
@@ -1244,6 +1487,39 @@ class Retur extends CI_Controller
     public function deleteRetur()
     {
         $norefretur = $this->input->post('norefretur');
+
+        $ret_skb = $this->db_logistik_pt->query("SELECT * FROM retskb WHERE norefretur='$norefretur'")->row();
+        $data_retskb_histori['noretur']         = $ret_skb->noretur;
+        $data_retskb_histori['norefretur']      = $ret_skb->norefretur;
+        $data_retskb_histori['tgl']             = $ret_skb->tgl;
+        $data_retskb_histori['nobkb']           = $ret_skb->nobkb;
+        $data_retskb_histori['norefbkb']        = $ret_skb->norefbkb;
+        $data_retskb_histori['tglinput']        = $ret_skb->tglinput;
+        $data_retskb_histori['txttgl']          = $ret_skb->txttgl;
+        $data_retskb_histori['thn']             = $ret_skb->thn;
+        $data_retskb_histori['periode1']        = $ret_skb->periode;
+        $data_retskb_histori['periode2']        = NULL;
+        $data_retskb_histori['txtperiode1']     = $ret_skb->txtperiode;
+        $data_retskb_histori['txtperiode2']     = NULL;
+        $data_retskb_histori['pt']              = $ret_skb->pt;
+        $data_retskb_histori['kode']            = $ret_skb->kode;
+        $data_retskb_histori['devisi']          = $ret_skb->devisi;
+        $data_retskb_histori['kode_dev']        = $ret_skb->kode_dev;
+        $data_retskb_histori['no_ba']           = $ret_skb->no_ba;
+        $data_retskb_histori['keterangan']      = $ret_skb->keterangan;
+        $data_retskb_histori['bag']             = $ret_skb->bag;
+        $data_retskb_histori['batal']           = "1";
+        $data_retskb_histori['alasan_batal']    = NULL;
+        $data_retskb_histori['id_user']         = $ret_skb->id_user;
+        $data_retskb_histori['user']            = $this->session->userdata('user');
+        $data_retskb_histori['cetak']           = $ret_skb->cetak;
+        $data_retskb_histori['keterangan_transaksi']  = "BATAL RETUR";
+        $data_retskb_histori['log']  = $this->session->userdata('user') . " membatalkan RETUR $ret_skb->noretur";
+        $data_retskb_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
+        $data_retskb_histori['user_transaksi']  = $this->session->userdata('user');
+        $data_retskb_histori['client_ip']  = $this->input->ip_address();
+        $data_retskb_histori['client_platform']  = $this->platform->agent();
+        $savehistoriretskb = $this->M_retur->savehistoriretskb($data_retskb_histori);
 
         $deleteretur = $this->M_retur->deleteRetur($norefretur);
         $deletestokmasuk = $this->M_retur->deleteStokMasuk($norefretur);

@@ -1042,9 +1042,10 @@
                     </div>
                     <div class="modal-body">
 
+
                         <div class="form-group">
-                            <label class="col-3 col-form-label">
-                                <font face="Verdana" size="2">Tanggal PP *</font>
+                            <label class="col-4 col-form-label">
+                                <font face="Verdana" size="2">Tanggal SPP*</font>
                             </label>
                             <div class="col-12">
                                 <input type="text" class="form-control" id="txt_periode6" name="txt_periode6">
@@ -1851,11 +1852,11 @@
     <!-- END wrapper -->
 
     <!-- Right Sidebar -->
-    
+
     <!-- /Right-bar -->
 
     <!-- Right bar overlay-->
-  
+
 
     <!-- Vendor js -->
     <script src="<?php echo base_url() ?>assets/libs/tippy.js/tippy.all.min.js"></script>

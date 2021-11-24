@@ -1621,7 +1621,7 @@
 
             beforeSend: function() {
                 $('#lbl_bkb_status').empty();
-                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Hapus Retur</label>');
+                $('#lbl_bkb_status').append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i>Proses Batal Retur</label>');
             },
 
             data: {
@@ -1640,7 +1640,7 @@
                 });
                 setTimeout(function() {
                     location.reload();
-                }, 100);
+                }, 1000);
             }
         });
     }

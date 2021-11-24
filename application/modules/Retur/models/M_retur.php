@@ -120,10 +120,18 @@ class M_retur extends CI_Model
     {
         return $this->db_logistik_pt->insert('retskb', $data);
     }
+    public function savehistoriretskb($data)
+    {
+        return $this->db_logistik_pt->insert('retskb_history', $data);
+    }
 
     public function savedataretskbitem($data)
     {
         return $this->db_logistik_pt->insert('ret_skbitem', $data);
+    }
+    public function savehistoriretskbitem($data)
+    {
+        return $this->db_logistik_pt->insert('ret_skbitem_history', $data);
     }
 
     public function savedatastokmasuk($data)

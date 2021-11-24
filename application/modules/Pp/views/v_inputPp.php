@@ -172,7 +172,7 @@
                                     Keterangan
                                 </label>
                                 <div class="col-8 col-xl-12">
-                                    <textarea class="form-control form-control-sm" id="txt_keterangan" name="txt_keterangan" placeholder="Keterangan" rows="2" required="required"></textarea>
+                                    <textarea class="form-control form-control-sm" id="txt_keterangan" name="txt_keterangan" placeholder="Keterangan" rows="2"></textarea>
                                     <!-- <input id="txt_keterangan" name="txt_keterangan" rows="3" class="form-control form-control-sm" required="required" type="text" placeholder="Keterangan" autocomplete="off"> -->
                                 </div>
                             </div>
@@ -228,7 +228,7 @@
                             </div>
 
                             <div class="button-list" style="float: right; margin-top: 15px;">
-                                <button type="button" onclick="saveData()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
+                                <button type="button" onclick="validasi()" class="btn btn-xs btn-primary" id="simpan_pp">Simpan</button>
                                 <button type="button" onclick="updateData()" class="btn btn-xs btn-warning" style="display: none;" id="update_pp">Update</button>
                                 <button type="button" onclick="cancelUpdate()" class="btn btn-xs btn-primary" style="display: none;" id="cancelUpdate">Cancel</button>
                             </div>
@@ -301,9 +301,9 @@
                         </div>
                     </div>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
-                </div> -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn_close" id="tutup_modal" onclick="tutup_modal()">Tutup</button>
+                </div>
             </div>
         </div>
     </div>
@@ -335,6 +335,7 @@
         padding: 3px;
         padding-left: 10px;
         font-size: 11px;
+        cursor: pointer;
     }
 
     input::-webkit-outer-spin-button,
@@ -366,7 +367,75 @@
     function goBack() {
         window.history.back();
     }
+
+    function toast(v_text) {
+        $.toast({
+            position: 'top-right',
+            heading: 'Failed!',
+            text: v_text + ' ',
+            icon: 'error',
+            loader: false
+        });
+    }
+
+    function validasi() {
+        var refpo = $('#txt_no_ref_po').val();
+        var pembayaran = $('#txt_pembayaran').val();
+        var pajak = $('#txt_pajak').val();
+        var nilai_bpo1 = $('#txt_nilai_bpo1').val();
+        var nilai_bpo2 = $('#txt_nilai_bpo2').val();
+        var bayar_ke = $('#txt_dibayar_ke').val();
+        var jumlah = $('#txt_jumlah').val();
+
+        if (!refpo) {
+            toast('NOREF PO is required!');
+            $('#txt_no_ref_po').css({
+                "background": "#FFCECE"
+            });
+        } else if (!pembayaran) {
+            toast('Pembayaran is required!');
+            $('#txt_pembayaran').css({
+                "background": "#FFCECE"
+            });
+
+        } else if (!pajak) {
+            toast('Pajak is required!');
+            $('#txt_pajak').css({
+                "background": "#FFCECE"
+            });
+
+        } else if (!nilai_bpo1) {
+            toast('BPO is required!');
+            $('#txt_nilai_bpo1').css({
+                "background": "#FFCECE"
+            });
+
+        } else if (!nilai_bpo2) {
+            toast('BPO is required!');
+            $('#txt_nilai_bpo2').css({
+                "background": "#FFCECE"
+            });
+
+        } else if (!bayar_ke) {
+            toast('Bayar is required!');
+            $('#txt_dibayar_ke').css({
+                "background": "#FFCECE"
+            });
+
+        } else if (!jumlah) {
+            toast('Bayar is required!');
+            $('#txt_jumlah').css({
+                "background": "#FFCECE"
+            });
+
+        } else {
+            saveData();
+        }
+    }
     $(document).ready(function() {
+        // setTimeout(function() {
+        //     check_form()
+        // }, 1000);
         // $('#preview').show();
         // console.log('ini dia',$(this).attr('at'));
         $('#txt_pajak,#txt_nilai_bpo1,#txt_nilai_bpo2').number(true, 2);
@@ -648,6 +717,10 @@
         window.open('cetak/' + noref_rpc + '/' + id_pp, '_blank');
     }
 
+    function saveRinciEnter(e) {
+        saveData();
+    }
+
     function saveData() {
         $('#simpan_pp').attr('disabled', '');
         var id_pp = $('#id_pp').val();
@@ -845,6 +918,11 @@
         $('#simpan_pp').show();
         $('#simpan_pp').removeAttr('disabled');
         $('#update_pp').hide();
+    }
+
+    function tutup_modal() {
+        $('#modalcariPO').modal('hide');
+        scanner.stop();
     }
 
     function cancelUpdate() {

@@ -813,6 +813,9 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default btn_close" id="tutup_modal">Tutup</button>
+            </div>
         </div>
     </div>
 </div>
@@ -1398,6 +1401,12 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                         $("#kamera1").css('display', 'none');
                         $("#kamera2").css('display', 'none');
                     }
+                });
+                $('#tutup_modal').click(function(e) {
+                    e.preventDefault();
+
+                    $('#modalcarispp').modal('hide');
+                    scanner.stop();
                 });
 
                 $(document).on('click', '#data_spp', function() {
