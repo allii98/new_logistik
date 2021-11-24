@@ -360,7 +360,7 @@ class Retur extends CI_Controller
         $data_retskb_histori['user']            = $this->session->userdata('user');
         $data_retskb_histori['cetak']           = "0";
         $data_retskb_histori['keterangan_transaksi']  = "INPUT RETUR";
-        $data_retskb_histori['log']  = "-";
+        $data_retskb_histori['log']  =  $this->session->userdata('user') . " membuat RETUR baru $nobkb";
         $data_retskb_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
         $data_retskb_histori['user_transaksi']  = $this->session->userdata('user');
         $data_retskb_histori['client_ip']  = $this->input->ip_address();
@@ -401,7 +401,7 @@ class Retur extends CI_Controller
         $data_retskbitem_histori['id_user']         = $id_user;
         $data_retskbitem_histori['user']            = $this->session->userdata('user');
         $data_retskbitem_histori['keterangan_transaksi']  = "INPUT ITEM RETUR";
-        $data_retskbitem_histori['log']  = "-";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " membuat RETUR baru $noretur";
         $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
         $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
         $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
@@ -1024,7 +1024,7 @@ class Retur extends CI_Controller
         $data_retskbitem_histori['id_user']         = $skb_item->id_user;
         $data_retskbitem_histori['user']            = $this->session->userdata('user');
         $data_retskbitem_histori['keterangan_transaksi']  = "UPDATE ITEM RETUR";
-        $data_retskbitem_histori['log']  = "-";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " mengubah ITEM RETUR $skb_item->noretur";
         $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
         $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
         $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
@@ -1315,7 +1315,7 @@ class Retur extends CI_Controller
         $data_retskbitem_histori['id_user']         = $skb_item->id_user;
         $data_retskbitem_histori['user']            = $this->session->userdata('user');
         $data_retskbitem_histori['keterangan_transaksi']  = "BATAL ITEM RETUR";
-        $data_retskbitem_histori['log']  = "-";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " membatalkan RETUR $skb_item->noretur";
         $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
         $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
         $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
@@ -1386,7 +1386,7 @@ class Retur extends CI_Controller
         $data_retskbitem_histori['id_user']         = $skb_item->id_user;
         $data_retskbitem_histori['user']            = $this->session->userdata('user');
         $data_retskbitem_histori['keterangan_transaksi']  = "DELETE ITEM RETUR";
-        $data_retskbitem_histori['log']  = "-";
+        $data_retskbitem_histori['log']  = $this->session->userdata('user') . " menghapus ITEM RETUR $skb_item->noretur";
         $data_retskbitem_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
         $data_retskbitem_histori['user_transaksi']  = $this->session->userdata('user');
         $data_retskbitem_histori['client_ip']  = $this->input->ip_address();
@@ -1465,7 +1465,7 @@ class Retur extends CI_Controller
         $data_retskb_histori['user']            = $this->session->userdata('user');
         $data_retskb_histori['cetak']           = $ret_skb->cetak;
         $data_retskb_histori['keterangan_transaksi']  = "BATAL RETUR";
-        $data_retskb_histori['log']  = "-";
+        $data_retskb_histori['log']  = $this->session->userdata('user') . " membatalkan RETUR $ret_skb->noretur";
         $data_retskb_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
         $data_retskb_histori['user_transaksi']  = $this->session->userdata('user');
         $data_retskb_histori['client_ip']  = $this->input->ip_address();
@@ -1514,7 +1514,7 @@ class Retur extends CI_Controller
         $data_retskb_histori['user']            = $this->session->userdata('user');
         $data_retskb_histori['cetak']           = $ret_skb->cetak;
         $data_retskb_histori['keterangan_transaksi']  = "BATAL RETUR";
-        $data_retskb_histori['log']  = "-";
+        $data_retskb_histori['log']  = $this->session->userdata('user') . " membatalkan RETUR $ret_skb->noretur";
         $data_retskb_histori['tgl_transaksi']  = date("Y-m-d H:i:s");
         $data_retskb_histori['user_transaksi']  = $this->session->userdata('user');
         $data_retskb_histori['client_ip']  = $this->input->ip_address();
