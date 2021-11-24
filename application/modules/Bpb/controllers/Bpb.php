@@ -115,6 +115,32 @@ class Bpb extends CI_Controller
         echo json_encode($data);
     }
 
+    public function cari_station()
+    {
+        $query = "SELECT coa_unit, nama_unit FROM station ORDER BY nama_unit ASC";
+
+        $data = $this->db_logistik_center->query($query)->result();
+        echo json_encode($data);
+    }
+
+    public function cari_kategori_st()
+    {
+        $station = $this->input->post('cmb_station');
+        $query_coa = "SELECT noac, nama FROM noac WHERE general = '$station'";
+        $data = $this->db_mips_gl->query($query_coa)->result();
+
+        echo json_encode($data);
+    }
+
+    public function cari_sub_kategori()
+    {
+        $kategori_st = $this->input->post('cmb_kategori_st');
+        $query_coa = "SELECT noac, nama FROM noac WHERE general = '$kategori_st'";
+        $data = $this->db_mips_gl->query($query_coa)->result();
+
+        echo json_encode($data);
+    }
+
     function pilih_afd()
     {
         $tm_tbm = $this->input->post('tm_tbm');
@@ -191,7 +217,7 @@ class Bpb extends CI_Controller
             $data_coa = array();
             $noac = $list_coa_material->coa_material;
             $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$noac'";
-            $get_coa = $this->db_logistik->query($query_coa)->row();
+            $get_coa = $this->db_mips_gl->query($query_coa)->row();
             $data_coa[] = $get_coa->noac;
             $data_coa[] = $get_coa->nama;
             array_push($data, $data_coa);
@@ -329,7 +355,8 @@ class Bpb extends CI_Controller
         $mutasi_pt = $this->input->post('mutasi_pt');
         $mutasi_lokal = $this->input->post('mutasi_lokal');
         $devisi = $this->input->post('devisi');
-        $this->M_bpb->where_datatables($dt, $pt, $cmb_bahan, $mutasi_pt, $mutasi_lokal, $devisi);
+        $sub_kategori = $this->input->post('sub_kategori');
+        $this->M_bpb->where_datatables($dt, $pt, $cmb_bahan, $mutasi_pt, $mutasi_lokal, $devisi, $sub_kategori);
         $list = $this->M_bpb->get_datatables();
         $data = array();
         $no = $_POST['start'];

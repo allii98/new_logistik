@@ -16,7 +16,7 @@ class M_bpb extends CI_Model
         $this->load->database();
     }
 
-    public function where_datatables($dt, $pt, $cmb_bahan, $mutasi_pt, $mutasi_lokal, $devisi)
+    public function where_datatables($dt, $pt, $cmb_bahan, $mutasi_pt, $mutasi_lokal, $devisi, $sub_kategori)
     {
         // global $nopo;
         $this->dt = $dt;
@@ -25,6 +25,7 @@ class M_bpb extends CI_Model
         $this->mutasi_pt = $mutasi_pt;
         $this->mutasi_lokal = $mutasi_lokal;
         $this->devisi = $devisi;
+        $this->sub_kategori = $sub_kategori;
         // return $nopo;
     }
 
@@ -36,7 +37,7 @@ class M_bpb extends CI_Model
         $mutasi_pt = $this->mutasi_pt;
         $mutasi_lokal = $this->mutasi_lokal;
         $devisi = $this->devisi;
-
+        $sub_kategori = $this->sub_kategori;
 
         $this->db_mips_gl->from($this->table);
         if ($bahan != '-') {
@@ -97,6 +98,8 @@ class M_bpb extends CI_Model
                 # code...
                 // $this->db_mips_gl->like('nama', 'HUBUNGAN INTRA COMPANY', 'both');
             }
+        } else if ($sub_kategori != '0') {
+            $this->db_mips_gl->where('noac', $sub_kategori);
         }
         //  else {
         //     $tm = '7005';
@@ -198,19 +201,13 @@ class M_bpb extends CI_Model
 
     function simpan_rinci_bpb()
     {
-
-
-        // $diberikan_kpd = $this->input->post('txt_diberikan_kpd');
         $keperluan      = $this->input->post('txt_untuk_keperluan');
         $kode_devisi    = $this->input->post('devisi');
-        // $tgl           = $this->input->post('txt_tgl_bpb');
         $tgl            = date("Y-m-d", strtotime($this->input->post('txt_tgl_bpb')));
         $bagian         = $this->input->post('cmb_bagian');
         $alokasi        = $this->input->post('cmb_alokasi_est');
-        // $tm_tbm         = $this->input->post('cmb_tm_tbm');
         $afd_unit       = $this->input->post('cmb_afd_unit');
         $blok_sub       = $this->input->post('cmb_blok_sub');
-        // $tahun_tanam    = $this->input->post('cmb_tahun_tanam');
         $tm_tbm          = $this->input->post('cmb_tm_tbm');
         $bahan          = $this->input->post('cmb_bahan');
         $thun_tanam          = $this->input->post('cmb_tahun_tanam');
@@ -219,15 +216,11 @@ class M_bpb extends CI_Model
         $kodebar        = $this->input->post('hidden_kode_barang');
         $nabar          = $this->input->post('hidden_nama_barang');
         $grup           = $this->input->post('hidden_grup_barang');
-        // $stok_tgl_ini   = $this->input->post('hidden_stok_tgl_ini');
         $satuan         = $this->input->post('hidden_satuan');
         $qty            = $this->input->post('txt_qty_diminta');
         $ket            = $this->input->post('txt_ket_rinci');
-        // $no_bpb         = $this->input->post('hidden_no_bpb');
         $sess_lokasi    = $this->session->userdata('status_lokasi');
-        // $sess_periode   = $this->session->userdata('periode');
         $periode        = $this->session->userdata('ym_periode');
-        // $periode        =  date("Ym",strtotime($sess_periode));
         $nobkb_ro       = "";
         $nopo_ro        = "";
 
@@ -236,7 +229,6 @@ class M_bpb extends CI_Model
         $kd_nmr        = $this->input->post('kd_nmr');
         $hm_km        = $this->input->post('hm_km');
         $lokasi_kerja       = $this->input->post('lokasi_kerja');
-
 
         $sess_lokasi = $this->session->userdata('status_lokasi');
         $kode_devisi = $this->input->post('devisi');
@@ -268,11 +260,8 @@ class M_bpb extends CI_Model
 
         $digit = $dig_1 . $dig_2;
 
-        // $ym = date("ym");
         $hitung_digit1_2 = strlen($digit);
-        // $query_bpb = "SELECT MAX(SUBSTRING(nobpb, 5)) as max_nobpb from bpb WHERE nobpb LIKE '$ym%'";
         $query_bpb = "SELECT MAX(SUBSTRING(nobpb, $hitung_digit1_2+1)) as max_nobpb from bpb WHERE nobpb LIKE '$digit%'";
-        // var_dump($query_bpb);exit();
         $generate_bpb = $this->db_logistik_pt->query($query_bpb)->row();
         $noUrut_bpb = (int)($generate_bpb->max_nobpb);
         $noUrut_bpb++;
@@ -283,7 +272,6 @@ class M_bpb extends CI_Model
         } else {
             $nobpb = $this->input->post('hidden_no_bpb');
         }
-
 
         $format_m_y = date("m/Y");
 
@@ -330,18 +318,7 @@ class M_bpb extends CI_Model
             $kodebeban = NULL;
         }
         $ketbebanfix = $this->input->post('hidden_nama_bahan');
-        $noac = $this->input->post('hidden_no_acc');
-        if ($bahan == '-') {
-            $ketbeban = NULL;
-        } else {
-            $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$noac'";
-            $get_coa = $this->db_mips_gl->query($query_coa)->row();
-            $ketbeban = $get_coa->nama;
-        }
-        // if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
 
-        //     $databpb['id']              = $id_bpb;
-        // }
         $databpb['nobpb']           = $nobpb;
         $databpb['norefbpb']        = $norefbpb;
         $databpb['nobkb_ro']        = $nobkb_ro;
@@ -355,7 +332,6 @@ class M_bpb extends CI_Model
         $databpb['kode']            = $this->session->userdata('kode_pt');
         $databpb['devisi']          = $data['devisi']['PT'];
         $databpb['kode_dev']        = $kode_devisi;
-        // $databpb['kpd']             = "";
         $databpb['keperluan']       = $keperluan;
         $databpb['bag']             = $bagian;
         $databpb['batal']           = "0";
@@ -372,9 +348,6 @@ class M_bpb extends CI_Model
         $databpb['lok_kerja']        = $lokasi_kerja;
         $databpb['status_mutasi']        = $statusmutasi;
 
-        // if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
-        //     $databpbitem['id']            = $id_bpbitem;
-        // }
         $databpbitem['kodebar']       = $kodebar;
         $databpbitem['nabar']         = $nabar;
         $databpbitem['satuan']        = $satuan;
@@ -418,11 +391,6 @@ class M_bpb extends CI_Model
             $no_id_approval = "1";
         }
 
-        // if ($this->input->post('hidden_mutasi_pt') != 'mutasi_pt' || $this->input->post('hidden_mutasi_lokal') != 'mutasi_lokal') {
-        //     $data_approval_bpb['id']                = $no_id_approval;
-        // }
-
-
         if (empty($this->input->post('hidden_no_bpb'))) {
 
             $this->db_logistik_pt->insert('bpb', $databpb);
@@ -464,14 +432,12 @@ class M_bpb extends CI_Model
                 $databpb['pt_req_mutasi'] = $this->session->userdata('nama_pt');
                 $this->db_logistik_center->insert('bpb_mutasi', $databpb);
 
-
                 $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                 $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
             } else if ($this->input->post('hidden_mutasi_lokal') == 'mutasi_lokal') {
                 $databpb['kode_pt_req_mutasi'] = $this->session->userdata('kode_pt_login');
                 $databpb['pt_req_mutasi'] = $this->session->userdata('nama_pt');
                 $this->db_logistik_center->insert('bpb_mutasi', $databpb);
-
 
                 $this->db_logistik_center->insert('bpbitem_mutasi', $databpbitem);
                 $this->db_logistik_center->insert('approval_bpb', $data_approval_bpb);
@@ -485,16 +451,13 @@ class M_bpb extends CI_Model
                 $bool_approval_bpb = FALSE;
             }
 
-
             if ($bool_bpb === TRUE && $bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
-                // if ($bool_bpb === TRUE && $bool_bpbitem === TRUE){
                 return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $ambil_bpb->id, 'id_bpbitem' => $ambil_item->id, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
             } else {
                 return FALSE;
             }
         } else {
             $nobpb      = $this->input->post('hidden_no_bpb');
-
             $kodebar    = $this->input->post('hidden_kode_barang');
             $nabar      = $this->input->post('hidden_nama_barang');
 
@@ -512,7 +475,6 @@ class M_bpb extends CI_Model
                 } else {
                     $bool_bpbitem = FALSE;
                 }
-
 
                 $ambil_bpb =  $this->db_logistik_pt->query("SELECT id FROM bpb WHERE norefbpb='$norefbpb'")->row();
                 $ambil_item =  $this->db_logistik_pt->query("SELECT id FROM bpbitem WHERE norefbpb='$norefbpb' AND kodebar='$kodebar'")->row();
@@ -550,9 +512,6 @@ class M_bpb extends CI_Model
                     $bool_approval_bpb = FALSE;
                 }
 
-
-
-
                 if ($bool_bpbitem === TRUE && $bool_approval_bpb === TRUE) {
                     return array('status' => TRUE, 'nobpb' => $nobpb, 'id_bpb' => $ambil_bpb->id, 'id_bpbitem' => $ambil_item->id, 'norefbpb' => $norefbpb, 'kodebar' => $kodebar, 'kode_dev' => $kode_devisi, 'id_approve' => $no_id_approval);
                 } else {
@@ -572,11 +531,8 @@ class M_bpb extends CI_Model
         $thun_tanam          = $this->input->post('cmb_tahun_tanam');
         $mut = $this->input->post('hidden_mutasi_pt');
         $mutlok = $this->input->post('hidden_mutasi_lokal');
+        $edit = $this->input->post('edit');
 
-
-
-
-        // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
         if ($tm_tbm == 'TM') {
             $tm_tbm1 = '7005';
@@ -595,20 +551,18 @@ class M_bpb extends CI_Model
             $kodebeban = NULL;
         }
         $ketbebanfix = $this->input->post('hidden_nama_bahan');
-        $noac = $this->input->post('hidden_no_acc');
-        if ($bahan == '-') {
-            $ketbeban = NULL;
+
+        if ($edit == 1) {
+            $kodebebanfix = $this->input->post('cmb_kode_bahan');
         } else {
-            $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$noac'";
-            $get_coa = $this->db_mips_gl->query($query_coa)->row();
-            $ketbeban = $get_coa->nama;
+            $kodebebanfix = $kodebeban;
         }
 
         $kodebar = $this->input->post('hidden_kode_barang');
 
         $databpbitem['afd']             = $this->input->post('cmb_afd_unit');
         $databpbitem['blok']           = $this->input->post('cmb_blok_sub');
-        $databpbitem['kodebebantxt']  = $kodebeban;
+        $databpbitem['kodebebantxt']  = $kodebebanfix;
         $databpbitem['ketbeban']     = $ketbebanfix;
         $databpbitem['kodesubtxt']  = $this->input->post('hidden_no_acc');
         $databpbitem['ketsub']     = $this->input->post('hidden_nama_acc');
@@ -621,12 +575,10 @@ class M_bpb extends CI_Model
         $databpbitem['qty']   = $this->input->post('txt_qty_diminta');
         $databpbitem['ket']  = $this->input->post('txt_ket_rinci');
 
-
-
         $databpbitemMut = array(
             'afd' => $this->input->post('cmb_afd_unit'),
             'blok' => $this->input->post('cmb_blok_sub'),
-            'kodebebantxt' => $kodebeban,
+            'kodebebantxt' => $kodebebanfix,
             'ketbeban' => $ketbebanfix,
             'kodesubtxt' => $this->input->post('hidden_no_acc'),
             'ketsub' => $this->input->post('hidden_nama_acc'),
@@ -656,8 +608,6 @@ class M_bpb extends CI_Model
         $query = "SELECT kodebar FROM bpbitem WHERE id = '$id_bpbitem'";
         $check_brg = $this->db_logistik_pt->query($query)->row_array();
 
-
-
         if ($check_brg['kodebar'] != $kodebar) {
             $cek_item = "SELECT kodebar FROM bpbitem WHERE norefbpb = '$norefbpb' AND kodebar = '$kodebar'";
             $cek_isi_item = $this->db_logistik_pt->query($cek_item)->num_rows();
@@ -668,16 +618,9 @@ class M_bpb extends CI_Model
                 $this->db_logistik_pt->where('id', $id_bpbitem);
                 return $this->db_logistik_pt->update('bpbitem');
 
-
                 $this->db_logistik_pt->set($data_approval_bpb);
                 $this->db_logistik_pt->where('norefbpb', $id_bpbitem);
                 return $this->db_logistik_pt->update('approval_bpb');
-
-
-
-
-                // $data_approval_bpb['qty_disetujui'] = "0";
-
             }
         } else {
             $this->db_logistik_pt->set($databpbitem);

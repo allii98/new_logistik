@@ -537,7 +537,7 @@
                         $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
                     } else {
 
-                        var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].kodebebantxt + '</option>';
+                        var opsi_cmb_bahan = '<option value="' + data.data_bpbitem[index].kodebebantxt + '">' + data.data_bpbitem[index].ketbeban + '</option>';
                         $('#cmb_bahan_' + n).empty();
                         $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
                     }
@@ -926,9 +926,14 @@
         var kode_dev = $('#hidden_kode_dev').val();
         var kodebar = $('#hidden_kode_barang_' + no).val();
 
+        form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
         form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
-        form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
+        form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
+        // kalo bpb edit dia langsung jadi kodebeban
+        form_data.append('cmb_kode_bahan', $('#cmb_bahan_' + no).val());
+        form_data.append('hidden_nama_bahan', $('#cmb_bahan_' + no + ' option:selected').text());
+
         form_data.append('hidden_no_acc', $('#hidden_no_acc_' + no).val());
         form_data.append('hidden_nama_acc', $('#hidden_nama_acc_' + no).val());
         form_data.append('hidden_kode_barang', $('#hidden_kode_barang_' + no).val());
@@ -943,6 +948,7 @@
 
         form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
         form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
+        form_data.append('edit', 1);
 
         $.ajax({
             type: "POST",

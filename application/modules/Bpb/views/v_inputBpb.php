@@ -79,51 +79,121 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-xl-4 col-12">
-                            <div class="form-group row" style="margin-bottom: 2px;">
-                                <label for="cmb_bagian" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    Bagian
-                                </label>
-                                <div class="col-9 col-xl-12">
-                                    <select class="form-control form-control-sm" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
-                                        <option disabled selected>--Pilih--</option>
-                                    </select>
-                                    <input type="hidden" name="hidden_bagian" id="hidden_bagian">
+                            <?php
+                            // jika dia pabrik
+                            if ($this->session->userdata('kode_dev') == 03) {
+                            ?>
+                                <div class="form-group row" style="margin-bottom: 2px; display: none;">
+                                    <label for="cmb_bagian" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Bagian
+                                    </label>
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
+                                            <option disabled selected>--Pilih--</option>
+                                        </select>
+                                        <input type="hidden" name="hidden_bagian" id="hidden_bagian">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row" style="margin-bottom: 2px;">
-                                <label for="bhnbakar" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    Bahan&nbsp;Bakar
-                                </label>
 
-                                <div class="col-9 col-xl-12">
-                                    <select class="form-control form-control-sm bg-light" id="bhnbakar" name="bhnbakar" disabled>
-                                        <option disabled value="" selected>--Pilih--</option>
-                                        <option value="BBM">BBM</option>
-                                        <option value="NONBBM">NON BBM</option>
-                                    </select>
+                                <div class="form-group row" style="margin-bottom: 2px;">
+                                    <label for="cmb_station" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Station
+                                    </label>
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm" id="cmb_station" name="cmb_station" required="">
+                                            <option disabled selected>--Pilih--</option>
+                                            <option value="0">-</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group row mb-0">
-                                <label for="cmb_alokasi_est" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
-                                    Alokasi&nbsp;Estate
-                                </label>
 
-                                <div class="col-9 col-xl-12">
-                                    <select class="form-control form-control-sm" id="cmb_alokasi_est" name="cmb_alokasi_est">
-                                        <option disabled value="" selected>--Pilih--</option>
-                                        <option value="03">03</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                    </select>
-                                    <div id="txt_estate"></div>
+                                <div class="form-group row" style="margin-bottom: 2px;">
+                                    <label for="cmb_kategori" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Kategori
+                                    </label>
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm" id="cmb_kategori" name="cmb_kategori" required="">
+                                            <option disabled selected>--Pilih--</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
+
+                                <div class="form-group row" style="margin-bottom: 2px;">
+                                    <label for="cmb_sub_kategori" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Sub
+                                    </label>
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm" id="cmb_sub_kategori" name="cmb_sub_kategori" required="">
+                                            <option disabled selected>--Pilih--</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row" style="margin-bottom: 2px;">
+                                    <label for="bhnbakar" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Bahan&nbsp;Bakar
+                                    </label>
+
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm" id="bhnbakar" name="bhnbakar">
+                                            <option disabled value="" selected>--Pilih--</option>
+                                            <option value="BBM">BBM</option>
+                                            <option value="NONBBM">NON BBM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php
+                            } else {
+                            ?>
+                                <div class="form-group row" style="margin-bottom: 2px;">
+                                    <label for="cmb_bagian" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Bagian
+                                    </label>
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm" id="cmb_bagian" name="cmb_bagian" required="" onchange="cek_tm_tbm(1)">
+                                            <option disabled selected>--Pilih--</option>
+                                        </select>
+                                        <input type="hidden" name="hidden_bagian" id="hidden_bagian">
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="margin-bottom: 2px;">
+                                    <label for="bhnbakar" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Bahan&nbsp;Bakar
+                                    </label>
+
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm bg-light" id="bhnbakar" name="bhnbakar" disabled>
+                                            <option disabled value="" selected>--Pilih--</option>
+                                            <option value="BBM">BBM</option>
+                                            <option value="NONBBM">NON BBM</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-0">
+                                    <label for="cmb_alokasi_est" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
+                                        Alokasi&nbsp;Estate
+                                    </label>
+
+                                    <div class="col-9 col-xl-12">
+                                        <select class="form-control form-control-sm" id="cmb_alokasi_est" name="cmb_alokasi_est">
+                                            <option disabled value="" selected>--Pilih--</option>
+                                            <option value="03">03</option>
+                                            <option value="06">06</option>
+                                            <option value="07">07</option>
+                                            <option value="08">08</option>
+                                            <option value="09">09</option>
+                                            <option value="10">10</option>
+                                            <option value="21">21</option>
+                                            <option value="22">22</option>
+                                        </select>
+                                        <div id="txt_estate"></div>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            ?>
                         </div>
+
                         <div class="col-lg-4 col-xl-4 col-12" id="databbm">
                             <div class="form-group row" style="margin-bottom: 2px;">
                                 <label for="txt_jns_alat" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
@@ -539,8 +609,6 @@
         -moz-appearance: textfield;
         /* Firefox */
     }
-
-    
 </style>
 
 <script>
@@ -599,8 +667,6 @@
         var isi_dev = $("#devisi option:selected").text();
         $('#hidden_devisi').val(isi_dev);
 
-
-
         //mutasi LOKASI
         $('#mutasi_lokal').click(function() {
             if ($(this).prop("checked") == true) {
@@ -627,12 +693,6 @@
         cari_dept();
         $('#hidden_no_table').val(2);
 
-        // $('#cmb_bagian').change(function() {
-        //     console.log(this.value);
-        // });
-
-
-
         $("#txt_qty_diminta_1").on("keypress keyup blur", function(event) {
             //this.value = this.value.replace(/[^0-9\.]/g,'');
             $(this).val($(this).val().replace(/[^0-9\.]/g, ''));
@@ -641,12 +701,18 @@
             }
         });
 
-
+        // cari station jika dia pabrik
+        var kode_dev = $('#devisi').val();
+        if (kode_dev == 03) {
+            cari_station();
+            forpabrik();
+        }
     });
 
     $('#cmb_bagian').change(function() {
         // console.log(this.value);
         var data = this.value;
+        console.log(data + 'bag')
         $('#hidden_bagian').val(data);
         if (data != 1 && data != 2) {
             $('#cmb_tm_tbm_1').attr('disabled', '');
@@ -672,7 +738,20 @@
             // $('').attr('disabled', '');
             $('input[type=checkbox]').prop('checked', false);
         }
-    })
+    });
+
+    // sengaja gue copy karna gua males ngetiknya untuk bag pabrik ini
+    function forpabrik() {
+
+        $('#cmb_tm_tbm_1').attr('disabled', '');
+        $('#cmb_afd_unit_1').attr('disabled', '');
+        $('#cmb_blok_sub_1').attr('disabled', '');
+        $('#cmb_bahan_1').attr('disabled', '');
+        $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
+        $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
+        $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
+    }
+
 
 
     $('#cmb_alokasi_est').change(function() {
@@ -745,9 +824,42 @@
             cache: false,
             data: '',
             success: function(data) {
+                var kode_dev = $('#devisi').val();
+
+                //jika dia pabrik
+                if (kode_dev == 03) {
+                    $.each(data, function(index) {
+                        kode_dev_int = Number(kode_dev);
+                        if (data[index].kode == kode_dev_int) {
+                            var opsi_cmb_bagian = '<option value="' + data[index].kode + '" style="font-size: 12px" selected>' + data[index].nama + '</option>';
+                            $('#cmb_bagian').append(opsi_cmb_bagian);
+                        }
+                    });
+                } else {
+                    $.each(data, function(index) {
+                        var opsi_cmb_bagian = '<option value="' + data[index].kode + '" style="font-size: 12px">' + data[index].nama + '</option>';
+                        $('#cmb_bagian').append(opsi_cmb_bagian);
+                    });
+                }
+            },
+            error: function(request) {
+                alert("KONEKSI TERPUTUS!");
+            }
+        });
+    }
+
+    function cari_station() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/cari_station'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: '',
+            success: function(data) {
                 $.each(data, function(index) {
-                    var opsi_cmb_bagian = '<option value="' + data[index].kode + '" style="font-size: 12px">' + data[index].nama + '</option>';
-                    $('#cmb_bagian').append(opsi_cmb_bagian);
+                    var opsi_cmb_station = '<option value="' + data[index].coa_unit + '" style="font-size: 12px">' + data[index].nama_unit + '</option>';
+                    $('#cmb_station').append(opsi_cmb_station);
                 });
             },
             error: function(request) {
@@ -755,6 +867,77 @@
             }
         });
     }
+
+    $('#cmb_station').change(function() {
+        var st = this.value;
+        // dinormalin lagi ketika di ganti st nya
+        $('#cmb_sub_kategori').empty();
+        var cmb_st = '<option disabled selected>--Pilih--</option>';
+        $('#cmb_sub_kategori').append(cmb_st);
+
+        $('#cmb_kategori').empty();
+        var cmb_st = '<option disabled selected>--Pilih--</option>';
+        $('#cmb_kategori').append(cmb_st);
+
+        if (st == 0) {
+            $('#cmb_sub_kategori').empty();
+            var cmb_st = '<option value="0" selected>-</option>';
+            $('#cmb_sub_kategori').append(cmb_st);
+
+            $('#cmb_kategori').empty();
+            var cmb_st = '<option value="0" selected>-</option>';
+            $('#cmb_kategori').append(cmb_st);
+
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Bpb/cari_kategori_st'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                cache: false,
+                data: {
+                    cmb_station: $('#cmb_station :selected').val(),
+                },
+                success: function(data) {
+                    $('#cmb_kategori').empty();
+                    var opsi_cmb_station = '<option disabled selected>--Pilih--</option>';
+                    $('#cmb_kategori').append(opsi_cmb_station);
+                    $.each(data, function(index) {
+                        var opsi_cmb_station = '<option value="' + data[index].noac + '" style="font-size: 12px">' + data[index].nama + '</option>';
+                        $('#cmb_kategori').append(opsi_cmb_station);
+                    });
+                },
+                error: function(request) {
+                    alert("KONEKSI TERPUTUS!");
+                }
+            });
+        }
+    });
+
+    $('#cmb_kategori').change(function() {
+
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Bpb/cari_sub_kategori'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                cmb_kategori_st: $('#cmb_kategori :selected').val(),
+            },
+            success: function(data) {
+                $('#cmb_sub_kategori').empty();
+
+                $.each(data, function(index) {
+                    var opsi_cmb_station = '<option value="' + data[index].noac + '" style="font-size: 12px">' + data[index].nama + '</option>';
+                    $('#cmb_sub_kategori').append(opsi_cmb_station);
+                });
+            },
+            error: function(request) {
+                alert("KONEKSI TERPUTUS!");
+            }
+        });
+    });
 
     function check_form() {
 
@@ -777,8 +960,6 @@
             }
         } else if ($('#cmb_bagian :selected').text() == "TEKNIK") {
             //mutasi PT
-            // $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
-            // $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
             $('#mutasi_pt').click(function() {
                 if ($(this).prop("checked") == true) {
                     $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
@@ -810,13 +991,9 @@
                     $('.div_form_2').show();
                 } else {
                     $('.div_form_2').hide();
-
-
                 }
             }
         } else {
-            // $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
-            // $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled', '');
             //mutasi PT
             $('#mutasi_pt').click(function() {
                 if ($(this).prop("checked") == true) {
@@ -842,11 +1019,7 @@
             }
 
         }
-
-
     }
-
-
 
     function pilihDevisi() {
         $.ajax({
@@ -1043,17 +1216,12 @@
                 }
             }
         }
-
-
-
     }
 
     function pilihEST() {
         $('#modalPilihEstate').modal('hide');
         var est = $('#cmb_pilih_est').val();
     }
-
-
 
     function pilihItem() {
         console.log("hello world");
@@ -1273,10 +1441,6 @@
             }
 
         }
-
-
-
-
     }
 
     function update(no) {
@@ -1494,14 +1658,23 @@
 
     function saveData(no) {
 
+        var kode_dev = $('#devisi').val();
+
         var form_data = new FormData();
 
-        // form_data.append('txt_diberikan_kpd',$('#txt_diberikan_kpd').val());  	  
         form_data.append('txt_untuk_keperluan', $('#txt_untuk_keperluan').val());
         form_data.append('devisi', $('#devisi').val());
         form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
-        // form_data.append('txt_no_bpb',$('#txt_no_bpb').val());  	  
-        form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
+        // jika dia pabrik bag jadi station
+        if (kode_dev == 03) {
+            if ($('#cmb_station :selected').val() == "0") {
+                form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
+            } else {
+                form_data.append('cmb_bagian', $('#cmb_station :selected').text());
+            }
+        } else {
+            form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
+        }
         form_data.append('cmb_alokasi_est', $('#cmb_alokasi_est').val());
         form_data.append('bhnbakar', $('#bhnbakar').val());
         form_data.append('jns_alat', $('#txt_jns_alat').val());
@@ -1823,6 +1996,7 @@
         form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
         form_data.append('cmb_blok_sub', $('#cmb_blok_sub_' + no).val());
+        form_data.append('cmb_tahun_tanam', $('#cmb_tahun_tanam_' + no).val());
         form_data.append('cmb_bahan', $('#cmb_bahan_' + no).val());
         form_data.append('hidden_nama_bahan', $('#hidden_nama_bahan_' + no).val());
 
@@ -1840,6 +2014,7 @@
 
         form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
         form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
+        form_data.append('edit', 0);
 
         $.ajax({
             type: "POST",
@@ -1899,7 +2074,7 @@
 
     function ubahRinci(no) {
         var data = $('#hidden_bagian').val();
-        if (data != 1 || data != 2) {
+        if (data != 1 && data != 2) {
             $('#cmb_tm_tbm_' + no).attr('disabled', '');
             $('#cmb_afd_unit_' + no).attr('disabled', '');
             $('#cmb_blok_sub_' + no).attr('disabled', '');
@@ -2133,27 +2308,9 @@
             cmb_tm_tbm += '<option value="PEMBIBITAN">PEMBIBITAN</option>';
 
             var strip_cmb = '<option value="-">-</option>';
-            // $('.set_strip_cmb').empty();
-            // $('.set_strip_cmb').append(strip_cmb);
             $('.set_strip_cmb').html(strip_cmb);
-            // $('#cmb_tm_tbm_'+row).html(strip_cmb);
-
-            // $('.cmb_tm_tbm').empty();
-            // $('.cmb_tm_tbm').append(cmb_tm_tbm);			
             $('.cmb_tm_tbm').html(cmb_tm_tbm);
-            // $('#cmb_tm_tbm_'+row).html(cmb_tm_tbm);
-
-            // $('#txt_account_beban_'+row).attr('disabled','');
         }
-
-
-        // if ($('#bhnbakar :selected').text() === "BBM") {
-        //     $('#txt_jns_alat').removeAttr('disabled', '');
-        //     $('#txt_jns_alat').removeClass('bg-light');
-        // } else {
-        //     $('#txt_jns_alat').attr('disabled', '');
-        //     $('#txt_jns_alat').addClass('form-control bg-light');
-        // }
     }
 
     //ngambil dari HRIS nama db -> msalgrou_personalia
@@ -2346,6 +2503,14 @@
     var table;
 
     function tableAccBeban(row) {
+        var kode_dev = $('#devisi').val();
+        // jika pabrik
+        if (kode_dev == 03) {
+            var sub_kategori = $('#cmb_sub_kategori :selected').val();
+        } else {
+            var sub_kategori = 0;
+        }
+
         var mutasi_pt = $('#hidden_mutasi_pt').val();
         var mutasi_lokal = $('#hidden_mutasi_lokal').val();
         var pt = $('#cmb_pt_mutasi').val();
@@ -2383,7 +2548,8 @@
                     devisi: devisi,
                     cmb_bahan: cmb_bahan,
                     mutasi_pt: mutasi_pt,
-                    mutasi_lokal: mutasi_lokal
+                    mutasi_lokal: mutasi_lokal,
+                    sub_kategori: sub_kategori
                 }
             },
             "initComplete": function(settings, json) {
