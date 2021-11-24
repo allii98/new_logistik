@@ -453,6 +453,7 @@ date_default_timezone_set('Asia/Jakarta');
                   '<input type="hidden" id="hidden_id_item_lpb_' + row + '" name="hidden_id_item_lpb_' + row + '">' +
                   '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
                   '<input type="hidden" id="hidden_sisa_qty_' + row + '" name="hidden_sisa_qty_' + row + '">' +
+                  '<input type="hidden" id="hidden_kodesub_' + row + '" name="hidden_kodesub_' + row + '">' +
                   '</td>';
             var td_col_7 = '<td style="padding-top: 2px;">' +
                   '<div class="row">' +
@@ -648,6 +649,7 @@ date_default_timezone_set('Asia/Jakarta');
                               var sat = data_item_mutasi[i].satuan;
                               var grp = data_item_mutasi[i].grp;
                               var ket = data_item_mutasi[i].ket;
+                              var kodesub = data_item_mutasi[i].kodesub;
 
                               // Set data
                               $('#txt_kode_barang_' + i).val(kodebar);
@@ -657,6 +659,7 @@ date_default_timezone_set('Asia/Jakarta');
                               $('#txt_satuan_' + i).text(sat);
                               $('#txt_grup_' + i).text(grp);
                               $('#txt_ket_rinci_' + i).text(ket);
+                              $('#hidden_kodesub_' + i).val(kodesub);
 
                         }
                   },
@@ -782,8 +785,6 @@ date_default_timezone_set('Asia/Jakarta');
                         hidden_no_lpb: $('#hidden_no_lpb').val(),
                         hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
                         chk_asset: chk_asset,
-                        // txt_kd_supplier: $('#txt_kd_supplier').val(),
-                        txt_kd_supplier: '',
                         // txt_supplier: $('#txt_supplier').val(),
                         txt_supplier: $('#hidden_asal_devisi_txt').val(),
                         // txt_no_pengantar: $('#txt_no_pengantar').val(),
@@ -800,6 +801,7 @@ date_default_timezone_set('Asia/Jakarta');
                         txt_qty: $('#txt_qty_' + n).val(),
                         hidden_qtypo: $('#hidden_qtypo_' + n).val(),
                         txt_ket_rinci: $('#txt_ket_rinci_' + n).val(),
+                        txt_kd_supplier: $('#hidden_kodesub_' + n).val(),
                         mutasi: '1'
                   },
 
@@ -846,6 +848,9 @@ date_default_timezone_set('Asia/Jakarta');
 
                         $('#a_print_lpb').removeAttr('disabled');
 
+                        // notif2 jika ada function gagal
+                        notiferor(data);
+
                   },
                   error: function(response) {
                         $('#lbl_status_simpan_' + n).empty();
@@ -854,6 +859,36 @@ date_default_timezone_set('Asia/Jakarta');
                         alert('KONEKSI TERPUTUS! Gagal Save Data!');
                   }
             });
+      }
+
+      function notiferor(data) {
+            if (data.insert_stok_awal_bulanan == 0) {
+                  alert('insert_stok_awal_bulanan GAGAL!');
+            }
+
+            if (data.insert_stok_harian == 0) {
+                  alert('insert_stok_harian GAGAL!');
+            }
+
+            if (data.update_stok == 0) {
+                  alert('update_stok GAGAL!');
+            }
+
+            if (data.insert_lpb_to_entry_gl_dr == 0) {
+                  alert('insert_lpb_to_entry_gl_dr GAGAL!');
+            }
+
+            if (data.insert_lpb_to_entry_gl_cr == 0) {
+                  alert('insert_lpb_to_entry_gl_cr GAGAL!');
+            }
+
+            if (data.insert_to_gl_header == 0) {
+                  alert('insert_to_gl_header GAGAL!');
+            }
+
+            if (data.insert_register_stok == 0) {
+                  alert('insert_register_stok GAGAL!');
+            }
       }
 
       function ubahRinci(n) {
@@ -942,6 +977,8 @@ date_default_timezone_set('Asia/Jakarta');
                         $('#btn_ubah_' + n).css('display', 'block');
                         $('#btn_hapus_' + n).css('display', 'block');
                         $('#btn_cancel_update_' + n).css('display', 'none');
+
+                        notiferrorupdate(data);
                   },
                   error: function(response) {
                         $('#btn_update_' + n).css('display', 'block');
@@ -950,6 +987,27 @@ date_default_timezone_set('Asia/Jakarta');
                   }
             });
       };
+
+      function notiferrorupdate(data) {
+            if (data.data_editStokAwalHarian == 0) {
+                  alert('data_editStokAwalHarian GAGAL!');
+            }
+            if (data.data_editStokAwalBulananDevisi == 0) {
+                  alert('data_editStokAwalBulananDevisi GAGAL!');
+            }
+            if (data.update_stok_awal == 0) {
+                  alert('update_stok_awal GAGAL!');
+            }
+            if (data.data_update_lpb == 0) {
+                  alert('data_update_lpb GAGAL!');
+            }
+            if (data.data_update_register_stok == 0) {
+                  alert('data_update_register_stok GAGAL!');
+            }
+            if (data.data_edit_gl == 0) {
+                  alert('data_edit_gl GAGAL!');
+            }
+      }
 
       function cancelUpdate(n) {
             $.ajax({
@@ -1130,7 +1188,9 @@ date_default_timezone_set('Asia/Jakarta');
                         hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
                         norefpo: $('#txt_ref_po').val(),
                         delete_stok_register: '0',
-                        alasan: $('#alasan').val()
+                        alasan: $('#alasan').val(),
+                        hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                        kodebar: $('#txt_kode_barang_' + n).val(),
                   },
 
                   success: function(data) {
@@ -1166,7 +1226,9 @@ date_default_timezone_set('Asia/Jakarta');
 
                   data: {
                         hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                        norefpo: $('#txt_ref_po').val()
+                        norefpo: $('#txt_ref_po').val(),
+                        hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                        kodebar: $('#txt_kode_barang_' + n).val(),
                   },
 
                   success: function(data) {
@@ -1189,6 +1251,8 @@ date_default_timezone_set('Asia/Jakarta');
                         // if (n == 1) {
                         //     hapusLpb();
                         // }
+
+                        notiferrordeleteitem(data);
                   },
                   error: function(response) {
                         $('#lbl_status_simpan_' + n).empty();
@@ -1196,6 +1260,21 @@ date_default_timezone_set('Asia/Jakarta');
                   }
             });
       };
+
+      function notiferrordeleteitem(data) {
+            if (data.delete_masukitem == 0) {
+                  alert('delete_masukitem GAGAL!');
+            }
+            if (data.delete_regis == 0) {
+                  alert('delete_regis GAGAL!');
+            }
+            if (data.update_lpb_po == 0) {
+                  alert('update_lpb_po GAGAL!');
+            }
+            if (data.delete_gl == 0) {
+                  alert('delete_gl GAGAL!');
+            }
+      }
 
       function cek_data_masukitem(n) {
             var noreflpb = $('#hidden_no_ref_lpb').val();
@@ -1307,6 +1386,8 @@ date_default_timezone_set('Asia/Jakarta');
                   success: function(data) {
                         console.log(data);
 
+                        notiferrordeletelpb(data);
+
                         location.reload();
                   },
                   error: function(response) {
@@ -1314,5 +1395,14 @@ date_default_timezone_set('Asia/Jakarta');
                         alert('KONEKSI TERPUTUS! Gagal Hapus LPB!');
                   }
             });
+      }
+
+      function notiferrordeletelpb(data) {
+            if (data.delete_stokmasuk == 0) {
+                  alert('delete_stokmasuk GAGAL!');
+            }
+            if (data.delete_header_entry == 0) {
+                  alert('delete_header_entry GAGAL!');
+            }
       }
 </script>

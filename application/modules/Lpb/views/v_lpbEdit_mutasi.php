@@ -724,6 +724,9 @@
                 $('#btn_ubah_' + n).css('display', 'block');
                 $('#btn_hapus_' + n).css('display', 'block');
                 $('#btn_cancel_update_' + n).css('display', 'none');
+
+                notiferrorupdate(data);
+
             },
             error: function(response) {
                 $('#btn_update_' + n).css('display', 'block');
@@ -732,6 +735,27 @@
             }
         });
     };
+
+    function notiferrorupdate(data) {
+        if (data.data_editStokAwalHarian == 0) {
+            alert('data_editStokAwalHarian GAGAL!');
+        }
+        if (data.data_editStokAwalBulananDevisi == 0) {
+            alert('data_editStokAwalBulananDevisi GAGAL!');
+        }
+        if (data.update_stok_awal == 0) {
+            alert('update_stok_awal GAGAL!');
+        }
+        if (data.data_update_lpb == 0) {
+            alert('data_update_lpb GAGAL!');
+        }
+        if (data.data_update_register_stok == 0) {
+            alert('data_update_register_stok GAGAL!');
+        }
+        if (data.data_edit_gl == 0) {
+            alert('data_edit_gl GAGAL!');
+        }
+    }
 
     function cancelUpdate(n) {
         $.ajax({
@@ -900,7 +924,9 @@
                 hidden_id_register_stok: $('#hidden_id_register_stok_' + n).val(),
                 norefpo: $('#txt_ref_po').val(),
                 delete_stok_register: '0',
-                alasan: $('#alasan').val()
+                alasan: $('#alasan').val(),
+                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                kodebar: $('#txt_kode_barang_' + n).val(),
             },
 
             success: function(data) {
@@ -936,7 +962,9 @@
 
             data: {
                 hidden_id_item_lpb: $('#hidden_id_item_lpb_' + n).val(),
-                norefpo: $('#txt_ref_po').val()
+                norefpo: $('#txt_ref_po').val(),
+                hidden_no_ref_lpb: $('#hidden_no_ref_lpb').val(),
+                kodebar: $('#txt_kode_barang_' + n).val(),
             },
 
             success: function(data) {
@@ -960,6 +988,8 @@
                 // if (n == 1) {
                 //     hapusLpb();
                 // }
+                notiferrordeleteitem(data);
+
             },
             error: function(response) {
                 $('#lbl_status_simpan_' + n).empty();
@@ -967,6 +997,21 @@
             }
         });
     };
+
+    function notiferrordeleteitem(data) {
+        if (data.delete_masukitem == 0) {
+            alert('delete_masukitem GAGAL!');
+        }
+        if (data.delete_regis == 0) {
+            alert('delete_regis GAGAL!');
+        }
+        if (data.update_lpb_po == 0) {
+            alert('update_lpb_po GAGAL!');
+        }
+        if (data.delete_gl == 0) {
+            alert('delete_gl GAGAL!');
+        }
+    }
 
     function cek_data_masukitem(n) {
         var noreflpb = $('#hidden_no_ref_lpb').val();
@@ -1036,6 +1081,8 @@
             success: function(data) {
                 console.log(data);
 
+                notiferrordeletelpb(data);
+
                 location.href = "<?php echo base_url('Lpb') ?>";
             },
             error: function(response) {
@@ -1043,6 +1090,15 @@
                 alert('KONEKSI TERPUTUS! Gagal Hapus LPB!');
             }
         });
+    }
+
+    function notiferrordeletelpb(data) {
+        if (data.delete_stokmasuk == 0) {
+            alert('delete_stokmasuk GAGAL!');
+        }
+        if (data.delete_header_entry == 0) {
+            alert('delete_header_entry GAGAL!');
+        }
     }
 
     function batalLpb() {

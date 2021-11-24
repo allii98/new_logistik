@@ -36,14 +36,8 @@ class M_lpb_mutasi extends CI_Model
             $this->db_logistik_center->from('tb_mutasi');
             $data_mutasi = $this->db_logistik_center->get()->row_array();
 
-            //mencari NO_REF di tb_mutasi_item, karna no_mutasi tidak ada di tb_mutasi_item
-            $this->db_logistik_center->select('NO_REF');
-            $this->db_logistik_center->where('no_mutasi', $noref);
-            $this->db_logistik_center->from('tb_mutasi');
-            $no_ref_data_item_mutasi = $this->db_logistik_center->get()->row_array();
-
-            $this->db_logistik_center->select('kodebar, nabar, satuan, grp, qty2, ket, status_item_lpb');
-            $this->db_logistik_center->where('NO_REF', $no_ref_data_item_mutasi['NO_REF']);
+            $this->db_logistik_center->select('kodebar, nabar, satuan, grp, qty2, ket, status_item_lpb, kodesub');
+            $this->db_logistik_center->where('NO_REF', $data_mutasi['NO_REF']);
             $this->db_logistik_center->from('tb_mutasi_item');
             $data_item_mutasi = $this->db_logistik_center->get()->result_array();
 
