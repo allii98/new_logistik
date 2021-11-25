@@ -74,34 +74,37 @@ if ($statusmutasi == 1) {
             </td>
         </tr>
     </table>
-    <!-- <table width="100%"> -->
-    <!-- <tr> -->
-    <!-- <td>Depart/Divisi : <?= $bpb->bag; ?></td> -->
-    <!-- <td align="right">Tanggal : <?= $bpb->tgl; ?></td> -->
-    <!-- </tr> -->
-    <!-- </table> -->
+    <table width="100%" style="margin-top: 5px;">
+        <tr>
+            <td>Depart/Divisi : <?= $bpb->bag; ?></td>
+            <td align="right">Tanggal : <?= date("d-m-Y", strtotime($bpb->tglbpb)); ?></td>
+        </tr>
+    </table>
     <table class="singleborder" border="1" width="100%">
         <tr>
-            <td align="center">No</td>
-            <td align="center">No. Kode Barang</td>
-            <td align="center">Nama / Spesifikasi Barang</td>
-            <td align="center">Sat</td>
-            <td align="center">Jumlah Diminta</td>
-            <td align="center">Keterangan</td>
+            <td align="center" class="pddg" width="5%">No</td>
+            <td align="center" class="pddg" width="15%">Kode Barang</td>
+            <td align="center" class="pddg" width="22%">Nama / Spesifikasi Barang</td>
+            <td align="center" class="pddg" width="5%">Sat</td>
+            <td align="center" class="pddg">Jumlah Diminta</td>
+            <td align="center" class="pddg">Kode Beban</td>
+            <td align="center" class="pddg">Blok</td>
+            <td align="center" class="pddg" width="12%">Keterangan</td>
         </tr>
         <?php
         $no = 1;
         foreach ($bpbitem as $listbpbitem) {
+            // var_dump($keluarbrgitem);exit();
         ?>
             <tr>
-                <td><?= $no++; ?></td>
-                <td><?= $listbpbitem->kodebar; ?></td>
-                <td><?= $listbpbitem->nabar; ?></td>
-                <td><?= $listbpbitem->satuan; ?></td>
-                <td><?= $listbpbitem->qty; ?></td>
-                <td>
-                    <p style="word-wrap:break-word;"><?= htmlspecialchars($listbpbitem->ket); ?></p>
-                </td>
+                <td class="cntr"><?= $no++ ?></td>
+                <td class="pddg"><?= $listbpbitem->kodebar; ?></td>
+                <td class="pddg"><?= $listbpbitem->nabar; ?></td>
+                <td class="pddg"><?= $listbpbitem->satuan; ?></td>
+                <td class="cntr"><?= $listbpbitem->qty; ?></td>
+                <td class="pddg"><?= $listbpbitem->kodesubtxt; ?></td>
+                <td class="pddg"><?= $listbpbitem->blok; ?></td>
+                <td class="pddg"><?= $listbpbitem->ket; ?></td>
             </tr>
         <?php } ?>
         <tr>
@@ -110,7 +113,7 @@ if ($statusmutasi == 1) {
                 -Ke 1 - Kantor Kebun/PKS<br />
                 -Ke 2 - Gudang
             </td>
-            <td colspan="4">
+            <td colspan="6">
                 <table border="0" width="100%">
                     <tr>
                         <!-- <td align="center">Diminta Oleh,</td> -->

@@ -177,7 +177,6 @@
                                     <div class="col-9 col-xl-12">
                                         <select class="form-control form-control-sm" id="cmb_alokasi_est" name="cmb_alokasi_est">
                                             <option disabled value="" selected>--Pilih--</option>
-                                            <option value="03">03</option>
                                             <option value="06">06</option>
                                             <option value="07">07</option>
                                             <option value="08">08</option>
@@ -324,47 +323,32 @@
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- Tahun Tanam -->
-                                                    <!-- <select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1" onchange="cmb_bahan(1)"> -->
                                                     <select class="form-control form-control-sm set_strip_cmb" id="cmb_tahun_tanam_1" name="cmb_tahun_tanam_1">
                                                         <option value="-">-</option>
                                                     </select>
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <!-- Bahan -->
-                                                    <!-- <select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_1" name="cmb_bahan_1">
-                                                        <option value="-">-</option>
-                                                    </select> -->
                                                     <select class="form-control form-control-sm" id="cmb_bahan_1" name="cmb_bahan_1" onchange="ketbeban('1')">
                                                         <option value="-">-</option>
-                                                        <option value="021">UPKEEP BAHAN</option>
-                                                        <option value="051">PEMUPUKAN BAHAN</option>
-                                                        <option value="081">PANEN BAHAN</option>
                                                     </select>
                                                     <input type="hidden" name="hidden_nama_bahan_1" id="hidden_nama_bahan_1">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em; padding-top: 2px; padding-bottom: 0.1em;  padding-top: 2px; padding-bottom: 0; width: 5%;">
                                                     <!-- Account Beban -->
                                                     <input type="text" class="form-control form-control-sm" id="txt_account_beban_1" name="txt_account_beban_1" placeholder="Account Beban" onfocus="pilihModalAccBeban('1')" autocomplite="off">
-                                                    <!-- <label class="control-label" id="lbl_no_acc_1"></label>
-                                                <label class="control-label" id="lbl_nama_acc_1"></label> -->
                                                     <input type="hidden" id="hidden_no_acc_1" name="hidden_no_acc_1" value="0">
                                                     <input type="hidden" id="hidden_nama_acc_1" name="hidden_nama_acc_1" value="0">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
                                                     <!-- Barang -->
                                                     <input type="text" class="form-control form-control-sm" id="txt_barang_1" name="txt_barang_1" onfocus="cari_barang('1')" placeholder="Barang" autocomplite="off">
-                                                    <!-- <label id="lbl_kode_barang_1"></label>
-                                                <label id="lbl_nama_barang_1"></label> -->
-
                                                     <input type="hidden" id="hidden_kode_barang_1" name="hidden_kode_barang_1" value="0">
                                                     <input type="hidden" id="hidden_nama_barang_1" name="hidden_nama_barang_1" value="0">
                                                     <input type="hidden" id="hidden_grup_barang_1" name="hidden_grup_barang_1" value="0">
                                                     <input type="hidden" id="hidden_txtperiode_1" name="hidden_txtperiode_1">
                                                 </td>
                                                 <td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">
-                                                    <!-- <span class="small text-muted" style="font-family: Verdana, Geneva, Tahoma, sans-serif; font-size:small">
-                                                    Satuan :<b id="b_satuan_1" name="b_satuan_1"></b>
-                                                </span><br> -->
                                                     <input type="hidden" id="hidden_satuan_1" name="hidden_satuan_1">
                                                     <span class="small text-muted" style="font-size:small;">
                                                         Stok :<b id="b_stok_tgl_ini_1" name="b_stok_tgl_ini_1"></b>
@@ -751,8 +735,6 @@
         $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
         $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
     }
-
-
 
     $('#cmb_alokasi_est').change(function() {
         // var ses_lokasi ='<?= $this->session->userdata('status_lokasi') ?>';
@@ -1278,36 +1260,26 @@
             '<!-- Bahan -->' +
             '<select class="form-control form-control-sm set_strip_cmb" id="cmb_bahan_' + row + '" name="cmb_bahan_' + row + '" onchange="ketbeban(' + row + ')">' +
             '<option value="-">-</option>' +
-            '<option value="021">UPKEEP BAHAN</option>' +
-            '<option value="051">PEMUPUKAN BAHAN</option>' +
-            '<option value="081">PANEN BAHAN</option>' +
             '</select>' +
             '<input type="hidden" name="hidden_nama_bahan_' + row + '" id="hidden_nama_bahan_' + row + '">' +
             '</td>';
         var td_col_7 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Account Beban -->' +
             '<input type="text" class="form-control form-control-sm" id="txt_account_beban_' + row + '" value="" name="txt_account_beban_' + row + '" placeholder="Account Beban" onfocus="pilihModalAccBeban(' + row + ')" >' +
-            // '<label class="control-label" id="lbl_no_acc_' + row + '"></label>' +
-            // '<label class="control-label" id="lbl_nama_acc_' + row + '"></label>' +
             '<input type="hidden" id="hidden_no_acc_' + row + '" name="hidden_no_acc_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_nama_acc_' + row + '" name="hidden_nama_acc_' + row + '" value="0">' +
             '</td>';
         var td_col_8 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             '<!-- Barang -->' +
             '<input type="text" class="form-control form-control-sm" id="txt_barang_' + row + '" name="txt_barang_' + row + '" onfocus="cari_barang(' + row + ')" placeholder="Barang">' +
-            // '<label id="lbl_kode_barang_' + row + '"></label>' +
-            // '<label id="lbl_nama_barang_' + row + '"></label>' +
             '<input type="hidden" id="hidden_kode_barang_' + row + '" name="hidden_kode_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_nama_barang_' + row + '" name="hidden_nama_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_grup_barang_' + row + '" name="hidden_grup_barang_' + row + '" value="0">' +
             '<input type="hidden" id="hidden_txtperiode_' + row + '" name="hidden_txtperiode_' + row + '">' +
             '</td>';
         var td_col_10 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
-            // '<label>Satuan : <b id="b_satuan_' + row + '" name="b_satuan_' + row + '"></b></label>' +
-            // '<label>Stok di tgl ini : <b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></label>' +
             '<span class="small text-muted" style="font-size:small">Stok :<b id="b_stok_tgl_ini_' + row + '" name="b_stok_tgl_ini_' + row + '"></b></span><br>' +
             '<input type="hidden" id="hidden_stok_tgl_ini_' + row + '" name="hidden_stok_tgl_ini_' + row + '">' +
-
             '<span class="small text-muted" style="font-size:small">Booking :<b id="b_stok_booking_' + row + '"  name="b_stok_booking_' + row + '"></b></span>' +
             '<input type="hidden" id="hidden_stok_booking_' + row + '" name="hidden_stok_booking_' + row + '">' +
             '<input type="hidden" id="hidden_satuan_' + row + '" name="hidden_satuan_' + row + '">' +
@@ -1320,7 +1292,6 @@
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
             '<!-- Keterangan -->' +
             '<textarea class="form-control form-control-sm" rows="1" id="txt_ket_rinci_' + row + '" name="txt_ket_rinci_' + row + '" placeholder="Keterangan" onkeypress="saveRinciEnter(event,' + row + ')"></textarea>' +
-
             '<input type="hidden" id="hidden_id_bpbitem_' + row + '" name="hidden_id_bpbitem_' + row + '">' +
             '</td>';
         var td_col_12 = '<td width="5%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0;">' +
@@ -1336,7 +1307,6 @@
 
         $('#tbody_rincian').append(tr_buka + td_col_1 + form_buka + td_col_2 + td_col_3 + td_col_4 + td_col_5 + td_col_6 + td_col_7 + td_col_8 + td_col_10 + td_col_9 + td_col_11 + td_col_12 + form_tutup + tr_tutup);
         bahan(row);
-
 
         cek_bagian(row);
 
@@ -1505,9 +1475,6 @@
             },
             success: function(data) {
 
-                console.log(data);
-                // $('#tr_' + no).remove();
-                // alert('Data Berhasil dihapus');
                 $('#alasanbatal').modal('hide');
                 $.toast({
                     position: 'top-right',
@@ -1520,26 +1487,11 @@
                 setTimeout(function() {
                     window.location.href = "<?php echo site_url('Bpb/input'); ?>";
                 }, 1000);
-                // $('#btn_konfirmasi_terima_'+index).removeAttr('disabled');
-                // $('.modal-success').modal('show');
             },
             error: function(request) {
                 alert("KONEKSI TERPUTUS!");
             }
         });
-        // Swal.fire({
-        //     title: 'Apakah anda yakin?',
-        //     text: "Data bpb ini akan dibatalkan",
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Ya'
-        // }).then((result) => {
-        //     if (result.value) {
-
-
-        //     }
-        // });
     }
 
     function saveRinci(no) {
@@ -1550,11 +1502,6 @@
 
         var kodebar = $('#hidden_kode_barang_' + no).val();
         var kode_dev = $('#devisi').val();
-
-
-        // sum_stok_booking(kodebar, no, kode_dev);
-
-        // console.log(kodebar);
 
         var v_qty = validasi_qty(sudah_booking, qty_diminta, stok_tgl_ini, no);
 
@@ -1649,7 +1596,6 @@
             });
             if (isValid === true) {
                 saveData(no);
-                // sum_stok_booking(kodebar, no);
             }
         }
     }
@@ -1743,11 +1689,8 @@
                         var kode_barang = data.kodebar;
                         var kode_dev = data.kode_dev;
                         $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
-                        // console.log('ini nomernya ges', no);
 
                         sum_stok_booking(kode_barang, no, kode_dev);
-                        // $('#a_bpb_baru').show();
-                        // $('#input-baru').show();
                         $('#inputNew').css('display', 'block');
 
                         $('.div_form_1').find('input,textarea,select,checkbox').attr('disabled', '');
@@ -1810,9 +1753,6 @@
         $('.div_form_1').find('input,textarea').attr('readonly', '');
         $('.div_form_1').find('select').attr('disabled', '');
 
-        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('input,textarea').not('#txt_account_beban_' + no + ',#txt_barang_' + no).attr('readonly', '');
-        // $('#tableRinciBPB tbody #tr_' + no + ' td').find('select,#txt_account_beban_' + no + ',#txt_barang_' + no).attr('disabled', '');
-
         $('#tr_' + no).find('input,textarea,select').attr('disabled', '');
         $('#tr_' + no).find('input,textarea,select').addClass('form-control bg-light');
 
@@ -1847,14 +1787,19 @@
 
             data: form_data,
             success: function(data) {
+                // untuk bahan dimanualkan
+                var bahan = data.data_bpbitem.kodebebantxt;
+                var digit_last_beban = bahan.substr(10, 3);
 
-                get_all_cmb(data.data_bpbitem.kodebebantxt, no);
                 sum_stok(data.data_bpbitem.kodebar, no, kode_dev);
                 sum_stok_booking(data.data_bpbitem.kodebar, no, kode_dev);
 
+                $('#cmb_tm_tbm_' + no).val(data.data_bpbitem.tmtbm);
+                $('#cmb_tahun_tanam_' + no).val(data.data_bpbitem.thntanam);
                 $('#cmb_afd_unit_' + no).val(data.data_bpbitem.afd);
                 $('#cmb_blok_sub_' + no).val(data.data_bpbitem.blok);
-                $('#cmb_bahan_' + no).val(data.data_bpbitem.kodebebantxt);
+                $('#cmb_bahan_' + no).val(digit_last_beban);
+                $('#hidden_nama_bahan_' + no).val(data.data_bpbitem.ketbeban);
 
                 $('#txt_account_beban_' + no).val(data.data_bpbitem.ketsub);
                 $('#hidden_no_acc_' + no).val(data.data_bpbitem.kodesubtxt);
@@ -1990,8 +1935,6 @@
 
         var kodebar = $('#hidden_kode_barang_' + no).val();
         var kode_dev = $('#devisi').val();
-        // var hidden_mutasi_pt = $('#hidden_mutasi_pt').val();
-        // console.log('HELLO MUTASI NYA ADALAH', hidden_mutasi_pt);
 
         form_data.append('cmb_tm_tbm', $('#cmb_tm_tbm_' + no).val());
         form_data.append('cmb_afd_unit', $('#cmb_afd_unit_' + no).val());
@@ -2014,7 +1957,7 @@
 
         form_data.append('hidden_mutasi_pt', $('#hidden_mutasi_pt').val());
         form_data.append('hidden_mutasi_lokal', $('#hidden_mutasi_lokal').val());
-        form_data.append('edit', 0);
+        // form_data.append('edit', 0);
 
         $.ajax({
             type: "POST",
@@ -2236,48 +2179,38 @@
     }
 
     function cek_bagian(row) {
-        // console.log($('#cmb_bagian :selected').text());
         if ($('#cmb_bagian :selected').text() != "TANAMAN") {
             var strip_cmb = '<option value="-">-</option>';
-            // cari_dept();
-            // $('.set_strip_cmb').empty();
-            // $('.set_strip_cmb').append(strip_cmb);
+
             $('.set_strip_cmb').html(strip_cmb);
             $("#cmb_alokasi_est").prop('selectedIndex', 0);
-            // $('#cmb_alokasi_est').val("");
-            // $('#cmb_tm_tbm_'+row).html(strip_cmb);
+
         } else {
-            var cmb_tm_tbm = '<option value=""></option>';
+            var cmb_tm_tbm = '<option value="">-</option>';
             cmb_tm_tbm += '<option value="TM">TM</option>';
             cmb_tm_tbm += '<option value="TBM">TBM</option>';
             cmb_tm_tbm += '<option value="LANDCLEARING">LANDCLEARING</option>';
             cmb_tm_tbm += '<option value="PEMBIBITAN">PEMBIBITAN</option>';
 
-            var strip_cmb = '<option value="-">-</option>';
-            // $('.set_strip_cmb').empty();
-            // $('.set_strip_cmb').append(strip_cmb);
-            // $('.set_strip_cmb').html(strip_cmb);
-            $('#cmb_tm_tbm_' + row).html(strip_cmb);
-
-            // $('.cmb_tm_tbm').empty();
-            // $('.cmb_tm_tbm').append(cmb_tm_tbm);			
-            // $('.cmb_tm_tbm').html(cmb_tm_tbm);
             $('#cmb_tm_tbm_' + row).html(cmb_tm_tbm);
+
+            var cmb_bahan_p = '<option value="">-</option>';
+            cmb_bahan_p += '<option value="021">UPKEEP BAHAN</option>';
+            cmb_bahan_p += '<option value="051">PEMUPUKAN BAHAN</option>';
+            cmb_bahan_p += '<option value="081">PANEN BAHAN</option>';
+
+            $('#cmb_bahan_' + row).html(cmb_bahan_p);
+
         }
     }
 
     function cek_tm_tbm(row) {
-        // check_form();
+
         if ($('#cmb_bagian :selected').text() != "TANAMAN" && $('#cmb_bagian :selected').text() != "TANAMAN UMUM") {
             var strip_cmb = '<option value="-">-</option>';
-            // $('.set_strip_cmb').empty();
-            // $('.set_strip_cmb').append(strip_cmb);
+
             $('.set_strip_cmb').html(strip_cmb);
-            // $('#cmb_alokasi_est').addClass('form-control bg-light');
-            // $('#cmb_alokasi_est').attr('disabled', '');
-            // $("#cmb_alokasi_est").prop('selectedIndex', 0);
-            // $('#txt_estate').text('');
-            // $('#cmb_tm_tbm_'+row).html(strip_cmb);
+
             if ($('#cmb_bagian :selected').text() != "TEKNIK") {
                 $('#bhnbakar').addClass('form-control bg-light');
                 $("#bhnbakar").prop('selectedIndex', 0);
@@ -2301,15 +2234,20 @@
 
             $('#cmb_alokasi_est').removeAttr('disabled', '');
             $('#cmb_alokasi_est').removeClass('bg-light');
-            var cmb_tm_tbm = '<option value=""></option>';
+            var cmb_tm_tbm = '<option value="">-</option>';
             cmb_tm_tbm += '<option value="TM">TM</option>';
             cmb_tm_tbm += '<option value="TBM">TBM</option>';
             cmb_tm_tbm += '<option value="LANDCLEARING">LANDCLEARING</option>';
             cmb_tm_tbm += '<option value="PEMBIBITAN">PEMBIBITAN</option>';
-
-            var strip_cmb = '<option value="-">-</option>';
-            $('.set_strip_cmb').html(strip_cmb);
             $('.cmb_tm_tbm').html(cmb_tm_tbm);
+
+            var cmb_bahan_p = '<option value="">-</option>';
+            cmb_bahan_p += '<option value="021">UPKEEP BAHAN</option>';
+            cmb_bahan_p += '<option value="051">PEMUPUKAN BAHAN</option>';
+            cmb_bahan_p += '<option value="081">PANEN BAHAN</option>';
+
+            $('#cmb_bahan_' + row).html(cmb_bahan_p);
+
         }
     }
 
@@ -2334,11 +2272,9 @@
                 $('#cmb_afd_unit_' + row).append(opsi_pilih);
 
                 $.each(data, function(index) {
-                    // var opsi_afd_unit = '<option value="'+data[index].AFD+'">'+data[index].AFD+'</option>';
                     var opsi_afd_unit = '<option value="' + data[index].afd + '" style="font-size: 12px">' + data[index].afd + '</option>';
                     $('#cmb_afd_unit_' + row).append(opsi_afd_unit);
                 });
-                // cmb_tahun_tanam(row);
             },
             error: function(request) {
                 alert("KONEKSI TERPUTUS!");
@@ -2685,9 +2621,6 @@
 
         $('#devisi').attr('disabled', '');
 
-
-        // $('#modalListBarang').modal('hide');
-
         sum_stok(kode_barang, row, kode_dev);
         sum_stok_booking(kode_barang, row, kode_dev);
     });
@@ -2734,11 +2667,7 @@
                             window.open('<?php echo site_url('stok'); ?>', '_blank');
                         });
                     }
-                    // if(frombpb == 'frombpb'){
-                    // 	$('#tr_'+row).css('background-color','#ffcece');    
-                    // 	$('#txt_ket_rinci_'+row).attr('readonly','');
-                    // 	$('#btn_simpan_'+row).attr('disabled','');
-                    // }
+
                 } else {
                     if (data == '0' || data == '0.00') {
                         swal('Tidak ada stok di gudang, silahkan lakukan pengajuan SPP');
@@ -2803,50 +2732,50 @@
         }
     }
 
-    function get_all_cmb(bahan, n) {
-        $.ajax({
-            type: "POST",
-            url: "<?php echo site_url('Bpb/get_all_cmb'); ?>",
-            dataType: "JSON",
-            beforeSend: function() {},
-            cache: false,
-            // contentType : false,
-            // processData : false,
+    // function get_all_cmb(bahan, n) {
+    //     $.ajax({
+    //         type: "POST",
+    //         url: "<?php echo site_url('Bpb/get_all_cmb'); ?>",
+    //         dataType: "JSON",
+    //         beforeSend: function() {},
+    //         cache: false,
+    //         // contentType : false,
+    //         // processData : false,
 
-            data: {
-                'bahan': bahan
-            },
-            success: function(data) {
+    //         data: {
+    //             'bahan': bahan
+    //         },
+    //         success: function(data) {
 
-                if (data == null) {
-                    var opsi_tm_tbm_ = '<option value="' + '-' + '">' + '-' + '</option>';
-                    $('#cmb_tm_tbm_' + n).append(opsi_tm_tbm_);
+    //             if (data == null) {
+    //                 var opsi_tm_tbm_ = '<option value="' + '-' + '">' + '-' + '</option>';
+    //                 $('#cmb_tm_tbm_' + n).append(opsi_tm_tbm_);
 
-                    var opsi_afd_unit = '<option value="' + '-' + '">' + '-' + '</option>';
-                    $('#cmb_afd_unit_' + n).append(opsi_afd_unit);
+    //                 var opsi_afd_unit = '<option value="' + '-' + '">' + '-' + '</option>';
+    //                 $('#cmb_afd_unit_' + n).append(opsi_afd_unit);
 
-                    var opsi_blok_sub = '<option value="' + '-' + '">' + '-' + '</option>';
-                    $('#cmb_blok_sub_' + n).append(opsi_blok_sub);
+    //                 var opsi_blok_sub = '<option value="' + '-' + '">' + '-' + '</option>';
+    //                 $('#cmb_blok_sub_' + n).append(opsi_blok_sub);
 
-                    var opsi_cmb_thn_tanam = '<option value="' + '-' + '">' + '-' + '</option>';
-                    $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
+    //                 var opsi_cmb_thn_tanam = '<option value="' + '-' + '">' + '-' + '</option>';
+    //                 $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
 
-                    var opsi_cmb_bahan = '<option value="' + '-' + '">' + '-' + '</option>';
-                    $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
-                } else {
+    //                 var opsi_cmb_bahan = '<option value="' + '-' + '">' + '-' + '</option>';
+    //                 $('#cmb_bahan_' + n).append(opsi_cmb_bahan);
+    //             } else {
 
-                    $('#cmb_tm_tbm_' + n).val(data.tmtbm);
-                    $('#cmb_tahun_tanam_' + n).val(data.thn_tanam);
+    //                 // $('#cmb_tm_tbm_' + n).val(data.tmtbm);
+    //                 // $('#cmb_tahun_tanam_' + n).val(data.thn_tanam);
 
-                    // var opsi_cmb_thn_tanam = '<option value="' + data.thn_tanam + '">' + data.thn_tanam + '</option>';
-                    // $('#cmb_tahun_tanam_' + n).empty();
-                    // $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
-                }
+    //                 // var opsi_cmb_thn_tanam = '<option value="' + data.thn_tanam + '">' + data.thn_tanam + '</option>';
+    //                 // $('#cmb_tahun_tanam_' + n).empty();
+    //                 // $('#cmb_tahun_tanam_' + n).append(opsi_cmb_thn_tanam);
+    //             }
 
-            },
-            error: function(request) {
-                alert("KONEKSI TERPUTUS!");
-            }
-        });
-    }
+    //         },
+    //         error: function(request) {
+    //             alert("KONEKSI TERPUTUS!");
+    //         }
+    //     });
+    // }
 </script>

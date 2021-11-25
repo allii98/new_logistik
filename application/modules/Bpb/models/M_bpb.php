@@ -531,7 +531,7 @@ class M_bpb extends CI_Model
         $thun_tanam          = $this->input->post('cmb_tahun_tanam');
         $mut = $this->input->post('hidden_mutasi_pt');
         $mutlok = $this->input->post('hidden_mutasi_lokal');
-        $edit = $this->input->post('edit');
+        // $edit = $this->input->post('edit');
 
         // jika tanaman pakai where ini, jika bukan tanaman tidak pakai query dibawah ini
         if ($tm_tbm == 'TM') {
@@ -552,17 +552,17 @@ class M_bpb extends CI_Model
         }
         $ketbebanfix = $this->input->post('hidden_nama_bahan');
 
-        if ($edit == 1) {
-            $kodebebanfix = $this->input->post('cmb_kode_bahan');
-        } else {
-            $kodebebanfix = $kodebeban;
-        }
+        // if ($edit == 1) {
+        //     $kodebeban = $this->input->post('cmb_kode_bahan');
+        // } else {
+        //     $kodebeban = $kodebeban;
+        // }
 
         $kodebar = $this->input->post('hidden_kode_barang');
 
         $databpbitem['afd']             = $this->input->post('cmb_afd_unit');
         $databpbitem['blok']           = $this->input->post('cmb_blok_sub');
-        $databpbitem['kodebebantxt']  = $kodebebanfix;
+        $databpbitem['kodebebantxt']  = $kodebeban;
         $databpbitem['ketbeban']     = $ketbebanfix;
         $databpbitem['kodesubtxt']  = $this->input->post('hidden_no_acc');
         $databpbitem['ketsub']     = $this->input->post('hidden_nama_acc');
@@ -578,7 +578,7 @@ class M_bpb extends CI_Model
         $databpbitemMut = array(
             'afd' => $this->input->post('cmb_afd_unit'),
             'blok' => $this->input->post('cmb_blok_sub'),
-            'kodebebantxt' => $kodebebanfix,
+            'kodebebantxt' => $kodebeban,
             'ketbeban' => $ketbebanfix,
             'kodesubtxt' => $this->input->post('hidden_no_acc'),
             'ketsub' => $this->input->post('hidden_nama_acc'),
