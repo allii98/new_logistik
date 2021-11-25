@@ -157,6 +157,14 @@ class M_bkb extends CI_Model
     {
         return $this->db_logistik_pt->insert('stockkeluar', $data);
     }
+    public function savehistoristockkeluar($data)
+    {
+        return $this->db_logistik_pt->insert('stockkeluar_history', $data);
+    }
+    public function savehistorikeluarbrgitem($data)
+    {
+        return $this->db_logistik_pt->insert('keluarbrgitem_history', $data);
+    }
 
     public function savedatastockkeluar_mutasi($data)
     {
