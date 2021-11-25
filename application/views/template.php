@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php
+date_default_timezone_set('Asia/Jakarta');
+?>
 
 <head>
     <meta charset="utf-8" />
@@ -78,7 +81,7 @@
                             </div>
 
                             <!-- item-->
-                            <a href="javascript:void(0);" class="dropdown-item notify-item">
+                            <a onclick="return modalUbahPeriode();" class="dropdown-item notify-item" href="#">
                                 <i class="fe-calendar"></i>
                                 Periode : <?= $this->session->userdata('ym_periode'); ?>
                             </a>
@@ -398,9 +401,9 @@
                                 </div>
 
                                 <!-- item-->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item">
+                                <a onclick="return modalUbahPeriode();" class="dropdown-item notify-item" href="#">
                                     <i class="fe-calendar"></i>
-                                    <span>Periode : <?= $this->session->userdata('ym_periode'); ?></span>
+                                    Periode : <?= $this->session->userdata('ym_periode'); ?>
                                 </a>
                                 <a class="dropdown-item notify-item" href="<?= base_url('Login/logout') ?>">
                                     <i class="mdi mdi-logout mr-1"></i>
@@ -490,34 +493,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="radio radio-info form-check-inline">
-                                <input type="radio" id="rbt_register" value="register" name="rbt_pilihan1" checked="">
-                                <label for="rbt_register">Register PO</label>
-                            </div> -->
-
-                            <!-- <div class="radio radio-info form-check-inline">
-                                <input type="radio" id="rbt_cetakan" value="cetakan" name="rbt_pilihan1">
-                                <label for="rbt_cetakan">Cetakan</label>
-                            </div> -->
-
-                            <!-- <div class="radio radio-info form-check-inline">
-                                <input type="radio" id="rbt_cash" value="cash" name="rbt_pilihan1">
-                                <label for="rbt_cash">PO ( Cash )</label>
-                            </div> -->
                         </div>
-                        <!-- <div class="form-group"> -->
 
-                        <!-- <div class="radio radio-info form-check-inline">
-                                <input type="radio" id="rbt_po_lokal_r" value="po_lokal_r" name="rbt_pilihan1">
-                                <label for="rbt_po_lokal_r"> PO Lokal (Register)</label>
-                            </div> -->
-
-                        <!-- <div class="radio radio-info form-check-inline">
-                                <input type="radio" id="rbt_po_lokal_t" value="po_lokal_t" name="rbt_pilihan1">
-                                <label for="rbt_po_lokal_t">PO Lokal (Total PO)</label>
-                            </div> -->
-
-                        <!-- </div> -->
 
                     </div>
                     <div class="modal-footer">
@@ -765,14 +742,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="register1" id="rbt_register1" name="rbt_pilihan2" checked>
-                                <label for="rbt_register1">Register PO</label>
-                            </div>
-                            <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="cetakan1" id="rbt_cetakan1" name="rbt_pilihan2">
-                                <label for="rbt_cetakan1">Cetakan</label>
-                            </div> -->
 
                         </div>
 
@@ -1068,10 +1037,6 @@
                                 <label for="rbt_spp_blm_po">Belum PO</label>
                             </div>
 
-                            <!-- <div class="radio radio-info form-check-inline">
-                                <input type="radio" value="graphic" id="rbt_graphic" name="rbt_pilihan3">
-                                <label for="rbt_graphic">Graphic</label>
-                            </div> -->
                         </div>
 
                     </div>
@@ -1691,6 +1656,37 @@
         </div>
         <!-- end modal transfer to GL -->
 
+        <!-- modal ubah periode -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="ubahPeriode">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body p-4">
+                        <div class="text-center">
+                            <i class="dripicons-information h1 text-info"></i>
+                            <h4 class="mt-2">Ubah Periode</h4>
+
+                            <div class="mb-1">
+                                <div class="input-group input-group-merge">
+                                    <input type="text" id="u_periode" class="form-control" placeholder="Ubah Periode">
+                                    <div class="input-group-text">
+                                        <i class="fe-calendar"></i>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="mb-0 text-center">
+                                <button type="button" class="btn btn-info my-2" id="btn_batal" onclick="UbahPeriode()">Ubah</button>
+                                <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal ubah periode -->
+
         <style>
             .hastag_th {
                 width: 5% !important;
@@ -1892,6 +1888,46 @@
     <script src="<?php echo base_url() ?>assets/js/app.min.js"></script>
 
     <script type="text/javascript">
+        function modalUbahPeriode() {
+            $('#ubahPeriode').modal('show');
+
+            var date = '<?php echo $this->session->userdata("Ymd_periode"); ?>';
+            // console.log(date);
+            var convert_date = '<?php echo date("m/d/Y", strtotime($this->session->userdata("Ymd_periode"))) ?>';
+            console.log(convert_date);
+            $('#u_periode').daterangepicker({
+                singleDatePicker: !0,
+                singleClasses: "picker_1",
+                "startDate": convert_date, // "03/20/2019" "mm/dd/yyyy"
+            }, function(start, end, label) {
+                // start.format('YYYY-MM-DD')
+            });
+        }
+
+        function UbahPeriode() {
+            var txt_ubah_periode = $('#u_periode').val();
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Home/ubah_session_ymd'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {},
+                // cache   : false,
+                // contentType : false,
+                // processData : false,
+
+                data: {
+                    'periode_ubah': txt_ubah_periode
+                },
+                success: function(data) {
+                    location.reload();
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        }
+
         function lap_po() {
             $('#modalLapPO').modal('show');
             $('#cmb_company').empty();

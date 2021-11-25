@@ -27,6 +27,34 @@ class Home extends CI_Controller
         $this->load->model('M_bpb_mutasi');
     }
 
+    function ubah_session_ymd()
+    {
+        if (isset($_POST['periode_ubah'])) {
+            $periode = $this->input->post('periode_ubah');
+
+            $d_periode =  date("j", strtotime($periode));
+
+            if ($d_periode >= 26) {
+                $ym_periode = date('Ym', strtotime($periode . " +1 month"));
+            } else {
+                $ym_periode = date('Ym', strtotime($periode));
+            }
+
+            $Ymd_periode =  date('Y-m-d', strtotime($periode));
+
+            $this->session->set_userdata(array(
+                'periode' => $periode,
+                'ym_periode' => $ym_periode,
+                'Ymd_periode' => $Ymd_periode,
+            ));
+
+            $data = TRUE;
+        } else {
+            $data = FALSE;
+        }
+        echo json_encode($data);
+    }
+
 
     public function index()
     {

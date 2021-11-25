@@ -253,13 +253,13 @@
     table#tabel_mutasi td {
         padding: 10px;
         font-size: 12px;
-        cursor:pointer;
+        cursor: pointer;
     }
 
     table#tabel_bpb_mutasi td {
         padding: 10px;
         font-size: 12px;
-        cursor:pointer;
+        cursor: pointer;
     }
 </style>
 
