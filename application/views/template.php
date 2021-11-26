@@ -1773,7 +1773,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 
         <!-- Sweet alert init js-->
-        <!-- <script src="<?php echo base_url() ?>assets/js/pages/sweet-alerts.init.js"></script> -->
+        <script src="<?php echo base_url() ?>assets/js/pages/sweet-alerts.init.js"></script>
 
         <!-- Tost-->
         <script src="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.js"></script>
