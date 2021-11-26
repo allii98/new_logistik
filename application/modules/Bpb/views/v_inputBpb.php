@@ -2069,7 +2069,7 @@
                 // $(arr_id[index]).after('<div class="pesan_error"><br /><small style="margin-top:0px;color:red;">Harus diisi</small></div>');
             });
         } else {
-            alert('update gagal gess!');
+            alert('sistem ngambek, abis di cancel update terus di update lagi!');
             if ($('#' + arr_id).is('input') || $('#' + arr_id).is('textarea') || $('#' + arr_id).is('select')) {
                 if (arr_id == 'hidden_no_acc_' + no) {
                     $('#lbl_no_acc_' + no).css({
