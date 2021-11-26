@@ -1,7 +1,19 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Posting extends CI_Controller {
+class Posting extends CI_Controller
+{
+
+      function auth_hitungstok()
+      {
+            $value = $this->input->post('pw');
+            if ($value == "123456789") {
+                  $data = TRUE;
+            } else {
+                  $data = FALSE;
+            }
+            echo json_encode($data);
+      }
 
       public function transfer_to_gl()
       {
@@ -49,9 +61,7 @@ class Posting extends CI_Controller {
             $entry["POST"] = $i;
             $entry["tglinput"] = $i;
             $entry["USER"] = $i;
-
       }
-
 }
 
 /* End of file Posting.php */

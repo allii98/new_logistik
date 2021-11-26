@@ -343,13 +343,13 @@ date_default_timezone_set('Asia/Jakarta');
                                     <div class="arrow-down"></div>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="topnav-components">
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-repeat mr-1"></i>
+                                    <a href="javascript:hitungulang();" class="dropdown-item"><i class="fe-repeat mr-1"></i>
                                         <font face="Verdana" size="2.5">Hitung Ulang Stok</font>
                                     </a>
-                                    <a href="#" onclick="tflpbbkbtogl()" class="dropdown-item"><i class="fe-send mr-1"></i>
+                                    <a href="javascript:tflpbbkbtogl();" class="dropdown-item"><i class="fe-send mr-1"></i>
                                         <font face="Verdana" size="2.5">Transfer Transaksi LPB & BKB ke GL</font>
                                     </a>
-                                    <a href="widgets.html" class="dropdown-item"><i class="fe-book mr-1"></i>
+                                    <a href="javascript:tutupbuku();" class="dropdown-item"><i class="fe-book mr-1"></i>
                                         <font face="Verdana" size="2.5">Tutup Buku</font>
                                     </a>
                                 </div>
@@ -1665,7 +1665,7 @@ date_default_timezone_set('Asia/Jakarta');
                             <i class="dripicons-information h1 text-info"></i>
                             <h4 class="mt-2">Ubah Periode</h4>
 
-                            <div class="mb-1">
+                            <div class="mb-2">
                                 <div class="input-group input-group-merge">
                                     <input type="text" id="u_periode" class="form-control" placeholder="Ubah Periode">
                                     <div class="input-group-text">
@@ -1677,8 +1677,8 @@ date_default_timezone_set('Asia/Jakarta');
 
 
                             <div class="mb-0 text-center">
-                                <button type="button" class="btn btn-info my-2" id="btn_batal" onclick="UbahPeriode()">Ubah</button>
-                                <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                                <button type="button" class="btn btn-outline-info rounded-pill waves-effect waves-light" onclick="UbahPeriode()">Ubah</button>
+                                <button type="button" class="btn btn-outline-secondary rounded-pill waves-effect" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -1769,11 +1769,11 @@ date_default_timezone_set('Asia/Jakarta');
         <!-- JQuery -->
         <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
         <script src="<?php echo base_url() ?>assets/js/vendor.min.js"></script>
-        <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.min.js"></script>
+        <script src="<?php echo base_url() ?>assets/libs/sweetalert2/sweetalert2.all.min.js"></script>
 
 
         <!-- Sweet alert init js-->
-        <script src="<?php echo base_url() ?>assets/js/pages/sweet-alerts.init.js"></script>
+        <!-- <script src="<?php echo base_url() ?>assets/js/pages/sweet-alerts.init.js"></script> -->
 
         <!-- Tost-->
         <script src="<?php echo base_url() ?>assets/libs/jquery-toast-plugin/jquery.toast.min.js"></script>
@@ -1888,6 +1888,52 @@ date_default_timezone_set('Asia/Jakarta');
     <script src="<?php echo base_url() ?>assets/js/app.min.js"></script>
 
     <script type="text/javascript">
+        //menu posting
+        function hitungulang() {
+            Swal.fire({
+                title: 'Masukkan Passwoed',
+                input: 'password',
+                inputLabel: 'Password',
+                inputPlaceholder: 'Masukkan Passwoed',
+                inputAttributes: {
+                    maxlength: 10,
+                    autocapitalize: 'off',
+                    autocorrect: 'off'
+                }
+            }).then((value) => {
+                var pw = value.value;
+                if (pw != null && $.trim(pw) != "") {
+                    // console.log(pw);
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('Posting/auth_hitungstok'); ?>",
+                        dataType: "JSON",
+                        beforeSend: function() {},
+                        data: {
+                            pw: pw
+                        },
+                        success: function(data) {
+                            // console.log(data);
+                            if (data === true) {
+                                console.log("Password Benar");
+                            } else {
+                                window.Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: 'Password Salah!'
+                                })
+                            }
+                        },
+                        error: function(request) {
+
+                            console.log(request.responseText);
+                        }
+                    });
+                }
+            });
+        }
+        //end
+
         function modalUbahPeriode() {
             $('#ubahPeriode').modal('show');
 
