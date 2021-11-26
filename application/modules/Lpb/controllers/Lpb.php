@@ -694,7 +694,7 @@ class Lpb extends CI_Controller
         $entry["converse"] = 0;
         $entry["ref"] = 'LPB-' . $no_lpb;
         $entry["noref"] = $no_ref_lpb;
-        $entry["descac"] = $nama_supply;
+        $entry["descac"] = $data_noac_gl['nama'];
         $entry["ket"] = 'Hutang Supplier No.PO:' . $no_ref_po . '/' . $nabar;
         $entry["begindr"] = 0;
         $entry["begincr"] = 0;
