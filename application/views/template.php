@@ -1915,7 +1915,7 @@ date_default_timezone_set('Asia/Jakarta');
                         success: function(data) {
                             // console.log(data);
                             if (data === true) {
-                                console.log("Password Benar");
+                                doHitulStok();
                             } else {
                                 window.Swal.fire({
                                     type: 'error',
@@ -1929,6 +1929,38 @@ date_default_timezone_set('Asia/Jakarta');
                             console.log(request.responseText);
                         }
                     });
+                }
+            });
+        }
+
+        function doHitulStok() {
+            $.ajax({
+                url: "<?php echo site_url('Posting/hitung_stok'); ?>",
+                type: "POST",
+                data: {
+                    'do': 'do'
+                },
+                beforeSend: function() {
+                    Swal.fire({
+                        imageUrl: '<?php echo base_url(); ?>assets/img/loading3.gif',
+                        imageHeight: 90,
+                        imageAlt: 'A tall image',
+                        showConfirmButton: false,
+                        closeOnClickOutside: false,
+                    })
+                },
+                success: function(data) {
+                    //$("#loader").hide(); // hides loading sccreen in success call back
+                    window.Swal.fire({
+                        type: 'success',
+                        title: 'Berhasil Posting',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+
                 }
             });
         }
