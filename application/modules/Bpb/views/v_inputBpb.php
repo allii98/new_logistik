@@ -1789,7 +1789,11 @@
             success: function(data) {
                 // untuk bahan dimanualkan
                 var bahan = data.data_bpbitem.kodebebantxt;
-                var digit_last_beban = bahan.substr(10, 3);
+                if ($('#cmb_bagian :selected').text() == "TANAMAN" || $('#cmb_bagian :selected').text() == "TANAMAN UMUM") {
+                    var digit_last_beban = bahan.substr(10, 3);
+                } else {
+                    var digit_last_beban = '';
+                }
 
                 sum_stok(data.data_bpbitem.kodebar, no, kode_dev);
                 sum_stok_booking(data.data_bpbitem.kodebar, no, kode_dev);
@@ -2065,7 +2069,7 @@
                 // $(arr_id[index]).after('<div class="pesan_error"><br /><small style="margin-top:0px;color:red;">Harus diisi</small></div>');
             });
         } else {
-            console.log(arr_id);
+            alert('update gagal gess!');
             if ($('#' + arr_id).is('input') || $('#' + arr_id).is('textarea') || $('#' + arr_id).is('select')) {
                 if (arr_id == 'hidden_no_acc_' + no) {
                     $('#lbl_no_acc_' + no).css({
