@@ -384,6 +384,82 @@ class M_bpb extends CI_Model
         $databpbitem['cetak']         = "";
         $databpbitem['posting']       = "";
 
+        //histori bpb
+        $databpb_history['nobpb']           = $nobpb;
+        $databpb_history['norefbpb']        = $norefbpb;
+        $databpb_history['nobkb_ro']        = $nobkb_ro;
+        $databpb_history['nopo_ro']         = $nopo_ro;
+        $databpb_history['tglbpb']          = $tgl . date(' H:i:s');
+        $databpb_history['tglinput']        = date('Y-m-d');
+        $databpb_history['jaminput']        = date('H:i:s');
+        $databpb_history['periode']         = $periode;
+        $databpb_history['alokasi']         = $alokasi;
+        $databpb_history['pt']              = $this->session->userdata('pt');
+        $databpb_history['kode']            = $this->session->userdata('kode_pt');
+        $databpb_history['devisi']          = $data['devisi']['PT'];
+        $databpb_history['kode_dev']        = $kode_devisi;
+        $databpb_history['keperluan']       = $keperluan;
+        $databpb_history['bag']             = $bagian;
+        $databpb_history['batal']           = "0";
+        $databpb_history['alasan_batal']    = NULL;
+        $databpb_history['USER']            = $this->session->userdata('user');
+        $databpb_history['cetak']           = "";
+        $databpb_history['posting']         = "";
+        $databpb_history['approval']        = "0";
+        $databpb_history['req_rev_qty']        = "0";
+        $databpb_history['bhn_bakar']        = $bhnbakar;
+        $databpb_history['jn_alat']        = $jns_alat;
+        $databpb_history['no_kode']        = $kd_nmr;
+        $databpb_history['hm_km']        = $hm_km;
+        $databpb_history['lok_kerja']        = $lokasi_kerja;
+        $databpb_history['status_mutasi']        = $statusmutasi;
+        $databpb_history['keterangan_transaksi'] = 'INPUT BPB';
+        $databpb_history['log'] = $this->session->userdata('user') . " menambahkan BPB $nobpb";
+        $databpb_history['tgl_transaksi'] = date("Y-m-d H:i:s");
+        $databpb_history['user_transaksi'] = $this->session->userdata('user');
+        $databpb_history['client_ip'] = $this->input->ip_address();
+        $databpb_history['client_platform'] = $this->platform->agent();
+
+        $databpbitem_history['kodebar']       = $kodebar;
+        $databpbitem_history['nabar']         = $nabar;
+        $databpbitem_history['satuan']        = $satuan;
+        $databpbitem_history['grp']           = $grup;
+        $databpbitem_history['alokasi']       = $alokasi;
+        $databpbitem_history['kodept']        = $this->session->userdata('kode_pt');
+        $databpbitem_history['nobpb']         = $nobpb;
+        $databpbitem_history['norefbpb']      = $norefbpb;
+        $databpbitem_history['pt']            = $this->session->userdata('pt');
+        $databpbitem_history['kode']          = $this->session->userdata('kode_pt');
+        $databpbitem_history['devisi']        = $data['devisi']['PT'];
+        $databpbitem_history['kode_dev']      = $kode_devisi;
+        $databpbitem_history['qty']           = $qty;
+        $databpbitem_history['qty_disetujui'] = "0";
+        $databpbitem_history['tglbpb']        = $tgl . date(' H:i:s');
+        $databpbitem_history['tglinput']      = date('Y-m-d');
+        $databpbitem_history['jaminput']      = date('H:i:s');
+        $databpbitem_history['periode']       = $periode;
+        $databpbitem_history['ket']           = $keterangan;
+        $databpbitem_history['afd']           = $afd_unit;
+        $databpbitem_history['blok']          = $blok_sub;
+        $databpbitem_history['tmtbm']           = $tm_tbm;
+        $databpbitem_history['thntanam']          = $thun_tanam;
+        $databpbitem_history['noadjust']      = "0";
+        $databpbitem_history['kodebebantxt']  = $kodebeban;
+        $databpbitem_history['ketbeban']      = $ketbebanfix;
+        $databpbitem_history['kodesubtxt']    = $no_acc;
+        $databpbitem_history['ketsub']        = $nama_acc;
+        $databpbitem_history['batal']         = "0";
+        $databpbitem_history['alasan_batal']  = NULL;
+        $databpbitem_history['USER']          = $this->session->userdata('user');
+        $databpbitem_history['cetak']         = "";
+        $databpbitem_history['posting']       = "";
+        $databpbitem_history['keterangan_transaksi'] = 'INPUT ITEM BPB';
+        $databpbitem_history['log'] = $this->session->userdata('user') . " menambahkan ITEM BPB $nobpb";
+        $databpbitem_history['tgl_transaksi'] = date("Y-m-d H:i:s");
+        $databpbitem_history['user_transaksi'] = $this->session->userdata('user');
+        $databpbitem_history['client_ip'] = $this->input->ip_address();
+        $databpbitem_history['client_platform'] = $this->platform->agent();
+
         $query_max_id_approval_bpb = "SELECT max(id)+1 as max_id_approval_bpb from approval_bpb";
         $data_max_id_approval_bpb = $this->db_logistik_pt->query($query_max_id_approval_bpb)->row();
 
@@ -409,22 +485,9 @@ class M_bpb extends CI_Model
                 $bool_bpbitem = FALSE;
             }
 
-            //histori bpb
-            $databpb['keterangan_transaksi'] = 'INPUT BPB';
-            $databpb['log'] = $this->session->userdata('user') . " menambahkan BPB $nobpb";
-            $databpb['tgl_transaksi'] = date("Y-m-d H:i:s");
-            $databpb['user_transaksi'] = $this->session->userdata('user');
-            $databpb['client_ip'] = $this->input->ip_address();
-            $databpb['client_platform'] = $this->platform->agent();
-            $historibpb = $this->db_logistik_pt->insert('bpb_history', $databpb);
+            $historibpb = $this->db_logistik_pt->insert('bpb_history', $databpb_history);
 
-            $databpbitem['keterangan_transaksi'] = 'INPUT ITEM BPB';
-            $databpbitem['log'] = $this->session->userdata('user') . " menambahkan ITEM BPB $nobpb";
-            $databpbitem['tgl_transaksi'] = date("Y-m-d H:i:s");
-            $databpbitem['user_transaksi'] = $this->session->userdata('user');
-            $databpbitem['client_ip'] = $this->input->ip_address();
-            $databpbitem['client_platform'] = $this->platform->agent();
-            $historiItem = $this->db_logistik_pt->insert('bpbitem_history', $databpbitem);
+            $historiItem = $this->db_logistik_pt->insert('bpbitem_history', $databpbitem_history);
             //end histori
 
             $ambil_bpb =  $this->db_logistik_pt->query("SELECT id FROM bpb WHERE norefbpb='$norefbpb'")->row();
@@ -496,13 +559,7 @@ class M_bpb extends CI_Model
                     $bool_bpbitem = FALSE;
                 }
 
-                $databpbitem['keterangan_transaksi'] = 'INPUT ITEM BPB';
-                $databpbitem['log'] = $this->session->userdata('user') . " menambahkan ITEM BPB $nobpb";
-                $databpbitem['tgl_transaksi'] = date("Y-m-d H:i:s");
-                $databpbitem['user_transaksi'] = $this->session->userdata('user');
-                $databpbitem['client_ip'] = $this->input->ip_address();
-                $databpbitem['client_platform'] = $this->platform->agent();
-                $historiItem = $this->db_logistik_pt->insert('bpbitem_history', $databpbitem);
+                $historiItem = $this->db_logistik_pt->insert('bpbitem_history', $databpbitem_history);
 
                 $ambil_bpb =  $this->db_logistik_pt->query("SELECT id FROM bpb WHERE norefbpb='$norefbpb'")->row();
                 $ambil_item =  $this->db_logistik_pt->query("SELECT id FROM bpbitem WHERE norefbpb='$norefbpb' AND kodebar='$kodebar'")->row();

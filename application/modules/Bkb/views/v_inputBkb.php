@@ -768,7 +768,10 @@
                             console.log('ini bukan mutasi PT');
                         } else {
                             // jika dia mutasi rev qty belum fungsi
-                            $('#rev_qty_' + i).attr('disabled', '');
+                            $('#rev_qty_' + i).css('display', 'none');
+                            $('#txt_qty_disetujui_' + i).removeClass('bg-light');
+                            $('#txt_qty_disetujui_' + i).removeAttr('disabled', '');
+
                             if (data_bpb.status_mutasi == 1) {
                                 ubah_beban_bkb_mutasi(i, data_bpb.kode_pt_req_mutasi);
                             }
@@ -911,7 +914,7 @@
             '</td>';
         var td_col_11 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Qty Diminta & Stok di Tgl ini & Satuan -->' +
-            '<input type="number" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_disetujui_' + row + '" name="txt_qty_disetujui_' + row + '" placeholder="Qty Diminta" disabled>' +
+            '<input type="number" class="form-control form-control-sm bg-light" style="font-size:12px;" id="txt_qty_disetujui_' + row + '" name="txt_qty_disetujui_' + row + '" placeholder="Qty Diminta" disabled onkeyup="validasi_qty_disetujui(' + row + ')">' +
             '</td>';
         var td_col_12 = '<td style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<!-- Keterangan -->' +
@@ -1170,7 +1173,10 @@
                         //jika dia mutasi ubah status bpb mutasi
                         if (cexbox_mutasi_pt == '1' || cexbox_mutasi_local == '1') {
                             ubah_status_bpb_mutasi(hidden_kode_barang, noref_bpb);
+                            $('#txt_qty_disetujui_' + n).addClass('bg-light');
+                            $('#txt_qty_disetujui_' + n).attr('disabled', '');
                         }
+
 
                         notiferor(data);
                     }
@@ -1333,6 +1339,23 @@
         } else if (req_rev_qty == 0) {
             swal('Tidak boleh 0!');
             $('#req_rev_qty').val('');
+        }
+    }
+
+    function validasi_qty_disetujui(n) {
+
+        var a = $('#txt_qty_diminta_' + n).val();
+        var b = $('#txt_qty_disetujui_' + n).val();
+
+        var txt_qty_diminta = Number(a);
+        var txt_qty_disetujui = Number(b);
+
+        if (txt_qty_disetujui > txt_qty_diminta) {
+            swal('Melibihi QTY diminta!');
+            $('#txt_qty_disetujui_' + n).val(a);
+        } else if (txt_qty_disetujui == 0) {
+            swal('Tidak boleh 0!');
+            $('#txt_qty_disetujui_' + n).val(a);
         }
     }
 

@@ -101,7 +101,7 @@
                                     </label>
                                     <div class="col-9 col-xl-12">
                                         <select class="form-control form-control-sm" id="cmb_station" name="cmb_station" required="">
-                                            <option disabled selected>--Pilih--</option>
+                                            <option value="" disabled selected>--Pilih--</option>
                                             <option value="0">-</option>
                                         </select>
                                     </div>
@@ -924,7 +924,7 @@
     function check_form() {
 
         // console.log('oke siap berjalan');
-        if ($('#cmb_bagian :selected').text() == "TANAMAN" || $('#cmb_bagian :selected').text() == "TANAMAN UMUM") {
+        if ($('#cmb_bagian :selected').text() == "TANAMAN" && $('#cmb_bagian :selected').text() == "TANAMAN UMUM") {
 
             //kunci checkbox
             $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
@@ -1613,7 +1613,9 @@
         form_data.append('txt_tgl_bpb', $('#txt_tgl_bpb').val());
         // jika dia pabrik bag jadi station
         if (kode_dev == 03) {
-            if ($('#cmb_station :selected').val() == "0") {
+            if (!$('#cmb_station :selected').val()) {
+                form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
+            } else if ($('#cmb_station :selected').val() == "0") {
                 form_data.append('cmb_bagian', $('#cmb_bagian :selected').text());
             } else {
                 form_data.append('cmb_bagian', $('#cmb_station :selected').text());
@@ -1710,7 +1712,6 @@
                         });
                         $('#cetak').removeAttr('disabled', '');
                         $('#batalBPB').removeAttr('disabled', '');
-
 
                         $('#lbl_bpb_status').empty();
                         $('#h4_no_bpb').empty();
@@ -2069,7 +2070,7 @@
                 // $(arr_id[index]).after('<div class="pesan_error"><br /><small style="margin-top:0px;color:red;">Harus diisi</small></div>');
             });
         } else {
-            alert('sistem ngambek, abis di cancel update terus di update lagi!');
+            console.log(arr_id);
             if ($('#' + arr_id).is('input') || $('#' + arr_id).is('textarea') || $('#' + arr_id).is('select')) {
                 if (arr_id == 'hidden_no_acc_' + no) {
                     $('#lbl_no_acc_' + no).css({
