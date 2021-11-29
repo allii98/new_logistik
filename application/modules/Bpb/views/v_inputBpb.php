@@ -1044,6 +1044,8 @@
 
         var rowCount = $("#tableRinciBPB td").closest("tr").length;
 
+        console.log($('#hidden_id_bpbitem_' + no).val() + 'ni idnye');
+
         if (rowCount != 1) {
             var form_data = new FormData();
 
@@ -1458,6 +1460,7 @@
         var noref = $('#hidden_no_ref_bpb').val();
         var mutasi_pt = $('#hidden_mutasi_pt').val();
         var alasan = $('#alasan').val();
+        console.log(idbpb + 'ni idbpbnya');
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Bpb/batalBPB'); ?>",

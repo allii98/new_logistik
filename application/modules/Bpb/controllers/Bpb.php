@@ -537,7 +537,7 @@ class Bpb extends CI_Controller
         $databpb['user_transaksi'] = $this->session->userdata('user');
         $databpb['client_ip'] = $this->input->ip_address();
         $databpb['client_platform'] = $this->platform->agent();
-        $historibpb = $this->db_logistik_pt->insert('bpb', $databpb);
+        $historibpb = $this->db_logistik_pt->insert('bpb_history', $databpb);
 
         $get_itembpb = $this->db_logistik_pt->query("SELECT * FROM bpbitem WHERE id='$id_bpbitem'")->row();
         $databpbitem['kodebar']       = $get_itembpb->kodebar;
@@ -646,7 +646,7 @@ class Bpb extends CI_Controller
         $databpb['user_transaksi'] = $this->session->userdata('user');
         $databpb['client_ip'] = $this->input->ip_address();
         $databpb['client_platform'] = $this->platform->agent();
-        $historibpb = $this->db_logistik_pt->insert('bpb', $databpb);
+        $historibpb = $this->db_logistik_pt->insert('bpb_history', $databpb);
         //end
 
         $mutasi_pt = $this->input->post('mutasi_pt');
@@ -797,7 +797,7 @@ class Bpb extends CI_Controller
         $kode_dev = $this->input->post('kode_dev');
 
         $query_booking = "SELECT SUM(qty) as stokbooking FROM bpbitem WHERE kodebar = '$id' AND kode_dev='$kode_dev' AND batal <> 1";
-        $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id' AND kode_dev='$kode_dev' AND batal <> 1";
+        $query_booking2 = "SELECT SUM(qty2) as stokbooking2 FROM keluarbrgitem WHERE kodebar = '$id' AND kode_dev='$kode_dev' AND batal <> 1 AND nobpb NOT LIKE '%MUT%'";
         $get_booking = $this->db_logistik_pt->query($query_booking)->row();
         $get_booking2 = $this->db_logistik_pt->query($query_booking2)->row();
 
