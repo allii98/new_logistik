@@ -20,6 +20,7 @@ class Posting extends CI_Controller
             }
             date_default_timezone_set('Asia/Jakarta');
             $this->load->library('form_validation');
+            $this->load->model('M_posting');
       }
 
 
@@ -37,10 +38,20 @@ class Posting extends CI_Controller
       function hitung_stok()
       {
             $data = "Oke siap";
-            //ambil
+            $ym_periode_skrg = $this->session->userdata('ym_periode');
+            $this->db_logistik_pt->delete('stockawal', array('txtperiode' => $ym_periode_skrg));
+            $this->db_logistik_pt->delete('stockawal_harian', array('txtperiode' => $ym_periode_skrg));
+
+            //ambil lpb
+            $lpb = $this->M_posting->getItemLpb();
+            foreach ($lpb as $d) {
+            }
+            //end lpb
+
+
             //cek data di stokawal berdasarkan periode saat di posting
             //end cek
-            echo json_encode($data);
+            echo json_encode($ym_periode_skrg);
       }
 
       public function transfer_to_gl()

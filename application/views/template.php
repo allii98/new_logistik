@@ -1891,10 +1891,10 @@ date_default_timezone_set('Asia/Jakarta');
         //menu posting
         function hitungulang() {
             Swal.fire({
-                title: 'Masukkan Passwoed',
+                title: 'Masukkan Password',
                 input: 'password',
                 inputLabel: 'Password',
-                inputPlaceholder: 'Masukkan Passwoed',
+                inputPlaceholder: 'Masukkan Password',
                 inputAttributes: {
                     maxlength: 10,
                     autocapitalize: 'off',
@@ -1950,6 +1950,7 @@ date_default_timezone_set('Asia/Jakarta');
                     })
                 },
                 success: function(data) {
+                    console.log("periode skrg", data);
                     //$("#loader").hide(); // hides loading sccreen in success call back
                     window.Swal.fire({
                         type: 'success',
