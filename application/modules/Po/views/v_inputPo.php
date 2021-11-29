@@ -3400,9 +3400,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
     function ubah(id) {
         $('#alasanedit').modal('show');
-        $('#no_baris').val(n);
+        $('#no_baris').val(id);
         $('#pass').val('');
         $('#alasan_edit').val('');
+        console.log(id + 'ni nobaris');
 
         // $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeClass('bg-light');
         // $('.div_form_1').find('#tgl_po,#select2 ,#cmb_status_bayar, #tmpo_pembayaran, #tmpo_pengiriman, #lks_pengiriman, #lks_pembelian, #no_penawaran, #txt_pemesan, #devisi,#ket_pengiriman,#pph,#ppn,#keterangan,#cmb_dikirim_ke_kebun').removeAttr('disabled', '');

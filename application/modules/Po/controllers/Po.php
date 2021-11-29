@@ -1719,8 +1719,8 @@ class Po extends CI_Controller
         $qty = $this->input->post('qty');
         $alasan = $this->input->post('alasan');
 
-        $cek = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row();
-        $qty2 = $cek->qty2;
+        $cek['cek_data'] = $this->db_logistik_pt->query("SELECT qty2 FROM item_ppo WHERE id='$id_ppo'")->row_array();
+        $qty2 = $cek['cek_data']['qty2'];
         $isi = $qty2 - $qty;
 
         $data_ppo2 =  array(

@@ -1396,7 +1396,8 @@
     }
 
     function cekbatal() {
-        var refspp = $('#refspp').val();
+        // var refspp = $('#refspp').val();
+        var refpo = $('#hidden_no_ref_po').val();
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Po/cekDataPo'); ?>",
@@ -1406,12 +1407,13 @@
             },
 
             data: {
-                refspp: refspp
+                // refspp: refspp
+                refpo: refpo,
             },
             success: function(data) {
 
-                // console.log('inni gess', data.length);
-                for (i = 0; i < data.length; i++) {
+                console.log(data + 'ni data length');
+                for (var i = 0; i < data; i++) {
 
                     konfirbatal(i);
                 }
@@ -1447,11 +1449,11 @@
             beforeSend: function() {},
 
             data: {
-                noref_po: noref_po,
                 hidden_id_po_item: hidden_id_po_item,
                 id_item: iditemspp,
                 hidden_no_ref_spp: ref_spp,
                 qty: qty,
+                noref_po: noref_po,
                 alasan: alasan
             },
             success: function(data) {
@@ -1464,7 +1466,6 @@
                     icon: 'success',
                     loader: false
                 });
-                $('#tr_' + no).remove();
                 setTimeout(function() {
                     window.location.href = "<?php echo site_url('Po'); ?>";
                 }, 1000);
