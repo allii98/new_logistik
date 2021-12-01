@@ -9,7 +9,7 @@
                         <div class="button-list mr-2">
                             <button class="btn btn-xs btn-info" id="data_lpb" onclick="data_lpb()">Data LPB</button>
                             <button class="btn btn-xs btn-success" id="new_lpb" onclick="new_lpb()">LPB Baru</button>
-                            <button class="btn btn-xs btn-danger" id="cancelLpb" onclick="cancelLpb()">Batal LPB</button>
+                            <button class="btn btn-xs btn-danger" id="cancelLpb" data-toggle="modal" data-target="#alasanbatal">Batal LPB</button>
                             <button class="btn btn-primary btn-xs" id="a_print_lpb" onclick="cetak_lpb()">Cetak</button>
                             <button onclick="goBack()" class="btn btn-xs btn-secondary" id="kembali">Kembali</button>
                         </div>
@@ -250,7 +250,7 @@
     </div>
 </div>
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+<!-- <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body p-4">
@@ -264,8 +264,51 @@
             </div>
         </div>
     </div>
+</div> -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" id="alasanbatal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-1">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                </div>
+
+
+
+                <form class="parsley-examples" action="#" novalidate>
+                    <div class="mb-1">
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="pw" class="form-control" placeholder="Masukkan password">
+                            <div class="input-group-text" data-password="false">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                        <ul class="parsley-errors-list filled" id="pw_validasi" style="display: none;">
+                            <li class="parsley-required" id="text-pw"></li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="alasan" class="form-label">Alasan</label>
+                        <textarea class="form-control" id="alasan" rows="2" placeholder="Alasan batal..." required></textarea>
+                        <ul class="parsley-errors-list filled" id="alasan_validasi" style="display: none;">
+                            <li class="parsley-required">Alasan tidak boleh kosong!</li>
+                        </ul>
+                    </div>
+                    <div class="mb-0 text-center">
+                        <button type="button" class="btn btn-warning my-2" id="btn_batal" onclick="validasibatal()">Batalkan</button>
+                        <button type="button" class="btn btn-default btn_close" onclick="closemodal()">Cancel</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>
 <input type="hidden" name="status_batal" id="status_batal">
+<input type="hidden" name="password" id="password" value="<?= $this->session->userdata('pw') ?>">
 <input type="hidden" id="id_stokmasuk" value="<?= $id_stokmasuk ?>">
 
 <style>
@@ -321,22 +364,74 @@
         var batal = $('#status_batal').val("0");
     }
 
-    function validasibatal() {
-        var alasan = $('#alasan').val();
+    // function validasibatal() {
+    //     var alasan = $('#alasan').val();
 
-        if (!alasan) {
-            $.toast({
-                position: 'top-right',
-                text: 'Silahkan Isi Alasan!',
-                icon: 'error',
-                loader: false
-            });
-            $('#alasan').css({
-                "background": "#FFCECE"
-            });
+    //     if (!alasan) {
+    //         $.toast({
+    //             position: 'top-right',
+    //             text: 'Silahkan Isi Alasan!',
+    //             icon: 'error',
+    //             loader: false
+    //         });
+    //         $('#alasan').css({
+    //             "background": "#FFCECE"
+    //         });
+    //     } else {
+    //         cekLpb();
+    //     }
+    // }
+
+    function validasibatal() {
+        var password = $('#pw').val();
+        var pw_session = $('#password').val();
+        var pw = $('#pw').val().length;
+        var alasan = $('#alasan').val().length;
+
+        if (pw == 0) {
+            $('#pw').addClass('parsley-error');
+            $('#pw_validasi').css('display', 'block');
+            $('#text-pw').html('Password tidak boleh kosong!');
+        } else if (alasan == 0) {
+            $('#alasan').addClass('parsley-error');
+            $('#alasan_validasi').css('display', 'block');
         } else {
-            cekLpb();
+            $('#pw').removeClass('parsley-error');
+            $('#pw_validasi').css('display', 'none');
+
+            $('#alasan').removeClass('parsley-error');
+            $('#alasan_validasi').css('display', 'none');
+
+            if (password == pw_session) {
+                cekLpb();
+                $('#alasanbatal').modal('hide');
+            } else {
+                $('#pw').addClass('parsley-error');
+                $('#pw_validasi').css('display', 'block');
+                $('#text-pw').html('Password Salah!');
+            }
         }
+
+        // if (!alasan) {
+        //     $.toast({
+        //         position: 'top-right',
+        //         text: 'Silahkan Isi Alasan!',
+        //         icon: 'error',
+        //         loader: false
+        //     });
+        //     $('#alasan').css({
+        //         "background": "#FFCECE"
+        //     });
+        // } else {
+        //     cekLpb();
+        // }
+    }
+
+    function closemodal() {
+
+        // $('#modalKonfirmasiHapusLpb').modal('show');
+        $('#alasanbatal').modal('hide');
+        var batal = $('#status_batal').val("0");
     }
 
     function goBack() {
@@ -360,6 +455,10 @@
     $(document).ready(function() {
         var id_stokmasuk = $('#id_stokmasuk').val();
         cari_lpb_edit(id_stokmasuk);
+        $('#alasanbatal').on('shown.bs.modal', function() {
+            $('#pw').focus();
+            $('#status_batal').val("1")
+        })
     });
 
     function cari_lpb_edit(id_stokmasuk) {

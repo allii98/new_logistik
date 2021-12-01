@@ -1687,6 +1687,31 @@ date_default_timezone_set('Asia/Jakarta');
         </div>
         <!-- end modal ubah periode -->
 
+        <!-- modal Progress -->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" id="modal_progres">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body p-4">
+                        <div class="text-center">
+                            <i class="dripicons-information h1 text-info"></i>
+                            <h4 class="mt-1">Silahkan Tunggu</h4>
+
+                            <div class="mb-2">
+                                <div class="progress mb-0">
+                                    <div id="proses-posting" class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end modal ubah periode -->
+
         <style>
             .hastag_th {
                 width: 5% !important;
@@ -1934,29 +1959,34 @@ date_default_timezone_set('Asia/Jakarta');
         }
 
         function doHitulStok() {
+            // $('#modal_progres').modal('show');
             $.ajax({
+
                 url: "<?php echo site_url('Posting/hitung_stok'); ?>",
                 type: "POST",
                 data: {
                     'do': 'do'
                 },
+
                 beforeSend: function() {
                     Swal.fire({
                         imageUrl: '<?php echo base_url(); ?>assets/img/loading3.gif',
                         imageHeight: 90,
                         imageAlt: 'A tall image',
                         showConfirmButton: false,
-                        closeOnClickOutside: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
                     })
+                    // $("#proses-posting").width('0%');
                 },
                 success: function(data) {
-                    console.log("periode skrg", data);
+                    console.log(data);
+                    // $('#modal_progres').modal('hide');
                     //$("#loader").hide(); // hides loading sccreen in success call back
                     window.Swal.fire({
                         type: 'success',
                         title: 'Berhasil Posting',
-                        showConfirmButton: false,
-                        timer: 1500
+                        showConfirmButton: true,
                     })
                 },
                 error: function(request) {
