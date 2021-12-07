@@ -536,7 +536,7 @@
         </div>
     </div>
 
-    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
+    <!-- <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="alasanbatal">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-body p-4">
@@ -547,6 +547,48 @@
                         <button type="button" class="btn btn-warning my-2" id="btn_delete" onclick="validasibatal()">Batalkan</button>
                         <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" id="alasanbatal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center mt-2 mb-1">
+                        <i class="dripicons-warning h1 text-warning"></i>
+                    </div>
+
+
+
+                    <form class="parsley-examples" action="#" novalidate>
+                        <div class="mb-1">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group input-group-merge">
+                                <input type="password" id="pw" class="form-control" placeholder="Masukkan password">
+                                <div class="input-group-text" data-password="false">
+                                    <span class="password-eye"></span>
+                                </div>
+                            </div>
+                            <ul class="parsley-errors-list filled" id="pw_validasi" style="display: none;">
+                                <li class="parsley-required" id="text-pw"></li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-2">
+                            <label for="alasan" class="form-label">Alasan</label>
+                            <textarea class="form-control" id="alasan" rows="2" placeholder="Alasan batal..." required></textarea>
+                            <ul class="parsley-errors-list filled" id="alasan_validasi" style="display: none;">
+                                <li class="parsley-required">Alasan tidak boleh kosong!</li>
+                            </ul>
+                        </div>
+                        <div class="mb-0 text-center">
+                            <button type="button" class="btn btn-warning my-2" id="btn_batal" onclick="validasibatal()">Batalkan</button>
+                            <button type="button" class="btn btn-default btn_close" onclick="closemodal()">Cancel</button>
+                        </div>
+
+                    </form>
+
                 </div>
             </div>
         </div>
