@@ -29,12 +29,11 @@
                                     <th style="font-size: 12px; padding:10px">#</th>
                                     <th style="font-size: 12px; padding:10px">No.</th>
                                     <th style="font-size: 12px; padding:10px">Ref. PP</th>
-                                    <th style="font-size: 12px; padding:10px">Ref PO</th>
                                     <th style="font-size: 12px; padding:10px">Tgl. PP</th>
-                                    <th style="font-size: 12px; padding:10px">Tgl. PO</th>
                                     <th style="font-size: 12px; padding:10px">Nama Supplier</th>
                                     <th style="font-size: 12px; padding:10px">User Input</th>
                                     <th style="font-size: 12px; padding:10px">Ket</th>
+                                    <th style="font-size: 12px; padding:10px">Status</th>
                                 </tr>
                             </thead>
 
@@ -85,6 +84,7 @@
                                 <tr>
                                     <th width="3%" style="font-size: 12px; padding:10px">No</th>
                                     <th width="15%" style="font-size: 12px; padding:10px">Ref.&nbsp;PO</th>
+                                    <th width="15%" style="font-size: 12px; padding:10px">Tgl.&nbsp;PO</th>
                                     <th width="10%" style="font-size: 12px; padding:10px">Pembayaran</th>
                                     <th width="15%" style="font-size: 12px; padding:10px">Total&nbsp;PO</th>
                                     <th width="20%" style="font-size: 12px; padding:10px">Sudah&nbsp;Bayar</th>
@@ -170,11 +170,12 @@
                 {
                     "width": "18%"
                 },
-                {
-                    "width": "18%"
-                },
+
                 {
                     "width": "8%"
+                },
+                {
+                    "width": "20%"
                 },
                 {
                     "width": "8%"
@@ -183,11 +184,9 @@
                     "width": null
                 },
                 {
-                    "width": null
+                    "width": "5%"
                 },
-                {
-                    "width": "12%"
-                },
+
 
             ],
             "columnDefs": [{
@@ -228,6 +227,9 @@
                 },
                 {
                     "width": "15%"
+                },
+                {
+                    "width": "5%"
                 },
                 {
                     "width": "10%"

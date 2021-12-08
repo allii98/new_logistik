@@ -46,31 +46,45 @@ class Pp extends CI_Controller
                 </button>
             </a>
                 ';
+
+                $status = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-danger">batal</span></h5>';
+
+
                 # code...
             } else {
-                $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $noref) . '" class="btn btn-warning fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
-    
-                <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
-                <a href="javascript:;" id="a_delete_pp">
+                if ($hasil->status_vou == 1) {
+
+                    $status = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Cashbank</span></h5>';
+                    # code...
+                    $row[] = '<a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                    <a href="javascript:;" id="a_delete_pp">
                     <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                     </button>
-                </a>';
-
-                //     <a href="javascript:;" id="a_delete_pp">
-                //     <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Batal PP" onClick="deletePP(' . $id . ',' . $hasil->nopp . ','  . $hasil->jumlah . ',' . $hasil->nopotxt . ')">
-                //     </button>
-                // </a>
-                # code...
+                    </a>';
+                } else {
+                    $status = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">Proses</span></h5>';
+                    # code...
+                    $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $noref) . '" class="btn btn-warning fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
+        
+                    <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                    <a href="javascript:;" id="a_delete_pp">
+                        <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
+                        </button>
+                    </a>';
+                }
             }
 
             $row[] = $no . ".";
             $row[] = $hasil->ref_pp;
-            $row[] = $hasil->ref_po;
+            // $row[] = $hasil->ref_po;
             $row[] = date('d-m-Y', strtotime($hasil->tglpp));
-            $row[] = date('d-m-Y', strtotime($hasil->tglpo));
+            // $row[] = date('d-m-Y', strtotime($hasil->tglpo));
             $row[] = $hasil->nama_supply;
             $row[] = $hasil->user;
             $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($hasil->ket) . ' </p>';
+
+            $row[] = $status;
+
             $data[] = $row;
         }
 
@@ -102,6 +116,7 @@ class Pp extends CI_Controller
 
             $row[] = $no . ".";
             $row[] = $hasil->ref_po;
+            $row[] = date('d-m-Y', strtotime($hasil->tglpo));
             $row[] = $hasil->bayar;
             $row[] = number_format($hasil->total_po, 2, ",", ".");
             $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar, 2, ",", ".");
