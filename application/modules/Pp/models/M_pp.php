@@ -256,11 +256,6 @@ class M_pp extends CI_Model
 
         $tot_terbayar = 1;
 
-        // if ($hasil != 0) {
-        // } else {
-        //     $tot_terbayar = $jumlah;
-        // }
-
 
         $query_id_logistik_caba = "SELECT max(id)+1 as new_id FROM pp_logistik";
         $data_logistik_caba = $this->db_caba->query($query_id_logistik_caba)->row();
@@ -302,11 +297,10 @@ class M_pp extends CI_Model
         $data_pplogistikdicaba['user']              = $this->session->userdata('user');
         $data_pplogistikdicaba['tglisi']            = date("Y-m-d H:i:s");
         $data_pplogistikdicaba['status_vou']        = "0";
-        // $data_pplogistikdicaba['status_vou']        = "1";
-        $data_pplogistikdicaba['no_vou']            = $no_vou;
-        $data_pplogistikdicaba['no_voutxt']         = $no_vou;
-        $data_pplogistikdicaba['tgl_vou']           = $tgl_vou;
-        $data_pplogistikdicaba['tgl_voutxt']        = $tgl_voutxt;
+        // $data_pplogistikdicaba['no_vou']            = $no_vou;
+        // $data_pplogistikdicaba['no_voutxt']         = $no_vou;
+        // $data_pplogistikdicaba['tgl_vou']           = $tgl_vou;
+        // $data_pplogistikdicaba['tgl_voutxt']        = $tgl_voutxt;
         $data_pplogistikdicaba['TGL_BAYAR_REAL']    = NULL;
         $data_pplogistikdicaba['kode_budget']       = "0";
         $data_pplogistikdicaba['grup']              = $this->input->post('hidden_grup');
@@ -503,10 +497,10 @@ class M_pp extends CI_Model
         $data_pplogistikdicaba['tglisi']            = date("Y-m-d H:i:s");
         $data_pplogistikdicaba['status_vou']        = "0";
         // $data_pplogistikdicaba['status_vou']        = "1";
-        $data_pplogistikdicaba['no_vou']            = $no_vou;
-        $data_pplogistikdicaba['no_voutxt']         = $no_vou;
-        $data_pplogistikdicaba['tgl_vou']           = $tgl_vou;
-        $data_pplogistikdicaba['tgl_voutxt']        = $tgl_voutxt;
+        // $data_pplogistikdicaba['no_vou']            = $no_vou;
+        // $data_pplogistikdicaba['no_voutxt']         = $no_vou;
+        // $data_pplogistikdicaba['tgl_vou']           = $tgl_vou;
+        // $data_pplogistikdicaba['tgl_voutxt']        = $tgl_voutxt;
         $data_pplogistikdicaba['TGL_BAYAR_REAL']    = NULL;
         $data_pplogistikdicaba['kode_budget']       = "0";
         $data_pplogistikdicaba['grup']              = $this->input->post('hidden_grup');

@@ -73,6 +73,7 @@
                 </button>
             </div>
             <div class="sub-header mb-2" style="margin-top: -20px; margin-left:28px;">
+                <span id="no_vocer" style="font-size: 12px;"></span>
                 <span id="detail_noref_pp" style="font-size: 12px;"></span>
             </div>
             <div class="modal-body">
@@ -87,8 +88,8 @@
                                     <th width="15%" style="font-size: 12px; padding:10px">Tgl.&nbsp;PO</th>
                                     <th width="10%" style="font-size: 12px; padding:10px">Pembayaran</th>
                                     <th width="15%" style="font-size: 12px; padding:10px">Total&nbsp;PO</th>
-                                    <th width="20%" style="font-size: 12px; padding:10px">Sudah&nbsp;Bayar</th>
                                     <th width="5%" style="font-size: 12px; padding:10px">Jumlah</th>
+                                    <th width="20%" style="font-size: 12px; padding:10px">Sudah&nbsp;Bayar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -193,6 +194,9 @@
                 "targets": [],
                 "orderable": false,
             }, ],
+            "language": {
+                "infoFiltered": ""
+            }
 
         });
         var rel = setInterval(function() {
@@ -271,11 +275,14 @@
             },
             success: function(data) {
                 if (batal != 0) {
-
                     $('#detail_noref_pp').html('<b>No. Ref. PP : </b>' + data.ref_pp + ' <span class="badge badge-danger">Dibatalkan</span>');
                 } else {
                     $('#detail_noref_pp').html('<b>No. Ref. PP : </b>' + data.ref_pp);
-
+                    if (data.status_vou == 1) {
+                        $('#no_vocer').html('<b>No. Voucher : </b>' + data.no_voutxt + ' | ');
+                    } else {
+                        $('#no_vocer').html('');
+                    }
                 }
             }
         });

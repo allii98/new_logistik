@@ -360,9 +360,9 @@
         location.href = "<?php echo base_url('Pp/input') ?>";
     }
 
-    function data_pp() {
-        location.href = "<?php echo base_url('Pp') ?>";
-    }
+    // function data_pp() {
+    //     location.href = "<?php echo base_url('Pp') ?>";
+    // }
 
     function goBack() {
         window.history.back();

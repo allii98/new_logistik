@@ -119,8 +119,15 @@ class Pp extends CI_Controller
             $row[] = date('d-m-Y', strtotime($hasil->tglpo));
             $row[] = $hasil->bayar;
             $row[] = number_format($hasil->total_po, 2, ",", ".");
-            $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar, 2, ",", ".");
             $row[] = number_format($hasil->kasir_bayar, 2, ",", ".");
+            if ($hasil->status_vou == 1) {
+                # code...
+                $row[] = number_format($get_jumlah_sudah_bayar->kasir_bayar, 2, ",", ".");
+            } else {
+                $row[] = number_format("0", 2, ",", ".");
+                # code...
+            }
+
             $data[] = $row;
         }
 
@@ -137,7 +144,7 @@ class Pp extends CI_Controller
     function ambilnorefPP()
     {
         $id = $this->input->post('id');
-        $data = $this->db_logistik_pt->query("SELECT ref_pp FROM pp WHERE id='$id'")->row();
+        $data = $this->db_logistik_pt->query("SELECT ref_pp, status_vou, no_voutxt FROM pp WHERE id='$id'")->row();
         echo json_encode($data);
     }
 
