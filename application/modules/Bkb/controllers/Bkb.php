@@ -532,56 +532,56 @@ class Bkb extends CI_Controller
         $edit = $this->input->post('edit');
         $alasan = $this->input->post('alasan');
 
-//histori
-$get_bkb = $this->db_logistik_pt->query("SELECT * FROM stockkeluar WHERE NO_REF='$noref_bkb'")->row();
-$datastockkeluar['tgl']             = $get_bkb->tgl . " 00:00:00";
-$datastockkeluar['skb']             = $get_bkb->skb;
-$datastockkeluar['SKBTXT']          = $get_bkb->SKBTXT;
-$datastockkeluar['NO_REF']          = $noref_bkb;
-$datastockkeluar['nobpb']           = $get_bkb->nobpb;
+        //histori
+        $get_bkb = $this->db_logistik_pt->query("SELECT * FROM stockkeluar WHERE NO_REF='$noref_bkb'")->row();
+        $datastockkeluar['tgl']             = $get_bkb->tgl . " 00:00:00";
+        $datastockkeluar['skb']             = $get_bkb->skb;
+        $datastockkeluar['SKBTXT']          = $get_bkb->SKBTXT;
+        $datastockkeluar['NO_REF']          = $noref_bkb;
+        $datastockkeluar['nobpb']           = $get_bkb->nobpb;
 
-$datastockkeluar['mutasi']              = $get_bkb->mutasi;
-$datastockkeluar['no_mutasi']           = $get_bkb->no_mutasi;
-$datastockkeluar['kode_devisi_mutasi']  = $get_bkb->kode_devisi_mutasi;
-$datastockkeluar['devisi_mutasi']       = $get_bkb->devisi_mutasi;
-$datastockkeluar['kode_pt_mutasi']      = $get_bkb->kode_pt_mutasi;
-$datastockkeluar['pt_mutasi']           = $get_bkb->pt_mutasi;
+        $datastockkeluar['mutasi']              = $get_bkb->mutasi;
+        $datastockkeluar['no_mutasi']           = $get_bkb->no_mutasi;
+        $datastockkeluar['kode_devisi_mutasi']  = $get_bkb->kode_devisi_mutasi;
+        $datastockkeluar['devisi_mutasi']       = $get_bkb->devisi_mutasi;
+        $datastockkeluar['kode_pt_mutasi']      = $get_bkb->kode_pt_mutasi;
+        $datastockkeluar['pt_mutasi']           = $get_bkb->pt_mutasi;
 
-$datastockkeluar['tglinput']        = $get_bkb->tglinput;
-$datastockkeluar['txttgl']          = $get_bkb->txttgl;
-$datastockkeluar['thn']             = $get_bkb->thn;
-$datastockkeluar['periode1']        = $get_bkb->periode1 . " 00:00:00";
-$datastockkeluar['periode2']        = NULL;
-$datastockkeluar['txtperiode1']     = $get_bkb->txtperiode1;
-$datastockkeluar['txtperiode2']     = NULL;
-$datastockkeluar['alokasi']         = $get_bkb->alokasi;
-$datastockkeluar['pt']              = $this->session->userdata('pt');
-$datastockkeluar['kode']            = $this->session->userdata('kode_pt');
-$datastockkeluar['devisi']          = $get_bkb->devisi;
-$datastockkeluar['kode_dev']        = $get_bkb->kode_dev;
-$datastockkeluar['kpd']             = $get_bkb->kpd;
-$datastockkeluar['keperluan']       = $get_bkb->keperluan;
-$datastockkeluar['bag']             = $get_bkb->bag;
-$datastockkeluar['batal']           = $get_bkb->batal;
-$datastockkeluar['id_user']         = $get_bkb->id_user;
-$datastockkeluar['USER']            = $this->session->userdata('user');
-$datastockkeluar['SUB']             = NULL;
-$datastockkeluar['USER1']           = NULL;
-$datastockkeluar['cetak']           = $get_bkb->cetak;
-$datastockkeluar['bhn_bakar']       = $get_bkb->bhn_bakar;
-$datastockkeluar['jn_alat']         = $get_bkb->jn_alat;
-$datastockkeluar['no_kode']         = $get_bkb->no_kode;
-$datastockkeluar['hm_km']           = $get_bkb->hm_km;
-$datastockkeluar['lok_kerja']       = $get_bkb->lok_kerja;
-$datastockkeluar['posting']         = '0';
-$datastockkeluar['keterangan_transaksi'] = 'BATAL BKB';
-$datastockkeluar['log'] = $this->session->userdata('user') . " membatalkan BKB $get_bkb->skb";
-$datastockkeluar['tgl_transaksi'] = date("Y-m-d H:i:s");
-$datastockkeluar['user_transaksi'] = $this->session->userdata('user');
-$datastockkeluar['client_ip'] = $this->input->ip_address();
-$datastockkeluar['client_platform'] = $this->platform->agent();
-$simpanhistoribkb = $this->M_bkb->savehistoristockkeluar($datastockkeluar);
-//end
+        $datastockkeluar['tglinput']        = $get_bkb->tglinput;
+        $datastockkeluar['txttgl']          = $get_bkb->txttgl;
+        $datastockkeluar['thn']             = $get_bkb->thn;
+        $datastockkeluar['periode1']        = $get_bkb->periode1 . " 00:00:00";
+        $datastockkeluar['periode2']        = NULL;
+        $datastockkeluar['txtperiode1']     = $get_bkb->txtperiode1;
+        $datastockkeluar['txtperiode2']     = NULL;
+        $datastockkeluar['alokasi']         = $get_bkb->alokasi;
+        $datastockkeluar['pt']              = $this->session->userdata('pt');
+        $datastockkeluar['kode']            = $this->session->userdata('kode_pt');
+        $datastockkeluar['devisi']          = $get_bkb->devisi;
+        $datastockkeluar['kode_dev']        = $get_bkb->kode_dev;
+        $datastockkeluar['kpd']             = $get_bkb->kpd;
+        $datastockkeluar['keperluan']       = $get_bkb->keperluan;
+        $datastockkeluar['bag']             = $get_bkb->bag;
+        $datastockkeluar['batal']           = $get_bkb->batal;
+        $datastockkeluar['id_user']         = $get_bkb->id_user;
+        $datastockkeluar['USER']            = $this->session->userdata('user');
+        $datastockkeluar['SUB']             = NULL;
+        $datastockkeluar['USER1']           = NULL;
+        $datastockkeluar['cetak']           = $get_bkb->cetak;
+        $datastockkeluar['bhn_bakar']       = $get_bkb->bhn_bakar;
+        $datastockkeluar['jn_alat']         = $get_bkb->jn_alat;
+        $datastockkeluar['no_kode']         = $get_bkb->no_kode;
+        $datastockkeluar['hm_km']           = $get_bkb->hm_km;
+        $datastockkeluar['lok_kerja']       = $get_bkb->lok_kerja;
+        $datastockkeluar['posting']         = '0';
+        $datastockkeluar['keterangan_transaksi'] = 'BATAL BKB';
+        $datastockkeluar['log'] = $this->session->userdata('user') . " membatalkan BKB $get_bkb->skb";
+        $datastockkeluar['tgl_transaksi'] = date("Y-m-d H:i:s");
+        $datastockkeluar['user_transaksi'] = $this->session->userdata('user');
+        $datastockkeluar['client_ip'] = $this->input->ip_address();
+        $datastockkeluar['client_platform'] = $this->platform->agent();
+        $simpanhistoribkb = $this->M_bkb->savehistoristockkeluar($datastockkeluar);
+        //end
 
 
         $isibatal = array(
@@ -1083,9 +1083,11 @@ $simpanhistoribkb = $this->M_bkb->savehistoristockkeluar($datastockkeluar);
         $status_lokasi = $this->session->userdata('status_lokasi');
         $user = $this->session->userdata('user');
 
+        $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
         //var untuk save ke header entry
         $header_entry["date"] = date("Y-m-d");
-        $header_entry["periode"] = $periode;
+        $header_entry["periode"] = $periodes;
         $header_entry["ref"] = 'BKB-' . $no_bkb;
         $header_entry["totaldr"] = 0;
         $header_entry["totalcr"] = 0;
@@ -1110,6 +1112,8 @@ $simpanhistoribkb = $this->M_bkb->savehistoristockkeluar($datastockkeluar);
 
         $data_noac_gl = $this->M_bkb_gl->get_data_noac_gl($kodebar);
 
+        $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
         //var untuk save ke entry
         $entry["date"] = date("Y-m-d");
         $entry["sbu"] = $kode_dev;
@@ -1122,7 +1126,7 @@ $simpanhistoribkb = $this->M_bkb->savehistoristockkeluar($datastockkeluar);
         $entry["dc"] = 'C';
         $entry["dr"] = 0;
         $entry["cr"] = $totharga;
-        $entry["periode"] = $periode;
+        $entry["periode"] = $periodes;
         $entry["converse"] = 0;
         $entry["ref"] = 'BKB-' . $no_bkb;
         $entry["noref"] = $no_ref_bkb;
@@ -1159,6 +1163,8 @@ $simpanhistoribkb = $this->M_bkb->savehistoristockkeluar($datastockkeluar);
 
         $data_noac_gl = $this->M_bkb_gl->get_data_noac_beban($kodesub);
 
+        $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
         //var untuk save ke entry
         $entry["date"] = date("Y-m-d");
         $entry["sbu"] = $kode_dev;
@@ -1171,7 +1177,7 @@ $simpanhistoribkb = $this->M_bkb->savehistoristockkeluar($datastockkeluar);
         $entry["dc"] = 'D';
         $entry["dr"] = $totharga;
         $entry["cr"] = 0;
-        $entry["periode"] = $periode;
+        $entry["periode"] = $periodes;
         $entry["converse"] = 0;
         $entry["ref"] = 'BKB-' . $no_bkb;
         $entry["noref"] = $no_ref_bkb;

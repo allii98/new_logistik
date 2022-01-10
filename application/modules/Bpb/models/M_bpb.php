@@ -39,6 +39,7 @@ class M_bpb extends CI_Model
         $devisi = $this->devisi;
         $sub_kategori = $this->sub_kategori;
 
+        $this->db_mips_gl->where('type !=', 'G');
         $this->db_mips_gl->from($this->table);
         if ($bahan != '-') {
             $this->db_mips_gl->like('noac', $grub, 'both');

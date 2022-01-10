@@ -647,9 +647,12 @@ class Lpb extends CI_Controller
         $status_lokasi = $this->session->userdata('status_lokasi');
         $user = $this->session->userdata('user');
 
+        $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+
         //var untuk save ke header entry
         $header_entry["date"] = date("Y-m-d");
-        $header_entry["periode"] = $periode;
+        $header_entry["periode"] = $periodes;
         $header_entry["ref"] = 'LPB-' . $no_lpb;
         $header_entry["totaldr"] = 0;
         $header_entry["totalcr"] = 0;
@@ -678,6 +681,8 @@ class Lpb extends CI_Controller
             $data_noac_gl = $this->M_lpb_gl->get_data_noac_supplier($kode_supply);
         }
 
+        $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
         //var untuk save ke entry
         $entry["date"] = date("Y-m-d");
         $entry["sbu"] = $kode_dev;
@@ -690,7 +695,7 @@ class Lpb extends CI_Controller
         $entry["dc"] = 'C';
         $entry["dr"] = 0;
         $entry["cr"] = $totharga;
-        $entry["periode"] = $periode;
+        $entry["periode"] = $periodes;
         $entry["converse"] = 0;
         $entry["ref"] = 'LPB-' . $no_lpb;
         $entry["noref"] = $no_ref_lpb;
@@ -727,6 +732,8 @@ class Lpb extends CI_Controller
 
         $data_noac_gl = $this->M_lpb_gl->get_data_noac_gl($kodebar);
 
+        $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
         //var untuk save ke entry
         $entry["date"] = date("Y-m-d");
         $entry["sbu"] = $kode_dev;
@@ -739,7 +746,7 @@ class Lpb extends CI_Controller
         $entry["dc"] = 'D';
         $entry["dr"] = $totharga;
         $entry["cr"] = 0;
-        $entry["periode"] = $periode;
+        $entry["periode"] = $periodes;
         $entry["converse"] = 0;
         $entry["ref"] = 'LPB-' . $no_lpb;
         $entry["noref"] = $no_ref_lpb;
