@@ -1983,11 +1983,14 @@ date_default_timezone_set('Asia/Jakarta');
                     console.log(data);
                     // $('#modal_progres').modal('hide');
                     //$("#loader").hide(); // hides loading sccreen in success call back
-                    window.Swal.fire({
-                        type: 'success',
-                        title: 'Berhasil Posting',
-                        showConfirmButton: true,
-                    })
+
+                    HuBkb();
+
+                    // window.Swal.fire({
+                    //     type: 'success',
+                    //     title: 'Berhasil Posting',
+                    //     showConfirmButton: true,
+                    // })
                 },
                 error: function(request) {
                     console.log(request.responseText);
@@ -1996,6 +1999,43 @@ date_default_timezone_set('Asia/Jakarta');
             });
         }
         //end
+
+        function HuBkb() {
+            $.ajax({
+
+                url: "<?php echo site_url('Posting/hitung_stok_bkb'); ?>",
+                type: "POST",
+                data: {
+                    'do': 'do'
+                },
+
+                beforeSend: function() {
+                    Swal.fire({
+                        imageUrl: '<?php echo base_url(); ?>assets/img/loading3.gif',
+                        imageHeight: 90,
+                        imageAlt: 'A tall image',
+                        showConfirmButton: false,
+                        allowOutsideClick: false,
+                        allowEscapeKey: false
+                    })
+                    // $("#proses-posting").width('0%');
+                },
+                success: function(data) {
+                    console.log(data);
+                    // $('#modal_progres').modal('hide');
+                    //$("#loader").hide(); // hides loading sccreen in success call back
+
+                    window.Swal.fire({
+                        type: 'success',
+                        title: 'Berhasil Posting',
+                        showConfirmButton: true,
+                    })
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        }
 
         function modalUbahPeriode() {
             $('#ubahPeriode').modal('show');
