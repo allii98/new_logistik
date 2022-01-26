@@ -8,6 +8,119 @@ class M_posting extends CI_Model
             parent::__construct();
       }
 
+      function posting_ke_gl()
+      {
+            /* LPB */
+            $itemLpb = $this->db_logistik_pt->query("SELECT id, ttgtxt, txtperiode, kode_dev, noref, kodebar, refpo, norefppo, qty, nabar, refpo, lokasi FROM masukitem WHERE posting=0")->result();
+            foreach ($itemLpb as $d) {
+                  # code...
+                  $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+                  $header_entry["date"] = date("Y-m-d");
+                  $header_entry["periode"] = $periodes;
+                  $header_entry["ref"] = 'LPB-' . $d->ttgtxt;
+                  $header_entry["totaldr"] = 0;
+                  $header_entry["totalcr"] = 0;
+                  $header_entry["periodetxt"] = $d->txtperiode;
+                  $header_entry["modul"] = 'LOGISTIK';
+                  $header_entry["lokasi"] = $d->lokasi;
+                  $header_entry["SBU"] = $d->kode_dev;
+                  $header_entry["USER"] = $this->session->userdata('user');
+                  $header_entry["noref"] = $d->noref;
+                  $this->db_mips_gl->insert('header_entry', $header_entry);
+
+
+                  //var untuk save ke entry
+                  $header_lpb = $this->db_logistik_pt->query("SELECT jenis_lpb FROM stokmasuk WHERE noref='$d->noref'")->row();
+                  if ($header_lpb->jenis_lpb == '1') {
+                        $tb_mutasi = $this->db_logistik_center->query("SELECT NO_REF FROM tb_mutasi WHERE no_mutasi='$d->refpo'")->row_array();
+                        $tb_item_mutasi = $this->db_logistik_center->query("SELECT qty2, nilai_item FROM tb_mutasi_item WHERE kodebar='$d->kodebar' AND NO_REF='$tb_mutasi[NO_REF]'")->row_array();
+                        $harga_item_po = $tb_item_mutasi['nilai_item'] / $tb_item_mutasi['qty2'];
+                  } else {
+                        // $result_harga_item_po = $this->M_lpb->cari_harga_po($no_ref_po, $kodebar, $noref_ppo);
+                        $result_harga_item_po = $this->db_logistik_pt->query("SELECT harga FROM item_po WHERE kodebar='$d->kodebar' AND noref='$d->refpo' AND refppo='$d->norefppo' ")->row_array();
+                        $harga_item_po = $result_harga_item_po['harga'];
+                  }
+
+                  $totharga = $harga_item_po * $d->qty;
+                  $noac = $this->db_mips_gl->query("SELECT * FROM noac WHERE `noac` LIKE $d->kodebar ")->row_array();
+
+                  //dr
+                  $entry["date"] = date("Y-m-d");
+                  $entry["sbu"] = $d->kode_dev;
+                  $entry["noac"] = $noac['noac'];
+                  $entry["desc"] = '';
+                  $entry["group"] = $noac['group'];
+                  $entry["type"] = $noac['type'];
+                  $entry["level"] = $noac['level'];
+                  $entry["general"] = $noac['general'];
+                  $entry["dc"] = 'D';
+                  $entry["dr"] = $totharga;
+                  $entry["cr"] = 0;
+                  $entry["periode"] = $periodes;
+                  $entry["converse"] = 0;
+                  $entry["ref"] = 'LPB-' . $d->ttgtxt;
+                  $entry["noref"] = $d->noref;
+                  $entry["descac"] = $d->nabar;
+                  $entry["ket"] = 'Persediaan No.PO:' . $d->refpo;
+                  $entry["begindr"] = 0;
+                  $entry["begincr"] = 0;
+                  $entry["kurs"] = '';
+                  $entry["kursrate"] = '';
+                  $entry["tglkurs"] = '';
+                  $entry["periodetxt"] = $d->txtperiode;
+                  $entry["module"] = 'LOGISTIK';
+                  $entry["lokasi"] = $d->lokasi;
+                  $entry["POST"] = 0;
+                  $entry["tglinput"] = date("Y-m-d H:i:s");
+                  $entry["USER"] = $this->session->userdata('user');
+                  $entry["kodebar"] = $d->kodebar;
+                  $this->db_mips_gl->insert('entry', $entry);
+
+                  //CR
+                  $entry2["date"] = date("Y-m-d");
+                  $entry2["sbu"] = $d->kode_dev;
+                  $entry2["noac"] = $noac['noac'];
+                  $entry2["desc"] = '';
+                  $entry2["group"] = $noac['group'];
+                  $entry2["type"] = $noac['type'];
+                  $entry2["level"] = $noac['level'];
+                  $entry2["general"] = $noac['general'];
+                  $entry2["dc"] = 'C';
+                  $entry2["dr"] = 0;
+                  $entry2["cr"] = $totharga;
+                  $entry2["periode"] = $periodes;
+                  $entry2["converse"] = 0;
+                  $entry2["ref"] = 'LPB-' . $d->ttgtxt;
+                  $entry2["noref"] = $d->noref;
+                  $entry2["descac"] = $d->nabar;
+                  $entry2["ket"] = 'Persediaan No.PO:' . $d->refpo;
+                  $entry2["begindr"] = 0;
+                  $entry2["begincr"] = 0;
+                  $entry2["kurs"] = '';
+                  $entry2["kursrate"] = '';
+                  $entry2["tglkurs"] = '';
+                  $entry2["periodetxt"] = $d->txtperiode;
+                  $entry2["module"] = 'LOGISTIK';
+                  $entry2["lokasi"] = $d->lokasi;
+                  $entry2["POST"] = 0;
+                  $entry2["tglinput"] = date("Y-m-d H:i:s");
+                  $entry2["USER"] = $this->session->userdata('user');
+                  $entry2["kodebar"] = $d->kodebar;
+                  $this->db_mips_gl->insert('entry', $entry2);
+
+                  $data_item_lpb = array(
+                        'posting' => 1
+                  );
+                  $this->db_logistik_pt->where('id', $d->id);
+                  $this->db_logistik_pt->update('masukitem', $data_item_lpb);
+            }
+
+            return TRUE;
+
+
+            /* END */
+      }
+
       public function get_data_lpb()
       {
             $txtperiode = $this->session->userdata('ym_periode');

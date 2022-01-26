@@ -1824,6 +1824,8 @@ date_default_timezone_set('Asia/Jakarta');
         <script src="<?php echo base_url(); ?>assets/terbilang/terbilang.js"></script>
         <!-- <script src="<?php echo base_url(); ?>assets/terbilang.js"></script>
         <script src="<?php echo base_url(); ?>assets/terbilang.min.js"></script> -->
+        <script src="<?php echo base_url(); ?>assets/libs/moment_js/moment.js"></script>
+        <script src="<?php echo base_url(); ?>assets/libs/moment_js/moment.min.js"></script>
 
         <!-- JQuery Number -->
         <script src="<?php echo base_url(); ?>assets/jquerynumber/jquery.number.js"></script>
@@ -3953,8 +3955,24 @@ date_default_timezone_set('Asia/Jakarta');
         }
 
         function tflpbbkbtogl() {
-            $('#modalKonfirmasiTfToGl').modal('show');
+            // $('#modalKonfirmasiTfToGl').modal('show');
+            swal({
+                title: "Transfer ke GL ?",
+                text: "Jika ingin disimpan, silahkan klik button simpan",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Ya Posting",
+                //confirmButtonColor: "#E73D4A"
+                confirmButtonColor: "#286090"
+            }).then((value) => {
+                transferToGl();
+
+            });
         }
+
+
 
         function transferToGl() {
             $.ajax({
@@ -3962,10 +3980,33 @@ date_default_timezone_set('Asia/Jakarta');
                 type: "POST",
                 dataType: "JSON",
                 beforeSend: function() {
+                    now = moment().format('DD/MM/YYYY HH:mm:ss');
+                    Swal.fire({
+                        title: 'Please Wait !',
+                        html: 'data uploading', // add html attribute if you want or remove
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            Swal.showLoading()
+                        },
+                    });
+                },
+                success: function(response) {
 
                 },
-                success: function(result) {
+                complete: function(response) {
+                    then = moment().format('DD/MM/YYYY HH:mm:ss');
 
+                    var ms = moment(then, "DD/MM/YYYY HH:mm:ss").diff(moment(now, "DD/MM/YYYY HH:mm:ss"));
+                    var d = moment.duration(ms);
+
+                    var formats = d.hours() + ' Jam : ' + d.minutes() + ' Menit : ' + d.seconds() + ' Detik';
+
+                    swal({
+                        title: "Selesai",
+                        text: "Terima Kasih, Data berhasil di Posting dan tersimpan, Waktu Proses Posting " + formats + "",
+                        type: "success"
+
+                    })
                 },
                 error: function(request) {
                     console.log(request.responseText);
