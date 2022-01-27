@@ -3958,7 +3958,7 @@ date_default_timezone_set('Asia/Jakarta');
             // $('#modalKonfirmasiTfToGl').modal('show');
             swal({
                 title: "Transfer ke GL ?",
-                text: "Jika ingin disimpan, silahkan klik button simpan",
+                text: "Jika ingin diposting, silahkan klik tombol simpan",
                 type: "info",
                 showCancelButton: true,
                 closeOnConfirm: false,
@@ -3967,20 +3967,18 @@ date_default_timezone_set('Asia/Jakarta');
                 //confirmButtonColor: "#E73D4A"
                 confirmButtonColor: "#286090"
             }).then((value) => {
-                transferToGl();
-
+                if (value.value == true) {
+                    cekPeriodeGL();
+                }
             });
         }
 
-
-
-        function transferToGl() {
+        function cekPeriodeGL() {
             $.ajax({
-                url: "<?= site_url('Posting/transfer_to_gl'); ?>",
+                url: "<?= site_url('Posting/cekPeriodeGL'); ?>",
                 type: "POST",
                 dataType: "JSON",
                 beforeSend: function() {
-                    now = moment().format('DD/MM/YYYY HH:mm:ss');
                     Swal.fire({
                         title: 'Please Wait !',
                         html: 'data uploading', // add html attribute if you want or remove
@@ -3989,6 +3987,35 @@ date_default_timezone_set('Asia/Jakarta');
                             Swal.showLoading()
                         },
                     });
+                },
+                success: function(response) {
+                    // console.log(response)
+                    var periode = '<?= $this->session->userdata('ym_periode') ?>';
+                    if (response.txtperiode == periode) {
+                        transferToGl();
+                    } else {
+                        Swal.fire({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: 'Maaf, Modul GL sudah tutup buku, silahkan Hub. Accounting',
+                        })
+                    }
+                    // console.log(periode)
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        }
+
+        function transferToGl() {
+            $.ajax({
+                url: "<?= site_url('Posting/transfer_to_gl'); ?>",
+                type: "POST",
+                dataType: "JSON",
+                beforeSend: function() {
+                    now = moment().format('DD/MM/YYYY HH:mm:ss');
+
                 },
                 success: function(response) {
 

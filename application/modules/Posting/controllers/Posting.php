@@ -21,6 +21,7 @@ class Posting extends CI_Controller
             $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
             $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
             $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
+            $this->db_conf_caba = $this->load->database('db_conf_caba', TRUE);
             if (!$this->session->userdata('id_user')) {
                   $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
                   $this->session->set_flashdata('pesan', $pemberitahuan);
@@ -568,6 +569,15 @@ class Posting extends CI_Controller
       {
             //var untuk save ke header entry
             $data = $this->M_posting->posting_ke_gl();
+            echo json_encode($data);
+      }
+
+      function cekPeriodeGL()
+      {
+            $pt = substr($this->session->userdata('kode_pt_login'), 1);
+            $lokasi = $this->session->userdata('kode_dev');
+
+            $data = $this->db_conf_caba->query("SELECT txtperiode FROM tb_setup WHERE id_modul='2' AND id_pt='$pt' AND lokasi='$lokasi'")->row();
             echo json_encode($data);
       }
 }
