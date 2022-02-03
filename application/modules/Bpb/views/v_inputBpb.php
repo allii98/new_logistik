@@ -741,7 +741,7 @@
         console.log(data + 'bag')
         $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
         $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
-        // $('#hidden_bagian').val(data);
+        $('#hidden_bagian').val(data);
         // $('#cmb_tm_tbm_1').attr('disabled', '');
         // $('#cmb_afd_unit_1').attr('disabled', '');
         // $('#cmb_blok_sub_1').attr('disabled', '');
