@@ -13,9 +13,9 @@ class Barang extends CI_Controller
 
         $db_pt = check_db_pt();
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
-        $this->db_mips_gl = $this->load->database('db_mips_gl_msal', TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
-        $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
+        $this->db_personalia = $this->load->database('db_personalia_' . $db_pt, TRUE);
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
             $this->session->set_flashdata('pesan', $pemberitahuan);

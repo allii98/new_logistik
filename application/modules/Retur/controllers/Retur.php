@@ -21,7 +21,7 @@ class Retur extends CI_Controller
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 
         // DB GL
-        $this->db_mips_gl = $this->load->database('db_mips_gl_msal', TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
 
         //DB MSAL
         $this->db_logistik_msal = $this->load->database('db_logistik_msal', TRUE);

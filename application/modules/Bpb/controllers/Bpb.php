@@ -14,10 +14,10 @@ class Bpb extends CI_Controller
         $this->load->model('M_detail');
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
-        $this->db_mips_gl = $this->load->database('db_mips_gl_msal', TRUE);
+        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
-        $this->db_msal_personalia = $this->load->database('db_msal_personalia', TRUE);
+        $this->db_personalia = $this->load->database('db_personalia_' . $db_pt, TRUE);
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
             $this->session->set_flashdata('pesan', $pemberitahuan);
@@ -150,7 +150,7 @@ class Bpb extends CI_Controller
 
         // $query = "SELECT DISTINCT(afd) FROM masterblok WHERE afd <> '00' ORDER BY afd ASC";
         $query = "SELECT DISTINCT(afd) FROM item_pekerjaan WHERE kategori='$tm_tbm' ORDER BY afd ASC";
-        $data = $this->db_msal_personalia->query($query)->result();
+        $data = $this->db_personalia->query($query)->result();
         echo json_encode($data);
     }
 
@@ -168,7 +168,7 @@ class Bpb extends CI_Controller
                 break;
         }
         $query_master_blok = "SELECT DISTINCT(blok) FROM masterblok WHERE afd = '$afd_unit'";
-        $data = $this->db_msal_personalia->query($query_master_blok)->result();
+        $data = $this->db_personalia->query($query_master_blok)->result();
 
         // $data = array('data_thn_tanam'=>$data_thn_tanam,'data_master_blok'=>$data_master_blok);
         echo json_encode($data);
@@ -190,7 +190,7 @@ class Bpb extends CI_Controller
         // $query_thn_tanam = "SELECT DISTINCT thn_tanam FROM tahun_tanam WHERE tmtbm = '$tmtbm' AND AFD = '$afd_unit' ORDER BY thn_tanam ASC";
         // $data_thn_tanam = $this->db_logistik_pt->query($query_thn_tanam)->result();
         $query_thn_tanam = "SELECT DISTINCT(tahuntanam) FROM masterblok WHERE afd = '$afd_unit' AND blok = '$blok_sub' ORDER BY tahuntanam ASC";
-        $data = $this->db_msal_personalia->query($query_thn_tanam)->result();
+        $data = $this->db_personalia->query($query_thn_tanam)->result();
 
         echo json_encode($data);
     }

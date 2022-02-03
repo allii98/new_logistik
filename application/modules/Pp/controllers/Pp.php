@@ -14,7 +14,7 @@ class Pp extends CI_Controller
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
-        $this->db_caba = $this->load->database('db_caba', TRUE);
+        $this->db_caba = $this->load->database('db_caba_' . $db_pt, TRUE);
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
             $this->session->set_flashdata('pesan', $pemberitahuan);
