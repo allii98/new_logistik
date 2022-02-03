@@ -740,30 +740,30 @@
         var data = this.value;
         console.log(data + 'bag')
         $('#hidden_bagian').val(data);
-        if (data != 1 && data != 2) {
-            $('#cmb_tm_tbm_1').attr('disabled', '');
-            $('#cmb_afd_unit_1').attr('disabled', '');
-            $('#cmb_blok_sub_1').attr('disabled', '');
-            $('#cmb_bahan_1').attr('disabled', '');
-            $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
-            $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
-            $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
+        $('#cmb_tm_tbm_1').attr('disabled', '');
+        $('#cmb_afd_unit_1').attr('disabled', '');
+        $('#cmb_blok_sub_1').attr('disabled', '');
+        $('#cmb_bahan_1').attr('disabled', '');
+        $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
+        $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
+        $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
+        // if (data != 1 && data != 2) {
 
-        } else {
-            $('#cmb_tm_tbm_1').removeAttr('disabled', '');
-            $('#cmb_afd_unit_1').removeAttr('disabled', '');
-            $('#cmb_blok_sub_1').removeAttr('disabled', '');
-            $('#cmb_tahun_tanam_1').removeAttr('disabled', '');
-            $('#cmb_bahan_1').removeAttr('disabled', '');
-            $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').removeClass('bg-light');
-            $('#cmb_pt_mutasi').attr('disabled', '');
-            $('#cmb_pt_mutasi').addClass('bg-light');
-            $("#cmb_pt_mutasi").prop('selectedIndex', 0);
-            $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
-            $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
-            // $('').attr('disabled', '');
-            $('input[type=checkbox]').prop('checked', false);
-        }
+        // } else {
+        //     $('#cmb_tm_tbm_1').removeAttr('disabled', '');
+        //     $('#cmb_afd_unit_1').removeAttr('disabled', '');
+        //     $('#cmb_blok_sub_1').removeAttr('disabled', '');
+        //     $('#cmb_tahun_tanam_1').removeAttr('disabled', '');
+        //     $('#cmb_bahan_1').removeAttr('disabled', '');
+        //     $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').removeClass('bg-light');
+        //     $('#cmb_pt_mutasi').attr('disabled', '');
+        //     $('#cmb_pt_mutasi').addClass('bg-light');
+        //     $("#cmb_pt_mutasi").prop('selectedIndex', 0);
+        //     $('.lokalmutasi').find('input[type=checkbox]').attr('disabled', '');
+        //     $('.ptmutasi').find('input[type=checkbox]').attr('disabled', '');
+        //     // $('').attr('disabled', '');
+        //     $('input[type=checkbox]').prop('checked', false);
+        // }
     });
 
     // sengaja gue copy karna gua males ngetiknya untuk bag pabrik ini
