@@ -739,14 +739,14 @@
         // console.log(this.value);
         var data = this.value;
         console.log(data + 'bag')
-        $('#hidden_bagian').val(data);
-        $('#cmb_tm_tbm_1').attr('disabled', '');
-        $('#cmb_afd_unit_1').attr('disabled', '');
-        $('#cmb_blok_sub_1').attr('disabled', '');
-        $('#cmb_bahan_1').attr('disabled', '');
-        $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
         $('.ptmutasi').find('input[type=checkbox]').removeAttr('disabled');
         $('.lokalmutasi').find('input[type=checkbox]').removeAttr('disabled');
+        // $('#hidden_bagian').val(data);
+        // $('#cmb_tm_tbm_1').attr('disabled', '');
+        // $('#cmb_afd_unit_1').attr('disabled', '');
+        // $('#cmb_blok_sub_1').attr('disabled', '');
+        // $('#cmb_bahan_1').attr('disabled', '');
+        // $('#cmb_tm_tbm_1,#cmb_afd_unit_1,#cmb_blok_sub_1,#cmb_tahun_tanam_1,#cmb_bahan_1').addClass('form-control bg-light');
         // if (data != 1 && data != 2) {
 
         // } else {
