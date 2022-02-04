@@ -41,7 +41,7 @@ class M_bpb extends CI_Model
 
         // $this->db_mips_gl->where('type !=', 'G');
         $this->db_mips_gl->from($this->table);
-        if ($bahan != '-') {
+        if ($bahan != '-' and $mutasi_pt != 'mutasi_pt' and $mutasi_lokal != 'mutasi_lokal') {
             $this->db_mips_gl->like('noac', $grub, 'both');
         } else if ($mutasi_pt == 'mutasi_pt') {
             if ($pt == '02') {
