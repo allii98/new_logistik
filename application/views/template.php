@@ -368,6 +368,9 @@ date_default_timezone_set('Asia/Jakarta');
                                     <a href="<?= base_url('Setup/supplier') ?>" class="dropdown-item"><i class="fe-codepen mr-1"></i>
                                         <font face="Verdana" size="2.5">Supplier</font>
                                     </a>
+                                    <a href="<?= base_url('User/tambah') ?>" class="dropdown-item"><i class="fe-codepen mr-1"></i>
+                                        <font face="Verdana" size="2.5">Tambah User</font>
+                                    </a>
                                     <a href="<?= base_url('Stok') ?>" class="dropdown-item"><i class="fe-edit mr-1"></i>
                                         <font face="Verdana" size="2.5">Stok Awal</font>
                                     </a>

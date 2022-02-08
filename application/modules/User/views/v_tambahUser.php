@@ -64,6 +64,18 @@
                       ?>
                     </select>
                   </div>
+                  <div class="form-group col-lg-6 col-xl-6 col-12">
+                    <label style="font-size: 12px;">Divisi</label>
+                    <select class="form-control form-control-sm" id="devisi" style="font-size: 12px;">
+                      <option value="" selected disabled>Pilih</option>
+                      <?php
+                      foreach ($devisi as $d) : { ?>
+                          <option value="<?= $d['kodetxt'] ?>"><?= $d['kodetxt'] . ' - ' . $d['PT'] ?></option>
+                      <?php }
+                      endforeach;
+                      ?>
+                    </select>
+                  </div>
                 </div>
                 <div class="form-group mb-0 mt-0">
                   <label id="lbl_status_simpan"></label>
@@ -141,6 +153,7 @@
         password: $('#password').val(),
         lokasi: $('#lokasi').val(),
         level: $('#level').val(),
+        devisi: $('#devisi').val(),
       },
 
       success: function(data) {

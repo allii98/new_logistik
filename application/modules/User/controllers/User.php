@@ -33,9 +33,12 @@ class User extends CI_Controller
         # code...
         $level_user = $this->User_m->level_user();
 
+        $data['devisi'] = $this->User_m->cariDevisi();
+
         $data = [
             'tittle' => 'Tambah Data User',
-            'level' => $level_user
+            'level' => $level_user,
+            'devisi' => $data['devisi']
         ];
         $this->template->load('template', 'v_tambahUser', $data);
     }
@@ -54,7 +57,8 @@ class User extends CI_Controller
             'status_lokasi' => $this->input->post('lokasi'),
             'kode_level' => $kode_level,
             'level' => $data['data_level']['level'],
-            'password' => $hash_pass
+            'password' => $hash_pass,
+            'status_lokasi_site' => $this->input->post('devisi'),
         );
 
         $cari_username = $this->db_logistik_pt->get_where('user', array('username' => $data['username']))->num_rows();

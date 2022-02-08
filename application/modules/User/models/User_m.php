@@ -55,4 +55,23 @@ class User_m extends CI_Model
         $this->db_logistik_pt->delete('tbuser');
         return TRUE;
     }
+
+    public function cariDevisi()
+    {
+        $lokasi = $this->session->userdata('status_lokasi');
+        $kode_dev = $this->session->userdata('kode_dev');
+
+        if ($lokasi == 'HO') {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            $this->db_logistik_pt->from('tb_devisi');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        } else {
+            $this->db_logistik_pt->select('PT, kodetxt');
+            // $this->db_logistik_pt->where('kodetxt', $kode_dev);
+            $this->db_logistik_pt->from('tb_devisi');
+            $this->db_logistik_pt->order_by('kodetxt', 'ASC');
+            return $this->db_logistik_pt->get()->result_array();
+        }
+    }
 }
