@@ -163,10 +163,16 @@ date_default_timezone_set('Asia/Jakarta');
                                             <a href="<?= base_url('Spp/sppBaru') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">SPP Baru</font>
                                             </a>
-                                            <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">SPP
-                                                    Approval</font>
-                                            </a>
+                                            <?php
+                                            if ($this->session->userdata('level') == 'KTU') {
+                                            ?>
+                                                <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">SPP
+                                                        Approval</font>
+                                                </a>
+                                            <?php
+                                            }
+                                            ?>
                                             <a href="<?= base_url('Spp'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Semua Data
                                                     SPP</font>

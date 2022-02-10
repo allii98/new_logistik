@@ -332,7 +332,10 @@ class Bpb extends CI_Controller
             // $row[] = $approval_mgr;
             // $row[] = $approval_gm;
             $row[] = $stat;
-            $row[] = $approval;
+            if ($this->session->userdata('level') == 'KTU') {
+                # code...
+                $row[] = $approval;
+            }
             $data[] = $row;
         }
 

@@ -172,12 +172,12 @@ class M_home extends CI_Model
 
         $this->db_logistik_pt->select('norefbpb');
         $this->db_logistik_pt->from('bpb');
-        $this->db_logistik_pt->where(['approval' => '0', 'user' => $role_user]);
+        $this->db_logistik_pt->where(['approval' => '0']);
         $count_bpb = $this->db_logistik_pt->count_all_results();
 
         $this->db_logistik_pt->select('norefbpb');
         $this->db_logistik_pt->from('bpb');
-        $this->db_logistik_pt->where(['approval' => '1', 'user' => $role_user]);
+        $this->db_logistik_pt->where(['approval' => '1']);
         $count_bpb_approved = $this->db_logistik_pt->count_all_results();
 
         $this->db_logistik_pt->select('NO_REF');

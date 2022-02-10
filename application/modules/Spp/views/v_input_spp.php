@@ -7,7 +7,13 @@
                     <div class="row justify-content-between headspp" style="margin-top: -10px;">
                         <h4 class="header-title ml-2">SPP</h4>
                         <div class="button-list mr-2">
-                            <button class="btn btn-xs btn-warning" id="data_spp_approval" onclick="data_spp_approval()">SPP Approval</button>
+                            <?php
+                            if ($this->session->userdata('level') == 'KTU') {
+                            ?>
+                                <button class="btn btn-xs btn-warning" id="data_spp_approval" onclick="data_spp_approval()">SPP Approval</button>
+                            <?php
+                            }
+                            ?>
                             <button class="btn btn-xs btn-info" id="data_spp" onclick="data_spp()">Data SPP</button>
                             <button class="btn btn-xs btn-success" id="new_spp" onclick="new_spp()" disabled>SPP Baru</button>
                             <button class="btn btn-xs btn-danger" id="cancelSpp" data-toggle="modal" data-target="#alasanbatal" disabled>Batal SPP</button>

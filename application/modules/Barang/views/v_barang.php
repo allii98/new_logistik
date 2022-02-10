@@ -148,13 +148,13 @@
                         <div class="form-group row">
                             <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
                             <div class="col-9">
-                                <input type="text" class="form-control" id="txt_satuan" name="txt_satuan" placeholder="Satuan" readonly="" required="">
+                                <input type="text" class="form-control" id="txt_satuan" name="txt_satuan" placeholder="Satuan">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="txt_spesifikasi" class="col-3 col-form-label">Spesifikasi</label>
                             <div class="col-9">
-                                <input type="text" class="form-control" id="txt_spesifikasi" placeholder="Spesifikasi" autocomplete="off" value="-" required="">
+                                <input type="text" class="form-control" id="txt_spesifikasi" placeholder="Spesifikasi" autocomplete="off" value="-">
                             </div>
                         </div>
                         <div class="form-group row">

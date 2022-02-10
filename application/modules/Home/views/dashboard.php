@@ -187,7 +187,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between ml-0 mr-0 mb-2">
-                        <h4 class="header-title mb-0"><b>BPB (Permintaan Antar PT)</b></h4>
+                        <h4 class="header-title mb-0"><b>BPB (Permintaan Antar PT & Kebun)</b></h4>
                         <!-- <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a> -->
                     </div>
 

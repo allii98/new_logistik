@@ -27,15 +27,21 @@
                         <table id="tableListBPB" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th style="font-size: 12px; padding:10px">#</th>
-                                    <th style="font-size: 12px; padding:10px">No</th>
+                                    <th style="font-size: 12px; padding:10px; width: 12%;">#</th>
+                                    <th style="font-size: 12px; padding:10px; width: 4%">No</th>
                                     <th style="font-size: 12px; padding:10px">No.&nbsp;Ref.&nbsp;BPB</th>
                                     <th style="font-size: 12px; padding:10px">Item&nbsp;Barang</th>
                                     <th style="font-size: 12px; padding:10px">Keperluan</th>
                                     <th style="font-size: 12px; padding:10px">Tgl&nbsp;Input</th>
                                     <th style="font-size: 12px; padding:10px">Diminta&nbsp;Oleh</th>
-                                    <th style="font-size: 12px; padding:10px">Status&nbsp;BPB</th>
-                                    <th style="font-size: 12px; padding:10px">Approval</th>
+                                    <th style="font-size: 12px; padding:10px; width: 4%">Status&nbsp;BPB</th>
+                                    <?php
+                                    if ($this->session->userdata('level') == 'KTU') {
+                                    ?>
+                                        <th style="font-size: 12px; padding:10px">Approval</th>
+                                    <?php
+                                    }
+                                    ?>
                                 </tr>
                             </thead>
                             <tbody id="tbody_list_po">
@@ -526,34 +532,35 @@
                 "targets": [],
                 "orderable": false,
             }, ],
-            "columns": [{
-                    "width": "12%"
-                },
-                {
-                    "width": "5%"
-                },
-                {
-                    "width": "15%"
-                },
-                {
-                    "width": "20%"
-                },
-                {
-                    "width": "15%"
-                },
-                {
-                    "width": "8%"
-                },
-                {
-                    "width": "10%"
-                },
-                {
-                    "width": "8%"
-                },
-                {
-                    "width": "8%"
-                }
-            ],
+            // "columns": [{
+            //         "width": "12%"
+            //     },
+            //     {
+            //         "width": "5%"
+            //     },
+            //     {
+            //         "width": "15%"
+            //     },
+            //     {
+            //         "width": "20%"
+            //     },
+            //     {
+            //         "width": "15%"
+            //     },
+            //     {
+            //         "width": "8%"
+            //     },
+            //     {
+            //         "width": "10%"
+            //     },
+            //     {
+            //         "width": "8%"
+            //     },
+
+            //     {
+            //         "width": "8%"
+            //     }
+            // ],
         });
 
         var rel = setInterval(function() {
