@@ -164,7 +164,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <font face="Verdana" size="2.5">SPP Baru</font>
                                             </a>
                                             <?php
-                                            if ($this->session->userdata('level') == 'KTU') {
+                                            if ($this->session->userdata('level') == 'KTU' or $this->session->userdata('level') == 'Mill Manager') {
                                             ?>
                                                 <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">
                                                     <font face="Verdana" size="2.5">SPP

@@ -36,7 +36,7 @@
                                     <th style="font-size: 12px; padding:10px">Diminta&nbsp;Oleh</th>
                                     <th style="font-size: 12px; padding:10px; width: 4%">Status&nbsp;BPB</th>
                                     <?php
-                                    if ($this->session->userdata('level') == 'KTU') {
+                                    if ($this->session->userdata('level') == 'KTU' or $this->session->userdata('level') == 'Mill Manager') {
                                     ?>
                                         <th style="font-size: 12px; padding:10px">Approval</th>
                                     <?php

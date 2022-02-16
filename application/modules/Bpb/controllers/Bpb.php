@@ -332,7 +332,7 @@ class Bpb extends CI_Controller
             // $row[] = $approval_mgr;
             // $row[] = $approval_gm;
             $row[] = $stat;
-            if ($this->session->userdata('level') == 'KTU') {
+            if ($this->session->userdata('level') == 'KTU' or $this->session->userdata('level') == 'Mill Manager') {
                 # code...
                 $row[] = $approval;
             }

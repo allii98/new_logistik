@@ -8,7 +8,7 @@
                         <h4 class="header-title ml-2">SPP</h4>
                         <div class="button-list mr-2">
                             <?php
-                            if ($this->session->userdata('level') == 'KTU') {
+                            if ($this->session->userdata('level') == 'KTU' or $this->session->userdata('level') == 'Mill Manager') {
                             ?>
                                 <button class="btn btn-xs btn-warning" id="data_spp_approval" onclick="data_spp_approval()">SPP Approval</button>
                             <?php
