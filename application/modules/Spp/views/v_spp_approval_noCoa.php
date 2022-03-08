@@ -5,7 +5,7 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row justify-content-between" style="margin-top: -10px;">
-                        <h4 class="header-title ml-2 mb-3">Approval SPP</h4>
+                        <h4 class="header-title ml-2 mb-3">Approval SPP Tanpa COA</h4>
                         <!-- <div class="form-group mr-2">
                             <select class="form-control" id="filter" name="filter">
                                 <option value="">Semua</option>
@@ -14,7 +14,7 @@
                     </div>
 
                     <div class="table-responsive">
-                        <table id="datasppapproval" class="table w-100 dataTable no-footer table-bordered table-striped">
+                        <table id="datasppapproval_NoCOA" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th width="5%" style="font-size: 12px; padding:10px">Approval</th>
@@ -45,48 +45,38 @@
 
 </div> <!-- container -->
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modal-spp-approval">
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="spp-approval">
     <div class="modal-dialog modal-full-width modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <button type="button" class="close" onclick="tutup_modal()"><span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="sub-header mb-2" style="margin-top: -20px; margin-left:17px;">
-                <span id="detail_noref_spp" style="font-size: 12px;"></span>
+                <span id="detail_noref_spp" style="font-size: 12px; "><b style="color: crimson;">Pastikan Nama Barang dan Grup sudah benar!</b></span>
             </div>
             <div class="modal-body">
                 <div class="table-responsive" style="margin-top: -15px;">
                     <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
                     <input type="hidden" id="hidden_noref_spp">
-                    <table id="spp_approval" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                    <table id="spp_approval_noCoa" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                         <thead>
                             <tr>
                                 <th class="no_th">No</th>
-                                <th>ID</th>
-                                <th class="kodebar_th">Kode&nbsp;Barang</th>
                                 <th class="nabar_th">Nama&nbsp;Barang </th>
-                                <th class="sat_th">Sat</th>
-                                <th class="qty_th">Qty</th>
-                                <th class="stok_th">Stok</th>
-                                <th class="ket_th">Ket</th>
-                                <!-- <th>Revisi&nbsp;Qty</th> -->
-                                <th class="status_th">Status&nbsp;SPP</th>
+                                <th class="ket_th">Grup</th>
+                                <!-- <th class="status_th">Status&nbsp;SPP</th> -->
+                                <th class="btn_th">Approval</th>
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th style="text-align: center;" colspan="9"><button class="btn btn-sm btn-info" data-toggle="tooltip" id="btn_setuju_all" onclick="approve_barang()" data-placement="left">Approve</button></th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-default" onclick="tutup_modal()">Tutup</button>
             </div>
         </div>
     </div>
@@ -101,15 +91,15 @@
     }
 
     .nabar_th {
-        width: 27% !important;
+        width: 35% !important;
     }
 
     .ket_th {
-        width: 25% !important;
+        width: 30% !important;
     }
 
-    .status_th {
-        width: 18% !important;
+    .btn_th {
+        width: 8% !important;
     }
 
     .sat_th,
@@ -118,92 +108,187 @@
         width: 5% !important;
     }
 
-    table#datasppapproval td {
+    table#datasppapproval_NoCOA td {
         padding: 3px;
         padding-left: 10px;
         font-size: 12px;
     }
 
-    table#spp_approval td {
+    table#spp_approval_noCoa td {
         padding: 3px;
         padding-left: 10px;
         font-size: 12px;
     }
 
-    table#spp_approval th {
+    table#spp_approval_noCoa th {
         padding: 10px;
         font-size: 12px;
     }
 </style>
 <script>
     $(document).ready(function() {
-        $(document).on('click', '#detail_spp_approval', function() {
-
-            $("#modal-spp-approval").modal('show');
-
-            var id_ppo = $(this).data('id_ppo');
-            var noref_spp = $(this).data('noref_spp');
-
-            $('#hidden_id_ppo').val(id_ppo);
-            $('#hidden_noref_spp').val(noref_spp);
-            $('#detail_noref_spp').html('<b>No. Ref. SPP : </b>' + noref_spp);
-
-            $('#spp_approval').DataTable().destroy();
-            $('#spp_approval').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "order": [],
-                "select": true,
-
-                "ajax": {
-                    "url": "<?php echo site_url('Spp/get_detail_approval') ?>",
-                    "type": "POST",
-                    "data": {
-                        id_ppo: id_ppo
-                    }
-                },
-                "columnDefs ": [{
-                    "targets": [0],
-                    "orderable": false,
-
-                }, ],
-                "dom": 'Bfrtip',
-                "buttons": [{
-                        "text": "Select All",
-                        "action": function() {
-                            $('#spp_approval').DataTable().rows().select();
-                        }
-                    },
-                    {
-                        "text": "Unselect All",
-                        "action": function() {
-                            $('#spp_approval').DataTable().rows().deselect();
-                        }
-                    }
-                ],
-                "lengthMenu": [
-                    [5, 10, 15, -1],
-                    [10, 15, 20, 25]
-                ],
-                "aoColumnDefs": [{
-                    "bSearchable": false,
-                    "bVisible": false,
-                    "aTargets": [1]
-                }, ],
-                "language": {
-                    "infoFiltered": ""
-                },
-                "pageLength": 10,
-            });
-        });
 
         listApproval();
+
     });
 
+    function tutup_modal() {
+        $('#spp-approval').modal('hide');
+        listApproval();
+    }
+
+    function get_grub(id) {
+        $('.grp_coa').select2({
+            ajax: {
+                url: "<?php echo site_url('Spp/get_grp_coa') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        grp: params.term, // search term
+                    };
+                },
+                processResults: function(data) {
+                    var results = [];
+                    $.each(data, function(index, item) {
+                        results.push({
+                            id: item.grp,
+                            text: item.grp
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+
+        });
+
+    }
+
+    function validasi_approve(id) {
+        var id = $('#id_nocoa_' + id).val();
+        var nama = $('#nama_' + id).val();
+        var grp = $('#grp_coa_' + id).val();
+        var status = 1;
+        if (nama == '') {
+            toast('Nama barang harus di isi!');
+            $('#nama_' + id).css({
+                "background": "#FFCECE"
+            });
+        } else if (grp == 0) {
+            toast('Group barang harus di isi!');
+            $('#grp_coa_' + id).css({
+                "background": "#FFCECE"
+            });
+
+        } else {
+            $('#nama_' + id).css({
+                "background": "#FFFFFF"
+            });
+            $('#grp_coa_' + id).css({
+                "background": "#FFFFFF"
+            });
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Spp/approve_noCOA'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+                    $('#simpan_approve_' + id).css('display', 'none');
+                    $('#no_approve_' + id).css('display', 'none');
+                    $('#status_approve_' + id).empty();
+                    $('#status_approve_' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
+                },
+                cache: false,
+                data: {
+                    id: id,
+                    nama: nama,
+                    grp: grp,
+                    status: status,
+                },
+                success: function(data) {
+                    var kode = $('#hidden_id_ppo').val();
+                    update_ppo_tmp(kode)
+                    // console.log('oke field ppo berhasil diupdate', data);
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        }
+
+    }
+
+    function update_ppo_tmp(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Spp/update_ppo_tmp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                id: id
+            },
+            success: function(data) {
+                var kode = $('#hidden_id_ppo').val();
+                spp_approval_noCoa(kode)
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    }
+
+    function modalSppApproval(id, noref) {
+        $("#spp-approval").modal('show');
+
+        var id_ppo = id;
+        var noref_spp = noref;
+        $('#hidden_id_ppo').val(id_ppo);
+        $('#hidden_noref_spp').val(noref_spp);
+        spp_approval_noCoa(id)
+    }
+
+    function spp_approval_noCoa(id) {
+        $('#spp_approval_noCoa').DataTable().destroy();
+        $('#spp_approval_noCoa').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            // "select": true,
+            "ajax": {
+                "url": "<?php echo site_url('Spp/detail_approval_noCOA') ?>",
+                "type": "POST",
+                "data": {
+                    id_ppo: id
+                }
+            },
+
+            "language": {
+                "infoFiltered": ""
+            },
+
+
+        });
+        var rel = setInterval(function() {
+            $('#tableListBPBItem').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
+    }
+
+
+    function inputtest(id) {
+        // $(this).val($(this).val().toUpperCase());
+        $('#nama_' + id).keyup(function() {
+            $(this).val($(this).val().toUpperCase());
+            // console.log('oke');
+        });
+    }
 
     function listApproval() {
-        $('#datasppapproval').DataTable().destroy();
-        $('#datasppapproval').DataTable({
+        $('#datasppapproval_NoCOA').DataTable().destroy();
+        $('#datasppapproval_NoCOA').DataTable({
 
             "fixedColumns": true,
             "fixedHeader": true,
@@ -215,7 +300,7 @@
             "order": [],
 
             "ajax": {
-                "url": "<?php echo site_url('Spp/get_data_spp_approval') ?>",
+                "url": "<?php echo site_url('Spp/data_spp_approval_noCOA') ?>",
                 "type": "POST"
             },
 
@@ -229,10 +314,11 @@
         });
 
         var rel = setInterval(function() {
-            $('#datasppapproval').DataTable().ajax.reload();
+            $('#datasppapproval_NoCOA').DataTable().ajax.reload();
             clearInterval(rel);
         }, 100);
     }
+
 
     function setujui_barang(n) {
 
@@ -288,15 +374,6 @@
 
         $.each(rowcollection, function(index, elem) {
             var id = rowcollection[index][1];
-            // var noreftxt = rowcollection[index][2];
-            // var kodebar = rowcollection[index][3];
-
-            // // isSelected(id);
-            // if (isSelected(id)) {
-            //     swal('Item sudah di pilih');
-            //     return false;
-            // }
-            // console.log(id, noreftxt, kodebar);
             setujui_barang(id);
             // data_spp_dipilih(id, no_spp, no_ref_spp, kodebar);
         });
@@ -315,7 +392,7 @@
             "select": true,
 
             "ajax": {
-                "url": "<?php echo site_url('Spp/get_detail_approval') ?>",
+                "url": "<?php echo site_url('Spp/get_detail_noCoa') ?>",
                 "type": "POST",
                 "data": {
                     id_ppo: id_ppo

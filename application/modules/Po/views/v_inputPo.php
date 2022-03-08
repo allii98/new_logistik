@@ -1154,7 +1154,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
             beforeSend: function() {
                 $('#lbl_status_delete_po').empty();
-                $('#lbl_status_delete_po').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses batalkan PO..</label');
+                $('#lbl_status_delete_po').append('<label><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i> Proses batalkan PO..</label>');
             },
 
             data: {
@@ -2047,22 +2047,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
 
         var form_buka = '<form id="form_rinci_' + row + '" name="form_rinci_' + row + '" method="POST" action="javascript:;">';
 
-        // var td_col_3 = '<td width="30%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
-        //     '<select class="form-control form-control-sm" id="cmb_jenis_budget_' + row + '" name="cmb_jenis_budget_' + row + '" required>' +
-        //     '<option value="">-- Pilih --</option>' +
-        //     '<option value="TEKNIK">TEKNIK</option>' +
-        //     '<option value="BIBITAN">BIBITAN</option>' +
-        //     '<option value="LC & TANAM">LC & TANAM</option>' +
-        //     '<option value="RAWAT">RAWAT</option>' +
-        //     '<option value="PANEN">PANEN</option>' +
-        //     '<option value="TEKNIK">TEKNIK</option>' +
-        //     '<option value="PABRIK">PABRIK</option>' +
-        //     '<option value="KANTOR">KANTOR</option>' +
-        //     '<option value="Kendaraan">Kendaraan</option>' +
-        //     '<option value="TBM">TBM</option>' +
-        //     '</select>'; +
 
-        // '</td>';
         var td_col_ = '<td width="10%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             // '<input type="text" class="form-control form-control-sm" id="brg' + row + '" name="brg' + row + '">' +
             '<input type="hidden" class="form-control form-control-sm"  id="getspp' + row + '" rowame="spp' + row + '" >' +

@@ -148,6 +148,10 @@ class M_spp extends CI_Model
     {
         return $this->db_logistik_pt->insert('ppo', $data_ppo);
     }
+    public function saveSpp_tmp($data_ppo)
+    {
+        return $this->db_logistik_pt->insert('ppo_tmp', $data_ppo);
+    }
     public function saveSppHistori($data_ppo_histori)
     {
         return $this->db_logistik_pt->insert('ppo_history', $data_ppo_histori);
@@ -156,6 +160,10 @@ class M_spp extends CI_Model
     public function saveSpp2($data_item_ppo)
     {
         return $this->db_logistik_pt->insert('item_ppo', $data_item_ppo);
+    }
+    public function saveSpp2_tmp($data_item_ppo)
+    {
+        return $this->db_logistik_pt->insert('item_ppo_tmp', $data_item_ppo);
     }
     public function saveSpp3($data_item_ppo)
     {
@@ -240,6 +248,17 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->where('noppo', $noppo);
         return $this->db_logistik_pt->get()->row_array();
     }
+    public function urut_cetak_no_coa($noppo)
+    {
+        $this->db_logistik_pt->set('main_acct', 'main_acct+1', FALSE);
+        $this->db_logistik_pt->where('noppo', $noppo);
+        $this->db_logistik_pt->update('ppo_tmp');
+
+        $this->db_logistik_pt->select('main_acct');
+        $this->db_logistik_pt->from('ppo_tmp');
+        $this->db_logistik_pt->where('noppo', $noppo);
+        return $this->db_logistik_pt->get()->row_array();
+    }
 
     public function cari_noref_itemppo($noref_spp)
     {
@@ -269,6 +288,24 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->from('item_ppo');
         $this->db_logistik_pt->where(['noreftxt' => $noref_spp, 'status2' => '0']);
         return $this->db_logistik_pt->get()->num_rows();
+    }
+
+    public function get_grp_coa()
+    {
+        $grp = $this->input->get('grp');
+        $data = $this->db_logistik_center->query("SELECT DISTINCT(grp) FROM `kodebar` WHERE grp LIKE '%$grp%' ORDER BY id DESC")->result();
+        return $data;
+    }
+
+    public function updateNocoa($data, $id)
+    {
+        // $this->db_logistik_pt->where($id);
+        // $this->db_logistik_pt->update('item_ppo_tmp', $data);
+        // return TRUE;
+
+        $this->db_logistik_pt->set($data);
+        $this->db_logistik_pt->where('id', $id);
+        return $this->db_logistik_pt->update('item_ppo_tmp');
     }
 }
 

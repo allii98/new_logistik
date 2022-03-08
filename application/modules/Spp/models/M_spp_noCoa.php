@@ -2,14 +2,13 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_data_spp extends CI_Model
+class M_spp_noCoa extends CI_Model
 {
 
-    var $table = 'ppo'; //nama tabel dari database
+    var $table = 'ppo_tmp'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
     var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC', 'noreftxt' => 'DESC', 'tglref' => 'DESC'); // default order 
-
     public function __construct()
     {
         parent::__construct();
@@ -54,8 +53,6 @@ class M_data_spp extends CI_Model
                 $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
             }
         }
-        // $this->db_logistik_pt->select('id, noppotxt, noreftxt, tglref,tglppo,tgltrm,namadept,lokasi,ket,user');
-        // $this->db_logistik_pt->order_by('id', 'desc');
 
         $i = 0;
 
@@ -71,7 +68,6 @@ class M_data_spp extends CI_Model
                 } else {
                     $this->db_logistik_pt->or_like($item, $_POST['search']['value']);
                 }
-
                 if (count($this->column_search) - 1 == $i)
                     $this->db_logistik_pt->group_end();
             }
@@ -107,32 +103,6 @@ class M_data_spp extends CI_Model
         $this->db_logistik_pt->from($this->table);
         return $this->db_logistik_pt->count_all_results();
     }
-
-    public function getDetailSpp($noppo)
-    {
-        $this->db_logistik_pt->select('*');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('noppotxt', $noppo);
-        return $this->db_logistik_pt->get()->result_array();
-    }
-
-    public function cari_spp_edit($id_ppo)
-    {
-        $this->db_logistik_pt->select('id, noref, noreftxt, kodedept, namadept, periode, kode_dev, tglppo, status2');
-        $this->db_logistik_pt->from('ppo');
-        $this->db_logistik_pt->where('id', $id_ppo);
-        $ppo = $this->db_logistik_pt->get()->row_array();
-
-        $this->db_logistik_pt->select('kodebar, nabar,qty, STOK, sat, ket, noref, noreftxt, id, status2');
-        $this->db_logistik_pt->from('item_ppo');
-        $this->db_logistik_pt->where('noreftxt', $ppo['noreftxt']);
-        $item_ppo = $this->db_logistik_pt->get()->result_array();
-
-        $data = [
-            'ppo' => $ppo,
-            'item_ppo' => $item_ppo
-        ];
-
-        return $data;
-    }
 }
+
+/* End of file M_spp_noCoa.php */

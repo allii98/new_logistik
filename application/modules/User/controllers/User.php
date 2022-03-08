@@ -31,14 +31,12 @@ class User extends CI_Controller
     public function tambah()
     {
         # code...
-        $level_user = $this->User_m->level_user();
-
-        $data['devisi'] = $this->User_m->cariDevisi();
 
         $data = [
             'tittle' => 'Tambah Data User',
-            'level' => $level_user,
-            'devisi' => $data['devisi']
+            'level' => $this->User_m->level_user(),
+            'devisi' => $this->User_m->cariDevisi(),
+            'dept' => $this->User_m->dept(),
         ];
         $this->template->load('template', 'v_tambahUser', $data);
     }
@@ -50,6 +48,9 @@ class User extends CI_Controller
         $hash_pass = $this->bcrypt->hash_password($password);
         $kode_level = $this->input->post('level');
         $data['data_level'] = $this->User_m->get_level($kode_level);
+        $kodedept = $this->input->post('kodedept');
+
+        $caridept = $this->db_logistik_pt->get_where('dept', array('kode' => $kodedept))->row_array();
 
         $data = array(
             'nama' => $this->input->post('nama'),
@@ -59,6 +60,8 @@ class User extends CI_Controller
             'level' => $data['data_level']['level'],
             'password' => $hash_pass,
             'status_lokasi_site' => $this->input->post('devisi'),
+            'kodedept' => $caridept['kode'],
+            'namadept' =>  $caridept['nama'],
         );
 
         $cari_username = $this->db_logistik_pt->get_where('user', array('username' => $data['username']))->num_rows();

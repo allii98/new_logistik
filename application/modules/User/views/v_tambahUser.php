@@ -76,6 +76,20 @@
                       ?>
                     </select>
                   </div>
+                  <div class="form-group col-lg-6 col-xl-6 col-12">
+                    <label style="font-size: 12px;">Departemen</label>
+                    <select class="form-control form-control-sm" id="cmb_departemen" style="font-size: 12px;">
+                      <option value="" selected disabled>Pilih</option>
+                      <?php
+                      foreach ($dept as $d) : {
+                      ?>
+                          <option value="<?= $d['kode']; ?>"><?= $d['kode'] . ' - ' . $d['nama']; ?></option>
+                      <?php
+                        }
+                      endforeach;
+                      ?>
+                    </select>
+                  </div>
                 </div>
                 <div class="form-group mb-0 mt-0">
                   <label id="lbl_status_simpan"></label>
@@ -105,6 +119,7 @@
     var password = $('#password').val();
     var lokasi = $('#lokasi').val();
     var level = $('#level').val();
+    var cmb_departemen = $('#cmb_departemen').val();
 
     if (!nama) {
       toast('Nama');
@@ -116,6 +131,8 @@
       toast('Lokasi');
     } else if (!level) {
       toast('Level');
+    } else if (!cmb_departemen) {
+      toast('Departemen');
     } else {
       saveData();
     }
@@ -154,6 +171,7 @@
         lokasi: $('#lokasi').val(),
         level: $('#level').val(),
         devisi: $('#devisi').val(),
+        kodedept: $('#cmb_departemen').val(),
       },
 
       success: function(data) {

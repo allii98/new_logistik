@@ -17,6 +17,13 @@ class User_m extends CI_Model
         }
     }
 
+    public function dept()
+    {
+        $this->db_logistik_pt->select('kode, nama');
+        $this->db_logistik_pt->from('dept');
+        return $this->db_logistik_pt->get()->result_array();
+    }
+
     public function level_user()
     {
         return $this->db_logistik_pt->get('level_user')->result_array();

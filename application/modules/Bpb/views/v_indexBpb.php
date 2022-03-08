@@ -603,7 +603,7 @@
 
     function modalListApproval(nobpb, norefbpb, prove) {
         // console.log(nobpb);
-        console.log(prove);
+        // console.log(prove);
         $('#modalListApproval').modal('show');
         if (prove == 0) {
             $('#btn_setuju_all').show();

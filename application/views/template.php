@@ -161,10 +161,13 @@ date_default_timezone_set('Asia/Jakarta');
                                         </a>
                                         <div class="dropdown-menu" aria-labelledby="topnav-ecommerce">
                                             <a href="<?= base_url('Spp/sppBaru') ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">SPP Baru</font>
+                                                <font face="Verdana" size="2.5">Input SPP Baru</font>
+                                            </a>
+                                            <a href="<?= base_url('Spp/sppNoCoa') ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Input SPP Tanpa COA</font>
                                             </a>
                                             <?php
-                                            if ($this->session->userdata('level') == 'KTU' or $this->session->userdata('level') == 'Mill Manager') {
+                                            if ($this->session->userdata('level') == 'KTU' || $this->session->userdata('level') == 'Mill Manager') {
                                             ?>
                                                 <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">
                                                     <font face="Verdana" size="2.5">SPP
@@ -173,50 +176,64 @@ date_default_timezone_set('Asia/Jakarta');
                                             <?php
                                             }
                                             ?>
+                                            <?php
+                                            if ($this->session->userdata('level') == 'Staff HO') { ?>
+                                                <a href="<?= base_url('Spp/sppApproval_noCoa') ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Approval SPP Tanpa Coa</font>
+                                                </a>
+                                            <?php } ?>
+
+
                                             <a href="<?= base_url('Spp'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Semua Data
+                                                <font face="Verdana" size="2.5">Data
                                                     SPP</font>
                                             </a>
+                                            <a href="<?= base_url('Spp/dataNoCoa'); ?>" class="dropdown-item">
+                                                <font face="Verdana" size="2.5">Data
+                                                    SPP Tanpa Coa</font>
+                                            </a>
 
                                         </div>
                                     </div>
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-clipboard-arrow-up-outline mr-1"></i>
-                                            <font face="Verdana" size="2.5">PO</font>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-email">
-                                            <a href="<?= base_url('Po/input') ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Input PO</font>
+                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING') { ?>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-clipboard-arrow-up-outline mr-1"></i>
+                                                <font face="Verdana" size="2.5">PO</font>
+                                                <div class="arrow-down"></div>
                                             </a>
-                                            <a href="<?= base_url('Po') ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Data PO</font>
-                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-email">
+                                                <a href="<?= base_url('Po/input') ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input PO</font>
+                                                </a>
+                                                <a href="<?= base_url('Po') ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data PO</font>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-clipboard-arrow-down-outline mr-1"></i>
-                                            <font face="Verdana" size="2.5">LPB</font>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('Lpb/input'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Input LPB</font>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-clipboard-arrow-down-outline mr-1"></i>
+                                                <font face="Verdana" size="2.5">LPB</font>
+                                                <div class="arrow-down"></div>
                                             </a>
-                                            <a href="<?= base_url('Lpb/lpb_mutasi'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Input LPB Mutasi</font>
-                                            </a>
-                                            <!-- <a href="<?= base_url('Lpb/lpb_retur'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Input LPB Retur</font>
-                                            </a> -->
-                                            <a href="<?= base_url('Lpb'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Data LPB</font>
-                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                <a href="<?= base_url('Lpb/input'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input LPB</font>
+                                                </a>
+                                                <a href="<?= base_url('Lpb/lpb_mutasi'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input LPB Mutasi</font>
+                                                </a>
+                                                <!-- <a href="<?= base_url('Lpb/lpb_retur'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input LPB Retur</font>
+                                                </a> -->
+                                                <a href="<?= base_url('Lpb'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data LPB</font>
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php } ?>
 
                                     <div class="dropdown">
                                         <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -233,57 +250,58 @@ date_default_timezone_set('Asia/Jakarta');
                                             </a>
                                         </div>
                                     </div>
-
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i>
-                                            <font face="Verdana" size="2.5"> BKB</font>
-                                            <div class="arrow-down">
+                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING') { ?>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i>
+                                                <font face="Verdana" size="2.5"> BKB</font>
+                                                <div class="arrow-down">
+                                                </div>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                <a href="<?= base_url('Bkb/input'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input BKB</font>
+                                                </a>
+                                                <a href="<?= base_url('Bkb'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data BKB</font>
+                                                </a>
+                                                <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="dropdown-item">Approval Rev Qty</font></a>
                                             </div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('Bkb/input'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Input BKB</font>
-                                            </a>
-                                            <a href="<?= base_url('Bkb'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Data BKB</font>
-                                            </a>
-                                            <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="dropdown-item">Approval Rev Qty</font></a>
                                         </div>
-                                    </div>
 
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-cash-multiple mr-1"></i>
-                                            <font face="Verdana" size="2.5"> PP</font>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('Pp/input'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Input PP</font>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-cash-multiple mr-1"></i>
+                                                <font face="Verdana" size="2.5"> PP</font>
+                                                <div class="arrow-down"></div>
                                             </a>
-                                            <a href="<?= base_url('Pp'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Data PP</font>
-                                            </a>
-                                        </div>
-                                    </div>
-
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-backburger mr-1"></i>
-                                            <font face="Verdana" size="2.5">Retur</font>
-                                            <div class="arrow-down">
+                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                <a href="<?= base_url('Pp/input'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input PP</font>
+                                                </a>
+                                                <a href="<?= base_url('Pp'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data PP</font>
+                                                </a>
                                             </div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('Retur/input') ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Retur BKB</font>
-                                            </a>
-                                            <a href="<?= base_url('Retur') ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Data Retur</font>
-                                            </a>
                                         </div>
-                                    </div>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-backburger mr-1"></i>
+                                                <font face="Verdana" size="2.5">Retur</font>
+                                                <div class="arrow-down">
+                                                </div>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                <a href="<?= base_url('Retur/input') ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Retur BKB</font>
+                                                </a>
+                                                <a href="<?= base_url('Retur') ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data Retur</font>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+
 
                                 </div>
                             </li>

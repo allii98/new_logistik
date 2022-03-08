@@ -11,6 +11,7 @@ class Login extends CI_Controller
         parent::__construct();
         $this->load->model('M_login');
         $db_pt = check_db_pt();
+        $this->db_config = $this->load->database('db_conf_caba', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_logistik_center = $this->load->database('db_logistik_center', true);
         $this->db_logistik_msal = $this->load->database('db_logistik_msal', true);
@@ -58,16 +59,23 @@ class Login extends CI_Controller
                 $pt_login = 'db_logistik_kpp';
             }
 
-            $get_username = $this->$pt_login->get_where('user', array('username' => $username));
+            $get_username = $this->db_config->get_where('users', array('username' => $username));
             $user = $get_username->row();
 
+            $lokasi = $this->db_config->query("SELECT nama FROM `codegroup` WHERE group_n='LOKASI_USERS' AND value='$user->id_lokasi'")->row();
+            if ($lokasi->nama == 'ESTATE') {
+                $lok = 'SITE';
+            } else {
+                $lok = $lokasi->nama;
+            }
+
             // mengambil devisi user login
-            $get_devisi = $this->$pt_login->get_where('tb_devisi', array('kodetxt' => $user->status_lokasi_site));
+            $get_devisi = $this->$pt_login->get_where('tb_devisi', array('kodetxt' => $user->id_lokasi));
             $devisi = $get_devisi->row();
 
             if ($get_username->num_rows() > 0) {
 
-                switch ($user->status_lokasi) {
+                switch ($lokasi->status_lokasi) {
                     case 'HO':
                         $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'HO'));
                         $pt     = $get_pt->row();
@@ -82,7 +90,7 @@ class Login extends CI_Controller
                         $kode_pt = $pt->kodetxt;
                         $nama_pt = $pt->PT;
                         break;
-                    case 'SITE':
+                    case 'ESTATE':
                         $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'SITE'));
                         $pt     = $get_pt->row();
 
@@ -114,9 +122,9 @@ class Login extends CI_Controller
                 if (password_verify($password, $user->password)) {
                     # code...
                     $this->session->set_userdata(array(
-                        'id_user' => $user->no,
+                        'id_user' => $user->id,
                         'user' => $user->nama,
-                        'status_lokasi' => $user->status_lokasi, //HO, RO, SITE, PKS
+                        'status_lokasi' => $lok, //HO, RO, SITE, PKS
                         'kode_pt_login' => $kode_pt_login,
                         'app_pt' => $data['get_tb_pt_central']['alias'], //MSAL, MAPA, PSAM, PEAK
                         'nama_pt' => $data['get_tb_pt_central']['nama_pt'], //MSAL, MAPA, PSAM, PEAK
@@ -133,7 +141,9 @@ class Login extends CI_Controller
                         'periode' => $periode,
                         'ym_periode' => $ym_periode,
                         'Ymd_periode' => $Ymd_periode,
-                        'pw' => $data['get_tb_pt_central']['alias'] . date('mdY')
+                        'pw' => $data['get_tb_pt_central']['alias'] . date('mdY'),
+                        'kode_dept' => $user->kode_dept,
+                        'nama_dept' => $user->dept,
                     ));
                     redirect('Home');
                 } else {
