@@ -112,15 +112,16 @@
                                 <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px; font-size: 12px;">Departemen*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
                                     <select class="form-control form-control-sm" id="cmb_departemen" style="font-size: 12px;">
-                                        <option value="" selected disabled>Pilih</option>
-                                        <?php
-                                        foreach ($dept as $d) : {
-                                        ?>
+                                        <option selected value="<?= $this->session->userdata('kode_dept') ?>"><?= $this->session->userdata('kode_dept') . ' - ' . $this->session->userdata('nama_dept') ?></option>
+                                        <!-- <option value="" selected disabled>Pilih</option> -->
+                                        <!-- <?php
+                                                foreach ($dept as $d) : {
+                                                ?>
                                                 <option value="<?= $d['kode']; ?>"><?= $d['kode'] . ' - ' . $d['nama']; ?></option>
                                         <?php
-                                            }
-                                        endforeach;
-                                        ?>
+                                                    }
+                                                endforeach;
+                                        ?> -->
                                     </select>
                                 </div>
                             </div>
@@ -222,16 +223,30 @@
 
 </div> <!-- container -->
 
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalListBarang">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" aria-hidden="true" id="modalListBarang">
     <div class="modal-dialog modal-full-width modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">List Barang</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <!-- <h4 class="modal-title" id="myModalLabel">List Barang</h4> -->
+                <ul class="nav nav-tabs nav-bordered">
+                    <li class="nav-item">
+                        <a href="#listbrg" at="brg" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
+                            List Barang
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#tanpaCOA" at="coa" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
+                            Barang Tanpa COA
+                        </a>
+                    </li>
+
+
+                </ul>
+                <button type="button" class="close" onclick="closeModal()"><span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body" style="margin-top: -20px;">
-                <div class="table-responsive">
+            <div class="modal-body" style="margin-top: -5px;">
+                <div class="table-responsive" id="listbrg" style="display: block;">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                     <table id="dabar" class="table table-striped table-bordered" width="100%">
                         <thead>
@@ -247,9 +262,40 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="table-responsive" id="tanpaCOA" style="display: none;">
+                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                    <table id="noCOA" class="table table-striped table-bordered table-in">
+                        <thead>
+                            <tr>
+                                <th class="nabar_th">Nama Barang</th>
+                                <th class="satuan">Satuan</th>
+                                <th class="grup_th">Grup</th>
+                                <th class="hastag_th">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Nama Barang">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="satuan_barang" name="satuan_barang" placeholder="Satuan">
+                                </td>
+                                <td>
+                                    <select class="form-control grup_coa" id="grup_brg">
+                                        <option selected value="" disabled>Pilih</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-success fa fa-check ml-1" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" onclick="saveTanpaCOA('1')"></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-default" onclick="closeModal()">Tutup</button>
             </div>
         </div>
     </div>
@@ -373,6 +419,10 @@
         width: 4% !important;
     }
 
+    .satuan {
+        width: 15% !important;
+    }
+
     .kodebar_th {
         width: 12% !important;
     }
@@ -432,6 +482,31 @@
         });
     });
 
+    function saveTanpaCOA() {
+        var namabrg = $('#nama_barang').val();
+        var satbrg = $('#satuan_barang').val();
+        var grb_brg = $('#grup_brg').val();
+
+        console.table({
+            namabrg: namabrg,
+            sat: satbrg,
+            grb_brg: grb_brg
+        });
+    }
+
+    function closeModal() {
+        $('#modalListBarang').modal('hide');
+
+        $('#nama_barang').val('');
+        $('#satuan_barang').val('');
+        $('#grup_brg')
+            .find('option')
+            .remove()
+            .end()
+            .append('<option selected value="" disabled>Pilih</option>').val('');
+
+    }
+
     function data_spp_approval() {
         location.href = "<?php echo base_url('Spp/SppApproval') ?>";
     }
@@ -467,6 +542,55 @@
     }
 
     $(document).ready(function() {
+
+        $("input[type=text]").keyup(function() {
+            $(this).val($(this).val().toUpperCase());
+        });
+
+        $(".nav-link").click(function() {
+            $(".nav-link").removeClass("active");
+            $(this).addClass("active");
+            var jenis = $(this).attr('at');
+            if (jenis != 'coa') {
+
+                $("#listbrg").css('display', 'block');
+                $("#tanpaCOA").css('display', 'none');
+
+            } else {
+
+                $("#tanpaCOA").css('display', 'block');
+                $("#listbrg").css('display', 'none');
+
+            }
+        });
+
+        /* grup coa */
+        $('.grup_coa').select2({
+            ajax: {
+                url: "<?php echo site_url('Spp/get_grp_coa') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        grp: params.term, // search term
+                    };
+                },
+                processResults: function(data) {
+                    var results = [];
+                    $.each(data, function(index, item) {
+                        results.push({
+                            id: item.grp,
+                            text: item.grp
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+
+        });
+        /* end grup coa */
 
         tittle();
         tittle1();
@@ -538,6 +662,15 @@
         // $('#hidden_no_row').empty();
         $('#hidden_no_row').val(no_row);
         $('#modalListBarang').modal('show');
+        // $("a[data-target=#modalListBarang]").click(function(ev) {
+        //     ev.preventDefault();
+        //     var target = $(this).attr("href");
+
+        //     // load the url and show modal on success
+        //     $("#modalListBarang .modal-body").load(target, function() {
+        //         $("#modalListBarang").modal("show");
+        //     });
+        // });
         // $('#tableListBarang').DataTable().destroy();
         listBarang();
     }
