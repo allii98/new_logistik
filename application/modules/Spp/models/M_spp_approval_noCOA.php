@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_spp_approval_noCOA extends CI_Model
 {
 
-    var $table = 'ppo_tmp'; //nama tabel dari database
+    var $table = 'ppo'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
     var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC', 'noreftxt' => 'DESC', 'tglref' => 'DESC'); // default order 
@@ -24,7 +24,7 @@ class M_spp_approval_noCOA extends CI_Model
 
         $this->db_logistik_pt->from($this->table);
         $this->db_logistik_pt->where('namadept', $dept);
-        $this->db_logistik_pt->where_in('status2', array(0, 2));
+        $this->db_logistik_pt->where('status2', 9);
 
 
         $i = 0;

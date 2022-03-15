@@ -236,6 +236,13 @@ class M_spp extends CI_Model
         $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noreftxt' => $noreftxt]);
         return $this->db_logistik_pt->get()->num_rows();
     }
+    public function cari_item_spp_tmp($kodebar, $noreftxt)
+    {
+        $this->db_logistik_pt->select('kodebar');
+        $this->db_logistik_pt->from('item_ppo');
+        $this->db_logistik_pt->where(['kodebar' => $kodebar, 'noreftxt' => $noreftxt]);
+        return $this->db_logistik_pt->get()->num_rows();
+    }
 
     public function urut_cetak($noppo)
     {
@@ -305,7 +312,22 @@ class M_spp extends CI_Model
 
         $this->db_logistik_pt->set($data);
         $this->db_logistik_pt->where('id', $id);
-        return $this->db_logistik_pt->update('item_ppo_tmp');
+        return $this->db_logistik_pt->update('item_ppo');
+    }
+
+    public function cari_spp($noref)
+    {
+        $data = $this->db_logistik_pt->query("SELECT * FROM `ppo` WHERE noreftxt='$noref' ORDER BY id DESC")->num_rows();
+        return $data;
+    }
+
+    public function update_spp($noref)
+    {
+        $data = array('status2' => '9');
+        $this->db_logistik_pt->set($data);
+        $this->db_logistik_pt->where('noreftxt', $noref);
+        return $this->db_logistik_pt->update('ppo');
+        # code...
     }
 }
 

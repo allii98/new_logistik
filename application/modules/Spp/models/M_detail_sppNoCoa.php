@@ -5,8 +5,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_detail_sppNoCoa extends CI_Model
 {
 
-    var $table = 'item_ppo_tmp'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noreftxt', 'kodebar', 'nabar', 'sat', 'qty', 'STOK', 'ket'); //field yang ada di table supplier  
+    var $table = 'item_ppo'; //nama tabel dari database
+    var $column_order = array(null, 'id', 'noreftxt', 'kodebar', 'nabar', 'sat', 'qty', 'STOK', 'ket', 'grup'); //field yang ada di table supplier  
     var $column_search = array('id', 'noreftxt', 'kodebar', 'nabar', 'sat', 'qty', 'STOK', 'ket'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'ASC'); // default order 
 
@@ -80,7 +80,7 @@ class M_detail_sppNoCoa extends CI_Model
     public function get_noref($id_ppo)
     {
         $this->db_logistik_pt->select('noreftxt');
-        $this->db_logistik_pt->from('ppo_tmp');
+        $this->db_logistik_pt->from('ppo');
         $this->db_logistik_pt->where('id', $id_ppo);
         return $this->db_logistik_pt->get()->row_array();
     }

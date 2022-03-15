@@ -170,7 +170,7 @@
         var id = $('#id_nocoa_' + id).val();
         var nama = $('#nama_' + id).val();
         var grp = $('#grp_coa_' + id).val();
-        var status = 1;
+        var status = 12;
         if (nama == '') {
             toast('Nama barang harus di isi!');
             $('#nama_' + id).css({

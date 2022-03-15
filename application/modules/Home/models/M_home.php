@@ -101,9 +101,11 @@ class M_home extends CI_Model
         $role_user = $this->session->userdata('user');
         $lokasi = $this->session->userdata('status_lokasi');
         $kode_dev = $this->session->userdata('kode_dev');
+        $kode_dept = $this->session->userdata('kode_dept');
 
         $this->db_logistik_pt->select('noreftxt');
         $this->db_logistik_pt->where('status2', '0');
+        $this->db_logistik_pt->where('kodedept', $kode_dept);
         if ($lokasi == 'HO') {
             $this->db_logistik_pt->where('jenis !=', 'SPPI');
             $this->db_logistik_pt->like('lokasi', 'HO');
@@ -114,9 +116,9 @@ class M_home extends CI_Model
         } elseif ($lokasi == 'RO') {
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
         }
-        if ($lokasi != 'HO') {
-            $this->db_logistik_pt->where('kode_dev', $kode_dev);
-        }
+        // if ($lokasi != 'HO') {
+        //     $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        // }
         $this->db_logistik_pt->from('ppo');
         $count_spp = $this->db_logistik_pt->count_all_results();
 

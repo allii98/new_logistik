@@ -181,6 +181,7 @@
                                                     <input type="text" class="form-control form-control-sm" id="nakobar_1" name="txt_cari_kode_brg_1" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang('1')" style="font-size: 12px;">
                                                     <input type="hidden" id="hidden_kode_brg_1" name="hidden_kode_brg_1">
                                                     <input type="hidden" id="hidden_nama_brg_1" name="hidden_nama_brg_1">
+                                                    <input type="hidden" id="hidden_grup_brg_1" name="hidden_grup_brg_1">
                                                 </td>
                                                 <td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">
                                                     <input type="number" class="form-control form-control-sm" id="txt_qty_1" name="txt_qty_1" placeholder="Qty" style="font-size: 12px;" required>
@@ -227,27 +228,14 @@
     <div class="modal-dialog modal-full-width modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <!-- <h4 class="modal-title" id="myModalLabel">List Barang</h4> -->
-                <ul class="nav nav-tabs nav-bordered">
-                    <li class="nav-item">
-                        <a href="#listbrg" at="brg" data-bs-toggle="tab" aria-expanded="true" class="nav-link active">
-                            List Barang
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#tanpaCOA" at="coa" data-bs-toggle="tab" aria-expanded="false" class="nav-link">
-                            Barang Tanpa COA
-                        </a>
-                    </li>
-
-
-                </ul>
-                <button type="button" class="close" onclick="closeModal()"><span aria-hidden="true">×</span>
+                <h4 class="modal-title" id="myModalLabel">List Barang</h4>&nbsp;
+                <button type="button" class="btn btn-warning waves-effect waves-light btn-xs" onclick="brg_tanpa_coa()">Barang Tanpa COA</button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body" style="margin-top: -5px;">
+                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                 <div class="table-responsive" id="listbrg" style="display: block;">
-                    <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                     <table id="dabar" class="table table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
@@ -262,7 +250,69 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="table-responsive" id="tanpaCOA" style="display: none;">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- BARANG SERUPA -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" aria-hidden="true" id="modalListBarang">
+    <div class="modal-dialog modal-full-width modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">List Barang</h4>&nbsp;
+                <button type="button" class="btn btn-warning waves-effect waves-light btn-xs" onclick="brg_tanpa_coa()">Barang Tanpa COA</button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" style="margin-top: -5px;">
+                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                <div class="table-responsive" id="listbrg" style="display: block;">
+                    <table id="dabar" class="table table-striped table-bordered" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="hastag_th">#</th>
+                                <th class="no_th">No</th>
+                                <th class="kodebar_th">Kode Barang</th>
+                                <th class="nabar_th">Nama Barang</th>
+                                <th class="grup_th">Grup</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- END BARANG SERUPA -->
+
+<!-- barang tanpa coa -->
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" aria-hidden="true" id="modal_noCOA">
+    <div class="modal-dialog modal-full-width modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+
+
+
+                <h4 class="modal-title" id="myModalLabel">Input Barang</h4>&nbsp;
+                <button type="button" class="close" onclick="closeModal()"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="margin-top: -5px;">
+                <input type="hidden" id="hidden_no_row" name="hidden_no_row">
+                <div class="table-responsive" id="tanpaCOA">
                     <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                     <table id="noCOA" class="table table-striped table-bordered table-in">
                         <thead>
@@ -276,10 +326,11 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Nama Barang">
+                                    <input type="text" class="form-control" id="nama_barang" name="nama_barang" placeholder="Nama Barang" autofocus>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" id="satuan_barang" name="satuan_barang" placeholder="Satuan">
+                                    <select class="form-control" id="satuan_barang">
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="form-control grup_coa" id="grup_brg">
@@ -287,19 +338,24 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <button class="btn btn-xs btn-success fa fa-check ml-1" id="btn_simpan_1" name="btn_simpan_1" type="button" data-toggle="tooltip" data-placement="right" onclick="saveTanpaCOA('1')"></button>
+                                    <button class="btn btn-xs btn-success fa fa-check ml-1" id="save_coa" name="save_coa" type="button" data-toggle="tooltip" data-placement="right" onclick="saveTanpaCOA('1')"></button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
             </div>
+
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" onclick="closeModal()">Tutup</button>
             </div>
         </div>
     </div>
 </div>
+
+<!-- end  -->
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" id="modalKonfirmasiHapusSpp">
     <div class="modal-dialog">
@@ -420,7 +476,7 @@
     }
 
     .satuan {
-        width: 15% !important;
+        width: 13% !important;
     }
 
     .kodebar_th {
@@ -482,20 +538,107 @@
         });
     });
 
-    function saveTanpaCOA() {
+    function brg_tanpa_coa() {
+
+        $('#modalListBarang').modal('hide');
+        $('#modal_noCOA').modal('show');
+    }
+
+    function saveTanpaCOA(id) {
         var namabrg = $('#nama_barang').val();
         var satbrg = $('#satuan_barang').val();
         var grb_brg = $('#grup_brg').val();
 
-        console.table({
-            namabrg: namabrg,
-            sat: satbrg,
-            grb_brg: grb_brg
+        if (namabrg == '') {
+            // toast('Nama Barang');
+
+            $.toast({
+                position: 'top-right',
+                heading: 'Failed!',
+                text: 'Nama barang harus diisi!',
+                icon: 'error',
+                loader: true,
+                loaderBg: 'red'
+            });
+            $('#nama_barang').css({
+                "background": "#FFCECE"
+            });
+        } else if (satbrg == '') {
+            // toast('Satuan Barang');
+            $.toast({
+                position: 'top-right',
+                heading: 'Failed!',
+                text: 'Satuan barang harus diisi!',
+                icon: 'error',
+                loader: true,
+                loaderBg: 'red'
+            });
+
+            $('#satuan_barang').css({
+                "background": "#FFCECE"
+            });
+        } else if (grb_brg == '') {
+            // toast('Grup Barang');
+            $.toast({
+                position: 'top-right',
+                heading: 'Failed!',
+                text: 'Grup barang harus diisi!',
+                icon: 'error',
+                loader: true,
+                loaderBg: 'red'
+            });
+
+            $('#grup_brg').css({
+                "background": "#FFCECE"
+            });
+
+        } else {
+            $('#nama_barang, #grup_brg, #satuan_barang').css({
+                "background": "#FFFFFF"
+            });
+
+
+            var n = $('#hidden_no_row').val();
+
+
+
+            // Set data
+            $('#hidden_nama_brg_' + n).val(namabrg);
+            $('#hidden_kode_brg_' + n).val('0');
+            $('#nakobar_' + n).val(namabrg);
+            $('#satuan_' + n).text(satbrg);
+            $('#hidden_satuan_brg_' + n).val(satbrg);
+            $('#hidden_grup_brg_' + n).val(grb_brg);
+            closeModal()
+            // console.log('====================================');
+            // console.log('genza silite ireng');
+            // console.log('====================================');
+        }
+
+    }
+
+    function koreksi_coa() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Spp/koreksi_coa'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                nabar: $('#nama_barang').val(),
+            },
+            success: function(data) {
+                console.log(data);
+
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
         });
     }
 
     function closeModal() {
-        $('#modalListBarang').modal('hide');
+        $('#modal_noCOA').modal('hide');
 
         $('#nama_barang').val('');
         $('#satuan_barang').val('');
@@ -504,7 +647,31 @@
             .remove()
             .end()
             .append('<option selected value="" disabled>Pilih</option>').val('');
+        koreksi_coa();
+    }
 
+    function satuan() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Spp/satuan'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: '',
+            success: function(data) {
+                // console.log('nah iini', data);
+                var opsi_cmb_all = '<option value="" selected>Pilih</option>';
+                $('#satuan_barang').append(opsi_cmb_all);
+                $.each(data, function(index) {
+                    var opsi_txt_satuan = '<option value="' + data[index].satuan + '">' + data[index].satuan + '</option>';
+                    $('#satuan_barang').append(opsi_txt_satuan);
+                });
+                // $('.satuan').select2(); 
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
     }
 
     function data_spp_approval() {
@@ -543,26 +710,30 @@
 
     $(document).ready(function() {
 
+        satuan()
+
         $("input[type=text]").keyup(function() {
             $(this).val($(this).val().toUpperCase());
         });
 
-        $(".nav-link").click(function() {
-            $(".nav-link").removeClass("active");
-            $(this).addClass("active");
-            var jenis = $(this).attr('at');
-            if (jenis != 'coa') {
+        // $(".nav-link").click(function() {
+        //     $(".nav-link").removeClass("active");
+        //     $(this).addClass("active");
+        //     var jenis = $(this).attr('at');
+        //     if (jenis != 'coa') {
 
-                $("#listbrg").css('display', 'block');
-                $("#tanpaCOA").css('display', 'none');
+        //         $("#listbrg").css('display', 'block');
+        //         $("#tanpaCOA").css('display', 'none');
 
-            } else {
+        //     } else {
 
-                $("#tanpaCOA").css('display', 'block');
-                $("#listbrg").css('display', 'none');
+        //         $("#tanpaCOA").css('display', 'block');
+        //         $("#listbrg").css('display', 'none');
 
-            }
-        });
+        //     }
+        // });
+
+
 
         /* grup coa */
         $('.grup_coa').select2({
@@ -715,6 +886,7 @@
             var kodebar_hide = $(this).data('kodebar');
             var nakobar = $(this).data('nabar') + " - " + $(this).data('kodebar');
             var satuan = $(this).data('satuan');
+            var grp = $(this).data('grp');
             // console.log(nabar);
 
             // Set data
@@ -726,6 +898,7 @@
             $("#modalListBarang").modal('hide');
 
             $('#devisi').attr('disabled', '');
+            $('#hidden_grup_brg_' + n).val(grp);
 
         });
     });
@@ -752,6 +925,7 @@
                 success: function(data) {
                     $('#stok_' + n).text(data);
                     $('#hidden_stok_' + n).val(data);
+                    // $('#hidden_grup_brg_' + n).val(data);
                 },
                 error: function(response) {
                     alert('KONEKSI TERPUTUS! Gagal Menampilkan Barang!');
@@ -763,7 +937,7 @@
 
     function saveRinciClick(n) {
 
-        console.log(n);
+        // console.log(n);
         var tgl = $('#txt_tgl_spp').val();
         var tgl_trm = $('#txt_tgl_terima').val();
         var jp = $('#cmb_jenis_permohonan').val();
@@ -840,6 +1014,7 @@
                 hidden_kode_brg: $('#hidden_kode_brg_' + n).val(),
                 hidden_nama_brg: $('#hidden_nama_brg_' + n).val(),
                 hidden_satuan_brg: $('#hidden_satuan_brg_' + n).val(),
+                hidden_grup_brg: $('#hidden_grup_brg_' + n).val(),
                 txt_qty: $('#txt_qty_' + n).val(),
                 hidden_stok: $('#hidden_stok_' + n).val(),
                 txt_keterangan_rinci: $('#txt_keterangan_rinci_' + n).val()
@@ -1346,6 +1521,7 @@
             '<input type="text" class="form-control form-control-sm" id="nakobar_' + n + '" name="txt_cari_kode_brg_' + n + '" placeholder="Cari Kode/Nama Barang" onfocus="cari_barang(' + n + ')" style="font-size: 12px;">' +
             '<input type="hidden" id="hidden_kode_brg_' + n + '" name="hidden_kode_brg_' + n + '">' +
             '<input type="hidden" id="hidden_nama_brg_' + n + '" name="hidden_nama_brg_' + n + '">' +
+            '<input type="hidden" id="hidden_grup_brg_' + n + '" name="hidden_grup_brg_' + n + '">' +
             '</td>';
         var td_col_3 = '<td width="12%" style="padding-right: 0.2em; padding-left: 0.2em;  padding-top: 2px; padding-bottom: 0.1em;">' +
             '<input type="number" class="form-control form-control-sm" id="txt_qty_' + n + '" name="txt_qty_' + n + '" placeholder="Qty" required style="font-size: 12px;">' +

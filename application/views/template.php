@@ -163,9 +163,9 @@ date_default_timezone_set('Asia/Jakarta');
                                             <a href="<?= base_url('Spp/sppBaru') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input SPP Baru</font>
                                             </a>
-                                            <a href="<?= base_url('Spp/sppNoCoa') ?>" class="dropdown-item">
+                                            <!-- <a href="<?= base_url('Spp/sppNoCoa') ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Input SPP Tanpa COA</font>
-                                            </a>
+                                            </a> -->
                                             <?php
                                             if ($this->session->userdata('level') == 'KTU' || $this->session->userdata('level') == 'Mill Manager') {
                                             ?>
@@ -188,10 +188,10 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <font face="Verdana" size="2.5">Data
                                                     SPP</font>
                                             </a>
-                                            <a href="<?= base_url('Spp/dataNoCoa'); ?>" class="dropdown-item">
+                                            <!-- <a href="<?= base_url('Spp/dataNoCoa'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data
                                                     SPP Tanpa Coa</font>
-                                            </a>
+                                            </a> -->
 
                                         </div>
                                     </div>

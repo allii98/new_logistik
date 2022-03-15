@@ -30,6 +30,14 @@ class Spp extends CI_Controller
         date_default_timezone_set('Asia/Jakarta');
     }
 
+    public function koreksi_coa()
+    {
+        $nabar = $this->input->get('nabar');
+        $data = $this->db_logistik_center->query("SELECT nabar FROM `kodebar` WHERE nabar LIKE '%$nabar%' ORDER BY id DESC")->result();
+
+        echo json_encode($data);
+    }
+
     //Start Data Table Server Side
     function get_data_barang()
     {
@@ -40,8 +48,7 @@ class Spp extends CI_Controller
             $no++;
             $row = array();
             $row[] = '<button class="btn btn-success btn-xs" style="font-size: 11px;" id="data_barang" name="data_barang"
-                    data-nabar="' . $field->nabar . '" data-kodebar="' . $field->kodebar . '" data-satuan="' . $field->satuan . '"
-                    data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
+                    data-nabar="' . $field->nabar . '" data-kodebar="' . $field->kodebar . '" data-satuan="' . $field->satuan . '" data-grp="' . $field->grp . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
                         Pilih
                     </button>
                 ';
@@ -204,6 +211,19 @@ class Spp extends CI_Controller
 
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
+
+        $status = 'DALAM PROSES';
+
+        if ($this->input->post('hidden_kode_brg') != 0) {
+            # code...
+            $status2 = 0;
+            $kodebarang_sementara = $this->input->post('hidden_kode_brg');
+        } else {
+            $status2 = 9;
+            $kodebarang_sementara = mt_rand(1000, 9999);
+        }
+
+
         $data_ppo = [
             'kpd' => 'Bagian Purchasing',
             'noppo' => $nospp,
@@ -222,16 +242,16 @@ class Spp extends CI_Controller
             'ket' => $this->input->post('txt_keterangan'),
             'no_acc' => 0,
             'ket_acc' => "",
-            'pt' => $this->session->userdata('pt'),
-            'kodept' => $this->session->userdata('kode_pt'),
+            'pt' => $data['devisi']['PT'],
+            'kodept' => $kode_devisi,
             'periode' => $periode,
             'periodetxt' => $periodetxt,
             'thn' => $thn,
             'tglisi' => date("Y-m-d H:i:s"),
             'id_user' => $id_user,
             'user' => $this->session->userdata('user'),
-            'status' => 'DALAM PROSES',
-            'status2' => '0',
+            'status' => $status,
+            'status2' => $status2,
             'lokasi' => $this->session->userdata('status_lokasi'),
             'po' => 0,
             'kode_budget' => 0,
@@ -250,8 +270,8 @@ class Spp extends CI_Controller
             'namadept' => $data['nama_dept']['nama'],
             'noref' => $nospp,
             'noreftxt' => $noref,
-            'kodebar' => $this->input->post('hidden_kode_brg'),
-            'kodebartxt' => $this->input->post('hidden_kode_brg'),
+            'kodebar' => $kodebarang_sementara,
+            'kodebartxt' => $kodebarang_sementara,
             'nabar' => $this->input->post('hidden_nama_brg'),
             'sat' => $this->input->post('hidden_satuan_brg'),
             'qty' => $this->input->post('txt_qty'),
@@ -259,8 +279,8 @@ class Spp extends CI_Controller
             'stok' => $this->input->post('hidden_stok'),
             'harga' => "0",
             'jumharga' => "0",
-            'kodept' => $this->session->userdata('kode_pt'),
-            'namapt' => $this->session->userdata('pt'),
+            'namapt' => $data['devisi']['PT'],
+            'kodept' => $kode_devisi,
             'kode_dev' => $kode_devisi,
             'devisi' => $data['devisi']['PT'],
             'periode' => $periode,
@@ -270,14 +290,14 @@ class Spp extends CI_Controller
             'tglisi' => date("Y-m-d H:i:s"),
             'id_user' => $id_user,
             'user' => $this->session->userdata('user'),
-            'status' => 'DALAM PROSES',
-            'status2' => '0',
+            'status' => $status,
+            'status2' => $status2,
             'ada_penawar' => '',
             'lokasi' => $this->session->userdata('status_lokasi'),
             'po' => "0",
             'saldo_po' => "0",
             'kode_budget' => "0",
-            'grup' => "0",
+            'grup' => $this->input->post('hidden_grup_brg'),
             'main_acct' => "0",
             'nama_main' => "",
         ];
@@ -290,12 +310,21 @@ class Spp extends CI_Controller
             $data_return = 'conn_failed';
         } else {
             if (empty($this->input->post('hidden_no_spp'))) {
+                /* kondisi untuk insert ke spp tmp */
                 $data = $this->M_spp->saveSpp($data_ppo);
                 $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+                // if ($this->input->post('hidden_kode_brg') == 0) {
+                //     # code...
+                //     $data = $this->M_spp->saveSpp_tmp($data_ppo);
+                //     $data2 = $this->M_spp->saveSpp2_tmp($data_item_ppo);
+                // }
+                /* end */
                 $item_exist = 0;
             } else {
 
                 $cek_isi_item = $this->M_spp->cari_item_spp($data_item_ppo['kodebar'], $data_item_ppo['noreftxt']);
+
+
 
                 if ($cek_isi_item >= 1) {
                     $item_exist = 1;
@@ -317,6 +346,13 @@ class Spp extends CI_Controller
             $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
             $id_item_ppo = $generate_id_item->id_item_ppo;
 
+
+            $cek_spp = $this->M_spp->cari_spp($data_ppo['noref']);
+            if ($cek_spp >= 1) {
+                /* update status ppo */
+                $spp = $this->M_spp->update_spp($data_ppo['noref']);
+            }
+
             $data_return = [
                 'data' => $data,
                 'data2' => $data2,
@@ -329,6 +365,13 @@ class Spp extends CI_Controller
         }
 
         echo json_encode($data_return);
+    }
+
+    public function tes()
+    {
+        $mt_rand = mt_rand(1000, 9999);
+
+        echo $mt_rand;
     }
 
     public function saveSppNoCoa()
@@ -1540,7 +1583,7 @@ class Spp extends CI_Controller
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $d) {
-            if ($d->status2 != 0) {
+            if ($d->status2 != 9) {
                 $status = "<h5 style='margin-top:0px; margin-bottom:0px;'><span class='badge badge-warning'>Menunggu<br>Accounting</span></h5>";
                 $nabar = '<input type="text" class="form-control form-control-sm bg-light" id="nama_' . $d->id . '" value="' . $d->nabar . '" disabled>';
                 $grp = '<input type="text" class="form-control form-control-sm bg-light" id="grp_coa_' . $d->id . '" value="' . $d->grup . '" disabled>';
@@ -1549,9 +1592,11 @@ class Spp extends CI_Controller
                 <input type="text" class="form-control form-control-sm" onkeyup="inputtest(' . $d->id . ')" id="nama_' . $d->id . '" value="' . $d->nabar . '">
                 <input type="hidden" id="id_nocoa_' . $d->id . '" value="' . $d->id . '">
                 </a>';
-                $grp = '<select class="form-control form-control-sm grp_coa" id="grp_coa_' . $d->id . '" onClick="get_grub(' . $d->id . ')"  style="font-size: 12px;">
-                <option value="0" selected disabled>Pilih</option>
-                </select>';
+
+                $grp = "<select class='form-control form-control-sm grp_coa' id='grp_coa_" . $d->id . "' onClick='get_grub(" . $d->id . ")'  style='font-size: 12px;'> 
+                <option value='" . $d->grup . "' selected>  $d->grup </option>
+           </select>";
+
 
                 $status = '
                 <a href="javascript:;" id="btn_appprove">
@@ -1601,17 +1646,17 @@ class Spp extends CI_Controller
     function update_ppo_tmp()
     {
         $id = $this->input->post('id');
-        $d = $this->db_logistik_pt->query("SELECT * FROM ppo_tmp WHERE id='$id'")->row();
+        $d = $this->db_logistik_pt->query("SELECT * FROM ppo WHERE id='$id'")->row();
         $noref = $d->noreftxt;
-        $item1 = $this->db_logistik_pt->query("SELECT * FROM item_ppo_tmp WHERE noreftxt='$noref'")->num_rows();
-        $item2 = $this->db_logistik_pt->query("SELECT * FROM item_ppo_tmp WHERE noreftxt='$noref' AND status2='1'")->num_rows();
+        $item1 = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$noref'")->num_rows();
+        $item2 = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$noref' AND status2='12'")->num_rows();
 
         if ($item1 == $item2) {
-            $data = array('status' => 'MENUNGGU ACCOUNTING', 'status2' => '1');
-            $yy = $this->db_logistik_pt->update('ppo_tmp', $data, array('id' => $id));
+            $data = array('status' => 'MENUNGGU ACCOUNTING', 'status2' => '12');
+            $yy = $this->db_logistik_pt->update('ppo', $data, array('id' => $id));
         } else {
-            $data = array('status' => 'SEBAGIAN', 'status2' => '2');
-            $yy = $this->db_logistik_pt->update('ppo_tmp', $data, array('id' => $id));
+            $data = array('status' => 'SEBAGIAN', 'status2' => '11');
+            $yy = $this->db_logistik_pt->update('ppo', $data, array('id' => $id));
         }
 
         echo json_encode($yy);

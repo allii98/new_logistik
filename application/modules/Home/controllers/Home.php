@@ -66,7 +66,7 @@ class Home extends CI_Controller
         $data['pt_login'] = $this->session->userdata('app_pt');
         $data['pt_periode'] = $this->session->userdata('ym_periode');
 
-        // var_dump($data['count_spp']);
+        // var_dump($data['count']);
         // die;
 
         $this->template->load('template', 'dashboard', $data);
