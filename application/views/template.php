@@ -188,10 +188,10 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <font face="Verdana" size="2.5">Data
                                                     SPP</font>
                                             </a>
-                                            <!-- <a href="<?= base_url('Spp/dataNoCoa'); ?>" class="dropdown-item">
+                                            <a href="<?= base_url('Spp/dataNoCoa'); ?>" class="dropdown-item">
                                                 <font face="Verdana" size="2.5">Data
                                                     SPP Tanpa Coa</font>
-                                            </a> -->
+                                            </a>
 
                                         </div>
                                     </div>

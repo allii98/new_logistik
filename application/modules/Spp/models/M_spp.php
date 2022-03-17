@@ -300,19 +300,28 @@ class M_spp extends CI_Model
     public function get_grp_coa()
     {
         $grp = $this->input->get('grp');
-        $data = $this->db_logistik_center->query("SELECT DISTINCT(grp) FROM `kodebar` WHERE grp LIKE '%$grp%' ORDER BY id DESC")->result();
+        $data = $this->db_logistik_center->query("SELECT DISTINCT(nama) FROM `noac` WHERE nama LIKE '%$grp%' AND `noac` LIKE '%1025%' AND `type` = 'G' ORDER BY NOID DESC")->result();
         return $data;
     }
 
     public function updateNocoa($data, $id)
     {
-        // $this->db_logistik_pt->where($id);
-        // $this->db_logistik_pt->update('item_ppo_tmp', $data);
-        // return TRUE;
+
 
         $this->db_logistik_pt->set($data);
         $this->db_logistik_pt->where('id', $id);
         return $this->db_logistik_pt->update('item_ppo');
+    }
+
+    public function update_spp_tmp($noref, $kodebar, $spp_tmp)
+    {
+        # code...
+        $this->db_logistik_pt->set($spp_tmp);
+        $this->db_logistik_pt->where([
+            'noreftxt' => $noref,
+            'kodebar' => $kodebar
+        ]);
+        return $this->db_logistik_pt->update('item_ppo_tmp');
     }
 
     public function cari_spp($noref)

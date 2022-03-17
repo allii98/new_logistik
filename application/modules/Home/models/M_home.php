@@ -105,7 +105,7 @@ class M_home extends CI_Model
 
         $this->db_logistik_pt->select('noreftxt');
         $this->db_logistik_pt->where('status2', '0');
-        $this->db_logistik_pt->where('kodedept', $kode_dept);
+        // $this->db_logistik_pt->where('kodedept', $kode_dept);
         if ($lokasi == 'HO') {
             $this->db_logistik_pt->where('jenis !=', 'SPPI');
             $this->db_logistik_pt->like('lokasi', 'HO');
@@ -116,11 +116,14 @@ class M_home extends CI_Model
         } elseif ($lokasi == 'RO') {
             $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
         }
-        // if ($lokasi != 'HO') {
-        //     $this->db_logistik_pt->where('kode_dev', $kode_dev);
-        // }
+        if ($lokasi != 'HO') {
+            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+        }
         $this->db_logistik_pt->from('ppo');
         $count_spp = $this->db_logistik_pt->count_all_results();
+
+        $this->db_logistik_pt->from('ppo_tmp');
+        $count_spp_no_coa = $this->db_logistik_pt->count_all_results();
 
         $this->db_logistik_pt->select('noreftxt');
         $this->db_logistik_pt->where('status2', '1');
@@ -201,6 +204,7 @@ class M_home extends CI_Model
 
         $result = [
             'count_spp' => $count_spp,
+            'count_spp_no_coa' => $count_spp_no_coa,
             'count_pp' => $count_pp,
             'count_spp_approved' => $count_spp_approved,
             'count_po' => $count_po,

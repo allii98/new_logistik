@@ -30,6 +30,7 @@ class M_data_spp extends CI_Model
 
 
         $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_pt->where_in('status2', array(0, 1, 2, 3, 4, 5, 6, 7, 8));
         if ($lokasi == 'HO') {
             $this->db_logistik_pt->where('kodedept', $kode_dept);
             if ($filter == 'HO') {

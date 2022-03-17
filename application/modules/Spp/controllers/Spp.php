@@ -15,6 +15,7 @@ class Spp extends CI_Controller
         $this->load->model('M_spp_noCoa');
         $this->load->model('M_detail_sppNoCoa');
         $this->load->model('M_spp_approval_noCOA');
+        $this->load->model('M_brg_serupa');
 
         $db_pt = check_db_pt();
 
@@ -32,8 +33,14 @@ class Spp extends CI_Controller
 
     public function koreksi_coa()
     {
-        $nabar = $this->input->get('nabar');
-        $data = $this->db_logistik_center->query("SELECT nabar FROM `kodebar` WHERE nabar LIKE '%$nabar%' ORDER BY id DESC")->result();
+        $nabar = $this->input->post('nabar');
+        $dt = $this->db_logistik_center->query("SELECT nabar FROM `kodebar` WHERE nabar LIKE '%$nabar%' ORDER BY id DESC")->result();
+        $isi = $this->db_logistik_center->query("SELECT nabar FROM `kodebar` WHERE nabar LIKE '%$nabar%' ORDER BY id DESC")->num_rows();
+
+        $data = [
+            'data' => $dt,
+            'isi' => $isi
+        ];
 
         echo json_encode($data);
     }
@@ -64,6 +71,39 @@ class Spp extends CI_Controller
             "draw" => $_POST['draw'],
             "recordsTotal" => $this->M_spp->count_all(),
             "recordsFiltered" => $this->M_spp->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
+
+    function get_data_barang_serupa()
+    {
+        $nabar = $this->input->post('nabar');
+        $this->M_brg_serupa->nabar($nabar);
+        $list = $this->M_brg_serupa->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            $row = array();
+            $row[] = '<button class="btn btn-success btn-xs" style="font-size: 11px;" id="data_barang_serupa" name="data_barang_serupa"
+                    data-nabar="' . $field->nabar . '" data-kodebar="' . $field->kodebar . '" data-satuan="' . $field->satuan . '" data-grp="' . $field->grp . '" data-toggle="tooltip" data-placement="top" title="Pilih" onClick="return false">
+                        Pilih
+                    </button>
+                ';
+            $row[] = $no;
+            $row[] = $field->kodebar;
+            $row[] = $field->nabar;
+            $row[] = $field->grp;
+
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_brg_serupa->count_all(),
+            "recordsFiltered" => $this->M_brg_serupa->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
@@ -212,14 +252,15 @@ class Spp extends CI_Controller
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
 
-        $status = 'DALAM PROSES';
-
+        
         if ($this->input->post('hidden_kode_brg') != 0) {
             # code...
             $status2 = 0;
+            $status = 'DALAM PROSES';
             $kodebarang_sementara = $this->input->post('hidden_kode_brg');
         } else {
             $status2 = 9;
+            $status = 'TANPA COA';
             $kodebarang_sementara = mt_rand(1000, 9999);
         }
 
@@ -313,11 +354,11 @@ class Spp extends CI_Controller
                 /* kondisi untuk insert ke spp tmp */
                 $data = $this->M_spp->saveSpp($data_ppo);
                 $data2 = $this->M_spp->saveSpp2($data_item_ppo);
-                // if ($this->input->post('hidden_kode_brg') == 0) {
-                //     # code...
-                //     $data = $this->M_spp->saveSpp_tmp($data_ppo);
-                //     $data2 = $this->M_spp->saveSpp2_tmp($data_item_ppo);
-                // }
+                if ($this->input->post('hidden_kode_brg') == 0) {
+                    # code...
+                    $data = $this->M_spp->saveSpp_tmp($data_ppo);
+                    $data2 = $this->M_spp->saveSpp2_tmp($data_item_ppo);
+                }
                 /* end */
                 $item_exist = 0;
             } else {
@@ -332,6 +373,9 @@ class Spp extends CI_Controller
                     $data2 = NULL;
                 } else {
                     $data2 = $this->M_spp->saveSpp2($data_item_ppo);
+                    if ($this->input->post('hidden_kode_brg') == 0) {
+                        $data2 = $this->M_spp->saveSpp2_tmp($data_item_ppo);
+                    }
                     $item_exist = 0;
                     $data = NULL;
                 }
@@ -1083,9 +1127,9 @@ class Spp extends CI_Controller
         foreach ($list as $field) {
             $no++;
 
-            if ($field->status2 == 1) {
+            if ($field->status2 == 12) {
                 $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">MENUNGGU<br>ACCOUNTING</span></h5>';
-            } elseif ($field->status2 == 2) {
+            } elseif ($field->status2 == 11) {
                 $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
             } else if ($field->status2 == 5) {
                 # code...
@@ -1591,6 +1635,8 @@ class Spp extends CI_Controller
                 $nabar = '<a href="javascript:;" id="namabarang">
                 <input type="text" class="form-control form-control-sm" onkeyup="inputtest(' . $d->id . ')" id="nama_' . $d->id . '" value="' . $d->nabar . '">
                 <input type="hidden" id="id_nocoa_' . $d->id . '" value="' . $d->id . '">
+                <input type="hidden" id="noref_' . $d->id . '" value="' . $d->noreftxt . '">
+                <input type="hidden" id="kodebar_' . $d->id . '" value="' . $d->kodebar . '">
                 </a>';
 
                 $grp = "<select class='form-control form-control-sm grp_coa' id='grp_coa_" . $d->id . "' onClick='get_grub(" . $d->id . ")'  style='font-size: 12px;'> 
@@ -1634,9 +1680,16 @@ class Spp extends CI_Controller
     function approve_noCOA()
     {
         $id = $this->input->post('id');
+        $noref = $this->input->post('noref');
+        $kodebar = $this->input->post('kodebar');
         $nama = $this->input->post('nama');
         $grp = $this->input->post('grp');
         $status = $this->input->post('status');
+
+        $spp_tmp = array(
+            'status2' => 1
+        );
+        $this->M_spp->update_spp_tmp($noref, $kodebar, $spp_tmp);
 
         $data = array('nabar' => $nama, 'grup' => $grp, 'status2' => $status, 'TGL_APPROVE' => date('Y-m-d H:i:s'));
         $d = $this->M_spp->updateNocoa($data, $id);
@@ -1646,6 +1699,8 @@ class Spp extends CI_Controller
     function update_ppo_tmp()
     {
         $id = $this->input->post('id');
+        $ref = $this->input->post('noref');
+
         $d = $this->db_logistik_pt->query("SELECT * FROM ppo WHERE id='$id'")->row();
         $noref = $d->noreftxt;
         $item1 = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$noref'")->num_rows();
@@ -1654,9 +1709,15 @@ class Spp extends CI_Controller
         if ($item1 == $item2) {
             $data = array('status' => 'MENUNGGU ACCOUNTING', 'status2' => '12');
             $yy = $this->db_logistik_pt->update('ppo', $data, array('id' => $id));
+
+            $dt = array('status' => 'MENUNGGU ACCOUNTING', 'status2' => '12');
+            $this->db_logistik_pt->update('ppo_tmp', $dt, array('noreftxt' => $ref));
         } else {
             $data = array('status' => 'SEBAGIAN', 'status2' => '11');
             $yy = $this->db_logistik_pt->update('ppo', $data, array('id' => $id));
+
+            $dt = array('status' => 'SEBAGIAN', 'status2' => '11');
+            $this->db_logistik_pt->update('ppo_tmp', $dt, array('noreftxt' => $ref));
         }
 
         echo json_encode($yy);

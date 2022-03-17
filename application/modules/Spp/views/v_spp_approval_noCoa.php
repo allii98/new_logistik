@@ -168,9 +168,13 @@
 
     function validasi_approve(id) {
         var id = $('#id_nocoa_' + id).val();
+        var noref = $('#noref_' + id).val();
+        var kodebar = $('#kodebar_' + id).val();
         var nama = $('#nama_' + id).val();
         var grp = $('#grp_coa_' + id).val();
         var status = 12;
+
+
         if (nama == '') {
             toast('Nama barang harus di isi!');
             $('#nama_' + id).css({
@@ -202,13 +206,15 @@
                 cache: false,
                 data: {
                     id: id,
+                    noref: noref,
                     nama: nama,
+                    kodebar: kodebar,
                     grp: grp,
                     status: status,
                 },
                 success: function(data) {
                     var kode = $('#hidden_id_ppo').val();
-                    update_ppo_tmp(kode)
+                    update_ppo_tmp(kode, noref, kodebar)
                     // console.log('oke field ppo berhasil diupdate', data);
                 },
                 error: function(request) {
@@ -219,7 +225,7 @@
 
     }
 
-    function update_ppo_tmp(id) {
+    function update_ppo_tmp(id, noref, kodebar) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Spp/update_ppo_tmp'); ?>",
@@ -227,7 +233,9 @@
             beforeSend: function() {},
             cache: false,
             data: {
-                id: id
+                id: id,
+                noref: noref,
+                kodebar: kodebar,
             },
             success: function(data) {
                 var kode = $('#hidden_id_ppo').val();

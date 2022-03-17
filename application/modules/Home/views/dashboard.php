@@ -1,16 +1,13 @@
 <div class="container-fluid">
 
     <div class="row col-lg-12 col-xl-12 col-12 mt-2">
-        <div class="col-lg-4 col-xl-4 col-12">
+        <div class="col-lg-5 col-xl-5 col-12">
             <div class="card-box">
                 <div style="margin-top: -20px;">
                     <h4><span class="badge bg-blue p-2 text-white">SPP</span></h4>
                 </div>
                 <div class="row" style="margin-bottom: -10px;">
-                    <div class="col-3">
-                        <!-- <div class="avatar-sm bg-blue rounded">
-                                <i class="fe-file avatar-title font-22 text-white"></i>
-                            </div> -->
+                    <div class="col-2">
                     </div>
                     <div class="col-3" style="margin-top: -50px;">
                         <a href="<?= base_url('Spp'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
@@ -18,18 +15,27 @@
                             <p class="text-muted" style="font-size:small">Approved</p>
                         </a>
                     </div>
-                    <div class="col-1"></div>
+                    <!-- <div class="col-1"></div> -->
                     <div class="col-3" style="margin-top: -50px;">
                         <a href="<?= base_url('Spp/sppApproval'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
                             <h3 class="text-dark"><span><?= $count['count_spp'] ?></span></h3>
                             <p class="text-muted" style="font-size:small">Menunggu</p>
                         </a>
                     </div>
+                    <!-- <div class="col-1"></div> -->
+                    <div class="col-3" style="margin-top: -50px;">
+                        <a href="<?= base_url('Spp/dataNoCoa'); ?>" class="btn btn-white p-1 btn-rounded waves-effect">
+                            <h3 class="text-dark"><span><?= $count['count_spp_no_coa'] ?></span></h3>
+                            <p class="text-muted" style="font-size:small">No COA</p>
+                        </a>
+                    </div>
                 </div>
             </div> <!-- end card-box-->
         </div> <!-- end col -->
 
-        <div class="col-lg-4 col-xl-4 col-12">
+
+
+        <div class="col-lg-3 col-xl-3 col-12">
             <div class="card-box">
                 <div style="margin-top: -20px;">
                     <h4><span class="badge bg-success p-2 text-white">PO</span></h4>

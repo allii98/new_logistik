@@ -250,9 +250,9 @@ $db['db_logistik_kpp'] = array(
 
 $db['db_mips_gl_msal'] = array(
 	'dsn'	=> '',
-	'hostname' => '192.73.73.4',
-	'username' => 'mis',
-	'password' => 'msaljkt@88',
+	'hostname' => 'localhost',
+	'username' => 'root',
+	'password' => '',
 	'database' => 'db_mips_gl_msal',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',

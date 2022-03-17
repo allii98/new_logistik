@@ -229,7 +229,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="myModalLabel">List Barang</h4>&nbsp;
-                <button type="button" class="btn btn-warning waves-effect waves-light btn-xs" onclick="brg_tanpa_coa()">Barang Tanpa COA</button>
+                <button type="button" style="display:none;" id="brg_tanpa_coa" class="btn btn-warning waves-effect waves-light btn-xs">Barang Tanpa COA</button>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
                 </button>
             </div>
@@ -260,19 +260,18 @@
 </div>
 
 <!-- BARANG SERUPA -->
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" aria-hidden="true" id="modalListBarang">
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" data-backdrop="static" aria-hidden="true" id="modalBarangSerupa">
     <div class="modal-dialog modal-full-width modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">List Barang</h4>&nbsp;
-                <button type="button" class="btn btn-warning waves-effect waves-light btn-xs" onclick="brg_tanpa_coa()">Barang Tanpa COA</button>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
+                <h4 class="modal-title" id="myModalLabel">Barang Serupa</h4>&nbsp;
+                <button type="button" class="close" onclick="close_brg_serupa()"><span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body" style="margin-top: -5px;">
                 <input type="hidden" id="hidden_no_row" name="hidden_no_row">
                 <div class="table-responsive" id="listbrg" style="display: block;">
-                    <table id="dabar" class="table table-striped table-bordered" width="100%">
+                    <table id="barang_serupa" class="table table-striped table-bordered" width="100%">
                         <thead>
                             <tr>
                                 <th class="hastag_th">#</th>
@@ -289,7 +288,7 @@
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-default" onclick="close_brg_serupa()">Tutup</button>
             </div>
         </div>
     </div>
@@ -502,6 +501,17 @@
         font-size: 12px;
     }
 
+    table#barang_serupa td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#barang_serupa th {
+        padding: 10px;
+        font-size: 12px;
+    }
+
     table#tableRinciBarang th {
         padding: 10px;
         font-size: 12px;
@@ -609,15 +619,14 @@
             $('#satuan_' + n).text(satbrg);
             $('#hidden_satuan_brg_' + n).val(satbrg);
             $('#hidden_grup_brg_' + n).val(grb_brg);
-            closeModal()
-            // console.log('====================================');
-            // console.log('genza silite ireng');
-            // console.log('====================================');
+            koreksi_coa(namabrg);
+            // listBarang_serupa(namabrg);
+            // closeModal();
         }
 
     }
 
-    function koreksi_coa() {
+    function koreksi_coa(namabrg) {
         $.ajax({
             type: "POST",
             url: "<?php echo site_url('Spp/koreksi_coa'); ?>",
@@ -625,10 +634,34 @@
             beforeSend: function() {},
             cache: false,
             data: {
-                nabar: $('#nama_barang').val(),
+                nabar: namabrg,
             },
             success: function(data) {
                 console.log(data);
+                if (data.isi == 0) {
+                    // console.log("Kosong datanya");
+                    closeModal();
+                } else {
+                    var isi = data.isi;
+                    $('#modal_noCOA').modal('hide');
+                    Swal.fire({
+                        title: 'Ada barang serupa!',
+                        text: isi + " barang serupa",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Pilih',
+                        cancelButtonText: 'Batal',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            listBarang_serupa(namabrg);
+                        } else if (result.dismiss === Swal.DismissReason.cancel) {
+                            closeModal();
+                        }
+                    })
+                    // console.log("Datanya ada");
+
+                }
 
             },
             error: function(request) {
@@ -637,7 +670,44 @@
         });
     }
 
+    function listBarang_serupa(namabrg) {
+        $('#modalBarangSerupa').modal('show');
+        $('#barang_serupa').DataTable().destroy();
+        $('#barang_serupa').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+
+            "order": [],
+
+
+            "ajax": {
+                "url": "<?php echo site_url('Spp/get_data_barang_serupa') ?>",
+                "type": "POST",
+                "data": {
+                    nabar: namabrg,
+                }
+            },
+            "initComplete": function(settings, json) {
+                $("div.dataTables_filter input").focus();
+            },
+
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
+            }, ],
+
+        });
+    }
+
+    function close_brg_serupa() {
+        $('#modalBarangSerupa').modal('hide');
+        $('#modal_noCOA').modal('show');
+
+    }
+
     function closeModal() {
+
         $('#modal_noCOA').modal('hide');
 
         $('#nama_barang').val('');
@@ -647,8 +717,9 @@
             .remove()
             .end()
             .append('<option selected value="" disabled>Pilih</option>').val('');
-        koreksi_coa();
     }
+
+
 
     function satuan() {
         $.ajax({
@@ -750,8 +821,8 @@
                     var results = [];
                     $.each(data, function(index, item) {
                         results.push({
-                            id: item.grp,
-                            text: item.grp
+                            id: item.nama,
+                            text: item.nama
                         });
                     });
                     return {
@@ -848,7 +919,7 @@
 
     function listBarang() {
         $('#dabar').DataTable().destroy();
-        $('#dabar').DataTable({
+        var table = $('#dabar').DataTable({
 
             "processing": true,
             "serverSide": true,
@@ -857,10 +928,14 @@
 
             "ajax": {
                 "url": "<?php echo site_url('Spp/get_data_barang') ?>",
-                "type": "POST"
+                "type": "POST",
             },
+
             "initComplete": function(settings, json) {
                 $("div.dataTables_filter input").focus();
+            },
+            "language": {
+                "infoFiltered": ""
             },
 
             "columnDefs": [{
@@ -868,7 +943,33 @@
                 "orderable": false,
             }, ],
 
+            "drawCallback": function(settings) {
+                // Here the response
+                var response = settings.json;
+                // console.log(response);
+                if (response.recordsFiltered != 0) {
+                    // console.log('ada datanya ali');
+                    $('#brg_tanpa_coa').css('display', 'none');
+                } else {
+                    $('#brg_tanpa_coa').css('display', 'block');
+
+                    // console.log('datanya kosong ali');
+
+                }
+            },
+
+
+        }).on('search.dt', function() {
+            var input = $('.dataTables_filter input')[0];
+            // console.log(input.value)
         });
+
+        $('#brg_tanpa_coa').on('click', function() {
+            // alert(table.search())
+            $('#modalListBarang').modal('hide');
+            $('#modal_noCOA').modal('show');
+            $('#nama_barang').val(table.search());
+        })
     }
 
 
@@ -901,10 +1002,8 @@
             $('#hidden_grup_brg_' + n).val(grp);
 
         });
-    });
 
-    // pilih item dari data table server side
-    $(document).ready(function() {
+        // pilih item dari data table server side
         $(document).on('click', '#data_barang', function() {
 
             var n = $('#hidden_no_row').val();
@@ -933,7 +1032,63 @@
             });
             return false;
         });
+
+
+        $(document).on('click', '#data_barang_serupa', function() {
+
+            var n = $('#hidden_no_row').val();
+
+            var nabar_hide = $(this).data('nabar');
+            var kodebar_hide = $(this).data('kodebar');
+            var nakobar = $(this).data('nabar') + " - " + $(this).data('kodebar');
+            var satuan = $(this).data('satuan');
+            var grp = $(this).data('grp');
+            // console.log(nabar);
+
+            // Set data
+            $('#hidden_nama_brg_' + n).val(nabar_hide);
+            $('#hidden_kode_brg_' + n).val(kodebar_hide);
+            $('#nakobar_' + n).val(nakobar);
+            $('#satuan_' + n).text(satuan);
+            $('#hidden_satuan_brg_' + n).val(satuan);
+            $("#modalBarangSerupa").modal('hide');
+
+            $('#devisi').attr('disabled', '');
+            $('#hidden_grup_brg_' + n).val(grp);
+
+        });
+
+        // pilih item dari data table server side
+        $(document).on('click', '#data_barang_serupa', function() {
+            // console.log("hello world");
+            var n = $('#hidden_no_row').val();
+
+            var kode_dev = $('#devisi').val();
+
+            var kd_bar = $(this).data('kodebar');
+
+            // var id = $(this).attr('data');
+            $.ajax({
+                type: "POST",
+                url: "<?php echo base_url('Spp/getStok') ?>",
+                dataType: "JSON",
+                data: {
+                    kd_bar: kd_bar,
+                    kode_dev: kode_dev
+                },
+                success: function(data) {
+                    $('#stok_' + n).text(data);
+                    $('#hidden_stok_' + n).val(data);
+                    // $('#hidden_grup_brg_' + n).val(data);
+                },
+                error: function(response) {
+                    alert('KONEKSI TERPUTUS! Gagal Menampilkan Barang!');
+                }
+            });
+            return false;
+        });
     });
+
 
     function saveRinciClick(n) {
 
