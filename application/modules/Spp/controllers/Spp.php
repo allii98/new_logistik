@@ -252,7 +252,7 @@ class Spp extends CI_Controller
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
 
-        
+
         if ($this->input->post('hidden_kode_brg') != 0) {
             # code...
             $status2 = 0;
@@ -313,7 +313,7 @@ class Spp extends CI_Controller
             'noreftxt' => $noref,
             'kodebar' => $kodebarang_sementara,
             'kodebartxt' => $kodebarang_sementara,
-            'nabar' => $this->input->post('hidden_nama_brg'),
+            'nabar' => strtoupper($this->input->post('hidden_nama_brg')),
             'sat' => $this->input->post('hidden_satuan_brg'),
             'qty' => $this->input->post('txt_qty'),
             'qty2' => NULL,

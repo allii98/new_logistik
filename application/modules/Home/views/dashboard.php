@@ -188,69 +188,107 @@
         }
         ?>
     </div>
-    <div class="row col-12">
-        <div class="col-lg-6 col-xl-6 col-12">
+    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING') { ?>
+        <div class="row col-12">
+            <div class="col-lg-6 col-xl-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row justify-content-between ml-0 mr-0 mb-2">
+                            <h4 class="header-title mb-0"><b>BPB (Permintaan Antar PT & Kebun)</b></h4>
+                            <!-- <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a> -->
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table class="table table-sm table-hover table-bordered w-100" id="tabel_bpb_mutasi">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th width="3%" style="font-size: 12px; padding:10px; text-align: center;">No</th>
+                                        <th width="15%" style="font-size: 12px; padding:10px; text-align: center;">Tgl&nbsp;BPB</th>
+                                        <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Ref.&nbsp;BPB</th>
+                                        <th width="10%" style="font-size: 12px; padding:10px; text-align: center;">Bagian</th>
+                                        <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Keperluan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div> <!-- end card-body -->
+                </div> <!-- end card-->
+            </div>
+
+            <div class="col-lg-6 col-xl-6 col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <!-- <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small><br> -->
+                        <div class="row justify-content-between ml-0 mr-0 mb-2">
+                            <h4 class="header-title mb-0"><b>Mutasi Masuk</b></h4>
+                            <!-- <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a> -->
+                        </div>
+
+                        <div class="table-responsive">
+
+                            <table class="table table-sm table-hover table-bordered w-100" id="tabel_mutasi">
+                                <thead class="thead-light">
+                                    <tr>
+                                        <th width="3%" style="font-size: 12px; padding:10px; text-align: center;">No</th>
+                                        <th width="15%" style="font-size: 12px; padding:10px; text-align: center;">Tgl&nbsp;BKB</th>
+                                        <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Ref.&nbsp;Mutasi</th>
+                                        <th width="10%" style="font-size: 12px; padding:10px; text-align: center;">Asal&nbsp;PT</th>
+                                        <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">PT&nbsp;Tujuan</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?php } ?>
+
+    <div class="row mt-0">
+        <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <div class="row justify-content-between ml-0 mr-0 mb-2">
-                        <h4 class="header-title mb-0"><b>BPB (Permintaan Antar PT & Kebun)</b></h4>
-                        <!-- <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a> -->
-                    </div>
 
-                    <div class="table-responsive">
 
-                        <table class="table table-sm table-hover table-bordered w-100" id="tabel_bpb_mutasi">
-                            <thead class="thead-light">
+                    <div class="table-responsive" style="margin-top: -10px;">
+                        <table id="tb_approval" class="table w-100 dataTable no-footer table-bordered table-striped">
+                            <thead>
                                 <tr>
-                                    <th width="3%" style="font-size: 12px; padding:10px; text-align: center;">No</th>
-                                    <th width="15%" style="font-size: 12px; padding:10px; text-align: center;">Tgl&nbsp;BPB</th>
-                                    <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Ref.&nbsp;BPB</th>
-                                    <th width="10%" style="font-size: 12px; padding:10px; text-align: center;">Bagian</th>
-                                    <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Keperluan</th>
+                                    <th width="11%" style="font-size: 12px; padding:10px">#</th>
+                                    <th width="3%" style="font-size: 12px; padding:10px">No</th>
+                                    <th width="17%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Ref</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Terima</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th width="5%" style="font-size: 12px; padding:10px">Lokasi</th>
+                                    <th width="18%" style="font-size: 12px; padding:10px">Keterangan</th>
+                                    <th width="8%" style="font-size: 12px; padding:10px">Status SPP</th>
+                                    <th width="7%" style="font-size: 12px; padding:10px">Status PO</th>
+                                    <th width="7%" style="font-size: 12px; padding:10px">Input Oleh</th>
                                 </tr>
                             </thead>
                             <tbody>
-
                             </tbody>
                         </table>
-
                     </div>
+                    <br />
+                    <br />
 
+                    <!-- end row -->
                 </div> <!-- end card-body -->
-            </div> <!-- end card-->
-        </div>
-
-        <div class="col-lg-6 col-xl-6 col-12">
-            <div class="card">
-                <div class="card-body">
-                    <!-- <small class="float-right mt-0"><?= 'Periode: ' . $pt_periode ?></small><br> -->
-                    <div class="row justify-content-between ml-0 mr-0 mb-2">
-                        <h4 class="header-title mb-0"><b>Mutasi Masuk</b></h4>
-                        <!-- <a href="<?= base_url('Lpb/lpb_mutasi') ?>" class="btn btn-sm btn-info">Terima Mutasi</a> -->
-                    </div>
-
-                    <div class="table-responsive">
-
-                        <table class="table table-sm table-hover table-bordered w-100" id="tabel_mutasi">
-                            <thead class="thead-light">
-                                <tr>
-                                    <th width="3%" style="font-size: 12px; padding:10px; text-align: center;">No</th>
-                                    <th width="15%" style="font-size: 12px; padding:10px; text-align: center;">Tgl&nbsp;BKB</th>
-                                    <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">Ref.&nbsp;Mutasi</th>
-                                    <th width="10%" style="font-size: 12px; padding:10px; text-align: center;">Asal&nbsp;PT</th>
-                                    <th width="20%" style="font-size: 12px; padding:10px; text-align: center;">PT&nbsp;Tujuan</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                            </tbody>
-                        </table>
-
-                    </div>
-
-                </div> <!-- end card-body -->
-            </div> <!-- end card-->
-        </div>
+            </div> <!-- end card -->
+        </div><!-- end col -->
     </div>
 
 </div>
