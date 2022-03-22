@@ -255,27 +255,45 @@
         </div>
     <?php } ?>
 
-    <div class="row mt-0">
-        <div class="col-12">
+    <div class="row col-12">
+        <div class="col-lg-12 col-xl-12 col-12">
             <div class="card">
                 <div class="card-body">
 
+                    <div class="row justify-content-between" style="margin-top: -10px;">
+                        <h4 class="header-title ml-2 mb-3">Approval Spp Tanpa Coa</h4>
+                        <div class="row form-group mr-0">
+                            <div class="col-2">
+                                <label for="" style="margin-top: 3px;">Filter</label>
+                            </div>
+                            <div class="col-10">
+                                <select class="form-control form-control-sm" id="filter_spp" name="filter_spp">
+                                    <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+                                    <?php
+                                    foreach ($pt as $d) : {
+                                    ?>
+                                            <option value="<?= $d['alias']; ?>"><?= $d['nama_pt']; ?></option>
+                                    <?php
+                                        }
+                                    endforeach;
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="table-responsive" style="margin-top: -10px;">
                         <table id="tb_approval" class="table w-100 dataTable no-footer table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th width="11%" style="font-size: 12px; padding:10px">#</th>
-                                    <th width="3%" style="font-size: 12px; padding:10px">No</th>
-                                    <th width="17%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
-                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Ref</th>
-                                    <th width="8%" style="font-size: 12px; padding:10px">Tgl Terima</th>
-                                    <th width="8%" style="font-size: 12px; padding:10px">Departemen</th>
+                                    <th width="5%" style="font-size: 12px; padding:10px">Approval</th>
+                                    <th width="4%" style="font-size: 12px; padding:10px">No</th>
+                                    <th width="16%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
+                                    <th width="18%" style="font-size: 12px; padding:10px">PT</th>
+                                    <th width="9%" style="font-size: 12px; padding:10px">Departement</th>
                                     <th width="5%" style="font-size: 12px; padding:10px">Lokasi</th>
-                                    <th width="18%" style="font-size: 12px; padding:10px">Keterangan</th>
-                                    <th width="8%" style="font-size: 12px; padding:10px">Status SPP</th>
-                                    <th width="7%" style="font-size: 12px; padding:10px">Status PO</th>
-                                    <th width="7%" style="font-size: 12px; padding:10px">Input Oleh</th>
+                                    <th width="6%" style="font-size: 12px; padding:10px">Status SPP</th>
+                                    <th width="9%" style="font-size: 12px; padding:10px">Input Oleh</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -293,7 +311,57 @@
 
 </div>
 
+<!-- modal approval spp no coa -->
+<div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="sppNoCoa">
+    <div class="modal-dialog modal-full-width modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Pilih SPP</h4>
+                <button type="button" class="close" onclick="close_modal()"><span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="sub-header mb-2" style="margin-top: -20px; margin-left:17px;">
+                <span id="detail_noref_spp" style="font-size: 12px; "><b style="color: crimson;">Pastikan Nama Barang dan Grup sudah benar!</b></span>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive" style="margin-top: -15px;">
+                    <input type="hidden" id="hidden_id_ppo" name="hidden_no_row">
+                    <input type="hidden" id="hidden_noref_spp">
+                    <table id="spp_approval_no_coa" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
+                        <thead>
+                            <tr>
+                                <th class="no_th">No</th>
+                                <th class="nabar_th">Nama&nbsp;Barang </th>
+                                <th class="ket_th">Grup</th>
+                                <!-- <th class="status_th">Status&nbsp;SPP</th> -->
+                                <th class="btn_th">Approval</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" onclick="close_modal()">Tutup</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- ends -->
+
 <style>
+    table#tb_approval td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#tb_approval th {
+        padding: 10px;
+        font-size: 12px;
+    }
+
     table#tabel_mutasi td {
         padding: 10px;
         font-size: 12px;
@@ -304,6 +372,17 @@
         padding: 10px;
         font-size: 12px;
         cursor: pointer;
+    }
+
+    table#spp_approval_no_coa td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#spp_approval_no_coa th {
+        padding: 10px;
+        font-size: 12px;
     }
 </style>
 
@@ -318,8 +397,227 @@
     //     // $('.dataTables_filter').addClass('pull-left');
     // });
 
+    function close_modal() {
+        $('#sppNoCoa').modal('hide');
+        // spp_aproval();
+
+        var data = "SEMUA";
+        spp_aproval(data);
+    }
+
+    function grub_coa(id) {
+
+        $('.grpCoa').select2({
+            ajax: {
+                url: "<?php echo site_url('Home/get_grp_coa') ?>",
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        grp: params.term, // search term
+                    };
+                },
+                processResults: function(data) {
+                    var results = [];
+                    $.each(data, function(index, item) {
+                        results.push({
+                            id: item.nama,
+                            text: item.nama
+                        });
+                    });
+                    return {
+                        results: results
+                    };
+                }
+            }
+
+        });
+
+    }
+
+    function spp_approval_no_coa(id, pt, alias) {
+        $('#spp_approval_no_coa').DataTable().destroy();
+        $('#spp_approval_no_coa').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            // "select": true,
+            "ajax": {
+                "url": "<?php echo site_url('Home/detail_approval_noCOA') ?>",
+                "type": "POST",
+                "data": {
+                    id_ppo: id,
+                    pt: pt,
+                    alias: alias,
+                }
+            },
+
+            "language": {
+                "infoFiltered": ""
+            },
+
+
+        });
+        var rel = setInterval(function() {
+            $('#spp_approval_no_coa').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
+    }
+
+    function validasi_acc(id, pt, alias) {
+        var id = $('#id_nocoa_' + id).val();
+        var noref = $('#noref_' + id).val();
+        var kodebar = $('#kodebar_' + id).val();
+        var nama = $('#nama_' + id).val();
+        var grp = $('#grp_coa_' + id).val();
+        var status = 12;
+
+
+        if (nama == '') {
+            $.toast({
+                position: 'top-right',
+                heading: 'Failed!',
+                text: 'Nama barang harus diisi!',
+                icon: 'error',
+                loader: true,
+                loaderBg: 'red'
+            });
+            $('#nama_' + id).css({
+                "background": "#FFCECE"
+            });
+        } else if (grp == 0) {
+            $.toast({
+                position: 'top-right',
+                heading: 'Failed!',
+                text: 'Grup barang harus diisi!',
+                icon: 'error',
+                loader: true,
+                loaderBg: 'red'
+            });
+            $('#grp_coa_' + id).css({
+                "background": "#FFCECE"
+            });
+
+        } else {
+            $('#nama_' + id).css({
+                "background": "#FFFFFF"
+            });
+            $('#grp_coa_' + id).css({
+                "background": "#FFFFFF"
+            });
+
+            // console.log(pt);
+
+            $.ajax({
+                type: "POST",
+                url: "<?php echo site_url('Spp/approve_noCOA'); ?>",
+                dataType: "JSON",
+                beforeSend: function() {
+                    $('#simpan_approve_' + id).css('display', 'none');
+                    $('#no_approve_' + id).css('display', 'none');
+                    $('#status_approve_' + id).empty();
+                    $('#status_approve_' + id).append('<label style="color:#f0ad4e;"><i class="fa fa-spinner fa-spin" style="font-size:24px;color:#f0ad4e;"></i></label>');
+                },
+                cache: false,
+                data: {
+                    id: id,
+                    noref: noref,
+                    nama: nama,
+                    kodebar: kodebar,
+                    grp: grp,
+                    status: status,
+                    pt: pt,
+                    alias: alias,
+                },
+                success: function(data) {
+                    var kode = $('#hidden_id_ppo').val();
+                    edit_ppo_tmp(kode, noref, kodebar, alias, pt)
+                    // console.log('oke field ppo berhasil diupdate', data);
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        }
+
+    }
+
+    function edit_ppo_tmp(id, noref, kodebar, alias, pt) {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Spp/update_ppo_tmp'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+            data: {
+                id: id,
+                noref: noref,
+                kodebar: kodebar,
+                alias: alias,
+                pt: pt,
+            },
+            success: function(data) {
+                var kode = $('#hidden_id_ppo').val();
+                spp_approval_no_coa(kode, pt, alias)
+            },
+            error: function(request) {
+                console.log(request.responseText);
+            }
+        });
+    }
+
+    function modalSppApprove(id, noref, pt, alias) {
+        $("#sppNoCoa").modal('show');
+
+        var id_ppo = id;
+        var noref_spp = noref;
+        $('#hidden_id_ppo').val(id_ppo);
+        $('#hidden_noref_spp').val(noref_spp);
+        // console.log(alias);
+        spp_approval_no_coa(id, pt, alias)
+    }
+
+    function spp_aproval(data) {
+        $('#tb_approval').DataTable().destroy();
+        $('#tb_approval').DataTable({
+
+            "processing": true,
+            "serverSide": true,
+            "order": [],
+            // "select": true,
+            "ajax": {
+                "url": "<?php echo site_url('Home/get_no_coa') ?>",
+                "type": "POST",
+                "data": {
+                    data: data
+                }
+            },
+
+            "language": {
+                "infoFiltered": ""
+            },
+
+
+        });
+        var rel = setInterval(function() {
+            $('#tb_approval').DataTable().ajax.reload();
+            clearInterval(rel);
+        }, 100);
+    }
+
     var table;
     $(document).ready(function() {
+
+        $('#filter_spp').change(function() {
+            var data = this.value;
+            console.log(data);
+            // dataSppFilter(data);
+            spp_aproval(data)
+        });
+        var data = "SEMUA";
+        spp_aproval(data);
+
 
         //datatables mutasi
         table = $('#tabel_mutasi').DataTable({

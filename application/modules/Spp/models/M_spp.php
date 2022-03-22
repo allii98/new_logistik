@@ -150,7 +150,7 @@ class M_spp extends CI_Model
     }
     public function saveSpp_tmp($data_ppo)
     {
-        return $this->db_logistik_pt->insert('ppo_tmp', $data_ppo);
+        return $this->db_logistik_center->insert('ppo_tmp', $data_ppo);
     }
     public function saveSppHistori($data_ppo_histori)
     {
@@ -163,7 +163,7 @@ class M_spp extends CI_Model
     }
     public function saveSpp2_tmp($data_item_ppo)
     {
-        return $this->db_logistik_pt->insert('item_ppo_tmp', $data_item_ppo);
+        return $this->db_logistik_center->insert('item_ppo_tmp', $data_item_ppo);
     }
     public function saveSpp3($data_item_ppo)
     {
@@ -257,14 +257,14 @@ class M_spp extends CI_Model
     }
     public function urut_cetak_no_coa($noppo)
     {
-        $this->db_logistik_pt->set('main_acct', 'main_acct+1', FALSE);
-        $this->db_logistik_pt->where('noppo', $noppo);
-        $this->db_logistik_pt->update('ppo_tmp');
+        $this->db_logistik_center->set('main_acct', 'main_acct+1', FALSE);
+        $this->db_logistik_center->where('noppo', $noppo);
+        $this->db_logistik_center->update('ppo_tmp');
 
-        $this->db_logistik_pt->select('main_acct');
-        $this->db_logistik_pt->from('ppo_tmp');
-        $this->db_logistik_pt->where('noppo', $noppo);
-        return $this->db_logistik_pt->get()->row_array();
+        $this->db_logistik_center->select('main_acct');
+        $this->db_logistik_center->from('ppo_tmp');
+        $this->db_logistik_center->where('noppo', $noppo);
+        return $this->db_logistik_center->get()->row_array();
     }
 
     public function cari_noref_itemppo($noref_spp)
@@ -304,24 +304,30 @@ class M_spp extends CI_Model
         return $data;
     }
 
-    public function updateNocoa($data, $id)
+    public function updateNocoa($data, $id, $alias)
     {
+        $this->logistik_pt = $this->load->database('db_logistik_' . $alias, TRUE);
+        $this->logistik_pt->set($data);
+        $this->logistik_pt->where('id', $id);
+        return $this->logistik_pt->update('item_ppo');
 
-
-        $this->db_logistik_pt->set($data);
-        $this->db_logistik_pt->where('id', $id);
-        return $this->db_logistik_pt->update('item_ppo');
+        // $this->db_logistik_center->set($data);
+        // $this->db_logistik_center->where('id', $id);
+        // return $this->db_logistik_center->update('item_ppo');
     }
 
-    public function update_spp_tmp($noref, $kodebar, $spp_tmp)
+    public function update_spp_tmp($noref, $kodebar, $spp_tmp, $pt, $alias)
     {
+
+
         # code...
-        $this->db_logistik_pt->set($spp_tmp);
-        $this->db_logistik_pt->where([
+        $this->db_logistik_center->set($spp_tmp);
+        $this->db_logistik_center->where([
             'noreftxt' => $noref,
-            'kodebar' => $kodebar
+            'kodebar' => $kodebar,
+            'namapt' => $pt
         ]);
-        return $this->db_logistik_pt->update('item_ppo_tmp');
+        return $this->db_logistik_center->update('item_ppo_tmp');
     }
 
     public function cari_spp($noref)

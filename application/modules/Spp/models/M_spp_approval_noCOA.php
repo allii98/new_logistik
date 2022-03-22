@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_spp_approval_noCOA extends CI_Model
 {
 
-    var $table = 'ppo'; //nama tabel dari database
+    var $table = 'ppo_tmp'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
     var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC', 'noreftxt' => 'DESC', 'tglref' => 'DESC'); // default order 
@@ -22,9 +22,9 @@ class M_spp_approval_noCOA extends CI_Model
         $kode_dev = $this->session->userdata('kode_dev');
         $dept = $this->session->userdata('nama_dept');
 
-        $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('namadept', $dept);
-        $this->db_logistik_pt->where('status2', 9);
+        $this->db_logistik_center->from($this->table);
+        $this->db_logistik_center->where('namadept', $dept);
+        $this->db_logistik_center->where('status2', 9);
 
 
         $i = 0;
@@ -36,23 +36,23 @@ class M_spp_approval_noCOA extends CI_Model
 
                 if ($i === 0) // looping awal
                 {
-                    $this->db_logistik_pt->group_start();
-                    $this->db_logistik_pt->like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->group_start();
+                    $this->db_logistik_center->like($item, $_POST['search']['value']);
                 } else {
-                    $this->db_logistik_pt->or_like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->or_like($item, $_POST['search']['value']);
                 }
 
                 if (count($this->column_search) - 1 == $i)
-                    $this->db_logistik_pt->group_end();
+                    $this->db_logistik_center->group_end();
             }
             $i++;
         }
 
         if (isset($_POST['order'])) {
-            $this->db_logistik_pt->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db_logistik_center->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } else if (isset($this->order)) {
             $order = $this->order;
-            $this->db_logistik_pt->order_by(key($order), $order[key($order)]);
+            $this->db_logistik_center->order_by(key($order), $order[key($order)]);
         }
     }
 
@@ -60,30 +60,30 @@ class M_spp_approval_noCOA extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-            $this->db_logistik_pt->limit($_POST['length'], $_POST['start']);
-        $query = $this->db_logistik_pt->get();
+            $this->db_logistik_center->limit($_POST['length'], $_POST['start']);
+        $query = $this->db_logistik_center->get();
         return $query->result();
     }
 
     function count_filtered()
     {
         $this->_get_datatables_query();
-        $query = $this->db_logistik_pt->get();
+        $query = $this->db_logistik_center->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-        $this->db_logistik_pt->from($this->table);
-        return $this->db_logistik_pt->count_all_results();
+        $this->db_logistik_center->from($this->table);
+        return $this->db_logistik_center->count_all_results();
     }
 
     public function getDetailSppApproval($noppo)
     {
-        $this->db_logistik_pt->select('*');
-        $this->db_logistik_pt->from('item_ppo_tmp');
-        $this->db_logistik_pt->where('noppotxt', $noppo);
-        return $this->db_logistik_pt->get()->result_array();
+        $this->db_logistik_center->select('*');
+        $this->db_logistik_center->from('item_ppo_tmp');
+        $this->db_logistik_center->where('noppotxt', $noppo);
+        return $this->db_logistik_center->get()->result_array();
     }
 
     public function approval_spp1($id)
@@ -97,10 +97,10 @@ class M_spp_approval_noCOA extends CI_Model
             $cek_r = 0;
             return $cek_r;
         } else {
-            $this->db_logistik_pt->select('*');
-            $this->db_logistik_pt->from('item_ppo_tmp');
-            $this->db_logistik_pt->where('id', $id);
-            $data_item_ppo = $this->db_logistik_pt->get()->row_array();
+            $this->db_logistik_center->select('*');
+            $this->db_logistik_center->from('item_ppo_tmp');
+            $this->db_logistik_center->where('id', $id);
+            $data_item_ppo = $this->db_logistik_center->get()->row_array();
 
             $data_insert = [
                 'no_id_item_ppo' => $id,
@@ -126,18 +126,18 @@ class M_spp_approval_noCOA extends CI_Model
                 'TGL_APPROVE' => date("Y-m-d H:i:s")
             ];
 
-            $this->db_logistik_pt->where('id', $id);
-            $this->db_logistik_pt->update('item_ppo_tmp', $data_update_item_ppo);
+            $this->db_logistik_center->where('id', $id);
+            $this->db_logistik_center->update('item_ppo_tmp', $data_update_item_ppo);
 
-            $this->db_logistik_pt->select_sum('status2', 'sum_status2');
-            $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
-            $this->db_logistik_pt->from('item_ppo_tmp');
-            $return_sum = $this->db_logistik_pt->get()->row();
+            $this->db_logistik_center->select_sum('status2', 'sum_status2');
+            $this->db_logistik_center->where('noppotxt', $data_item_ppo['noppotxt']);
+            $this->db_logistik_center->from('item_ppo_tmp');
+            $return_sum = $this->db_logistik_center->get()->row();
 
-            $this->db_logistik_pt->select('status2');
-            $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
-            $this->db_logistik_pt->from('item_ppo_tmp');
-            $return_count = $this->db_logistik_pt->count_all_results();
+            $this->db_logistik_center->select('status2');
+            $this->db_logistik_center->where('noppotxt', $data_item_ppo['noppotxt']);
+            $this->db_logistik_center->from('item_ppo_tmp');
+            $return_count = $this->db_logistik_center->count_all_results();
 
             if ($return_sum->sum_status2 == $return_count) {
                 $data_sum_count = [
@@ -146,8 +146,8 @@ class M_spp_approval_noCOA extends CI_Model
                     'TGL_APPROVE' => date("Y-m-d H:i:s")
                 ];
 
-                $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
-                $this->db_logistik_pt->update('ppo_tmp', $data_sum_count);
+                $this->db_logistik_center->where('noppotxt', $data_item_ppo['noppotxt']);
+                $this->db_logistik_center->update('ppo_tmp', $data_sum_count);
             } else {
                 $data_sum_count = [
                     'status' => 'SEBAGIAN',
@@ -155,11 +155,11 @@ class M_spp_approval_noCOA extends CI_Model
                     'TGL_APPROVE' => date("Y-m-d H:i:s")
                 ];
 
-                $this->db_logistik_pt->where('noppotxt', $data_item_ppo['noppotxt']);
-                $this->db_logistik_pt->update('ppo_tmp', $data_sum_count);
+                $this->db_logistik_center->where('noppotxt', $data_item_ppo['noppotxt']);
+                $this->db_logistik_center->update('ppo_tmp', $data_sum_count);
             }
 
-            return $this->db_logistik_pt->insert('approval_spp', $data_insert);
+            return $this->db_logistik_center->insert('approval_spp', $data_insert);
         }
     }
 }

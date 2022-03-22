@@ -280,7 +280,7 @@
 
         });
         var rel = setInterval(function() {
-            $('#tableListBPBItem').DataTable().ajax.reload();
+            $('#spp_approval_noCoa').DataTable().ajax.reload();
             clearInterval(rel);
         }, 100);
     }

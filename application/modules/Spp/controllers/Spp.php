@@ -258,48 +258,123 @@ class Spp extends CI_Controller
             $status2 = 0;
             $status = 'DALAM PROSES';
             $kodebarang_sementara = $this->input->post('hidden_kode_brg');
+
+
+            $data_ppo = [
+                'kpd' => 'Bagian Purchasing',
+                'noppo' => $nospp,
+                'noppotxt' => $nospp,
+                'jenis' => $this->input->post('cmb_jenis_permohonan'),
+                'tglppo' => $this->input->post('txt_tgl_spp'),
+                'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
+                'tgltrm' => $tgl_trm . date(" H:i:s"),
+                'kodedept' => $this->input->post('cmb_departemen'),
+                'namadept' => $data['nama_dept']['nama'],
+                'kode_dev' => $kode_devisi,
+                'devisi' => $data['devisi']['PT'],
+                'noref' => $nospp,
+                'noreftxt' => $noref,
+                'tglref' => $periode,
+                'ket' => $this->input->post('txt_keterangan'),
+                'no_acc' => 0,
+                'ket_acc' => "",
+                'pt' => $data['devisi']['PT'],
+                'kodept' => $kode_devisi,
+                'periode' => $periode,
+                'periodetxt' => $periodetxt,
+                'thn' => $thn,
+                'tglisi' => date("Y-m-d H:i:s"),
+                'id_user' => $id_user,
+                'user' => $this->session->userdata('user'),
+                'status' => $status,
+                'status2' => $status2,
+                'lokasi' => $this->session->userdata('status_lokasi'),
+                'po' => 0,
+                'kode_budget' => 0,
+                'grup' => 0,
+                'main_acct' => 0,
+                'nama_main' => 0,
+            ];
         } else {
             $status2 = 9;
             $status = 'TANPA COA';
             $kodebarang_sementara = mt_rand(1000, 9999);
+
+            $data_ppo = [
+                'kpd' => 'Bagian Purchasing',
+                'noppo' => $nospp,
+                'noppotxt' => $nospp,
+                'jenis' => $this->input->post('cmb_jenis_permohonan'),
+                'tglppo' => $this->input->post('txt_tgl_spp'),
+                'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
+                'tgltrm' => $tgl_trm . date(" H:i:s"),
+                'kodedept' => $this->input->post('cmb_departemen'),
+                'namadept' => $data['nama_dept']['nama'],
+                'kode_dev' => $kode_devisi,
+                'devisi' => $data['devisi']['PT'],
+                'noref' => $nospp,
+                'noreftxt' => $noref,
+                'tglref' => $periode,
+                'ket' => $this->input->post('txt_keterangan'),
+                'no_acc' => 0,
+                'ket_acc' => "",
+                'pt' => $data['devisi']['PT'],
+                'kodept' => $kode_devisi,
+                'periode' => $periode,
+                'periodetxt' => $periodetxt,
+                'thn' => $thn,
+                'tglisi' => date("Y-m-d H:i:s"),
+                'id_user' => $id_user,
+                'user' => $this->session->userdata('user'),
+                'status' => $status,
+                'status2' => $status2,
+                'lokasi' => $this->session->userdata('status_lokasi'),
+                'po' => 0,
+                'kode_budget' => 0,
+                'grup' => 0,
+                'main_acct' => 0,
+                'nama_main' => 0,
+            ];
+
+            $data_ppo_tmp = [
+                'kpd' => 'Bagian Purchasing',
+                'noppo' => $nospp,
+                'noppotxt' => $nospp,
+                'jenis' => $this->input->post('cmb_jenis_permohonan'),
+                'tglppo' => $this->input->post('txt_tgl_spp'),
+                'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
+                'tgltrm' => $tgl_trm . date(" H:i:s"),
+                'kodedept' => $this->input->post('cmb_departemen'),
+                'namadept' => $data['nama_dept']['nama'],
+                'kode_dev' => $kode_devisi,
+                'devisi' => $data['devisi']['PT'],
+                'noref' => $nospp,
+                'noreftxt' => $noref,
+                'tglref' => $periode,
+                'ket' => $this->input->post('txt_keterangan'),
+                'no_acc' => 0,
+                'ket_acc' => "",
+                'pt' => $data['devisi']['PT'],
+                'kodept' => $kode_devisi,
+                'periode' => $periode,
+                'periodetxt' => $periodetxt,
+                'thn' => $thn,
+                'tglisi' => date("Y-m-d H:i:s"),
+                'id_user' => $id_user,
+                'user' => $this->session->userdata('user'),
+                'status' => $status,
+                'status2' => $status2,
+                'lokasi' => $this->session->userdata('status_lokasi'),
+                'po' => 0,
+                'kode_budget' => 0,
+                'grup' => 0,
+                'main_acct' => 0,
+                'nama_main' => 0,
+                'alias' => $this->session->userdata('app_pt')
+            ];
         }
 
 
-        $data_ppo = [
-            'kpd' => 'Bagian Purchasing',
-            'noppo' => $nospp,
-            'noppotxt' => $nospp,
-            'jenis' => $this->input->post('cmb_jenis_permohonan'),
-            'tglppo' => $this->input->post('txt_tgl_spp'),
-            'tglppotxt' => date("Ymd", strtotime($this->input->post('txt_tgl_spp'))),
-            'tgltrm' => $tgl_trm . date(" H:i:s"),
-            'kodedept' => $this->input->post('cmb_departemen'),
-            'namadept' => $data['nama_dept']['nama'],
-            'kode_dev' => $kode_devisi,
-            'devisi' => $data['devisi']['PT'],
-            'noref' => $nospp,
-            'noreftxt' => $noref,
-            'tglref' => $periode,
-            'ket' => $this->input->post('txt_keterangan'),
-            'no_acc' => 0,
-            'ket_acc' => "",
-            'pt' => $data['devisi']['PT'],
-            'kodept' => $kode_devisi,
-            'periode' => $periode,
-            'periodetxt' => $periodetxt,
-            'thn' => $thn,
-            'tglisi' => date("Y-m-d H:i:s"),
-            'id_user' => $id_user,
-            'user' => $this->session->userdata('user'),
-            'status' => $status,
-            'status2' => $status2,
-            'lokasi' => $this->session->userdata('status_lokasi'),
-            'po' => 0,
-            'kode_budget' => 0,
-            'grup' => 0,
-            'main_acct' => 0,
-            'nama_main' => 0,
-        ];
 
         $data_item_ppo = [
             'noppo' => $nospp,
@@ -342,6 +417,7 @@ class Spp extends CI_Controller
             'main_acct' => "0",
             'nama_main' => "",
         ];
+
         //cek koneksi
         $con = $this->db_logistik_pt;
 
@@ -356,7 +432,8 @@ class Spp extends CI_Controller
                 $data2 = $this->M_spp->saveSpp2($data_item_ppo);
                 if ($this->input->post('hidden_kode_brg') == 0) {
                     # code...
-                    $data = $this->M_spp->saveSpp_tmp($data_ppo);
+
+                    $data = $this->M_spp->saveSpp_tmp($data_ppo_tmp);
                     $data2 = $this->M_spp->saveSpp2_tmp($data_item_ppo);
                 }
                 /* end */
@@ -460,7 +537,7 @@ class Spp extends CI_Controller
 
         $hitung_key = strlen($key);
         $query_ppo = "SELECT MAX(SUBSTRING(noppotxt, $hitung_key+1)) as maxspp from ppo_tmp WHERE noppotxt LIKE '$key%'";
-        $generate_ppo = $this->db_logistik_pt->query($query_ppo)->row();
+        $generate_ppo = $this->db_logistik_center->query($query_ppo)->row();
         $noUrut = (int)($generate_ppo->maxspp);
         $noUrut++;
         $print = sprintf("%05s", $noUrut);
@@ -601,11 +678,11 @@ class Spp extends CI_Controller
 
             // cari id terakhir
             $query_id = "SELECT MAX(id) as id_ppo FROM ppo_tmp WHERE id_user = '$id_user' AND noreftxt ='$noref'";
-            $generate_id = $this->db_logistik_pt->query($query_id)->row();
+            $generate_id = $this->db_logistik_center->query($query_id)->row();
             $id_ppo = $generate_id->id_ppo;
 
             $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo_tmp WHERE id_user = '$id_user' AND noreftxt ='$noref'";
-            $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
+            $generate_id_item = $this->db_logistik_center->query($query_id_item)->row();
             $id_item_ppo = $generate_id_item->id_item_ppo;
 
             $data_return = [
@@ -1450,10 +1527,10 @@ class Spp extends CI_Controller
 
         $data['urut'] = $this->M_spp->urut_cetak_no_coa($nospp);
 
-        $data['ppo'] = $this->db_logistik_pt->get_where('ppo_tmp', array('noppotxt' => $nospp, 'id' => $id))->row();
+        $data['ppo'] = $this->db_logistik_center->get_where('ppo_tmp', array('noppotxt' => $nospp, 'id' => $id))->row();
 
         $noreftxt = $data['ppo']->noreftxt;
-        $data['item_ppo'] = $this->db_logistik_pt->get_where('item_ppo_tmp', array('noreftxt' => $noreftxt))->result();
+        $data['item_ppo'] = $this->db_logistik_center->get_where('item_ppo_tmp', array('noreftxt' => $noreftxt))->result();
 
         $query_approval = "SELECT DISTINCT nama_approval_ktu, tgl_approval_ktu, nama_approval_dept_head, tgl_approval_dept_head, nama_approval_gm, tgl_approval_gm FROM item_ppo_approval WHERE noreftxt = '$noreftxt' AND status2_ktu = '4' AND status2_dept_head = '1'";
         $data['item_ppo_approval'] = $this->db_logistik_pt->query($query_approval)->row();
@@ -1685,39 +1762,41 @@ class Spp extends CI_Controller
         $nama = $this->input->post('nama');
         $grp = $this->input->post('grp');
         $status = $this->input->post('status');
+        $pt = $this->input->post('pt');
+        $alias = $this->input->post('alias');
 
         $spp_tmp = array(
             'status2' => 1
         );
-        $this->M_spp->update_spp_tmp($noref, $kodebar, $spp_tmp);
+        $this->M_spp->update_spp_tmp($noref, $kodebar, $spp_tmp, $pt, $alias);
 
         $data = array('nabar' => $nama, 'grup' => $grp, 'status2' => $status, 'TGL_APPROVE' => date('Y-m-d H:i:s'));
-        $d = $this->M_spp->updateNocoa($data, $id);
+        $d = $this->M_spp->updateNocoa($data, $id, $alias);
         echo json_encode($d);
     }
 
     function update_ppo_tmp()
     {
-        $id = $this->input->post('id');
         $ref = $this->input->post('noref');
+        $alias = $this->input->post('alias');
+        $pt = $this->input->post('pt');
 
-        $d = $this->db_logistik_pt->query("SELECT * FROM ppo WHERE id='$id'")->row();
-        $noref = $d->noreftxt;
-        $item1 = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$noref'")->num_rows();
-        $item2 = $this->db_logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$noref' AND status2='12'")->num_rows();
+        $this->logistik_pt = $this->load->database('db_logistik_' . $alias, TRUE);
+        $item1 = $this->logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$ref'")->num_rows();
+        $item2 = $this->logistik_pt->query("SELECT * FROM item_ppo WHERE noreftxt='$ref' AND status2='12'")->num_rows();
 
         if ($item1 == $item2) {
             $data = array('status' => 'MENUNGGU ACCOUNTING', 'status2' => '12');
-            $yy = $this->db_logistik_pt->update('ppo', $data, array('id' => $id));
+            $yy = $this->logistik_pt->update('ppo', $data, array('noreftxt' => $ref));
 
             $dt = array('status' => 'MENUNGGU ACCOUNTING', 'status2' => '12');
-            $this->db_logistik_pt->update('ppo_tmp', $dt, array('noreftxt' => $ref));
+            $this->db_logistik_center->update('ppo_tmp', $dt, array('noreftxt' => $ref, 'pt' => $pt));
         } else {
             $data = array('status' => 'SEBAGIAN', 'status2' => '11');
-            $yy = $this->db_logistik_pt->update('ppo', $data, array('id' => $id));
+            $yy = $this->logistik_pt->update('ppo', $data, array('noreftxt' => $ref));
 
             $dt = array('status' => 'SEBAGIAN', 'status2' => '11');
-            $this->db_logistik_pt->update('ppo_tmp', $dt, array('noreftxt' => $ref));
+            $this->db_logistik_center->update('ppo_tmp', $dt, array('noreftxt' => $ref, 'pt' => $pt));
         }
 
         echo json_encode($yy);

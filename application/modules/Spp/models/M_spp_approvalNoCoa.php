@@ -5,7 +5,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_spp_approvalNoCoa extends CI_Model
 {
 
-    var $table = 'ppo'; //nama tabel dari database
+    var $table = 'ppo_tmp'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
     var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC', 'noreftxt' => 'DESC', 'tglref' => 'DESC'); // default order 
@@ -21,21 +21,21 @@ class M_spp_approvalNoCoa extends CI_Model
         $lokasi = $this->session->userdata('status_lokasi');
         $kode_dev = $this->session->userdata('kode_dev');
 
-        $this->db_logistik_pt->from($this->table);
+        $this->db_logistik_center->from($this->table);
         if ($lokasi == 'HO') {
-            $this->db_logistik_pt->where('jenis !=', 'SPPI');
-            $this->db_logistik_pt->like('lokasi', 'HO');
+            $this->db_logistik_center->where('jenis !=', 'SPPI');
+            $this->db_logistik_center->like('lokasi', 'HO');
         } elseif ($lokasi == 'SITE') {
-            $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
+            $this->db_logistik_center->like('noreftxt', 'EST', 'both');
         } elseif ($lokasi == 'PKS') {
-            $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
+            $this->db_logistik_center->like('noreftxt', 'FAC', 'both');
         } elseif ($lokasi == 'RO') {
-            $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
+            $this->db_logistik_center->like('noreftxt', 'ROM', 'both');
         }
-        $this->db_logistik_pt->where('status2', 9);
+        $this->db_logistik_center->where('status2', 9);
 
         if ($lokasi != 'HO') {
-            $this->db_logistik_pt->where('kode_dev', $kode_dev);
+            $this->db_logistik_center->where('kode_dev', $kode_dev);
         }
 
         $i = 0;
@@ -47,23 +47,23 @@ class M_spp_approvalNoCoa extends CI_Model
 
                 if ($i === 0) // looping awal
                 {
-                    $this->db_logistik_pt->group_start();
-                    $this->db_logistik_pt->like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->group_start();
+                    $this->db_logistik_center->like($item, $_POST['search']['value']);
                 } else {
-                    $this->db_logistik_pt->or_like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->or_like($item, $_POST['search']['value']);
                 }
 
                 if (count($this->column_search) - 1 == $i)
-                    $this->db_logistik_pt->group_end();
+                    $this->db_logistik_center->group_end();
             }
             $i++;
         }
 
         if (isset($_POST['order'])) {
-            $this->db_logistik_pt->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db_logistik_center->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } else if (isset($this->order)) {
             $order = $this->order;
-            $this->db_logistik_pt->order_by(key($order), $order[key($order)]);
+            $this->db_logistik_center->order_by(key($order), $order[key($order)]);
         }
     }
 
@@ -71,22 +71,22 @@ class M_spp_approvalNoCoa extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-            $this->db_logistik_pt->limit($_POST['length'], $_POST['start']);
-        $query = $this->db_logistik_pt->get();
+            $this->db_logistik_center->limit($_POST['length'], $_POST['start']);
+        $query = $this->db_logistik_center->get();
         return $query->result();
     }
 
     function count_filtered()
     {
         $this->_get_datatables_query();
-        $query = $this->db_logistik_pt->get();
+        $query = $this->db_logistik_center->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-        $this->db_logistik_pt->from($this->table);
-        return $this->db_logistik_pt->count_all_results();
+        $this->db_logistik_center->from($this->table);
+        return $this->db_logistik_center->count_all_results();
     }
 
     public function getDetailSppApproval($noppo)

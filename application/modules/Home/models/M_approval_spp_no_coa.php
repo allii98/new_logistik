@@ -2,13 +2,14 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_spp_noCoa extends CI_Model
+class M_approval_spp_no_coa extends CI_Model
 {
 
     var $table = 'ppo_tmp'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang ada di table user
-    var $column_search = array('noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user'); //field yang diizin untuk pencarian 
+    var $column_order = array(null, 'id', 'noppotxt', 'noreftxt', 'tglref', 'tglppo', 'tgltrm', 'namadept', 'lokasi', 'ket', 'user', 'alias'); //field yang ada di table user
+    var $column_search = array('noppotxt', 'pt', 'namadept'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC', 'noreftxt' => 'DESC', 'tglref' => 'DESC'); // default order 
+
     public function __construct()
     {
         parent::__construct();
@@ -20,38 +21,21 @@ class M_spp_noCoa extends CI_Model
         $this->data = $data;
     }
 
+
     private function _get_datatables_query()
     {
         $filter = $this->data;
         $lokasi = $this->session->userdata('status_lokasi');
-        $pt = $this->session->userdata('devisi');
-        $kode_dept = $this->session->userdata('kode_dept');
-
+        $kode_dev = $this->session->userdata('kode_dev');
+        $dept = $this->session->userdata('nama_dept');
 
         $this->db_logistik_center->from($this->table);
-        if ($lokasi == 'HO') {
-            // $this->db_logistik_center->where('kodedept', $kode_dept);
-            if ($filter == 'HO') {
-                $this->db_logistik_center->where('jenis !=', 'SPPI');
-                $this->db_logistik_center->like('noreftxt', 'PST', 'both');
-            } elseif ($filter == 'SITE') {
-                $this->db_logistik_center->like('noreftxt', 'EST', 'both');
-            } elseif ($filter == 'RO') {
-                $this->db_logistik_center->like('noreftxt', 'ROM', 'both');
-            } elseif ($filter == 'PKS') {
-                $this->db_logistik_center->like('noreftxt', 'FAC', 'both');
-            }
+        if ($filter == 'SEMUA') {
+            # code...
+            $this->db_logistik_center->where(['namadept' => $dept, 'status2' => 9]);
         } else {
-            $this->db_logistik_center->like('pt', $pt);
-            $this->db_logistik_center->where('kodedept', $kode_dept);
-
-            if ($lokasi == 'SITE') {
-                $this->db_logistik_center->like('noreftxt', 'EST', 'both');
-            } elseif ($lokasi == 'PKS') {
-                $this->db_logistik_center->like('noreftxt', 'FAC', 'both');
-            } elseif ($lokasi == 'RO') {
-                $this->db_logistik_center->like('noreftxt', 'ROM', 'both');
-            }
+            # code...
+            $this->db_logistik_center->where(['namadept' => $dept, 'status2' => 9, 'alias' => $filter]);
         }
 
         $i = 0;
@@ -68,6 +52,7 @@ class M_spp_noCoa extends CI_Model
                 } else {
                     $this->db_logistik_center->or_like($item, $_POST['search']['value']);
                 }
+
                 if (count($this->column_search) - 1 == $i)
                     $this->db_logistik_center->group_end();
             }
@@ -105,4 +90,4 @@ class M_spp_noCoa extends CI_Model
     }
 }
 
-/* End of file M_spp_noCoa.php */
+/* End of file M_approval_spp_no_coa.php */

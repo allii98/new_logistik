@@ -333,7 +333,7 @@
                                 </td>
                                 <td>
                                     <select class="form-control grup_coa" id="grup_brg">
-                                        <option selected value="" disabled>Pilih</option>
+                                        <option selected value="0" disabled>Pilih</option>
                                     </select>
                                 </td>
                                 <td>
@@ -587,7 +587,7 @@
             $('#satuan_barang').css({
                 "background": "#FFCECE"
             });
-        } else if (grb_brg == '') {
+        } else if (grb_brg = 0) {
             // toast('Grup Barang');
             $.toast({
                 position: 'top-right',
@@ -619,6 +619,7 @@
             $('#satuan_' + n).text(satbrg);
             $('#hidden_satuan_brg_' + n).val(satbrg);
             $('#hidden_grup_brg_' + n).val(grb_brg);
+
             koreksi_coa(namabrg);
             // listBarang_serupa(namabrg);
             // closeModal();
@@ -637,12 +638,13 @@
                 nabar: namabrg,
             },
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 if (data.isi == 0) {
                     // console.log("Kosong datanya");
                     closeModal();
                 } else {
                     var isi = data.isi;
+                    $('#brg_tanpa_coa').css('display', 'none');
                     $('#modal_noCOA').modal('hide');
                     Swal.fire({
                         title: 'Ada barang serupa!',

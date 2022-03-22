@@ -122,8 +122,15 @@ class M_home extends CI_Model
         $this->db_logistik_pt->from('ppo');
         $count_spp = $this->db_logistik_pt->count_all_results();
 
-        $this->db_logistik_pt->from('ppo_tmp');
-        $count_spp_no_coa = $this->db_logistik_pt->count_all_results();
+        $pt = $this->session->userdata('devisi');
+        $dept = $this->session->userdata('nama_dept');
+        if ($lokasi != 'HO') {
+            $this->db_logistik_center->like('pt', $pt);
+        }
+        $this->db_logistik_center->where('namadept', $dept);
+        $this->db_logistik_center->from('ppo_tmp');
+        $count_spp_no_coa = $this->db_logistik_center->count_all_results();
+
 
         $this->db_logistik_pt->select('noreftxt');
         $this->db_logistik_pt->where('status2', '1');
@@ -215,6 +222,13 @@ class M_home extends CI_Model
             'count_bkb_rev_qty' => $count_bkb_rev_qty
         ];
         return $result;
+    }
+
+    public function get_grp_coa()
+    {
+        $grp = $this->input->get('grp');
+        $data = $this->db_logistik_center->query("SELECT DISTINCT(nama) FROM `noac` WHERE nama LIKE '%$grp%' AND `noac` LIKE '%1025%' AND `type` = 'G' ORDER BY NOID DESC")->result();
+        return $data;
     }
 }
 
