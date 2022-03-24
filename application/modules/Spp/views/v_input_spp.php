@@ -587,7 +587,7 @@
             $('#satuan_barang').css({
                 "background": "#FFCECE"
             });
-        } else if (grb_brg = 0) {
+        } else if (grb_brg == 0) {
             // toast('Grup Barang');
             $.toast({
                 position: 'top-right',
