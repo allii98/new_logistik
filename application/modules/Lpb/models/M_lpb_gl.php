@@ -7,10 +7,10 @@ class M_lpb_gl extends CI_Model
 
       public function get_data_noac_gl($kodebar)
       {
-            $this->db_mips_gl->select('noac, nama, group, type, level, general');
-            $this->db_mips_gl->where(['noac' => $kodebar]);
-            $this->db_mips_gl->from('noac');
-            return $this->db_mips_gl->get()->row_array();
+            $this->db_logistik_center->select('noac, nama, group, type, level, general');
+            $this->db_logistik_center->where(['noac' => $kodebar]);
+            $this->db_logistik_center->from('noac');
+            return $this->db_logistik_center->get()->row_array();
       }
 
       public function get_data_noac_supplier($kode_supply)
@@ -21,10 +21,10 @@ class M_lpb_gl extends CI_Model
             $this->db_logistik_center->from('supplier');
             $data_supply = $this->db_logistik_center->get()->row_array();
 
-            $this->db_mips_gl->select('noac, nama, group, type, level, general');
-            $this->db_mips_gl->where(['noac' => $data_supply['account']]);
-            $this->db_mips_gl->from('noac');
-            return $this->db_mips_gl->get()->row_array();
+            $this->db_logistik_center->select('noac, nama, group, type, level, general');
+            $this->db_logistik_center->where(['noac' => $data_supply['account']]);
+            $this->db_logistik_center->from('noac');
+            return $this->db_logistik_center->get()->row_array();
       }
 
       // untuk debet

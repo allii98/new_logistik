@@ -22,7 +22,17 @@ class Lpb extends CI_Controller
 
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 
-        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+        // $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+
+        if ($this->session->userdata('kode_dev') == '01') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt, TRUE); //HO
+        } elseif ($this->session->userdata('kode_dev') == '02') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_ro', TRUE); //RO
+        } elseif ($this->session->userdata('kode_dev') == '03') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_pks', TRUE); //PKS
+        } else {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_site', TRUE); //SITE
+        }
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";

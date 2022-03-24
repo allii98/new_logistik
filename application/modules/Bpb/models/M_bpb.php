@@ -356,11 +356,11 @@ class M_bpb extends CI_Model
         $databpbitem['satuan']        = $satuan;
         $databpbitem['grp']           = $grup;
         $databpbitem['alokasi']       = $alokasi;
-        $databpbitem['kodept']        = $this->session->userdata('kode_pt');
+        $databpbitem['kodept']        = $this->session->userdata('kode_dev');
         $databpbitem['nobpb']         = $nobpb;
         $databpbitem['norefbpb']      = $norefbpb;
-        $databpbitem['pt']            = $this->session->userdata('pt');
-        $databpbitem['kode']          = $this->session->userdata('kode_pt');
+        $databpbitem['pt']            = $this->session->userdata('kode');
+        $databpbitem['kode']          = $this->session->userdata('kode_dev');
         $databpbitem['devisi']        = $data['devisi']['PT'];
         $databpbitem['kode_dev']      = $kode_devisi;
         $databpbitem['qty']           = $qty;

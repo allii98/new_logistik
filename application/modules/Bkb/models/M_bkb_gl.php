@@ -30,19 +30,19 @@ class M_bkb_gl extends CI_Model
 
       public function get_data_noac_gl($kodebar)
       {
-            $this->db_mips_gl->select('group, type, level, general');
-            $this->db_mips_gl->where(['noac' => $kodebar]);
-            $this->db_mips_gl->from('noac');
-            return $this->db_mips_gl->get()->row_array();
+            $this->db_logistik_center->select('group, type, level, general');
+            $this->db_logistik_center->where(['noac' => $kodebar]);
+            $this->db_logistik_center->from('noac');
+            return $this->db_logistik_center->get()->row_array();
       }
 
       public function get_data_noac_beban($kodesub)
       {
             // kalo di bkb sudah dapat noac nya
-            $this->db_mips_gl->select('noac, group, type, level, general');
-            $this->db_mips_gl->where(['noac' => $kodesub]);
-            $this->db_mips_gl->from('noac');
-            return $this->db_mips_gl->get()->row_array();
+            $this->db_logistik_center->select('noac, group, type, level, general');
+            $this->db_logistik_center->where(['noac' => $kodesub]);
+            $this->db_logistik_center->from('noac');
+            return $this->db_logistik_center->get()->row_array();
       }
 
       public function insert_bkb_to_entry_gl_dr($data_entry, $noref)

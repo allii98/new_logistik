@@ -29,7 +29,16 @@ class Bkb extends CI_Controller
         //DB kpp
         $this->db_logistik_kpp = $this->load->database('db_logistik_kpp', TRUE);
         // DB GL
-        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+        // $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+        if ($this->session->userdata('kode_dev') == '01') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt, TRUE); //HO
+        } elseif ($this->session->userdata('kode_dev') == '02') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_ro', TRUE); //RO
+        } elseif ($this->session->userdata('kode_dev') == '03') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_pks', TRUE); //PKS
+        } else {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_site', TRUE); //SITE
+        }
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -849,8 +858,8 @@ class Bkb extends CI_Controller
         $datastockkeluar['txtperiode1']     = $txtperiode;
         $datastockkeluar['txtperiode2']     = NULL;
         $datastockkeluar['alokasi']         = $alokasi;
-        $datastockkeluar['pt']              = $this->session->userdata('pt');
-        $datastockkeluar['kode']            = $this->session->userdata('kode_pt');
+        $datastockkeluar['pt']              = $this->session->userdata('devisi');
+        $datastockkeluar['kode']            = $this->session->userdata('kode_dev');
         $datastockkeluar['devisi']          = $this->input->post('devisi');
         $datastockkeluar['kode_dev']        = $kode_dev;
         $datastockkeluar['kpd']             = $diberikan_kpd;
@@ -876,9 +885,9 @@ class Bkb extends CI_Controller
         $datakeluarbrgitem['satuan']        = $satuan;
         $datakeluarbrgitem['grp']           = $grup_brg;
         $datakeluarbrgitem['alokasi']       = $alokasi;
-        $datakeluarbrgitem['kodept']        = $this->session->userdata('kode_pt');
+        $datakeluarbrgitem['kodept']        = $this->session->userdata('kode_dev');
         $datakeluarbrgitem['nobpb']         = $nobpb;
-        $datakeluarbrgitem['pt']            = $this->session->userdata('pt');
+        $datakeluarbrgitem['pt']            = $this->session->userdata('devisi');
         $datakeluarbrgitem['kode_dev']      = $kode_dev;
         $datakeluarbrgitem['devisi']        = $this->input->post('devisi');
         $datakeluarbrgitem['tmtbm']         = $this->input->post('cmb_tm_tbm');
