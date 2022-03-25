@@ -254,60 +254,61 @@
             </div>
         </div>
     <?php } ?>
+    <?php if ($this->session->userdata('status_lokasi') == 'HO' && $this->session->userdata('nama_dept') != 'PURCHASING') { ?>
+        <div class="row col-12">
+            <div class="col-lg-12 col-xl-12 col-12">
+                <div class="card">
+                    <div class="card-body">
 
-    <div class="row col-12">
-        <div class="col-lg-12 col-xl-12 col-12">
-            <div class="card">
-                <div class="card-body">
-
-                    <div class="row justify-content-between" style="margin-top: -10px;">
-                        <h4 class="header-title ml-2 mb-3">Approval Spp Tanpa Coa</h4>
-                        <div class="row form-group mr-0">
-                            <div class="col-2">
-                                <label for="" style="margin-top: 3px;">Filter</label>
-                            </div>
-                            <div class="col-10">
-                                <select class="form-control form-control-sm" id="filter_spp" name="filter_spp">
-                                    <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
-                                    <?php
-                                    foreach ($pt as $d) : {
-                                    ?>
-                                            <option value="<?= $d['alias']; ?>"><?= $d['nama_pt']; ?></option>
-                                    <?php
-                                        }
-                                    endforeach;
-                                    ?>
-                                </select>
+                        <div class="row justify-content-between" style="margin-top: -10px;">
+                            <h4 class="header-title ml-2 mb-3">Approval Spp Tanpa Coa</h4>
+                            <div class="row form-group mr-0">
+                                <div class="col-2">
+                                    <label for="" style="margin-top: 3px;">Filter</label>
+                                </div>
+                                <div class="col-10">
+                                    <select class="form-control form-control-sm" id="filter_spp" name="filter_spp">
+                                        <option value="SEMUA" selected>TAMPILKAN SEMUA</option>
+                                        <?php
+                                        foreach ($pt as $d) : {
+                                        ?>
+                                                <option value="<?= $d['alias']; ?>"><?= $d['nama_pt']; ?></option>
+                                        <?php
+                                            }
+                                        endforeach;
+                                        ?>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="table-responsive" style="margin-top: -10px;">
-                        <table id="tb_approval" class="table w-100 dataTable no-footer table-bordered table-striped">
-                            <thead>
-                                <tr>
-                                    <th width="5%" style="font-size: 12px; padding:10px">Approval</th>
-                                    <th width="4%" style="font-size: 12px; padding:10px">No</th>
-                                    <th width="16%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
-                                    <th width="18%" style="font-size: 12px; padding:10px">PT</th>
-                                    <th width="9%" style="font-size: 12px; padding:10px">Departement</th>
-                                    <th width="5%" style="font-size: 12px; padding:10px">Lokasi</th>
-                                    <th width="6%" style="font-size: 12px; padding:10px">Status SPP</th>
-                                    <th width="9%" style="font-size: 12px; padding:10px">Input Oleh</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                    </div>
-                    <br />
-                    <br />
+                        <div class="table-responsive" style="margin-top: -10px;">
+                            <table id="tb_approval" class="table w-100 dataTable no-footer table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th width="5%" style="font-size: 12px; padding:10px">Approval</th>
+                                        <th width="4%" style="font-size: 12px; padding:10px">No</th>
+                                        <th width="16%" style="font-size: 12px; padding:10px">No. Ref. SPP</th>
+                                        <th width="18%" style="font-size: 12px; padding:10px">PT</th>
+                                        <th width="9%" style="font-size: 12px; padding:10px">Departement</th>
+                                        <th width="5%" style="font-size: 12px; padding:10px">Lokasi</th>
+                                        <th width="6%" style="font-size: 12px; padding:10px">Status SPP</th>
+                                        <th width="9%" style="font-size: 12px; padding:10px">Input Oleh</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <br />
+                        <br />
 
-                    <!-- end row -->
-                </div> <!-- end card-body -->
-            </div> <!-- end card -->
-        </div><!-- end col -->
-    </div>
+                        <!-- end row -->
+                    </div> <!-- end card-body -->
+                </div> <!-- end card -->
+            </div><!-- end col -->
+        </div>
+    <?php } ?>
 
 </div>
 

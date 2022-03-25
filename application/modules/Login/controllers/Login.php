@@ -59,7 +59,9 @@ class Login extends CI_Controller
                 $pt_login = 'db_logistik_kpp';
             }
 
-            $get_username = $this->db_config->get_where('users', array('username' => $username));
+            $kodept = ltrim($kode_pt_login, '0');
+
+            $get_username = $this->db_config->get_where('users', array('username' => $username, 'id_pt' => $kodept));
             $user = $get_username->row();
 
             $lokasi = $this->db_config->query("SELECT nama FROM `codegroup` WHERE group_n='LOKASI_USERS' AND value='$user->id_lokasi'")->row();
