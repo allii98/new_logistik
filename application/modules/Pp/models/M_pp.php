@@ -131,6 +131,9 @@ class M_pp extends CI_Model
 
         $sess_lokasi = $this->session->userdata('status_lokasi');
 
+        $kode_devisi =  $this->session->userdata('kode_dev');
+        $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
+
 
 
         if ($sess_lokasi == "HO") {
@@ -228,8 +231,8 @@ class M_pp extends CI_Model
         $data_pp['terbilang']       = $this->input->post('txt_terbilang');
         $data_pp['ket']             = $this->input->post('txt_keterangan');
         // $data_pp['pt']              = $this->session->userdata('app_pt')." ".$this->session->userdata('status_lokasi');
-        $data_pp['pt']              = $this->session->userdata('pt');
-        $data_pp['kodept']          = $this->session->userdata('kode_pt');
+        $data_pp['pt']              = $data['devisi']['PT'];
+        $data_pp['kodept']          = $kode_devisi;
         $data_pp['periode']         = $periode . " 00:00:00";
         $data_pp['txtperiode']      = $txtperiode;
         $data_pp['user']            = $this->session->userdata('user');
@@ -290,8 +293,8 @@ class M_pp extends CI_Model
         $data_pplogistikdicaba['terbilang']         = $this->input->post('txt_terbilang');
         $data_pplogistikdicaba['ket']               = $this->input->post('txt_keterangan');
         // $data_pplogistikdicaba['pt']                = $this->session->userdata('app_pt')." ".$this->session->userdata('status_lokasi');
-        $data_pplogistikdicaba['pt']                = $this->session->userdata('pt');
-        $data_pplogistikdicaba['kodept']            = $this->session->userdata('kode_pt');
+        $data_pplogistikdicaba['pt']                = $data['devisi']['PT'];
+        $data_pplogistikdicaba['kodept']            = $kode_devisi;
         $data_pplogistikdicaba['periode']           = $periode . " 00:00:00";
         $data_pplogistikdicaba['txtperiode']        = $txtperiode;
         $data_pplogistikdicaba['user']              = $this->session->userdata('user');
@@ -432,7 +435,8 @@ class M_pp extends CI_Model
         $jumlah = $this->input->post('txt_jumlah');
         $total_po = $this->input->post('txt_total_po');
 
-
+        $kode_devisi =  $this->session->userdata('kode_dev');
+        $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $kode_devisi))->row_array();
 
         // $data_pp['id']              = $id_pp;
         $data_pp['tglpp']           = $tglpp;
@@ -454,8 +458,8 @@ class M_pp extends CI_Model
         $data_pp['total_po']        = $total_po;
         $data_pp['terbilang']       = $this->input->post('txt_terbilang');
         $data_pp['ket']             = $this->input->post('txt_keterangan');
-        $data_pp['pt']              = $this->session->userdata('pt');
-        $data_pp['kodept']          = $this->session->userdata('kode_pt');
+        $data_pp['pt']              = $data['devisi']['PT'];
+        $data_pp['kodept']          = $kode_devisi;
         $data_pp['periode']         = $periode . " 00:00:00";
         $data_pp['txtperiode']      = $txtperiode;
         $data_pp['user']            = $this->session->userdata('user');
@@ -489,18 +493,13 @@ class M_pp extends CI_Model
         $data_pplogistikdicaba['terbilang']         = $this->input->post('txt_terbilang');
         $data_pplogistikdicaba['ket']               = $this->input->post('txt_keterangan');
         // $data_pplogistikdicaba['pt']                = $this->session->userdata('app_pt')." ".$this->session->userdata('status_lokasi');
-        $data_pplogistikdicaba['pt']                = $this->session->userdata('pt');
-        $data_pplogistikdicaba['kodept']            = $this->session->userdata('kode_pt');
+        $data_pplogistikdicaba['pt']                = $data['devisi']['PT'];
+        $data_pplogistikdicaba['kodept']            = $kode_devisi;
         $data_pplogistikdicaba['periode']           = $periode . " 00:00:00";
         $data_pplogistikdicaba['txtperiode']        = $txtperiode;
         $data_pplogistikdicaba['user']              = $this->session->userdata('user');
         $data_pplogistikdicaba['tglisi']            = date("Y-m-d H:i:s");
         $data_pplogistikdicaba['status_vou']        = "0";
-        // $data_pplogistikdicaba['status_vou']        = "1";
-        // $data_pplogistikdicaba['no_vou']            = $no_vou;
-        // $data_pplogistikdicaba['no_voutxt']         = $no_vou;
-        // $data_pplogistikdicaba['tgl_vou']           = $tgl_vou;
-        // $data_pplogistikdicaba['tgl_voutxt']        = $tgl_voutxt;
         $data_pplogistikdicaba['TGL_BAYAR_REAL']    = NULL;
         $data_pplogistikdicaba['kode_budget']       = "0";
         $data_pplogistikdicaba['grup']              = $this->input->post('hidden_grup');
@@ -520,58 +519,7 @@ class M_pp extends CI_Model
             $bool_pp = FALSE;
         }
 
-        $pp = $this->db_logistik_pt->query("SELECT * FROM pp WHERE id='$id_pp'")->row();
-        $pp_histori['id']              = $id_pp;
-        $pp_histori['nopp']            = $pp->nopp;
-        $pp_histori['nopptxt']         = $pp->nopptxt;
-        $pp_histori['nopo']            = $pp->nopo;
-        $pp_histori['nopotxt']         = $pp->nopotxt;
-        $pp_histori['tglpp']           = $pp->tglpp;
-        $pp_histori['tglpptxt']        = $pp->tglpptxt;
-        $pp_histori['tglpo']           = $pp->tglpo;
-        $pp_histori['tglpotxt']        = $pp->tglpotxt;
-        $pp_histori['ref_pp']          = $pp->ref_pp;
-        $pp_histori['ref_po']          = $this->input->post('txt_no_ref_po');
-        $pp_histori['kode_supply']     = $this->input->post('kd_supplier');
-        $pp_histori['kode_supplytxt']  = $this->input->post('kd_supplier');
-        $pp_histori['nama_supply']     = $this->input->post('txt_supplier');
-        $pp_histori['kepada']          = $this->input->post('txt_dibayar_ke');
-        $pp_histori['bayar']           = $this->input->post('txt_pembayaran');
-        $pp_histori['KURS']            = $this->input->post('hidden_kurs');
-        $pp_histori['jumlah']          = $jumlah;
-        $pp_histori['pajak']           = $this->input->post('txt_pajak');
-        $pp_histori['jumlahpo']        = $this->input->post('txt_nilai_po');
-        $pp_histori['KODE_BPO']        = $this->input->post('txt_nilai_bpo1');
-        $pp_histori['jumlah_bpo']      = $this->input->post('txt_nilai_bpo2');
-        $pp_histori['total_po']        = $total_po;
-        $pp_histori['terbilang']       = $this->input->post('txt_terbilang');
-        $pp_histori['ket']             = $this->input->post('txt_keterangan');
-        $pp_histori['pt']              = $this->session->userdata('pt');
-        $pp_histori['kodept']          = $this->session->userdata('kode_pt');
-        $pp_histori['periode']         = $periode . " 00:00:00";
-        $pp_histori['txtperiode']      = $txtperiode;
-        $pp_histori['user']            = $this->session->userdata('user');
-        $pp_histori['tglisi']          = date("Y-m-d H:i:s");
-        $pp_histori['status_vou']      = "0";
-        // $pp_histori['status_vou']      = "1";
-        $pp_histori['no_vou']          = $no_vou;
-        $pp_histori['no_voutxt']       = $no_vou;
-        $pp_histori['tgl_vou']         = $tgl_vou;
-        $pp_histori['tgl_voutxt']      = $tgl_voutxt;
-        $pp_histori['tgl_bayar_real']  = NULL;
-        $pp_histori['kasir_bayar']     = $this->input->post('txt_jumlah');
-        $pp_histori['kode_budget']     = "0";
-        $pp_histori['grup']            = $this->input->post('hidden_grup');
-        $pp_histori['main_account']    = $this->input->post('hidden_main_account');
-        $pp_histori['nama_account']    = $this->input->post('hidden_nama_account');
-        $pp_histori['batal']           = "0";
-        $pp_histori['keterangan_transaksi'] = "UPDATE PP";
-        $pp_histori['log'] = $this->session->userdata('user') . " mengubah PP $pp->nopp";
-        $pp_histori['tgl_transaksi'] = date('Y-m-d H:i:s');
-        $pp_histori['user_transaksi'] = $this->session->userdata('user');
-        $pp_histori['client_ip'] = $this->input->ip_address();
-        $pp_histori['client_platform'] = $this->platform->agent();
-        $this->db_logistik_pt->insert('pp_history', $pp_histori);
+
 
 
         $this->db_caba->set($data_pplogistikdicaba);

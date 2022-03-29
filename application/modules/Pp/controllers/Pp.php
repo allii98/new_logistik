@@ -14,7 +14,17 @@ class Pp extends CI_Controller
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
-        $this->db_caba = $this->load->database('db_caba_' . $db_pt, TRUE);
+
+        if ($this->session->userdata('kode_dev') == '01') {
+            $this->db_caba = $this->load->database('db_caba_' . $db_pt, TRUE); //HO
+        } elseif ($this->session->userdata('kode_dev') == '02') {
+            $this->db_caba = $this->load->database('db_caba_' . $db_pt . '_ro', TRUE); //RO
+        } elseif ($this->session->userdata('kode_dev') == '03') {
+            $this->db_caba = $this->load->database('db_caba_' . $db_pt . '_pks', TRUE); //PKS
+        } else {
+            $this->db_caba = $this->load->database('db_caba_' . $db_pt . '_site', TRUE); //SITE
+        }
+
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
             $this->session->set_flashdata('pesan', $pemberitahuan);
@@ -287,8 +297,14 @@ class Pp extends CI_Controller
 
 
             // $saldo = $tot - ($tot * $diskon);
+            $norefspp = "'" . $d->noreftxt . "'";
+            $nopo = "'" . $d->nopotxt . "'";
 
-            $row[] = $d->id;
+            // $row[] = $d->id;
+            $row[] =  '<a href="javascript:;" id="btn_pilhspp">
+            <button type="button" onClick="pilih_pp(' . $d->id . ',' . $norefspp . ',' . $nopo . ',' . $sisa . ')" id="pilih_pp_' . $d->id . '" class="btn btn-success waves-effect waves-light btn-xs">Pilih</button>
+            </a>';
+
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
             $row[] = $d->noreftxt;
             $row[] = $d->nopotxt;

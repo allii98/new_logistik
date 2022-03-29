@@ -662,39 +662,6 @@
 
     });
 
-    //untuk scan
-    // let scanner = new Instascan.Scanner({
-    //     video: document.getElementById('preview')
-    // });
-    // scanner.addListener('scan', function(content) {
-    //     $('#preview').hide();
-    //     scanner.stop();
-    // });
-    // Instascan.Camera.getCameras().then(function(cameras) {
-    //     if (cameras.length > 0) {
-    //         scanner.start(cameras[0]);
-    //         $('[name="putar_camera"]').on('change', function() {
-    //             if ($(this).val() == 1) {
-    //                 if (cameras[0] != "") {
-    //                     scanner.start(cameras[0]);
-    //                 } else {
-    //                     alert('No Front camera found!');
-    //                 }
-    //             } else if ($(this).val() == 2) {
-    //                 if (cameras[1] != "") {
-    //                     scanner.start(cameras[1]);
-    //                 } else {
-    //                     alert('No Back camera found!');
-    //                 }
-    //             }
-    //         });
-    //     } else {
-    //         console.error('No cameras found.');
-    //     }
-    // }).catch(function(e) {
-    //     console.error(e);
-    // });
-    //end
 
     function tampilModal() {
         $('#modalcariPO').modal('show');
@@ -884,7 +851,7 @@
                 }
             });
         } else {
-            console.log('4. update terbayar PO jadi 0');
+            // console.log('4. update terbayar PO jadi 0');
             var terbayar = 0;
 
             $.ajax({
@@ -1068,6 +1035,7 @@
         var id = '<?php echo $this->uri->segment('3'); ?>';
 
         form_data.append('id_pp', id);
+        form_data.append('hidden_refpp', $('#hidden_refpp').val());
         form_data.append('txt_no_ref_po', $('#txt_no_ref_po').val());
         form_data.append('hidden_no_po', $('#hidden_no_po').val());
         form_data.append('hidden_grup', $('#hidden_grup').val());
