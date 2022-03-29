@@ -214,7 +214,7 @@
         form_data.append('txt_kd_barang', $('#txt_kd_barang').val());
         form_data.append('txt_nm_barang', $('#txt_nm_barang').val());
         form_data.append('cmb_grup_barang', $('#cmb_grup_barang').val());
-        form_data.append('cmb_satuan', $('#cmb_satuan').val());
+        form_data.append('cmb_satuan', $('#txt_satuan').val());
         form_data.append('txt_spesifikasi', $('#txt_spesifikasi').val());
         form_data.append('txt_keterangan', $('#txt_keterangan').val());
         $.ajax({
