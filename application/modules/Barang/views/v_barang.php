@@ -1,121 +1,49 @@
 <!-- start row-->
-<div class="row justify-content-center">
-    <div class="col-md">
-        <div class="widget-rounded-circle card-box">
+<div class="container-fluid">
+    <div class="row mt-0">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row mb-2 justify-content-between">
+                        <h4 class="header-title ml-2">Data Barang</h4>
+                        <h6 id="lbl_status_pp"></h6>
+                        <div class="button-list mr-2">
+                            <button class="btn btn-xs btn-info" id="data_pp" onclick="modalInputBarang()">Tambah Barang</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
 
-            <h4 class="header-title mb-3" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">Data Barang</h4>
-            <button type="button" class="btn btn-primary btn-rounded waves-effect waves-light" onclick="modalInputBarang()">Tambah</button>
-            <hr>
-            <div class=" row">
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="x_panel">
-                        <div class="x_content">
                             <table id="tableBarang" class="table table-striped table-bordered" width="100%">
                                 <thead>
                                     <tr>
-                                        <th>
-                                            <font face="Verdana" size="2.5">#</font>
+                                        <th width="7%" style="font-size: 12px; padding:10px">
+                                            #
                                         </th>
-                                        <th>
-                                            <font face="Verdana" size="2.5">No.</font>
+                                        <th width="8%" style="font-size: 12px; padding:10px">
+                                            No.
                                         </th>
-                                        <th>
-                                            <font face="Verdana" size="2.5">Kode Barang</font>
+                                        <th width="25%" style="font-size: 12px; padding:10px">
+                                            Kode Barang
                                         </th>
-                                        <th>
-                                            <font face="Verdana" size="2.5">Nama Barang</font>
+                                        <th width="30%" style="font-size: 12px; padding:10px">
+                                            Nama Barang
                                         </th>
-                                        <th>
-                                            <font face="Verdana" size="2.5">Group</font>
+                                        <th width="30%" style="font-size: 12px; padding:10px">
+                                            Group
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 </tbody>
                             </table>
-                            <br />
-                            <br />
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
-    <!-- modalsimpan -->
-    <!-- <div class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true" id="modalInputBarang">
-        <div class="modal-dialog modal-dialog-scrollable">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Detail Barang</h4>
-                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <form action="javascript:;" class="form-horizontal" id="form_input_master_barang" name="form_input_master_barang" method="POST">
-                    <div class="modal-body">
-                        <input type="hidden" id="hidden_id" name="hidden_id">
-                        <div class="form-group row">
-                            <label for="txt_nmr_part" class="col-3 col-form-label">Nomor Part</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="txt_nmr_part" placeholder="Nomor Part" required="" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="txt_kd_barang" class="col-3 col-form-label">Kode Barang</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="txt_kd_barang" placeholder="Kode Barang" onfocus="modalListCOA()" required="" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="txt_nm_barang" name="txt_nm_barang" placeholder="Nama Barang" required="">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="cmb_grup_barang" class="col-3 col-form-label">Group Barang</label>
-                            <div class="col-9">
-                                <select class="form-control" id="cmb_grup_barang" name="cmb_grup_barang" required="">
-                                    <option value="">Pilih</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="cmb_satuan" class="col-3 col-form-label">Satuan</label>
-                            <div class="col-9">
-                                <select class="form-control" id="cmb_satuan" name="cmb_satuan" required="">
-                                    <option value="">Pilih</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="txt_spesifikasi" class="col-3 col-form-label">Spesifikasi</label>
-                            <div class="col-9">
-                                <input type="text" class="form-control" id="txt_spesifikasi" placeholder="Spesifikasi" required="" autocomplete="off">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="txt_keterangan" class="col-3 col-form-label">Keterangan</label>
-                            <div class="col-9">
-                                <textarea class="resizable_textarea form-control" id="txt_keterangan" name="txt_keterangan" placeholder="Keterangan" required=""></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-
-                        <button class="btn btn-sm btn-success col-md-2 col-md-offset-5" data-toggle="tooltip" data-placement="top" title="" id="btn_simpan" name="btn_simpan" data-original-title="Simpan">Simpan</button>
-                        <button class="btn btn-sm btn-warning col-md-2 col-md-offset-5" data-toggle="tooltip" data-placement="top" title="" id="btn_ubah" name="btn_ubah" data-original-title="Ubah">Ubah</button>
-
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div> -->
-    <!-- endmodalsimpan -->
-
-
-    <div class="modal fade" id="inputBarang" tabindex="-1" role="dialog" aria-labelledby="scrollableModalTitle" aria-modal="true">
+    <div id="inputBarang" class="modal fade" tabindex="-1" role="dialog" data-backdrop="static" aria-labelledby="scrollableModalTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -142,11 +70,17 @@
                         <div class="form-group row">
                             <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
                             <div class="col-9">
-                                <input type="text" class="form-control" id="txt_nm_barang" name="txt_nm_barang" placeholder="Nama Barang" readonly>
+                                <input type="text" class="form-control bg-light" id="txt_nm_barang" name="txt_nm_barang" placeholder="Nama Barang" readonly>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="txt_nm_barang" class="col-3 col-form-label">Nama Barang</label>
+                            <label for="cmb_grup_barang" class="col-3 col-form-label">Group</label>
+                            <div class="col-9">
+                                <input type="text" class="form-control bg-light" id="cmb_grup_barang" name="cmb_grup_barang" placeholder="Nama Barang" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="txt_satuan" class="col-3 col-form-label">Satuan Barang</label>
                             <div class="col-9">
                                 <input type="text" class="form-control" id="txt_satuan" name="txt_satuan" placeholder="Satuan">
                             </div>
@@ -189,11 +123,11 @@
                                 <table id="tableListCOA" class="table table-bordered" width="100%">
                                     <thead>
                                         <tr>
-                                            <th>No</th>
-                                            <th>No. COA</th>
-                                            <th>Nama Account</th>
-                                            <th>Type</th>
-                                            <th>Grup</th>
+                                            <th width="5%" style="font-size: 12px; padding:10px">No</th>
+                                            <th width="30%" style="font-size: 12px; padding:10px">No. COA</th>
+                                            <th width="40%" style="font-size: 12px; padding:10px">Nama Account</th>
+                                            <th width="5%" style="font-size: 12px; padding:10px">Type</th>
+                                            <th width="20%" style="font-size: 12px; padding:10px">Grup</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody_list_coa">
@@ -212,12 +146,62 @@
     </div>
 </div>
 
+<style>
+    .capital {
+        text-transform: capitalize;
+    }
+
+    table#tableBarang td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+
+    table#tableListCOA td {
+        padding: 3px;
+        padding-left: 10px;
+        font-size: 12px;
+    }
+</style>
+
 <script>
     $("#form_input_master_barang").validate({
         ignore: [],
         submitHandler: function(form) {
             simpan_barang();
         }
+    });
+
+
+    $(document).ready(function() {
+        listBarang();
+        satuan();
+
+
+        $("input[type=text]").keyup(function() {
+            $(this).val($(this).val().toUpperCase());
+        });
+
+
+        $('#tableListCOA tbody').on('click', 'tr', function() {
+            var dataClick = $('#tableListCOA').DataTable().row(this).data();
+            // console.log(dataClick);
+
+            var no_coa = dataClick[1].trim();
+            var nama_account = dataClick[2].trim();
+            var grp = dataClick[4].trim();
+            var row = $('#hidden_no_row').val();
+            $('#txt_kd_barang').val(no_coa);
+            $('#txt_nm_barang').val(nama_account);
+            $('#cmb_grup_barang').val(grp);
+
+            $('#hidden_no_acc_' + row).val(no_coa);
+            $('#hidden_nama_acc_' + row).val(nama_account);
+
+            $('#modalListCOA').modal('hide');
+            group_barang(no_coa);
+        });
+
     });
 
     function simpan_barang() {
@@ -385,28 +369,7 @@
         });
     }
 
-    $(document).ready(function() {
-        listBarang();
-        satuan();
 
-        $('#tableListCOA tbody').on('click', 'tr', function() {
-            var dataClick = $('#tableListCOA').DataTable().row(this).data();
-            console.log(dataClick);
-
-            var no_coa = dataClick[1].trim();
-            var nama_account = dataClick[2].trim();
-            var row = $('#hidden_no_row').val();
-            $('#txt_kd_barang').val(no_coa);
-            $('#txt_nm_barang').val(nama_account);
-
-            $('#hidden_no_acc_' + row).val(no_coa);
-            $('#hidden_nama_acc_' + row).val(nama_account);
-
-            $('#modalListCOA').modal('hide');
-            group_barang(no_coa);
-        });
-
-    });
 
     function modalListCOA() {
         $('#modalListCOA').modal('show');
@@ -428,10 +391,10 @@
                 "targets": [0],
                 "orderable": false,
             }, ],
-            "lengthMenu": [
-                [5, 10, 15, -1],
-                [10, 15, 20, 25]
-            ],
+
+            "language": {
+                "infoFiltered": ""
+            }
         });
     }
 </script>

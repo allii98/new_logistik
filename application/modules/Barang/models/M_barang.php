@@ -97,7 +97,7 @@ class M_barang extends CI_Model
         $data_master_barang["kode"]       = $this->session->userdata('kode_pt');
 
         if (empty($this->input->post('hidden_id'))) {
-            $data_master_barang["id"]         = $no_id;
+
 
             $this->db_logistik_center->insert('kodebar', $data_master_barang);
             if ($this->db_logistik_center->affected_rows() > 0) {
@@ -110,7 +110,7 @@ class M_barang extends CI_Model
         } else {
             $id = $this->input->post('hidden_id');
 
-            $data_master_barang["id"]   = $id;
+
 
             $this->db_logistik_center->set($data_master_barang);
             $this->db_logistik_center->where('id', $id);
