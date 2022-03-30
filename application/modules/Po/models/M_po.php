@@ -259,6 +259,13 @@ class M_po extends CI_Model
         $this->db_logistik_pt->update('po', $data);
         return TRUE;
     }
+    function update_ppn($nilai)
+    {
+        $data = array('ppn' => $nilai);
+        $this->db_logistik_center->where('id', 1);
+        $this->db_logistik_center->update('tb_ppn', $data);
+        return TRUE;
+    }
     public function editPPO($no_id, $ppo)
     {
         $this->db_logistik_pt->where('id', $no_id);

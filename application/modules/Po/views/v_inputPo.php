@@ -321,14 +321,18 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             <div class="form-group row" style="margin-bottom: 1px;">
                                 <label for="ppn" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px; font-size: 12px;">
                                     PPN
-                                    <!-- <font face="Verdana" size="1.5">PPN*</font> -->
                                 </label>
-                                <div class="col-9 col-xl-12 ppn">
+                                <div class="col-4 col-xl-12">
                                     <select class="form-control form-control-sm" id="ppn" name="ppn" required>
-                                        <option value="0">N</option>
-                                        <option value="10">Y</option>
+                                        <!-- <option value="0">N</option>
+                                        <option value="10">Y</option> -->
                                     </select>
                                 </div>
+                                <label for="tmpo_pengiriman" class="col-lg-3 col-xl-3 col-form-label" style="margin-left: -11px;margin-top: -3px; font-size: 14px;">
+                                    <b id="nilai_ppn"></b>
+                                    &nbsp;<button class="btn btn-xs btn-warning fa fa-edit mb-1" id="ubah_ppn" name="ubah_ppn" onclick="ubah_ppn()" type="button" data-toggle="tooltip" data-placement="right" title="Ubah PPN"></button>
+                                </label>
+
                             </div>
                             <div class="form-group row" style="margin-bottom: 1px;">
                                 <label for="keterangan" class="col-lg-3 col-xl-3 col-12 col-form-label" style="margin-top: -5px;font-size: 12px;">
@@ -588,16 +592,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                                     </td>
                                 </table>
                                 <div class="sub-header" style="margin-top: -15px; margin-bottom: -15px;">
-                                    <!-- <div class="row ml-1 mr-1 justify-content-between">
 
-
-                                        
-                                        <h6>
-                                            <h6>
-                                                <button style="display:none;" onclick="cetak()" id="cetak" class="btn btn-danger btn-xs fa fa-print" title="Cetak"></button>
-                                            </h6>
-                                        </h6>
-                                    </div> -->
                                     <input type="hidden" id="hidden_no_po" name="hidden_no_po">
                                     <input type="hidden" id="hidden_id_po" name="hidden_id_po">
                                     <input type="hidden" id="hidden_no_ref_po" name="hidden_no_ref_po">
@@ -904,6 +899,52 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     </div>
 </div>
 
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" id="modalubahppn">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="text-center mt-2 mb-1">
+                    <i class="dripicons-warning h1 text-warning"></i>
+                </div>
+
+
+
+                <form class="parsley-examples" action="#" novalidate>
+                    <div class="mb-1">
+                        <label for="value_ppn" class="form-label">Nilai PPN*</label>
+                        <div class="input-group input-group-merge">
+                            <input type="number" id="value_ppn" class="form-control" placeholder="Masukkan nilai ppn" autofocus>
+                        </div>
+                        <ul class="parsley-errors-list filled" id="ppn_valid" style="display: none;">
+                            <li class="parsley-required">Nilai ppn tidak boleh kosong!</li>
+                        </ul>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="pw_ppn" class="form-label">Password*</label>
+                        <div class="input-group input-group-merge">
+                            <input type="password" id="pw_ppn" class="form-control" placeholder="Masukkan password">
+                            <div class="input-group-text" data-password="false">
+                                <span class="password-eye"></span>
+                            </div>
+                        </div>
+                        <ul class="parsley-errors-list filled" id="pw_ppn_validasi" style="display: none;">
+                            <li class="parsley-required" id="textpwppn"></li>
+                        </ul>
+                    </div>
+                    <div class="mb-0 text-center">
+                        <button type="button" class="btn btn-warning my-2" id="btn_ubah_ppn" onclick="validasi_update_ppn()">Update</button>
+                        <button type="button" class="btn btn-default btn_close" data-dismiss="modal">Cancel</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 <input type="hidden" name="password" id="password" value="<?= $this->session->userdata('pw') ?>">
 
 
@@ -1019,6 +1060,34 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
     }
 
 
+    function getPPN() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo site_url('Po/get_ppn'); ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            cache: false,
+
+            data: '',
+            success: function(data) {
+                $('#ppn').empty();
+
+
+                var opsi_pt = '<option value="0">N</option>';
+                var nilai = "Y";
+                $('#ppn').append(opsi_pt);
+                $.each(data, function(index) {
+                    var opsi_pt = '<option value="' + data[index].ppn + '">' + nilai + '</option>';
+                    $('#ppn').append(opsi_pt);
+                });
+            },
+            error: function(request) {
+                alert(request.responseText);
+            }
+        });
+    }
+
+
 
     function goBack() {
         window.history.back();
@@ -1032,14 +1101,94 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         location.href = "<?php echo base_url('Po') ?>";
     }
 
-    // function ganti_spp() {
-    //     $('.div_form_3').remove();
-    //     $('#tableItemPO').remove();
-    //     $('#modalcarispp').modal('show');
-    //     // $('#tr_' + id).remove();
-    // }
+
+    function validasi_update_ppn() {
+
+        var nilai = $('#value_ppn').val();
+        var password = $('#pw_ppn').val();
+        var pw_session = $('#password').val();
+        var pw = $('#pw_ppn').val().length;
+        if (!nilai) {
+            $('#value_ppn').addClass('parsley-error');
+            $('#ppn_valid').css('display', 'block');
+        } else if (pw == 0) {
+            $('#pw_ppn').addClass('parsley-error');
+            $('#pw_ppn_validasi').css('display', 'block');
+            $('#textpwppn').html('Password tidak boleh kosong!');
+        } else {
+            $('#pw_ppn').removeClass('parsley-error');
+            $('#pw_ppn_validasi').css('display', 'none');
+
+            $('#value_ppn').removeClass('parsley-error');
+            $('#ppn_valid').css('display', 'none');
+
+            if (password == pw_session) {
+                // var n = $('#no_baris').val();
+                update_ppn();
+                console.log("oke ppn di update");
+            } else {
+                $('#pw_ppn').addClass('parsley-error');
+                $('#pw_ppn_validasi').css('display', 'block');
+                $('#textpwppn').html('Password Salah!');
+            }
+        }
+    }
+
+    function update_ppn() {
+        $.ajax({
+            type: "POST",
+            url: "<?php echo base_url('Po/update_ppn') ?>",
+            dataType: "JSON",
+            beforeSend: function() {},
+            data: {
+                nilai: $('#value_ppn').val(),
+            },
+            success: function(data) {
+                if (data == true) {
+                    $('#value_ppn').val('');
+                    $('#pw_ppn').val('');
+                    $('#modalubahppn').modal('hide');
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Di update',
+                        text: 'Berhasil Diupdate!',
+                        icon: 'success',
+                        loader: false
+                    });
+                    getPPN();
+                } else {
+                    $.toast({
+                        position: 'top-right',
+                        heading: 'Oppss',
+                        text: 'Silahkan coba lagi.',
+                        icon: 'error',
+                        loader: false
+                    });
+                }
+            },
+            error: function(response) {
+                alert('KONEKSI TERPUTUS!');
+            }
+        });
+    }
+
+    $('#ppn').change(function(e) {
+        e.preventDefault();
+        // console.log(this.value);
+        var nilai = this.value;
+        if (nilai == 0) {
+            $('#nilai_ppn').text('');
+        } else {
+            $('#nilai_ppn').text(nilai + '%');
+
+        }
+    });
 
 
+    function ubah_ppn() {
+        $('#modalubahppn').modal('show');
+        $('#value_ppn').focus();
+    }
 
     function batal() {
         $('#modalKonfirmasibatalPO').modal('show');
@@ -1251,7 +1400,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         // var input = document.getElementById("keterangan");
 
 
-
+        getPPN();
         $('.div_form_2').hide();
         $('.div_form_3').hide();
         setInterval(function() {
@@ -2698,7 +2847,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                 var total_pph = 0;
             }
 
-            if (ppn == 10) {
+            if (ppn != 10) {
                 // var jml_ppn = ppn / 100;
                 // var total_ppn = qty_harga * jml_ppn;
                 var total_ppn = 0;
@@ -2872,7 +3021,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
         }
         if (simpanBaru) {
 
-            console.log('simpan pertama', id);
+            // console.log('simpan pertama', id);
 
             noppo = $('#noppo' + id).val();
 

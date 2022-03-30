@@ -5,8 +5,8 @@ $alamat_supplier = (!empty($supplier->alamat)) ? $supplier->alamat : "-";
 $tlp_supplier = (!empty($supplier->tlp)) ? $supplier->tlp : "-";
 $fax_supplier = (!empty($supplier->fax)) ? $supplier->fax : "-";
 
-$pot_ppn_format = ($po->ppn == "10") ? number_format($dikurangi_biayalain * 0.1, 2, ",", ".") : "0";
-$pot_ppn = ($po->ppn == "10") ? ($dikurangi_biayalain * 0.1) : "0";
+$pot_ppn_format = ($po->ppn == $ppn->ppn) ? number_format($dikurangi_biayalain * 0.1, 2, ",", ".") : "0";
+$pot_ppn = ($po->ppn == $ppn->ppn) ? ($dikurangi_biayalain * 0.1) : "0";
 
 $jml_pph = $po->pph / 100;
 $hit_pph_format = ($po->pph != NULL) ? number_format($dikurangi_biayalain * $jml_pph, 2, ",", ".") : "0";
@@ -331,7 +331,7 @@ $nama_pt = $this->session->userdata('nama_pt');
       <?php } ?>
     </tr>
     <tr>
-      <td colspan="3">PPN 10%</td>
+      <td colspan="3">PPN <?php echo $ppn->ppn ?>%</td>
       <?php if ($this->session->userdata('status_lokasi') != 'HO' && $po->jenis_spp != 'SPPI') { ?>
         <td colspan="2" align="right"><?= $list_item->kurs; ?>. </td>
       <?php } else if ($this->session->userdata('status_lokasi') != 'HO' && $po->jenis_spp == 'SPPI') { ?>

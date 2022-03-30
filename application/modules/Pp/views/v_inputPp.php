@@ -1046,7 +1046,7 @@
         //     jumlah: jumlah
         // });
 
-        if (jumlah == "0,00") {
+        if (jumlah == 0) {
             Swal.fire({
                 text: "Saldo sudah 0!",
                 confirmButtonColor: '#3085d6',
