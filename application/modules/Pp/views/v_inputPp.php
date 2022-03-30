@@ -282,7 +282,7 @@
                             <table id="tableDataPO" class="table table-striped table-bordered" width="100%">
                                 <thead>
                                     <tr>
-                                        <th style="font-size: 12px; padding:10px">id</th>
+                                        <th style="font-size: 12px; padding:10px">#</th>
                                         <th style="font-size: 12px; padding:10px">Tanggal</th>
                                         <th style="font-size: 12px; padding:10px">No. Ref. PO</th>
                                         <th style="font-size: 12px; padding:10px">No PO</th>
@@ -852,7 +852,7 @@
 
                 data: form_data,
                 success: function(data) {
-                    console.log('status', data);
+                    // console.log('status', data);
                     if (data.status == true) {
                         $('#a_pp_baru').show();
                         $.toast({
@@ -976,8 +976,6 @@
             "processing": true,
             "serverSide": true,
             "order": [],
-            "select": true,
-            "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {},
             "ajax": {
                 "url": "<?php echo site_url('Pp/list_po') ?>",
                 "type": "POST",
@@ -1027,10 +1025,9 @@
                 [5, 10, 15, -1],
                 [10, 15, 20, 25]
             ],
-            "aoColumnDefs": [{
-                "bSearchable": false,
-                "bVisible": false,
-                "aTargets": [0, 3]
+            "columnDefs": [{
+                "targets": [0],
+                "orderable": false,
             }, ],
             "language": {
                 "infoFiltered": ""
@@ -1038,47 +1035,33 @@
 
         });
 
-        $('#tableDataPO tbody').on('click', 'tr', function() {
 
-            var dataClick = $('#tableDataPO').DataTable().row(this).data();
-            // var tgl_po = new Date(dataClick[0]);
-            var id_po = dataClick[0];
-            var tgl_po = dataClick[1];
-            // console.log('tanggal', tgl_po);
-            var no_ref_po = dataClick[2];
-            var no_po = dataClick[3];
-            var kd_supplier = dataClick[4];
-            var nama_supplier = dataClick[5];
-            var bayar = dataClick[6];
-            var nilai_po = dataClick[7];
-            var nilai_bpo = dataClick[8];
-            var sudah_dibayar = dataClick[9];
-            var jumlah = dataClick[9];
-            var kurs = dataClick[11];
+    }
 
-            // $('#txt_tgl_po').val(tgl_po);
-            // var tgl = tgl_po.replace("-", "/");
-            console.log('ini jumlahnya', jumlah);
-            if (jumlah == "0,00") {
-                Swal.fire({
-                    text: "Saldo sudah 0!",
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'OK'
-                }).then((result) => {
-                    if (result.value) {
-                        tampilModal();
-                        //
-                    }
-                });
-            } else {
-                ambilPO(id_po, no_ref_po, no_po);
+    function pilih_pp(id_po, no_ref_po, no_po, jumlah) {
+        // console.table({
+        //     id_po: id_po,
+        //     no_ref_po: no_ref_po,
+        //     no_po: no_po,
+        //     jumlah: jumlah
+        // });
 
-            }
+        if (jumlah == "0,00") {
+            Swal.fire({
+                text: "Saldo sudah 0!",
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'OK'
+            }).then((result) => {
+                if (result.value) {
+                    tampilModal();
+                    //
+                }
+            });
+        } else {
+            ambilPO(id_po, no_ref_po, no_po);
 
-
-            // console.log(d);
-        });
+        }
     }
 
     function ambilPO(id_po, no_ref_po, nopo) {
@@ -1348,7 +1331,7 @@
         var jumlah = tot;
 
         if (parseFloat(jumlah) == parseFloat(nilaipo)) {
-            console.log('1. update terbayar PO jadi 1');
+            // console.log('1. update terbayar PO jadi 1');
             var terbayar = 1;
 
             $.ajax({
