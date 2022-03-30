@@ -17,7 +17,18 @@ class Posting extends CI_Controller
 
             $db_pt = check_db_pt();
             $this->db_logistik = $this->load->database('db_logistik', TRUE);
-            $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+            // $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+
+            if ($this->session->userdata('kode_dev') == '01') {
+                  $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt, TRUE); //HO
+            } elseif ($this->session->userdata('kode_dev') == '02') {
+                  $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_ro', TRUE); //RO
+            } elseif ($this->session->userdata('kode_dev') == '03') {
+                  $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_pks', TRUE); //PKS
+            } else {
+                  $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_site', TRUE); //SITE
+            }
+
             $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
             $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
             $this->db_personalia = $this->load->database('db_personalia_' . $db_pt, TRUE);
@@ -568,8 +579,385 @@ class Posting extends CI_Controller
       public function transfer_to_gl()
       {
             //var untuk save ke header entry
-            $data = $this->M_posting->posting_ke_gl();
-            echo json_encode($data);
+            // $data = $this->M_posting->posting_ke_gl();
+
+            // delete header entry
+            $this->M_posting->delete_header_entry();
+
+            // delete detail entry
+            $this->M_posting->delete_entry();
+
+            // LPB TO GL
+            //get data masukitem
+            $data_masukitem = $this->M_posting->get_data_masukitem();
+
+            foreach ($data_masukitem as $d) {
+
+                  // $mutasi_ga = substr($d['noref'], 8, 3);
+                  $mutasi = $d['jenis_lpb'];
+
+                  if ($mutasi == '1') {
+                        $harga_item_po = $this->M_posting->cari_harga_mutasi($d['refpo'], $d['kodebar']);
+                  } else {
+                        $result_harga_item_po = $this->M_posting->cari_harga_po($d['refpo'], $d['kodebar'], $d['norefppo']);
+                        $harga_item_po = $result_harga_item_po['harga'];
+                  }
+
+                  $result_insert_to_gl_header = $this->insert_lpb_to_header_entry_gl($d['ttg'], $d['kode_dev'], $d['noref']);
+                  $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($d['ttg'], $harga_item_po, $d['qty'], $d['kode_dev'], $d['kodebar'], $d['noref'], $d['nabar'], $d['refpo']);
+                  $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_to_entry_gl_cr($d['ttg'], $harga_item_po, $d['qty'], $d['kode_dev'], $d['kodebar'], $d['noref'], $d['nabar'], $d['refpo'], $d['kode_supply'], $d['nama_supply'], $mutasi);
+            }
+
+            // BKB TO GL
+            // get data keluarbrgitem
+            $data_keluarbrgitem = $this->M_posting->get_data_keluarbrgitem();
+
+            foreach ($data_keluarbrgitem as $d2) {
+
+                  $nilai_keluarbrgitem_untuk_register = $this->M_posting->get_rata2_nilai_untuk_register($d['kodebar'], $d2['txtperiode']);
+
+                  $result_insert_to_gl_header = $this->insert_bkb_to_header_entry_gl($d2['skb'], $d2['kode_dev'], $d2['NO_REF']);
+                  $result_insert_bkb_to_entry_gl_cr = $this->insert_bkb_to_entry_gl_cr($d2['skb'], $nilai_keluarbrgitem_untuk_register, $d2['qty2'], $d2['kode_dev'], $d2['kodebar'], $d2['NO_REF'], $d2['nabar'], $d2['nobpb'], $d2['ket']);
+                  $result_insert_bkb_to_entry_gl_dr = $this->insert_bkb_to_entry_gl_dr($d2['skb'], $nilai_keluarbrgitem_untuk_register, $d2['qty2'], $d2['kode_dev'], $d2['kodebar'], $d2['NO_REF'], $d2['nabar'], $d2['nobpb'], $d2['kodesub'], $d2['ketsub'], $d2['ket']);
+            }
+
+            // RETUR TO GL
+            // get data retskbitem
+            $data_retskbitem = $this->M_posting->get_data_retskbitem();
+
+            foreach ($data_retskbitem as $d3) {
+                  $harga_item_bkb = $this->M_posting->cari_harga_bkb($d3['norefbkb'], $d3['kodebar']);
+
+                  $result_insert_to_gl_header = $this->insert_lpb_to_header_entry_gl($d3['noretur'], $d3['kode_dev'], $d3['norefretur']);
+                  $result_insert_lpb_to_entry_gl_dr = $this->insert_lpb_to_entry_gl_dr($d3['noretur'], $harga_item_bkb, $d3['qty'], $d3['kode_dev'], $d3['kodebar'], $d3['norefretur'], $d3['nabar'], $d3['norefbkb']);
+                  $result_insert_lpb_to_entry_gl_cr = $this->insert_lpb_retur_to_entry_gl_cr($d3['noretur'], $harga_item_bkb, $d3['qty'], $d3['kode_dev'], $d3['kodebar'], $d3['norefretur'], $d3['nabar'], $d3['norefbkb'], $d3['kodesub'], $d3['ketsub']);
+            }
+
+            $true_aja_deh = true;
+            echo json_encode($true_aja_deh);
+      }
+
+      function insert_lpb_to_header_entry_gl($no_lpb, $kode_dev, $no_ref_lpb)
+      {
+            $periode = $this->session->userdata('Ymd_periode');
+            $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            $user = $this->session->userdata('user');
+
+            $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+            //var untuk save ke header entry
+            $header_entry["date"] = date("Y-m-d");
+            $header_entry["periode"] = $periodes;
+            $header_entry["ref"] = 'LPB-' . $no_lpb;
+            $header_entry["totaldr"] = 0;
+            $header_entry["totalcr"] = 0;
+            $header_entry["periodetxt"] = $txtperiode;
+            $header_entry["modul"] = 'LOGISTIK';
+            $header_entry["lokasi"] = $status_lokasi;
+            $header_entry["SBU"] = $kode_dev;
+            $header_entry["USER"] = $user;
+            $header_entry["noref"] = $no_ref_lpb;
+
+            //cek apakah sudah ada di header entry
+            $cek_header_entry = $this->M_posting->cek_header_entry($header_entry);
+
+            if ($cek_header_entry == 0) {
+                  return $this->M_posting->insert_lpb_to_header_entry_gl($header_entry);
+            } else {
+                  return false;
+            }
+      }
+
+      function insert_lpb_to_entry_gl_dr($no_lpb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_lpb, $nabar, $no_ref_po)
+      {
+            $periode = $this->session->userdata('Ymd_periode');
+            $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            $user = $this->session->userdata('user');
+
+            $totharga = $harga_item_po * $quantiti;
+
+            $data_noac_gl = $this->M_posting->get_data_noac_gl($kodebar);
+
+            $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+            //var untuk save ke entry
+            $entry["date"] = date("Y-m-d");
+            $entry["sbu"] = $kode_dev;
+            $entry["noac"] = $data_noac_gl['noac'];
+            $entry["desc"] = '';
+            $entry["group"] = $data_noac_gl['group'];
+            $entry["type"] = $data_noac_gl['type'];
+            $entry["level"] = $data_noac_gl['level'];
+            $entry["general"] = $data_noac_gl['general'];
+            $entry["dc"] = 'D';
+            $entry["dr"] = $totharga;
+            $entry["cr"] = 0;
+            $entry["periode"] = $periodes;
+            $entry["converse"] = 0;
+            $entry["ref"] = 'LPB-' . $no_lpb;
+            $entry["noref"] = $no_ref_lpb;
+            $entry["descac"] = $nabar;
+            $entry["ket"] = 'Persediaan No.PO:' . $no_ref_po;
+            $entry["begindr"] = 0;
+            $entry["begincr"] = 0;
+            $entry["kurs"] = '';
+            $entry["kursrate"] = '';
+            $entry["tglkurs"] = '';
+            $entry["periodetxt"] = $txtperiode;
+            $entry["module"] = 'LOGISTIK';
+            $entry["lokasi"] = $status_lokasi;
+            $entry["POST"] = 0;
+            $entry["tglinput"] = date("Y-m-d H:i:s");
+            $entry["USER"] = $user;
+            $entry["kodebar"] = $kodebar;
+
+            if ($data_noac_gl != NULL) {
+                  return $this->M_posting->insert_lpb_to_entry_gl_dr($entry, $entry["ref"]);
+            } else {
+                  return 0;
+            }
+      }
+
+      function insert_lpb_to_entry_gl_cr($no_lpb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_lpb, $nabar, $no_ref_po, $kode_supply, $nama_supply, $mutasi)
+      {
+            $periode = $this->session->userdata('Ymd_periode');
+            $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            $user = $this->session->userdata('user');
+
+            $totharga = $harga_item_po * $quantiti;
+
+            if ($mutasi == '1') {
+                  $data_noac_gl = $this->M_posting->get_data_noac_gl($kode_supply);
+            } else {
+                  $data_noac_gl = $this->M_posting->get_data_noac_supplier($kode_supply);
+            }
+
+            $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+            //var untuk save ke entry
+            $entry["date"] = date("Y-m-d");
+            $entry["sbu"] = $kode_dev;
+            $entry["noac"] = $data_noac_gl['noac'];
+            $entry["desc"] = '';
+            $entry["group"] = $data_noac_gl['group'];
+            $entry["type"] = $data_noac_gl['type'];
+            $entry["level"] = $data_noac_gl['level'];
+            $entry["general"] = $data_noac_gl['general'];
+            $entry["dc"] = 'C';
+            $entry["dr"] = 0;
+            $entry["cr"] = $totharga;
+            $entry["periode"] = $periodes;
+            $entry["converse"] = 0;
+            $entry["ref"] = 'LPB-' . $no_lpb;
+            $entry["noref"] = $no_ref_lpb;
+            $entry["descac"] = $data_noac_gl['nama'];
+            $entry["ket"] = 'Hutang Supplier No.PO:' . $no_ref_po . '/' . $nabar;
+            $entry["begindr"] = 0;
+            $entry["begincr"] = 0;
+            $entry["kurs"] = '';
+            $entry["kursrate"] = '';
+            $entry["tglkurs"] = '';
+            $entry["periodetxt"] = $txtperiode;
+            $entry["module"] = 'LOGISTIK';
+            $entry["lokasi"] = $status_lokasi;
+            $entry["POST"] = 0;
+            $entry["tglinput"] = date("Y-m-d H:i:s");
+            $entry["USER"] = $user;
+            $entry["kodebar"] = $kodebar;
+
+            if ($data_noac_gl != NULL) {
+                  return $this->M_posting->insert_lpb_to_entry_gl_cr($entry, $entry["ref"]);
+            } else {
+                  return 0;
+            }
+      }
+
+      function insert_bkb_to_header_entry_gl($no_bkb, $kode_dev, $no_ref_bkb)
+      {
+            $periode = $this->session->userdata('Ymd_periode');
+            $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            $user = $this->session->userdata('user');
+
+            $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+            //var untuk save ke header entry
+            $header_entry["date"] = date("Y-m-d");
+            $header_entry["periode"] = $periodes;
+            $header_entry["ref"] = 'BKB-' . $no_bkb;
+            $header_entry["totaldr"] = 0;
+            $header_entry["totalcr"] = 0;
+            $header_entry["periodetxt"] = $txtperiode;
+            $header_entry["modul"] = 'LOGISTIK';
+            $header_entry["lokasi"] = $status_lokasi;
+            $header_entry["SBU"] = $kode_dev;
+            $header_entry["USER"] = $user;
+            $header_entry["noref"] = $no_ref_bkb;
+
+            //cek apakah sudah ada di header entry
+            $cek_header_entry = $this->M_posting->cek_header_entry($header_entry);
+
+            if ($cek_header_entry == 0) {
+                  return $this->M_posting->insert_bkb_to_header_entry_gl($header_entry);
+            } else {
+                  return false;
+            }
+      }
+
+      function insert_bkb_to_entry_gl_cr($no_bkb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_bkb, $nabar, $no_ref_po, $ket)
+      {
+            $periode = $this->session->userdata('Ymd_periode');
+            $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            $user = $this->session->userdata('user');
+
+            $totharga = $harga_item_po * $quantiti;
+
+            $data_noac_gl = $this->M_posting->get_data_noac_gl($kodebar);
+
+            $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+            //var untuk save ke entry
+            $entry["date"] = date("Y-m-d");
+            $entry["sbu"] = $kode_dev;
+            $entry["noac"] = $kodebar;
+            $entry["desc"] = '';
+            $entry["group"] = $data_noac_gl['group'];
+            $entry["type"] = $data_noac_gl['type'];
+            $entry["level"] = $data_noac_gl['level'];
+            $entry["general"] = $data_noac_gl['general'];
+            $entry["dc"] = 'C';
+            $entry["dr"] = 0;
+            $entry["cr"] = $totharga;
+            $entry["periode"] = $periodes;
+            $entry["converse"] = 0;
+            $entry["ref"] = 'BKB-' . $no_bkb;
+            $entry["noref"] = $no_ref_bkb;
+            $entry["descac"] = $nabar;
+            $entry["ket"] = 'BKB:' . $nabar . '(' . $quantiti . '/' . $totharga . ')/' . $ket;
+            $entry["begindr"] = 0;
+            $entry["begincr"] = 0;
+            $entry["kurs"] = '';
+            $entry["kursrate"] = '';
+            $entry["tglkurs"] = '';
+            $entry["periodetxt"] = $txtperiode;
+            $entry["module"] = 'LOGISTIK';
+            $entry["lokasi"] = $status_lokasi;
+            $entry["POST"] = 0;
+            $entry["tglinput"] = date("Y-m-d H:i:s");
+            $entry["USER"] = $user;
+            $entry["kodebar"] = $kodebar;
+
+            if ($data_noac_gl != NULL) {
+                  return $this->M_posting->insert_bkb_to_entry_gl_cr($entry, $entry["noref"]);
+            } else {
+                  return 0;
+            }
+      }
+
+      function insert_bkb_to_entry_gl_dr($no_bkb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_bkb, $nabar, $no_ref_po, $kodesub, $ketsub, $ket)
+      {
+            $periode = $this->session->userdata('Ymd_periode');
+            $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            $user = $this->session->userdata('user');
+
+            $totharga = $harga_item_po * $quantiti;
+
+            $data_noac_gl = $this->M_posting->get_data_noac_beban($kodesub);
+
+            $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+            //var untuk save ke entry
+            $entry["date"] = date("Y-m-d");
+            $entry["sbu"] = $kode_dev;
+            $entry["noac"] = $data_noac_gl['noac'];
+            $entry["desc"] = '';
+            $entry["group"] = $data_noac_gl['group'];
+            $entry["type"] = $data_noac_gl['type'];
+            $entry["level"] = $data_noac_gl['level'];
+            $entry["general"] = $data_noac_gl['general'];
+            $entry["dc"] = 'D';
+            $entry["dr"] = $totharga;
+            $entry["cr"] = 0;
+            $entry["periode"] = $periodes;
+            $entry["converse"] = 0;
+            $entry["ref"] = 'BKB-' . $no_bkb;
+            $entry["noref"] = $no_ref_bkb;
+            $entry["descac"] = $ketsub;
+            $entry["ket"] = 'BKB:' . $nabar . '(' . $quantiti . '/' . $totharga . ')/' . $ket;
+            $entry["begindr"] = 0;
+            $entry["begincr"] = 0;
+            $entry["kurs"] = '';
+            $entry["kursrate"] = '';
+            $entry["tglkurs"] = '';
+            $entry["periodetxt"] = $txtperiode;
+            $entry["module"] = 'LOGISTIK';
+            $entry["lokasi"] = $status_lokasi;
+            $entry["POST"] = 0;
+            $entry["tglinput"] = date("Y-m-d H:i:s");
+            $entry["USER"] = $user;
+            $entry["kodebar"] = $kodebar;
+
+            if ($data_noac_gl != NULL) {
+                  return $this->M_posting->insert_bkb_to_entry_gl_dr($entry, $entry["noref"]);
+            } else {
+                  return 0;
+            }
+      }
+
+      function insert_lpb_retur_to_entry_gl_cr($no_lpb, $harga_item_po, $quantiti, $kode_dev, $kodebar, $no_ref_lpb, $nabar, $no_ref_po, $kodesub, $ketsub)
+      {
+            $periode = $this->session->userdata('Ymd_periode');
+            $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            $user = $this->session->userdata('user');
+
+            $totharga = $harga_item_po * $quantiti;
+
+            $data_noac_gl = $this->M_posting->get_data_noac_beban($kodesub);
+
+            $periodes = substr($this->session->userdata('ym_periode'), 0, 4) . '-' . substr($this->session->userdata('ym_periode'), 4, 6) . '-01';
+
+            //var untuk save ke entry
+            $entry["date"] = date("Y-m-d");
+            $entry["sbu"] = $kode_dev;
+            $entry["noac"] = $data_noac_gl['noac'];
+            $entry["desc"] = '';
+            $entry["group"] = $data_noac_gl['group'];
+            $entry["type"] = $data_noac_gl['type'];
+            $entry["level"] = $data_noac_gl['level'];
+            $entry["general"] = $data_noac_gl['general'];
+            $entry["dc"] = 'C';
+            $entry["dr"] = 0;
+            $entry["cr"] = $totharga;
+            $entry["periode"] = $periodes;
+            $entry["converse"] = 0;
+            $entry["ref"] = 'LPB-' . $no_lpb;
+            $entry["noref"] = $no_ref_lpb;
+            $entry["descac"] = $ketsub;
+            $entry["ket"] = 'Hutang Supplier No.PO:' . $no_ref_po . '/' . $nabar;
+            $entry["begindr"] = 0;
+            $entry["begincr"] = 0;
+            $entry["kurs"] = '';
+            $entry["kursrate"] = '';
+            $entry["tglkurs"] = '';
+            $entry["periodetxt"] = $txtperiode;
+            $entry["module"] = 'LOGISTIK';
+            $entry["lokasi"] = $status_lokasi;
+            $entry["POST"] = 0;
+            $entry["tglinput"] = date("Y-m-d H:i:s");
+            $entry["USER"] = $user;
+            $entry["kodebar"] = $kodebar;
+
+            if ($data_noac_gl != NULL) {
+                  return $this->M_posting->insert_lpb_to_entry_gl_cr($entry, $entry["noref"]);
+            } else {
+                  return 0;
+            }
       }
 
       function cekPeriodeGL()
