@@ -511,6 +511,206 @@ class M_posting extends CI_Model
             $this->db_logistik_pt->from('stockawal_harian');
             return $this->db_logistik_pt->get()->row();
       }
+
+      function get_data_masukitem()
+      {
+            $txtperiode = $this->session->userdata('ym_periode');
+
+            $query = "SELECT masukitem.ttg, masukitem.noref, masukitem.nabar, masukitem.kode_dev, masukitem.refpo, masukitem.noref, masukitem.norefppo, masukitem.kodebar, .masukitem.qty, stokmasuk.kode_supply, stokmasuk.nama_supply, stokmasuk.jenis_lpb FROM masukitem LEFT JOIN stokmasuk ON masukitem.noref = stokmasuk.noref WHERE txtperiode = '$txtperiode'";
+            $result = $this->db_logistik_pt->query($query)->result_array();
+            return $result;
+      }
+
+      function delete_header_entry()
+      {
+            $txtperiode = $this->session->userdata('ym_periode');
+
+            $tahun  = substr($txtperiode, 0, 4);
+            $bln  = substr($txtperiode, 4, 6);
+
+            $periode_nya = $tahun . '-' . $bln . '-' . '01';
+            $query = "DELETE FROM header_entry WHERE periode = '$periode_nya'";
+            $result = $this->db_mips_gl->query($query);
+            return $result;
+      }
+
+      function delete_entry()
+      {
+            $txtperiode = $this->session->userdata('ym_periode');
+
+            $tahun  = substr($txtperiode, 0, 4);
+            $bln  = substr($txtperiode, 4, 6);
+
+            $periode_nya = $tahun . '-' . $bln . '-' . '01';
+            $query = "DELETE FROM `entry` WHERE periode = '$periode_nya'";
+            $result = $this->db_mips_gl->query($query);
+            return $result;
+      }
+
+      function cek_header_entry($noref)
+      {
+            $noref = $noref['noref'];
+            $query = "SELECT noref FROM header_entry WHERE noref = '$noref'";
+            $result = $this->db_mips_gl->query($query)->num_rows();
+            return $result;
+      }
+
+      public function insert_lpb_to_header_entry_gl($data)
+      {
+            return $this->db_mips_gl->insert('header_entry', $data);
+      }
+
+      public function get_data_noac_gl($kodebar)
+      {
+            $this->db_logistik_center->select('noac, nama, group, type, level, general');
+            $this->db_logistik_center->where(['noac' => $kodebar]);
+            $this->db_logistik_center->from('noac');
+            return $this->db_logistik_center->get()->row_array();
+      }
+
+      public function insert_lpb_to_entry_gl_dr($data_entry, $ref)
+      {
+            $sql = $this->db_mips_gl->insert('entry', $data_entry);
+
+            // setelah disave, sum entry untuk mendapatkan total dr nya yang diupdate ke header_entry
+            if ($sql) {
+                  $this->db_mips_gl->select_sum('dr', 'dr');
+                  $this->db_mips_gl->where(['ref' => $ref]);
+                  $this->db_mips_gl->from('entry');
+                  $sum_dr = $this->db_mips_gl->get()->row();
+
+                  $this->db_mips_gl->set('totaldr', $sum_dr->dr);
+                  $this->db_mips_gl->where(['ref' => $ref]);
+                  return $this->db_mips_gl->update('header_entry');
+            } else {
+                  return 0;
+            }
+      }
+
+      public function get_data_noac_supplier($kode_supply)
+      {
+            //cari coa di supp
+            $this->db_logistik_center->select('account');
+            $this->db_logistik_center->where(['kode' => $kode_supply]);
+            $this->db_logistik_center->from('supplier');
+            $data_supply = $this->db_logistik_center->get()->row_array();
+
+            $this->db_logistik_center->select('noac, nama, group, type, level, general');
+            $this->db_logistik_center->where(['noac' => $data_supply['account']]);
+            $this->db_logistik_center->from('noac');
+            return $this->db_logistik_center->get()->row_array();
+      }
+
+      public function insert_lpb_to_entry_gl_cr($data_entry, $ref)
+      {
+            $sql = $this->db_mips_gl->insert('entry', $data_entry);
+
+            // setelah disave, sum entry untuk mendapatkan total cr nya yang diupdate ke header_entry
+            if ($sql) {
+                  $this->db_mips_gl->select_sum('cr', 'cr');
+                  $this->db_mips_gl->where(['ref' => $ref]);
+                  $this->db_mips_gl->from('entry');
+                  $sum_cr = $this->db_mips_gl->get()->row();
+
+                  $this->db_mips_gl->set('totalcr', $sum_cr->cr);
+                  $this->db_mips_gl->where(['ref' => $ref]);
+                  return $this->db_mips_gl->update('header_entry');
+            } else {
+                  return 0;
+            }
+      }
+
+      function get_data_keluarbrgitem()
+      {
+            $txtperiode = $this->session->userdata('ym_periode');
+
+            $query = "SELECT skb, kode_dev, NO_REF, kodebar, nabar, txtperiode, qty2, nobpb, ket, kodesub, ketsub FROM keluarbrgitem WHERE txtperiode = '$txtperiode'";
+            $result = $this->db_logistik_pt->query($query)->result_array();
+            return $result;
+      }
+
+      public function get_rata2_nilai_untuk_register($kodebar, $txtperiode)
+      {
+
+            $sql_rata2 = "SELECT SUM(saldoakhir_nilai) AS saldoakhir_nilai, SUM(saldoakhir_qty) AS saldoakhir_qty FROM stockawal_harian WHERE txtperiode <= '$txtperiode' AND kodebar = '$kodebar'";
+            $stock_awal = $this->db_logistik_pt->query($sql_rata2)->row_array();
+
+            $rata2 = $stock_awal['saldoakhir_nilai'] / $stock_awal['saldoakhir_qty'];
+
+            return $rata2;
+      }
+
+      public function insert_bkb_to_header_entry_gl($data)
+      {
+            return $this->db_mips_gl->insert('header_entry', $data);
+      }
+
+      public function insert_bkb_to_entry_gl_cr($data_entry, $noref)
+      {
+            $sql = $this->db_mips_gl->insert('entry', $data_entry);
+
+            // setelah disave, sum entry untuk mendapatkan total cr nya yang diupdate ke header_entry
+            if ($sql) {
+                  $this->db_mips_gl->select_sum('cr', 'cr');
+                  $this->db_mips_gl->where(['noref' => $noref]);
+                  $this->db_mips_gl->from('entry');
+                  $sum_cr = $this->db_mips_gl->get()->row();
+
+                  $this->db_mips_gl->set('totalcr', $sum_cr->cr);
+                  $this->db_mips_gl->where(['noref' => $noref]);
+                  return $this->db_mips_gl->update('header_entry');
+            } else {
+                  return 0;
+            }
+      }
+
+      public function get_data_noac_beban($kodesub)
+      {
+            // kalo di bkb sudah dapat noac nya
+            $this->db_logistik_center->select('noac, group, type, level, general');
+            $this->db_logistik_center->where(['noac' => $kodesub]);
+            $this->db_logistik_center->from('noac');
+            return $this->db_logistik_center->get()->row_array();
+      }
+
+      public function insert_bkb_to_entry_gl_dr($data_entry, $noref)
+      {
+            $sql = $this->db_mips_gl->insert('entry', $data_entry);
+
+            // setelah disave, sum entry untuk mendapatkan total dr nya yang diupdate ke header_entry
+            if ($sql) {
+                  $this->db_mips_gl->select_sum('dr', 'dr');
+                  $this->db_mips_gl->where(['noref' => $noref]);
+                  $this->db_mips_gl->from('entry');
+                  $sum_dr = $this->db_mips_gl->get()->row();
+
+                  $this->db_mips_gl->set('totaldr', $sum_dr->dr);
+                  $this->db_mips_gl->where(['noref' => $noref]);
+                  return $this->db_mips_gl->update('header_entry');
+            } else {
+                  return 0;
+            }
+      }
+
+      function get_data_retskbitem()
+      {
+            $txtperiode = $this->session->userdata('ym_periode');
+
+            $query = "SELECT ret_skbitem.noretur, ret_skbitem.norefretur, ret_skbitem.norefbkb, ret_skbitem.kodebar, ret_skbitem.nabar, ret_skbitem.qty, ret_skbitem.kodesub, ret_skbitem.ketsub, retskb.kode_dev FROM ret_skbitem LEFT JOIN retskb ON ret_skbitem.norefretur = retskb.norefretur WHERE txtperiode = '$txtperiode'";
+            $result = $this->db_logistik_pt->query($query)->result_array();
+            return $result;
+      }
+
+      public function cari_harga_bkb($no_ref_bkb, $kodebar)
+      {
+            $this->db_logistik_pt->select('qty2, nilai_item');
+            $this->db_logistik_pt->where(['kodebar' => $kodebar, 'NO_REF' => $no_ref_bkb]);
+            $this->db_logistik_pt->from('keluarbrgitem');
+            $data = $this->db_logistik_pt->get()->row_array();
+
+            $harga = $data['nilai_item'] / $data['qty2'];
+            return $harga;
+      }
 }
 
 /* End of file M_posting.php */
