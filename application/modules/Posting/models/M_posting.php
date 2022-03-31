@@ -515,8 +515,9 @@ class M_posting extends CI_Model
       function get_data_masukitem()
       {
             $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
 
-            $query = "SELECT masukitem.ttg, masukitem.noref, masukitem.nabar, masukitem.kode_dev, masukitem.refpo, masukitem.noref, masukitem.norefppo, masukitem.kodebar, .masukitem.qty, stokmasuk.kode_supply, stokmasuk.nama_supply, stokmasuk.jenis_lpb FROM masukitem LEFT JOIN stokmasuk ON masukitem.noref = stokmasuk.noref WHERE txtperiode = '$txtperiode'";
+            $query = "SELECT masukitem.ttg, masukitem.noref, masukitem.nabar, masukitem.kode_dev, masukitem.refpo, masukitem.noref, masukitem.norefppo, masukitem.kodebar, .masukitem.qty, stokmasuk.kode_supply, stokmasuk.nama_supply, stokmasuk.jenis_lpb FROM masukitem LEFT JOIN stokmasuk ON masukitem.noref = stokmasuk.noref WHERE txtperiode = '$txtperiode' AND stokmasuk.lokasi = '$status_lokasi'";
             $result = $this->db_logistik_pt->query($query)->result_array();
             return $result;
       }
@@ -623,8 +624,18 @@ class M_posting extends CI_Model
       function get_data_keluarbrgitem()
       {
             $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            if ($status_lokasi == 'HO') {
+                  $lok = 'PST';
+            } elseif ($status_lokasi == 'RO') {
+                  $lok = 'ROM';
+            } elseif ($status_lokasi == 'PKS') {
+                  $lok = 'FAC';
+            } else {
+                  $lok = 'EST';
+            }
 
-            $query = "SELECT skb, kode_dev, NO_REF, kodebar, nabar, txtperiode, qty2, nobpb, ket, kodesub, ketsub FROM keluarbrgitem WHERE txtperiode = '$txtperiode'";
+            $query = "SELECT skb, kode_dev, NO_REF, kodebar, nabar, txtperiode, qty2, nobpb, ket, kodesub, ketsub FROM keluarbrgitem WHERE txtperiode = '$txtperiode' AND SUBSTR(NO_REF,1,3) = '$lok'";
             $result = $this->db_logistik_pt->query($query)->result_array();
             return $result;
       }
@@ -695,8 +706,18 @@ class M_posting extends CI_Model
       function get_data_retskbitem()
       {
             $txtperiode = $this->session->userdata('ym_periode');
+            $status_lokasi = $this->session->userdata('status_lokasi');
+            if ($status_lokasi == 'HO') {
+                  $lok = 'PST';
+            } elseif ($status_lokasi == 'RO') {
+                  $lok = 'ROM';
+            } elseif ($status_lokasi == 'PKS') {
+                  $lok = 'FAC';
+            } else {
+                  $lok = 'EST';
+            }
 
-            $query = "SELECT ret_skbitem.noretur, ret_skbitem.norefretur, ret_skbitem.norefbkb, ret_skbitem.kodebar, ret_skbitem.nabar, ret_skbitem.qty, ret_skbitem.kodesub, ret_skbitem.ketsub, retskb.kode_dev FROM ret_skbitem LEFT JOIN retskb ON ret_skbitem.norefretur = retskb.norefretur WHERE txtperiode = '$txtperiode'";
+            $query = "SELECT ret_skbitem.noretur, ret_skbitem.norefretur, ret_skbitem.norefbkb, ret_skbitem.kodebar, ret_skbitem.nabar, ret_skbitem.qty, ret_skbitem.kodesub, ret_skbitem.ketsub, retskb.kode_dev FROM ret_skbitem LEFT JOIN retskb ON ret_skbitem.norefretur = retskb.norefretur WHERE txtperiode = '$txtperiode' AND SUBSTR(ret_skbitem.norefretur,1,3) = '$lok'";
             $result = $this->db_logistik_pt->query($query)->result_array();
             return $result;
       }
