@@ -18,6 +18,7 @@ class Po extends CI_Controller
         // $this->db_logistik = $this->load->database('db_logistik',TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
+        $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
 
         if (!$this->session->userdata('id_user')) {
             $pemberitahuan = "<div class='alert alert-warning'>Anda harus login dulu </div>";
@@ -174,6 +175,12 @@ class Po extends CI_Controller
         $this->template->Load('template', 'v_edit_po', $data);
     }
 
+    function get_ppn()
+    {
+        $data = $this->db_logistik_center->query("SELECT * FROM tb_ppn ")->result_array();
+        echo json_encode($data);
+    }
+
     public function cari_po_edit()
     {
         $nopo = $this->input->post('nopo');
@@ -325,7 +332,7 @@ class Po extends CI_Controller
         $data['pt'] = $this->db_logistik_pt->get_where('pt', array('kodetxt' => '01'))->row();
 
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $nopo, 'id' => $id))->row();
-
+        $data['ppn'] = $this->db_logistik_center->query("SELECT * FROM tb_ppn")->row();
 
 
         $kode_supplier = $data['po']->kode_supply;
@@ -365,15 +372,6 @@ class Po extends CI_Controller
             ]);
 
 
-            // if ($data['po']->terbayar == "1") {
-            //     $mpdf->SetWatermarkText('TERBAYAR');
-            //     $mpdf->showWatermarkText = true;
-            // }
-
-            // if ($data['po']->terbayar == "2") {
-            //     $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-            //     $mpdf->showWatermarkText = true;
-            // }
             if ($data['po']->batal == 1) {
                 # code...
                 $mpdf->SetWatermarkImage(
@@ -411,17 +409,6 @@ class Po extends CI_Controller
                 'margin_right' => '4',
                 'orientation' => 'P'
             ]);
-
-
-            // if ($data['po']->terbayar == "1") {
-            //     $mpdf->SetWatermarkText('TERBAYAR');
-            //     $mpdf->showWatermarkText = true;
-            // }
-
-            // if ($data['po']->terbayar == "2") {
-            //     $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-            //     $mpdf->showWatermarkText = true;
-            // }
 
             $namapt = $data['po']->namapt;
 
@@ -461,15 +448,6 @@ class Po extends CI_Controller
             ]);
 
 
-            // if ($data['po']->terbayar == "1") {
-            //     $mpdf->SetWatermarkText('TERBAYAR');
-            //     $mpdf->showWatermarkText = true;
-            // }
-
-            // if ($data['po']->terbayar == "2") {
-            //     $mpdf->SetWatermarkText('BAYAR SEBAGIAN');
-            //     $mpdf->showWatermarkText = true;
-            // }
 
             $namapt = $data['po']->namapt;
 
@@ -1706,6 +1684,14 @@ class Po extends CI_Controller
         $noref_ppo = $this->input->post('noref_ppo');
         $alasan_edit = $this->input->post('alasan');
         $result = $this->M_po->update_alasan($noref_ppo, $alasan_edit);
+
+        echo json_encode($result);
+    }
+
+    function update_ppn()
+    {
+        $nilai = $this->input->post('nilai');
+        $result = $this->M_po->update_ppn($nilai);
 
         echo json_encode($result);
     }

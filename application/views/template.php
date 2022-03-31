@@ -1869,7 +1869,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 
 
-            </div> <!-- content -->
+            </div>
 
             <!-- Footer Start -->
             <footer class="footer">

@@ -331,11 +331,10 @@
                     <table id="spp_approval_no_coa" class="table table-striped table-bordered" style="width: 100%; border-collapse: separate; padding: 0 50px 0 50px;">
                         <thead>
                             <tr>
-                                <th class="no_th">No</th>
-                                <th class="nabar_th">Nama&nbsp;Barang </th>
-                                <th class="ket_th">Grup</th>
-                                <!-- <th class="status_th">Status&nbsp;SPP</th> -->
-                                <th class="btn_th">Approval</th>
+                                <th width="5%" style="font-size: 12px; padding:10px">No</th>
+                                <th width="45%" style="font-size: 12px; padding:10px">Nama&nbsp;Barang </th>
+                                <th width="40%" style="font-size: 12px; padding:10px">Grup</th>
+                                <th width="10%" style="font-size: 12px; padding:10px">Approval</th>
                             </tr>
                         </thead>
                         <tbody>

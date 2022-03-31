@@ -5,8 +5,8 @@ $alamat_supplier = (!empty($supplier->alamat)) ? $supplier->alamat : "-";
 $tlp_supplier = (!empty($supplier->tlp)) ? $supplier->tlp : "-";
 $fax_supplier = (!empty($supplier->fax)) ? $supplier->fax : "-";
 
-$pot_ppn_format = ($po->ppn == "10") ? number_format($dikurangi_biayalain * 0.1, 2, ",", ".") : "0";
-$pot_ppn = ($po->ppn == "10") ? ($dikurangi_biayalain * 0.1) : "0";
+$pot_ppn_format = ($po->ppn == $ppn->ppn) ? number_format($dikurangi_biayalain * 0.1, 2, ",", ".") : "0";
+$pot_ppn = ($po->ppn == $ppn->ppn) ? ($dikurangi_biayalain * 0.1) : "0";
 
 $jml_pph = $po->pph / 100;
 $hit_pph_format = ($po->pph != NULL) ? number_format($dikurangi_biayalain * $jml_pph, 2, ",", ".") : "0";
@@ -248,7 +248,7 @@ $nama_pt = $this->session->userdata('nama_pt');
             $nama_bebanbpo = array();
             foreach ($item_po as $list_item) {
                 //harga dasar plus ppn 10% ( untuk mengambil total harga)
-                if ($po->ppn == "10") {
+                if ($po->ppn == $ppn->ppn) {
                     $ppn = "0.1";
                 } else {
                     $ppn = "0";

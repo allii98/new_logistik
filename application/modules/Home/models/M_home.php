@@ -227,7 +227,7 @@ class M_home extends CI_Model
     public function get_grp_coa()
     {
         $grp = $this->input->get('grp');
-        $data = $this->db_logistik_center->query("SELECT DISTINCT(nama) FROM `noac` WHERE nama LIKE '%$grp%' AND `noac` LIKE '%1025%' AND `type` = 'G' ORDER BY NOID DESC")->result();
+        $data = $this->db_logistik_center->query("SELECT DISTINCT(nama) FROM `noac` WHERE nama LIKE '%$grp%' AND `noac` LIKE '%1025%' AND `type` LIKE 'G' ORDER BY NOID DESC")->result();
         return $data;
     }
 }
