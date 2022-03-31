@@ -349,8 +349,8 @@ class Lpb extends CI_Controller
             'periode2' => NULL,
             'txtperiode1' => $txtperiode,
             'txtperiode2' => NULL,
-            'pt' => $this->session->userdata('pt'),
-            'kode' => $kodept,
+            'pt' => $data['devisi']['PT'],
+            'kode' => $kode_devisi,
             'devisi' => $data['devisi']['PT'],
             'kode_dev' => $kode_devisi,
             'jenis_lpb' => $jenis_lpb,
@@ -411,12 +411,12 @@ class Lpb extends CI_Controller
 
 
         $data_masukitem = [
-            'kdpt' => $this->session->userdata('kode_pt'),
+            'kdpt' => $kode_devisi,
             'nopo' => $no_po,
             'nopotxt' => $no_po,
             'LOKAL' => $po_lokal,
             'ASSET' => $asset,
-            'pt' => $this->session->userdata('pt'),
+            'pt' => $data['devisi']['PT'],
             'devisi' => $data['devisi']['PT'],
             'kode_dev' => $kode_devisi,
             'afd' => '-',
