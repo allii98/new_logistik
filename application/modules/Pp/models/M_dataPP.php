@@ -20,24 +20,28 @@ class M_dataPP extends CI_Model
     {
         // $Value = ;
 
-        # code...
+        $txtperiode = $this->session->userdata('ym_periode');
         $lokasi_sesi = $this->session->userdata('status_lokasi');
         if ($lokasi_sesi == 'HO') {
             $this->db_logistik_pt->from($this->table);
 
+            $this->db_logistik_pt->where('txtperiode', $txtperiode);
             $this->db_logistik_pt->like('ref_pp', 'PST', 'both');
         } else {
             # code...
             $this->db_logistik_pt->from($this->table);
             if ($lokasi_sesi == 'SITE') {
+                $this->db_logistik_pt->where('txtperiode', $txtperiode);
                 $this->db_logistik_pt->like('ref_pp', 'EST', 'both');
 
                 # code...
             } else if ($lokasi_sesi == 'PKS') {
+                $this->db_logistik_pt->where('txtperiode', $txtperiode);
                 $this->db_logistik_pt->like('ref_pp', 'FAC', 'both');
 
                 # code...
             } else if ($lokasi_sesi == 'RO') {
+                $this->db_logistik_pt->where('txtperiode', $txtperiode);
                 $this->db_logistik_pt->like('ref_pp', 'ROM', 'both');
 
                 # code...

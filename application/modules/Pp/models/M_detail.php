@@ -27,10 +27,10 @@ class M_detail extends CI_Model
     private function _get_datatables_query()
     {
         $id = $this->id;
-
+        $txtperiode = $this->session->userdata('ym_periode');
         # code...
         $this->db_logistik_pt->from($this->table);
-        $this->db_logistik_pt->where('id', $id);
+        $this->db_logistik_pt->where(['id' => $id, 'txtperiode' => $txtperiode]);
 
 
         $i = 0;
