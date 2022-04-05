@@ -6,7 +6,7 @@ class M_detail extends CI_Model
 {
 
     var $table = 'item_po'; //nama tabel dari database
-    var $column_order = array(null, 'id', 'noref', 'nopo', 'refppo', 'tglpo', 'grup', 'nabar', 'kodebar', 'qty'); //field yang ada di table supplier  
+    var $column_order = array(null, 'id', 'noref', 'nopo', 'refppo', 'tglpo', 'grup', 'nabar', 'kodebar', 'qty', 'jumharga'); //field yang ada di table supplier  
     var $column_search = array('noref', 'refppo', 'nabar', 'kodebar'); //field yang diizin untuk pencarian 
     var $order = array('id' => 'DESC'); // default order 
 

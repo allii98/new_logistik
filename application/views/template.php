@@ -1987,6 +1987,50 @@ date_default_timezone_set('Asia/Jakarta');
             });
         }
 
+        function tutupbuku() {
+            Swal.fire({
+                title: 'Masukkan Password',
+                input: 'password',
+                inputLabel: 'Password',
+                inputPlaceholder: 'Masukkan Password',
+                inputAttributes: {
+                    maxlength: 10,
+                    autocapitalize: 'off',
+                    autocorrect: 'off'
+                }
+            }).then((value) => {
+                var pw = value.value;
+                if (pw != null && $.trim(pw) != "") {
+                    // console.log(pw);
+                    $.ajax({
+                        type: "POST",
+                        url: "<?php echo site_url('Posting/auth_hitungstok'); ?>",
+                        dataType: "JSON",
+                        beforeSend: function() {},
+                        data: {
+                            pw: pw
+                        },
+                        success: function(data) {
+                            // console.log(data);
+                            if (data === true) {
+                                tutupbuku_act();
+                            } else {
+                                window.Swal.fire({
+                                    type: 'error',
+                                    title: 'Oops...',
+                                    text: 'Password Salah!'
+                                })
+                            }
+                        },
+                        error: function(request) {
+
+                            console.log(request.responseText);
+                        }
+                    });
+                }
+            });
+        }
+
         function doHitulStok() {
             // $('#modal_progres').modal('show');
             $.ajax({
@@ -4068,7 +4112,43 @@ date_default_timezone_set('Asia/Jakarta');
                 }
             });
         }
+
+        function tutupbuku_act() {
+            $.ajax({
+                url: "<?= site_url('Tutup_buku/tutup_buku'); ?>",
+                type: "POST",
+                dataType: "JSON",
+                beforeSend: function() {
+                    now = moment().format('DD/MM/YYYY HH:mm:ss');
+
+                },
+                success: function(response) {
+                    console.log(response);
+
+                },
+                complete: function(response) {
+                    console.log(response);
+                    then = moment().format('DD/MM/YYYY HH:mm:ss');
+
+                    var ms = moment(then, "DD/MM/YYYY HH:mm:ss").diff(moment(now, "DD/MM/YYYY HH:mm:ss"));
+                    var d = moment.duration(ms);
+
+                    var formats = d.hours() + ' Jam : ' + d.minutes() + ' Menit : ' + d.seconds() + ' Detik';
+
+                    swal({
+                        title: "Selesai",
+                        text: "Terima Kasih, Data berhasil di Posting dan tersimpan, Waktu Proses Posting " + formats + "",
+                        type: "success"
+
+                    })
+                },
+                error: function(request) {
+                    console.log(request.responseText);
+                }
+            });
+        }
     </script>
+
 </body>
 
 </html>

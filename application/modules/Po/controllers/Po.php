@@ -132,6 +132,7 @@ class Po extends CI_Controller
             // $row[] =  $d->grup ;
             $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->nabar . '</p>';
             $row[] =  '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . $d->kodebar . '</p>';
+            $row[] =  number_format($d->jumharga, 2, ",", ".");
             $row[] =  $d->qty;
             // $row[] = $d->tglpo;
             $row[] = date_format(date_create($d->tglpo), 'd-m-Y');
