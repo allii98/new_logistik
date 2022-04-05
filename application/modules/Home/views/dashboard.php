@@ -188,7 +188,7 @@
         }
         ?>
     </div>
-    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING') { ?>
+    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' && $this->session->userdata('status_lokasi') != 'HO') { ?>
         <div class="row col-12">
             <div class="col-lg-6 col-xl-6 col-12">
                 <div class="card">
@@ -254,7 +254,7 @@
             </div>
         </div>
     <?php } ?>
-    <?php if ($this->session->userdata('status_lokasi') == 'HO' && $this->session->userdata('nama_dept') != 'PURCHASING') { ?>
+    <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
         <div class="row col-12">
             <div class="col-lg-12 col-xl-12 col-12">
                 <div class="card">

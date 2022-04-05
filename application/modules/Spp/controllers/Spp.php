@@ -16,6 +16,7 @@ class Spp extends CI_Controller
         $this->load->model('M_detail_sppNoCoa');
         $this->load->model('M_spp_approval_noCOA');
         $this->load->model('M_brg_serupa');
+        $this->load->model('M_approval_spp_no_coa');
 
         $db_pt = check_db_pt();
 
@@ -1110,7 +1111,9 @@ class Spp extends CI_Controller
     }
     public function sppApproval_noCoa()
     {
-        $this->template->load('template', 'v_spp_approval_noCoa');
+        $data['pt'] = $this->db_logistik_center->get('tb_pt')->result_array();
+
+        $this->template->load('template', 'v_spp_approval_noCoa', $data);
     }
 
     public function get_data_spp()
@@ -1278,7 +1281,9 @@ class Spp extends CI_Controller
 
     public function data_spp_approval_noCOA()
     {
-        $list = $this->M_spp_approval_noCOA->get_datatables();
+        $data = $this->input->post('data');
+        $this->M_approval_spp_no_coa->where_datatables($data);
+        $list = $this->M_approval_spp_no_coa->get_datatables();
         $data = array();
         $no = $_POST['start'];
         foreach ($list as $field) {
@@ -1290,10 +1295,12 @@ class Spp extends CI_Controller
             }
 
             $norefspp = "'" . $field->noreftxt . "'";
+            $pt = "'" . $field->pt . "'";
+            $alias = "'" . $field->alias . "'";
 
             $row = array();
             $row[] = '<a href="javascript:;" id="spp_appproval">
-            <button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalSppApproval(' . $field->id . ',' . $norefspp . ')" > Approval
+            <button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalSppApprove(' . $field->id . ',' . $norefspp . ',' . $pt . ',' . $alias . ')" > Approval
             </button>
         </a>';
             // $row[] = '<button class="btn btn-info btn-xs" style="font-size: 11px;" id="detail_spp_approval" name="detail_spp_approval"
@@ -1302,11 +1309,9 @@ class Spp extends CI_Controller
             // </button>';
             $row[] = $no;
             $row[] = $field->noreftxt;
-            $row[] = date('d-m-Y', strtotime($field->tglref));
-            $row[] = date('d-m-Y', strtotime($field->tgltrm));
+            $row[] = $field->pt;
             $row[] = $field->namadept;
             $row[] = $field->lokasi;
-            $row[] = '<p style="word-break: break-word; margin-top:0px; margin-bottom: 0px;">' . htmlspecialchars($field->ket) . '</p>';
             $row[] = $stat;
             $row[] = $field->user;
 
@@ -1315,8 +1320,8 @@ class Spp extends CI_Controller
 
         $output = array(
             "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_spp_approval_noCOA->count_all(),
-            "recordsFiltered" => $this->M_spp_approval_noCOA->count_filtered(),
+            "recordsTotal" => $this->M_approval_spp_no_coa->count_all(),
+            "recordsFiltered" => $this->M_approval_spp_no_coa->count_filtered(),
             "data" => $data,
         );
         //output dalam format JSON
