@@ -298,11 +298,10 @@ date_default_timezone_set('Asia/Jakarta');
                                                 </a>
                                             </div>
                                         </div>
-<<<<<<< HEAD
                                     </div>
+                                    <?php}?>
                                     <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' or $this->session->userdata('nama_dept') == 'FINANCE & ACCOUNTING') { ?>
-=======
->>>>>>> a2398a9124d0067f20651b93cc14102c399af941
+
                                         <div class="dropdown">
                                             <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i>
