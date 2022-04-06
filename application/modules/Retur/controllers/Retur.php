@@ -35,7 +35,7 @@ class Retur extends CI_Controller
         // DB GL
         // $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
         if ($this->session->userdata('kode_dev') == '01') {
-            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt, TRUE); //HO
+            $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE); //HO
         } elseif ($this->session->userdata('kode_dev') == '02') {
             $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_ro', TRUE); //RO
         } elseif ($this->session->userdata('kode_dev') == '03') {

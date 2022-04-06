@@ -195,7 +195,7 @@ date_default_timezone_set('Asia/Jakarta');
 
                                         </div>
                                     </div>
-                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING') { ?>
+                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' or $this->session->userdata('nama_dept') == 'FINANCE & ACCOUNTING') { ?>
                                         <div class="dropdown">
                                             <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-email" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-clipboard-arrow-up-outline mr-1"></i>
@@ -211,7 +211,9 @@ date_default_timezone_set('Asia/Jakarta');
                                                 </a>
                                             </div>
                                         </div>
+                                    <?php } ?>
 
+                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' or $this->session->userdata('nama_dept') == 'FINANCE & ACCOUNTING' or $this->session->userdata('nama_dept') == 'MIS' or $this->session->userdata('nama_dept') == 'HRD & UMUM') { ?>
                                         <div class="dropdown">
                                             <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-clipboard-arrow-down-outline mr-1"></i>
@@ -250,7 +252,7 @@ date_default_timezone_set('Asia/Jakarta');
                                             </a>
                                         </div>
                                     </div>
-                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING') { ?>
+                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' or $this->session->userdata('nama_dept') == 'FINANCE & ACCOUNTING') { ?>
                                         <div class="dropdown">
                                             <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i>
@@ -284,22 +286,25 @@ date_default_timezone_set('Asia/Jakarta');
                                                 </a>
                                             </div>
                                         </div>
-                                        <div class="dropdown">
-                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <i class="mdi mdi-backburger mr-1"></i>
-                                                <font face="Verdana" size="2.5">Retur</font>
-                                                <div class="arrow-down">
+                                        <?php if ($this->session->userdata('status_lokasi') != 'HO') { ?>
+
+                                            <div class="dropdown">
+                                                <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="mdi mdi-backburger mr-1"></i>
+                                                    <font face="Verdana" size="2.5">Retur</font>
+                                                    <div class="arrow-down">
+                                                    </div>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                    <a href="<?= base_url('Retur/input') ?>" class="dropdown-item">
+                                                        <font face="Verdana" size="2.5">Retur BKB</font>
+                                                    </a>
+                                                    <a href="<?= base_url('Retur') ?>" class="dropdown-item">
+                                                        <font face="Verdana" size="2.5">Data Retur</font>
+                                                    </a>
                                                 </div>
-                                            </a>
-                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                                <a href="<?= base_url('Retur/input') ?>" class="dropdown-item">
-                                                    <font face="Verdana" size="2.5">Retur BKB</font>
-                                                </a>
-                                                <a href="<?= base_url('Retur') ?>" class="dropdown-item">
-                                                    <font face="Verdana" size="2.5">Data Retur</font>
-                                                </a>
                                             </div>
-                                        </div>
+                                        <?php } ?>
                                     <?php } ?>
 
 
