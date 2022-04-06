@@ -324,7 +324,7 @@ date_default_timezone_set('Asia/Jakarta');
                                         </div>
                                     <?php } ?>
 
-                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' && $this->session->userdata('status_lokasi') != 'HO') { ?>
+                                    <?php if ($this->session->userdata('status_lokasi') != 'HO') { ?>
                                         <div class="dropdown">
                                             <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <i class="mdi mdi-backburger mr-1"></i>
