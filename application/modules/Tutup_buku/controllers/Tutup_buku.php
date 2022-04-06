@@ -18,30 +18,38 @@ class Tutup_buku extends CI_Controller
             $this->load->model('M_tutup_buku');
       }
 
-
-      public function index()
+      function tutup_buku()
       {
-            $pass = 1;
+            $txtperiode = $this->session->userdata('ym_periode');
+            // get data stockawal
+            $data['stockawal'] = $this->M_tutup_buku->get_stockawal($txtperiode);
 
-            $pass2 = $this->input->post('pass');
-            if ($pass == $pass2) {
-                  $this->cek_password();
-            } else {
-                  $return = false;
-                  echo json_encode($return);
-            }
+            return $data;
       }
 
-      public function cek_password()
-      {
-            // $return = true;
+      // public function index()
+      // {
+      //       $pass = 1;
 
-            $get_stock_awal = $this->M_tutup_buku->get_stock_awal();
+      //       $pass2 = $this->input->post('pass');
+      //       if ($pass == $pass2) {
+      //             $this->cek_password();
+      //       } else {
+      //             $return = false;
+      //             echo json_encode($return);
+      //       }
+      // }
 
-            echo json_encode($get_stock_awal);
-            // var_dump($get_stock_awal);
-            // die;
-      }
+      // public function cek_password()
+      // {
+      //       // $return = true;
+
+      //       $get_stock_awal = $this->M_tutup_buku->get_stock_awal();
+
+      //       echo json_encode($get_stock_awal);
+      //       // var_dump($get_stock_awal);
+      //       // die;
+      // }
 }
 
 /* End of file Tutup_buku.php */

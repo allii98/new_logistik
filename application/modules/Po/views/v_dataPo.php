@@ -79,6 +79,7 @@
 									<th width="15%" style="font-size: 12px; padding:10px">Ref.&nbsp;SPP</th>
 									<th width="15%" style="font-size: 12px; padding:10px">Nama&nbsp;Barang</th>
 									<th width="20%" style="font-size: 12px; padding:10px">Kode&nbsp;Barang</th>
+									<th width="20%" style="font-size: 12px; padding:10px">Total&nbsp;Harga</th>
 									<th width="5%" style="font-size: 12px; padding:10px">QTY</th>
 									<th width="10%" style="font-size: 12px; padding:10px">Tanggal PO</th>
 								</tr>
