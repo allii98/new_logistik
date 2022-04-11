@@ -112,16 +112,16 @@
                                 <label class="col-lg-4 col-xl-4 col-12 col-form-label" style="margin-top: -2px; font-size: 12px; font-size: 12px;">Departemen*</label>
                                 <div class="col-lg-8 col-xl-8 col-12">
                                     <select class="form-control form-control-sm" id="cmb_departemen" style="font-size: 12px;">
-                                        <option selected value="<?= $this->session->userdata('kode_dept') ?>"><?= $this->session->userdata('kode_dept') . ' - ' . $this->session->userdata('nama_dept') ?></option>
-                                        <!-- <option value="" selected disabled>Pilih</option> -->
-                                        <!-- <?php
-                                                foreach ($dept as $d) : {
-                                                ?>
-                                                <option value="<?= $d['kode']; ?>"><?= $d['kode'] . ' - ' . $d['nama']; ?></option>
+                                        <!-- <option selected value="<?= $this->session->userdata('kode_dept') ?>"><?= $this->session->userdata('kode_dept') . ' - ' . $this->session->userdata('nama_dept') ?></option> -->
+                                        <option value="" disabled>Pilih</option>
                                         <?php
-                                                    }
-                                                endforeach;
-                                        ?> -->
+                                        foreach ($dept as $d) : {
+                                        ?>
+                                                <option value="<?= $d['kode']; ?>" <?= $this->session->userdata('kode_dept') == $d['kode'] ? "selected" : "" ?>><?= $d['nama']; ?></option>
+                                        <?php
+                                            }
+                                        endforeach;
+                                        ?>
                                     </select>
                                 </div>
                             </div>

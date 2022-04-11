@@ -167,7 +167,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <font face="Verdana" size="2.5">Input SPP Tanpa COA</font>
                                             </a> -->
                                             <?php
-                                            if ($this->session->userdata('level') == 'KTU' || $this->session->userdata('level') == 'Mill Manager') {
+                                            if ($this->session->userdata('level') == 'KTU' || $this->session->userdata('level') == 'Mill Manager' || $this->session->userdata('level') == 'Manager') {
                                             ?>
                                                 <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">
                                                     <font face="Verdana" size="2.5">SPP
