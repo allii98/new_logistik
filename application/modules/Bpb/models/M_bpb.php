@@ -39,32 +39,32 @@ class M_bpb extends CI_Model
         $devisi = $this->devisi;
         $sub_kategori = $this->sub_kategori;
 
-        // $this->db_mips_gl->where('type !=', 'G');
-        $this->db_mips_gl->from($this->table);
+        // $this->db_logistik_center->where('type !=', 'G');
+        $this->db_logistik_center->from($this->table);
         if ($bahan != '-' and $mutasi_pt != 'mutasi_pt' and $mutasi_lokal != 'mutasi_lokal') {
-            $this->db_mips_gl->like('noac', $grub, 'both');
+            $this->db_logistik_center->like('noac', $grub, 'both');
         } else if ($mutasi_pt == 'mutasi_pt') {
             if ($pt == '02') {
                 # code...
-                $this->db_mips_gl->where('nama', 'PSAM, PT');
+                $this->db_logistik_center->where('nama', 'PSAM, PT');
             } elseif ($pt == '04') {
                 # code...
-                $this->db_mips_gl->or_where('nama', 'MAPA, PT');
+                $this->db_logistik_center->or_where('nama', 'MAPA, PT');
             } elseif ($pt == '01') {
                 # code...
-                $this->db_mips_gl->or_where('nama', 'MSAL, PT');
+                $this->db_logistik_center->or_where('nama', 'MSAL, PT');
             } elseif ($pt == '03') {
                 # code...
-                $this->db_mips_gl->or_where('nama', 'PEAK, PT');
+                $this->db_logistik_center->or_where('nama', 'PEAK, PT');
             } elseif ($pt == '05') {
                 # code...
-                $this->db_mips_gl->or_where('nama', 'KPP, PT');
+                $this->db_logistik_center->or_where('nama', 'KPP, PT');
             }
         } else if ($mutasi_lokal == 'mutasi_lokal') {
             if ($devisi == '06') {
                 # code...
                 //kalo nambah kebun berarti yang dibawah ini ditambahkan manual
-                $this->db_mips_gl->where_in(
+                $this->db_logistik_center->where_in(
                     'noac',
                     [
                         100300000000000,
@@ -73,10 +73,10 @@ class M_bpb extends CI_Model
                         100302000000000
                     ]
                 );
-                // $this->db_mips_gl->or_like('nama', 'HUBUNGAN INTRA COMPANY EST 1 <> EST 3', 'both');
-                // $this->db_mips_gl->or_like('nama', 'HUBUNGAN INTRA COMPANY EST 1 <> PKS', 'both');
+                // $this->db_logistik_center->or_like('nama', 'HUBUNGAN INTRA COMPANY EST 1 <> EST 3', 'both');
+                // $this->db_logistik_center->or_like('nama', 'HUBUNGAN INTRA COMPANY EST 1 <> PKS', 'both');
             } else if ($devisi == '07') {
-                $this->db_mips_gl->where_in(
+                $this->db_logistik_center->where_in(
                     'noac',
                     [
                         100300000000000,
@@ -87,7 +87,7 @@ class M_bpb extends CI_Model
                 );
                 # code...
             } elseif ($devisi == '03') {
-                $this->db_mips_gl->where_in(
+                $this->db_logistik_center->where_in(
                     'noac',
                     [
                         100300000000000,
@@ -97,20 +97,20 @@ class M_bpb extends CI_Model
                     ]
                 );
                 # code...
-                // $this->db_mips_gl->like('nama', 'HUBUNGAN INTRA COMPANY', 'both');
+                // $this->db_logistik_center->like('nama', 'HUBUNGAN INTRA COMPANY', 'both');
             }
         } else if ($sub_kategori != '0') {
-            $this->db_mips_gl->where('noac', $sub_kategori);
+            $this->db_logistik_center->where('noac', $sub_kategori);
         }
         //  else {
         //     $tm = '7005';
         //     $tbm = '2024';
         //     $landclearing = '2090';
         //     $pembibitan = '2095';
-        //     $this->db_mips_gl->like('noac', $tm, 'match');
-        //     $this->db_mips_gl->or_like('noac', $tbm, 'match');
-        //     $this->db_mips_gl->or_like('noac', $landclearing, 'match');
-        //     $this->db_mips_gl->or_like('noac', $pembibitan, 'match');
+        //     $this->db_logistik_center->like('noac', $tm, 'match');
+        //     $this->db_logistik_center->or_like('noac', $tbm, 'match');
+        //     $this->db_logistik_center->or_like('noac', $landclearing, 'match');
+        //     $this->db_logistik_center->or_like('noac', $pembibitan, 'match');
         //     # code...
         // }
 
@@ -123,23 +123,23 @@ class M_bpb extends CI_Model
 
                 if ($i === 0) // looping awal
                 {
-                    $this->db_mips_gl->group_start();
-                    $this->db_mips_gl->like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->group_start();
+                    $this->db_logistik_center->like($item, $_POST['search']['value']);
                 } else {
-                    $this->db_mips_gl->or_like($item, $_POST['search']['value']);
+                    $this->db_logistik_center->or_like($item, $_POST['search']['value']);
                 }
 
                 if (count($this->column_search) - 1 == $i)
-                    $this->db_mips_gl->group_end();
+                    $this->db_logistik_center->group_end();
             }
             $i++;
         }
 
         if (isset($_POST['order'])) {
-            $this->db_mips_gl->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
+            $this->db_logistik_center->order_by($this->column_order[$_POST['order']['0']['column']], $_POST['order']['0']['dir']);
         } else if (isset($this->order)) {
             $order = $this->order;
-            $this->db_mips_gl->order_by(key($order), $order[key($order)]);
+            $this->db_logistik_center->order_by(key($order), $order[key($order)]);
         }
     }
 
@@ -147,22 +147,22 @@ class M_bpb extends CI_Model
     {
         $this->_get_datatables_query();
         if ($_POST['length'] != -1)
-            $this->db_mips_gl->limit($_POST['length'], $_POST['start']);
-        $query = $this->db_mips_gl->get();
+            $this->db_logistik_center->limit($_POST['length'], $_POST['start']);
+        $query = $this->db_logistik_center->get();
         return $query->result();
     }
 
     function count_filtered()
     {
         $this->_get_datatables_query();
-        $query = $this->db_mips_gl->get();
+        $query = $this->db_logistik_center->get();
         return $query->num_rows();
     }
 
     public function count_all()
     {
-        $this->db_mips_gl->from($this->table);
-        return $this->db_mips_gl->count_all_results();
+        $this->db_logistik_center->from($this->table);
+        return $this->db_logistik_center->count_all_results();
     }
     // end server side table
 

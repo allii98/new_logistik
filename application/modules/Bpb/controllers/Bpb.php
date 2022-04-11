@@ -14,7 +14,16 @@ class Bpb extends CI_Controller
         $this->load->model('M_detail');
         $db_pt = check_db_pt();
         $this->db_logistik = $this->load->database('db_logistik', TRUE);
-        $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+        // $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE);
+        if ($this->session->userdata('kode_dev') == '01') {
+            $this->db_mips_gl = $this->load->database('db_mips_gl_' . $db_pt, TRUE); //HO
+        } elseif ($this->session->userdata('kode_dev') == '02') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_ro', TRUE); //RO
+        } elseif ($this->session->userdata('kode_dev') == '03') {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_pks', TRUE); //PKS
+        } else {
+            $this->db_mips_gl = $this->load->database('mips_gl_' . $db_pt . '_site', TRUE); //SITE
+        }
         $this->db_logistik_center = $this->load->database('db_logistik_center', TRUE);
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_personalia = $this->load->database('db_personalia_' . $db_pt, TRUE);
@@ -127,7 +136,7 @@ class Bpb extends CI_Controller
     {
         $station = $this->input->post('cmb_station');
         $query_coa = "SELECT noac, nama FROM noac WHERE general = '$station'";
-        $data = $this->db_mips_gl->query($query_coa)->result();
+        $data = $this->db_logistik_center->query($query_coa)->result();
 
         echo json_encode($data);
     }
@@ -136,7 +145,7 @@ class Bpb extends CI_Controller
     {
         $kategori_st = $this->input->post('cmb_kategori_st');
         $query_coa = "SELECT noac, nama FROM noac WHERE general = '$kategori_st'";
-        $data = $this->db_mips_gl->query($query_coa)->result();
+        $data = $this->db_logistik_center->query($query_coa)->result();
 
         echo json_encode($data);
     }
@@ -217,7 +226,7 @@ class Bpb extends CI_Controller
             $data_coa = array();
             $noac = $list_coa_material->coa_material;
             $query_coa = "SELECT noac, nama FROM noac WHERE noac = '$noac'";
-            $get_coa = $this->db_mips_gl->query($query_coa)->row();
+            $get_coa = $this->db_logistik_center->query($query_coa)->row();
             $data_coa[] = $get_coa->noac;
             $data_coa[] = $get_coa->nama;
             array_push($data, $data_coa);
