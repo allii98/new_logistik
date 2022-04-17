@@ -4123,7 +4123,7 @@ date_default_timezone_set('Asia/Jakarta');
 
         function tutupbuku_act() {
             $.ajax({
-                url: "<?= site_url('Tutup_buku/tutup_buku'); ?>",
+                url: "<?= site_url('Tutup_buku/tutup_buku_act'); ?>",
                 type: "POST",
                 dataType: "JSON",
                 beforeSend: function() {

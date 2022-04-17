@@ -18,13 +18,14 @@ class Tutup_buku extends CI_Controller
             $this->load->model('M_tutup_buku');
       }
 
-      function tutup_buku()
+      public function tutup_buku_act()
       {
-            $txtperiode = $this->session->userdata('ym_periode');
-            // get data stockawal
-            $data['stockawal'] = $this->M_tutup_buku->get_stockawal($txtperiode);
+            $stockawal = $this->M_tutup_buku->insert_stockawal();
+            $stockawal_bulanan = $this->M_tutup_buku->insert_stockawal_bulanan();
 
-            return $data;
+            $result = true;
+
+            echo json_encode($result);
       }
 
       // public function index()
