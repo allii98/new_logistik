@@ -266,8 +266,8 @@ class Posting extends CI_Controller
       function insert_stok_awal_bulanan_devisi($kodebar, $nabar, $sat, $grp, $qty, $devisi, $kode_dev, $kdpt, $pt)
       {
             $data_insert_stok_bulanan = [
-                  'pt' => $kdpt,
-                  'KODE' => $pt,
+                  'pt' => $pt,
+                  'KODE' => $kdpt,
                   'devisi' => $devisi,
                   'kode_dev' => $kode_dev,
                   'afd' => '-',

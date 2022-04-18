@@ -5,17 +5,19 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_tutup_buku extends CI_Model
 {
 
-      function get_stockawal($txtperiode)
+      function get_stockawal($txtperiode, $kode_dev)
       {
             $this->db_logistik_pt->select('kodebar, kodebartxt, nabar, satuan, grp, nilai_masuk, nilai_keluar, QTY_MASUK, QTY_KELUAR, txtperiode, saldoakhir_qty, saldoakhir_nilai, txtperiode');
             $this->db_logistik_pt->from('stockawal');
             $this->db_logistik_pt->where('txtperiode', $txtperiode);
+            $this->db_logistik_pt->where('KODE', $kode_dev);
             return $this->db_logistik_pt->get()->result_array();
       }
 
       function insert_stockawal()
       {
             $txtperiode = $this->session->userdata('ym_periode');
+            $kode_dev = $this->session->userdata('kode_dev');
 
             $maks = "SELECT max(txtperiode) as maks_periode FROM stockawal";
             $maks_periode = $this->db_logistik_pt->query($maks)->row_array();
@@ -23,11 +25,11 @@ class M_tutup_buku extends CI_Model
             // jika periode select max lebih besar dari periode sesiion maka sudah pernah tutup buku pada periode itu 
             if ($maks_periode['maks_periode'] > $txtperiode) {
                   //delete stok awal
-                  $this->db_logistik_pt->delete('stockawal', array('txtperiode' => $maks_periode['maks_periode']));
+                  $this->db_logistik_pt->delete('stockawal', array('txtperiode' => $maks_periode['maks_periode'], 'KODE' => $kode_dev));
             }
 
             // get data stockawal
-            $data_stockawal = $this->get_stockawal($txtperiode);
+            $data_stockawal = $this->get_stockawal($txtperiode, $kode_dev);
 
             $thn_bln = date("Y-m", strtotime($this->session->userdata('Ymd_periode')));
 
@@ -62,20 +64,31 @@ class M_tutup_buku extends CI_Model
             }
       }
 
-      function get_stockawal_bulanan($txtperiode)
+      function get_stockawal_bulanan($txtperiode, $kode_dev)
       {
             $this->db_logistik_pt->select('kodebar, kodebartxt, nabar, satuan, grp, nilai_masuk, nilai_keluar, QTY_MASUK, QTY_KELUAR, txtperiode, saldoakhir_qty, saldoakhir_nilai, txtperiode');
-            $this->db_logistik_pt->from('stockawal');
+            $this->db_logistik_pt->from('stockawal_bulanan_devisi');
             $this->db_logistik_pt->where('txtperiode', $txtperiode);
+            $this->db_logistik_pt->where('KODE', $kode_dev);
             return $this->db_logistik_pt->get()->result_array();
       }
 
       function insert_stockawal_bulanan()
       {
             $txtperiode = $this->session->userdata('ym_periode');
+            $kode_dev = $this->session->userdata('kode_dev');
+
+            $maks = "SELECT max(txtperiode) as maks_periode FROM stockawal_bulanan_devisi";
+            $maks_periode = $this->db_logistik_pt->query($maks)->row_array();
+
+            // jika periode select max lebih besar dari periode sesiion maka sudah pernah tutup buku pada periode itu 
+            if ($maks_periode['maks_periode'] > $txtperiode) {
+                  //delete stok awal
+                  $this->db_logistik_pt->delete('stockawal_bulanan_devisi', array('txtperiode' => $maks_periode['maks_periode'], 'KODE' => $kode_dev));
+            }
 
             // get data stockawal
-            $data_stockawal_bulanan = $this->get_stockawal_bulanan($txtperiode);
+            $data_stockawal_bulanan = $this->get_stockawal_bulanan($txtperiode, $kode_dev);
 
             $thn_bln = date("Y-m", strtotime($this->session->userdata('Ymd_periode')));
 
