@@ -16,7 +16,7 @@ class Spp extends CI_Controller
         $this->load->model('M_detail_sppNoCoa');
         $this->load->model('M_spp_approval_noCOA');
         $this->load->model('M_brg_serupa');
-        $this->load->model('M_approval_spp_no_coa');
+        // $this->load->model('M_approval_spp_no_coa');
 
         $db_pt = check_db_pt();
 
@@ -1279,54 +1279,54 @@ class Spp extends CI_Controller
         echo json_encode($result);
     }
 
-    public function data_spp_approval_noCOA()
-    {
-        $data = $this->input->post('data');
-        $this->M_approval_spp_no_coa->where_datatables($data);
-        $list = $this->M_approval_spp_no_coa->get_datatables();
-        $data = array();
-        $no = $_POST['start'];
-        foreach ($list as $field) {
-            $no++;
-            if ($field->status2 == 2) {
-                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
-            } else {
-                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
-            }
+    // public function data_spp_approval_noCOA()
+    // {
+    //     $data = $this->input->post('data');
+    //     $this->M_approval_spp_no_coa->where_datatables($data);
+    //     $list = $this->M_approval_spp_no_coa->get_datatables();
+    //     $data = array();
+    //     $no = $_POST['start'];
+    //     foreach ($list as $field) {
+    //         $no++;
+    //         if ($field->status2 == 2) {
+    //             $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+    //         } else {
+    //             $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+    //         }
 
-            $norefspp = "'" . $field->noreftxt . "'";
-            $pt = "'" . $field->pt . "'";
-            $alias = "'" . $field->alias . "'";
+    //         $norefspp = "'" . $field->noreftxt . "'";
+    //         $pt = "'" . $field->pt . "'";
+    //         $alias = "'" . $field->alias . "'";
 
-            $row = array();
-            $row[] = '<a href="javascript:;" id="spp_appproval">
-            <button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalSppApprove(' . $field->id . ',' . $norefspp . ',' . $pt . ',' . $alias . ')" > Approval
-            </button>
-        </a>';
-            // $row[] = '<button class="btn btn-info btn-xs" style="font-size: 11px;" id="detail_spp_approval" name="detail_spp_approval"
-            // data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
-            // data-toggle="tooltip" data-placement="top" title="Approve">Approve
-            // </button>';
-            $row[] = $no;
-            $row[] = $field->noreftxt;
-            $row[] = $field->pt;
-            $row[] = $field->namadept;
-            $row[] = $field->lokasi;
-            $row[] = $stat;
-            $row[] = $field->user;
+    //         $row = array();
+    //         $row[] = '<a href="javascript:;" id="spp_appproval">
+    //         <button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalSppApprove(' . $field->id . ',' . $norefspp . ',' . $pt . ',' . $alias . ')" > Approval
+    //         </button>
+    //     </a>';
+    //         // $row[] = '<button class="btn btn-info btn-xs" style="font-size: 11px;" id="detail_spp_approval" name="detail_spp_approval"
+    //         // data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
+    //         // data-toggle="tooltip" data-placement="top" title="Approve">Approve
+    //         // </button>';
+    //         $row[] = $no;
+    //         $row[] = $field->noreftxt;
+    //         $row[] = $field->pt;
+    //         $row[] = $field->namadept;
+    //         $row[] = $field->lokasi;
+    //         $row[] = $stat;
+    //         $row[] = $field->user;
 
-            $data[] = $row;
-        }
+    //         $data[] = $row;
+    //     }
 
-        $output = array(
-            "draw" => $_POST['draw'],
-            "recordsTotal" => $this->M_approval_spp_no_coa->count_all(),
-            "recordsFiltered" => $this->M_approval_spp_no_coa->count_filtered(),
-            "data" => $data,
-        );
-        //output dalam format JSON
-        echo json_encode($output);
-    }
+    //     $output = array(
+    //         "draw" => $_POST['draw'],
+    //         "recordsTotal" => $this->M_approval_spp_no_coa->count_all(),
+    //         "recordsFiltered" => $this->M_approval_spp_no_coa->count_filtered(),
+    //         "data" => $data,
+    //     );
+    //     //output dalam format JSON
+    //     echo json_encode($output);
+    // }
     public function get_data_spp_approval()
     {
         $list = $this->M_data_spp_approval->get_datatables();
