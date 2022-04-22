@@ -272,7 +272,7 @@ class Spp extends CI_Controller
                 'kodedept' => $this->input->post('cmb_departemen'),
                 'namadept' => $data['nama_dept']['nama'],
                 'kode_dev' => $kode_devisi,
-                'devisi' => $data['devisi']['PT'],
+                // 'devisi' => $data['devisi']['PT'],
                 'noref' => $nospp,
                 'noreftxt' => $noref,
                 'tglref' => $periode,
@@ -280,12 +280,12 @@ class Spp extends CI_Controller
                 'no_acc' => 0,
                 'ket_acc' => "",
                 'pt' => $data['devisi']['PT'],
-                'kodept' => $kode_devisi,
+                // 'kodept' => $kode_devisi,
                 'periode' => $periode,
                 'periodetxt' => $periodetxt,
                 'thn' => $thn,
                 'tglisi' => date("Y-m-d H:i:s"),
-                'id_user' => $id_user,
+                // 'id_user' => $id_user,
                 'user' => $this->session->userdata('user'),
                 'status' => $status,
                 'status2' => $status2,
@@ -312,7 +312,7 @@ class Spp extends CI_Controller
                 'kodedept' => $this->input->post('cmb_departemen'),
                 'namadept' => $data['nama_dept']['nama'],
                 'kode_dev' => $kode_devisi,
-                'devisi' => $data['devisi']['PT'],
+                // 'devisi' => $data['devisi']['PT'],
                 'noref' => $nospp,
                 'noreftxt' => $noref,
                 'tglref' => $periode,
@@ -320,12 +320,12 @@ class Spp extends CI_Controller
                 'no_acc' => 0,
                 'ket_acc' => "",
                 'pt' => $data['devisi']['PT'],
-                'kodept' => $kode_devisi,
+                // 'kodept' => $kode_devisi,
                 'periode' => $periode,
                 'periodetxt' => $periodetxt,
                 'thn' => $thn,
                 'tglisi' => date("Y-m-d H:i:s"),
-                'id_user' => $id_user,
+                // 'id_user' => $id_user,
                 'user' => $this->session->userdata('user'),
                 'status' => $status,
                 'status2' => $status2,
@@ -397,15 +397,15 @@ class Spp extends CI_Controller
             'harga' => "0",
             'jumharga' => "0",
             'namapt' => $data['devisi']['PT'],
-            'kodept' => $kode_devisi,
+            // 'kodept' => $kode_devisi,
             'kode_dev' => $kode_devisi,
-            'devisi' => $data['devisi']['PT'],
+            // 'devisi' => $data['devisi']['PT'],
             'periode' => $periode,
             'periodetxt' => $periodetxt,
             'thn' => $thn,
             'ket' => $this->input->post('txt_keterangan_rinci'),
             'tglisi' => date("Y-m-d H:i:s"),
-            'id_user' => $id_user,
+            // 'id_user' => $id_user,
             'user' => $this->session->userdata('user'),
             'status' => $status,
             'status2' => $status2,
@@ -460,11 +460,11 @@ class Spp extends CI_Controller
             }
 
             // cari id terakhir
-            $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
+            $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE noreftxt ='$noref'";
             $generate_id = $this->db_logistik_pt->query($query_id)->row();
             $id_ppo = $generate_id->id_ppo;
 
-            $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
+            $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE noreftxt ='$noref'";
             $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
             $id_item_ppo = $generate_id_item->id_item_ppo;
 

@@ -71,7 +71,7 @@ $logo_pt = $this->session->userdata('logo_pt');
                 <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="65px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>">
                 </td>
                 <td rowspan="2" align="left" style="font-size:8.5px;">
-                    <h3 style="font-size:14px;font-weight:bold;"> <?= $ppo->devisi ?> </h3>
+                    <h3 style="font-size:14px;font-weight:bold;"> <?= $ppo->pt ?> </h3>
                     <?= $alamat_ho ?>
                 </td>
                 <td style="padding-left: 20px;"><img width="5%" height="5%" src="./assets/qrcode/spp/<?php echo $id . "_" . $nospp; ?>.png"></td>
@@ -102,7 +102,7 @@ $logo_pt = $this->session->userdata('logo_pt');
         <table width="100%" border="0" align="center" style="margin-bottom: 2px;">
             <tr>
                 <td colspan="2" align="left" style="vertical-align: text-top; padding-top:0px; padding-bottom: -10px;">
-                    <b style="margin-bottom: 0px; font-size: 14px;"><?= $ppo->devisi ?></b>
+                    <b style="margin-bottom: 0px; font-size: 14px;"><?= $ppo->pt ?></b>
                     <h6>&nbsp;</h6>
                     <h2 align="left" style="margin-top: 5px;margin-bottom: 0px;">SURAT PERMINTAAN PEMBELIAN <?= $jenis_spp ?></h2>
                 </td>
