@@ -8,7 +8,7 @@ class M_data extends CI_Model
     var $table = 'po'; //nama tabel dari database
     var $column_order = array(null, 'id', 'noreftxt', 'nopo', 'no_refppo', 'tgl_refppo', 'user', 'nopotxt', 'tglpo', 'nama_supply', 'ket', 'terbayar', 'sudah_lpb', 'batal'); //field yang ada di table supplier  
     var $column_search = array('noreftxt', 'no_refppo', 'tglpo', 'tgl_refppo', 'nama_supply', 'user', 'ket'); //field yang diizin untuk pencarian 
-    var $order = array('id' => 'DESC'); // default order 
+    var $order = array('tglpo' => 'DESC'); // default order 
 
     public function __construct()
     {
@@ -28,29 +28,33 @@ class M_data extends CI_Model
         // $Value = ;
         $data = $this->data;
         $lokasi_sesi = $this->session->userdata('status_lokasi');
+        // $no_ref = substr();
         if ($lokasi_sesi == 'HO') {
             if ($data == 'HO') {
                 $this->db_logistik_pt->from($this->table);
-                $this->db_logistik_pt->like('noreftxt', 'PST', 'both');
+                $this->db_logistik_pt->like('no_refppo', 'PST', 'both');
                 # code...
             } elseif ($data == 'SITE') {
                 $this->db_logistik_pt->from($this->table);
-                $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
-                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
+                $this->db_logistik_pt->like('no_refppo', 'EST-SPP/');
+                // $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
                 # code...
             } elseif ($data == 'PKS') {
                 $this->db_logistik_pt->from($this->table);
-                $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
-                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
+                $this->db_logistik_pt->like('no_refppo', 'FAC-SPP/', 'both');
+                // $this->db_logistik_pt->not_like('no_refppo', 'FAC-SPPI');
+                // $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
                 # code...
             } elseif ($data == 'RO') {
                 $this->db_logistik_pt->from($this->table);
-                $this->db_logistik_pt->like('noreftxt', 'RO', 'both');
-                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
+                $this->db_logistik_pt->like('no_refppo', 'ROM-SPP/', 'both');
+                // $this->db_logistik_pt->not_like('no_refppo', 'ROM-SPPI');
+                // $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
                 # code...
             } else {
                 $this->db_logistik_pt->from($this->table);
-                $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
+                $this->db_logistik_pt->like('no_refppo', '-SPP/', 'both');
+                // $this->db_logistik_pt->where('jenis_spp !=', 'SPPI');
             }
         } else {
             # code...

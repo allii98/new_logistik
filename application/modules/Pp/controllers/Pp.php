@@ -50,7 +50,7 @@ class Pp extends CI_Controller
 
             if ($hasil->batal == 1) {
                 $row[] = '
-                <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                <a href="' .  site_url('Pp/cetak/' .  $norefpo . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
                 <a href="javascript:;" id="a_delete_pp">
                 <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                 </button>
@@ -66,7 +66,7 @@ class Pp extends CI_Controller
 
                     $status = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Cashbank</span></h5>';
                     # code...
-                    $row[] = '<a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                    $row[] = '<a href="' .  site_url('Pp/cetak/' .  $norefpo . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
                     <a href="javascript:;" id="a_delete_pp">
                     <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                     </button>
@@ -74,9 +74,9 @@ class Pp extends CI_Controller
                 } else {
                     $status = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">Proses</span></h5>';
                     # code...
-                    $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $noref) . '" class="btn btn-warning fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
+                    $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $norefpo) . '" class="btn btn-warning fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
         
-                    <a href="' .  site_url('Pp/cetak/' .  $noref . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                    <a href="' .  site_url('Pp/cetak/' .  $norefpo . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
                     <a href="javascript:;" id="a_delete_pp">
                         <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                         </button>
@@ -85,7 +85,7 @@ class Pp extends CI_Controller
             }
 
             $row[] = $no . ".";
-            $row[] = $hasil->ref_pp;
+            $row[] = $hasil->ref_po;
             // $row[] = $hasil->ref_po;
             $row[] = date('d-m-Y', strtotime($hasil->tglpp));
             // $row[] = date('d-m-Y', strtotime($hasil->tglpo));
@@ -662,18 +662,18 @@ class Pp extends CI_Controller
     public function cetak()
     {
         $no_ref = $this->uri->segment('3');
-        $no_pp = str_replace('.', '/',  $no_ref);
+        $no_po = str_replace('.', '/',  $no_ref);
 
         $id = $this->uri->segment('4');
 
-        $this->qrcode($no_pp, $id);
+        $this->qrcode($no_po, $id);
 
-        $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('ref_pp' => $no_pp, 'id' => $id))->row();
+        $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('ref_po' => $no_po, 'id' => $id))->row();
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $data['data_pp']->ref_po))->row();
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $data['data_pp']->ref_po))->row();
 
         $this->db_logistik_pt->where('id', $id);
-        $this->db_logistik_pt->where('ref_pp', $no_pp);
+        $this->db_logistik_pt->where('ref_po', $no_po);
         $cek = $this->db_logistik_pt->get_where('pp');
         if ($cek->num_rows() > 0) {
             $cek = $cek->row();
@@ -683,27 +683,28 @@ class Pp extends CI_Controller
                 'jml_cetak' => $jml_ + 1
             ];
             $this->db_logistik_pt->where('id', $id);
-            $this->db_logistik_pt->where('ref_pp', $no_pp);
+            $this->db_logistik_pt->where('ref_po', $no_po);
             $this->db_logistik_pt->update('pp', $up);
         } else {
             $ins = [
                 'jml_cetak' => 1
             ];
             $this->db_logistik_pt->where('id', $id);
-            $this->db_logistik_pt->where('ref_pp', $no_pp);
+            $this->db_logistik_pt->where('ref_po', $no_po);
             $this->db_logistik_pt->update('pp', $ins);
             // $this->db_logistik_pt->insert('po', $ins);
         }
 
-        $data['qrcode'] = 'BPB-' . $id . '.png';
+        $data['qrcode'] = 'PP-' . $id . '.png';
+
+        // var_dump($data) . die();
 
         $mpdf = new \Mpdf\Mpdf([
             'mode' => 'utf-8',
             'format' => 'A4',
-            // 'format' => [190, 236],
             'margin_top' => '3',
-            'margin_left' => '3',
-            'margin_right' => '3',
+            'margin_left' => '4',
+            'margin_right' => '4',
             'orientation' => 'P'
         ]);
         // $mpdf->SetHTMLFooter('<h4>footer Nih</h4>');
@@ -723,9 +724,30 @@ class Pp extends CI_Controller
         $mpdf->Output();
     }
 
-    function qrcode($no_pp, $id)
+    function qrcode($no_po, $id)
     {
-        $this->load->library('ciqrcode');
+        // $this->load->library('ciqrcode');
+        // // header("Content-Type: image/png");
+
+        // $config['cacheable']    = false; //boolean, the default is true
+        // $config['cachedir']     = './assets/'; //string, the default is application/cache/
+        // $config['errorlog']     = './assets/'; //string, the default is application/logs/
+        // $config['imagedir']     = './assets/qrcode/pp/'; //direktori penyimpanan qr code
+        // $config['quality']      = true; //boolean, the default is true
+        // $config['size']         = '1024'; //interger, the default is 1024
+        // $config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+        // $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+        // $this->ciqrcode->initialize($config);
+
+        // $image_name = 'PP-' . $id . '.png'; //buat name dari qr code
+
+        // $params['data'] = $no_po; //data yang akan di jadikan QR CODE
+        // $params['level'] = 'H'; //H=High
+        // $params['size'] = 10;
+        // $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder
+        // $this->ciqrcode->generate($params); // fungsi untuk generate QR COD
+
+        $this->load->library('Ciqrcode');
         // header("Content-Type: image/png");
 
         $config['cacheable']    = false; //boolean, the default is true
@@ -738,9 +760,10 @@ class Pp extends CI_Controller
         $config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
         $this->ciqrcode->initialize($config);
 
-        $image_name = 'BPB-' . $id . '.png'; //buat name dari qr code
+        $image_name = 'PP' . '-' . $id . '.png'; //buat name dari qr code
 
-        $params['data'] = $no_pp; //data yang akan di jadikan QR CODE
+        // $params['data'] = site_url('lpb/cetak/'.$no_lpb.'/'.$id); //data yang akan di jadikan QR CODE
+        $params['data'] = $no_po; //data yang akan di jadikan QR CODE
         $params['level'] = 'H'; //H=High
         $params['size'] = 10;
         $params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder

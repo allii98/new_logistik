@@ -1578,10 +1578,10 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             data = JSON.parse(response);
                             $('#h4_no_spp').html('No. SPP : ' + data[0].noppo);
                             $('#h4_no_ref_spp').html('No. Ref SPP : ' + data[0].noreftxt);
-                            $('#devisi').val(data[0].devisi);
+                            $('#devisi').val(data[0].pt);
                             $('#hidden_kode_devisi').val(data[0].kode_dev);
-                            $('#hidden_devisi').val(data[0].devisi);
-                            $('#jenis_spp').val(data[0].devisi);
+                            $('#hidden_devisi').val(data[0].pt);
+                            $('#jenis_spp').val(data[0].pt);
 
                             cekJenis(jenis);
 
@@ -1589,7 +1589,7 @@ $lokasi_sesi = $this->session->userdata('status_lokasi');
                             var kodebar = data[0].kodebar;
                             $.each(data, function(index, value) {
 
-                                // console.log('ini yg belum di approve', value.statusaprove);
+                                // console.log('ini yg belum di approve', value);
                                 tambah_item(value.statusaprove, value.kodebar);
 
                                 if (value.statusaprove == '0') {
