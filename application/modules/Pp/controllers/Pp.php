@@ -43,14 +43,14 @@ class Pp extends CI_Controller
             $no++;
             $row   = array();
             $id = $hasil->id;
-            $refpp = $hasil->ref_pp;
+            $nopp = $hasil->nopp;
             $ref_po = $hasil->ref_po;
-            $noref = str_replace('/', '.', $refpp);
+            // $noref = str_replace('/', '.', $refpp);
             $norefpo = str_replace('/', '.', $ref_po);
 
             if ($hasil->batal == 1) {
                 $row[] = '
-                <a href="' .  site_url('Pp/cetak/' .  $norefpo . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                <a href="' .  site_url('Pp/cetak/' .  $nopp . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
                 <a href="javascript:;" id="a_delete_pp">
                 <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                 </button>
@@ -66,7 +66,7 @@ class Pp extends CI_Controller
 
                     $status = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-success">Cashbank</span></h5>';
                     # code...
-                    $row[] = '<a href="' .  site_url('Pp/cetak/' .  $norefpo . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                    $row[] = '<a href="' .  site_url('Pp/cetak/' .  $nopp . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
                     <a href="javascript:;" id="a_delete_pp">
                     <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                     </button>
@@ -74,9 +74,9 @@ class Pp extends CI_Controller
                 } else {
                     $status = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">Proses</span></h5>';
                     # code...
-                    $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $norefpo) . '" class="btn btn-warning fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
+                    $row[] = '<a href="' . site_url('Pp/edit_pp/' . $id . '/' . $nopp) . '" class="btn btn-warning fa fa-edit btn-xs" data-toggle="tooltip" data-placement="top" title="Update PP" id="btn_edit_pp"></a>
         
-                    <a href="' .  site_url('Pp/cetak/' .  $norefpo . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
+                    <a href="' .  site_url('Pp/cetak/' .  $nopp . '/' . $id) . '" target="_blank" title="Cetak PP" class="btn btn-primary btn-xs fa fa-print" id="a_print_po"></a>
                     <a href="javascript:;" id="a_delete_pp">
                         <button class="btn btn-info btn-xs fa fa-eye" id="btn_detail" name="btn_batal_pp" data-toggle="tooltip" style="padding-right:8px;" data-placement="top" title="Detail PP" onClick="detail(' . $id . ',' . $hasil->batal  . ')">
                         </button>
@@ -662,18 +662,18 @@ class Pp extends CI_Controller
     public function cetak()
     {
         $no_ref = $this->uri->segment('3');
-        $no_po = str_replace('.', '/',  $no_ref);
+        // $no_po = str_replace('.', '/',  $no_ref);
 
         $id = $this->uri->segment('4');
 
-        $this->qrcode($no_po, $id);
+        $this->qrcode($no_ref, $id);
 
-        $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('ref_po' => $no_po, 'id' => $id))->row();
+        $data['data_pp'] = $this->db_logistik_pt->get_where('pp', array('nopp' => $no_ref, 'id' => $id))->row();
         $data['po'] = $this->db_logistik_pt->get_where('po', array('noreftxt' => $data['data_pp']->ref_po))->row();
         $data['devisi'] = $this->db_logistik_pt->get_where('tb_devisi', array('kodetxt' => $data['data_pp']->ref_po))->row();
 
         $this->db_logistik_pt->where('id', $id);
-        $this->db_logistik_pt->where('ref_po', $no_po);
+        $this->db_logistik_pt->where('nopp', $no_ref);
         $cek = $this->db_logistik_pt->get_where('pp');
         if ($cek->num_rows() > 0) {
             $cek = $cek->row();
@@ -683,14 +683,14 @@ class Pp extends CI_Controller
                 'jml_cetak' => $jml_ + 1
             ];
             $this->db_logistik_pt->where('id', $id);
-            $this->db_logistik_pt->where('ref_po', $no_po);
+            $this->db_logistik_pt->where('nopp', $no_ref);
             $this->db_logistik_pt->update('pp', $up);
         } else {
             $ins = [
                 'jml_cetak' => 1
             ];
             $this->db_logistik_pt->where('id', $id);
-            $this->db_logistik_pt->where('ref_po', $no_po);
+            $this->db_logistik_pt->where('nopp', $no_ref);
             $this->db_logistik_pt->update('pp', $ins);
             // $this->db_logistik_pt->insert('po', $ins);
         }
