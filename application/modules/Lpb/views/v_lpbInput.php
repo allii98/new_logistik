@@ -20,7 +20,7 @@ date_default_timezone_set('Asia/Jakarta');
                     </div>
                     <div class="row">
                         <p class="sub-header ml-2">
-                            Input Laporan Penerimaan Barang
+                            Input Laporan Penerimaan Barang <?= $this->session->userdata('status_lokasi') ?>
                         </p>
                     </div>
 
@@ -794,7 +794,7 @@ date_default_timezone_set('Asia/Jakarta');
                     $('#txt_supplier').val(data_po.nama_supply);
                     $('#hidden_kd_dept').val(data_po.kd_dept);
                     $('#hidden_ket_dept').val(data_po.ket_dept);
-                    $('#devisi_text').val(data_po.devisi);
+                    $('#devisi_text').val(data_po.namapt);
                     $('#devisi').val(data_po.kode_dev);
 
                     //dibawah ini punya SPP
@@ -945,6 +945,7 @@ date_default_timezone_set('Asia/Jakarta');
             dataType: "JSON",
 
             beforeSend: function() {
+
                 $('#btn_simpan_' + n).css('display', 'none');
 
                 $('#lbl_status_simpan_' + n).empty();
@@ -1051,6 +1052,8 @@ date_default_timezone_set('Asia/Jakarta');
                 $('#lbl_lpb_status').empty();
                 $('#btn_simpan_' + n).css('display', 'block');
                 alert('KONEKSI TERPUTUS! Gagal Save Data!');
+                // console.log(response);
+
             }
         });
     }

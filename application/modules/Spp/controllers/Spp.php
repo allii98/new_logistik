@@ -464,7 +464,7 @@ class Spp extends CI_Controller
             $generate_id = $this->db_logistik_pt->query($query_id)->row();
             $id_ppo = $generate_id->id_ppo;
 
-            $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE noreftxt ='$noref'";
+            $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE noreftxt ='$noref' AND kodebar = '$kodebarang_sementara'";
             $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
             $id_item_ppo = $generate_id_item->id_item_ppo;
 

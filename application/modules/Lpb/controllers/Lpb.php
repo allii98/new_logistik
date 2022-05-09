@@ -362,14 +362,14 @@ class Lpb extends CI_Controller
             'noref' => $no_ref_lpb,
             'BATAL' => '0',
             'alasan_batal' => '0',
-            'id_user' => $id_user,
+            // 'id_user' => $id_user,
             'USER' => $this->session->userdata('user'),
             'cetak' => '0',
             'posting' => '0',
-            'approval' => '1',
-            'approval_kasie' => '1',
-            'approval_ktu' => '1',
-            'flag_lpb' => '1'
+            // 'approval' => '1',
+            // 'approval_kasie' => '1',
+            // 'approval_ktu' => '1',
+            // 'flag_lpb' => '1'
         ];
         // $data_stokmasuk_histori = [
         //     'tgl' => $tgl_terima,
@@ -446,11 +446,11 @@ class Lpb extends CI_Controller
             'alasan_batal' => '0',
             'kurs' => $kurs,
             'konversi' => $konversi,
-            'id_user' => $id_user,
+            // 'id_user' => $id_user,
             'USER' => $this->session->userdata('user'),
             'cetak' => '0',
             'posting' => '0',
-            'qtyditerima' => '0',
+            // 'qtyditerima' => '0',
         ];
         // $data_masukitem_histori = [
         //     'kdpt' => $this->session->userdata('kode_pt'),
@@ -535,7 +535,7 @@ class Lpb extends CI_Controller
             'lokasi' => $this->session->userdata('status_lokasi'),
             'refpo' => '-',
             'noref' => $no_ref_lpb,
-            'id_user' => $id_user,
+            // 'id_user' => $id_user,
             'USER' => $this->session->userdata('user'),
         ];
 
@@ -616,15 +616,15 @@ class Lpb extends CI_Controller
             }
         }
 
-        $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $query_id = "SELECT MAX(id) as id_lpb FROM stokmasuk WHERE noref = '$no_ref_lpb' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_lpb = $generate_id->id_lpb;
 
-        $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $query_id = "SELECT MAX(id) as id_item_lpb FROM masukitem WHERE noref = '$no_ref_lpb' AND kodebar = '$kodebar' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_item_lpb = $generate_id->id_item_lpb;
 
-        $query_id = "SELECT MAX(id) as id_register_stok FROM register_stok WHERE id_user = '$id_user' AND noref = '$no_ref_lpb' ";
+        $query_id = "SELECT MAX(id) as id_register_stok FROM register_stok WHERE kodebar = '$kodebar' AND noref = '$no_ref_lpb' ";
         $generate_id = $this->db_logistik_pt->query($query_id)->row();
         $id_register_stok = $generate_id->id_register_stok;
 
@@ -644,7 +644,8 @@ class Lpb extends CI_Controller
             'data_exist' => $data_exist,
             'insert_lpb_to_entry_gl_dr' => $result_insert_lpb_to_entry_gl_dr,
             'insert_lpb_to_entry_gl_cr' => $result_insert_lpb_to_entry_gl_cr,
-            'insert_to_gl_header' => $result_insert_to_gl_header
+            'insert_to_gl_header' => $result_insert_to_gl_header,
+            'lokasibuatpo' => $lokasibuatpo
         ];
 
         echo json_encode($data_return);
