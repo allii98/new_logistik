@@ -28,7 +28,7 @@
                                 <tr>
                                     <th style="font-size: 12px; padding:10px">#</th>
                                     <th style="font-size: 12px; padding:10px">No.</th>
-                                    <th style="font-size: 12px; padding:10px">Ref. PP</th>
+                                    <th style="font-size: 12px; padding:10px">Ref. PO</th>
                                     <th style="font-size: 12px; padding:10px">Tgl. PP</th>
                                     <th style="font-size: 12px; padding:10px">Nama Supplier</th>
                                     <th style="font-size: 12px; padding:10px">User Input</th>

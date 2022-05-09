@@ -133,12 +133,12 @@ $nama_pt = $this->session->userdata('nama_pt');
       <td rowspan="3" width="10%" height="10px" align="right"><img width="10%" height="60px" style="padding-left:8px" src="././assets/logo/<?= $logo_pt ?>"></td>
     <tr>
       <td align="left" style="font-size:8.5px;" valign="top">
-        <h3 style="font-size:14px;font-weight:bold;"> <?= $po->devisi ?></h3>
+        <h3 style="font-size:14px;font-weight:bold;"> <?= $po->namapt ?></h3>
         <?php if ($this->session->userdata('status_lokasi') == 'HO') { ?>
           <?= $alamat_lok ?>
         <?php } ?>
       </td>
-      <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="./assets/qrcode/po/<?= $po->qr_code ?>"></td>
+      <td width="10%" height="10px" align="center"><img width="10%" height="60px" style="padding-right:8px" src="./assets/qrcode/po/<?php echo $id . "_" . $nopo; ?>.png"></td>
     </tr>
   </table>
   <?php
