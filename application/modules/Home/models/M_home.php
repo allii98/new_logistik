@@ -206,7 +206,7 @@ class M_home extends CI_Model
 
         $this->db_logistik_pt->select('no_pp');
         $this->db_logistik_pt->from('pp');
-        $this->db_logistik_pt->where(['user' => $role_user]);
+        // $this->db_logistik_pt->where(['user' => $role_user]);
         $count_pp = $this->db_logistik_pt->count_all_results();
 
         $result = [
