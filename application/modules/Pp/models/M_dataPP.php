@@ -31,6 +31,7 @@ class M_dataPP extends CI_Model
         $lokasi_sesi = $this->session->userdata('status_lokasi');
         $kodept = $this->session->userdata('kode_dev');
 
+<<<<<<< HEAD
         if ($lokasi_sesi == 'HO') {
             $this->db_logistik_pt->from($this->table);
             if ($data == 'HO') {
@@ -58,12 +59,41 @@ class M_dataPP extends CI_Model
             //     $this->db_logistik_pt->where('txtperiode', $txtperiode);
             //     // $this->db_logistik_pt->like('ref_po', 'FAC', 'both');
             //     $this->db_logistik_pt->where('kodept', $kodept);
+=======
+        // $this->db_logistik_pt->from($this->table);
+        // $this->db_logistik_pt->where('txtperiode', $txtperiode);
+
+        $this->db_logistik_pt->from($this->table);
+        if ($lokasi_sesi == 'HO') {
+
+            $this->db_logistik_pt->where('txtperiode', $txtperiode);
+            $this->db_logistik_pt->where('kodept', $kodept);
+            // $this->db_logistik_pt->like('ref_po', 'PST', 'both');
+        } else {
+            # code...
+            // $this->db_logistik_pt->from($this->table);
+            $this->db_logistik_pt->where('txtperiode', $txtperiode);
+            $this->db_logistik_pt->where('kodept', $kodept);
+            // if ($lokasi_sesi == 'SITE') {
+            //     // $this->db_logistik_pt->like('ref_po', 'EST', 'both');
+
+            //     # code...
+            // } else if ($lokasi_sesi == 'PKS') {
+            //     $this->db_logistik_pt->where('txtperiode', $txtperiode);
+            //     $this->db_logistik_pt->where('kodept', $kodept);
+            //     // $this->db_logistik_pt->like('ref_po', 'FAC', 'both');
+>>>>>>> 46bddf9874fb0e3aa31fb5fe79f4c5520b94629f
 
             //     # code...
             // } else if ($lokasi_sesi == 'RO') {
             //     $this->db_logistik_pt->where('txtperiode', $txtperiode);
+<<<<<<< HEAD
             //     // $this->db_logistik_pt->like('ref_po', 'ROM', 'both');
             //     $this->db_logistik_pt->where('kodept', $kodept);
+=======
+            //     $this->db_logistik_pt->where('kodept', $kodept);
+            //     // $this->db_logistik_pt->like('ref_po', 'ROM', 'both');
+>>>>>>> 46bddf9874fb0e3aa31fb5fe79f4c5520b94629f
 
             //     # code...
             // }
