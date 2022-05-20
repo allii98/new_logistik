@@ -969,7 +969,7 @@
         cari_po_edit(no_nopo_edit);
         isi_edit();
         cekspp();
-        supply();
+        supply()
 
         // $('#cmb_filter_alokasi').change(function() {
         //     var data = this.value;
@@ -2352,10 +2352,10 @@
 
             data: {
                 'nopo': nopo,
-                // 'refspp': $('#refspp').val(),
+                'refspp': $('#refspp').val(),
             },
             success: function(data) {
-                // console.log("Hello", data);
+                // console.log("Hello", data.po.jenis_spp);
 
 
 

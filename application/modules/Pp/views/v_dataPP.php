@@ -11,7 +11,7 @@
                                     <label for="" style="margin-top: 3px;">Filter</label>
                                 </div>
                                 <div class="col-10">
-                                    <select class="form-control form-control-sm" id="filter" name="filter">
+                                    <select class="form-control form-control-sm" id="filter_pp" name="filter_pp">
                                         <option value="SEMUA">TAMPILKAN SEMUA</option>
                                         <option value="HO" selected>HO</option>
                                         <option value="PKS">PKS</option>
@@ -28,7 +28,7 @@
                                 <tr>
                                     <th style="font-size: 12px; padding:10px">#</th>
                                     <th style="font-size: 12px; padding:10px">No.</th>
-                                    <th style="font-size: 12px; padding:10px">Ref. PO</th>
+                                    <th style="font-size: 12px; padding:10px">Ref. PP</th>
                                     <th style="font-size: 12px; padding:10px">Tgl. PP</th>
                                     <th style="font-size: 12px; padding:10px">Nama Supplier</th>
                                     <th style="font-size: 12px; padding:10px">User Input</th>
@@ -142,13 +142,20 @@
 
 <script>
     $(document).ready(function() {
-        listPP();
+        $('#filter').change(function() {
+            var data = this.value;
+            console.log(data, "BY ALI DEV");
+            listPP(data);
 
+        });
 
+        //datatables
+        var data = "SEMUA";
+        listPP(data);
 
     });
 
-    function listPP() {
+    function listPP(data) {
         $('#tableListPP').DataTable().destroy();
         var dt = $('#tableListPP').DataTable({
             "processing": true,
@@ -157,7 +164,10 @@
             "ajax": {
                 "url": "<?php echo site_url('Pp/list_pp'); ?>",
                 "type": "POST",
-                "data": {},
+                "data": {
+                    data: data,
+                    // kodedev: kodedev,
+                },
                 "error": function(request) {
                     console.log(request.responseText);
                 }

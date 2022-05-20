@@ -93,7 +93,7 @@ class Retur extends CI_Controller
 
             if ($field->status_approval == '1') {
                 $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
-                data-id_retskb="' . $field->id . '" data-norefretur="' . $field->noretur . '" 
+                data-id_retskb="' . $field->id . '" data-norefretur="' . $field->norefretur . '" 
                 data-toggle="tooltip" data-placement="top" title="detail">
                 </button>
                 <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
@@ -101,14 +101,14 @@ class Retur extends CI_Controller
                 if ($field->batal == 1) {
                     # code...
                     $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
-                    data-id_retskb="' . $field->id . '" data-norefretur="' . $field->noretur . '" data-batal="' . $field->batal . '"
+                    data-id_retskb="' . $field->id . '" data-norefretur="' . $field->norefretur . '" data-batal="' . $field->batal . '"
                     data-toggle="tooltip" data-placement="top" title="detail">
                     </button>
                    
                     <a href="' . site_url('Retur/cetak/' . $field->noretur . '/' . $field->id) . '" target="_blank" class="btn btn-danger btn-xs fa fa-print" id="a_print_lpb"></a>';
                 } else {
                     $aksi = '<button class="btn btn-success btn-xs fa fa-eye" id="approval_retur" name="approval_retur"
-                    data-id_retskb="' . $field->id . '" data-norefretur="' . $field->noretur . '" data-batal="' . $field->batal . '"
+                    data-id_retskb="' . $field->id . '" data-norefretur="' . $field->norefretur . '" data-batal="' . $field->batal . '"
                     data-toggle="tooltip" data-placement="top" title="detail">
                     </button>
                     <button class="btn btn-xs btn-warning fa fa-edit" id="edit_retur" name="edit_retur"
@@ -125,8 +125,8 @@ class Retur extends CI_Controller
             $row[] = $aksi;
             $row[] = $no;
             $row[] = date("Y-m-d", strtotime($field->tgl));
-            $row[] = $field->noretur;
-            $row[] = $field->nobkb;
+            $row[] = $field->norefretur;
+            $row[] = $field->norefbkb;
             $row[] = $field->bag;
             $row[] = $field->no_ba;
             $row[] = $field->keterangan;

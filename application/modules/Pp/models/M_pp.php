@@ -31,7 +31,7 @@ class M_pp extends CI_Model
         } else {
             # code...
             if ($lokasi_sesi == 'SITE') {
-                // $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
+                $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'EST', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
                 // $this->db_logistik_pt->where('terbayar !=', '1');
@@ -39,7 +39,7 @@ class M_pp extends CI_Model
                 $this->db_logistik_pt->where('periodetxt', $txtperiode);
                 # code...
             } else if ($lokasi_sesi == 'PKS') {
-                // $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
+                $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'FAC', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
                 // $this->db_logistik_pt->where('terbayar !=', '1');
@@ -47,7 +47,7 @@ class M_pp extends CI_Model
                 $this->db_logistik_pt->where('periodetxt', $txtperiode);
                 # code...
             } else if ($lokasi_sesi == 'RO') {
-                // $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
+                $this->db_logistik_pt->where_in('jenis_spp', array('SPPI', 'SPPA', 'SPPK'));
                 $this->db_logistik_pt->like('noreftxt', 'ROM', 'both');
                 $this->db_logistik_pt->where('kirim', '1');
                 // $this->db_logistik_pt->where('terbayar !=', '1');
@@ -127,12 +127,12 @@ class M_pp extends CI_Model
     }
     function simpan_pp()
     {
-        // $query_id_pp = "SELECT MAX(id)+1 as id_pp FROM pp";
-        // $generate_id_pp = $this->db_logistik_pt->query($query_id_pp)->row();
-        // $id_pp = $generate_id_pp->id_pp;
-        // if (empty($id_pp)) {
-        //     $id_pp = 1;
-        // }
+        $query_id_pp = "SELECT MAX(id)+1 as id_pp FROM pp";
+        $generate_id_pp = $this->db_logistik_pt->query($query_id_pp)->row();
+        $id_pp = $generate_id_pp->id_pp;
+        if (empty($id_pp)) {
+            $id_pp = 1;
+        }
 
         $sess_lokasi = $this->session->userdata('status_lokasi');
 
@@ -210,7 +210,7 @@ class M_pp extends CI_Model
 
         $total_po = $this->input->post('txt_total_po');
 
-        // $data_pp['id']              = $id_pp;
+        $data_pp['id']              = $id_pp;
         $data_pp['nopp']            = $nopp;
         $data_pp['nopptxt']         = $nopp;
         $data_pp['nopo']            = $this->input->post('hidden_no_po');
@@ -349,11 +349,9 @@ class M_pp extends CI_Model
 
             $sdh_bayar = $get_jumlah_sudah_bayar->jumlah;
 
-            $get_id = $this->db_logistik_pt->query("SELECT id FROM pp WHERE nopp ='$nopp' AND ref_po='$no_ref_po'")->row();
-
 
             if ($bool_pp === TRUE) {
-                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba, 'idpp' => $get_id->id, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp, 'norefpo' => $no_ref_po);
+                return array('status' => TRUE, 'nopp' => $nopp, 'que' => $data_pplogistikdicaba, 'idpp' => $id_pp, 'sdh_bayar' => $sdh_bayar, 'norefpp' => $refpp, 'nopp' => $nopp, 'norefpo' => $no_ref_po);
             } else {
                 return FALSE;
             }

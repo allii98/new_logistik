@@ -16,7 +16,7 @@ class Spp extends CI_Controller
         $this->load->model('M_detail_sppNoCoa');
         $this->load->model('M_spp_approval_noCOA');
         $this->load->model('M_brg_serupa');
-        // $this->load->model('M_approval_spp_no_coa');
+        $this->load->model('M_approval_spp_no_coa');
 
         $db_pt = check_db_pt();
 
@@ -272,7 +272,7 @@ class Spp extends CI_Controller
                 'kodedept' => $this->input->post('cmb_departemen'),
                 'namadept' => $data['nama_dept']['nama'],
                 'kode_dev' => $kode_devisi,
-                // 'devisi' => $data['devisi']['PT'],
+                'devisi' => $data['devisi']['PT'],
                 'noref' => $nospp,
                 'noreftxt' => $noref,
                 'tglref' => $periode,
@@ -280,12 +280,12 @@ class Spp extends CI_Controller
                 'no_acc' => 0,
                 'ket_acc' => "",
                 'pt' => $data['devisi']['PT'],
-                // 'kodept' => $kode_devisi,
+                'kodept' => $kode_devisi,
                 'periode' => $periode,
                 'periodetxt' => $periodetxt,
                 'thn' => $thn,
                 'tglisi' => date("Y-m-d H:i:s"),
-                // 'id_user' => $id_user,
+                'id_user' => $id_user,
                 'user' => $this->session->userdata('user'),
                 'status' => $status,
                 'status2' => $status2,
@@ -312,7 +312,7 @@ class Spp extends CI_Controller
                 'kodedept' => $this->input->post('cmb_departemen'),
                 'namadept' => $data['nama_dept']['nama'],
                 'kode_dev' => $kode_devisi,
-                // 'devisi' => $data['devisi']['PT'],
+                'devisi' => $data['devisi']['PT'],
                 'noref' => $nospp,
                 'noreftxt' => $noref,
                 'tglref' => $periode,
@@ -320,12 +320,12 @@ class Spp extends CI_Controller
                 'no_acc' => 0,
                 'ket_acc' => "",
                 'pt' => $data['devisi']['PT'],
-                // 'kodept' => $kode_devisi,
+                'kodept' => $kode_devisi,
                 'periode' => $periode,
                 'periodetxt' => $periodetxt,
                 'thn' => $thn,
                 'tglisi' => date("Y-m-d H:i:s"),
-                // 'id_user' => $id_user,
+                'id_user' => $id_user,
                 'user' => $this->session->userdata('user'),
                 'status' => $status,
                 'status2' => $status2,
@@ -397,15 +397,15 @@ class Spp extends CI_Controller
             'harga' => "0",
             'jumharga' => "0",
             'namapt' => $data['devisi']['PT'],
-            // 'kodept' => $kode_devisi,
+            'kodept' => $kode_devisi,
             'kode_dev' => $kode_devisi,
-            // 'devisi' => $data['devisi']['PT'],
+            'devisi' => $data['devisi']['PT'],
             'periode' => $periode,
             'periodetxt' => $periodetxt,
             'thn' => $thn,
             'ket' => $this->input->post('txt_keterangan_rinci'),
             'tglisi' => date("Y-m-d H:i:s"),
-            // 'id_user' => $id_user,
+            'id_user' => $id_user,
             'user' => $this->session->userdata('user'),
             'status' => $status,
             'status2' => $status2,
@@ -460,11 +460,11 @@ class Spp extends CI_Controller
             }
 
             // cari id terakhir
-            $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE noreftxt ='$noref'";
+            $query_id = "SELECT MAX(id) as id_ppo FROM ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
             $generate_id = $this->db_logistik_pt->query($query_id)->row();
             $id_ppo = $generate_id->id_ppo;
 
-            $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE noreftxt ='$noref' AND kodebar = '$kodebarang_sementara'";
+            $query_id_item = "SELECT MAX(id) as id_item_ppo FROM item_ppo WHERE id_user = '$id_user' AND noreftxt ='$noref'";
             $generate_id_item = $this->db_logistik_pt->query($query_id_item)->row();
             $id_item_ppo = $generate_id_item->id_item_ppo;
 
@@ -1279,54 +1279,54 @@ class Spp extends CI_Controller
         echo json_encode($result);
     }
 
-    // public function data_spp_approval_noCOA()
-    // {
-    //     $data = $this->input->post('data');
-    //     $this->M_approval_spp_no_coa->where_datatables($data);
-    //     $list = $this->M_approval_spp_no_coa->get_datatables();
-    //     $data = array();
-    //     $no = $_POST['start'];
-    //     foreach ($list as $field) {
-    //         $no++;
-    //         if ($field->status2 == 2) {
-    //             $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
-    //         } else {
-    //             $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
-    //         }
+    public function data_spp_approval_noCOA()
+    {
+        $data = $this->input->post('data');
+        $this->M_approval_spp_no_coa->where_datatables($data);
+        $list = $this->M_approval_spp_no_coa->get_datatables();
+        $data = array();
+        $no = $_POST['start'];
+        foreach ($list as $field) {
+            $no++;
+            if ($field->status2 == 2) {
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-info">SEBAGIAN</span></h5>';
+            } else {
+                $stat = '<h5 style="margin-top:0px; margin-bottom:0px;"><span class="badge badge-warning">DALAM<br>PROSES</span></h5>';
+            }
 
-    //         $norefspp = "'" . $field->noreftxt . "'";
-    //         $pt = "'" . $field->pt . "'";
-    //         $alias = "'" . $field->alias . "'";
+            $norefspp = "'" . $field->noreftxt . "'";
+            $pt = "'" . $field->pt . "'";
+            $alias = "'" . $field->alias . "'";
 
-    //         $row = array();
-    //         $row[] = '<a href="javascript:;" id="spp_appproval">
-    //         <button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalSppApprove(' . $field->id . ',' . $norefspp . ',' . $pt . ',' . $alias . ')" > Approval
-    //         </button>
-    //     </a>';
-    //         // $row[] = '<button class="btn btn-info btn-xs" style="font-size: 11px;" id="detail_spp_approval" name="detail_spp_approval"
-    //         // data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
-    //         // data-toggle="tooltip" data-placement="top" title="Approve">Approve
-    //         // </button>';
-    //         $row[] = $no;
-    //         $row[] = $field->noreftxt;
-    //         $row[] = $field->pt;
-    //         $row[] = $field->namadept;
-    //         $row[] = $field->lokasi;
-    //         $row[] = $stat;
-    //         $row[] = $field->user;
+            $row = array();
+            $row[] = '<a href="javascript:;" id="spp_appproval">
+            <button class="btn btn-info btn-xs" id="detail_spp_approval" name="detail_spp_approval" data-toggle="tooltip" data-placement="top" title="Approval" onClick="modalSppApprove(' . $field->id . ',' . $norefspp . ',' . $pt . ',' . $alias . ')" > Approval
+            </button>
+        </a>';
+            // $row[] = '<button class="btn btn-info btn-xs" style="font-size: 11px;" id="detail_spp_approval" name="detail_spp_approval"
+            // data-id_ppo="' . $field->id . '" data-noref_spp="' . $field->noreftxt . '"
+            // data-toggle="tooltip" data-placement="top" title="Approve">Approve
+            // </button>';
+            $row[] = $no;
+            $row[] = $field->noreftxt;
+            $row[] = $field->pt;
+            $row[] = $field->namadept;
+            $row[] = $field->lokasi;
+            $row[] = $stat;
+            $row[] = $field->user;
 
-    //         $data[] = $row;
-    //     }
+            $data[] = $row;
+        }
 
-    //     $output = array(
-    //         "draw" => $_POST['draw'],
-    //         "recordsTotal" => $this->M_approval_spp_no_coa->count_all(),
-    //         "recordsFiltered" => $this->M_approval_spp_no_coa->count_filtered(),
-    //         "data" => $data,
-    //     );
-    //     //output dalam format JSON
-    //     echo json_encode($output);
-    // }
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->M_approval_spp_no_coa->count_all(),
+            "recordsFiltered" => $this->M_approval_spp_no_coa->count_filtered(),
+            "data" => $data,
+        );
+        //output dalam format JSON
+        echo json_encode($output);
+    }
     public function get_data_spp_approval()
     {
         $list = $this->M_data_spp_approval->get_datatables();
@@ -1517,6 +1517,8 @@ class Spp extends CI_Controller
             );
             $mpdf->showWatermarkImage = true;
         }
+
+        // var_dump($data) . die();
 
         $html = $this->load->view('v_spp_print', $data, true);
 

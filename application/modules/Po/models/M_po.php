@@ -199,7 +199,7 @@ class M_po extends CI_Model
 
     public function get_id($idspp, $noreftxt)
     {
-        $query = "SELECT p.*,p.id as id_spp,i.*,i.status2 as statusaprove, i.ket as ket_item_spp FROM ppo p LEFT JOIN item_ppo i ON p.noreftxt = i.noreftxt WHERE i.noreftxt='$noreftxt' AND i.po = '0' ";
+        $query = "SELECT p.*,p.id as id_spp,i.*,i.status2 as statusaprove, i.ket as ket_item_spp FROM ppo p LEFT JOIN item_ppo i ON p.noreftxt = i.noreftxt WHERE i.noreftxt='$noreftxt' AND i.po = '0' AND i.jenis != 'SPP'";
         $data = $this->db_logistik_pt->query($query)->result_array();
         return $data;
     }
@@ -325,7 +325,7 @@ class M_po extends CI_Model
         return $this->db_logistik_pt->get()->num_rows();
     }
 
-    public function cari_po_edit($nopo)
+    public function cari_po_edit($nopo, $refspp)
     {
         $this->db_logistik_pt->select('*, date(tglppo) as tglspp, date(tglpo) as tgl_po');
         $this->db_logistik_pt->from('po');
@@ -337,7 +337,7 @@ class M_po extends CI_Model
         // $this->db_logistik_pt->where('noref', $nopo);
         // $item_po = $this->db_logistik_pt->get()->result_array();
 
-        $item_po = $this->db_logistik_pt->query("SELECT p.*, s.qty2 FROM item_po p LEFT JOIN item_ppo s ON p.id_item_spp=s.id WHERE p.noref LIKE '%$nopo%'")->result_array();
+        $item_po = $this->db_logistik_pt->query("SELECT p.*, s.qty2 FROM item_po p LEFT JOIN item_ppo s ON p.id_item_spp=s.id WHERE p.noref='$nopo'")->result_array();
 
 
         $data = [

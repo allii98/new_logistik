@@ -167,7 +167,7 @@ date_default_timezone_set('Asia/Jakarta');
                                                 <font face="Verdana" size="2.5">Input SPP Tanpa COA</font>
                                             </a> -->
                                             <?php
-                                            if ($this->session->userdata('level') == 'KTU' || $this->session->userdata('level') == 'Mill Manager' || $this->session->userdata('level') == 'Manager') {
+                                            if ($this->session->userdata('level') == 'KTU' || $this->session->userdata('level') == 'Mill Manager') {
                                             ?>
                                                 <a href="<?= base_url('Spp/sppApproval') ?>" class="dropdown-item">
                                                     <font face="Verdana" size="2.5">SPP
@@ -239,22 +239,58 @@ date_default_timezone_set('Asia/Jakarta');
                                         </div>
                                     <?php } ?>
 
-                                    <div class="dropdown">
-                                        <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="mdi mdi-vote-outline mr-1"></i>
-                                            <font face="Verdana" size="2.5"> BPB</font>
-                                            <div class="arrow-down"></div>
-                                        </a>
-                                        <div class="dropdown-menu" aria-labelledby="topnav-crm">
-                                            <a href="<?= base_url('Bpb/input'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Input BPB</font>
+                                    <?php
+                                    if ($this->session->userdata('status_lokasi') != 'HO') { ?>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-vote-outline mr-1"></i>
+                                                <font face="Verdana" size="2.5"> BPB</font>
+                                                <div class="arrow-down"></div>
                                             </a>
-                                            <a href="<?= base_url('Bpb'); ?>" class="dropdown-item">
-                                                <font face="Verdana" size="2.5">Data BPB</font>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                <a href="<?= base_url('Bpb/input'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input BPB</font>
+                                                </a>
+                                                <a href="<?= base_url('Bpb'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data BPB</font>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-clipboard-arrow-right-outline mr-1"></i>
+                                                <font face="Verdana" size="2.5"> BKB</font>
+                                                <div class="arrow-down">
+                                                </div>
                                             </a>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                <a href="<?= base_url('Bkb/input'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input BKB</font>
+                                                </a>
+                                                <a href="<?= base_url('Bkb'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data BKB</font>
+                                                </a>
+                                                <a href="<?= base_url('Bkb/approval_rev_qty'); ?>" class="dropdown-item">Approval Rev Qty</font></a>
+                                            </div>
+                                        </div>
+                                    <?php } ?>
+                                    <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' || $this->session->userdata('nama_dept') == 'FINANCE & ACCOUNTING') { ?>
+                                        <div class="dropdown">
+                                            <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <i class="mdi mdi-vote-outline mr-1"></i>
+                                                <font face="Verdana" size="2.5"> BPB</font>
+                                                <div class="arrow-down"></div>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="topnav-crm">
+                                                <a href="<?= base_url('Bpb/input'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Input BPB</font>
+                                                </a>
+                                                <a href="<?= base_url('Bpb'); ?>" class="dropdown-item">
+                                                    <font face="Verdana" size="2.5">Data BPB</font>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-
                                     <?php if ($this->session->userdata('nama_dept') == 'PURCHASING' or $this->session->userdata('nama_dept') == 'FINANCE & ACCOUNTING') { ?>
                                         <div class="dropdown">
                                             <a class="dropdown-item dropdown-toggle arrow-none" href="#" id="topnav-crm" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -383,9 +419,6 @@ date_default_timezone_set('Asia/Jakarta');
                                     </a>
                                     <a href="javascript:tutupbuku();" class="dropdown-item"><i class="fe-book mr-1"></i>
                                         <font face="Verdana" size="2.5">Tutup Buku</font>
-                                    </a>
-                                    <a href="javascript:get_nilai_item();" class="dropdown-item"><i class="fe-book mr-1"></i>
-                                        <font face="Verdana" size="2.5">get nilai item bkb</font>
                                     </a>
                                 </div>
                             </li>
@@ -2094,7 +2127,6 @@ date_default_timezone_set('Asia/Jakarta');
                 },
 
                 beforeSend: function() {
-                    now = moment().format('DD/MM/YYYY HH:mm:ss');
                     Swal.fire({
                         imageUrl: '<?php echo base_url(); ?>assets/img/loading3.gif',
                         imageHeight: 90,
@@ -2105,24 +2137,15 @@ date_default_timezone_set('Asia/Jakarta');
                     })
                     // $("#proses-posting").width('0%');
                 },
-                success: function(response) {
-                    console.log(response);
+                success: function(data) {
+                    console.log(data);
                     // $('#modal_progres').modal('hide');
                     //$("#loader").hide(); // hides loading sccreen in success call back
 
-                    console.log(response);
-                    then = moment().format('DD/MM/YYYY HH:mm:ss');
-
-                    var ms = moment(then, "DD/MM/YYYY HH:mm:ss").diff(moment(now, "DD/MM/YYYY HH:mm:ss"));
-                    var d = moment.duration(ms);
-
-                    var formats = d.hours() + ' Jam : ' + d.minutes() + ' Menit : ' + d.seconds() + ' Detik';
-
-                    swal({
-                        title: "Selesai",
-                        text: "Terima Kasih, Data berhasil di Posting dan tersimpan, Waktu Proses Posting " + formats + "",
-                        type: "success"
-
+                    window.Swal.fire({
+                        type: 'success',
+                        title: 'Berhasil Posting',
+                        showConfirmButton: true,
                     })
                 },
                 error: function(request) {
@@ -3238,8 +3261,8 @@ date_default_timezone_set('Asia/Jakarta');
             });
         }
 
-        function printClick(noreftxt, id) {
-            window.open('<?= site_url("Spp/cetak/"); ?>' + noreftxt + '/' + id);
+        function printClick(noreftxt) {
+            window.open('<?= site_url("Laporan/print_lap_spp"); ?>/' + noreftxt);
         }
 
         function printLapPOCetClick(noreftxt, no_refppo, kode_supply) {
@@ -3421,26 +3444,37 @@ date_default_timezone_set('Asia/Jakarta');
                 window.open('<?= site_url("Laporan/print_lap_pp_register"); ?>/' + cmb_devisi1 + '/' + txt_periode4 + '/' + txt_periode5);
             } else {
                 $('#modalListLapPP').modal('show');
-
-
                 $('#tableListLapPP').DataTable().destroy();
                 $('#tableListLapPP').DataTable({
+                    "paging": true,
+                    "scrollY": false,
+                    "scrollX": false,
+                    "searching": true,
+                    "select": false,
+                    "bLengthChange": true,
+                    "scrollCollapse": true,
+                    "bPaginate": true,
+                    "bInfo": true,
+                    "bSort": false,
                     "processing": true,
                     "serverSide": true,
+                    "stateSave": true,
                     "order": [],
+                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        console.log(aData);
+                    },
                     "ajax": {
-                        "url": "<?php echo site_url('Pp/data_pp'); ?>",
+                        "url": "<?php echo site_url('Laporan/listPPCetakan'); ?>",
                         "type": "POST",
                         "data": {
-                            "kodept": cmb_devisi1,
-                            "tgl1": txt_periode4,
-                            "tgl2": txt_periode5
+                            "cmb_devisi1": cmb_devisi1,
+                            "txt_periode4": txt_periode4,
+                            "txt_periode5": txt_periode5
                         },
                         "error": function(request) {
                             console.log(request.responseText);
                         }
                     },
-
                     "columns": [{
                             "width": "5%"
                         },
@@ -3464,10 +3498,6 @@ date_default_timezone_set('Asia/Jakarta');
                         "targets": [],
                         "orderable": false,
                     }, ],
-                    "language": {
-                        "infoFiltered": ""
-                    }
-
                 });
                 var rel = setInterval(function() {
                     $('#tableListLapPP').DataTable().ajax.reload();
@@ -3475,7 +3505,7 @@ date_default_timezone_set('Asia/Jakarta');
                 }, 100);
             }
 
-            // console.log(cmb_devisi1, txt_periode4, txt_periode5, rbt_pilihan2);
+            console.log(cmb_devisi1, txt_periode4, txt_periode5, rbt_pilihan2);
         }
 
         function tampilkanLPB() {
@@ -4129,7 +4159,7 @@ date_default_timezone_set('Asia/Jakarta');
 
         function tutupbuku_act() {
             $.ajax({
-                url: "<?= site_url('Tutup_buku/tutup_buku_act'); ?>",
+                url: "<?= site_url('Tutup_buku/tutup_buku'); ?>",
                 type: "POST",
                 dataType: "JSON",
                 beforeSend: function() {
@@ -4152,49 +4182,6 @@ date_default_timezone_set('Asia/Jakarta');
                     swal({
                         title: "Selesai",
                         text: "Terima Kasih, Data berhasil di Posting dan tersimpan, Waktu Proses Posting " + formats + "",
-                        type: "success"
-
-                    })
-                },
-                error: function(request) {
-                    console.log(request.responseText);
-                }
-            });
-        }
-
-        function get_nilai_item() {
-            $.ajax({
-                url: "<?= site_url('Posting/get_nilai_item'); ?>",
-                type: "POST",
-                dataType: "JSON",
-                beforeSend: function() {
-                    Swal.fire({
-                        imageUrl: '<?php echo base_url(); ?>assets/img/loading3.gif',
-                        imageHeight: 90,
-                        imageAlt: 'A tall image',
-                        showConfirmButton: false,
-                        allowOutsideClick: false,
-                        allowEscapeKey: false
-                    })
-                    now = moment().format('DD/MM/YYYY HH:mm:ss');
-
-                },
-                success: function(response) {
-                    console.log(response);
-
-                },
-                complete: function(response) {
-                    console.log(response);
-                    then = moment().format('DD/MM/YYYY HH:mm:ss');
-
-                    var ms = moment(then, "DD/MM/YYYY HH:mm:ss").diff(moment(now, "DD/MM/YYYY HH:mm:ss"));
-                    var d = moment.duration(ms);
-
-                    var formats = d.hours() + ' Jam : ' + d.minutes() + ' Menit : ' + d.seconds() + ' Detik';
-
-                    swal({
-                        title: "Selesai",
-                        text: "Terima Kasih, Nilai Item berhasil di Posting dan tersimpan, Waktu Proses Posting " + formats + "",
                         type: "success"
 
                     })

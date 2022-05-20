@@ -31,8 +31,8 @@
                                                 <th width="11%" style="font-size: 12px; padding:10px">#</th>
                                                 <th width="3%" style="font-size: 12px; padding:10px">No.</th>
                                                 <th width="8%" style="font-size: 12px; padding:10px">Tgl Retur</th>
-                                                <th width="18%" style="font-size: 12px; padding:10px">No. Retur</th>
-                                                <th width="17%" style="font-size: 12px; padding:10px">No. BKB</th>
+                                                <th width="18%" style="font-size: 12px; padding:10px">No. Ref Retur</th>
+                                                <th width="17%" style="font-size: 12px; padding:10px">No. Ref BKB</th>
                                                 <th width="8%" style="font-size: 12px; padding:10px">Bagian</th>
                                                 <th width="15%" style="font-size: 12px; padding:10px">No. BA</th>
                                                 <th width="13%" style="font-size: 12px; padding:10px">Keterangan</th>

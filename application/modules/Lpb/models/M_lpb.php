@@ -27,7 +27,6 @@ class M_lpb extends CI_Model
         $lokasi = $this->session->userdata('status_lokasi');
         $this->db_logistik_pt->from($this->table);
         $this->db_logistik_pt->where('jenis_lpb !=', 2);
-        $this->db_logistik_pt->order_by('id', 'desc');
         if ($lokasi == 'HO') {
             if ($filter == 'HO') {
                 $this->db_logistik_pt->like('noref', 'PST', 'both');
@@ -122,7 +121,7 @@ class M_lpb extends CI_Model
     {
         $kode_dev = $this->session->userdata('kode_dev');
 
-        $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli, tglppo, no_refppo, kd_dept, ket_dept, devisi, kode_dev, namapt');
+        $this->db_logistik_pt->select('tglpo, noreftxt, nopotxt, nama_supply, kode_supply, lokasi_beli, tglppo, no_refppo, kd_dept, ket_dept, devisi, kode_dev');
         $this->db_logistik_pt->where(['noreftxt' => $noref]);
         $this->db_logistik_pt->from('po');
         $data_po = $this->db_logistik_pt->get()->row_array();
@@ -168,7 +167,7 @@ class M_lpb extends CI_Model
 
         $noref = $this->input->get('noref');
         if ($lokasi != 'HO') {
-            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND (status_lpb = 0 OR status_lpb IS NULL) AND noreftxt LIKE '%$awal_noref%' AND kirim = 1 AND batal != 1 ORDER BY id DESC";
+            $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' AND kirim = 1 AND batal != 1 ORDER BY id DESC";
         } else {
             $query = "SELECT noreftxt FROM po WHERE noreftxt LIKE '%$noref%' AND status_lpb = 0 AND noreftxt LIKE '%$awal_noref%' AND batal != 1 ORDER BY id DESC";
         }

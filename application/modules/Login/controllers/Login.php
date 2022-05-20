@@ -15,8 +15,6 @@ class Login extends CI_Controller
         $this->db_logistik_pt = $this->load->database('db_logistik_' . $db_pt, TRUE);
         $this->db_logistik_center = $this->load->database('db_logistik_center', true);
         $this->db_logistik_msal = $this->load->database('db_logistik_msal', true);
-
-        // jika instal PT buka dibawah ini sesuai PT nya
         // $this->db_logistik_mapa = $this->load->database('db_logistik_mapa', true);
         // $this->db_logistik_peak = $this->load->database('db_logistik_peak', true);
         // $this->db_logistik_psam = $this->load->database('db_logistik_psam', true);
@@ -84,28 +82,28 @@ class Login extends CI_Controller
                         $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'HO'));
                         $pt     = $get_pt->row();
 
-                        $kode_pt = $pt->kodetxt;
+                        $kode_pt = $pt->kode_pt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'RO':
                         $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'RO'));
                         $pt     = $get_pt->row();
 
-                        $kode_pt = $pt->kodetxt;
+                        $kode_pt = $pt->kode_pt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'ESTATE':
                         $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'SITE'));
                         $pt     = $get_pt->row();
 
-                        $kode_pt = $pt->kodetxt;
+                        $kode_pt = $pt->kode_pt;
                         $nama_pt = $pt->PT;
                         break;
                     case 'PKS':
                         $get_pt = $this->$pt_login->get_where('pt', array('lokasi' => 'PKS'));
                         $pt     = $get_pt->row();
 
-                        $kode_pt = $pt->kodetxt;
+                        $kode_pt = $pt->kode_pt;
                         $nama_pt = $pt->PT;
                         break;
                     default:
